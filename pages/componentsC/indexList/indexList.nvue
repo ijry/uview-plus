@@ -22,11 +22,11 @@
 			</view>
 			<u-line></u-line>
 		</view>
-		<template v-for="(item, index) in itemArr">
+		<template :key="index" v-for="(item, index) in itemArr">
 			<!-- #ifdef APP-NVUE -->
-			<u-index-anchor :text="indexList[index]" :key="index"></u-index-anchor>
+			<u-index-anchor :text="indexList[index]"></u-index-anchor>
 			<!-- #endif -->
-			<u-index-item :key="index">
+			<u-index-item>
 				<!-- #ifndef APP-NVUE -->
 				<u-index-anchor :text="indexList[index]"></u-index-anchor>
 				<!-- #endif -->

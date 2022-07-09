@@ -31,7 +31,9 @@
 	    return result
 	}
 	import props from './props.js';
-	import dayjs from '../../libs/util/dayjs.js';
+	// import dayjs from '../../libs/util/dayjs.js';
+	import dayjs from 'dayjs'
+
 	/**
 	 * DatetimePicker 时间日期选择器
 	 * @description 此选择器用于时间日期

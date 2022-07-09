@@ -33,7 +33,7 @@
       <!-- #endif -->
       <!-- #ifndef MP-TOUTIAO -->
       <!-- 音频 -->
-      <audio v-else-if="n.name=='audio'" :id="n.attrs.id" :class="n.attrs.class" :style="n.attrs.style" :author="n.attrs.author" :controls="n.attrs.controls" :loop="n.attrs.loop" :name="n.attrs.name" :poster="n.attrs.poster" :src="n.src[ctrl[i]||0]" :data-i="i" @play="play" @error="mediaError" />
+      <!-- <audio v-else-if="n.name=='audio'" :id="n.attrs.id" :class="n.attrs.class" :style="n.attrs.style" :author="n.attrs.author" :controls="n.attrs.controls" :loop="n.attrs.loop" :name="n.attrs.name" :poster="n.attrs.poster" :src="n.src[ctrl[i]||0]" :data-i="i" @play="play" @error="mediaError" /> -->
       <!-- #endif -->
       <view v-else-if="(n.name=='table'&&n.c)||n.name=='li'" :id="n.attrs.id" :class="'_'+n.name+' '+n.attrs.class" :style="n.attrs.style">
         <node v-if="n.name=='li'" :childs="n.children" :opts="opts" />

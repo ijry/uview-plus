@@ -1,5 +1,5 @@
 {
-	"id": "uview-plus",
+	"id": "uview-plus-demo",
 	"scripts": {
 		"test": "eslint . --fix"
 	},

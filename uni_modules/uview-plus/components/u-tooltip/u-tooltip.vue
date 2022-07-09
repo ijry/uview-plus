@@ -95,7 +95,8 @@
 	const dom = uni.requireNativePlugin('dom')
 	// #endif
 	// #ifdef H5
-	import ClipboardJS from "./clipboard.min.js"
+	// import ClipboardJS from "./clipboard.min.js"
+	import ClipboardJS from "clipboard"
 	// #endif
 	/**
 	 * Tooltip 

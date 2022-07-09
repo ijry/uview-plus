@@ -4,7 +4,6 @@ import App from './App'
 import store from './store'
 
 // 引入全局uview-plus
-import "./uni_modules/uview-plus/index.scss";
 import uviewPlus from './uni_modules/uview-plus/index.js'
 
 //import mixin from './common/mixin'

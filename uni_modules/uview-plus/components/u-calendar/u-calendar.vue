@@ -68,7 +68,8 @@ import uHeader from './header.vue'
 import uMonth from './month.vue'
 import props from './props.js'
 import util from './util.js'
-import dayjs from '../../libs/util/dayjs.js'
+// import dayjs from '../../libs/util/dayjs.js'
+import dayjs from 'dayjs'
 import Calendar from '../../libs/util/calendar.js'
 /**
  * Calendar 日历
