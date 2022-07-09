@@ -1,19 +1,19 @@
 {
-	"id": "uview-ui",
-	"name": "uview-ui",
-	"displayName": "uView2.0重磅发布，利剑出鞘，一统江湖",
-	"version": "2.0.33",
-	"description": "uView UI已完美兼容nvue，全面的组件和便捷的工具会让您信手拈来，如鱼得水",
+	"id": "uview-plus",
+	"name": "uview-plus",
+	"displayName": "uview-plus3.0重磅发布，利剑出鞘，一统江湖",
+	"version": "3.0.1",
+	"description": "uview-plus已完美兼容nvue，全面的组件和便捷的工具会让您信手拈来，如鱼得水",
 	"keywords": [
         "uview",
-        "uview",
+        "uview-plus",
         "ui",
         "ui",
         "uni-app",
         "uni-app",
         "ui"
     ],
-	"repository": "https://github.com/umicro/uView2.0",
+	"repository": "https://github.com/ijry/uview-plus",
 	"engines": {
 		"HBuilderX": "^3.1.0"
 	},
@@ -38,7 +38,7 @@
 			"data": "无",
 			"permissions": "无"
 		},
-		"npmurl": "https://www.npmjs.com/package/uview-ui"
+		"npmurl": "https://www.npmjs.com/package/uview-plus"
 	},
 	"uni_modules": {
 		"dependencies": [],
@@ -50,8 +50,8 @@
 			},
 			"client": {
 				"Vue": {
-					"vue2": "y",
-					"vue3": "n"
+					"vue2": "n",
+					"vue3": "y"
 				},
 				"App": {
 					"app-vue": "y",

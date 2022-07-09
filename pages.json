@@ -11,7 +11,7 @@
 		{
 			"path": "pages/example/components",
 			"style": {
-				"navigationBarTitleText": "uViewPlus UI"
+				"navigationBarTitleText": "uview-plus"
 			}
 		}
     ],

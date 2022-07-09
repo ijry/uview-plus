@@ -15,9 +15,9 @@
 
 uview-plus，是[uni-app](https://uniapp.dcloud.io/)全面兼容nvue的uni-app生态框架，全面的组件和便捷的工具会让您信手拈来，如鱼得水。
 
-## [官方文档：https://uviewui.com](https://uviewui.com)
+## [官方文档：https://uiadmin.net/uview-plus](https://uiadmin.net/uview-plus)
 
-### [点击加群交流反馈：495929039](https://jq.qq.com/?_wv=1027&k=vz4By4k5)
+### [点击加群交流反馈：495929039](https://jq.qq.com/?_wv=1027&k=mAfcBEtL)
 
 ## 特性
 
@@ -40,10 +40,10 @@ uview-plus，是[uni-app](https://uniapp.dcloud.io/)全面兼容nvue的uni-app�
 
 ## 链接
 
-- [官方文档](https://www.uviewui.com/)
-- [更新日志](https://www.uviewui.com/components/changelog.html)
-- [升级指南](https://www.uviewui.com/components/changeGuide.html)
-- [关于我们](https://www.uviewui.com/cooperation/about.html)
+- [官方文档](https://uiadmin.net/uview-plus/)
+- [更新日志](https://uiadmin.net/uview-plus/components/changelog.html)
+- [升级指南](https://uiadmin.net/uview-plus/components/changeGuide.html)
+- [关于我们](https://uiadmin.net/uview-plus/cooperation/about.html)
 
 ## 关于PR
 
@@ -52,11 +52,11 @@ uview-plus，是[uni-app](https://uniapp.dcloud.io/)全面兼容nvue的uni-app�
 
 ## 安装
 
-#### **uni-app插件市场链接** —— [https://ext.dcloud.net.cn/plugin?id=1593](https://ext.dcloud.net.cn/plugin?id=1593)
+#### **uni-app插件市场链接** —— [https://ext.dcloud.net.cn/plugin?name=uview-plus](https://ext.dcloud.net.cn/plugin?name=uview-plus)
 
 ## 快速上手
 
-请通过[快速上手](https://uviewui.com/components/quickstart.html)了解更详细的内容
+请通过[快速上手](https://uiadmin.net/uview-plus/components/quickstart.html)了解更详细的内容
 
 ## 使用方法
 配置easycom规则后，自动按需引入，无需`import`组件，直接引用即可。

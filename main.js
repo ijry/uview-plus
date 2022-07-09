@@ -3,9 +3,10 @@ import App from './App'
 // vuex
 import store from './store'
 
-// 引入全局uView
-import uView from './uni_modules/uview-ui/index.js'
-console.log('uView')
+// 引入全局uview-plus
+import "./uni_modules/uview-plus/index.scss";
+import uviewPlus from './uni_modules/uview-plus/index.js'
+
 //import mixin from './common/mixin'
 
 // #ifdef MP
@@ -23,7 +24,7 @@ export function createApp() {
   // require('./util/request/index')(app)
 
   app.use(store)
-	.use(uView)
+	.use(uviewPlus)
   return {
     app
   }
