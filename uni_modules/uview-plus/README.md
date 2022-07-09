@@ -22,8 +22,7 @@ uview-plus，是[uni-app](https://uniapp.dcloud.io/)全面兼容nvue的uni-app�
 您可以通过**微信**扫码，查看最佳的演示效果。
 <br>
 <br>
-<img src="https://uviewui.com/common/weixin_mini_qrcode.png" width="220" height="220" >
-
+<img src="https://uiadmin.net/uview-plus/common/h5_qrcode.png" width="220" height="220" >
 
 ## 链接
 
