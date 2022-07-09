@@ -170,7 +170,10 @@ function addStyle(customStyle, target = 'object') {
  * @param {string|number} value 需要添加单位的值
  * @param {string} unit 添加的单位名 比如px
  */
-function addUnit(value = 'auto', unit = uni?.$u?.config?.unit ?? 'px') {
+function addUnit(value = 'auto', unit = '') {
+	if (!unit) {
+		unit = uni.$u.config.unit || 'px'
+	}
 	value = String(value)
 	// 用uView内置验证规则中的number判断是否为数值
 	return test.number(value) ? `${value}${unit}` : value
@@ -285,7 +288,7 @@ if (!String.prototype.padStart) {
     date = new Date()
   }
   // 若为unix秒时间戳，则转为毫秒时间戳（逻辑有点奇怪，但不敢改，以保证历史兼容）
-  else if (/^\d{10}$/.test(dateTime?.toString().trim())) {
+  else if (/^\d{10}$/.test(dateTime.toString().trim())) {
     date = new Date(dateTime * 1000)
   }
   // 若用户传入字符串格式时间戳，new Date无法解析，需做兼容
@@ -639,7 +642,7 @@ function setProperty(obj, key, value) {
 function page() {
 	const pages = getCurrentPages()
 	// 某些特殊情况下(比如页面进行redirectTo时的一些时机)，pages可能为空数组
-	return `/${pages[pages.length - 1]?.route ?? ''}`
+	return `/${pages[pages.length - 1].route || ''}`
 }
 
 /**

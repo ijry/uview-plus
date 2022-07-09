@@ -20,8 +20,7 @@ import debounce from './libs/function/debounce.js'
 // 节流方法
 import throttle from './libs/function/throttle.js'
 // 公共文件写入的方法
-let index = {};
-// import index from './libs/function/index.js'
+import index from './libs/function/index.js'
 
 // 配置信息
 import config from './libs/config/config.js'

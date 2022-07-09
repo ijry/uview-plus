@@ -19,7 +19,7 @@
 		data() {
 			return {
 				list: list,
-				desc: 'uView UI，是全面兼容nvue的uni-app生态框架，全面的组件和便捷的工具会让您信手拈来，如鱼得水。',
+				desc: 'uViewPlus 是uViewUI的vue3版本，是全面兼容nvue的uni-app生态框架，全面的组件和便捷的工具会让您信手拈来，如鱼得水。',
 			}
 		},
 		computed: {
