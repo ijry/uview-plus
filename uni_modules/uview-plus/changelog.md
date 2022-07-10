@@ -1,3 +1,7 @@
+## 3.0.5（2022-07-11）
+修复u-upload缺少emits申明
+## 3.0.4（2022-07-10）
+修复u-textarea/u-input/u-datetime-picker/u-number-box/u-radio-group/u-switch/u-rate在vue3下数据绑定
 ## 3.0.3（2022-07-09）
 启用自建演示二维码
 ## 3.0.2（2022-07-09）

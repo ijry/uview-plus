@@ -185,6 +185,9 @@
 				}
 			},
 		},
+		// #ifdef VUE3
+		emits: ['error', 'beforeRead', 'oversize', 'afterRead', 'delete', 'clickPreview'],
+		// #endif
 		methods: {
 			formatFileList() {
 				const {
