@@ -12,7 +12,7 @@
 
 ## 说明
 
-uview-plus，是[uni-app](https://uniapp.dcloud.io/)全面兼容nvue的uni-app生态框架，全面的组件和便捷的工具会让您信手拈来，如鱼得水
+uview-plus，是uni-app全面兼容vue3/nvue的uni-app生态框架，全面的组件和便捷的工具会让您信手拈来，如鱼得水。uview-plus是基于uView2.x移植的支持vue3的版本，感谢uView。
 
 ## [官方文档：https://uiadmin.net/uview-plus](https://uiadmin.net/uview-plus)
 
