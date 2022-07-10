@@ -5,6 +5,10 @@ export default {
 			type: [String, Number],
 			default: uni.$u.props.input.value
 		},
+		modelValue: {
+			type: [String, Number],
+			default: uni.$u.props.input.value
+		},
 		// 输入框类型
 		// number-数字输入键盘，app-vue下可以输入浮点数，app-nvue和小程序平台下只能输入整数
 		// idcard-身份证输入键盘，微信、支付宝、百度、QQ小程序

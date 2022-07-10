@@ -95,9 +95,17 @@
 		mounted() {
 			this.init()
 		},
+		// #ifdef VUE3
+		emits: ['close', 'canel', 'confirm', 'change'],
+		// #endif
 		methods: {
 			init() {
+				// #ifdef VUE3
+				this.innerValue = this.correctValue(this.modelValue)
+				// #endif
+				// #ifdef VUE2
 				this.innerValue = this.correctValue(this.value)
+				// #endif
 				this.updateColumnValue(this.innerValue)
 			},
 			// 在微信小程序中，不支持将函数当做props参数，故只能通过ref形式调用
@@ -120,7 +128,12 @@
 					value: this.innerValue,
 					mode: this.mode
 				})
+				// #ifdef VUE3
+				this.$emit('update:modelValue', this.innerValue)
+				// #endif
+				// #ifdef VUE2
 				this.$emit('input', this.innerValue)
+				// #endif
 			},
 			//用正则截取输出值,当出现多组数字时,抛出错误
 			intercept(e,type){

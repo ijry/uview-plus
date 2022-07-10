@@ -10,11 +10,20 @@ export default {
             type: Boolean,
             default: uni.$u.props.datetimePicker.showToolbar
         },
+        // #ifdef VUE2
         // 绑定值
         value: {
             type: [String, Number],
             default: uni.$u.props.datetimePicker.value
         },
+        // #endif
+        // #ifdef VUE3
+        // 绑定值
+        modelValue: {
+            type: [String, Number],
+            default: uni.$u.props.datetimePicker.value
+        },
+        // #endif
         // 顶部标题
         title: {
             type: String,

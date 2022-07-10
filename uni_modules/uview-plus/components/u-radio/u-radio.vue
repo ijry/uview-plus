@@ -74,6 +74,7 @@
 					inactiveColor: null,
 					size: 18,
 					value: null,
+					modelValue: null,
 					iconColor: null,
 					placement: 'row',
 					borderBottom: false,
@@ -177,6 +178,7 @@
 		mounted() {
 			this.init()
 		},
+
 		methods: {
 			init() {
 				// 支付宝小程序不支持provide/inject，所以使用这个方法获取整个父组件，在created定义，避免循环引用
@@ -185,7 +187,12 @@
 					uni.$u.error('u-radio必须搭配u-radio-group组件使用')
 				}
 				// 设置初始化时，是否默认选中的状态
+				// #ifdef VUE3
+				this.checked = this.name === this.parentData.modelValue
+				// #endif
+        		// #ifdef VUE2
 				this.checked = this.name === this.parentData.value
+				// #endif
 			},
 			updateParentData() {
 				this.getParentData('u-radio-group')

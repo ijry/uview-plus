@@ -1,6 +1,7 @@
 <template>
 	<uvTextarea
 		:value="value"
+		:modelValue="modelValue"
 		:placeholder="placeholder"
 		:height="height"
 		:confirmType="confirmType"
@@ -27,6 +28,7 @@
 		@linechange="e => $emit('linechange', e)"
 		@confirm="e => $emit('confirm')"
 		@input="e => $emit('input', e)"
+		@update:modelValue="e => $emit('update:modelValue', e)"
 		@keyboardheightchange="e => $emit('keyboardheightchange')"
 	></uvTextarea>
 </template>

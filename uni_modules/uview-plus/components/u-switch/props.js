@@ -26,10 +26,18 @@ export default {
             default: uni.$u.props.switch.inactiveColor
         },
         // 通过v-model双向绑定的值
+        // #ifdef VUE3
+        modelValue: {
+            type: [Boolean, String, Number],
+            default: uni.$u.props.switch.value
+        },
+        // #endif
+        // #ifdef VUE2
         value: {
             type: [Boolean, String, Number],
             default: uni.$u.props.switch.value
         },
+        // #endif
         // switch打开时的值
         activeValue: {
             type: [String, Number, Boolean],

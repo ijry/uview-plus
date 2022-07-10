@@ -1,10 +1,19 @@
 export default {
     props: {
+        // #ifdef VUE3
+        // 用于v-model双向绑定选中的星星数量
+        modelValue: {
+            type: [String, Number],
+            default: uni.$u.props.rate.value
+        },
+        // #endif
+        // #ifdef VUE2
         // 用于v-model双向绑定选中的星星数量
         value: {
             type: [String, Number],
             default: uni.$u.props.rate.value
         },
+        // #endif
         // 要显示的星星数量
         count: {
             type: [String, Number],

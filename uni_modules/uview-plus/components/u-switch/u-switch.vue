@@ -52,6 +52,17 @@
 		name: "u-switch",
 		mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
 		watch: {
+			// #ifdef VUE3
+			modelValue: {
+				immediate: true,
+				handler(n) {
+					if(n !== this.inactiveValue && n !== this.activeValue) {
+						uni.$u.error('v-model绑定的值必须为inactiveValue、activeValue二者之一')
+					}
+				}
+			},
+			// #endif
+        	// #ifdef VUE2
 			value: {
 				immediate: true,
 				handler(n) {
@@ -60,6 +71,7 @@
 					}
 				}
 			}
+			// #endif
 		},
 		data() {
 			return {
@@ -68,7 +80,12 @@
 		},
 		computed: {
 			isActive(){
+				// #ifdef VUE3
+				return this.modelValue === this.activeValue;
+				// #endif
+        		// #ifdef VUE2
 				return this.value === this.activeValue;
+				// #endif
 			},
 			switchStyle() {
 				let style = {}
@@ -108,12 +125,20 @@
 				return this.inactiveColor !== '#fff' && this.inactiveColor !== '#ffffff'
 			}
 		},
+		// #ifdef VUE3
+		emits: ['update:modelValue', 'change'],
+    	// #endif
 		methods: {
 			clickHandler() {
 				if (!this.disabled && !this.loading) {
 					const oldValue = this.isActive ? this.inactiveValue : this.activeValue
 					if(!this.asyncChange) {
-						this.$emit('input', oldValue)
+						// #ifdef VUE3
+						this.$emit("update:modelValue", oldValue);
+						// #endif
+						// #ifdef VUE2
+						this.$emit("input", oldValue);
+						// #endif
 					}
 					// 放到下一个生命周期，因为双向绑定的value修改父组件状态需要时间，且是异步的
 					this.$nextTick(() => {

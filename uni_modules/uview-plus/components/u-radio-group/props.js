@@ -1,11 +1,19 @@
 export default {
     props: {
+        // #ifdef VUE3
+        // 绑定的值
+        modelValue: {
+            type: [String, Number, Boolean],
+            default: uni.$u.props.radioGroup.value
+        },
+        // #endif
+        // #ifdef VUE2
         // 绑定的值
         value: {
             type: [String, Number, Boolean],
             default: uni.$u.props.radioGroup.value
         },
-
+        // #endif
         // 是否禁用全部radio
         disabled: {
             type: Boolean,

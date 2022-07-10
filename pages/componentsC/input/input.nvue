@@ -9,6 +9,7 @@
 					v-model="value"
 					@change="change"
 				></u--input>
+				{{value}}
 			</view>
 		</view>
 		<view class="u-demo-block">

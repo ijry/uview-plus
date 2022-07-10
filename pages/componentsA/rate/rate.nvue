@@ -11,7 +11,7 @@
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">自定义选中星星数量</text>
 			<view class="u-demo-block__content">
-				<view class="u-page__tag-item">
+				<view class="u-page__tag-item flex">
 					<u-rate
 						size="20"
 						v-model="value"

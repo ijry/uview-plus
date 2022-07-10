@@ -97,6 +97,7 @@ export default {
 		}
 	},
 	watch: {
+        // #ifdef VUE2
 	    value: {
 	        immediate: true,
 	        handler(newVal, oldVal) {
@@ -115,6 +116,27 @@ export default {
 	            this.changeFromInner = false;
 	        },
 	    },
+        // #endif
+        // #ifdef VUE3
+        modelValue: {
+	        immediate: true,
+	        handler(newVal, oldVal) {
+	            this.innerValue = newVal;
+	            /* #ifdef H5 */
+	            // 在H5中，外部value变化后，修改input中的值，不会触发@input事件，此时手动调用值变化方法
+	            if (
+	                this.firstChange === false &&
+	                this.changeFromInner === false
+	            ) {
+	                this.valueChange();
+	            }
+	            /* #endif */
+	            this.firstChange = false;
+	            // 重置changeFromInner的值为false，标识下一次引起默认为外部引起的
+	            this.changeFromInner = false;
+	        },
+	    }
+        // #endif
 	},
     computed: {
         // 组件的类名
@@ -146,6 +168,9 @@ export default {
             return uni.$u.deepMerge(style, uni.$u.addStyle(this.customStyle));
         },
     },
+    // #ifdef VUE3
+    emits: ['update:modelValue', 'linechange', 'focus', 'blur', 'change', 'confirm', 'keyboardheightchange'],
+    // #endif
     methods: {
 		// 在微信小程序中，不支持将函数当做props参数，故只能通过ref形式调用
 		setFormatter(e) {
@@ -178,7 +203,12 @@ export default {
 		valueChange() {
 		    const value = this.innerValue;
 		    this.$nextTick(() => {
-		        this.$emit("input", value);
+                // #ifdef VUE3
+                this.$emit("update:modelValue", value);
+                // #endif
+                // #ifdef VUE2
+                this.$emit("input", value);
+                // #endif
 		        // 标识value值的变化是由内部引起的
 		        this.changeFromInner = true;
 		        this.$emit("change", value);

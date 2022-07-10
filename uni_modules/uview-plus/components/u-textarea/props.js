@@ -5,6 +5,11 @@ export default {
 			type: [String, Number],
 			default: uni.$u.props.textarea.value
 		},
+		// 输入框的内容
+		modelValue: {
+			type: [String, Number],
+			default: uni.$u.props.textarea.value
+		},
 		// 输入框为空时占位符
 		placeholder: {
 			type: [String, Number],

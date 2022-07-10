@@ -10,6 +10,11 @@ export default {
             type: [Number, String],
             default: uni.$u.props.badge.value
         },
+        // 显示的内容
+        modelValue: {
+            type: [Number, String],
+            default: uni.$u.props.badge.modelValue
+        },
         // 是否显示
         show: {
             type: Boolean,

@@ -1,6 +1,7 @@
 <template>
 	<uvInput 
 		:value="value"
+		:modelValue="modelValue"
 		:type="type"
 		:fixed="fixed"
 		:disabled="disabled"
@@ -41,6 +42,7 @@
 		@keyboardheightchange="$emit('keyboardheightchange')"
 		@change="e => $emit('change', e)"
 		@input="e => $emit('input', e)"
+		@update:modelValue="e => $emit('update:modelValue', e)"
 		@confirm="e => $emit('confirm', e)"
 		@clear="$emit('clear')"
 		@click="$emit('click')"

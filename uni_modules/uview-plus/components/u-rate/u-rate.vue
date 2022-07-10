@@ -116,11 +116,21 @@
 			};
 		},
 		watch: {
+			// #ifdef VUE3
+			modelValue(val) {
+				this.activeIndex = val;
+			},
+			// #endif
+        	// #ifdef VUE2
 			value(val) {
 				this.activeIndex = val;
 			},
+			// #endif
 			activeIndex: 'emitEvent'
 		},
+		// #ifdef VUE3
+		emits: ['update:modelValue', 'change'],
+    	// #endif
 		methods: {
 			init() {
 				uni.$u.sleep().then(() => {
@@ -202,8 +212,13 @@
 			emitEvent() {
 				// 发出change事件
 				this.$emit("change", this.activeIndex);
-				// 同时修改双向绑定的value的值
+				// 同时修改双向绑定的值
+				// #ifdef VUE3
+                this.$emit("update:modelValue", this.activeIndex);
+                // #endif
+                // #ifdef VUE2
 				this.$emit("input", this.activeIndex);
+				// #endif
 			},
 			// 获取当前激活的评分图标
 			getActiveIndex(x,isClick = false) {

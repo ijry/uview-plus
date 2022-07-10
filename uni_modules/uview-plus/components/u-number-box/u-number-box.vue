@@ -124,12 +124,22 @@
 			watchChange(n) {
 				this.check()
 			},
+			// #ifdef VUE2
 			// 监听v-mode的变化，重新初始化内部的值
 			value(n) {
 				if (n !== this.currentValue) {
 					this.currentValue = this.format(this.value)
 				}
+			},
+			// #endif
+			// #ifdef VUE3
+			// 监听v-mode的变化，重新初始化内部的值
+			modelValue(n) {
+				if (n !== this.currentValue) {
+					this.currentValue = this.format(this.modelValue)
+				}
 			}
+			// #endif
 		},
 		computed: {
 			getCursorSpacing() {
@@ -187,9 +197,17 @@
 		mounted() {
 			this.init()
 		},
+		// #ifdef VUE3
+		emits: ['update:modelValue', 'focus', 'blur', 'overlimit'],
+		// #endif
 		methods: {
 			init() {
+				// #ifdef VUE3
+				this.currentValue = this.format(this.modelValue)
+				// #endif
+				// #ifdef VUE2
 				this.currentValue = this.format(this.value)
+				// #endif
 			},
 			// 格式化整理数据，限制范围
 			format(value) {
@@ -278,7 +296,12 @@
 				// 如果开启了异步变更值，则不修改内部的值，需要用户手动在外部通过v-model变更
 				if (!this.asyncChange) {
 					this.$nextTick(() => {
+						// #ifdef VUE3
+						this.$emit('update:modelValue', value)
+						// #endif
+						// #ifdef VUE2
 						this.$emit('input', value)
+						// #endif
 						this.currentValue = value
 						this.$forceUpdate()
 					})

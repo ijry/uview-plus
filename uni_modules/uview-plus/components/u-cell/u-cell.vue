@@ -80,6 +80,7 @@
 				return uni.$u.addStyle(this.titleStyle)
 			}
 		},
+		emits: ['click'],
 		methods: {
 			// 点击cell
 			clickHandler(e) {

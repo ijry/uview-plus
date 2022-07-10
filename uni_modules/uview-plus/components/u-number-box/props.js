@@ -5,11 +5,20 @@ export default {
             type: [String, Number],
             default: uni.$u.props.numberBox.name
         },
+        // #ifdef VUE2
         // 用于双向绑定的值，初始化时设置设为默认min值(最小值)
         value: {
             type: [String, Number],
             default: uni.$u.props.numberBox.value
         },
+        // #endif
+        // #ifdef VUE3
+        // 用于双向绑定的值，初始化时设置设为默认min值(最小值)
+        modelValue: {
+            type: [String, Number],
+            default: uni.$u.props.numberBox.value
+        },
+        // #endif
         // 最小值
         min: {
             type: [String, Number],

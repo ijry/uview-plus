@@ -21,6 +21,7 @@
 						</u-radio>
 					</u-radio-group>
 				</view>
+				{{radiovalue1}}
 			</view>
 		</view>
 		<view class="u-demo-block">
@@ -43,6 +44,7 @@
 						</u-radio>
 					</u-radio-group>
 				</view>
+				{{radiovalue2}}
 			</view>
 		</view>
 		<view class="u-demo-block">
