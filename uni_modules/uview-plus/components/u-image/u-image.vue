@@ -149,6 +149,7 @@
 		mounted() {
 			this.show = true
 		},
+		emits: ['click', 'error', 'load'],
 		methods: {
 			// 点击图片
 			onClick() {

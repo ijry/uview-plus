@@ -39,25 +39,26 @@
 				title="个人中心"
 				:safeAreaInsetTop="false"
 			>
-				<view
-					class="u-nav-slot"
-					slot="left"
-				>
-					<u-icon
-						name="arrow-left"
-						size="19"
-					></u-icon>
-					<u-line
-						direction="column"
-						:hairline="false"
-						length="16"
-						margin="0 8px"
-					></u-line>
-					<u-icon
-						name="home"
-						size="20"
-					></u-icon>
-				</view>
+				<template #left>
+					<view
+						class="u-nav-slot"
+					>
+						<u-icon
+							name="arrow-left"
+							size="19"
+						></u-icon>
+						<u-line
+							direction="column"
+							:hairline="false"
+							length="16"
+							margin="0 8px"
+						></u-line>
+						<u-icon
+							name="home"
+							size="20"
+						></u-icon>
+					</view>
+				</template>
 			</u-navbar>
 		</view>
 		<u-gap height="50"></u-gap>

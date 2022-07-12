@@ -43,5 +43,6 @@
 		components: {
 			uvImage
 		},
+		emits: ['click', 'error', 'load']
 	}
 </script>
