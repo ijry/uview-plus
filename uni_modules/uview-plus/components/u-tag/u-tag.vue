@@ -2,6 +2,7 @@
 	<u-transition
 		mode="fade"
 		:show="show"
+		style="display: inline-flex;"
 	>
 		<view class="u-tag-wrapper">
 			<view
