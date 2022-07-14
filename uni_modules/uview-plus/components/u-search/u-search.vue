@@ -30,7 +30,7 @@
 			<input
 			    confirm-type="search"
 			    @blur="blur"
-			    :value="value"
+			    :value="keyword"
 			    @confirm="search"
 			    @input="inputChange"
 			    :disabled="disabled"
@@ -126,22 +126,38 @@
 		watch: {
 			keyword(nVal) {
 				// 双向绑定值，让v-model绑定的值双向变化
+				// #ifdef VUE3
+				this.$emit("update:modelValue", nVal);
+				// #endif
+				// #ifdef VUE2
 				this.$emit('input', nVal);
+				// #endif
 				// 触发change事件，事件效果和v-model双向绑定的效果一样，让用户多一个选择
 				this.$emit('change', nVal);
 			},
+			// #ifdef VUE3
+			modelValue: {
+				immediate: true,
+				handler(nVal) {
+					this.keyword = nVal;
+				}
+			},
+			// #endif
+			// #ifdef VUE2
 			value: {
 				immediate: true,
 				handler(nVal) {
 					this.keyword = nVal;
 				}
-			}
+			},
+			// #endif
 		},
 		computed: {
 			showActionBtn() {
 				return !this.animation && this.showAction
 			}
 		},
+		emits: ['clear', 'search', 'custom', 'focus', 'blur', 'click', 'clickIcon'],
 		methods: {
 			// 目前HX2.6.9 v-model双向绑定无效，故监听input事件获取输入框内容的变化
 			inputChange(e) {

@@ -95,10 +95,14 @@ export default {
             default: uni.$u.props.search.animation
         },
         // 输入框的初始化内容
-        value: {
+        modelValue: {
             type: String,
             default: uni.$u.props.search.value
         },
+		value: {
+		    type: String,
+		    default: uni.$u.props.search.value
+		},
         // 输入框最大能输入的长度，-1为不限制长度(来自uniapp文档)
         maxlength: {
             type: [String, Number],
