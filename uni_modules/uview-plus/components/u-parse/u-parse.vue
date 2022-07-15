@@ -39,7 +39,7 @@
  * @event {Function}	error	媒体加载出错时触发
  */
 const plugins=[]
-const parser = require('./parser')
+const parser = import('./parser')
 // #ifndef APP-PLUS-NVUE
 import node from './node/node'
 // #endif
