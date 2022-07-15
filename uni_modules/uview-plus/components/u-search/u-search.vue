@@ -157,7 +157,7 @@
 				return !this.animation && this.showAction
 			}
 		},
-		emits: ['clear', 'search', 'custom', 'focus', 'blur', 'click', 'clickIcon'],
+		emits: ['clear', 'search', 'custom', 'focus', 'blur', 'click', 'clickIcon', 'update:modelValue', 'change'],
 		methods: {
 			// 目前HX2.6.9 v-model双向绑定无效，故监听input事件获取输入框内容的变化
 			inputChange(e) {
