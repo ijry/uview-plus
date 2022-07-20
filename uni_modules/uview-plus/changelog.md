@@ -1,3 +1,8 @@
+## 3.0.12（2022-07-20）
+修复u-action-sheet中v-for报错
+u-collapse-item中slot修复
+## 3.0.11（2022-07-19）
+修复微信小程序编译报错及其它修复
 ## 3.0.10（2022-07-15）
 修复文档一批slot示例写法
 修复u-search缺失emits定义导致warning
