@@ -10,13 +10,14 @@
 				<u-cell
 					:title="`列表长度-${index + 1}`"
 				>
-					<u-avatar
-						slot="icon"
-						shape="square"
-						size="35"
-						:src="item.url"
-						customStyle="margin: -3px 5px -3px 0"
-					></u-avatar>
+					<template #icon>
+						<u-avatar
+							shape="square"
+							size="35"
+							:src="item.url"
+							customStyle="margin: -3px 5px -3px 0"
+						></u-avatar>
+					</template>
 				</u-cell>
 			</u-list-item>
 		</u-list>
