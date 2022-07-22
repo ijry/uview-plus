@@ -129,7 +129,7 @@
 			},
 			gridItemClasses() {
 				if(this.parentData.border) {
-					const classes = []
+					let classes = []
 					this.parent.children.map((child, index) =>{
 						if(this === child) {
 							const len = this.parent.children.length

@@ -31,14 +31,16 @@
 		<view class="u-swipe-action-item__content" @touchstart="wxs.touchstart" @touchmove="wxs.touchmove"
 			@touchend="wxs.touchend" :status="status" :change:status="wxs.statusChange" :size="size"
 			:change:size="wxs.sizeChange">
-			<!-- #endif -->
-			<!-- #ifdef APP-NVUE -->
-			<view class="u-swipe-action-item__content" ref="u-swipe-action-item__content" @panstart="onTouchstart"
-				@tap="clickHandler">
-				<!-- #endif -->
-				<slot />
-			</view>
+			<slot></slot>
 		</view>
+		<!-- #endif -->
+		<!-- #ifdef APP-NVUE -->
+		<view class="u-swipe-action-item__content" ref="u-swipe-action-item__content" @panstart="onTouchstart"
+			@tap="clickHandler">
+			<slot></slot>
+		</view>
+		<!-- #endif -->
+	</view>
 </template>
 <!-- #ifdef APP-VUE || MP-WEIXIN || H5 || MP-QQ -->
 <script src="./index.wxs" module="wxs" lang="wxs"></script>
