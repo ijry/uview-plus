@@ -37,15 +37,8 @@
 		:customStyle="customStyle"
 		:formatter="formatter"
 		:ignoreCompositionEvent="ignoreCompositionEvent"
-		@focus="$emit('focus')"
-		@blur="e => $emit('blur', e)"
-		@keyboardheightchange="$emit('keyboardheightchange')"
-		@change="e => $emit('change', e)"
 		@input="e => $emit('input', e)"
 		@update:modelValue="e => $emit('update:modelValue', e)"
-		@confirm="e => $emit('confirm', e)"
-		@clear="$emit('clear')"
-		@click="$emit('click')"
 	>
 		<!-- #ifdef MP -->
 		<slot name="prefix"></slot>

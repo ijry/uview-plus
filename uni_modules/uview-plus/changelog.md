@@ -1,3 +1,5 @@
+## 3.0.13（2022-07-22）
+修复u--input与u--textarea组件多个事件执行两次问题
 ## 3.0.12（2022-07-20）
 修复u-action-sheet中v-for报错
 u-collapse-item中slot修复

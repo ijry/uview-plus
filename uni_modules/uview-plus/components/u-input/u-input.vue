@@ -49,7 +49,7 @@
             <view
                 class="u-input__content__clear"
                 v-if="isShowClear"
-                @tap="onClear"
+                @click="onClear"
             >
                 <u-icon
                     name="close"
