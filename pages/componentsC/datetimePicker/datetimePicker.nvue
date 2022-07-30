@@ -167,15 +167,6 @@
 			navigateBack() {
 				uni.navigateBack()
 			},
-			formatter(mode, value) {
-				if (mode === 'year') {
-					return `${value}年`;
-				}
-				if (mode === 'month') {
-					return `${value}月`;
-				}
-				return value;
-			},
 			filter(mode, options) {
 				if (mode === 'year') {
 					return options.filter((option) => option % 2 === 0);
@@ -202,13 +193,6 @@
 					default:
 						return ''
 				}
-			},
-			filter(type, options) {
-				if (type === 'year') {
-					return options.filter((option) => option % 2 === 0)
-				}
-
-				return options;
 			},
 			formatter(type, value) {
 				if (type === 'year') {

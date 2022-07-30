@@ -100,7 +100,9 @@ import nvueMixin from "./nvue.js"
 import props from './props.js';
 export default {
 	name: 'u-scroll-list',
+	// #ifndef APP-NVUE
 	mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+	// #endif
 	// #ifdef APP-NVUE
 	mixins: [uni.$u.mpMixin, uni.$u.mixin, nvueMixin, props],
 	// #endif

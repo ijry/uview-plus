@@ -71,7 +71,9 @@
 	 */
 	export default {
 		name: 'u-swipe-action-item',
+		// #ifndef APP-NVUE
 		mixins: [uni.$u.mpMixin, uni.$u.mixin, props, touch],
+		// #endif
 		// #ifdef APP-NVUE
 		mixins: [uni.$u.mpMixin, uni.$u.mixin, props, nvue, touch],
 		// #endif
