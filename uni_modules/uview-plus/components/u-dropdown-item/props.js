@@ -1,3 +1,4 @@
+import defprops from '../../libs/config/props';
 export default {
     props: {
         // 当前选中项的value值

@@ -1,28 +1,29 @@
+import defprops from '../../libs/config/props';
 export default {
     props: {
         // 激活部分的颜色
         activeColor: {
             type: String,
-            default: uni.$u.props.lineProgress.activeColor
+            default: defprops.lineProgress.activeColor
         },
         inactiveColor: {
             type: String,
-            default: uni.$u.props.lineProgress.color
+            default: defprops.lineProgress.color
         },
         // 进度百分比，数值
         percentage: {
             type: [String, Number],
-            default: uni.$u.props.lineProgress.inactiveColor
+            default: defprops.lineProgress.inactiveColor
         },
         // 是否在进度条内部显示百分比的值
         showText: {
             type: Boolean,
-            default: uni.$u.props.lineProgress.showText
+            default: defprops.lineProgress.showText
         },
         // 进度条的高度，单位px
         height: {
             type: [String, Number],
-            default: uni.$u.props.lineProgress.height
+            default: defprops.lineProgress.height
         }
     }
 }

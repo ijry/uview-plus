@@ -1,3 +1,4 @@
+import defprops from '../../libs/config/props';
 export default {
     props: {
         // 标题选中时的样式
