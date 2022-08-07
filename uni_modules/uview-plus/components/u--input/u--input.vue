@@ -57,10 +57,12 @@
 	 * 所以在nvue下，取名为u--input，内部其实还是u-input.vue，只不过做一层中转
 	 */
 	import uvInput from '../u-input/u-input.vue';
-	import props from '../u-input/props.js'
+	import props from '../u-input/props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	export default {
 		name: 'u--input',
-		mixins: [uni.$u.mpMixin, props, uni.$u.mixin],
+		mixins: [mpMixin, props, mixin],
 		components: {
 			uvInput
 		},

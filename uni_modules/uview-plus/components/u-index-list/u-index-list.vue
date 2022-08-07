@@ -101,6 +101,8 @@
 		return indexList;
 	}
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	// #ifdef APP-NVUE
 	// 由于weex为阿里的KPI业绩考核的产物，所以不支持百分比单位，这里需要通过dom查询组件的宽度
 	const dom = uni.requireNativePlugin('dom')
@@ -117,7 +119,7 @@
 	 * */ 
 	export default {
 		name: 'u-index-list',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+		mixins: [mpMixin, mixin, props],
 		// #ifdef MP-WEIXIN
 		// 将自定义节点设置成虚拟的，更加接近Vue组件的表现，能更好的使用flex属性
 		options: {

@@ -50,6 +50,8 @@
 	const dom = uni.requireNativePlugin('dom')
 	// #endif
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * readMore 阅读更多
 	 * @description 该组件一般用于内容较长，预先收起一部分，点击展开全部内容的场景。
@@ -69,7 +71,7 @@
 	 */
 	export default {
 		name: 'u-read-more',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 				isLongContent: false, // 是否需要隐藏一部分内容

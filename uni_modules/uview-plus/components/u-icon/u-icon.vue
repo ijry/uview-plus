@@ -49,7 +49,9 @@
 	// 引入图标名称，已经对应的unicode
 	import icons from './icons'
 	
-	import props from './props.js';;
+	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 
 	/**
 	 * icon 图标
@@ -84,7 +86,7 @@
 
 			}
 		},
-		mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+		mixins: [mpMixin, mixin, props],
 		computed: {
 			uClasses() {
 				let classes = []

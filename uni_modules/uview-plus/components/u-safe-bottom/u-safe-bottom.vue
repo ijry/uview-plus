@@ -9,6 +9,8 @@
 
 <script>
 	import props from "./props.js";
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * SafeBottom 底部安全区
 	 * @description 这个适配，主要是针对IPhone X等一些底部带指示条的机型，指示条的操作区域与页面底部存在重合，容易导致用户误操作，因此我们需要针对这些机型进行底部安全区适配。
@@ -21,7 +23,7 @@
 	 */
 	export default {
 		name: "u-safe-bottom",
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 				safeAreaBottomHeight: 0,

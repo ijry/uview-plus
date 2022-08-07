@@ -59,6 +59,8 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	// #ifdef APP-NVUE
 	const animation = weex.requireModule('animation');
 	// #endif
@@ -82,7 +84,7 @@
 	 */
 	export default {
 		name: 'u-loading-icon',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 				// Array.form可以通过一个伪数组对象创建指定长度的数组

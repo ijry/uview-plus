@@ -12,6 +12,8 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 
 	/**
 	 * overlay 遮罩
@@ -27,7 +29,7 @@
 	 */
 	export default {
 		name: "u-overlay",
-		mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+		mixins: [mpMixin, mixin,props],
 		computed: {
 			overlayStyle() {
 				const style = {

@@ -111,6 +111,8 @@
 <script>
 import button from "../../libs/mixin/button.js";
 import openType from "../../libs/mixin/openType.js";
+import mpMixin from '../../libs/mixin/mpMixin.js';
+import mixin from '../../libs/mixin/mixin.js';
 import props from "./props.js";
 /**
  * button 按钮
@@ -158,10 +160,10 @@ import props from "./props.js";
 export default {
     name: "u-button",
     // #ifdef MP
-    mixins: [uni.$u.mpMixin, uni.$u.mixin, button, openType, props],
+    mixins: [mpMixin, mixin, button, openType, props],
     // #endif
     // #ifndef MP
-    mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+    mixins: [mpMixin, mixin, props],
     // #endif
     data() {
         return {};

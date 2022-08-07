@@ -34,10 +34,12 @@
 	 * 所以在nvue下，取名为u--textarea，内部其实还是u-textarea.vue，只不过做一层中转
 	 */
 	import uvTextarea from '../u-textarea/u-textarea.vue';
-	import props from '../u-textarea/props.js'
+	import props from '../u-textarea/props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	export default {
 		name: 'u--textarea',
-		mixins: [uni.$u.mpMixin, props, uni.$u.mixin],
+		mixins: [mpMixin, props, mixin],
 		components: {
 			uvTextarea
 		},

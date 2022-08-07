@@ -38,6 +38,8 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * Dropdown  
 	 * @description 
@@ -48,7 +50,7 @@
 	 */
 	export default {
 		name: 'u-dropdown',
-		mixins: [uni.$u.mixin, props],
+		mixins: [mixin, props],
 		data() {
 			return {
 				// ²Ëµ¥Êý×é

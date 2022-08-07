@@ -14,6 +14,8 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * CodeInput 栅格系统的列 
 	 * @description 该组件一般用于Layout 布局 通过基础的 12 分栏，迅速简便地创建布局
@@ -29,7 +31,7 @@
 	 */
 	export default {
 		name: 'u-col',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 				width: 0,

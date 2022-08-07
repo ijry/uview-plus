@@ -44,6 +44,8 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 
 	/**
 	 * noNetwork 无网络提示
@@ -57,7 +59,7 @@
 	 */
 	export default {
 		name: "u-no-network",
-		mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+		mixins: [mpMixin, mixin,props],
 		data() {
 			return {
 				isConnected: true, // 是否有网络连接

@@ -40,6 +40,8 @@
 </template>
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 
 	/**
 	 * noticeBar 滚动通知
@@ -66,7 +68,7 @@
 	 */
 	export default {
 		name: "u-notice-bar",
-		mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+		mixins: [mpMixin, mixin,props],
 		data() {
 			return {
 				show: true

@@ -76,6 +76,8 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * numberBox 步进器
 	 * @description 该组件一般用于商城购物选择物品数量的场景。
@@ -110,7 +112,7 @@
 	 */
 	export default {
 		name: 'u-number-box',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 				// 输入框实际操作的值

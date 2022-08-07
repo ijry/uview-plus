@@ -33,6 +33,8 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * SwiperIndicator 轮播图指示器
 	 * @description 该组件一般用于导航轮播，广告展示等场景,可开箱即用，
@@ -46,7 +48,7 @@
 	 */
 	export default {
 		name: 'u-swiper-indicator',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 				lineWidth: 22

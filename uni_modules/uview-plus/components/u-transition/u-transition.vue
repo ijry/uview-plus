@@ -14,6 +14,8 @@
 
 <script>
 import props from './props.js';
+import mpMixin from '../../libs/mixin/mpMixin.js';
+import mixin from '../../libs/mixin/mixin.js';
 // 组件的methods方法，由于内容较长，写在外部文件中通过mixin引入
 import transition from "./transition.js";
 /**
@@ -61,7 +63,7 @@ export default {
 	    }
 	},
 	// 将mixin挂在到组件中，uni.$u.mixin实际上为一个vue格式对象
-	mixins: [uni.$u.mpMixin, uni.$u.mixin, transition, props],
+	mixins: [mpMixin, mixin, transition, props],
 	watch: {
 		show: {
 			handler(newVal) {

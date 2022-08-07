@@ -8,6 +8,8 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 
 	/**
 	 * link 超链接
@@ -26,7 +28,7 @@
 	 */
 	export default {
 		name: "u-link",
-		mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+		mixins: [mpMixin, mixin, props],
 		computed: {
 			linkStyle() {
 				const style = {

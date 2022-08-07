@@ -39,6 +39,8 @@
 </template>
 
 <script>
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * toast 消息提示
 	 * @description 此组件表现形式类似uni的uni.showToastAPI，但也有不同的地方。
@@ -63,7 +65,7 @@
 	 */
 	export default {
 		name: 'u-toast',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin],
+		mixins: [mpMixin, mixin],
 		data() {
 			return {
 				isShow: false,

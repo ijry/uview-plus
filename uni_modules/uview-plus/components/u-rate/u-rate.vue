@@ -75,6 +75,8 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 
 	// #ifdef APP-NVUE
 	const dom = weex.requireModule("dom");
@@ -102,7 +104,7 @@
 	 */
 	export default {
 		name: "u-rate",
-		mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 				// 生成一个唯一id，否则一个页面多个评分组件，会造成冲突

@@ -109,6 +109,8 @@
 	import openType from '../../libs/mixin/openType'
 	import button from '../../libs/mixin/button'
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * ActionSheet 操作菜单
 	 * @description 本组件用于从底部弹出一个操作菜单，供用户选择并返回结果。本组件功能类似于uni的uni.showActionSheetAPI，配置更加灵活，所有平台都表现一致。
@@ -145,7 +147,7 @@
 	export default {
 		name: "u-action-sheet",
 		// 一些props参数和methods方法，通过mixin混入，因为其他文件也会用到
-		mixins: [openType, button, uni.$u.mixin, props],
+		mixins: [openType, button, mixin, props],
 		data() {
 			return {
 

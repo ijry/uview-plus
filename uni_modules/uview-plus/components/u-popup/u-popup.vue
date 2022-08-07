@@ -46,6 +46,8 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 
 	/**
 	 * popup 弹窗
@@ -73,7 +75,7 @@
 	 */
 	export default {
 		name: 'u-popup',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 				overlayDuration: this.duration + 50

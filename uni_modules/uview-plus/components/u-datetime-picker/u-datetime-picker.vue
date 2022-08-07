@@ -31,6 +31,8 @@
 	    return result
 	}
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	// import dayjs from '../../libs/util/dayjs.js';
 	import dayjs from 'dayjs'
 
@@ -68,7 +70,7 @@
 	 */
 	export default {
 		name: 'datetime-picker',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 				columns: [],

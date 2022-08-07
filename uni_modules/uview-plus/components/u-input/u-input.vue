@@ -76,6 +76,8 @@
 
 <script>
 import props from "./props.js";
+import mpMixin from '../../libs/mixin/mpMixin.js';
+import mixin from '../../libs/mixin/mixin.js';
 /**
  * Input 输入框
  * @description  此组件为一个输入框，默认没有边框和样式，是专门为配合表单组件u-form而设计的，利用它可以快速实现表单验证，输入内容，下拉选择等功能。
@@ -120,7 +122,7 @@ import props from "./props.js";
  */
 export default {
     name: "u-input",
-    mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+    mixins: [mpMixin, mixin, props],
     data() {
         return {
             // 输入框的值

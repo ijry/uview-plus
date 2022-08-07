@@ -71,6 +71,8 @@
 
 <script>
 import value from './value.js'
+import mpMixin from '../../libs/mixin/mpMixin.js';
+import mixin from '../../libs/mixin/mixin.js';
 import button from '../../libs/mixin/button.js'
 import openType from '../../libs/mixin/openType.js'
 import props from './props.js'
@@ -105,10 +107,10 @@ import props from './props.js'
 export default {
     name: 'u--text',
     // #ifdef MP
-    mixins: [uni.$u.mpMixin, uni.$u.mixin, value, button, openType, props],
+    mixins: [mpMixin, mixin, value, button, openType, props],
     // #endif
     // #ifndef MP
-    mixins: [uni.$u.mpMixin, uni.$u.mixin, value, props],
+    mixins: [mpMixin, mixin, value, props],
     // #endif
     computed: {
         valueStyle() {

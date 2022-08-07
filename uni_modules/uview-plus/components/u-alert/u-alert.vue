@@ -61,6 +61,8 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * Alert  警告提示
 	 * @description 警告提示，展现需要关注的信息。
@@ -80,7 +82,7 @@
 	 */
 	export default {
 		name: 'u-alert',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 				show: true

@@ -48,6 +48,8 @@
 <script>
 	import touch from '../../libs/mixin/touch.js'
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	// #ifdef APP-NVUE
 	import nvue from './nvue.js';
 	// #endif
@@ -72,13 +74,13 @@
 	export default {
 		name: 'u-swipe-action-item',
 		// #ifndef APP-NVUE
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props, touch],
+		mixins: [mpMixin, mixin, props, touch],
 		// #endif
 		// #ifdef APP-NVUE
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props, nvue, touch],
+		mixins: [mpMixin, mixin, props, nvue, touch],
 		// #endif
 		// #ifdef APP-VUE || MP-WEIXIN || H5 || MP-QQ
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props, touch, wxs],
+		mixins: [mpMixin, mixin, props, touch, wxs],
 		// #endif
 		data() {
 			return {

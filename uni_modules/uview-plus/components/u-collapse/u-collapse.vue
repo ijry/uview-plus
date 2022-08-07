@@ -7,6 +7,8 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * collapse 折叠面板 
 	 * @description 通过折叠面板收纳内容区域
@@ -19,7 +21,7 @@
 	 */
 	export default {
 		name: "u-collapse",
-		mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+		mixins: [mpMixin, mixin,props],
 		watch: {
 			needInit() {
 				this.init()

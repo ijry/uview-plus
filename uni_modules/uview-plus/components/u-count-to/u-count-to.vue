@@ -11,6 +11,8 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 /**
  * countTo 数字滚动
  * @description 该组件一般用于需要滚动数字到某一个值的场景，目标要求是一个递增的值。
@@ -45,7 +47,7 @@ export default {
 			lastTime: 0 // 上一次的时间
 		};
 	},
-	mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+	mixins: [mpMixin, mixin,props],
 	computed: {
 		countDown() {
 			return this.startVal > this.endVal;

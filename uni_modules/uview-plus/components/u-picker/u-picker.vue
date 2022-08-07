@@ -77,9 +77,11 @@
  * @event {Function} confirm	点击确定按钮，返回当前选择的值
  */
 import props from './props.js';
+import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 export default {
 	name: 'u-picker',
-	mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+	mixins: [mpMixin, mixin, props],
 	data() {
 		return {
 			// 上一次选择的列索引

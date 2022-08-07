@@ -21,10 +21,12 @@
 </template>
 
 <script>
-	import props from './props.js'
+	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	export default {
 		name: 'u--slider',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+		mixins: [mpMixin, mixin, props],
 		methods: {
 			// 拖动过程中触发
 			changingHandler(e) {

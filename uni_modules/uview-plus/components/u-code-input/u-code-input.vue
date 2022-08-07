@@ -47,6 +47,8 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * CodeInput 验证码输入
 	 * @description 该组件一般用于验证用户短信验证码的场景，也可以结合uView的键盘组件使用
@@ -72,7 +74,7 @@
 	 */
 	export default {
 		name: 'u-code-input',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 				inputValue: '',
