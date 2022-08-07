@@ -47,6 +47,7 @@
 	import props from './props.js';
 	import mpMixin from '../../libs/mixin/mpMixin.js';
 	import mixin from '../../libs/mixin/mixin.js';
+	import { nextTick } from 'vue'
 	// #ifdef APP-NVUE
 	const animation = uni.requireNativePlugin('animation')
 	const dom = uni.requireNativePlugin('dom')
@@ -104,7 +105,7 @@
 		},
 		methods: {
 			// 异步获取内容，或者动态修改了内容时，需要重新初始化
-			init() {
+			async init() {
 				// 初始化数据
 				this.updateParentData()
 				if (!this.parent) {
@@ -128,9 +129,8 @@
 					this.expanded = (value || []).some(item => item == this.name)
 				}
 				// 设置组件的展开或收起状态
-				this.$nextTick(function() {
-					this.setContentAnimate()
-				})
+				await nextTick()
+				this.setContentAnimate()
 			},
 			updateParentData() {
 				// 此方法在mixin中

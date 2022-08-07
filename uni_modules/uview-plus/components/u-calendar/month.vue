@@ -31,11 +31,14 @@
 	// 由于nvue不支持百分比单位，需要查询宽度来计算每个日期的宽度
 	const dom = uni.requireNativePlugin('dom')
 	// #endif
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
+	import defprops from '../../libs/config/props';
 	// import dayjs from '../../libs/util/dayjs.js';
 	import dayjs from 'dayjs'
 	export default {
 		name: 'u-calendar-month',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin],
+		mixins: [mpMixin, mixin],
 		props: {
 			// 是否显示月份背景色
 			showMark: {
