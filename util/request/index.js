@@ -7,7 +7,6 @@ uni.$u.http.setConfig((defaultConfig) => {
     return defaultConfig
 })
 
-module.exports = (vm) => {
-    require('./requestInterceptors')(vm)
-    require('./responseInterceptors')(vm)
-}
+import('./requestInterceptors')
+import('./responseInterceptors')
+

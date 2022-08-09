@@ -14,13 +14,14 @@ import uviewPlus from './uni_modules/uview-plus/index.js'
 // Vue.mixin(mpShare)
 // Vue.mixin(mixin)
 // #endif
-
+  
 // #ifdef VUE3
 import { createSSRApp } from 'vue'
 export function createApp() {
   const app = createSSRApp(App)
+  
   // 引入请求封装
-  // require('./util/request/index')(app)
+  import ('./util/request/index')
 
   app.use(store)
 	.use(uviewPlus)

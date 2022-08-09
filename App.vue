@@ -5,6 +5,8 @@
 		},
 		onShow: function() {
 			console.log('App Show')
+			console.log(uni.$u.http)
+			//uni.$u.http.get('https://baidu.com')
 		},
 		onHide: function() {
 			console.log('App Hide')
