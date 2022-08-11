@@ -17,11 +17,12 @@ import uviewPlus from './uni_modules/uview-plus/index.js'
   
 // #ifdef VUE3
 import { createSSRApp } from 'vue'
+import {initRequest} from './util/request/index'
 export function createApp() {
   const app = createSSRApp(App)
   
   // 引入请求封装
-  import ('./util/request/index')
+  initRequest(app)
 
   app.use(store)
 	.use(uviewPlus)
