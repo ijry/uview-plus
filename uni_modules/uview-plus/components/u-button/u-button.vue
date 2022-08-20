@@ -262,6 +262,8 @@ export default {
             return fontSize;
         },
     },
+	emits: ['click', 'getphonenumber', 'getuserinfo',
+		'error', 'opensetting', 'launchapp'],
     methods: {
         clickHandler() {
             // 非禁止并且非加载中，才能点击
