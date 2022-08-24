@@ -130,6 +130,7 @@
 			&__item-wrapper {
 				height: 50px;
 				@include flex(row);
+				justify-content: space-around;
 			}
 		}
 

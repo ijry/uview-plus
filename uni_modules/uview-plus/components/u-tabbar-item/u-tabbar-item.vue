@@ -114,12 +114,13 @@
 
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
-
 	.u-tabbar-item {
 		@include flex(column);
 		align-items: center;
 		justify-content: center;
 		flex: 1;
+		width: 100%;
+		height: 100%;
 		
 		&__icon {
 			@include flex;
@@ -138,7 +139,8 @@
 	/* #ifdef MP */
 	// 由于小程序都使用shadow DOM形式实现，需要给影子宿主设置flex: 1才能让其撑开
 	:host {
-		flex: 1
+		flex: 1;
+		width: 100%;
 	}
 	/* #endif */
 </style>

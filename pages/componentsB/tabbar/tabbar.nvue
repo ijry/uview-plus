@@ -10,23 +10,23 @@
 			    :safeAreaInsetBottom="false"
 			>
 				<u-tabbar-item
-				    text="首页"
-				    icon="home"
+					text="首页"
+					icon="home"
 					@click="click1"
 				></u-tabbar-item>
 				<u-tabbar-item
-				    text="放映厅"
-				    icon="photo"
+					text="放映厅"
+					icon="photo"
 					@click="click1"
 				></u-tabbar-item>
 				<u-tabbar-item
-				    text="直播"
-				    icon="play-right"
+					text="直播"
+					icon="play-right"
 					@click="click1"
 				></u-tabbar-item>
 				<u-tabbar-item
-				    text="我的"
-				    icon="account"
+					text="我的"
+					icon="account"
 					@click="click1"
 				></u-tabbar-item>
 			</u-tabbar>
@@ -102,16 +102,18 @@
 			    :safeAreaInsetBottom="false"
 			>
 				<u-tabbar-item text="首页">
-					<image
-					    class="u-page__item__slot-icon"
-					    slot="active-icon"
-					    src="https://cdn.uviewui.com/uview/common/bell-selected.png"
-					></image>
-					<image
-					    class="u-page__item__slot-icon"
-					    slot="inactive-icon"
-					    src="https://cdn.uviewui.com/uview/common/bell.png"
-					></image>
+					<template v-slot:active-icon>
+						<image
+						    class="u-page__item__slot-icon"
+						    src="https://cdn.uviewui.com/uview/common/bell-selected.png"
+						></image>
+					</template>
+					<template v-slot:inactive-icon>
+						<image
+							class="u-page__item__slot-icon"
+							src="https://cdn.uviewui.com/uview/common/bell.png"
+						></image>
+					</template>
 				</u-tabbar-item>
 				<u-tabbar-item
 				    text="放映厅"
@@ -194,21 +196,21 @@
 			    :safeAreaInsetBottom="true"
 			>
 				<u-tabbar-item
-				    text="首页"
-				    icon="home"
+					text="首页"
+					icon="home"
 				>
 				</u-tabbar-item>
 				<u-tabbar-item
-				    text="放映厅"
-				    icon="photo"
+					text="放映厅"
+					icon="photo"
 				></u-tabbar-item>
 				<u-tabbar-item
-				    text="直播"
-				    icon="play-right"
+					text="直播"
+					icon="play-right"
 				></u-tabbar-item>
 				<u-tabbar-item
-				    text="我的"
-				    icon="account"
+					text="我的"
+					icon="account"
 				></u-tabbar-item>
 			</u-tabbar>
 		</view>
@@ -250,7 +252,6 @@
 <style lang="scss">
 	.u-page {
 		padding: 0;
-
 		&__item {
 
 			&__title {
