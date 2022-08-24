@@ -86,6 +86,7 @@
 
 			}
 		},
+		emits: ['click'],
 		mixins: [mpMixin, mixin, props],
 		computed: {
 			uClasses() {

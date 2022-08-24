@@ -112,6 +112,7 @@ export default {
     // #ifndef MP
     mixins: [mpMixin, mixin, value, props],
     // #endif
+	emits: ['click'],
     computed: {
         valueStyle() {
             const style = {

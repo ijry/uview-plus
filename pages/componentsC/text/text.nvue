@@ -4,7 +4,10 @@
 			<text class="u-demo-block__title">基础功能</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__text-item">
-					<u--text text="我用十年青春,赴你最后之约"></u--text>
+					<u--text
+						text="我用十年青春,赴你最后之约"
+						@click="test">
+					</u--text>
 				</view>
 			</view>
 		</view>
@@ -149,6 +152,9 @@
 	export default {
 		onLoad() {},
 		methods: {
+			test() {
+				console.log('test')
+			},
 			clickHandler() {
 				// #ifndef MP-WEIXIN
 				uni.$u.toast('请在微信小程序内查看效果')

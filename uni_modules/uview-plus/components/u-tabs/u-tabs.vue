@@ -156,6 +156,7 @@
 		async mounted() {
 			this.init()
 		},
+		emits: ['click', 'change'],
 		methods: {
 			setLineLeft() {
 				const tabItem = this.list[this.innerCurrent];
