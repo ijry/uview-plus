@@ -110,6 +110,7 @@ export default {
 			}
 		},
 	},
+	emits: ['close', 'cancel', 'confirm', 'change'],
 	methods: {
 		// 获取item需要显示的文字，判别为对象还是文本
 		getItemText(item) {
@@ -212,6 +213,7 @@ export default {
 		},
 		// 设置整体各列的columns的值
 		setColumns(columns) {
+			console.log(columns)
 			this.innerColumns = uni.$u.deepClone(columns)
 			// 如果在设置各列数据时，没有被设置默认的各列索引defaultIndex，那么用0去填充它，数组长度为列的数量
 			if (this.innerIndex.length === 0) {

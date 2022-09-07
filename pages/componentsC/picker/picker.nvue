@@ -105,6 +105,19 @@
 				columns6: [
 					['中国', '美国', '日本']
 				],
+				columns7: [
+					[{
+						label: '苹果',
+						value: 1
+					}, {
+						label: '橘子',
+						value: 2
+					},
+					{
+						label: '香蕉',
+						value: 3
+					}]
+				],
 				show1: false,
 				show2: false,
 				show3: false,
