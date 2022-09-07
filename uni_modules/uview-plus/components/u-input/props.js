@@ -1,16 +1,20 @@
 import defprops from '../../libs/config/props';
 export default {
 	props: {
-		// 输入的值
-		value: {
-			type: [String, Number],
-			default: defprops.input.value
-		},
+		// #ifdef VUE3
+		// 绑定的值
 		modelValue: {
 			type: [String, Number],
 			default: defprops.input.value
 		},
-		// 输入框类型
+		// #endif
+		// #ifdef VUE2
+		// 绑定的值
+		value: {
+			type: [String, Number],
+			default: defprops.input.value
+		},
+		// #endif
 		// number-数字输入键盘，app-vue下可以输入浮点数，app-nvue和小程序平台下只能输入整数
 		// idcard-身份证输入键盘，微信、支付宝、百度、QQ小程序
 		// digit-带小数点的数字键盘，App的nvue页面、微信、支付宝、百度、头条、QQ小程序

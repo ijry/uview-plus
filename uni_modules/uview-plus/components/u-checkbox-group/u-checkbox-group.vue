@@ -70,6 +70,9 @@
 		created() {
 			this.children = []
 		},
+		// #ifdef VUE3
+		emits: ['update:modelValue', 'change'],
+		// #endif
 		methods: {
 			// 将其他的checkbox设置为未选中的状态
 			unCheckedOther(childInstance) {
@@ -83,7 +86,11 @@
 				// 发出事件
 				this.$emit('change', values)
 				// 修改通过v-model绑定的值
-				this.$emit('input', values)
+				// #ifdef VUE3
+				this.$emit("update:modelValue", value);
+				// #endif
+				// #ifdef VUE2
+				this.$emit("input", value);
 			},
 		}
 	}

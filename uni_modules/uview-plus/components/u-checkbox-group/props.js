@@ -6,11 +6,20 @@ export default {
             type: String,
             default: defprops.checkboxGroup.name
         },
-        // 绑定的值
-        value: {
-            type: Array,
-            default: defprops.checkboxGroup.value
-        },
+		// #ifdef VUE3
+		// 绑定的值
+		modelValue: {
+		    type: Array,
+		    default: defprops.checkboxGroup.value
+		},
+		// #endif
+		// #ifdef VUE2
+		// 绑定的值
+		value: {
+		    type: Array,
+		    default: defprops.checkboxGroup.value
+		},
+		// #endif
         // 形状，circle-圆形，square-方形
         shape: {
             type: String,
