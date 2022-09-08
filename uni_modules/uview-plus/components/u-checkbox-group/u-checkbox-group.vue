@@ -91,6 +91,7 @@
 				// #endif
 				// #ifdef VUE2
 				this.$emit("input", value);
+				// #endif
 			},
 		}
 	}
