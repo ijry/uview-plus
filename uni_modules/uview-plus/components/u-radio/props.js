@@ -60,6 +60,11 @@ export default {
         labelColor: {
             type: String,
             default: defprops.radio.labelColor
+        },
+        // 图标颜色
+        iconColor: {
+            type: String,
+            default: defprops.radio.iconColor
         }
     }
 }
