@@ -104,10 +104,10 @@
 				this.$emit('change', values)
 				// 修改通过v-model绑定的值
 				// #ifdef VUE3
-				this.$emit("update:modelValue", value);
+				this.$emit("update:modelValue", values);
 				// #endif
 				// #ifdef VUE2
-				this.$emit("input", value);
+				this.$emit("input", values);
 				// #endif
 			},
 		}
