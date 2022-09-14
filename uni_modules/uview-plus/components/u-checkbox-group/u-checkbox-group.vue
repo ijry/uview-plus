@@ -42,9 +42,23 @@
 			// 所以需要手动通知子组件，这里返回一个parentData变量，供watch监听，在其中去通知每一个子组件重新从父组件(u-checkbox-group)
 			// 拉取父组件新的变化后的参数
 			parentData() {
-				return [this.value, this.disabled, this.inactiveColor, this.activeColor, this.size, this.labelDisabled, this.shape,
-					this.iconSize, this.borderBottom, this.placement
-				]
+			  return [
+				// #ifdef VUE2
+				this.value,
+				// #endif
+				// #ifdef VUE3
+				this.modelValue,
+				// #endif
+				this.disabled,
+				this.inactiveColor,
+				this.activeColor,
+				this.size,
+				this.labelDisabled,
+				this.shape,
+				this.iconSize,
+				this.borderBottom,
+				this.placement,
+			  ];
 			},
 			bemClass() {
 				// this.bem为一个computed变量，在mixin中
@@ -53,13 +67,16 @@
 		},
 		watch: {
 			// 当父组件需要子组件需要共享的参数发生了变化，手动通知子组件
-			parentData() {
+			parentData: {
+			  handler() {
 				if (this.children.length) {
-					this.children.map(child => {
-						// 判断子组件(u-checkbox)如果有init方法的话，就就执行(执行的结果是子组件重新从父组件拉取了最新的值)
-						typeof(child.init) === 'function' && child.init()
-					})
+				  this.children.map((child) => {
+					// 判断子组件(u-checkbox)如果有init方法的话，就就执行(执行的结果是子组件重新从父组件拉取了最新的值)
+					typeof child.init === "function" && child.init();
+				  });
 				}
+			  },
+			  deep: true,
 			},
 		},
 		data() {
