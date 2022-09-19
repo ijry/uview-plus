@@ -96,7 +96,7 @@
 				for (let i = 0; i < this.rows; i++) {
 					let item = {},
 						// 需要预防超出数组边界的情况
-						rowWidth = uni.$u.test.array(this.rowsWidth) ? (this.rowsWidth[i] || (i === this.row - 1 ? '70%' : '100%')) : i ===
+						rowWidth = uni.$u.test.array(this.rowsWidth) ? (this.rowsWidth[i] || (i === this.rows - 1 ? '70%' : '100%')) : i ===
 						this.rows - 1 ? '70%' : this.rowsWidth,
 						rowHeight = uni.$u.test.array(this.rowsHeight) ? (this.rowsHeight[i] || '18px') : this.rowsHeight
 					// 如果有title占位图，第一个段落占位图的外边距需要大一些，如果没有title占位图，第一个段落占位图则无需外边距

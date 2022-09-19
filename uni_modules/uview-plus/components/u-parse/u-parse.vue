@@ -39,7 +39,15 @@
  * @event {Function}	error	媒体加载出错时触发
  */
 const plugins=[]
-const parser = import('./parser')
+// TODO
+// 暂时先这样 之后在进行优化
+// #ifdef VUE2
+const parser = import("./parser");
+// #endif
+// #ifdef VUE3
+import parser from "./parser-es-module";
+// #endif
+
 // #ifndef APP-PLUS-NVUE
 import node from './node/node'
 // #endif
