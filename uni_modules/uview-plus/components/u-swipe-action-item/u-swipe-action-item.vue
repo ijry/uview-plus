@@ -73,6 +73,7 @@
 	 */
 	export default {
 		name: 'u-swipe-action-item',
+		emits: ['click'],
 		// #ifndef APP-NVUE
 		mixins: [mpMixin, mixin, props, touch],
 		// #endif
