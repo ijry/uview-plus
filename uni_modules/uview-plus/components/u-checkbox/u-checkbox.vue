@@ -279,6 +279,8 @@
 		overflow: hidden;
 		flex-direction: row;
 		align-items: center;
+		margin-bottom: 5px;
+		margin-top: 5px;
 
 		&-label--left {
 			flex-direction: row
