@@ -120,7 +120,10 @@
 	.u-checkbox-group {
 
 		&--row {
-			@include flex;
+			/* #ifndef APP-NVUE */
+			display: flex;
+			/* #endif */
+			flex-flow: row wrap;
 		}
 
 		&--column {
