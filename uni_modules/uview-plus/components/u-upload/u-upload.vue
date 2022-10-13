@@ -184,7 +184,9 @@
 				immediate: true,
 				handler() {
 					this.formatFileList()
-				}
+				},
+				immediate: true,
+				deep: true,
 			},
 		},
 		// #ifdef VUE3

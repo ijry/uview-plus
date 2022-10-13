@@ -115,7 +115,10 @@
 		flex: 1;
 
 		&--row {
-			@include flex;
+			/* #ifndef APP-NVUE */
+			display: flex;
+			/* #endif */
+			flex-flow: row wrap;
 		}
 
 		&--column {
