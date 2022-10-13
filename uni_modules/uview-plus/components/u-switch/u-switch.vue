@@ -12,7 +12,12 @@
 		</view>
 		<view
 		    class="u-switch__node"
-		    :class="[value && 'u-switch__node--on']"
+		    <!-- #ifdef VUE3 -->
+			:class="[modelValue && 'u-switch__node--on']"
+			<!-- #endif -->
+			<!-- #ifdef VUE2 -->
+			:class="[value && 'u-switch__node--on']"
+			<!-- #endif -->
 		    :style="[nodeStyle]"
 		    ref="u-switch__node"
 		>
@@ -20,7 +25,12 @@
 			    :show="loading"
 			    mode="circle"
 			    timingFunction='linear'
-			    :color="value ? activeColor : '#AAABAD'"
+			    <!-- #ifdef VUE3 -->
+				:color="modelValue ? activeColor : '#AAABAD'"
+				<!-- #endif -->
+				<!-- #ifdef VUE2 -->
+				:color="value ? activeColor : '#AAABAD'"
+				<!-- #endif -->
 			    :size="size * 0.6"
 			/>
 		</view>
