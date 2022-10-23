@@ -4,12 +4,13 @@
 <h3 align="center" style="margin: 30px 0 30px;font-weight: bold;font-size:40px;">uview-plus 3.0</h3>
 <h3 align="center">多平台快速开发的UI框架(fork自uView2.0)</h3>
 
+[![star](https://gitee.com/uiadmin/uview-plus/badge/star.svg?theme=gvp)](https://gitee.com/uiadmin//uview-plus/stargazers)
 [![stars](https://img.shields.io/github/stars/ijry/uview-plus?style=flat-square&logo=GitHub)](https://github.com/ijry/uview-plus)
 [![forks](https://img.shields.io/github/forks/ijry/uview-plus?style=flat-square&logo=GitHub)](https://github.com/ijry/uview-plus)
 [![issues](https://img.shields.io/github/issues/ijry/uview-plus?style=flat-square&logo=GitHub)](https://github.com/ijry/uview-plus/issues)
-[![Website](https://img.shields.io/badge/uview-up-blue?style=flat-square)](https://uiadmin.net/uview-plus)
-[![release](https://img.shields.io/github/v/release/ijry/uview-plus?style=flat-square)](https://github.com/ijry/uview-plus/releases)
-[![license](https://img.shields.io/github/license/uiadmin/uview-plus?style=flat-square)](https://en.wikipedia.org/wiki/MIT_License)
+[![Website](https://img.shields.io/badge/uview-plus-blue?style=flat-square)](https://uiadmin.net/uview-plus)
+[![license](https://img.shields.io/github/license/ijry/uview-plus?style=flat-square)](https://en.wikipedia.org/wiki/MIT_License)
+<!-- [![release](https://img.shields.io/github/v/release/ijry/uview-plus?style=flat-square)](https://github.com/ijry/uview-plus/releases) -->
 
 ## 说明
 
