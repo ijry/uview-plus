@@ -125,8 +125,9 @@ export default {
     opts: Array
   },
   components: {
-
-    node
+	// #ifdef VUE2
+	node
+	// #endif
   },
   mounted() {
     for (this.root = this.$parent; this.root.$options.name != 'mp-html'; this.root = this.root.$parent);
