@@ -4,10 +4,10 @@
 <h3 align="center" style="margin: 30px 0 30px;font-weight: bold;font-size:40px;">uview-plus 3.0</h3>
 <h3 align="center">多平台快速开发的UI框架(fork自uView2.0)</h3>
 
-[![stars](https://img.shields.io/github/stars/uiadmin/uview-plus?style=flat-square&logo=GitHub)](https://github.com/uiadmin/uview-plus)
-[![forks](https://img.shields.io/github/forks/uiadmin/uview-plus?style=flat-square&logo=GitHub)](https://github.com/uiadmin/uview-plus)
-[![issues](https://img.shields.io/github/issues/uiadmin/uview-plus?style=flat-square&logo=GitHub)](https://github.com/uiadmin/uview-plus/issues)
-[![Website](https://img.shields.io/badge/uView-up-blue?style=flat-square)](https://uviewui.com)
+[![stars](https://img.shields.io/github/stars/uiadmin/uview-plus?style=flat-square&logo=GitHub)](https://github.com/ijry/uview-plus)
+[![forks](https://img.shields.io/github/forks/uiadmin/uview-plus?style=flat-square&logo=GitHub)](https://github.com/ijry/uview-plus)
+[![issues](https://img.shields.io/github/issues/uiadmin/uview-plus?style=flat-square&logo=GitHub)](https://github.com/ijry/uview-plus/issues)
+[![Website](https://img.shields.io/badge/uview-up-blue?style=flat-square)](https://uiadmin.net/uview-plus)
 [![release](https://img.shields.io/github/v/release/uiadmin/uview-plus?style=flat-square)](https://gitee.com/uiadmin/uview-plus/releases)
 [![license](https://img.shields.io/github/license/uiadmin/uview-plus?style=flat-square)](https://en.wikipedia.org/wiki/MIT_License)
 
@@ -35,7 +35,7 @@ uview-plus，是[uni-app](https://uniapp.dcloud.io/)全面兼容nvue的uni-app�
 您可以通过**微信**扫码，查看最佳的演示效果。
 <br>
 <br>
-<img src="https://uviewui.com/common/weixin_mini_qrcode.png" width="220" height="220" >
+![image](https://user-images.githubusercontent.com/3102798/197370341-2f5ca42c-7d8f-400a-bbc7-051500842fbf.png)
 
 
 ## 链接
