@@ -144,7 +144,7 @@ export default {
         // 组件的类名
         textareaClass() {
             let classes = [],
-                { border, disabled, shape } = this;
+                { border, disabled } = this;
             border === "surround" &&
                 (classes = classes.concat(["u-border", "u-textarea--radius"]));
             border === "bottom" &&
