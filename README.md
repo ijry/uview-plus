@@ -4,11 +4,11 @@
 <h3 align="center" style="margin: 30px 0 30px;font-weight: bold;font-size:40px;">uview-plus 3.0</h3>
 <h3 align="center">多平台快速开发的UI框架(fork自uView2.0)</h3>
 
-[![stars](https://img.shields.io/github/stars/uiadmin/uview-plus?style=flat-square&logo=GitHub)](https://github.com/ijry/uview-plus)
-[![forks](https://img.shields.io/github/forks/uiadmin/uview-plus?style=flat-square&logo=GitHub)](https://github.com/ijry/uview-plus)
-[![issues](https://img.shields.io/github/issues/uiadmin/uview-plus?style=flat-square&logo=GitHub)](https://github.com/ijry/uview-plus/issues)
+[![stars](https://img.shields.io/github/stars/ijry/uview-plus?style=flat-square&logo=GitHub)](https://github.com/ijry/uview-plus)
+[![forks](https://img.shields.io/github/forks/ijry/uview-plus?style=flat-square&logo=GitHub)](https://github.com/ijry/uview-plus)
+[![issues](https://img.shields.io/github/issues/ijry/uview-plus?style=flat-square&logo=GitHub)](https://github.com/ijry/uview-plus/issues)
 [![Website](https://img.shields.io/badge/uview-up-blue?style=flat-square)](https://uiadmin.net/uview-plus)
-[![release](https://img.shields.io/github/v/release/uiadmin/uview-plus?style=flat-square)](https://gitee.com/uiadmin/uview-plus/releases)
+[![release](https://img.shields.io/github/v/release/ijry/uview-plus?style=flat-square)](https://github.com/ijry/uview-plus/releases)
 [![license](https://img.shields.io/github/license/uiadmin/uview-plus?style=flat-square)](https://en.wikipedia.org/wiki/MIT_License)
 
 ## 说明
@@ -47,7 +47,7 @@ uview-plus，是[uni-app](https://uniapp.dcloud.io/)全面兼容nvue的uni-app�
 
 ## 关于PR
 
-> 我们非常乐意接受各位的优质PR，但在此之前我希望您了解uView2.0是一个需要兼容多个平台的（小程序、h5、ios app、android app）包括nvue页面、vue页面。
+> 我们非常乐意接受各位的优质PR，但在此之前我希望您了解uview-plus是一个需要兼容多个平台的（小程序、h5、ios app、android app）包括nvue页面、vue页面。
 > 所以希望在您修复bug并提交之前尽可能的去这些平台测试一下兼容性。最好能携带测试截图以方便审核。非常感谢！
 
 ## 安装
