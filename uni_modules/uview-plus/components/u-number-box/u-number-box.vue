@@ -200,7 +200,7 @@
 			this.init()
 		},
 		// #ifdef VUE3
-		emits: ['update:modelValue', 'focus', 'blur', 'overlimit'],
+		emits: ['update:modelValue', 'focus', 'blur', 'overlimit', 'change', 'plus', 'minus'],
 		// #endif
 		methods: {
 			init() {
