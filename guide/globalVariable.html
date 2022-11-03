@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title>全局变量的实现方式 | uview-plus 3.0 - 全面兼容nvue的uni-app生态框架 - uni-app UI框架</title>
+		<meta charset="utf-8">
+		
+		<meta name="description" content="uview-plus，是uni-app生态最优秀的UI框架，全面的组件和便捷的工具会让您信手拈来，如鱼得水">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="keywords" content="uview,uview-plus,uviewui,uview ui,uviewUI,uview-plusui,uview-plusUI,uview-plus UI,uni ui,uni UI,uni-app ui框架,uni-app UI框架,uniapp ui,ui,UI框架,uniapp ui框架,uniapp UI">
+		<link rel="preload" href="/uview-plus/assets/css/0.styles.3965b927.css" as="style"><link rel="preload" href="/uview-plus/assets/js/app.76bd3f98.js" as="script"><link rel="preload" href="/uview-plus/assets/js/3.75a80f83.js" as="script"><link rel="preload" href="/uview-plus/assets/js/4.0c52c040.js" as="script"><link rel="preload" href="/uview-plus/assets/js/123.58043e6f.js" as="script"><link rel="preload" href="/uview-plus/assets/js/8.f5bcdbaf.js" as="script"><link rel="prefetch" href="/uview-plus/assets/js/1.53758d99.js"><link rel="prefetch" href="/uview-plus/assets/js/10.30a44ac5.js"><link rel="prefetch" href="/uview-plus/assets/js/100.59da0e9a.js"><link rel="prefetch" href="/uview-plus/assets/js/101.dd999591.js"><link rel="prefetch" href="/uview-plus/assets/js/102.b25e1bb8.js"><link rel="prefetch" href="/uview-plus/assets/js/103.82b7a984.js"><link rel="prefetch" href="/uview-plus/assets/js/104.6765f6ab.js"><link rel="prefetch" href="/uview-plus/assets/js/105.2560b836.js"><link rel="prefetch" href="/uview-plus/assets/js/106.2bc4db87.js"><link rel="prefetch" href="/uview-plus/assets/js/107.ce2aba4d.js"><link rel="prefetch" href="/uview-plus/assets/js/108.2b511274.js"><link rel="prefetch" href="/uview-plus/assets/js/109.2f354f6d.js"><link rel="prefetch" href="/uview-plus/assets/js/11.29d51bd1.js"><link rel="prefetch" href="/uview-plus/assets/js/110.e577a86a.js"><link rel="prefetch" href="/uview-plus/assets/js/111.9b8b9cc9.js"><link rel="prefetch" href="/uview-plus/assets/js/112.4ebd9a4f.js"><link rel="prefetch" href="/uview-plus/assets/js/113.4330e831.js"><link rel="prefetch" href="/uview-plus/assets/js/114.6826613a.js"><link rel="prefetch" href="/uview-plus/assets/js/115.ecfcf88b.js"><link rel="prefetch" href="/uview-plus/assets/js/116.a205e301.js"><link rel="prefetch" href="/uview-plus/assets/js/117.2d4d03d8.js"><link rel="prefetch" href="/uview-plus/assets/js/118.0f77ecd5.js"><link rel="prefetch" href="/uview-plus/assets/js/119.2ca3b1d3.js"><link rel="prefetch" href="/uview-plus/assets/js/12.58535345.js"><link rel="prefetch" href="/uview-plus/assets/js/120.f17257be.js"><link rel="prefetch" href="/uview-plus/assets/js/121.fb4501bd.js"><link rel="prefetch" href="/uview-plus/assets/js/122.dc18f2bc.js"><link rel="prefetch" href="/uview-plus/assets/js/124.f61e9fc3.js"><link rel="prefetch" href="/uview-plus/assets/js/125.c19fe436.js"><link rel="prefetch" href="/uview-plus/assets/js/126.cbace1b7.js"><link rel="prefetch" href="/uview-plus/assets/js/127.3090570d.js"><link rel="prefetch" href="/uview-plus/assets/js/128.09e17da4.js"><link rel="prefetch" href="/uview-plus/assets/js/129.c8e5b7bd.js"><link rel="prefetch" href="/uview-plus/assets/js/13.6b85489d.js"><link rel="prefetch" href="/uview-plus/assets/js/130.595c4a82.js"><link rel="prefetch" href="/uview-plus/assets/js/131.2a049ad1.js"><link rel="prefetch" href="/uview-plus/assets/js/132.d3602e13.js"><link rel="prefetch" href="/uview-plus/assets/js/133.eb65fc44.js"><link rel="prefetch" href="/uview-plus/assets/js/134.791f1942.js"><link rel="prefetch" href="/uview-plus/assets/js/135.98a7f69f.js"><link rel="prefetch" href="/uview-plus/assets/js/136.7a8b3fb2.js"><link rel="prefetch" href="/uview-plus/assets/js/137.5b3da21e.js"><link rel="prefetch" href="/uview-plus/assets/js/138.211e3e0e.js"><link rel="prefetch" href="/uview-plus/assets/js/139.b60fb4f2.js"><link rel="prefetch" href="/uview-plus/assets/js/14.10d3987c.js"><link rel="prefetch" href="/uview-plus/assets/js/140.252ca6a3.js"><link rel="prefetch" href="/uview-plus/assets/js/141.a010702c.js"><link rel="prefetch" href="/uview-plus/assets/js/142.7dfd1add.js"><link rel="prefetch" href="/uview-plus/assets/js/143.49772a3b.js"><link rel="prefetch" href="/uview-plus/assets/js/144.55c33b16.js"><link rel="prefetch" href="/uview-plus/assets/js/145.5a524f74.js"><link rel="prefetch" href="/uview-plus/assets/js/146.004a0cbc.js"><link rel="prefetch" href="/uview-plus/assets/js/147.573c464f.js"><link rel="prefetch" href="/uview-plus/assets/js/148.e52fb6e9.js"><link rel="prefetch" href="/uview-plus/assets/js/149.e09ea939.js"><link rel="prefetch" href="/uview-plus/assets/js/15.222c85f8.js"><link rel="prefetch" href="/uview-plus/assets/js/150.e0e224ff.js"><link rel="prefetch" href="/uview-plus/assets/js/151.15401b21.js"><link rel="prefetch" href="/uview-plus/assets/js/152.b00ee527.js"><link rel="prefetch" href="/uview-plus/assets/js/153.9ded3812.js"><link rel="prefetch" href="/uview-plus/assets/js/154.d6e612aa.js"><link rel="prefetch" href="/uview-plus/assets/js/16.f66cdef8.js"><link rel="prefetch" href="/uview-plus/assets/js/17.12ba2092.js"><link rel="prefetch" href="/uview-plus/assets/js/18.5c56073f.js"><link rel="prefetch" href="/uview-plus/assets/js/19.2160dab1.js"><link rel="prefetch" href="/uview-plus/assets/js/20.51707141.js"><link rel="prefetch" href="/uview-plus/assets/js/21.1ec98f13.js"><link rel="prefetch" href="/uview-plus/assets/js/22.ee69042f.js"><link rel="prefetch" href="/uview-plus/assets/js/23.850475bc.js"><link rel="prefetch" href="/uview-plus/assets/js/24.a284e1a5.js"><link rel="prefetch" href="/uview-plus/assets/js/25.f6939fdc.js"><link rel="prefetch" href="/uview-plus/assets/js/26.60a6db80.js"><link rel="prefetch" href="/uview-plus/assets/js/27.d576f406.js"><link rel="prefetch" href="/uview-plus/assets/js/28.f62cc390.js"><link rel="prefetch" href="/uview-plus/assets/js/29.e31b3b86.js"><link rel="prefetch" href="/uview-plus/assets/js/30.a68455f8.js"><link rel="prefetch" href="/uview-plus/assets/js/31.76e46815.js"><link rel="prefetch" href="/uview-plus/assets/js/32.1d6a5a82.js"><link rel="prefetch" href="/uview-plus/assets/js/33.60f2336d.js"><link rel="prefetch" href="/uview-plus/assets/js/34.56990963.js"><link rel="prefetch" href="/uview-plus/assets/js/35.a2ed07b9.js"><link rel="prefetch" href="/uview-plus/assets/js/36.c3262962.js"><link rel="prefetch" href="/uview-plus/assets/js/37.12c18567.js"><link rel="prefetch" href="/uview-plus/assets/js/38.835c5948.js"><link rel="prefetch" href="/uview-plus/assets/js/39.7f91039b.js"><link rel="prefetch" href="/uview-plus/assets/js/40.9325ca26.js"><link rel="prefetch" href="/uview-plus/assets/js/41.31d6f3de.js"><link rel="prefetch" href="/uview-plus/assets/js/42.8a1639e0.js"><link rel="prefetch" href="/uview-plus/assets/js/43.1a8e2c31.js"><link rel="prefetch" href="/uview-plus/assets/js/44.a1ec480b.js"><link rel="prefetch" href="/uview-plus/assets/js/45.18dabc3d.js"><link rel="prefetch" href="/uview-plus/assets/js/46.30f86d40.js"><link rel="prefetch" href="/uview-plus/assets/js/47.32190f82.js"><link rel="prefetch" href="/uview-plus/assets/js/48.bf966653.js"><link rel="prefetch" href="/uview-plus/assets/js/49.4a97ea7b.js"><link rel="prefetch" href="/uview-plus/assets/js/5.680d1fc4.js"><link rel="prefetch" href="/uview-plus/assets/js/50.decd2ef0.js"><link rel="prefetch" href="/uview-plus/assets/js/51.620dcc1f.js"><link rel="prefetch" href="/uview-plus/assets/js/52.507f9e16.js"><link rel="prefetch" href="/uview-plus/assets/js/53.b38e62ac.js"><link rel="prefetch" href="/uview-plus/assets/js/54.0ec1ea0e.js"><link rel="prefetch" href="/uview-plus/assets/js/55.17ac3644.js"><link rel="prefetch" href="/uview-plus/assets/js/56.deaf9fe7.js"><link rel="prefetch" href="/uview-plus/assets/js/57.f217975f.js"><link rel="prefetch" href="/uview-plus/assets/js/58.b4962ee1.js"><link rel="prefetch" href="/uview-plus/assets/js/59.f60fc190.js"><link rel="prefetch" href="/uview-plus/assets/js/6.5bc6bb47.js"><link rel="prefetch" href="/uview-plus/assets/js/60.fa189679.js"><link rel="prefetch" href="/uview-plus/assets/js/61.ed77f52c.js"><link rel="prefetch" href="/uview-plus/assets/js/62.d4c6280e.js"><link rel="prefetch" href="/uview-plus/assets/js/63.55cd3adb.js"><link rel="prefetch" href="/uview-plus/assets/js/64.10d1f803.js"><link rel="prefetch" href="/uview-plus/assets/js/65.88f064c5.js"><link rel="prefetch" href="/uview-plus/assets/js/66.fd8b42e6.js"><link rel="prefetch" href="/uview-plus/assets/js/67.bcd2446c.js"><link rel="prefetch" href="/uview-plus/assets/js/68.fa36ce44.js"><link rel="prefetch" href="/uview-plus/assets/js/69.5f9a6e8f.js"><link rel="prefetch" href="/uview-plus/assets/js/7.c9543b25.js"><link rel="prefetch" href="/uview-plus/assets/js/70.e4758534.js"><link rel="prefetch" href="/uview-plus/assets/js/71.4663ca42.js"><link rel="prefetch" href="/uview-plus/assets/js/72.2c6a8549.js"><link rel="prefetch" href="/uview-plus/assets/js/73.57cc5fcf.js"><link rel="prefetch" href="/uview-plus/assets/js/74.d40efd94.js"><link rel="prefetch" href="/uview-plus/assets/js/75.8f16dfd7.js"><link rel="prefetch" href="/uview-plus/assets/js/76.2b456250.js"><link rel="prefetch" href="/uview-plus/assets/js/77.d3c64ffe.js"><link rel="prefetch" href="/uview-plus/assets/js/78.f9ea38c7.js"><link rel="prefetch" href="/uview-plus/assets/js/79.19d4d548.js"><link rel="prefetch" href="/uview-plus/assets/js/80.2c35d94d.js"><link rel="prefetch" href="/uview-plus/assets/js/81.9a8043de.js"><link rel="prefetch" href="/uview-plus/assets/js/82.e4f7962c.js"><link rel="prefetch" href="/uview-plus/assets/js/83.07885bb8.js"><link rel="prefetch" href="/uview-plus/assets/js/84.d8a2f67f.js"><link rel="prefetch" href="/uview-plus/assets/js/85.da337da9.js"><link rel="prefetch" href="/uview-plus/assets/js/86.755c7e81.js"><link rel="prefetch" href="/uview-plus/assets/js/87.7b8e696e.js"><link rel="prefetch" href="/uview-plus/assets/js/88.dbbfe52d.js"><link rel="prefetch" href="/uview-plus/assets/js/89.8ba3eb80.js"><link rel="prefetch" href="/uview-plus/assets/js/9.931079c0.js"><link rel="prefetch" href="/uview-plus/assets/js/90.e746078a.js"><link rel="prefetch" href="/uview-plus/assets/js/91.91b88ed6.js"><link rel="prefetch" href="/uview-plus/assets/js/92.f7adbdba.js"><link rel="prefetch" href="/uview-plus/assets/js/93.622f887c.js"><link rel="prefetch" href="/uview-plus/assets/js/94.87ace4e0.js"><link rel="prefetch" href="/uview-plus/assets/js/95.2b163bfe.js"><link rel="prefetch" href="/uview-plus/assets/js/96.436449ee.js"><link rel="prefetch" href="/uview-plus/assets/js/97.4c6d63f4.js"><link rel="prefetch" href="/uview-plus/assets/js/98.166352be.js"><link rel="prefetch" href="/uview-plus/assets/js/99.a0eae389.js">
+		<link rel="stylesheet" href="/uview-plus/assets/css/0.styles.3965b927.css">
+		<script>
+			var _hmt = _hmt || [];
+			(function() {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?32be4bb94670f2fcd42a05fb1bcf4680";
+			var s = document.getElementsByTagName("script")[0]; 
+			s.parentNode.insertBefore(hm, s);
+			})();
+		</script>
+	</head>
+	<body>
+		<div id="app" data-server-rendered="true"><div class="theme-container"><div><!----> <header class="navbar" style="position:fixed;"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/uview-plus/" class="home-link router-link-active"><img src="/uview-plus/common/logo.png" alt="uview-plus 3.0 - 全面兼容nvue的uni-app生态框架 - uni-app UI框架" class="logo"> <span class="site-name can-hide">uview-plus</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/uview-plus/guide/demo.html" class="nav-link">
+  指南
+</a></div><div class="nav-item"><a href="/uview-plus/components/intro.html" class="nav-link">
+  组件
+</a></div><div class="nav-item"><a href="/uview-plus/js/intro.html" class="nav-link">
+  API
+</a></div><div class="nav-item"><a href="/uview-plus/layout/intro.html" class="nav-link">
+  模板
+</a></div><div class="nav-item"><a href="/uview-plus/components/resource.html" class="nav-link">
+  资源
+</a></div><div class="nav-item"><a href="/uview-plus/cooperation/about.html" class="nav-link">
+  关于我们
+</a></div><div class="nav-item"><a href="https://github.com/ijry/uview-plus" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://gitee.com/uiadmin/uview-plus" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Gitee
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header></div> <div class="sidebar-mask"></div> <div><aside class="sidebar" style="margin-top:0;"><a target="_blank" href="https://uiadmin.net?from=uview-plus" class="jump-linker"><img src="/uview-plus/customer/uiadmin.jpg"></a> <nav class="nav-links"><div class="nav-item"><a href="/uview-plus/guide/demo.html" class="nav-link">
+  指南
+</a></div><div class="nav-item"><a href="/uview-plus/components/intro.html" class="nav-link">
+  组件
+</a></div><div class="nav-item"><a href="/uview-plus/js/intro.html" class="nav-link">
+  API
+</a></div><div class="nav-item"><a href="/uview-plus/layout/intro.html" class="nav-link">
+  模板
+</a></div><div class="nav-item"><a href="/uview-plus/components/resource.html" class="nav-link">
+  资源
+</a></div><div class="nav-item"><a href="/uview-plus/cooperation/about.html" class="nav-link">
+  关于我们
+</a></div><div class="nav-item"><a href="https://github.com/ijry/uview-plus" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://gitee.com/uiadmin/uview-plus" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Gitee
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>开发指南</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/uview-plus/guide/demo.html" class="sidebar-link">效果演示</a></li><li><a href="/uview-plus/guide/codeHint.html" class="sidebar-link">HBuilder X代码提示</a></li><li><a href="/uview-plus/guide/note.html" class="sidebar-link">注意事项</a></li></ul></section></li></ul> </aside></div> <main class="page" style="margin-top:0;"> <div class="theme-default-content content__default"><h2 id="全局变量的实现方式"><a href="#全局变量的实现方式" class="header-anchor">#</a> 全局变量的实现方式</h2> <p>我们这里说的全局变量，着重指的是能够<strong>全局动态响应</strong>的情况。</p> <p>说到全局变量，我们首先想到的可能就是<code>vuex</code>，确实，这是最好的实现方式。在uni-app中，我们还可以有其他的实现方式，这里我们做一个抛砖引玉的讨论，当然，我们
+推荐的，还是使用uview-plus封装后的<code>vuex</code>的实现方式，它具有配置简单，使用方便的特点。</p> <p>整体来说，在uni-app中，可以有如下实现全局变量的方式：</p> <ol><li>本地存储</li> <li>配置文件</li> <li>挂载Vue.prototype</li> <li>globalData</li> <li>Vuex</li></ol> <p>下面分别对这几个实现方式进行讲解，由于1到4点由于各种原因，与我们要讨论的<strong>全局动态响应</strong>不是很切合，实现起来也较简单，所以不着重讨论。</p> <h3 id="本地存储"><a href="#本地存储" class="header-anchor">#</a> 本地存储</h3> <p>这是一种持久存储的方式，类似于<code>web</code>中的<code>Local Storage</code>，当我们需要将一个变量保存很长一段时间，比如用户的登录状态(Token)，才会使用这种方式，
+同时，频繁对这种方式进行存和取，是有性能消耗的，应用生命周期(应用从启动到关闭)内使用的变量，不应该使用此方式操作。</p> <p>此种存储方式，有同步和异步之分：</p> <ul><li>同步的意思是，下一步的操作要等获取存储的内容之后才能进行，一般获取变量的时候，都使用此种方式。</li></ul> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// 同步存储</span>
+uni<span class="token punctuation">.</span><span class="token function">setStorageSync</span><span class="token punctuation">(</span><span class="token string">'key'</span><span class="token punctuation">,</span> <span class="token string">'value'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 同步获取</span>
+<span class="token keyword">let</span> key <span class="token operator">=</span> uni<span class="token punctuation">.</span><span class="token function">getStorageSync</span><span class="token punctuation">(</span><span class="token string">'key'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 这一句要等从本地存储中获取了key之后，才执行</span>
+<span class="token keyword">let</span> val <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> 
+</code></pre></div><ul><li>异步的意思是，执行取或存的过程中，先执行后面的代码，而另一边在回调中得到存储的结果。</li></ul> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// 异步存储</span>
+uni<span class="token punctuation">.</span><span class="token function">setStorage</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    <span class="token literal-property property">key</span><span class="token operator">:</span> <span class="token string">'key'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">data</span><span class="token operator">:</span> <span class="token string">'value'</span><span class="token punctuation">,</span>
+    <span class="token function-variable function">success</span><span class="token operator">:</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 存储成功的回调</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 下面这行会比存储成功的回调先执行</span>
+<span class="token keyword">let</span> val <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+
+<span class="token comment">// 异步获取</span>
+uni<span class="token punctuation">.</span><span class="token function">getStorage</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    <span class="token literal-property property">key</span><span class="token operator">:</span> <span class="token string">'key'</span><span class="token punctuation">,</span>
+    <span class="token function-variable function">success</span><span class="token operator">:</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">res</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 获取成功的回调</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 下面这行会比获取成功的回调先执行</span>
+<span class="token keyword">let</span> val <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> 
+</code></pre></div><h3 id="配置文件"><a href="#配置文件" class="header-anchor">#</a> 配置文件</h3> <p>配置文件，顾名思义，就是把一些变量写入到<code>js</code>文件中，再通过<code>export default</code>的形式导出，一般什么情况会使用这种方式呢，是我们要从用户尚未开始安装
+APP之前，直到用户卸载APP，都需要存在的这样一些变量或者配置。比如我们可以把向后端请求的域名写到配置文件中，其他情况不适用这种存储变量的方式。</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// config.js，根目录的common文件夹中</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+	<span class="token literal-property property">domain</span><span class="token operator">:</span> <span class="token string">'http://www.example.com'</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>需要使用的时候，我们通过<code>import</code>引入即可，这种方式，缺点是每次都需要引入文件，我们无法将挂载在到Vue.prototype上。</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> config <span class="token keyword">from</span> <span class="token string">&quot;./uview-plus/libs/config/config.js&quot;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+	<span class="token function">onLoad</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>config<span class="token punctuation">.</span>domain<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>我们可以在<code>main.js</code>中将从<code>config.js</code>中获取的值挂载到app.config<code>this.xxx</code>形式获取。</p> <p><strong>注意：</strong> 这种挂载的方式，在<strong>微信小程序</strong>中，无法在模板中直接读取<code>xxx</code>值(结果为undefined)，只能在js中读取(HX 2.6.11，当前最新稳定版)。</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// main.js</span>
+<span class="token keyword">import</span> config <span class="token keyword">from</span> <span class="token string">&quot;./uview-plus/libs/config/config.js&quot;</span>
+
+<span class="token class-name">Vue</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>domain <span class="token operator">=</span> config<span class="token punctuation">.</span>domain<span class="token punctuation">;</span>
+</code></pre></div><div class="language-html extra-class"><pre class="language-html"><code>// demo.vue
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+	<span class="token comment">&lt;!-- 微信小程序中值为undefined，其他端有效 --&gt;</span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view</span><span class="token punctuation">&gt;</span></span>
+		值为：{{this.domain}}
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>view</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+	<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+		<span class="token function">onLoad</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>domain<span class="token punctuation">)</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><h3 id="挂载到vue-prototype"><a href="#挂载到vue-prototype" class="header-anchor">#</a> 挂载到Vue.prototype</h3> <p>使用挂载到Vue.prototype的方式，需要在根目录的<code>main.js</code>中进行，在页面中，我们可以使用<code>this.xxx</code>的形式获取变量，注意上面说的，在微信小程序模板
+无法读取挂在的值，只能在js中使用。</p> <p>具体使用，见上方的<code>配置文件</code>中的介绍</p> <h3 id="globaldata"><a href="#globaldata" class="header-anchor">#</a> globalData</h3> <p>这个方式，最早是微信小程序特有的，它无法使用<code>vuex</code>进行全局状态的管理，就造了这个方式。</p> <p>可能您会问，为什么uni-app有了<code>vuex</code>还需要有这个呢？</p> <p>globalData是微信小程序的特性，uni-app对微信小程序的另一个实现，顺理成章的就有了globalData，另外的原因也是因为globalData使用简单，也有它存在的理由。
+当然，globalData也不是动态响应的，也就是说，您在<code>A.vue</code>修改了globalData中的某个值<code>username</code>，在<code>B.vue</code>中对这个值的引用是无法自动更新的，<code>vuex</code>却是可以做到的。</p> <p>由上，因为无法自动更新，为了做到这一点，所以我们需要在页面的<code>onShow</code>生命周期中获取globalData的值，或许您会问，为什么一定是<code>onShow</code>呢，<code>onLoad</code>不行吗？
+<code>onLoad</code>获取值是没问题的，但是当我们从<code>A.vue</code>进入<code>B.vue</code>中(假设A和B页面都通过globalData引用了某个<code>userName</code>)，在<code>B.vue</code>中修改了globalData的
+<code>userName</code>，当我们返回<code>A.vue</code>页面时，<code>onLoad</code>不会再次触发，但是<code>onShow</code>就如它的字面意思，是会再次触发的，所以我们需要把对globalData的获取放在<code>onShow</code>生命周期。</p> <p>下面为使用globalData的示范：</p> <ol><li>对globalData的定义，需要在App.vue中进行</li></ol> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// App.vue</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+	<span class="token literal-property property">globalData</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+		<span class="token literal-property property">userName</span><span class="token operator">:</span> <span class="token string">'白居易'</span>
+	<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	<span class="token comment">// 这里需要注意的是，如果我们需要在App.vue中使用userName</span>
+	<span class="token comment">// 使用getApp().globalData.userName是不行，因为此时getApp()尚未生成</span>
+	<span class="token comment">// 1. 非V3模式，可以通过this.$scope.globalData获取</span>
+	<span class="token comment">// 2. V3模式，可以通过getApp({allowDefault: true}).globalData获取</span>
+	<span class="token comment">// 详见uni-app文档：https://uniapp.dcloud.io/collocation/frame/window?id=getapp</span>
+	<span class="token function">onLaunch</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>$scope<span class="token punctuation">.</span>globalData<span class="token punctuation">.</span>userName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><ol start="2"><li>定义好了globalData，我们进入<code>A.vue</code>，并使用<code>userName</code>值</li></ol> <div class="language-html extra-class"><pre class="language-html"><code><span class="token comment">&lt;!-- A.vue --&gt;</span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view</span><span class="token punctuation">&gt;</span></span>
+		<span class="token comment">&lt;!-- 注意，不能在模板中直接使用 getApp().globalData.userName --&gt;</span>
+		&lt;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>琵琶行</span><span class="token punctuation">&gt;</span></span>&gt;的作者是：{{author}}
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>view</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+	<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+		<span class="token function">data</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">return</span> <span class="token punctuation">{</span>
+				<span class="token literal-property property">author</span><span class="token operator">:</span> <span class="token string">''</span>
+			<span class="token punctuation">}</span>
+		<span class="token punctuation">}</span><span class="token punctuation">,</span>
+		<span class="token function">onShow</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token comment">// 每次A.vue出现在屏幕上时，都会触发onShow，从而更新author值</span>
+			<span class="token keyword">this</span><span class="token punctuation">.</span>author <span class="token operator">=</span> <span class="token function">getApp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>globalData<span class="token punctuation">.</span>userName<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><ol start="3"><li>当我们从<code>A.vue</code>进入<code>B.vue</code>时，引用并修改<code>userName</code>的值</li></ol> <div class="language-html extra-class"><pre class="language-html"><code><span class="token comment">&lt;!-- B.vue --&gt;</span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view</span><span class="token punctuation">&gt;</span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view</span><span class="token punctuation">&gt;</span></span>
+			<span class="token comment">&lt;!-- 注意，不能在模板中直接使用 getApp().globalData.userName --&gt;</span>
+			&lt;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>卖炭翁</span><span class="token punctuation">&gt;</span></span>&gt;的作者是：{{author}}
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>view</span><span class="token punctuation">&gt;</span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view</span><span class="token punctuation">&gt;</span></span>
+			<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>u-button</span> <span class="token attr-name">@click</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>modifyUserName<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>修改userName值<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>u-button</span><span class="token punctuation">&gt;</span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>view</span><span class="token punctuation">&gt;</span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>view</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+	<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+		<span class="token function">data</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">return</span> <span class="token punctuation">{</span>
+				<span class="token literal-property property">author</span><span class="token operator">:</span> <span class="token string">''</span>
+			<span class="token punctuation">}</span>
+		<span class="token punctuation">}</span><span class="token punctuation">,</span>
+		<span class="token function">onShow</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token comment">// 每次B.vue出现在屏幕上时，都会触发onShow，从而更新author值</span>
+			<span class="token keyword">this</span><span class="token punctuation">.</span>author <span class="token operator">=</span> <span class="token function">getApp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>globalData<span class="token punctuation">.</span>userName<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span><span class="token punctuation">,</span>
+		<span class="token literal-property property">methods</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+			<span class="token function">modifyUserName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+				<span class="token function">getApp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>globalData<span class="token punctuation">.</span>userName <span class="token operator">=</span> <span class="token string">&quot;诗圣&quot;</span>；
+				<span class="token comment">// 修改userName后，本页的author依然不会自动刷新，因为globalData不是响应式的</span>
+				<span class="token comment">// 我们仍然需要手动刷新本页的author值，由此可见globalData的弊端</span>
+				<span class="token keyword">this</span><span class="token punctuation">.</span>author <span class="token operator">=</span> <span class="token function">getApp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>globalData<span class="token punctuation">.</span>userName<span class="token punctuation">;</span>
+			<span class="token punctuation">}</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><ol start="4"><li>假设我们从<code>B.vue</code>返回<code>A.vue</code>，这时<code>A.vue</code>出现在屏幕上，触发了它的<code>onShow</code>生命周期，执行了<code>this.author = getApp().globalData.userName;</code>，
+因而我们可以看到<code>A.vue</code>的值由<code>白居易</code>变成了在<code>B.vue</code>中修改后的<code>诗圣</code>。</li></ol> <h3 id="vuex的实现方式"><a href="#vuex的实现方式" class="header-anchor">#</a> Vuex的实现方式</h3> <p>我们希望您使用<code>vuex</code>方式，但是也希望您对其他的实现方式有所了解，知己知彼，才能闲庭信步，了然于胸，所以把<code>vuex</code>的讲解放在最后。</p> <p>这里介绍两个写法，一是传统的写法，类似于<code>web</code>中对<code>vuex</code>的使用，这里默认大家都会，只是举例，不进行过多解读。二是uview-plus进行一定封装优化后的写法，
+新项目可以使用这个形式，它具体有简单易用的特点，当然它不是全能的，您依然可以补充自己的内容进去，它和传统的写法是不冲突的。</p> <h4 id="一-传统实现方式"><a href="#一-传统实现方式" class="header-anchor">#</a> (一) 传统实现方式</h4> <ol><li>在uni-app目根目录新建<code>store</code>文件夹，并在其中创建<code>index.js</code>，内容如下：</li></ol> <p>为了避免和页面<code>data</code>变量混淆，可以给<code>state</code>中的变量添加一个特定的前缀，比如&quot;vuex_&quot;</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> Vue <span class="token keyword">from</span> <span class="token string">'vue'</span>
+<span class="token keyword">import</span> Vuex <span class="token keyword">from</span> <span class="token string">'vuex'</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Vuex<span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> store <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Vuex<span class="token punctuation">.</span>Store</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+	<span class="token literal-property property">state</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+		<span class="token literal-property property">vuex_token</span><span class="token operator">:</span> <span class="token string">'123654789'</span>
+	<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	<span class="token literal-property property">mutations</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+		<span class="token comment">// payload为用户传递的值，可以是单一值或者对象</span>
+		<span class="token function">modifyToken</span><span class="token punctuation">(</span><span class="token parameter">state<span class="token punctuation">,</span> payload</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			state<span class="token punctuation">.</span>vuex_token <span class="token operator">=</span> payload<span class="token punctuation">.</span>token<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> store
+</code></pre></div><ol start="2"><li>在uni-app目根目录的<code>main.js</code>中，引入<code>vuex</code></li></ol> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// main.js</span>
+
+<span class="token keyword">import</span> store <span class="token keyword">from</span> <span class="token string">'@/store'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 将store放入Vue对象创建中</span>
+<span class="token keyword">const</span> app <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+	store<span class="token punctuation">,</span>
+	<span class="token operator">...</span>App
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><ol start="3"><li>在<code>demo.vue</code>页面中使用并修改<code>state</code>中的<code>vuex_token</code>变量</li></ol> <div class="language-html extra-class"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view</span><span class="token punctuation">&gt;</span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view</span><span class="token punctuation">&gt;</span></span>
+			Token值为{{vuex_token}}
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>view</span><span class="token punctuation">&gt;</span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>u-button</span> <span class="token attr-name">@click</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>btnClick<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>修改vuex_token<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>u-button</span><span class="token punctuation">&gt;</span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>view</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+<span class="token keyword">import</span> <span class="token punctuation">{</span>mapState<span class="token punctuation">,</span> mapMutations<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'vuex'</span><span class="token punctuation">;</span> 
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+	<span class="token literal-property property">computed</span><span class="token operator">:</span> <span class="token punctuation">{</span>  
+		<span class="token operator">...</span><span class="token function">mapState</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'vuex_token'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>  
+	<span class="token punctuation">}</span><span class="token punctuation">,</span>  
+	<span class="token literal-property property">methods</span><span class="token operator">:</span> <span class="token punctuation">{</span>  
+		<span class="token operator">...</span><span class="token function">mapMutations</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'modifyToken'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+		
+		<span class="token function">btnClick</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token comment">// 这里第二个参数可以普通变量或者对象，自定义的，根据mutations需求处理</span>
+			<span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token string">'modifyToken'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token literal-property property">token</span><span class="token operator">:</span> <span class="token string">'xxxyyyzzz'</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>  
+<span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><p>(二) uview-plus进行一定改进后写法</p> <p>上面(一)中介绍的传统写法简单，但是也很繁琐：</p> <ol><li>我们需要在<code>vuex</code>中定义<code>state</code>和<code>mutations</code></li> <li>我们需要在每个用到<code>vuex</code>变量的地方，都引入<code>mapState</code>，同时还要解构到<code>computed</code>中去</li> <li>修改<code>vuex</code>变量的时候，还需要通过<code>commit</code>提交</li> <li>由于<code>vuex</code>变量是保存在运行内存中的，H5中刷新浏览器<code>vuex</code>变量会消失，还需要通过其他手段实现变量的存续</li></ol> <p>我们相信大家都会上面的用法，也肯定会想，有没有更简单的做法呢，答案是肯定的，uview-plus专门对这个问题进行了优化，解决您一般情况下的苦恼。
+这个实现的方式，不是万能的，如果您需要自己的逻辑，可以融入传统的写法，是不冲突的。</p> <p>说明：确保您是新项目的情况下，或者您对这个实现方法很清楚，才使用这个方法。</p> <p>我们把实现的基本原理放到了另一个独立的专题，如果您感兴趣，可以点击这里查看：<a href="/uview-plus/components/vuexDetail.html">uview-plus优化Vuex的写法的基本原理</a></p> <h4 id="具体实现"><a href="#具体实现" class="header-anchor">#</a> <strong>具体实现</strong></h4> <ol><li>uni-app目根目录新建'/store/index.js'，并复制如下内容到其中</li></ol> <p>注意：如果某个变量需要保存到APP的下一次启动中，或者需要H5刷新之后不消失，在<code>state</code>中声明后，还需要写入到<code>saveStateKeys</code>数组中，
+同时，在<code>state</code>中也需要写上<code>lifeData.xxx ? lifeData.xxx : yyy</code>的形式，保证应用启动时能把从存储中获取的值赋值给变量，见如下：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> Vue <span class="token keyword">from</span> <span class="token string">'vue'</span>
+<span class="token keyword">import</span> Vuex <span class="token keyword">from</span> <span class="token string">'vuex'</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Vuex<span class="token punctuation">)</span>
+
+<span class="token keyword">let</span> lifeData <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">try</span><span class="token punctuation">{</span>
+	<span class="token comment">// 尝试获取本地是否存在lifeData变量，第一次启动APP时是不存在的</span>
+	lifeData <span class="token operator">=</span> uni<span class="token punctuation">.</span><span class="token function">getStorageSync</span><span class="token punctuation">(</span><span class="token string">'lifeData'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token keyword">catch</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 需要永久存储，且下次APP启动需要取出的，在state中的变量名</span>
+<span class="token keyword">let</span> saveStateKeys <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'vuex_user'</span><span class="token punctuation">,</span> <span class="token string">'vuex_token'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 保存变量到本地存储中</span>
+<span class="token keyword">const</span> <span class="token function-variable function">saveLifeData</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">key<span class="token punctuation">,</span> value</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token comment">// 判断变量名是否在需要存储的数组中</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>saveStateKeys<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token comment">// 获取本地存储的lifeData对象，将变量添加到对象中</span>
+		<span class="token keyword">let</span> tmp <span class="token operator">=</span> uni<span class="token punctuation">.</span><span class="token function">getStorageSync</span><span class="token punctuation">(</span><span class="token string">'lifeData'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token comment">// 第一次打开APP，不存在lifeData变量，故放一个{}空对象</span>
+		tmp <span class="token operator">=</span> tmp <span class="token operator">?</span> tmp <span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+		tmp<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> value<span class="token punctuation">;</span>
+		<span class="token comment">// 执行这一步后，所有需要存储的变量，都挂载在本地的lifeData对象中</span>
+		uni<span class="token punctuation">.</span><span class="token function">setStorageSync</span><span class="token punctuation">(</span><span class="token string">'lifeData'</span><span class="token punctuation">,</span> tmp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">const</span> store <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Vuex<span class="token punctuation">.</span>Store</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+	<span class="token comment">// 下面这些值仅为示例，使用过程中请删除</span>
+	<span class="token literal-property property">state</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+		<span class="token comment">// 如果上面从本地获取的lifeData对象下有对应的属性，就赋值给state中对应的变量</span>
+		<span class="token comment">// 加上vuex_前缀，是防止变量名冲突，也让人一目了然</span>
+		<span class="token literal-property property">vuex_user</span><span class="token operator">:</span> lifeData<span class="token punctuation">.</span>vuex_user <span class="token operator">?</span> lifeData<span class="token punctuation">.</span>vuex_user <span class="token operator">:</span> <span class="token punctuation">{</span><span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'明月'</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+		<span class="token literal-property property">vuex_token</span><span class="token operator">:</span> lifeData<span class="token punctuation">.</span>vuex_token <span class="token operator">?</span> lifeData<span class="token punctuation">.</span>vuex_token <span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">,</span>
+		<span class="token comment">// 如果vuex_version无需保存到本地永久存储，无需lifeData.vuex_version方式</span>
+		<span class="token literal-property property">vuex_version</span><span class="token operator">:</span> <span class="token string">'1.0.1'</span><span class="token punctuation">,</span>
+	<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	<span class="token literal-property property">mutations</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+		<span class="token function">$uStore</span><span class="token punctuation">(</span><span class="token parameter">state<span class="token punctuation">,</span> payload</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token comment">// 判断是否多层级调用，state中为对象存在的情况，诸如user.info.score = 1</span>
+			<span class="token keyword">let</span> nameArr <span class="token operator">=</span> payload<span class="token punctuation">.</span>name<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">'.'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token keyword">let</span> saveKey <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+			<span class="token keyword">let</span> len <span class="token operator">=</span> nameArr<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+			<span class="token keyword">if</span><span class="token punctuation">(</span>nameArr<span class="token punctuation">.</span>length <span class="token operator">&gt;=</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+				<span class="token keyword">let</span> obj <span class="token operator">=</span> state<span class="token punctuation">[</span>nameArr<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+				<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> len <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+					obj <span class="token operator">=</span> obj<span class="token punctuation">[</span>nameArr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+				<span class="token punctuation">}</span>
+				obj<span class="token punctuation">[</span>nameArr<span class="token punctuation">[</span>len <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> payload<span class="token punctuation">.</span>value<span class="token punctuation">;</span>
+				saveKey <span class="token operator">=</span> nameArr<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+			<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+				<span class="token comment">// 单层级变量，在state就是一个普通变量的情况</span>
+				state<span class="token punctuation">[</span>payload<span class="token punctuation">.</span>name<span class="token punctuation">]</span> <span class="token operator">=</span> payload<span class="token punctuation">.</span>value<span class="token punctuation">;</span>
+				saveKey <span class="token operator">=</span> payload<span class="token punctuation">.</span>name<span class="token punctuation">;</span>
+			<span class="token punctuation">}</span>
+			<span class="token comment">// 保存变量到本地，见顶部函数定义</span>
+			<span class="token function">saveLifeData</span><span class="token punctuation">(</span>saveKey<span class="token punctuation">,</span> state<span class="token punctuation">[</span>saveKey<span class="token punctuation">]</span><span class="token punctuation">)</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> store
+</code></pre></div><ol start="2"><li>uni-app目根目录新建'/store/$u.mixin.js'，并复制如下内容到其中，由于HX某些版本的限制，我们无法帮您自动引入&quot;$u.mixin.js&quot;，您需要在<code>main.js</code>
+中手动引入，并mixin处理。</li></ol> <p>以下为&quot;main.js&quot;文件：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// main.js</span>
+
+<span class="token keyword">let</span> vuexStore <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&quot;@/store/$u.mixin.js&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">mixin</span><span class="token punctuation">(</span>vuexStore<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+</code></pre></div><p>以下为&quot;$u.mixin.js&quot;文件：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// $u.mixin.js</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> mapState <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'vuex'</span>
+<span class="token keyword">import</span> store <span class="token keyword">from</span> <span class="token string">&quot;@/store&quot;</span>
+
+<span class="token comment">// 尝试将用户在根目录中的store/index.js的vuex的state变量，全部加载到全局变量中</span>
+<span class="token keyword">let</span> $uStoreKey <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">try</span><span class="token punctuation">{</span>
+	$uStoreKey <span class="token operator">=</span> store<span class="token punctuation">.</span>state <span class="token operator">?</span> Object<span class="token punctuation">.</span><span class="token function">keys</span><span class="token punctuation">(</span>store<span class="token punctuation">.</span>state<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token keyword">catch</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	
+<span class="token punctuation">}</span>
+
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+	<span class="token function">created</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token comment">// 将vuex方法挂在到$u中</span>
+		<span class="token comment">// 使用方法为：如果要修改vuex的state中的user.name变量为&quot;史诗&quot; =&gt; this.$u.vuex('user.name', '史诗')</span>
+		<span class="token comment">// 如果要修改vuex的state的version变量为1.0.1 =&gt; this.$u.vuex('version', '1.0.1')</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>$u<span class="token punctuation">.</span><span class="token function-variable function">vuex</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">name<span class="token punctuation">,</span> value</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+			<span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token string">'$uStore'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+				name<span class="token punctuation">,</span>value
+			<span class="token punctuation">}</span><span class="token punctuation">)</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	<span class="token literal-property property">computed</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+		<span class="token comment">// 将vuex的state中的所有变量，解构到全局混入的mixin中</span>
+		<span class="token operator">...</span><span class="token function">mapState</span><span class="token punctuation">(</span>$uStoreKey<span class="token punctuation">)</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><ol start="3"><li>在项目根目录的<code>main.js</code>中，引入&quot;/store/index.js&quot;，并放到Vue示例中</li></ol> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// main.js</span>
+
+<span class="token keyword">import</span> store <span class="token keyword">from</span> <span class="token string">'@/store'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 将store放入Vue对象创建中</span>
+<span class="token keyword">const</span> app <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+	store<span class="token punctuation">,</span>
+	<span class="token operator">...</span>App
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><ol start="4"><li>在页面使用<code>vuex</code>变量</li></ol> <p>假设我们在<code>vuex</code>的<code>state</code>中定义了<code>vuex_version</code>变量和<code>vuex_user</code>对象</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token literal-property property">state</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+	<span class="token literal-property property">vuex_version</span><span class="token operator">:</span> <span class="token string">'1.0.0'</span><span class="token punctuation">,</span>
+	<span class="token literal-property property">vuex_user</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+		<span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'白居易'</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>在<code>demo.vue</code>页面使用和修改这些变量，他们是动态全局响应的。</p> <p>这里用的修改方式为：this.$u.vuex(key, value)：</p> <ol><li>如果要修改<code>state</code>中的<code>vuex_version</code>变量为<code>1.0.3</code>，则：this.$u.vuex('vuex_version', '1.0.3')。</li> <li>如果要修改<code>state</code>中的<code>vuex_user</code>对象的<code>name</code>属性为<code>青柠</code>，则：this.$u.vuex('vuex_user.name', '青柠')，与1中不同的是，对象的话，
+需要用点&quot;.&quot;分隔开。</li></ol> <div class="language-html extra-class"><pre class="language-html"><code><span class="token comment">&lt;!-- demo.vue --&gt;</span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view</span><span class="token punctuation">&gt;</span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view</span><span class="token punctuation">&gt;</span></span>
+			版本号为：{{vuex_version}}
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>view</span><span class="token punctuation">&gt;</span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view</span><span class="token punctuation">&gt;</span></span>
+			&lt;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>琵琶行</span><span class="token punctuation">&gt;</span></span>&gt;的作者为{{vuex_user.name}}
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>view</span><span class="token punctuation">&gt;</span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>u-button</span> <span class="token attr-name">@click</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>modifyVuex<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>修改变量<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>u-button</span><span class="token punctuation">&gt;</span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>view</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+	<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+		<span class="token literal-property property">methods</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+			<span class="token function">modifyVuex</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+				<span class="token keyword">this</span><span class="token punctuation">.</span>$u<span class="token punctuation">.</span><span class="token function">vuex</span><span class="token punctuation">(</span><span class="token string">'vuex_version'</span><span class="token punctuation">,</span> <span class="token string">'1.0.1'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+				<span class="token comment">// 修改对象的形式，中间用&quot;.&quot;分隔</span>
+				<span class="token keyword">this</span><span class="token punctuation">.</span>$u<span class="token punctuation">.</span><span class="token function">vuex</span><span class="token punctuation">(</span><span class="token string">'vuex_user.name'</span><span class="token punctuation">,</span> <span class="token string">'诗圣'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token punctuation">}</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div></div> <footer class="page-edit"><!----> <!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+		<script src="/uview-plus/assets/js/app.76bd3f98.js" defer></script><script src="/uview-plus/assets/js/3.75a80f83.js" defer></script><script src="/uview-plus/assets/js/4.0c52c040.js" defer></script><script src="/uview-plus/assets/js/123.58043e6f.js" defer></script><script src="/uview-plus/assets/js/8.f5bcdbaf.js" defer></script>
+	</body>
+</html>
