@@ -4,11 +4,11 @@
 <h3 align="center" style="margin: 30px 0 30px;font-weight: bold;font-size:40px;">uview-plus 3.0</h3>
 <h3 align="center">多平台快速开发的UI框架(fork自uView2.0)</h3>
 
-[![star](https://gitee.com/uiadmin/uview-plus/badge/star.svg?theme=gvp)](https://gitee.com/uiadmin//uview-plus/stargazers)
+[![star](https://gitee.com/uiadmin/uview-plus/badge/star.svg?theme=gvp)](https://gitee.com/uiadmin/uview-plus/stargazers)
 [![stars](https://img.shields.io/github/stars/ijry/uview-plus?style=flat-square&logo=GitHub)](https://github.com/ijry/uview-plus)
 [![forks](https://img.shields.io/github/forks/ijry/uview-plus?style=flat-square&logo=GitHub)](https://github.com/ijry/uview-plus)
 [![issues](https://img.shields.io/github/issues/ijry/uview-plus?style=flat-square&logo=GitHub)](https://github.com/ijry/uview-plus/issues)
-[![Website](https://img.shields.io/badge/uview-plus-blue?style=flat-square)](https://uiadmin.net/uview-plus)
+[![Website](https://img.shields.io/badge/uview-plus-blue?style=flat-square)](https://ijry.github.io/uview-plus/)
 [![license](https://img.shields.io/github/license/ijry/uview-plus?style=flat-square)](https://en.wikipedia.org/wiki/MIT_License)
 <!-- [![release](https://img.shields.io/github/v/release/ijry/uview-plus?style=flat-square)](https://github.com/ijry/uview-plus/releases) -->
 
@@ -16,7 +16,7 @@
 
 uview-plus，是[uni-app](https://uniapp.dcloud.io/)全面兼容nvue的uni-app生态框架，全面的组件和便捷的工具会让您信手拈来，如鱼得水。
 
-## [官方文档：https://uiadmin.net/uview-plus](https://uiadmin.net/uview-plus)
+## [官方文档：https://ijry.github.io/uview-plus/](https://ijry.github.io/uview-plus/)
 
 ### [点击加群交流反馈：495929039](https://jq.qq.com/?_wv=1027&k=mAfcBEtL)
 
@@ -41,10 +41,10 @@ uview-plus，是[uni-app](https://uniapp.dcloud.io/)全面兼容nvue的uni-app�
 
 ## 链接
 
-- [官方文档](https://uiadmin.net/uview-plus/)
-- [更新日志](https://uiadmin.net/uview-plus/components/changelog.html)
-- [升级指南](https://uiadmin.net/uview-plus/components/changeGuide.html)
-- [关于我们](https://uiadmin.net/uview-plus/cooperation/about.html)
+- [官方文档](https://ijry.github.io/uview-plus/)
+- [更新日志](https://ijry.github.io/uview-plus/components/changelog.html)
+- [升级指南](https://ijry.github.io/uview-plus/components/changeGuide.html)
+- [关于我们](https://ijry.github.io/uview-plus/cooperation/about.html)
 
 ## 关于PR
 
@@ -57,7 +57,7 @@ uview-plus，是[uni-app](https://uniapp.dcloud.io/)全面兼容nvue的uni-app�
 
 ## 快速上手
 
-请通过[快速上手](https://uiadmin.net/uview-plus/components/quickstart.html)了解更详细的内容
+请通过[快速上手](https://ijry.github.io/uview-plus/components/quickstart.html)了解更详细的内容
 
 ## 使用方法
 配置easycom规则后，自动按需引入，无需`import`组件，直接引用即可。
