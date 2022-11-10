@@ -52,6 +52,7 @@
 	import props from './props.js';
 	import mpMixin from '../../libs/mixin/mpMixin.js';
 	import mixin from '../../libs/mixin/mixin.js';
+	import defprops from '../../libs/config/props';
 
 	/**
 	 * icon 图标
@@ -91,6 +92,7 @@
 		computed: {
 			uClasses() {
 				let classes = []
+				classes.push(this.customPrefix)
 				classes.push(this.customPrefix + '-' + this.name)
 				// // uView的自定义图标类名为u-iconfont
 				// if (this.customPrefix == 'uicon') {
@@ -134,6 +136,9 @@
 			},
 			// 通过图标名，查找对应的图标
 			icon() {
+				if (this.customPrefix !== defprops.icon.customPrefix) {
+					return ""
+				}
 				// 如果内置的图标中找不到对应的图标，就直接返回name值，因为用户可能传入的是unicode代码
 				return icons['uicon-' + this.name] || this.name
 			}
