@@ -1,7 +1,13 @@
 <template>
 	<uvInput 
+		<!-- #ifdef VUE2 -->
 		:value="value"
+		@input="e => $emit('input', e)"
+		<!-- #endif -->
+		<!-- #ifdef VUE3 -->
 		:modelValue="modelValue"
+		@update:modelValue="e => $emit('update:modelValue', e)"
+		<!-- #endif -->
 		:type="type"
 		:fixed="fixed"
 		:disabled="disabled"
@@ -37,8 +43,6 @@
 		:customStyle="customStyle"
 		:formatter="formatter"
 		:ignoreCompositionEvent="ignoreCompositionEvent"
-		@input="e => $emit('input', e)"
-		@update:modelValue="e => $emit('update:modelValue', e)"
 	>
 		<!-- #ifdef MP -->
 		<slot name="prefix"></slot>
