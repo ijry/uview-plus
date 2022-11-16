@@ -20,7 +20,7 @@
             :disableDefaultPadding="disableDefaultPadding"
             :holdKeyboard="holdKeyboard"
             :maxlength="maxlength"
-            :confirmType="confirmType"
+            :confirm-type="confirmType"
             :ignoreCompositionEvent="ignoreCompositionEvent"
             @focus="onFocus"
             @blur="onBlur"
@@ -97,6 +97,8 @@ export default {
 			// 过滤处理方法
 			innerFormatter: value => value
 		}
+	},
+	created() {
 	},
 	watch: {
         // #ifdef VUE2
