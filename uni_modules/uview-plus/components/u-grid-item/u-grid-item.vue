@@ -56,6 +56,11 @@
 		mounted() {
 			this.init()
 		},
+		emits: ['click'],
+		//  微信小程序中 options 选项
+		options: {
+		    virtualHost: true //将自定义节点设置成虚拟的，更加接近Vue组件的表现。我们不希望自定义组件的这个节点本身可以设置样式、响应 flex 布局等
+		},
 		computed: {
 			// #ifndef APP-NVUE
 			// vue下放到computed中，否则会因为延时造成闪烁
