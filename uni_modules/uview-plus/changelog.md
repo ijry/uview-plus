@@ -1,3 +1,8 @@
+## 3.1.19（2022-11-16）
+修复u-rate的v-model绑定值不生效#48
+修复u-grid-item click事件会执行两次 #40
+修复u--input组建Property "value" was accessed during render but is not defined on instance
+修复textarea组建confirmType报错
 ## 3.1.18（2022-10-23）
 新增页面模板
 ## 3.1.17（2022-10-23）

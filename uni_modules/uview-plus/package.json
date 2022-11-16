@@ -1,8 +1,8 @@
 {
 	"id": "uview-plus",
 	"name": "uview-plus",
-	"displayName": "uview-plus3.0重磅发布，利剑出鞘，一统江湖",
-	"version": "3.1.18",
+	"displayName": "uview-plus3.0重磅发布，全面的Vue3移动组件库。",
+	"version": "3.1.19",
 	"description": "uview-plus已兼容vue3，全面的组件和便捷的工具会让您信手拈来，如鱼得水",
 	"keywords": [
         "uview",
