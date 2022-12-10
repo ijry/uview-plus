@@ -131,14 +131,14 @@
         "template" : "",
         "router" : {
             "mode" : "history",
-            "base" : ""
+            "base" : "./"
         },
         "optimization" : {
             "treeShaking" : {
                 "enable" : false
             }
         },
-        "title" : "uViewPlus UI",
+        "title" : "uview-plus",
         "sdkConfigs" : {
             "maps" : {
                 "qqmap" : {
