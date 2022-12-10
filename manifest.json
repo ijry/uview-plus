@@ -131,7 +131,7 @@
         "template" : "",
         "router" : {
             "mode" : "history",
-            "base" : "./"
+            "base" : "/uview-plus/h5/"
         },
         "optimization" : {
             "treeShaking" : {
