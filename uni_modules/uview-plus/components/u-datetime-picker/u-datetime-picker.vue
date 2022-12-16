@@ -98,7 +98,7 @@
 			this.init()
 		},
 		// #ifdef VUE3
-		emits: ['close', 'canel', 'confirm', 'change'],
+		emits: ['close', 'cancel', 'confirm', 'change'],
 		// #endif
 		methods: {
 			init() {
