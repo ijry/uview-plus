@@ -130,8 +130,8 @@
     "h5" : {
         "template" : "",
         "router" : {
-            "mode" : "history",
-            "base" : "/uview-plus/h5/"
+            "mode" : "hash",
+            "base" : "./"
         },
         "optimization" : {
             "treeShaking" : {
