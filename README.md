@@ -1,7 +1,7 @@
 <p align="center">
     <img alt="logo" src="https://uviewui.com/common/logo.png" width="120" height="120" style="margin-bottom: 10px;">
 </p>
-<h3 align="center" style="margin: 30px 0 30px;font-weight: bold;font-size:40px;">uview-plus 3.0</h3>
+<h3 align="center" style="margin: 30px 0 30px;font-weight: bold;font-size:40px;">uview-plus 3.0 (Beta)</h3>
 <h3 align="center">多平台快速开发的UI框架(fork自uView2.0)</h3>
 
 [![star](https://gitee.com/uiadmin/uview-plus/badge/star.svg?theme=gvp)](https://gitee.com/uiadmin/uview-plus/stargazers)
@@ -13,6 +13,10 @@
 <!-- [![release](https://img.shields.io/github/v/release/ijry/uview-plus?style=flat-square)](https://github.com/ijry/uview-plus/releases) -->
 
 ## 说明
+
+因为是2.0移植的3.0，时间有限，有很多细节问题需要完善与修复，个人时间精力有限，可能一个月定期维护几次，希望有能力的一起完善，提交PR。
+
+## 介绍
 
 uview-plus，是[uni-app](https://uniapp.dcloud.io/)全面兼容nvue的uni-app生态框架，全面的组件和便捷的工具会让您信手拈来，如鱼得水。
 
