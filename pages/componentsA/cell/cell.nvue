@@ -115,10 +115,14 @@
 				    title="单元格"
 					isLink
 				>
-					<text
-					    slot="value"
-					    class="u-slot-value"
-					>99</text>
+					<template #value>
+						<text
+						    class="u-slot-value"
+						>99</text>
+					</template>
+					<template #right-icon>
+						0
+					</template>
 				</u-cell>
 			</u-cell-group>
 		</view>
