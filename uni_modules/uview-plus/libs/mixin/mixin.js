@@ -88,10 +88,13 @@ export default {
         openPage(urlKey = 'url') {
             const url = this[urlKey]
             if (url) {
+                // h5官方回应：发行h5会自动摇树优化，所有使用uni的地方，都会被直接转换成具体的API调用 https://ask.dcloud.net.cn/question/161523?notification_id-1201922__rf-false__item_id-226372
+                // 使用封装的 route 进行跳转（直接调用方法），不使用 uni 对象
+                this.$u.route({ type: this.linkType, url })
                 // 执行类似uni.navigateTo的方法
-                uni[this.linkType]({
-                    url
-                })
+                // uni[this.linkType]({
+                //     url
+                // })
             }
         },
         // 查询节点信息
