@@ -1,3 +1,7 @@
+## 3.1.23（2023-01-15）
+修复 build:h5 cell 和 notice-bar 点击失效的问题 
+修复小程序端报 alert 和 upload 重复定义的bug
+感谢@dodu2014
 ## 3.1.22（2023-01-14）
 增加transpileDependencies检测
 ## 3.1.21（2023-01-14）
