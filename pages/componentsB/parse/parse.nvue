@@ -5,7 +5,8 @@
 </template>
 
 <script>
-	const content = import('./content')
+	// const content = import('./content')
+	import parseContent from './content';
 	export default {
 		data() {
 			return {
@@ -21,7 +22,7 @@
 		onLoad() {
 			// 模拟网络请求
 			setTimeout(() => {
-				this.content = content
+				this.content = parseContent
 			}, 200)
 		},
 		methods: {
