@@ -1,9 +1,10 @@
 import defprops from '../../libs/config/props';
 export default {
     props: {
-        // #ifdef APP-PLUS-NVUE
-        bgColor: String,
-        // #endif
+		containerStyle: {
+          type: String,
+          default: null
+		},
         content: String,
         copyLink: {
 		  type: Boolean,
