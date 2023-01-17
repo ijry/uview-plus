@@ -53,7 +53,7 @@
 		mixins: [mixin, props],
 		data() {
 			return {
-				// ²Ëµ¥Êý×é
+				// ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½
 				menuList: [],
 				current: 0
 			}
@@ -62,7 +62,7 @@
 		
 		},
 		created() {
-			// ÒýÓÃËùÓÐ×Ó×é¼þ(u-dropdown-item)µÄthis£¬²»ÄÜÔÚdataÖÐÉùÃ÷±äÁ¿£¬·ñÔòÔÚÎ¢ÐÅÐ¡³ÌÐò»áÔì³ÉÑ­»·ÒýÓÃ¶ø±¨´í
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(u-dropdown-item)ï¿½ï¿½thisï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½dataï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¢ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ­ï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½
 			this.children = [];
 		},
 		methods: {
@@ -80,11 +80,11 @@
 					}
 				})
 			},
-			// »ñÈ¡±êÇ©µÄ³ß´çÎ»ÖÃ
+			// ï¿½ï¿½È¡ï¿½ï¿½Ç©ï¿½Ä³ß´ï¿½Î»ï¿½ï¿½
 			queryRect(el) {
 				// #ifndef APP-NVUE
-				// $uGetRectÎªuView×Ô´øµÄ½Úµã²éÑ¯¼ò»¯·½·¨£¬Ïê¼ûÎÄµµ½éÉÜ£ºhttps://www.uviewui.com/js/getRect.html
-				// ×é¼þÄÚ²¿Ò»°ãÓÃthis.$uGetRect£¬¶ÔÍâµÄÎªthis.$u.getRect£¬¶þÕß¹¦ÄÜÒ»ÖÂ£¬Ãû³Æ²»Í¬
+				// $uGetRectÎªuViewï¿½Ô´ï¿½ï¿½Ä½Úµï¿½ï¿½Ñ¯ï¿½ò»¯·ï¿½ï¿½ï¿½https://ijry.github.io/uview-plus/.uviewui.com/js/getRect.html
+				// ï¿½ï¿½ï¿½ï¿½Ú²ï¿½Ò»ï¿½ï¿½ï¿½ï¿½this.$uGetRectï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªthis.$u.getRectï¿½ï¿½ï¿½ï¿½ï¿½ß¹ï¿½ï¿½ï¿½Ò»ï¿½Â£ï¿½ï¿½ï¿½ï¿½Æ²ï¿½Í¬
 				return new Promise(resolve => {
 					this.$uGetRect(`.${el}`).then(size => {
 						resolve(size)
@@ -93,8 +93,8 @@
 				// #endif
 			
 				// #ifdef APP-NVUE 
-				// nvueÏÂ£¬Ê¹ÓÃdomÄ£¿é²éÑ¯ÔªËØ¸ß¶È
-				// ·µ»ØÒ»¸öpromise£¬ÈÃµ÷ÓÃ´Ë·½·¨µÄÖ÷ÌåÄÜÊ¹ÓÃthen»Øµ÷
+				// nvueï¿½Â£ï¿½Ê¹ï¿½ï¿½domÄ£ï¿½ï¿½ï¿½Ñ¯Ôªï¿½Ø¸ß¶ï¿½
+				// ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½promiseï¿½ï¿½ï¿½Ãµï¿½ï¿½Ã´Ë·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½thenï¿½Øµï¿½
 				return new Promise(resolve => {
 					dom.getComponentRect(this.$refs[el], res => {
 						resolve(res.size)

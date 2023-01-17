@@ -76,7 +76,7 @@ import mixin from '../../libs/mixin/mixin.js'
 /**
  * Calendar 日历
  * @description  此组件用于单个选择日期，范围选择日期等，日历被包裹在底部弹起的容器中.
- * @tutorial https://www.uviewui.com/components/calendar.html
+ * @tutorial https://ijry.github.io/uview-plus/components/calendar.html
  *
  * @property {String}				title				标题内容 (默认 日期选择 )
  * @property {Boolean}				showTitle			是否显示标题  (默认 true )
