@@ -34,7 +34,7 @@
 	import mpMixin from '../../libs/mixin/mpMixin.js';
 	import mixin from '../../libs/mixin/mixin.js';
 	// import dayjs from '../../libs/util/dayjs.js';
-	import dayjs from 'dayjs'
+	import dayjs from 'dayjs/ems/index.js'
 
 	/**
 	 * DatetimePicker 时间日期选择器

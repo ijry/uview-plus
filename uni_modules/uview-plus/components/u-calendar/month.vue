@@ -35,7 +35,7 @@
 	import mixin from '../../libs/mixin/mixin.js';
 	import defprops from '../../libs/config/props';
 	// import dayjs from '../../libs/util/dayjs.js';
-	import dayjs from 'dayjs'
+	import dayjs from 'dayjs/ems/index.js'
 	export default {
 		name: 'u-calendar-month',
 		mixins: [mpMixin, mixin],

@@ -1,3 +1,5 @@
+## 3.1.24（2023-01-17）
+修复dayjs报错does not provide an export named 'default'
 ## 3.1.23（2023-01-15）
 修复 build:h5 cell 和 notice-bar 点击失效的问题 
 修复小程序端报 alert 和 upload 重复定义的bug
