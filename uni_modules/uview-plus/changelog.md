@@ -1,3 +1,5 @@
+## 3.1.25（2023-02-04）
+修复dayjs引入问题导致小程序编译报错
 ## 3.1.24（2023-01-17）
 修复dayjs报错does not provide an export named 'default'
 ## 3.1.23（2023-01-15）
