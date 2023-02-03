@@ -8,7 +8,7 @@ import commonjs from '@rollup/plugin-commonjs'
 
 export default defineConfig({
   build: {
-    sourcemap: true, // App，小程序端源码调试，需要在 vite.config.js 中主动开启 sourcemap
+    sourcemap: false, // App，小程序端源码调试，需要在 vite.config.js 中主动开启 sourcemap
 	rollupOptions: {
 	}
   },
