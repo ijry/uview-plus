@@ -19,14 +19,9 @@ let i18nConfig = {
   messages
 }
 
-//import mixin from './common/mixin'
-
-// #ifdef MP
 // 引入uView对小程序分享的mixin封装
-// const mpShare = require('@/uni_modules/uview-ui/libs/mixin/mpShare.js')
-// Vue.mixin(mpShare)
-// Vue.mixin(mixin)
-// #endif
+import mpShare from '@/uni_modules/uview-plus/libs/mixin/mpShare.js'
+import mixin from './common/mixin'
   
 // #ifdef VUE3
 import { createSSRApp } from 'vue'
@@ -42,6 +37,12 @@ export function createApp() {
   app.use(store)
 	.use(i18n)
 	.use(uviewPlus)
+
+  // #ifdef MP
+  app.mixin(mpShare)
+  app.mixin(mixin)
+  // #endif
+
   return {
     app
   }

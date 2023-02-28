@@ -4,7 +4,7 @@
 			<text class="u-page__item__title">基础功能</text>
 			<u-cell-group>
 				<u-cell
-				    title="uView UI"
+				    title="uview-plus"
 				    value="内容"
 				    :isLink="true"
 				></u-cell>

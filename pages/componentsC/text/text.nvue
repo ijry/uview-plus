@@ -86,8 +86,8 @@
 				<view class="u-page__text-item">
 					<u--text
 					    mode="link"
-					    text="Go to uView docs"
-					    href="https://www.uviewui.com"
+					    text="Go to uview-plus docs"
+					    href="https://ijry.github.io/uview-plus/"
 					></u--text>
 				</view>
 			</view>

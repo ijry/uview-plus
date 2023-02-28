@@ -1,3 +1,5 @@
+## 3.1.27（2023-02-28）
+修复日历组建对dayjs等依赖
 ## 3.1.26（2023-02-04）
 修复安卓Multiple conflicting contents for sourcemap
 ## 3.1.25（2023-02-04）
