@@ -72,6 +72,7 @@
 								<!-- #endif -->
 							</view>
 						</view>
+					</view>
 				</scroll-view>
 			</view>
 			<slot name="right" />
