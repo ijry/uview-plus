@@ -55,6 +55,7 @@
 									backgroundSize: lineBgSize,
 								}]"
 						>
+						</view>
 							<!-- #endif -->
 							<!-- #ifndef APP-NVUE -->
 							<view
@@ -69,9 +70,8 @@
 										backgroundSize: lineBgSize,
 									}]"
 							>
-								<!-- #endif -->
 							</view>
-						</view>
+								<!-- #endif -->
 					</view>
 				</scroll-view>
 			</view>
