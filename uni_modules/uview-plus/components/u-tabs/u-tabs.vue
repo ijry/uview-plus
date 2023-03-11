@@ -49,29 +49,29 @@
 							class="u-tabs__wrapper__nav__line"
 							ref="u-tabs__wrapper__nav__line"
 							:style="[{
-									width: $u.addUnit(lineWidth),
-									height: $u.addUnit(lineHeight),
-									background: lineColor,
-									backgroundSize: lineBgSize,
-								}]"
+								width: $u.addUnit(lineWidth),
+								height: $u.addUnit(lineHeight),
+								background: lineColor,
+								backgroundSize: lineBgSize,
+							}]"
 						>
-							<!-- #endif -->
-							<!-- #ifndef APP-NVUE -->
-							<view
-								class="u-tabs__wrapper__nav__line"
-								ref="u-tabs__wrapper__nav__line"
-								:style="[{
-										width: $u.addUnit(lineWidth),
-										transform: `translate(${lineOffsetLeft}px)`,
-										transitionDuration: `${firstTime ? 0 : duration}ms`,
-										height: $u.addUnit(lineHeight),
-										background: lineColor,
-										backgroundSize: lineBgSize,
-									}]"
-							>
-								<!-- #endif -->
-							</view>
 						</view>
+						<!-- #endif -->
+						<!-- #ifndef APP-NVUE -->
+						<view
+							class="u-tabs__wrapper__nav__line"
+							ref="u-tabs__wrapper__nav__line"
+							:style="[{
+								width: $u.addUnit(lineWidth),
+								transform: `translate(${lineOffsetLeft}px)`,
+								transitionDuration: `${firstTime ? 0 : duration}ms`,
+								height: $u.addUnit(lineHeight),
+								background: lineColor,
+								backgroundSize: lineBgSize,
+							}]"
+						>
+						</view>
+						<!-- #endif -->
 					</view>
 				</scroll-view>
 			</view>
