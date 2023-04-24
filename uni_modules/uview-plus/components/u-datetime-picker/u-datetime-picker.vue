@@ -98,7 +98,7 @@
 			this.init()
 		},
 		// #ifdef VUE3
-		emits: ['close', 'cancel', 'confirm', 'change'],
+		emits: ['close', 'cancel', 'confirm', 'change', 'update:modelValue'],
 		// #endif
 		methods: {
 			init() {
