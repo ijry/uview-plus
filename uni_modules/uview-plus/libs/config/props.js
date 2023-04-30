@@ -93,6 +93,7 @@ import Toolbar from './props/toolbar'
 import Tooltip from './props/tooltip'
 import Transition from './props/transition'
 import Upload from './props/upload'
+import drawer from './props/drawer'
 
 const {
     color
@@ -186,5 +187,6 @@ export default {
     ...Toolbar,
     ...Tooltip,
     ...Transition,
-    ...Upload
+    ...Upload,
+    ...drawer,
 }
