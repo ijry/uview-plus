@@ -1,4 +1,4 @@
-import dayjs from 'dayjs'
+import dayjs from 'dayjs/esm/index'
 export default {
     methods: {
         // 设置月份数据
