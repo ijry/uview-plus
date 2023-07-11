@@ -181,7 +181,6 @@
 		watch: {
 			// 监听文件列表的变化，重新整理内部数据
 			fileList: {
-				immediate: true,
 				handler() {
 					this.formatFileList()
 				},
