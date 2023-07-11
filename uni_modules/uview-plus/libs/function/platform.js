@@ -28,6 +28,10 @@ platform = 'nvue'
 platform = 'h5'
 // #endif
 
+// #ifdef MP
+platform = 'mp'
+// #endif
+
 // #ifdef MP-WEIXIN
 platform = 'weixin'
 // #endif
@@ -54,10 +58,6 @@ platform = 'kuaishou'
 
 // #ifdef MP-360
 platform = '360'
-// #endif
-
-// #ifdef MP
-platform = 'mp'
 // #endif
 
 // #ifdef QUICKAPP-WEBVIEW
