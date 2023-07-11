@@ -6,3 +6,4 @@
 deploy.sh
 /.hbuilderx/
 /.vscode/
+/*-lock.*
