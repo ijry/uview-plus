@@ -47,6 +47,7 @@ export default {
 			classes: '', // 应用的类名
 		}
 	},
+	emits: ['click', 'beforeEnter', 'enter', 'afterEnter', 'beforeLeave', 'leave', 'afterLeave'],
 	computed: {
 	    mergeStyle() {
 	        const { viewStyle, customStyle } = this
