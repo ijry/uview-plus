@@ -129,11 +129,12 @@
 							placeholder="请填写验证码"
 						></u--input>
 						<u-button
-							slot="right"
+							#right
 							@tap="getCode"
 							:text="tips"
 							type="success"
 							size="mini"
+							style="flex: 0.5;"
 							:disabled="disabled1"
 						></u-button>
 					</u-form-item>

@@ -1,14 +1,14 @@
 <template>
 	<view class="nav-wrap">
 		<view class="nav-title">
-			<u--image :showLoading="true" src="https://cdn.uviewui.com/uview/common/logo.png" width="70px"
+			<u--image :showLoading="true" src="./static/uview/common/logo.png" width="70px"
 				height="70px" />
 			<view class="nav-info">
 				<view class="nav-info__title" @tap="jumpToWx">
 					<text class="nav-info__title__text">uview-plus3</text>
 					<!-- #ifdef MP-WEIXIN -->
 					<!-- uni-app不支持text内部的text组件的tap事件，所以放到外部响应tap -->
-					<text class="nav-info__title__jump">查看1.x演示</text>
+					<text class="nav-info__title__jump">查看演示</text>
 					<!-- #endif -->
 				</view>
 				<text class="nav-slogan">多平台快速开发的UI框架</text>
@@ -32,9 +32,9 @@
 		methods: {
 			jumpToWx() {
 				// #ifdef MP-WEIXIN
-				uni.navigateToMiniProgram({
-					appId: 'wx3be833c4a263e0c2'
-				})
+				// uni.navigateToMiniProgram({
+				// 	appId: ''
+				// })
 				// #endif
 			}
 		},
