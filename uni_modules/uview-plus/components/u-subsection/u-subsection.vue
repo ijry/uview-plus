@@ -53,10 +53,12 @@ const dom = uni.requireNativePlugin("dom");
 const animation = uni.requireNativePlugin("animation");
 // #endif
 import props from "./props.js";
+import mpMixin from '../../libs/mixin/mpMixin.js';
+import mixin from '../../libs/mixin/mixin.js';
 /**
  * Subsection 分段器
  * @description 该分段器一般用于用户从几个选项中选择某一个的场景
- * @tutorial https://www.uviewui.com/components/subsection.html
+ * @tutorial https://ijry.github.io/uview-plus/components/subsection.html
  * @property {Array}			list			tab的数据
  * @property {String ｜ Number}	current			当前活动的tab的index（默认 0 ）
  * @property {String}			activeColor		激活时的颜色（默认 '#3c9cff' ）
@@ -73,7 +75,7 @@ import props from "./props.js";
  */
 export default {
     name: "u-subsection",
-    mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+    mixins: [mpMixin, mixin, props],
     data() {
         return {
             // 组件尺寸

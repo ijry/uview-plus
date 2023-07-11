@@ -9,10 +9,12 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * checkboxGroup 复选框组
 	 * @description 复选框组件一般用于需要多个选择的场景，该组件功能完整，使用方便
-	 * @tutorial https://www.uviewui.com/components/checkbox.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/checkbox.html
 	 * @property {String}			name			标识符 
 	 * @property {Array}			value			绑定的值
 	 * @property {String}			shape			形状，circle-圆形，square-方形 （默认 'square' ）
@@ -34,15 +36,29 @@
 	 */
 	export default {
 		name: 'u-checkbox-group',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+		mixins: [mpMixin, mixin,props],
 		computed: {
 			// 这里computed的变量，都是子组件u-checkbox需要用到的，由于头条小程序的兼容性差异，子组件无法实时监听父组件参数的变化
 			// 所以需要手动通知子组件，这里返回一个parentData变量，供watch监听，在其中去通知每一个子组件重新从父组件(u-checkbox-group)
 			// 拉取父组件新的变化后的参数
 			parentData() {
-				return [this.value, this.disabled, this.inactiveColor, this.activeColor, this.size, this.labelDisabled, this.shape,
-					this.iconSize, this.borderBottom, this.placement
-				]
+			  return [
+				// #ifdef VUE2
+				this.value,
+				// #endif
+				// #ifdef VUE3
+				this.modelValue,
+				// #endif
+				this.disabled,
+				this.inactiveColor,
+				this.activeColor,
+				this.size,
+				this.labelDisabled,
+				this.shape,
+				this.iconSize,
+				this.borderBottom,
+				this.placement,
+			  ];
 			},
 			bemClass() {
 				// this.bem为一个computed变量，在mixin中
@@ -51,13 +67,16 @@
 		},
 		watch: {
 			// 当父组件需要子组件需要共享的参数发生了变化，手动通知子组件
-			parentData() {
+			parentData: {
+			  handler() {
 				if (this.children.length) {
-					this.children.map(child => {
-						// 判断子组件(u-checkbox)如果有init方法的话，就就执行(执行的结果是子组件重新从父组件拉取了最新的值)
-						typeof(child.init) === 'function' && child.init()
-					})
+				  this.children.map((child) => {
+					// 判断子组件(u-checkbox)如果有init方法的话，就就执行(执行的结果是子组件重新从父组件拉取了最新的值)
+					typeof child.init === "function" && child.init();
+				  });
 				}
+			  },
+			  deep: true,
 			},
 		},
 		data() {
@@ -68,6 +87,9 @@
 		created() {
 			this.children = []
 		},
+		// #ifdef VUE3
+		emits: ['update:modelValue', 'change'],
+		// #endif
 		methods: {
 			// 将其他的checkbox设置为未选中的状态
 			unCheckedOther(childInstance) {
@@ -81,7 +103,12 @@
 				// 发出事件
 				this.$emit('change', values)
 				// 修改通过v-model绑定的值
-				this.$emit('input', values)
+				// #ifdef VUE3
+				this.$emit("update:modelValue", values);
+				// #endif
+				// #ifdef VUE2
+				this.$emit("input", values);
+				// #endif
 			},
 		}
 	}
@@ -93,7 +120,10 @@
 	.u-checkbox-group {
 
 		&--row {
-			@include flex;
+			/* #ifndef APP-NVUE */
+			display: flex;
+			/* #endif */
+			flex-flow: row wrap;
 		}
 
 		&--column {

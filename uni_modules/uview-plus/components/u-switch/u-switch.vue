@@ -12,7 +12,12 @@
 		</view>
 		<view
 		    class="u-switch__node"
-		    :class="[value && 'u-switch__node--on']"
+		    <!-- #ifdef VUE3 -->
+			:class="[modelValue && 'u-switch__node--on']"
+			<!-- #endif -->
+			<!-- #ifdef VUE2 -->
+			:class="[value && 'u-switch__node--on']"
+			<!-- #endif -->
 		    :style="[nodeStyle]"
 		    ref="u-switch__node"
 		>
@@ -20,7 +25,12 @@
 			    :show="loading"
 			    mode="circle"
 			    timingFunction='linear'
-			    :color="value ? activeColor : '#AAABAD'"
+			    <!-- #ifdef VUE3 -->
+				:color="modelValue ? activeColor : '#AAABAD'"
+				<!-- #endif -->
+				<!-- #ifdef VUE2 -->
+				:color="value ? activeColor : '#AAABAD'"
+				<!-- #endif -->
 			    :size="size * 0.6"
 			/>
 		</view>
@@ -29,10 +39,12 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * switch 开关选择器
 	 * @description 选择开关一般用于只有两个选择，且只能选其一的场景。
-	 * @tutorial https://www.uviewui.com/components/switch.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/switch.html
 	 * @property {Boolean}						loading			是否处于加载中（默认 false ）
 	 * @property {Boolean}						disabled		是否禁用（默认 false ）
 	 * @property {String | Number}				size			开关尺寸，单位px （默认 25 ）
@@ -50,7 +62,7 @@
 	 */
 	export default {
 		name: "u-switch",
-		mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+		mixins: [mpMixin, mixin,props],
 		watch: {
 			// #ifdef VUE3
 			modelValue: {

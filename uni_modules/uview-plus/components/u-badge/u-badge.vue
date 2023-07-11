@@ -9,6 +9,8 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * badge 徽标数
 	 * @description 该组件一般用于图标右上角显示未读的消息数量，提示用户点击，有圆点和圆包含文字两种形式。
@@ -32,7 +34,7 @@
 	 */
 	export default {
 		name: 'u-badge',
-		mixins: [uni.$u.mpMixin, props, uni.$u.mixin],
+		mixins: [mpMixin, props, mixin],
 		computed: {
 			// 是否将badge中心与父组件右上角重合
 			boxStyle() {

@@ -53,7 +53,7 @@ class Router {
             mergeConfig.url = this.mixinParam(options, params)
             mergeConfig.type = 'navigateTo'
         } else {
-            mergeConfig = uni.$u.deepMerge(options, this.config)
+            mergeConfig = uni.$u.deepMerge(this.config, options)
             // 否则正常使用mergeConfig中的url和params进行拼接
             mergeConfig.url = this.mixinParam(options.url, options.params)
         }

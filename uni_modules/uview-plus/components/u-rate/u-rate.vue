@@ -75,6 +75,8 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 
 	// #ifdef APP-NVUE
 	const dom = weex.requireModule("dom");
@@ -82,7 +84,7 @@
 	/**
 	 * rate 评分
 	 * @description 该组件一般用于满意度调查，星型评分的场景
-	 * @tutorial https://www.uviewui.com/components/rate.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/rate.html
 	 * @property {String | Number}	value			用于v-model双向绑定选中的星星数量 (默认 1 )
 	 * @property {String | Number}	count			最多可选的星星数量 （默认 5 ）
 	 * @property {Boolean}			disabled		是否禁止用户操作 （默认 false ）
@@ -102,14 +104,19 @@
 	 */
 	export default {
 		name: "u-rate",
-		mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 				// 生成一个唯一id，否则一个页面多个评分组件，会造成冲突
 				elId: uni.$u.guid(),
 				elClass: uni.$u.guid(),
 				rateBoxLeft: 0, // 评分盒子左边到屏幕左边的距离，用于滑动选择时计算距离
+				// #ifdef VUE3
+				activeIndex: this.modelValue,
+				// #endif
+				// #ifdef VUE2
 				activeIndex: this.value,
+				// #endif
 				rateWidth: 0, // 每个星星的宽度
 				// 标识是否正在滑动，由于iOS事件上touch比click先触发，导致快速滑动结束后，接着触发click，导致事件混乱而出错
 				moving: false,

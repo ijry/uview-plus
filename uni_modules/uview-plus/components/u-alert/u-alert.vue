@@ -61,10 +61,12 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * Alert  警告提示
 	 * @description 警告提示，展现需要关注的信息。
-	 * @tutorial https://www.uviewui.com/components/alertTips.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/alertTips.html
 	 * 
 	 * @property {String}			title       显示的文字 
 	 * @property {String}			type        使用预设的颜色  （默认 'warning' ）
@@ -80,7 +82,7 @@
 	 */
 	export default {
 		name: 'u-alert',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 				show: true

@@ -40,11 +40,13 @@
 </template>
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 
 	/**
 	 * noticeBar 滚动通知
 	 * @description 该组件用于滚动通告场景，有多种模式可供选择
-	 * @tutorial https://www.uviewui.com/components/noticeBar.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/noticeBar.html
 	 * @property {Array | String}	text			显示的内容，数组
 	 * @property {String}			direction		通告滚动模式，row-横向滚动，column-竖向滚动 ( 默认 'row' )
 	 * @property {Boolean}			step			direction = row时，是否使用步进形式滚动  ( 默认 false )
@@ -66,7 +68,7 @@
 	 */
 	export default {
 		name: "u-notice-bar",
-		mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+		mixins: [mpMixin, mixin,props],
 		data() {
 			return {
 				show: true

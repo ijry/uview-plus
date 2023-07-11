@@ -73,11 +73,13 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 
 	/**
 	 * search 搜索框
 	 * @description 搜索组件，集成了常见搜索框所需功能，用户可以一键引入，开箱即用。
-	 * @tutorial https://www.uviewui.com/components/search.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/search.html
 	 * @property {String}			shape				搜索框形状，round-圆形，square-方形（默认 'round' ）
 	 * @property {String}			bgColor				搜索框背景颜色（默认 '#f2f2f2' ）
 	 * @property {String}			placeholder			占位文字内容（默认 '请输入关键字' ）
@@ -111,7 +113,7 @@
 	 */
 	export default {
 		name: "u-search",
-		mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 				keyword: '',
@@ -157,7 +159,7 @@
 				return !this.animation && this.showAction
 			}
 		},
-		emits: ['clear', 'search', 'custom', 'focus', 'blur', 'click', 'clickIcon'],
+		emits: ['clear', 'search', 'custom', 'focus', 'blur', 'click', 'clickIcon', 'update:modelValue', 'change'],
 		methods: {
 			// 目前HX2.6.9 v-model双向绑定无效，故监听input事件获取输入框内容的变化
 			inputChange(e) {

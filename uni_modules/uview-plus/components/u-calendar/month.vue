@@ -31,11 +31,14 @@
 	// 由于nvue不支持百分比单位，需要查询宽度来计算每个日期的宽度
 	const dom = uni.requireNativePlugin('dom')
 	// #endif
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
+	import defprops from '../../libs/config/props';
 	// import dayjs from '../../libs/util/dayjs.js';
 	import dayjs from 'dayjs'
 	export default {
 		name: 'u-calendar-month',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin],
+		mixins: [mpMixin, mixin],
 		props: {
 			// 是否显示月份背景色
 			showMark: {
@@ -100,7 +103,7 @@
 			// 是否为只读状态，只读状态下禁止选择日期
 			readonly: {
 				type: Boolean,
-				default: uni.$u.props.calendar.readonly
+				default: defprops.calendar.readonly
 			},
 			// 日期区间最多可选天数，默认无限制，mode = range时有效
 			maxRange: {
@@ -330,7 +333,7 @@
 			// 获取每个月份区域的尺寸
 			getMonthRectByPromise(el) {
 				// #ifndef APP-NVUE
-				// $uGetRect为uView自带的节点查询简化方法，详见文档介绍：https://www.uviewui.com/js/getRect.html
+				// $uGetRect为uView自带的节点查询简化方法，详见文档介绍：https://ijry.github.io/uview-plus/js/getRect.html
 				// 组件内部一般用this.$uGetRect，对外的为uni.$u.getRect，二者功能一致，名称不同
 				return new Promise(resolve => {
 					this.$uGetRect(`.${el}`).then(size => {

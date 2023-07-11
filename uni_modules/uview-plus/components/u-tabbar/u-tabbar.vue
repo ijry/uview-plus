@@ -24,13 +24,15 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	// #ifdef APP-NVUE
 	const dom = uni.requireNativePlugin('dom')
 	// #endif
 	/**
 	 * Tabbar 底部导航栏
 	 * @description 此组件提供了自定义tabbar的能力。
-	 * @tutorial https://www.uviewui.com/components/tabbar.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/tabbar.html
 	 * @property {String | Number}	value				当前匹配项的name
 	 * @property {Boolean}			safeAreaInsetBottom	是否为iPhoneX留出底部安全距离（默认 true ）
 	 * @property {Boolean}			border				是否显示上方边框（默认 true ）
@@ -45,7 +47,7 @@
 	 */
 	export default {
 		name: 'u-tabbar',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 				placeholderHeight: 0
@@ -128,6 +130,7 @@
 			&__item-wrapper {
 				height: 50px;
 				@include flex(row);
+				justify-content: space-around;
 			}
 		}
 

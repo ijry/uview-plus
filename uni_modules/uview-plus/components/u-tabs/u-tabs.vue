@@ -49,29 +49,30 @@
 							class="u-tabs__wrapper__nav__line"
 							ref="u-tabs__wrapper__nav__line"
 							:style="[{
-									width: $u.addUnit(lineWidth),
-									height: $u.addUnit(lineHeight),
-									background: lineColor,
-									backgroundSize: lineBgSize,
-								}]"
+								width: $u.addUnit(lineWidth),
+								height: $u.addUnit(lineHeight),
+								background: lineColor,
+								backgroundSize: lineBgSize,
+							}]"
 						>
-							<!-- #endif -->
-							<!-- #ifndef APP-NVUE -->
-							<view
-								class="u-tabs__wrapper__nav__line"
-								ref="u-tabs__wrapper__nav__line"
-								:style="[{
-										width: $u.addUnit(lineWidth),
-										transform: `translate(${lineOffsetLeft}px)`,
-										transitionDuration: `${firstTime ? 0 : duration}ms`,
-										height: $u.addUnit(lineHeight),
-										background: lineColor,
-										backgroundSize: lineBgSize,
-									}]"
-							>
-								<!-- #endif -->
-							</view>
 						</view>
+						<!-- #endif -->
+						<!-- #ifndef APP-NVUE -->
+						<view
+							class="u-tabs__wrapper__nav__line"
+							ref="u-tabs__wrapper__nav__line"
+							:style="[{
+								width: $u.addUnit(lineWidth),
+								transform: `translate(${lineOffsetLeft}px)`,
+								transitionDuration: `${firstTime ? 0 : duration}ms`,
+								height: $u.addUnit(lineHeight),
+								background: lineColor,
+								backgroundSize: lineBgSize,
+							}]"
+						>
+						</view>
+						<!-- #endif -->
+					</view>
 				</scroll-view>
 			</view>
 			<slot name="right" />
@@ -85,10 +86,12 @@
 	const dom = uni.requireNativePlugin('dom')
 	// #endif
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * Tabs 标签
 	 * @description tabs标签组件，在标签多的时候，可以配置为左右滑动，标签少的时候，可以禁止滑动。 该组件的一个特点是配置为滚动模式时，激活的tab会自动移动到组件的中间位置。
-	 * @tutorial https://www.uviewui.com/components/tabs.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/tabs.html
 	 * @property {String | Number}	duration			滑块移动一次所需的时间，单位秒（默认 200 ）
 	 * @property {String | Number}	swierWidth			swiper的宽度（默认 '750rpx' ）
 	 * @property {String}	keyName	 从`list`元素对象中读取的键名（默认 'name' ）
@@ -98,7 +101,7 @@
 	 */
 	export default {
 		name: 'u-tabs',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 				firstTime: true,
@@ -154,6 +157,7 @@
 		async mounted() {
 			this.init()
 		},
+		emits: ['click', 'change'],
 		methods: {
 			setLineLeft() {
 				const tabItem = this.list[this.innerCurrent];
@@ -268,7 +272,7 @@
 			// 获取各个标签的尺寸
 			queryRect(el, item) {
 				// #ifndef APP-NVUE
-				// $uGetRect为uView自带的节点查询简化方法，详见文档介绍：https://www.uviewui.com/js/getRect.html
+				// $uGetRect为uView自带的节点查询简化方法，详见文档介绍：https://ijry.github.io/uview-plus/js/getRect.html
 				// 组件内部一般用this.$uGetRect，对外的为uni.$u.getRect，二者功能一致，名称不同
 				return new Promise(resolve => {
 					this.$uGetRect(`.${el}`).then(size => {

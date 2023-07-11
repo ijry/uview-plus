@@ -53,7 +53,9 @@
 </template>
 
 <script>
-import props from './props.js'
+import props from './props.js';
+import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 // #ifdef APP-NVUE
 // 由于weex为阿里的KPI业绩考核的产物，所以不支持百分比单位，这里需要通过dom查询组件的宽度
 const dom = uni.requireNativePlugin('dom')
@@ -62,7 +64,7 @@ const dom = uni.requireNativePlugin('dom')
 /**
  * Album 相册
  * @description 本组件提供一个类似相册的功能，让开发者开发起来更加得心应手。减少重复的模板代码
- * @tutorial https://www.uviewui.com/components/album.html
+ * @tutorial https://ijry.github.io/uview-plus/components/album.html
  *
  * @property {Array}           urls             图片地址列表 Array<String>|Array<Object>形式
  * @property {String}          keyName          指定从数组的对象元素中读取哪个属性作为图片地址
@@ -81,7 +83,7 @@ const dom = uni.requireNativePlugin('dom')
  */
 export default {
     name: 'u-album',
-    mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+    mixins: [mpMixin, mixin, props],
     data() {
         return {
             // 单图的宽度

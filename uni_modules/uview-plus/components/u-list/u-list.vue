@@ -38,13 +38,15 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	// #ifdef APP-NVUE
 	const dom = uni.requireNativePlugin('dom')
 	// #endif
 	/**
 	 * List 列表
 	 * @description 该组件为高性能列表组件
-	 * @tutorial https://www.uviewui.com/components/list.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/list.html
 	 * @property {Boolean}			showScrollbar		控制是否出现滚动条，仅nvue有效 （默认 false ）
 	 * @property {String ｜ Number}	lowerThreshold		距底部多少时触发scrolltolower事件 （默认 50 ）
 	 * @property {String ｜ Number}	upperThreshold		距顶部多少时触发scrolltoupper事件，非nvue有效 （默认 0 ）
@@ -65,7 +67,7 @@
 	 */
 	export default {
 		name: 'u-list',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+		mixins: [mpMixin, mixin, props],
 		watch: {
 			scrollIntoView(n) {
 				this.scrollIntoViewById(n)

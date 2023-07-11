@@ -26,10 +26,12 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * gridItem 提示
 	 * @description 宫格组件一般用于同时展示多个同类项目的场景，可以给宫格的项目设置徽标组件(badge)，或者图标等，也可以扩展为左右滑动的轮播形式。搭配u-grid使用
-	 * @tutorial https://www.uviewui.com/components/grid.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/grid.html
 	 * @property {String | Number}	name		宫格的name ( 默认 null )
 	 * @property {String}			bgColor		宫格的背景颜色 （默认 'transparent' ）
 	 * @property {Object}			customStyle	自定义样式，对象形式
@@ -38,7 +40,7 @@
 	 */
 	export default {
 		name: "u-grid-item",
-		mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 				parentData: {
@@ -53,6 +55,11 @@
 		},
 		mounted() {
 			this.init()
+		},
+		emits: ['click'],
+		//  微信小程序中 options 选项
+		options: {
+		    virtualHost: true //将自定义节点设置成虚拟的，更加接近Vue组件的表现。我们不希望自定义组件的这个节点本身可以设置样式、响应 flex 布局等
 		},
 		computed: {
 			// #ifndef APP-NVUE
@@ -129,7 +136,7 @@
 			},
 			gridItemClasses() {
 				if(this.parentData.border) {
-					const classes = []
+					let classes = []
 					this.parent.children.map((child, index) =>{
 						if(this === child) {
 							const len = this.parent.children.length

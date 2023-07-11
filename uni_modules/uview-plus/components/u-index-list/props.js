@@ -1,29 +1,30 @@
+import defprops from '../../libs/config/props';
 export default {
     props: {
         // 右边锚点非激活的颜色
         inactiveColor: {
             type: String,
-            default: uni.$u.props.indexList.inactiveColor
+            default: defprops.indexList.inactiveColor
         },
         // 右边锚点激活的颜色
         activeColor: {
             type: String,
-            default: uni.$u.props.indexList.activeColor
+            default: defprops.indexList.activeColor
         },
         // 索引字符列表，数组形式
         indexList: {
             type: Array,
-            default: uni.$u.props.indexList.indexList
+            default: defprops.indexList.indexList
         },
         // 是否开启锚点自动吸顶
         sticky: {
             type: Boolean,
-            default: uni.$u.props.indexList.sticky
+            default: defprops.indexList.sticky
         },
         // 自定义导航栏的高度
         customNavHeight: {
             type: [String, Number],
-            default: uni.$u.props.indexList.customNavHeight
+            default: defprops.indexList.customNavHeight
         }
     }
 }

@@ -1,8 +1,9 @@
+import defprops from '../../libs/config/props';
 export default {
     props: {
         percentage: {
             type: [String, Number],
-            default: uni.$u.props.circleProgress.percentage
+            default: defprops.circleProgress.percentage
         }
     }
 }

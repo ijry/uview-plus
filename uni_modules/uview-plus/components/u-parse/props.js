@@ -1,43 +1,45 @@
+import defprops from '../../libs/config/props';
 export default {
     props: {
-        // #ifdef APP-PLUS-NVUE
-        bgColor: String,
-        // #endif
+		containerStyle: {
+          type: String,
+          default: null
+		},
         content: String,
         copyLink: {
 		  type: Boolean,
-		  default: uni.$u.props.parse.copyLink
+		  default: defprops.parse.copyLink
         },
         domain: String,
         errorImg: {
 		  type: String,
-		  default: uni.$u.props.parse.errorImg
+		  default: defprops.parse.errorImg
         },
         lazyLoad: {
 		  type: Boolean,
-		  default: uni.$u.props.parse.lazyLoad
+		  default: defprops.parse.lazyLoad
         },
         loadingImg: {
 		  type: String,
-		  default: uni.$u.props.parse.loadingImg
+		  default: defprops.parse.loadingImg
         },
         pauseVideo: {
 		  type: Boolean,
-		  default: uni.$u.props.parse.pauseVideo
+		  default: defprops.parse.pauseVideo
         },
         previewImg: {
 		  type: Boolean,
-		  default: uni.$u.props.parse.previewImg
+		  default: defprops.parse.previewImg
         },
         scrollTable: Boolean,
         selectable: Boolean,
         setTitle: {
 		  type: Boolean,
-		  default: uni.$u.props.parse.setTitle
+		  default: defprops.parse.setTitle
         },
         showImgMenu: {
 		  type: Boolean,
-		  default: uni.$u.props.parse.showImgMenu
+		  default: defprops.parse.showImgMenu
         },
         tagStyle: Object,
         useAnchor: null

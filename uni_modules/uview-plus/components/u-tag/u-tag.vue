@@ -57,10 +57,12 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * Tag 标签
 	 * @description tag组件一般用于标记和选择，我们提供了更加丰富的表现形式，能够较全面的涵盖您的使用场景
-	 * @tutorial https://www.uviewui.com/components/tag.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/tag.html
 	 * @property {String}			type		标签类型info、primary、success、warning、error （默认 'primary' ）
 	 * @property {Boolean | String}	disabled	不可用（默认 false ）
 	 * @property {String}			size		标签的大小，large，medium，mini （默认 'medium' ）
@@ -82,7 +84,7 @@
 	 */
 	export default {
 		name: 'u-tag',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 

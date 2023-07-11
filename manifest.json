@@ -2,7 +2,7 @@
     "name" : "uiew-plus",
     "appid" : "__UNI__0FF8111",
     "description" : "多平台快速开发的UI框架",
-    "versionName" : "1.0.0",
+    "versionName" : "3.1.0",
     "versionCode" : 1,
     "transformPx" : false,
     "app-plus" : {
@@ -130,15 +130,15 @@
     "h5" : {
         "template" : "",
         "router" : {
-            "mode" : "history",
-            "base" : ""
+            "mode" : "hash",
+            "base" : "./"
         },
         "optimization" : {
             "treeShaking" : {
                 "enable" : false
             }
         },
-        "title" : "uViewPlus UI",
+        "title" : "uview-plus",
         "sdkConfigs" : {
             "maps" : {
                 "qqmap" : {

@@ -49,12 +49,14 @@
 	// 引入图标名称，已经对应的unicode
 	import icons from './icons'
 	
-	import props from './props.js';;
+	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 
 	/**
 	 * icon 图标
 	 * @description 基于字体的图标集，包含了大多数常见场景的图标。
-	 * @tutorial https://www.uviewui.com/components/icon.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/icon.html
 	 * @property {String}			name			图标名称，见示例图标集
 	 * @property {String}			color			图标颜色,可接受主题色 （默认 color['u-content-color'] ）
 	 * @property {String | Number}	size			图标字体大小，单位px （默认 '16px' ）
@@ -84,7 +86,8 @@
 
 			}
 		},
-		mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+		emits: ['click'],
+		mixins: [mpMixin, mixin, props],
 		computed: {
 			uClasses() {
 				let classes = []

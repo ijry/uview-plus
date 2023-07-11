@@ -53,6 +53,8 @@
 </template>
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	// #ifdef APP-NVUE
 	const animation = uni.requireNativePlugin('animation')
 	const dom = uni.requireNativePlugin('dom')
@@ -60,7 +62,7 @@
 	/**
 	 * RowNotice 滚动通知中的水平滚动模式
 	 * @description 水平滚动
-	 * @tutorial https://www.uviewui.com/components/noticeBar.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/noticeBar.html
 	 * @property {String | Number}	text			显示的内容，字符串
 	 * @property {String}			icon			是否显示左侧的音量图标 (默认 'volume' )
 	 * @property {String}			mode			通告模式，link-显示右箭头，closable-显示右侧关闭图标
@@ -75,7 +77,7 @@
 	 */
 	export default {
 		name: 'u-row-notice',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 				animationDuration: '0', // 动画执行时间
@@ -318,13 +320,15 @@
 
 	}
 
+	/* #ifndef APP-NVUE */
 	@keyframes u-loop-animation {
 		0% {
 			transform: translate3d(0, 0, 0);
 		}
-
+	
 		100% {
 			transform: translate3d(-100%, 0, 0);
 		}
 	}
+	/* #endif */
 </style>

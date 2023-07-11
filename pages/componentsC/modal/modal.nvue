@@ -19,12 +19,13 @@
 				:key="index"
 				isLink
 			>
-				<image
-					slot="icon"
-					class="u-cell-icon"
-					:src="item.iconUrl"
-					mode="widthFix"
-				></image>
+				<template #icon>
+					<image
+						class="u-cell-icon"
+						:src="item.iconUrl"
+						mode="widthFix"
+					></image>
+				</template>
 			</u-cell>
 		</u-cell-group>
 		<u-modal
@@ -89,13 +90,14 @@
 			closeOnClickOverlay
 			showCancelButton
 		>
-			<u-button
-				slot="confirmButton"
-				text="确定"
-				type="success"
-				shape="circle"
-				@click="show8 = false"
-			></u-button>
+			<template #confirmButton>
+				<u-button
+					text="确定"
+					type="success"
+					shape="circle"
+					@click="show8 = false"
+				></u-button>
+			</template>
 		</u-modal>
 		<u-modal
 			:content="content"

@@ -4,10 +4,12 @@
 		@tap="clickHandler">
 		<view class="u-cell__body" :class="[ center && 'u-cell--center', size === 'large' && 'u-cell__body--large']">
 			<view class="u-cell__body__content">
-				<view class="u-cell__left-icon-wrap" v-if="$slots.icon || icon">
-					<slot name="icon" v-if="$slots.icon">
+				<view class="u-cell__left-icon-wrap">
+					<slot name="icon">
+						<u-icon  v-if="icon" :name="icon"
+							:custom-style="iconStyle"
+							:size="size === 'large' ? 22 : 18"></u-icon>
 					</slot>
-					<u-icon v-else :name="icon" :custom-style="iconStyle" :size="size === 'large' ? 22 : 18"></u-icon>
 				</view>
 				<view class="u-cell__title">
 					<slot name="title">
@@ -25,12 +27,12 @@
 					:class="[disabled && 'u-cell--disabled', size === 'large' && 'u-cell__value--large']"
 					v-if="!$u.test.empty(value)">{{ value }}</text>
 			</slot>
-			<view class="u-cell__right-icon-wrap" v-if="$slots['right-icon'] || isLink"
+			<view class="u-cell__right-icon-wrap"
 				:class="[`u-cell__right-icon-wrap--${arrowDirection}`]">
-				<slot name="right-icon" v-if="$slots['right-icon']">
+				<slot name="right-icon">
+					<u-icon v-if="isLink" :name="rightIcon" :custom-style="rightIconStyle" :color="disabled ? '#c8c9cc' : 'info'"
+						:size="size === 'large' ? 18 : 16"></u-icon>
 				</slot>
-				<u-icon v-else :name="rightIcon" :custom-style="rightIconStyle" :color="disabled ? '#c8c9cc' : 'info'"
-					:size="size === 'large' ? 18 : 16"></u-icon>
 			</view>
 		</view>
 		<u-line v-if="border"></u-line>
@@ -39,6 +41,8 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * cell  单元格
 	 * @description cell单元格一般用于一组列表的情况，比如个人中心页，设置页等。
@@ -74,7 +78,7 @@
 
 			}
 		},
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+		mixins: [mpMixin, mixin, props],
 		computed: {
 			titleTextStyle() {
 				return uni.$u.addStyle(this.titleStyle)

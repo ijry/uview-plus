@@ -1,5 +1,5 @@
 // 看到此报错，是因为没有配置vue.config.js的【transpileDependencies】，详见：https://www.uviewui.com/components/npmSetting.html#_5-cli模式额外配置
-//const pleaseSetTranspileDependencies = {}, babelTest = pleaseSetTranspileDependencies?.test
+const pleaseSetTranspileDependencies = {}, babelTest = pleaseSetTranspileDependencies?.test
 
 // 引入全局mixin
 import mixin from './libs/mixin/mixin.js'
@@ -68,6 +68,7 @@ const install = (Vue) => {
     // #ifndef APP-NVUE
     // 只有vue，挂载到Vue.prototype才有意义，因为nvue中全局Vue.prototype和Vue.mixin是无效的
     Vue.config.globalProperties.$u = $u
+	// 暂时兼容vue2的$nextTick写法
     Vue.config.globalProperties.$nextTick = (cb) => {
         cb();
     }

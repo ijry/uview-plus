@@ -4,7 +4,7 @@
 			<text class="u-page__item__title">基础功能</text>
 			<u-cell-group>
 				<u-cell
-				    title="uView UI"
+				    title="uview-plus"
 				    value="内容"
 				    :isLink="true"
 				></u-cell>
@@ -115,10 +115,14 @@
 				    title="单元格"
 					isLink
 				>
-					<text
-					    slot="value"
-					    class="u-slot-value"
-					>99</text>
+					<template #value>
+						<text
+						    class="u-slot-value"
+						>99</text>
+					</template>
+					<template #right-icon>
+						0
+					</template>
 				</u-cell>
 			</u-cell-group>
 		</view>

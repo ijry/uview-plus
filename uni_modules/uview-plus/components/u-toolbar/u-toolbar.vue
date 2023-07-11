@@ -37,10 +37,12 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * Toolbar 工具条
 	 * @description 
-	 * @tutorial https://www.uviewui.com/components/toolbar.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/toolbar.html
 	 * @property {Boolean}	show			是否展示工具条（默认 true ）
 	 * @property {String}	cancelText		取消按钮的文字（默认 '取消' ）
 	 * @property {String}	confirmText		确认按钮的文字（默认 '确认' ）
@@ -52,7 +54,7 @@
 	 */
 	export default {
 		name: 'u-toolbar',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+		mixins: [mpMixin, mixin, props],
 		methods: {
 			// 点击取消按钮
 			cancel() {

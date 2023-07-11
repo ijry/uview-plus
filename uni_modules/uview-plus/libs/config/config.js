@@ -1,9 +1,8 @@
-// 此版本发布于2022-07-09
-const version = '3.0.0'
+const version = '3'
 
 // 开发环境才提示，生产环境不会提示
 if (process.env.NODE_ENV === 'development') {
-	console.log(`\n %c uview-plus V${version} %c https://uiadmin.net/uview-plus \n\n`, 'color: #ffffff; background: #3c9cff; padding:5px 0;', 'color: #3c9cff;background: #ffffff; padding:5px 0;');
+	console.log(`\n %c uview-plus V${version} %c https://ijry.github.io/uview-plus/ \n\n`, 'color: #ffffff; background: #3c9cff; padding:5px 0;', 'color: #3c9cff;background: #ffffff; padding:5px 0;');
 }
 
 export default {

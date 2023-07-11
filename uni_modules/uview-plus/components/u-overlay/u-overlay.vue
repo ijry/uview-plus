@@ -12,11 +12,13 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 
 	/**
 	 * overlay 遮罩
 	 * @description 创建一个遮罩层，用于强调特定的页面元素，并阻止用户对遮罩下层的内容进行操作，一般用于弹窗场景
-	 * @tutorial https://www.uviewui.com/components/overlay.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/overlay.html
 	 * @property {Boolean}			show		是否显示遮罩（默认 false ）
 	 * @property {String | Number}	zIndex		zIndex 层级（默认 10070 ）
 	 * @property {String | Number}	duration	动画时长，单位毫秒（默认 300 ）
@@ -27,7 +29,7 @@
 	 */
 	export default {
 		name: "u-overlay",
-		mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+		mixins: [mpMixin, mixin,props],
 		computed: {
 			overlayStyle() {
 				const style = {

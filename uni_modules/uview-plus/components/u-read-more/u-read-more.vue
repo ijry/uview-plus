@@ -50,10 +50,12 @@
 	const dom = uni.requireNativePlugin('dom')
 	// #endif
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * readMore 阅读更多
 	 * @description 该组件一般用于内容较长，预先收起一部分，点击展开全部内容的场景。
-	 * @tutorial https://www.uviewui.com/components/readMore.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/readMore.html
 	 * @property {String | Number}	showHeight	内容超出此高度才会显示展开全文按钮，单位px（默认 400 ）
 	 * @property {Boolean}			toggle		展开后是否显示收起按钮（默认 false ）
 	 * @property {String}			closeText	关闭时的提示文字（默认 '展开阅读全文' ）
@@ -69,7 +71,7 @@
 	 */
 	export default {
 		name: 'u-read-more',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 				isLongContent: false, // 是否需要隐藏一部分内容

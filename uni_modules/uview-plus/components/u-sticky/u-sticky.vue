@@ -14,11 +14,13 @@
 </template>
 
 <script>
-	import props from './props.js';;
+	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * sticky 吸顶
 	 * @description 该组件与CSS中position: sticky属性实现的效果一致，当组件达到预设的到顶部距离时， 就会固定在指定位置，组件位置大于预设的顶部距离时，会重新按照正常的布局排列。
-	 * @tutorial https://www.uviewui.com/components/sticky.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/sticky.html
 	 * @property {String ｜ Number}	offsetTop		吸顶时与顶部的距离，单位px（默认 0 ）
 	 * @property {String ｜ Number}	customNavHeight	自定义导航栏的高度 （h5 默认44  其他默认 0 ）
 	 * @property {Boolean}			disabled		是否开启吸顶功能 （默认 false ）
@@ -32,7 +34,7 @@
 	 */
 	export default {
 		name: 'u-sticky',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 				cssSticky: false, // 是否使用css的sticky实现

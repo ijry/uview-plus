@@ -5,186 +5,186 @@
  */
 import config from './config'
 
-import actionSheet from './props/actionSheet.js'
-import album from './props/album.js'
-import alert from './props/alert.js'
-import avatar from './props/avatar'
-import avatarGroup from './props/avatarGroup'
-import backtop from './props/backtop'
-import badge from './props/badge'
-import button from './props/button'
-import calendar from './props/calendar'
-import carKeyboard from './props/carKeyboard'
-import cell from './props/cell'
-import cellGroup from './props/cellGroup'
-import checkbox from './props/checkbox'
-import checkboxGroup from './props/checkboxGroup'
-import circleProgress from './props/circleProgress'
-import code from './props/code'
-import codeInput from './props/codeInput'
-import col from './props/col'
-import collapse from './props/collapse'
-import collapseItem from './props/collapseItem'
-import columnNotice from './props/columnNotice'
-import countDown from './props/countDown'
-import countTo from './props/countTo'
-import datetimePicker from './props/datetimePicker'
-import divider from './props/divider'
-import empty from './props/empty'
-import form from './props/form'
-import formItem from './props/formItem'
-import gap from './props/gap'
-import grid from './props/grid'
-import gridItem from './props/gridItem'
-import icon from './props/icon'
-import image from './props/image'
-import indexAnchor from './props/indexAnchor'
-import indexList from './props/indexList'
-import input from './props/input'
-import keyboard from './props/keyboard'
-import line from './props/line'
-import lineProgress from './props/lineProgress'
-import link from './props/link'
-import list from './props/list'
-import listItem from './props/listItem'
-import loadingIcon from './props/loadingIcon'
-import loadingPage from './props/loadingPage'
-import loadmore from './props/loadmore'
-import modal from './props/modal'
-import navbar from './props/navbar'
-import noNetwork from './props/noNetwork'
-import noticeBar from './props/noticeBar'
-import notify from './props/notify'
-import numberBox from './props/numberBox'
-import numberKeyboard from './props/numberKeyboard'
-import overlay from './props/overlay'
-import parse from './props/parse'
-import picker from './props/picker'
-import popup from './props/popup'
-import radio from './props/radio'
-import radioGroup from './props/radioGroup'
-import rate from './props/rate'
-import readMore from './props/readMore'
-import row from './props/row'
-import rowNotice from './props/rowNotice'
-import scrollList from './props/scrollList'
-import search from './props/search'
-import section from './props/section'
-import skeleton from './props/skeleton'
-import slider from './props/slider'
-import statusBar from './props/statusBar'
-import steps from './props/steps'
-import stepsItem from './props/stepsItem'
-import sticky from './props/sticky'
-import subsection from './props/subsection'
-import swipeAction from './props/swipeAction'
-import swipeActionItem from './props/swipeActionItem'
-import swiper from './props/swiper'
-import swipterIndicator from './props/swipterIndicator'
-import _switch from './props/switch'
-import tabbar from './props/tabbar'
-import tabbarItem from './props/tabbarItem'
-import tabs from './props/tabs'
-import tag from './props/tag'
-import text from './props/text'
-import textarea from './props/textarea'
-import toast from './props/toast'
-import toolbar from './props/toolbar'
-import tooltip from './props/tooltip'
-import transition from './props/transition'
-import upload from './props/upload'
+import ActionSheet from './props/actionSheet'
+import Album from './props/album'
+import Alert from './props/alert'
+import Avatar from './props/avatar'
+import AvatarGroup from './props/avatarGroup'
+import Backtop from './props/backtop'
+import Badge from './props/badge'
+import Button from './props/button'
+import Calendar from './props/calendar'
+import CarKeyboard from './props/carKeyboard'
+import Cell from './props/cell'
+import CellGroup from './props/cellGroup'
+import Checkbox from './props/checkbox'
+import CheckboxGroup from './props/checkboxGroup'
+import CircleProgress from './props/circleProgress'
+import Code from './props/code'
+import CodeInput from './props/codeInput'
+import Col from './props/col'
+import Collapse from './props/collapse'
+import CollapseItem from './props/collapseItem'
+import ColumnNotice from './props/columnNotice'
+import CountDown from './props/countDown'
+import CountTo from './props/countTo'
+import DatetimePicker from './props/datetimePicker'
+import Divider from './props/divider'
+import Empty from './props/empty'
+import Form from './props/form'
+import GormItem from './props/formItem'
+import Gap from './props/gap'
+import Grid from './props/grid'
+import GridItem from './props/gridItem'
+import Icon from './props/icon'
+import Image from './props/image'
+import IndexAnchor from './props/indexAnchor'
+import IndexList from './props/indexList'
+import Input from './props/input'
+import Keyboard from './props/keyboard'
+import Line from './props/line'
+import LineProgress from './props/lineProgress'
+import Link from './props/link'
+import List from './props/list'
+import ListItem from './props/listItem'
+import LoadingIcon from './props/loadingIcon'
+import LoadingPage from './props/loadingPage'
+import Loadmore from './props/loadmore'
+import Modal from './props/modal'
+import Navbar from './props/navbar'
+import NoNetwork from './props/noNetwork'
+import NoticeBar from './props/noticeBar'
+import Notify from './props/notify'
+import NumberBox from './props/numberBox'
+import NumberKeyboard from './props/numberKeyboard'
+import Overlay from './props/overlay'
+import Parse from './props/parse'
+import Picker from './props/picker'
+import Popup from './props/popup'
+import Radio from './props/radio'
+import RadioGroup from './props/radioGroup'
+import Rate from './props/rate'
+import ReadMore from './props/readMore'
+import Row from './props/row'
+import RowNotice from './props/rowNotice'
+import ScrollList from './props/scrollList'
+import Search from './props/search'
+import Section from './props/section'
+import Skeleton from './props/skeleton'
+import Slider from './props/slider'
+import StatusBar from './props/statusBar'
+import Steps from './props/steps'
+import StepsItem from './props/stepsItem'
+import Sticky from './props/sticky'
+import Subsection from './props/subsection'
+import SwipeAction from './props/swipeAction'
+import SwipeActionItem from './props/swipeActionItem'
+import Swiper from './props/swiper'
+import SwipterIndicator from './props/swipterIndicator'
+import Switch from './props/switch'
+import Tabbar from './props/tabbar'
+import TabbarItem from './props/tabbarItem'
+import Tabs from './props/tabs'
+import Tag from './props/tag'
+import Text from './props/text'
+import Textarea from './props/textarea'
+import Toast from './props/toast'
+import Toolbar from './props/toolbar'
+import Tooltip from './props/tooltip'
+import Transition from './props/transition'
+import Upload from './props/upload'
 
 const {
     color
 } = config
 
 export default {
-    ...actionSheet,
-    ...album,
-    ...alert,
-    ...avatar,
-    ...avatarGroup,
-    ...backtop,
-    ...badge,
-    ...button,
-    ...calendar,
-    ...carKeyboard,
-    ...cell,
-    ...cellGroup,
-    ...checkbox,
-    ...checkboxGroup,
-    ...circleProgress,
-    ...code,
-    ...codeInput,
-    ...col,
-    ...collapse,
-    ...collapseItem,
-    ...columnNotice,
-    ...countDown,
-    ...countTo,
-    ...datetimePicker,
-    ...divider,
-    ...empty,
-    ...form,
-    ...formItem,
-    ...gap,
-    ...grid,
-    ...gridItem,
-    ...icon,
-    ...image,
-    ...indexAnchor,
-    ...indexList,
-    ...input,
-    ...keyboard,
-    ...line,
-    ...lineProgress,
-    ...link,
-    ...list,
-    ...listItem,
-    ...loadingIcon,
-    ...loadingPage,
-    ...loadmore,
-    ...modal,
-    ...navbar,
-    ...noNetwork,
-    ...noticeBar,
-    ...notify,
-    ...numberBox,
-    ...numberKeyboard,
-    ...overlay,
-    ...parse,
-    ...picker,
-    ...popup,
-    ...radio,
-    ...radioGroup,
-    ...rate,
-    ...readMore,
-    ...row,
-    ...rowNotice,
-    ...scrollList,
-    ...search,
-    ...section,
-    ...skeleton,
-    ...slider,
-    ...statusBar,
-    ...steps,
-    ...stepsItem,
-    ...sticky,
-    ...subsection,
-    ...swipeAction,
-    ...swipeActionItem,
-    ...swiper,
-    ...swipterIndicator,
-    ..._switch,
-    ...tabbar,
-    ...tabbarItem,
-    ...tabs,
-    ...tag,
-    ...text,
-    ...textarea,
-    ...toast,
-    ...toolbar,
-    ...tooltip,
-    ...transition,
-    ...upload
+    ...ActionSheet,
+    ...Album,
+    ...Alert,
+    ...Avatar,
+    ...AvatarGroup,
+    ...Backtop,
+    ...Badge,
+    ...Button,
+    ...Calendar,
+    ...CarKeyboard,
+    ...Cell,
+    ...CellGroup,
+    ...Checkbox,
+    ...CheckboxGroup,
+    ...CircleProgress,
+    ...Code,
+    ...CodeInput,
+    ...Col,
+    ...Collapse,
+    ...CollapseItem,
+    ...ColumnNotice,
+    ...CountDown,
+    ...CountTo,
+    ...DatetimePicker,
+    ...Divider,
+    ...Empty,
+    ...Form,
+    ...GormItem,
+    ...Gap,
+    ...Grid,
+    ...GridItem,
+    ...Icon,
+    ...Image,
+    ...IndexAnchor,
+    ...IndexList,
+    ...Input,
+    ...Keyboard,
+    ...Line,
+    ...LineProgress,
+    ...Link,
+    ...List,
+    ...ListItem,
+    ...LoadingIcon,
+    ...LoadingPage,
+    ...Loadmore,
+    ...Modal,
+    ...Navbar,
+    ...NoNetwork,
+    ...NoticeBar,
+    ...Notify,
+    ...NumberBox,
+    ...NumberKeyboard,
+    ...Overlay,
+    ...Parse,
+    ...Picker,
+    ...Popup,
+    ...Radio,
+    ...RadioGroup,
+    ...Rate,
+    ...ReadMore,
+    ...Row,
+    ...RowNotice,
+    ...ScrollList,
+    ...Search,
+    ...Section,
+    ...Skeleton,
+    ...Slider,
+    ...StatusBar,
+    ...Steps,
+    ...StepsItem,
+    ...Sticky,
+    ...Subsection,
+    ...SwipeAction,
+    ...SwipeActionItem,
+    ...Swiper,
+    ...SwipterIndicator,
+    ...Switch,
+    ...Tabbar,
+    ...TabbarItem,
+    ...Tabs,
+    ...Tag,
+    ...Text,
+    ...Textarea,
+    ...Toast,
+    ...Toolbar,
+    ...Tooltip,
+    ...Transition,
+    ...Upload
 }

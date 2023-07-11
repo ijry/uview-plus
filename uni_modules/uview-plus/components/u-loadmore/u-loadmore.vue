@@ -53,11 +53,13 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 
 	/**
 	 * loadmore 加载更多
 	 * @description 此组件一般用于标识页面底部加载数据时的状态。
-	 * @tutorial https://www.uviewui.com/components/loadMore.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/loadMore.html
 	 * @property {String}			status			组件状态（默认 'loadmore' ）
 	 * @property {String}			bgColor			组件背景颜色，在页面是非白色时会用到（默认 'transparent' ）
 	 * @property {Boolean}			icon			加载中时是否显示图标（默认 true ）
@@ -81,7 +83,7 @@
 	 */
 	export default {
 		name: "u-loadmore",
-		mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 				// 粗点

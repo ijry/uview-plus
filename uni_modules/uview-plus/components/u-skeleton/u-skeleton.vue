@@ -50,6 +50,8 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	// #ifdef APP-NVUE
 	// 由于weex为阿里的KPI业绩考核的产物，所以不支持百分比单位，这里需要通过dom查询组件的宽度
 	const dom = uni.requireNativePlugin('dom')
@@ -58,7 +60,7 @@
 	/**
 	 * Skeleton 骨架屏
 	 * @description 骨架屏一般用于页面在请求远程数据尚未完成时，页面用灰色块预显示本来的页面结构，给用户更好的体验。
-	 * @tutorial https://www.uviewui.com/components/skeleton.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/skeleton.html
 	 * @property {Boolean}					loading		是否显示骨架占位图，设置为false将会展示子组件内容 (默认 true )
 	 * @property {Boolean}					animate		是否开启动画效果 (默认 true )
 	 * @property {String | Number}			rows		段落占位图行数 (默认 0 )
@@ -74,7 +76,7 @@
 	 */
 	export default {
 		name: 'u-skeleton',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 				width: 0,
@@ -94,7 +96,7 @@
 				for (let i = 0; i < this.rows; i++) {
 					let item = {},
 						// 需要预防超出数组边界的情况
-						rowWidth = uni.$u.test.array(this.rowsWidth) ? (this.rowsWidth[i] || (i === this.row - 1 ? '70%' : '100%')) : i ===
+						rowWidth = uni.$u.test.array(this.rowsWidth) ? (this.rowsWidth[i] || (i === this.rows - 1 ? '70%' : '100%')) : i ===
 						this.rows - 1 ? '70%' : this.rowsWidth,
 						rowHeight = uni.$u.test.array(this.rowsHeight) ? (this.rowsHeight[i] || '18px') : this.rowsHeight
 					// 如果有title占位图，第一个段落占位图的外边距需要大一些，如果没有title占位图，第一个段落占位图则无需外边距

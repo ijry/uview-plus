@@ -20,7 +20,7 @@
             :disableDefaultPadding="disableDefaultPadding"
             :holdKeyboard="holdKeyboard"
             :maxlength="maxlength"
-            :confirmType="confirmType"
+            :confirm-type="confirmType"
             :ignoreCompositionEvent="ignoreCompositionEvent"
             @focus="onFocus"
             @blur="onBlur"
@@ -42,10 +42,12 @@
 
 <script>
 import props from "./props.js";
+import mpMixin from '../../libs/mixin/mpMixin.js';
+import mixin from '../../libs/mixin/mixin.js';
 /**
  * Textarea 文本域
  * @description 文本域此组件满足了可能出现的表单信息补充，编辑等实际逻辑的功能，内置了字数校验等
- * @tutorial https://www.uviewui.com/components/textarea.html
+ * @tutorial https://ijry.github.io/uview-plus/components/textarea.html
  *
  * @property {String | Number} 		value					输入框的内容
  * @property {String | Number}		placeholder				输入框为空时占位符
@@ -81,7 +83,7 @@ import props from "./props.js";
  */
 export default {
     name: "u-textarea",
-    mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+    mixins: [mpMixin, mixin, props],
 	data() {
 		return {
 			// 输入框的值
@@ -95,6 +97,8 @@ export default {
 			// 过滤处理方法
 			innerFormatter: value => value
 		}
+	},
+	created() {
 	},
 	watch: {
         // #ifdef VUE2
@@ -142,7 +146,7 @@ export default {
         // 组件的类名
         textareaClass() {
             let classes = [],
-                { border, disabled, shape } = this;
+                { border, disabled } = this;
             border === "surround" &&
                 (classes = classes.concat(["u-border", "u-textarea--radius"]));
             border === "bottom" &&

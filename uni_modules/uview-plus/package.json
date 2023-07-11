@@ -1,8 +1,8 @@
 {
 	"id": "uview-plus",
 	"name": "uview-plus",
-	"displayName": "uview-plus3.0重磅发布，利剑出鞘，一统江湖",
-	"version": "3.0.9",
+	"displayName": "uview-plus3.0重磅发布，全面的Vue3移动组件库。",
+	"version": "3.1.30",
 	"description": "uview-plus已兼容vue3，全面的组件和便捷的工具会让您信手拈来，如鱼得水",
 	"keywords": [
         "uview",
@@ -17,12 +17,8 @@
 	"engines": {
 		"HBuilderX": "^3.1.0"
 	},
-	"dcloudext": {
-		"category": [
-			"前端组件",
-			"通用组件"
-		],
-		"sale": {
+    "dcloudext": {
+        "sale": {
 			"regular": {
 				"price": "0.00"
 			},
@@ -38,7 +34,8 @@
 			"data": "无",
 			"permissions": "无"
 		},
-		"npmurl": "https://www.npmjs.com/package/uview-plus"
+        "npmurl": "https://www.npmjs.com/package/uview-plus",
+        "type": "component-vue"
 	},
 	"uni_modules": {
 		"dependencies": [],
@@ -87,5 +84,8 @@
 	"dependencies": {
 		"clipboard": "^2.0.11",
 		"dayjs": "^1.11.3"
+	},
+	"publishConfig": {
+	    "registry": "https://registry.npmjs.org/"
 	}
 }

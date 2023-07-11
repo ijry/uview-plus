@@ -12,6 +12,7 @@
 					    :name="item.name"
 					    size="30"
 					    color="#909399"
+						@click="test"
 					></u-icon>
 				</view>
 				<text class="u-page__grid__item__text">{{item.name}}</text>
@@ -607,6 +608,9 @@
 			};
 		},
 		methods: {
+			test() {
+				console.log('test')
+			},
 			selectIcon(name) {
 				// #ifdef H5
 				return uni.$u.toast('H5暂不支持复制');

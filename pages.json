@@ -13,6 +13,13 @@
 			"style": {
 				"navigationBarTitleText": "uview-plus"
 			}
+		},
+		// 演示-模板
+		{
+			"path": "pages/example/template",
+			"style": {
+				"navigationBarTitleText": "模板"
+			}
 		}
     ],
 	"subPackages": [{
@@ -414,6 +421,116 @@
 				"navigationBarTitleText": "分段器"
 			}
 		}]
+	},
+	{
+		"root": "pages/template",
+		"pages": [
+			// wxCenter 仿微信个人中心
+			{
+				"path": "wxCenter/index",
+				"style": {
+					"navigationBarTitleText": "wxCenter 仿微信个人中心",
+					"navigationStyle": "custom"
+				}
+			},
+			// keyboardPay 自定义键盘支付
+			{
+				"path": "keyboardPay/index",
+				"style": {
+					"navigationBarTitleText": "keyboardPay 自定义键盘支付"
+				}
+			},
+			// douyin 仿抖音
+			// {
+			// 	"path": "douyin/index",
+			// 	"style": {
+			// 		"navigationBarTitleText": "douyin 仿抖音"
+			// 	}
+			// },
+			// mallMenu商城分类
+			{
+				"path": "mallMenu/index2",
+				"style": {
+					"navigationBarTitleText": "mallMenu-商城分类"
+				}
+			},
+			// mallMenu商城分类
+			{
+				"path": "mallMenu/index1",
+				"style": {
+					"navigationBarTitleText": "mallMenu-商城分类"
+				}
+			},
+			// coupon优惠券
+			{
+				"path": "coupon/index",
+				"style": {
+					"navigationBarTitleText": "coupon-优惠券"
+				}
+			},
+			{
+				"path": "login/index",
+				"style": {
+					"navigationBarTitleText": "美团登录"
+				}
+			},
+			// 城市选择
+			{
+				"path": "citySelect/index",
+				"style": {
+					"navigationBarTitleText": "城市选择"
+				}
+			},
+			// SubmitBar提交订单栏
+			{
+				"path": "submitBar/index",
+				"style": {
+					"navigationBarTitleText": "提交订单栏"
+				}
+			},
+			// comment评论
+			{
+				"path": "comment/index",
+				"style": {
+					"navigationBarTitleText": "评论"
+				}
+			},
+			// comment评论详情
+			{
+				"path": "comment/reply",
+				"style": {
+					"navigationBarTitleText": "评论详情"
+				}
+			},
+			// order订单
+			{
+				"path": "order/index",
+				"style": {
+					"navigationBarTitleText": "订单"
+				}
+			},
+			// login登录获取验证码
+			{
+				"path": "login/code",
+				"style": {
+					"navigationBarTitleText": "登录获取验证码"
+				}
+			},
+			// address用户地址
+			{
+				"path": "address/index",
+				"style": {
+					"navigationBarTitleText": "用户地址"
+				}
+			},
+			// address添加用户地址
+			{
+				"path": "address/addSite",
+				"style": {
+					"navigationBarTitleText": "添加用户地址"
+				}
+			}
+		]
 	}],
 	"preloadRule": {
 		"pages/example/components": {
@@ -423,8 +540,33 @@
 	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uViewPlus",
+		"navigationBarTitleText": "uview-plus",
 		"navigationBarBackgroundColor": "#FFFFFF",
 		"backgroundColor": "#FFFFFF"
+	},
+	"tabBar": {
+		"color": "#909399",
+		"selectedColor": "#303133",
+		"backgroundColor": "#FFFFFF",
+		"borderStyle": "black",
+		"list": [{
+				"pagePath": "pages/example/components",
+				"iconPath": "static/uview/example/component.png",
+				"selectedIconPath": "static/uview/example/component_select.png",
+				"text": "组件"
+			},
+			// {
+			// 	"pagePath": "pages/example/js",
+			// 	"iconPath": "static/uview/example/js.png",
+			// 	"selectedIconPath": "static/uview/example/js_select.png",
+			// 	"text": "工具"
+			// },
+			{
+				"pagePath": "pages/example/template",
+				"iconPath": "static/uview/example/template.png",
+				"selectedIconPath": "static/uview/example/template_select.png",
+				"text": "模板"
+			}
+		]
 	}
 }

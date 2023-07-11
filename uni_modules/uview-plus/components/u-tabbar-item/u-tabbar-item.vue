@@ -44,10 +44,12 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * TabbarItem 底部导航栏子组件
 	 * @description 此组件提供了自定义tabbar的能力。
-	 * @tutorial https://www.uviewui.com/components/tabbar.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/tabbar.html
 	 * @property {String | Number}	name		item标签的名称，作为与u-tabbar的value参数匹配的标识符
 	 * @property {String}			icon		uView内置图标或者绝对路径的图片
 	 * @property {String | Number}	badge		右上角的角标提示信息
@@ -60,7 +62,7 @@
 	 */
 	export default {
 		name: 'u-tabbar-item',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 				isActive: false, // 是否处于激活状态
@@ -70,6 +72,10 @@
 					inactiveColor: ''
 				}
 			}
+		},
+		//  微信小程序中 options 选项
+		options: {
+		    virtualHost: true //将自定义节点设置成虚拟的，更加接近Vue组件的表现。我们不希望自定义组件的这个节点本身可以设置样式、响应 flex 布局等
 		},
 		created() {
 			this.init()
@@ -112,12 +118,13 @@
 
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
-
 	.u-tabbar-item {
 		@include flex(column);
 		align-items: center;
 		justify-content: center;
 		flex: 1;
+		width: 100%;
+		height: 100%;
 		
 		&__icon {
 			@include flex;
@@ -136,7 +143,8 @@
 	/* #ifdef MP */
 	// 由于小程序都使用shadow DOM形式实现，需要给影子宿主设置flex: 1才能让其撑开
 	:host {
-		flex: 1
+		flex: 1;
+		width: 100%;
 	}
 	/* #endif */
 </style>

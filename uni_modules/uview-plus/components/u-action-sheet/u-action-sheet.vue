@@ -35,10 +35,9 @@
 			<slot>
 				<u-line v-if="description"></u-line>
 				<view class="u-action-sheet__item-wrap">
-					<template v-for="(item, index) in actions">
+					<view :key="index" v-for="(item, index) in actions">
 						<!-- #ifdef MP -->
 						<button
-						    :key="index"
 						    class="u-reset-button"
 						    :openType="item.openType"
 						    @getuserinfo="onGetUserInfo"
@@ -85,7 +84,7 @@
 						</button>
 						<!-- #endif -->
 						<u-line v-if="index !== actions.length - 1"></u-line>
-					</template>
+					</view>
 				</view>
 			</slot>
 			<u-gap
@@ -110,10 +109,12 @@
 	import openType from '../../libs/mixin/openType'
 	import button from '../../libs/mixin/button'
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * ActionSheet 操作菜单
 	 * @description 本组件用于从底部弹出一个操作菜单，供用户选择并返回结果。本组件功能类似于uni的uni.showActionSheetAPI，配置更加灵活，所有平台都表现一致。
-	 * @tutorial https://www.uviewui.com/components/actionSheet.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/actionSheet.html
 	 * 
 	 * @property {Boolean}			show				操作菜单是否展示 （默认 false ）
 	 * @property {String}			title				操作菜单标题
@@ -146,7 +147,7 @@
 	export default {
 		name: "u-action-sheet",
 		// 一些props参数和methods方法，通过mixin混入，因为其他文件也会用到
-		mixins: [openType, button, uni.$u.mixin, props],
+		mixins: [openType, button, mixin, props],
 		data() {
 			return {
 

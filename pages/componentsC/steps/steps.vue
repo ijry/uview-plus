@@ -135,7 +135,9 @@
 					    title="运输中"
 					    desc="11:40"
 					>
-						<text class="slot-icon" slot="icon">运</text>
+						<template v-slot:icon>
+							<text class="slot-icon">运</text>
+						</template>
 					</u-steps-item>
 				</u-steps>
 			</view>

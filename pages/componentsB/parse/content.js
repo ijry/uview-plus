@@ -1,7 +1,7 @@
 /**
  * @fileoverview 用于测试的 html 内容
  */
-module.exports = `<title>富文本示例</title>
+export default `<title>富文本示例</title>
 <div>
   <section style="text-align: center; margin: 0px auto;">
     <section style="border-radius: 4px; border: 1px solid #757576; display: inline-block; padding: 5px 20px;">

@@ -77,9 +77,11 @@
  * @event {Function} confirm	点击确定按钮，返回当前选择的值
  */
 import props from './props.js';
+import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 export default {
 	name: 'u-picker',
-	mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+	mixins: [mpMixin, mixin, props],
 	data() {
 		return {
 			// 上一次选择的列索引
@@ -103,11 +105,13 @@ export default {
 		// 监听columns参数的变化
 		columns: {
 			immediate: true,
+			deep:true,
 			handler(n) {
 				this.setColumns(n)
 			}
 		},
 	},
+	emits: ['close', 'cancel', 'confirm', 'change'],
 	methods: {
 		// 获取item需要显示的文字，判别为对象还是文本
 		getItemText(item) {
@@ -210,6 +214,7 @@ export default {
 		},
 		// 设置整体各列的columns的值
 		setColumns(columns) {
+			console.log(columns)
 			this.innerColumns = uni.$u.deepClone(columns)
 			// 如果在设置各列数据时，没有被设置默认的各列索引defaultIndex，那么用0去填充它，数组长度为列的数量
 			if (this.innerIndex.length === 0) {

@@ -10,6 +10,7 @@
 				>
 					<u-grid-item
 						v-for="(baseListItem,baseListIndex) in baseList"
+						@click="click('test')"
 						:key="baseListIndex"
 					>
 						<u-icon
@@ -172,6 +173,7 @@
 		},
 		methods: {
 			click(name) {
+				console.log(name)
 				this.$refs.uToast.success(`点击了第${name}个`)
 			}
 		}

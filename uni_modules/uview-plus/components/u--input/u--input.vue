@@ -1,7 +1,13 @@
 <template>
 	<uvInput 
+		<!-- #ifdef VUE2 -->
 		:value="value"
+		@input="e => $emit('input', e)"
+		<!-- #endif -->
+		<!-- #ifdef VUE3 -->
 		:modelValue="modelValue"
+		@update:modelValue="e => $emit('update:modelValue', e)"
+		<!-- #endif -->
 		:type="type"
 		:fixed="fixed"
 		:disabled="disabled"
@@ -37,15 +43,6 @@
 		:customStyle="customStyle"
 		:formatter="formatter"
 		:ignoreCompositionEvent="ignoreCompositionEvent"
-		@focus="$emit('focus')"
-		@blur="e => $emit('blur', e)"
-		@keyboardheightchange="$emit('keyboardheightchange')"
-		@change="e => $emit('change', e)"
-		@input="e => $emit('input', e)"
-		@update:modelValue="e => $emit('update:modelValue', e)"
-		@confirm="e => $emit('confirm', e)"
-		@clear="$emit('clear')"
-		@click="$emit('click')"
 	>
 		<!-- #ifdef MP -->
 		<slot name="prefix"></slot>
@@ -64,10 +61,12 @@
 	 * 所以在nvue下，取名为u--input，内部其实还是u-input.vue，只不过做一层中转
 	 */
 	import uvInput from '../u-input/u-input.vue';
-	import props from '../u-input/props.js'
+	import props from '../u-input/props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	export default {
 		name: 'u--input',
-		mixins: [uni.$u.mpMixin, props, uni.$u.mixin],
+		mixins: [mpMixin, props, mixin],
 		components: {
 			uvInput
 		},

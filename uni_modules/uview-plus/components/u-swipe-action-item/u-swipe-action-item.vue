@@ -31,14 +31,16 @@
 		<view class="u-swipe-action-item__content" @touchstart="wxs.touchstart" @touchmove="wxs.touchmove"
 			@touchend="wxs.touchend" :status="status" :change:status="wxs.statusChange" :size="size"
 			:change:size="wxs.sizeChange">
-			<!-- #endif -->
-			<!-- #ifdef APP-NVUE -->
-			<view class="u-swipe-action-item__content" ref="u-swipe-action-item__content" @panstart="onTouchstart"
-				@tap="clickHandler">
-				<!-- #endif -->
-				<slot />
-			</view>
+			<slot></slot>
 		</view>
+		<!-- #endif -->
+		<!-- #ifdef APP-NVUE -->
+		<view class="u-swipe-action-item__content" ref="u-swipe-action-item__content" @panstart="onTouchstart"
+			@tap="clickHandler">
+			<slot></slot>
+		</view>
+		<!-- #endif -->
+	</view>
 </template>
 <!-- #ifdef APP-VUE || MP-WEIXIN || H5 || MP-QQ -->
 <script src="./index.wxs" module="wxs" lang="wxs"></script>
@@ -46,6 +48,8 @@
 <script>
 	import touch from '../../libs/mixin/touch.js'
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	// #ifdef APP-NVUE
 	import nvue from './nvue.js';
 	// #endif
@@ -55,7 +59,7 @@
 	/**
 	 * SwipeActionItem 滑动单元格子组件
 	 * @description 该组件一般用于左滑唤出操作菜单的场景，用的最多的是左滑删除操作
-	 * @tutorial https://www.uviewui.com/components/swipeAction.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/swipeAction.html
 	 * @property {Boolean}			show			控制打开或者关闭（默认 false ）
 	 * @property {String | Number}	index			标识符，如果是v-for，可用index索引
 	 * @property {Boolean}			disabled		是否禁用（默认 false ）
@@ -69,12 +73,15 @@
 	 */
 	export default {
 		name: 'u-swipe-action-item',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props, touch],
+		emits: ['click'],
+		// #ifndef APP-NVUE
+		mixins: [mpMixin, mixin, props, touch],
+		// #endif
 		// #ifdef APP-NVUE
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props, nvue, touch],
+		mixins: [mpMixin, mixin, props, nvue, touch],
 		// #endif
 		// #ifdef APP-VUE || MP-WEIXIN || H5 || MP-QQ
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props, touch, wxs],
+		mixins: [mpMixin, mixin, props, touch, wxs],
 		// #endif
 		data() {
 			return {

@@ -33,10 +33,12 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * AvatarGroup  头像组
 	 * @description 本组件一般用于展示头像的地方，如个人中心，或者评论列表页的用户头像展示等场所。
-	 * @tutorial https://www.uviewui.com/components/avatar.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/avatar.html
 	 * 
 	 * @property {Array}           urls     头像图片组 （默认 [] ）
 	 * @property {String | Number} maxCount 最多展示的头像数量 （ 默认 5 ）
@@ -52,7 +54,7 @@
 	 */
 	export default {
 		name: 'u-avatar-group',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 

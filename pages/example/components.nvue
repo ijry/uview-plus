@@ -5,7 +5,13 @@
 			<u-cell-group title-bg-color="rgb(243, 244, 246)" :title="item.groupName" v-for="(item, index) in list" :key="index">
 				<u-cell :titleStyle="{fontWeight: 500}" :title="item1.title"
 				 v-for="(item1, index1) in item.list" :key="index1" isLink @click="openPage" :name="item1.path">
-					<image slot="icon" class="u-cell-icon" :src="getIcon(item1.icon)" mode="widthFix"></image>
+					<template v-slot:icon>
+						<image
+							class="u-cell-icon"
+							:src="getIcon(item1.icon)"
+							mode="widthFix">
+						</image>
+					</template>
 				</u-cell>
 			</u-cell-group>
 		</view>
@@ -13,7 +19,7 @@
 	</view>
 </template>
 
-<script>
+<script lang="ts">
 	import list from "./components.config.js";
 	export default {
 		data() {

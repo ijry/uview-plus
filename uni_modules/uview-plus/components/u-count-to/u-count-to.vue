@@ -11,10 +11,12 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 /**
  * countTo 数字滚动
  * @description 该组件一般用于需要滚动数字到某一个值的场景，目标要求是一个递增的值。
- * @tutorial https://www.uviewui.com/components/countTo.html
+ * @tutorial https://ijry.github.io/uview-plus/components/countTo.html
  * @property {String | Number}	startVal	开始的数值，默认从0增长到某一个数（默认 0 ）
  * @property {String | Number}	endVal		要滚动的目标数值，必须 （默认 0 ）
  * @property {String | Number}	duration	滚动到目标数值的动画持续时间，单位为毫秒（ms） （默认 2000 ）
@@ -45,7 +47,7 @@ export default {
 			lastTime: 0 // 上一次的时间
 		};
 	},
-	mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+	mixins: [mpMixin, mixin,props],
 	computed: {
 		countDown() {
 			return this.startVal > this.endVal;

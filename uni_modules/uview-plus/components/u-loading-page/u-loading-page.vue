@@ -48,10 +48,12 @@
 
 <script>
 import props from "./props.js";
+import mpMixin from '../../libs/mixin/mpMixin.js';
+import mixin from '../../libs/mixin/mixin.js';
 /**
  * loadingPage 加载动画
  * @description 警此组件为一个小动画，目前用在uView的loadmore加载更多和switch开关等组件的正在加载状态场景。
- * @tutorial https://www.uviewui.com/components/loading.html
+ * @tutorial https://ijry.github.io/uview-plus/components/loading.html
  * @property {String | Number}	loadingText		提示内容  (默认 '正在加载' )
  * @property {String}			image			文字上方用于替换loading动画的图片
  * @property {String}			loadingMode		加载动画的模式，circle-圆形，spinner-花朵形，semicircle-半圆形 （默认 'circle' ）
@@ -66,7 +68,7 @@ import props from "./props.js";
  */
 export default {
     name: "u-loading-page",
-    mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+    mixins: [mpMixin, mixin, props],
     data() {
         return {};
     },

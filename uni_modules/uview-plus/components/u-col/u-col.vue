@@ -14,10 +14,12 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * CodeInput 栅格系统的列 
 	 * @description 该组件一般用于Layout 布局 通过基础的 12 分栏，迅速简便地创建布局
-	 * @tutorial https://www.uviewui.com/components/Layout.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/Layout.html
 	 * @property {String | Number}	span		栅格占据的列数，总12等份 (默认 12 ) 
 	 * @property {String | Number}	offset		分栏左边偏移，计算方式与span相同 (默认 0 ) 
 	 * @property {String}			justify		水平排列方式，可选值为`start`(或`flex-start`)、`end`(或`flex-end`)、`center`、`around`(或`space-around`)、`between`(或`space-between`)  (默认 'start' ) 
@@ -29,7 +31,7 @@
 	 */
 	export default {
 		name: 'u-col',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 				width: 0,
@@ -38,6 +40,10 @@
 				},
 				gridNum: 12
 			}
+		},
+		//  微信小程序中 options 选项
+		options: {
+			virtualHost: true // 将自定义节点设置成虚拟的，更加接近Vue组件的表现。我们不希望自定义组件的这个节点本身可以设置样式、响应 flex 布局等
 		},
 		computed: {
 			uJustify() {

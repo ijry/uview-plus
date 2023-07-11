@@ -14,16 +14,16 @@
 		>
 			<!-- #ifndef MP-WEIXIN -->
 			<!-- 微信小程序不支持，因为微信中不支持 <slot name="title" slot="title" />的写法 -->
-			<template slot="title">
+			<template #title>
 				<slot name="title"></slot>
 			</template>
-			<template slot="icon">
+			<template #icon>
 				<slot name="icon"></slot>
 			</template>
-			<template slot="value">
+			<template #value>
 				<slot name="value"></slot>
 			</template>
-			<template slot="right-icon">
+			<template #right-icon>
 				<slot name="right-icon"></slot>
 			</template>
 			<!-- #endif -->
@@ -45,6 +45,9 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
+	import { nextTick } from 'vue'
 	// #ifdef APP-NVUE
 	const animation = uni.requireNativePlugin('animation')
 	const dom = uni.requireNativePlugin('dom')
@@ -52,7 +55,7 @@
 	/**
 	 * collapseItem 折叠面板Item
 	 * @description 通过折叠面板收纳内容区域（搭配u-collapse使用）
-	 * @tutorial https://www.uviewui.com/components/collapse.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/collapse.html
 	 * @property {String}			title 		标题
 	 * @property {String}			value 		标题右侧内容
 	 * @property {String}			label 		标题下方的描述信息
@@ -68,7 +71,7 @@
 	 */
 	export default {
 		name: "u-collapse-item",
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 				elId: uni.$u.guid(),
@@ -102,7 +105,7 @@
 		},
 		methods: {
 			// 异步获取内容，或者动态修改了内容时，需要重新初始化
-			init() {
+			async init() {
 				// 初始化数据
 				this.updateParentData()
 				if (!this.parent) {
@@ -126,9 +129,8 @@
 					this.expanded = (value || []).some(item => item == this.name)
 				}
 				// 设置组件的展开或收起状态
-				this.$nextTick(function() {
-					this.setContentAnimate()
-				})
+				await nextTick()
+				this.setContentAnimate()
 			},
 			updateParentData() {
 				// 此方法在mixin中
@@ -182,7 +184,7 @@
 			// 查询内容高度
 			queryRect() {
 				// #ifndef APP-NVUE
-				// $uGetRect为uView自带的节点查询简化方法，详见文档介绍：https://www.uviewui.com/js/getRect.html
+				// $uGetRect为uView自带的节点查询简化方法，详见文档介绍：https://ijry.github.io/uview-plus/js/getRect.html
 				// 组件内部一般用this.$uGetRect，对外的为uni.$u.getRect，二者功能一致，名称不同
 				return new Promise(resolve => {
 					this.$uGetRect(`#${this.elId}`).then(size => {

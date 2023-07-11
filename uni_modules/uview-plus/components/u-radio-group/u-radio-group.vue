@@ -9,11 +9,13 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 
 	/**
 	 * radioRroup 单选框父组件
 	 * @description 单选框用于有一个选择，用户只能选择其中一个的场景。搭配u-radio使用
-	 * @tutorial https://www.uviewui.com/components/radio.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/radio.html
 	 * @property {String | Number | Boolean}	value 			绑定的值
 	 * @property {Boolean}						disabled		是否禁用所有radio（默认 false ）
 	 * @property {String}						shape			外观形状，shape-方形，circle-圆形(默认 circle )
@@ -36,7 +38,7 @@
 	 */
 	export default {
 		name: 'u-radio-group',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+		mixins: [mpMixin, mixin, props],
 		computed: {
 			// 这里computed的变量，都是子组件u-radio需要用到的，由于头条小程序的兼容性差异，子组件无法实时监听父组件参数的变化
 			// 所以需要手动通知子组件，这里返回一个parentData变量，供watch监听，在其中去通知每一个子组件重新从父组件(u-radio-group)
@@ -113,7 +115,10 @@
 		flex: 1;
 
 		&--row {
-			@include flex;
+			/* #ifndef APP-NVUE */
+			display: flex;
+			/* #endif */
+			flex-flow: row wrap;
 		}
 
 		&--column {

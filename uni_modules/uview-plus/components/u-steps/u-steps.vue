@@ -9,6 +9,8 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * Steps 步骤条
 	 * @description 该组件一般用于完成一个任务要分几个步骤，标识目前处于第几步的场景。
@@ -24,7 +26,7 @@
 	 */
 	export default {
 		name: 'u-steps',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 			}

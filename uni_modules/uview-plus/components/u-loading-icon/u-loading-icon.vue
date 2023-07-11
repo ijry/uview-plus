@@ -59,13 +59,15 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	// #ifdef APP-NVUE
 	const animation = weex.requireModule('animation');
 	// #endif
 	/**
 	 * loading 加载动画
 	 * @description 警此组件为一个小动画，目前用在uView的loadmore加载更多和switch开关等组件的正在加载状态场景。
-	 * @tutorial https://www.uviewui.com/components/loading.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/loading.html
 	 * @property {Boolean}			show			是否显示组件  (默认 true)
 	 * @property {String}			color			动画活动区域的颜色，只对 mode = flower 模式有效（默认color['u-tips-color']）
 	 * @property {String}			textColor		提示文本的颜色（默认color['u-tips-color']）
@@ -82,7 +84,7 @@
 	 */
 	export default {
 		name: 'u-loading-icon',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 				// Array.form可以通过一个伪数组对象创建指定长度的数组

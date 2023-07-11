@@ -30,10 +30,12 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * divider 分割线
 	 * @description 区隔内容的分割线，一般用于页面底部"没有更多"的提示。
-	 * @tutorial https://www.uviewui.com/components/divider.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/divider.html
 	 * @property {Boolean}			dashed			是否虚线 （默认 false ）
 	 * @property {Boolean}			hairline		是否细线 （默认  true ）
 	 * @property {Boolean}			dot				是否以点替代文字，优先于text字段起作用 （默认 false ）
@@ -49,7 +51,7 @@
 	 */
 	export default {
 		name:'u-divider',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+		mixins: [mpMixin, mixin, props],
 		computed: {
 			textStyle() {
 				const style = {}

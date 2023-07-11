@@ -58,10 +58,12 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * ColumnNotice 滚动通知中的垂直滚动 内部组件
 	 * @description 该组件用于滚动通告场景，是其中的垂直滚动方式
-	 * @tutorial https://www.uviewui.com/components/noticeBar.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/noticeBar.html
 	 * @property {Array}			text 			显示的内容，字符串
 	 * @property {String}			icon 			是否显示左侧的音量图标 （ 默认 'volume' ）
 	 * @property {String}			mode 			通告模式，link-显示右箭头，closable-显示右侧关闭图标
@@ -75,7 +77,7 @@
 	 * @example 
 	 */
 	export default {
-		mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+		mixins: [mpMixin, mixin, props],
 		watch: {
 			text: {
 				immediate: true,

@@ -28,19 +28,21 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	// #ifdef APP-NVUE
 	const animation = uni.requireNativePlugin('animation')
 	// #endif
 	/**
 	 * CircleProgress 圆形进度条 TODO: 待完善 
 	 * @description 展示操作或任务的当前进度，比如上传文件，是一个圆形的进度环。
-	 * @tutorial https://www.uviewui.com/components/circleProgress.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/circleProgress.html
 	 * @property {String | Number}	percentage	圆环进度百分比值，为数值类型，0-100 (默认 30 )
 	 * @example
 	 */
 	export default {
 		name: 'u-circle-progress',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 				leftBorderColor: 'rgb(200, 200, 200)',

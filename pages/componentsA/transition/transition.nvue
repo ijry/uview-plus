@@ -10,12 +10,13 @@
                 :key="index"
                 clickable
             >
-                <image
-                    slot="icon"
-                    class="u-cell-icon"
-                    :src="item.iconUrl"
-                    mode="widthFix"
-                ></image>
+				<template #icon>
+					<image
+					    class="u-cell-icon"
+					    :src="item.iconUrl"
+					    mode="widthFix"
+					></image>
+				</template>
             </u-cell>
             <u-transition
                 :mode="mode"

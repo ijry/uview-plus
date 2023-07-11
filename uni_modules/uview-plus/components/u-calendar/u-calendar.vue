@@ -68,13 +68,15 @@ import uHeader from './header.vue'
 import uMonth from './month.vue'
 import props from './props.js'
 import util from './util.js'
-// import dayjs from '../../libs/util/dayjs.js'
+// import dayjs from '../../libs/util/dayjs.min.js'
 import dayjs from 'dayjs'
 import Calendar from '../../libs/util/calendar.js'
+import mpMixin from '../../libs/mixin/mpMixin.js'
+import mixin from '../../libs/mixin/mixin.js'
 /**
  * Calendar 日历
  * @description  此组件用于单个选择日期，范围选择日期等，日历被包裹在底部弹起的容器中.
- * @tutorial https://www.uviewui.com/components/calendar.html
+ * @tutorial https://ijry.github.io/uview-plus/components/calendar.html
  *
  * @property {String}				title				标题内容 (默认 日期选择 )
  * @property {Boolean}				showTitle			是否显示标题  (默认 true )
@@ -111,7 +113,7 @@ import Calendar from '../../libs/util/calendar.js'
  * */
 export default {
 	name: 'u-calendar',
-	mixins: [uni.$u.mpMixin, uni.$u.mixin, props],
+	mixins: [mpMixin, mixin, props],
 	components: {
 		uHeader,
 		uMonth

@@ -128,8 +128,10 @@
 	import {
 		chooseFile
 	} from './utils';
-	import mixin from './mixin.js';
+	import mixinUp from './mixin.js';
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 
 	/**
 	 * upload 上传
@@ -166,7 +168,7 @@
 	 */
 	export default {
 		name: "u-upload",
-		mixins: [uni.$u.mpMixin, uni.$u.mixin, mixin,props],
+		mixins: [mpMixin, mixin, mixinUp, props],
 		data() {
 			return {
 				// #ifdef APP-NVUE
@@ -182,7 +184,9 @@
 				immediate: true,
 				handler() {
 					this.formatFileList()
-				}
+				},
+				immediate: true,
+				deep: true,
 			},
 		},
 		// #ifdef VUE3

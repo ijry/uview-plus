@@ -25,13 +25,15 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	// #ifdef APP-NVUE
 	const dom = uni.requireNativePlugin('dom')
 	// #endif
 	/**
 	 * lineProgress 线型进度条
 	 * @description 展示操作或任务的当前进度，比如上传文件，是一个线形的进度条。
-	 * @tutorial https://www.uviewui.com/components/lineProgress.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/lineProgress.html
 	 * @property {String}			activeColor		激活部分的颜色 ( 默认 '#19be6b' )
 	 * @property {String}			inactiveColor	背景色 ( 默认 '#ececec' )
 	 * @property {String | Number}	percentage		进度百分比，数值 ( 默认 0 )
@@ -42,7 +44,7 @@
 	 */
 	export default {
 		name: "u-line-progress",
-		mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
 				lineWidth: 0,

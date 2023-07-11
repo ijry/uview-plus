@@ -34,10 +34,12 @@
 
 <script>
 	import props from './props.js';
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * radio 单选框
 	 * @description 单选框用于有一个选择，用户只能选择其中一个的场景。搭配u-radio-group使用
-	 * @tutorial https://www.uviewui.com/components/radio.html
+	 * @tutorial https://ijry.github.io/uview-plus/components/radio.html
 	 * @property {String | Number}	name			radio的名称
 	 * @property {String}			shape			形状，square为方形，circle为圆型
 	 * @property {Boolean}			disabled		是否禁用
@@ -58,7 +60,7 @@
 	export default {
 		name: "u-radio",
 		
-		mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+		mixins: [mpMixin, mixin,props],
 		data() {
 			return {
 				checked: false,
@@ -267,7 +269,9 @@
 		overflow: hidden;
 		flex-direction: row;
 		align-items: center;
-
+		margin-bottom: 5px;
+		margin-top: 5px;
+		
 		&-label--left {
 			flex-direction: row
 		}
