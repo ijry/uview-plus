@@ -21,7 +21,7 @@
 				<view class="circle-left"></view>
 				<view class="circle-right"></view>
 				<view class="explain u-line-1">满8.1元可用、限最新版本客户端使用</view>
-				<view class="rule u-line-1" @tap="xxx122">
+				<view class="rule" @tap="xxx122">
 					<text>使用规则</text>
 					<u-icon name="arrow-right" color="" :size="20" @click=""></u-icon>
 				</view>
@@ -326,6 +326,7 @@ page {
 			display: flex;
 			.picture {
 				width: 172rpx;
+				height: 172rpx;
 				border-radius: 20rpx;
 			}
 			.introduce {

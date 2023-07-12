@@ -14,11 +14,11 @@
 		<view class="buttom">
 			<view class="loginType">
 				<view class="wechat item">
-					<view class="icon"><u-icon size="70" name="weixin-fill" color="rgb(83,194,64)"></u-icon></view>
+					<view class="icon"><u-icon size="40" name="weixin-fill" color="rgb(83,194,64)"></u-icon></view>
 					微信
 				</view>
 				<view class="QQ item">
-					<view class="icon"><u-icon size="70" name="qq-fill" color="rgb(17,183,233)"></u-icon></view>
+					<view class="icon"><u-icon size="40" name="qq-fill" color="rgb(17,183,233)"></u-icon></view>
 					QQ
 				</view>
 			</view>
@@ -82,6 +82,7 @@ export default {
 			color: $u-info;
 			margin-bottom: 60rpx;
 			margin-top: 8rpx;
+			font-size: 12px;
 		}
 		.getCaptcha {
 			background-color: rgb(253, 243, 208);
