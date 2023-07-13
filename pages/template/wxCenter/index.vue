@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<u-navbar :fixed="false" :is-back="false" title="　" :border-bottom="false">
+		<u-navbar :fixed="false" :is-back="true" title="　" :border-bottom="false">
 			<view class="u-flex u-row-right" style="width: 100%;">
 				<view class="camera u-flex u-row-center">
 					<u-icon name="camera-fill" color="#000000" size="48"></u-icon>
