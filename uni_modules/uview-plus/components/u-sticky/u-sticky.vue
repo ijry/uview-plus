@@ -153,7 +153,7 @@
 				}
 
 				// APP-Vue和微信平台，通过computedStyle判断是否支持css sticky
-				// #ifdef APP-VUE || MP-WEIXIN
+				// #ifdef APP-VUE || MP-WEIXIN || MP-TOUTIAO
 				this.cssSticky = await this.checkComputedStyle()
 				// #endif
 
@@ -170,7 +170,7 @@
 			// 在APP和微信小程序上，通过uni.createSelectorQuery可以判断是否支持css sticky
 			checkComputedStyle() {
 				// 方法内进行判断，避免在其他平台生成无用代码
-				// #ifdef APP-VUE || MP-WEIXIN
+				// #ifdef APP-VUE || MP-WEIXIN || MP-TOUTIAO
 				return new Promise(resolve => {
 					uni.createSelectorQuery().in(this).select('.u-sticky').fields({
 						computedStyle: ["position"]
@@ -206,7 +206,7 @@
 
 <style lang="scss" scoped>
 	.u-sticky {
-		/* #ifdef APP-VUE || MP-WEIXIN */
+		/* #ifdef APP-VUE || MP-WEIXIN || MP-TOUTIAO */
 		// 此处默认写sticky属性，是为了给微信和APP通过uni.createSelectorQuery查询是否支持css sticky使用
 		position: sticky;
 		/* #endif */
