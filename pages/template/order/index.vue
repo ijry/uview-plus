@@ -2,7 +2,7 @@
 	<view>
 		<view class="wrap">
 			<view class="u-tabs-box">
-				<u-tabs-swiper activeColor="#f29100" ref="tabs" :list="list" :current="current" @change="change" :is-scroll="false" swiperWidth="750"></u-tabs-swiper>
+				<u-tabs activeColor="#f29100" ref="tabs" :list="list" :current="current" @change="change" :is-scroll="false" swiperWidth="750"></u-tabs>
 			</view>
 			<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 				<swiper-item class="swiper-item">
