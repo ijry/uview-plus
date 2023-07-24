@@ -3,12 +3,12 @@
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">基础使用</text>
 			<view class="u-demo-block__content">
-				<u--input
+				<up-input
 					placeholder="请输入内容"
 					border="surround"
 					v-model="value"
 					@change="change"
-				></u--input>
+				></up-input>
 				{{value}}
 			</view>
 		</view>
