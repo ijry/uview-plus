@@ -21,9 +21,11 @@
 </template>
 
 <script>
+	import mpMixin from '../../libs/mixin/mpMixin.js';
+	import mixin from '../../libs/mixin/mixin.js';
 	export default {
 		name: 'u-calendar-header',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin],
+		mixins: [mpMixin, mixin],
 		props: {
 			// 标题
 			title: {

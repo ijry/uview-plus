@@ -106,7 +106,7 @@ export default {
 	mixins: [mpMixin, mixin, props],
 	// #endif
 	// #ifdef APP-NVUE
-	mixins: [uni.$u.mpMixin, uni.$u.mixin, nvueMixin, props],
+	mixins: [mpMixin, mixin, nvueMixin, props],
 	// #endif
 	data() {
 		return {

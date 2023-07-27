@@ -51,7 +51,7 @@
 	 */
 	export default {
 		name: 'u-back-top',
-		mixins: [uni.$u.mpMixin, uni.$u.mixin,props],
+		mixins: [mpMixin, mixin, props],
 		computed: {
 			backTopStyle() {
 				// 动画组件样式
