@@ -122,7 +122,7 @@
 				</swiper>
 			</view>
 		</view>
-		<u-toast ref="uToast" />
+		<u-toast ref="uToastRef" />
 	</view>
 </template>
 
@@ -174,7 +174,7 @@
 		methods: {
 			click(name) {
 				console.log(name)
-				this.$refs.uToast.success(`点击了第${name}个`)
+				this.$refs.uToastRef.success(`点击了第${name}个`)
 			}
 		}
 	}

@@ -71,6 +71,7 @@
 				return uni.$u.deepMerge(style, uni.$u.addStyle(this.customStyle));
 			}
 		},
+		emits: ['click'], // 防止事件执行两次
 		methods: {
 			// 此方法由u-grid-item触发，用于在u-grid发出事件
 			childClick(name) {
