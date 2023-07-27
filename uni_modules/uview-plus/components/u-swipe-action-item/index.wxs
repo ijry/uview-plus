@@ -199,6 +199,10 @@ function statusChange(newValue, oldValue, ownerInstance, instance) {
 function sizeChange(newValue, oldValue, ownerInstance, instance) {
 	// wxs内的局部变量快照
 	var state = instance.getState()
+	// 临时防止nv_disabled报错
+	if (!state || !newValue) {
+		return;
+	}
 	state.disabled = newValue.disabled
 	state.duration = newValue.duration
 	state.show = newValue.show
