@@ -22,7 +22,7 @@ uview-plus，是[uni-app](https://uniapp.dcloud.io/)全面兼容nvue的uni-app�
 
 ## [官方文档：https://ijry.github.io/uview-plus/](https://ijry.github.io/uview-plus/)
 
-### [点击加群交流反馈：495929039](https://jq.qq.com/?_wv=1027&k=mAfcBEtL)
+### [点击加群交流反馈](https://uiadmin.net/uview-plus/components/addQQGroup.html)
 
 ## 特性
 
