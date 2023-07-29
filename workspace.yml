@@ -1,0 +1,19 @@
+---
+version: "v1"
+image: "cloudstudio-devops-docker.pkg.coding.net/artifacts/workspace/full-1.0.0:2023-07-10.0946"
+extensions: []
+lifecycle:
+  start:
+  - name: "start"
+    command: "cd code/uview-plus-cli-project && npm i && npm run dev:h5"
+name: "uview-plus移动UI组件库"
+description: "uview-plus移动UI组件库示例工程"
+tags:
+- "Vue.js"
+repository: "https://github.com/ijry/uview-plus.git"
+ref: "master"
+storage:
+  copy_to_working_dir: true
+category: "userDefined"
+sort: 0
+show: true
