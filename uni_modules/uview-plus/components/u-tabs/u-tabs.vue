@@ -130,9 +130,11 @@
 			},
 			// list变化时，重新渲染list各项信息
 			list() {
-				this.$nextTick(() => {
-					this.resize()
-				})
+				setTimeout(() => {
+					this.$nextTick(() => {
+						this.resize()
+					})
+				}, 0)
 			}
 		},
 		computed: {
