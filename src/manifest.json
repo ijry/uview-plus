@@ -107,6 +107,8 @@
         "optimization" : {
             "subPackages" : true
         },
+		"mergeVirtualHostAttributes": true,
+		"lazyCodeLoading" : "requiredComponents",
         "usingComponents" : true
     },
     "mp-alipay" : {
