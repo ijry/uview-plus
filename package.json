@@ -73,6 +73,6 @@
     "vite": "4.0.4",
     "vue-tsc": "^1.0.24",
     "eslint": "^8.2.0",
-		"eslint-config-airbnb": "^19.0.0"
+	"eslint-config-airbnb": "^19.0.0"
   }
 }

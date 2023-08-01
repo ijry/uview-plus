@@ -1,5 +1,5 @@
 {
-    "name" : "uiew-plus",
+    "name" : "uview-plus",
     "appid" : "__UNI__0FF8111",
     "description" : "多平台快速开发的UI框架",
     "versionName" : "3.1.0",
@@ -97,11 +97,11 @@
     },
     "quickapp" : {},
     "mp-weixin" : {
-        "appid" : "",
+        "appid" : "touristappid",
         "setting" : {
             "urlCheck" : false,
-            "es6" : false,
-            "minified" : false,
+            "es6" : true,
+            "minified" : true,
             "postcss" : false
         },
         "optimization" : {
