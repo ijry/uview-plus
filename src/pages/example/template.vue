@@ -7,9 +7,9 @@
 				v-for="(item, index) in list" :key="index">
 				<u-cell :titleStyle="{fontWeight: 500}"
 					@click="openPage(item1.path)" :title="getFieldTitle(item1)"
-				 v-for="(item1, index1) in item.list" :key="index1">
+				 	v-for="(item1, index1) in item.list" :key="index1">
 					<template v-slot:icon>
-						<image  class="u-cell-icon"
+						<image class="u-cell-icon"
 							:src="getIcon(item1.icon)" mode="widthFix"></image>
 					</template>
 				</u-cell>

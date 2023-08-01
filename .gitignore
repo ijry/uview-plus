@@ -3,6 +3,7 @@
 /unpackage/release/*
 /node_modules/*
 /.idea/*
+/dist/
 deploy.sh
 /.hbuilderx/
 /.vscode/

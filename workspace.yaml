@@ -1,0 +1,12 @@
+---
+version: "v1"
+image: "cloudstudio-devops-docker.pkg.coding.net/artifacts/workspace/full-1.0.0:2023-07-10.0946"
+extensions:
+- "https://cs-res-1258344699.file.myqcloud.com/vscode_plugins/GitHub.vscode-pull-request-github.0.48.0.vsix"
+lifecycle:
+  init:
+  - name: "install"
+    command: "npm i"
+  start:
+  - name: "start"
+    command: "npm run dev:h5"
