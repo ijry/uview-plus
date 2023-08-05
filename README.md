@@ -1,6 +1,7 @@
 <p align="center">
     <img alt="logo" src="https://uviewui.com/common/logo.png" width="120" height="120" style="margin-bottom: 10px;">
 </p>
+
 <h3 align="center" style="margin: 30px 0 30px;font-weight: bold;font-size:40px;">uview-plus 3.0 (Beta)</h3>
 <h3 align="center">多平台快速开发的UI框架(fork自uView2.0)</h3>
 
@@ -12,6 +13,8 @@
 [![Website](https://img.shields.io/badge/uview-plus-blue?style=flat-square)](https://ijry.github.io/uview-plus/)
 [![license](https://img.shields.io/github/license/ijry/uview-plus?style=flat-square)](https://en.wikipedia.org/wiki/MIT_License)
 <!-- [![release](https://img.shields.io/github/v/release/ijry/uview-plus?style=flat-square)](https://github.com/ijry/uview-plus/releases) -->
+
+本项目来源于[《腾讯云 Cloud Studio 实战训练营》](https://marketing.csdn.net/p/06a21ca7f4a1843512fa8f8c40a16635)的参赛作品，该作品在腾讯云 [Cloud Studio](https://www.cloudstudio.net/?utm=csdn) 中运行无误。
 
 ## 说明
 
