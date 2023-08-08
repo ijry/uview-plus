@@ -103,7 +103,7 @@ export default {
 		useAnchor: [Boolean, Number]
 	},
 	// #ifdef VUE3
-	emits: ['load', 'ready', 'imgtap', 'linktap', 'play', 'error'],
+	emits: ['load', 'ready', 'imgTap', 'linkTap', 'play', 'error'],
 	// #endif
 	// #ifndef APP-PLUS-NVUE
 	components: {
@@ -410,7 +410,7 @@ export default {
 					break
 				// 图片点击
 				case 'onImgTap':
-					this.$emit('imgtap', message.attrs)
+					this.$emit('imgtTap', message.attrs)
 					if (this.previewImg) {
 						uni.previewImage({
 							current: parseInt(message.attrs.i),
@@ -421,7 +421,7 @@ export default {
 				// 链接点击
 				case 'onLinkTap': {
 					const href = message.attrs.href
-					this.$emit('linktap', message.attrs)
+					this.$emit('linkTap', message.attrs)
 					if (href) {
 						// 锚点跳转
 						if (href[0] === '#') {
