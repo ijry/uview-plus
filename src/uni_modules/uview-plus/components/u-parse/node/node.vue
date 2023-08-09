@@ -227,7 +227,7 @@ export default {
       // #ifdef H5 || APP-PLUS
       node.attrs.src = node.attrs.src || node.attrs['data-src']
       // #endif
-      this.root.$emit('imgtap', node.attrs)
+      this.root.$emit('imgTap', node.attrs)
       // 自动预览图片
       if (this.root.previewImg) {
         uni.previewImage({
@@ -321,7 +321,7 @@ export default {
       const node = e.currentTarget ? this.childs[e.currentTarget.dataset.i] : {}
       const attrs = node.attrs || e
       const href = attrs.href
-      this.root.$emit('linktap', Object.assign({
+      this.root.$emit('linkTap', Object.assign({
         innerText: this.root.getText(node.children || []) // 链接内的文本内容
       }, attrs))
       if (href) {
