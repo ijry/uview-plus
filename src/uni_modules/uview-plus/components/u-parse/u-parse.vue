@@ -32,8 +32,8 @@
  * @property {Boolean | Number} use-anchor 是否使用锚点链接
  * @event {Function} load dom 结构加载完毕时触发
  * @event {Function} ready 所有图片加载完毕时触发
- * @event {Function} imgtap 图片被点击时触发
- * @event {Function} linktap 链接被点击时触发
+ * @event {Function} imgTap 图片被点击时触发
+ * @event {Function} linkTap 链接被点击时触发
  * @event {Function} play 音视频播放时触发
  * @event {Function} error 媒体加载出错时触发
  */
@@ -410,7 +410,7 @@ export default {
 					break
 				// 图片点击
 				case 'onImgTap':
-					this.$emit('imgtTap', message.attrs)
+					this.$emit('imgTap', message.attrs)
 					if (this.previewImg) {
 						uni.previewImage({
 							current: parseInt(message.attrs.i),

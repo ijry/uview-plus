@@ -336,7 +336,7 @@ Parser.prototype.onAttrName = function (name) {
       // data-src 自动转为 src
       this.attrName = 'src'
     } else if (this.tagName === 'img' || this.tagName === 'a') {
-      // a 和 img 标签保留 data- 的属性，可以在 imgtap 和 linktap 事件中使用
+      // a 和 img 标签保留 data- 的属性，可以在 imgTap 和 linkTap 事件中使用
       this.attrName = name
     } else {
       // 剩余的移除以减小大小
