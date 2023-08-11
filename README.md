@@ -5,7 +5,7 @@
 <h3 align="center" style="margin: 30px 0 30px;font-weight: bold;font-size:40px;">uview-plus 3.0 (Beta)</h3>
 <h3 align="center">多平台快速开发的UI框架(fork自uView2.0)</h3>
 
-[![Cloud Studio Template](https://cs-res.codehub.cn/common/assets/icon-badge.svg)](https://cloudstudio.net/templates/3802ynh0pvk)
+[![Cloud Studio Template](https://cs-res.codehub.cn/common/assets/icon-badge.svg)](https://club.cloudstudio.net/261753/11943789224931328)
 [![star](https://gitee.com/uiadmin/uview-plus/badge/star.svg?theme=gvp)](https://gitee.com/uiadmin/uview-plus/stargazers)
 [![stars](https://img.shields.io/github/stars/ijry/uview-plus?style=flat-square&logo=GitHub)](https://github.com/ijry/uview-plus)
 [![forks](https://img.shields.io/github/forks/ijry/uview-plus?style=flat-square&logo=GitHub)](https://github.com/ijry/uview-plus)
