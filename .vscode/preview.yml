@@ -2,7 +2,7 @@
 autoOpen: true # 打开工作空间时是否自动开启所有应用的预览
 apps:
   - port: 8080 # 应用的端口
-    run: npm i && node run dev # 应用的启动命令
+    run: nvm install 16 && nvm use 16 && npm i && npm run dev # 应用的启动命令
     root: ./ # 应用的启动目录
     name: uview-plus # 应用名称
     description: 多平台快速开发的UI框架
