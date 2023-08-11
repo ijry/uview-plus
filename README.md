@@ -72,7 +72,7 @@ uview-plus，是[uni-app](https://uniapp.dcloud.io/)全面兼容nvue的uni-app�
 
 ```html
 <template>
-	<u-button text="按钮"></u-button>
+	<up-button text="按钮"></up-button>
 </template>
 ```
 

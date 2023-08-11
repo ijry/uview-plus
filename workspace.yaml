@@ -9,4 +9,4 @@ lifecycle:
     command: "npm i"
   start:
   - name: "start"
-    command: "npm run dev:h5"
+    command: "npm run dev"
