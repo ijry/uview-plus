@@ -271,8 +271,8 @@ export default {
         },
         // 键盘高度发生变化的时候触发此事件
         // 兼容性：微信小程序2.7.0+、App 3.1.0+
-		onkeyboardheightchange() {
-            this.$emit("keyboardheightchange");
+		onkeyboardheightchange(event) {
+            this.$emit("keyboardheightchange", event);
         },
         // 内容发生变化，进行处理
         valueChange() {
