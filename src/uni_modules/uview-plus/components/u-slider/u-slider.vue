@@ -9,7 +9,7 @@
 			:step="step"
 			:value="value"
 			:activeColor="activeColor"
-			:inactiveColor="inactiveColor"
+			:backgroundColor="inactiveColor"
 			:blockSize="$u.getPx(blockSize)"
 			:blockColor="blockColor"
 			:showValue="showValue"
