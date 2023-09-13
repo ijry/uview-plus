@@ -64,6 +64,7 @@ export default {
 	mounted() {
 		this.autoplay && this.start();
 	},
+	emits: ["end"],
 	methods: {
 		easingFn(t, b, c, d) {
 			return (c * (-Math.pow(2, (-10 * t) / d) + 1) * 1024) / 1023 + b;

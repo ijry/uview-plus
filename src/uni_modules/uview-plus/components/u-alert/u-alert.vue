@@ -115,6 +115,7 @@
 				}
 			}
 		},
+		emits: ["click"],
 		methods: {
 			// 点击内容
 			clickHandler() {

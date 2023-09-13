@@ -65,6 +65,7 @@
 				return this.urls.slice(0, this.maxCount)
 			}
 		},
+		emits: ["showMore"],
 		methods: {
 			clickHandler() {
 				this.$emit('showMore')

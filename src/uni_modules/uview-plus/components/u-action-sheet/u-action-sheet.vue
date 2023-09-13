@@ -166,6 +166,7 @@
 				}
 			},
 		},
+		emits: ["close", "select"],
 		methods: {
 			closeHandler() {
 				// 允许点击遮罩关闭时，才发出close事件

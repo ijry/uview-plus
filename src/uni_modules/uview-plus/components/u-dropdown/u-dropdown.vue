@@ -53,7 +53,6 @@
 		mixins: [mixin, props],
 		data() {
 			return {
-				// �˵�����
 				menuList: [],
 				current: 0
 			}
@@ -62,9 +61,9 @@
 		
 		},
 		created() {
-			// �������������(u-dropdown-item)��this��������data������������������΢��С��������ѭ�����ö�����
 			this.children = [];
 		},
+		emits: ["click"],
 		methods: {
 			clickHandler(item, index) {
 				this.children.map(child => {
@@ -80,11 +79,11 @@
 					}
 				})
 			},
-			// ��ȡ��ǩ�ĳߴ�λ��
+			// 
 			queryRect(el) {
 				// #ifndef APP-NVUE
-				// $uGetRectΪuView�Դ��Ľڵ��ѯ�򻯷���https://ijry.github.io/uview-plus/.uviewui.com/js/getRect.html
-				// ����ڲ�һ����this.$uGetRect�������Ϊthis.$u.getRect�����߹���һ�£����Ʋ�ͬ
+				// $uGetRect?uView https://ijry.github.io/uview-plus/.uviewui.com/js/getRect.html
+				// this.$uGetRect this.$u.getRect
 				return new Promise(resolve => {
 					this.$uGetRect(`.${el}`).then(size => {
 						resolve(size)
@@ -93,8 +92,7 @@
 				// #endif
 			
 				// #ifdef APP-NVUE 
-				// nvue�£�ʹ��domģ���ѯԪ�ظ߶�
-				// ����һ��promise���õ��ô˷�����������ʹ��then�ص�
+				// promisethen
 				return new Promise(resolve => {
 					dom.getComponentRect(this.$refs[el], res => {
 						resolve(res.size)

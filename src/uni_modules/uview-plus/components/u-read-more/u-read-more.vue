@@ -90,6 +90,7 @@
 		mounted() {
 			this.init()
 		},
+		emits: ["open", "close"],
 		methods: {
 			async init() {
 				this.getContentHeight().then(height => {

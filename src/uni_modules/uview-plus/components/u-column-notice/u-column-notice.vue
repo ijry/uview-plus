@@ -107,6 +107,7 @@
 				index:0
 			}
 		},
+		emits: ["click", "close"],
 		methods: {
 			noticeChange(e){
 				this.index = e.detail.current

@@ -133,6 +133,7 @@
 				if (n && this.loading) this.loading = false
 			}
 		},
+		emits: ["confirm", "cancel", "close"],
 		methods: {
 			// 点击确定按钮
 			confirmHandler() {

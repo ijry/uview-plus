@@ -106,8 +106,8 @@
 			},
 		},
 		created() {
-
 		},
+		emits: ["backspace", "change"],
 		methods: {
 			// 点击退格键
 			backspaceClick() {

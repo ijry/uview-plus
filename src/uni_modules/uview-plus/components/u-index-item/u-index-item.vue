@@ -25,7 +25,7 @@
 	/**
 	 * IndexItem 
 	 * @description 
-	 * @tutorial https://uviewui.com/components/indexList.html
+	 * @tutorial https://uiadmin.net/uview-plus/components/indexList.html
 	 * @property {String}
 	 * @event {Function}
 	 * @example

@@ -192,6 +192,7 @@ export default {
 		this.start = Date.now()
 		this.init()
 	},
+	emits: ["confirm", "close"],
 	methods: {
 		// 在微信小程序中，不支持将函数当做props参数，故只能通过ref形式调用
 		setFormatter(e) {

@@ -197,6 +197,7 @@
 		mounted() {
 			this.init()
 		},
+		emits: ["click"],
 		methods: {
 			init() {
 				this.getElRect()

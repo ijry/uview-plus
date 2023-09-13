@@ -134,6 +134,7 @@
 				return this.iconColor ? this.iconColor : this.plain ? this.type : '#ffffff'
 			}
 		},
+		emits: ["click", "close"],
 		methods: {
 			// 点击关闭按钮
 			closeHandler() {

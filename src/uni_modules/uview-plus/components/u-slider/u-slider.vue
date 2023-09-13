@@ -27,6 +27,7 @@
 	export default {
 		name: 'u--slider',
 		mixins: [mpMixin, mixin, props],
+		emits: ["changing", "change"],
 		methods: {
 			// 拖动过程中触发
 			changingHandler(e) {
@@ -34,7 +35,12 @@
 					value
 				} = e.detail
 				// 更新v-model的值
-				this.$emit('input', value)
+				// #ifdef VUE3
+                this.$emit("update:modelValue", value);
+                // #endif
+                // #ifdef VUE2
+                this.$emit("input", value);
+                // #endif
 				// 触发事件
 				this.$emit('changing', value)
 			},
@@ -44,7 +50,12 @@
 					value
 				} = e.detail
 				// 更新v-model的值
-				this.$emit('input', value)
+				// #ifdef VUE3
+                this.$emit("update:modelValue", value);
+                // #endif
+                // #ifdef VUE2
+                this.$emit("input", value);
+                // #endif
 				// 触发事件
 				this.$emit('change', value)
 			}

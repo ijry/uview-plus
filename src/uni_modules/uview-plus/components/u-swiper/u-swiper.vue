@@ -139,6 +139,7 @@
 				this.currentIndex = val; // 和上游数据关联上
 			}
 		},
+		emits: ["click", "change"],
 		computed: {
 			itemStyle() {
 				return index => {
@@ -156,15 +157,15 @@
 			}
 		},
 		methods: {
-      getItemType(item) {
-        if (typeof item === 'string') return uni.$u.test.video(this.getSource(item)) ? 'video' : 'image'
-        if (typeof item === 'object' && this.keyName) {
-          if (!item.type) return uni.$u.test.video(this.getSource(item)) ? 'video' : 'image'
-          if (item.type === 'image') return 'image'
-          if (item.type === 'video') return 'video'
-          return 'image'
-        }
-      },
+			getItemType(item) {
+				if (typeof item === 'string') return uni.$u.test.video(this.getSource(item)) ? 'video' : 'image'
+				if (typeof item === 'object' && this.keyName) {
+				if (!item.type) return uni.$u.test.video(this.getSource(item)) ? 'video' : 'image'
+				if (item.type === 'image') return 'image'
+				if (item.type === 'video') return 'video'
+				return 'image'
+				}
+			},
 			// 获取目标路径，可能数组中为字符串，对象的形式，额外可指定对象的目标属性名keyName
 			getSource(item) {
 				if (typeof item === 'string') return item

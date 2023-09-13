@@ -123,6 +123,7 @@
 		mounted() {
 			this.init()
 		},
+		emits: ["click"],
 		methods: {
 			init() {
 				// 父组件的实例

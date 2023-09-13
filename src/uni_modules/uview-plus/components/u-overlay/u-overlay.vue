@@ -44,6 +44,7 @@
 				return uni.$u.deepMerge(style, uni.$u.addStyle(this.customStyle))
 			}
 		},
+		emits: ["click"],
 		methods: {
 			clickHandler() {
 				this.$emit('click')

@@ -45,6 +45,7 @@
 				return style
 			}
 		},
+		emits: ["click"],
 		methods: {
 			openLink() {
 				// #ifdef APP-PLUS

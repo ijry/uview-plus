@@ -121,6 +121,7 @@
 		created() {
 			this.init()
 		},
+		emits: ["click"],
 		methods: {
 			init() {
 				// 目前只有这几个小程序平台具有open-data标签

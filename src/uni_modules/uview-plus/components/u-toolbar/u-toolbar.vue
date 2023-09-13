@@ -55,6 +55,7 @@
 	export default {
 		name: 'u-toolbar',
 		mixins: [mpMixin, mixin, props],
+		emits: ["confirm", "cancel"],
 		methods: {
 			// 点击取消按钮
 			cancel() {

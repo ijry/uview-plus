@@ -166,6 +166,7 @@
 
 			this.init()
 		},
+		emits: ["click", "close"],
 		methods: {
 			init() {
 				// #ifdef APP-NVUE

@@ -45,6 +45,7 @@
 				}
 			}
 		},
+		emits: ["start", "end", "change"],
 		methods: {
 			checkKeepRunning() {
 				// 获取上一次退出页面(H5还包括刷新)时的时间戳，如果没有上次的保存，此值可能为空

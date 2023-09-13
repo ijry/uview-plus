@@ -104,6 +104,7 @@
 			this.anchors = []
 		},
 		mounted() {},
+		emits: ["scroll", "scrolltolower", "scrolltoupper"],
 		methods: {
 			updateOffsetFromChild(top) {
 				this.offset = top

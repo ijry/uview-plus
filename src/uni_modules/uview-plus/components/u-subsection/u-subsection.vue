@@ -176,6 +176,7 @@ export default {
     mounted() {
         this.init();
     },
+	emits: ["change"],
     methods: {
         init() {
             uni.$u.sleep().then(() => this.getRect());

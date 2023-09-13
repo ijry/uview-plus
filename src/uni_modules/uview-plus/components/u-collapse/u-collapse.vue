@@ -46,6 +46,7 @@
 				return [this.accordion, this.value]
 			}
 		},
+		emits: ["open", "close", "change"],
 		methods: {
 			// 重新初始化一次内部的所有子元素
 			init() {

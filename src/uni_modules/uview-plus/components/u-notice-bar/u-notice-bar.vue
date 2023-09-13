@@ -74,6 +74,7 @@
 				show: true
 			}
 		},
+		emits: ["click", "close"],
 		methods: {
 			// 点击通告栏
 			click(index) {

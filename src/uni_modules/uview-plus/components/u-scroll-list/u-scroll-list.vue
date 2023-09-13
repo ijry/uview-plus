@@ -147,6 +147,7 @@ export default {
 	mounted() {
 		this.init()
 	},
+	emits: ["left", "right"],
 	methods: {
 		init() {
 			this.getComponentWidth()

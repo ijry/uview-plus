@@ -105,9 +105,9 @@
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
-
 			}
 		},
+		emits: ["leftClick", "rightClick"],
 		methods: {
 			// 点击左侧区域
 			leftClick() {

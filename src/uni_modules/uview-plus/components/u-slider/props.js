@@ -16,11 +16,19 @@ export default {
             type: [Number, String],
             default: defprops.slider.step
         },
-        // 当前取值
-        value: {
-            type: [Number, String],
-            default: defprops.slider.value
-        },
+		// #ifdef VUE3
+		// 当前取值
+		modelValue: {
+			type: [String, Number],
+			default: defprops.slider.value
+		},
+		// #endif
+		// #ifdef VUE2
+		// 当前取值
+		value: {
+			type: [String, Number],
+			default: defprops.slider.value
+		},
         // 滑块右侧已选择部分的背景色
         activeColor: {
             type: String,

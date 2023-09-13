@@ -85,6 +85,7 @@
 				}
 			})
 		},
+		emits: ["disconnected", "connected"],
 		methods: {
 			retry() {
 				// 重新检查网络

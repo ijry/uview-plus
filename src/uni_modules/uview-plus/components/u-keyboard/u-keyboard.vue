@@ -106,6 +106,7 @@
 			}
 		},
 		mixins: [mpMixin, mixin, props],
+		emits: ["change", "close", "confirm", "cancel", "backspace"],
 		methods: {
 			change(e) {
 				this.$emit('change', e);

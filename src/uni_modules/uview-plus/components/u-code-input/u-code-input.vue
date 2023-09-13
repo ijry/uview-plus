@@ -51,7 +51,7 @@
 	import mixin from '../../libs/mixin/mixin.js';
 	/**
 	 * CodeInput 验证码输入
-	 * @description 该组件一般用于验证用户短信验证码的场景，也可以结合uView的键盘组件使用
+	 * @description 该组件一般用于验证用户短信验证码的场景，也可以结合uview-plus的键盘组件使用
 	 * @tutorial https://ijry.github.io/uview-plus/components/codeInput.html
 	 * @property {String | Number}	maxlength			最大输入长度 （默认 6 ）
 	 * @property {Boolean}			dot					是否用圆点填充 （默认 false ）
@@ -149,6 +149,7 @@
 				return style
 			}
 		},
+		emits: ["change", 'finish', "update:modelValue"],
 		methods: {
 			// 监听输入框的值发生变化
 			inputHandler(e) {
@@ -163,7 +164,12 @@
 				// 未达到maxlength之前，发送change事件，达到后发送finish事件
 				this.$emit('change', value)
 				// 修改通过v-model双向绑定的值
-				this.$emit('input', value)
+				// #ifdef VUE3
+                this.$emit("update:modelValue", value);
+                // #endif
+                // #ifdef VUE2
+                this.$emit("input", value);
+                // #endif
 				// 达到用户指定输入长度时，发出完成事件
 				if (String(value).length >= Number(this.maxlength)) {
 					this.$emit('finish', value)

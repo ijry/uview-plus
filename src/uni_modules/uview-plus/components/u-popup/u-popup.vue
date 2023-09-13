@@ -176,6 +176,7 @@
 				}
 			},
 		},
+		emits: ["open", "close", "click"],
 		methods: {
 			// 点击遮罩
 			overlayClick() {

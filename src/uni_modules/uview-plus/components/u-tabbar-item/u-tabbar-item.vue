@@ -80,6 +80,7 @@
 		created() {
 			this.init()
 		},
+		emits: ["click", "change"],
 		methods: {
 			init() {
 				// 支付宝小程序不支持provide/inject，所以使用这个方法获取整个父组件，在created定义，避免循环引用

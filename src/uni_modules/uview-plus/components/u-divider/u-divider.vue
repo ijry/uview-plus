@@ -82,6 +82,7 @@
 				return style
 			}
 		},
+		emits: ["click"],
 		methods: {
 			// divider组件被点击时触发
 			click() {
