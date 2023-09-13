@@ -212,8 +212,12 @@
 				if (this.disabled) this.$emit('click');
 			},
 			// 点击左边图标
-			clickIcon() {
-				this.$emit('clickIcon');
+			clickIcon(e) {
+				this.$emit('clickIcon', this.keyword);
+				try {
+					// 收起键盘
+					uni.hideKeyboard();
+				} catch (e) {}
 			}
 		}
 	}
