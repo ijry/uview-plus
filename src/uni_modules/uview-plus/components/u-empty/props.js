@@ -1,4 +1,5 @@
-import defprops from '../../libs/config/props';
+import defProps from '../../libs/config/props';
+const defprops = uni?.$u?.props || defProps;
 export default {
     props: {
         // 内置图标名称，或图片路径，建议绝对路径

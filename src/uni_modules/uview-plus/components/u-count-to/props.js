@@ -1,4 +1,5 @@
-import defprops from '../../libs/config/props';
+import defProps from '../../libs/config/props';
+const defprops = uni?.$u?.props || defProps;
 export default {
     props: {
         // 开始的数值，默认从0增长到某一个数
