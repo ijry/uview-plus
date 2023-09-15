@@ -212,7 +212,9 @@ function deepMerge(target = {}, source = {}) {
 	for (const prop in source) {
 		if (!source.hasOwnProperty(prop)) continue
 		if (prop in target) {
-			if (typeof target[prop] !== 'object') {
+			if (source[prop] == null) {
+				target[prop] = source[prop]
+			}else if (typeof target[prop] !== 'object') {
 				target[prop] = source[prop]
 			} else if (typeof source[prop] !== 'object') {
 				target[prop] = source[prop]
