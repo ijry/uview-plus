@@ -1,4 +1,4 @@
-import defprops from '../../libs/config/props';
+const defprops = uni.$u.props;
 export default {
     props: {
         // 当前form的需要验证字段的集合

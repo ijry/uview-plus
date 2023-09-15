@@ -1,4 +1,4 @@
-import defprops from '../../libs/config/props';
+const defprops = uni.$u.props;
 export default {
     props: {
         // 占父容器宽度的多少等分，总分为12份

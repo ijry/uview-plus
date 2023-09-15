@@ -1,4 +1,4 @@
-import defprops from '../../libs/config/props';
+const defprops = uni.$u.props;
 export default {
     props: {
         // 列表数组，元素可为字符串，如为对象可通过keyName指定目标属性名

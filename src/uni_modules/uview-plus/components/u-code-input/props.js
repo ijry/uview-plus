@@ -1,4 +1,4 @@
-import defprops from '../../libs/config/props';
+const defprops = uni.$u.props;
 export default {
     props: {
 		// 键盘弹起时，是否自动上推页面

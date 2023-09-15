@@ -1,4 +1,4 @@
-import defprops from '../../libs/config/props';
+const defprops = uni.$u.props;
 export default {
     props: {
         // 接受的文件类型, 可选值为all media image file video

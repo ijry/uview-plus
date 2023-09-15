@@ -1,4 +1,4 @@
-import defprops from '../../libs/config/props';
+const defprops = uni.$u.props;
 export default {
     props: {
         // 吸顶容器到顶部某个距离的时候，进行吸顶，在H5平台，NavigationBar为44px

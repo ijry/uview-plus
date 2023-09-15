@@ -7,7 +7,7 @@
  * @lastTime     : 2021-08-16 10:04:24
  * @FilePath     : /u-view2.0/uview-ui/components/u-button/props.js
  */
-import defprops from '../../libs/config/props';
+const defprops = uni.$u.props;
 export default {
     props: {
         // 是否细边框

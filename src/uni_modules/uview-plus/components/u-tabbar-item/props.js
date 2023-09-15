@@ -1,4 +1,4 @@
-import defprops from '../../libs/config/props';
+const defprops = uni.$u.props;
 export default {
     props: {
         // item标签的名称，作为与u-tabbar的value参数匹配的标识符

@@ -1,4 +1,4 @@
-import defprops from '../../libs/config/props';
+const defprops = uni.$u.props;
 export default {
     props: {
         // 当前展开面板的name，非手风琴模式：[<string | number>]，手风琴模式：string | number
