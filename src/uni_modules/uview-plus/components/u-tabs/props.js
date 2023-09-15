@@ -1,4 +1,5 @@
-import defprops from '../../libs/config/props';
+import defProps from '../../libs/config/props';
+const defprops = uni?.$u?.props || defProps;
 export default {
     props: {
         // 滑块的移动过渡时间，单位ms

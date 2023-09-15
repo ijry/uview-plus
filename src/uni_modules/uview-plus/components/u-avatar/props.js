@@ -1,4 +1,5 @@
-import defprops from '../../libs/config/props';
+import defProps from '../../libs/config/props';
+const defprops = uni?.$u?.props || defProps;
 export default {
     props: {
         // 头像图片路径(不能为相对路径)

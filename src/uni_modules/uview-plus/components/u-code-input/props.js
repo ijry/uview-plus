@@ -1,4 +1,5 @@
-import defprops from '../../libs/config/props';
+import defProps from '../../libs/config/props';
+const defprops = uni?.$u?.props || defProps;
 export default {
     props: {
 		// 键盘弹起时，是否自动上推页面
