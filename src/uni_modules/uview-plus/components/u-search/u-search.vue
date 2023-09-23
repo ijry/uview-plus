@@ -63,6 +63,7 @@
 			</view>
 		</view>
 		<text
+			v-if="showAction"
 		    :style="[actionStyle]"
 		    class="u-search__action"
 		    :class="[(showActionBtn || show) && 'u-search__action--active']"
