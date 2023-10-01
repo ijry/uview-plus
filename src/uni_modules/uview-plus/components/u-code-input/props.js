@@ -44,6 +44,7 @@ export default {
 			type: [String, Number],
 			default: defprops.codeInput.value
 		},
+		// #endif
         // 是否自动获取焦点
         focus: {
             type: Boolean,

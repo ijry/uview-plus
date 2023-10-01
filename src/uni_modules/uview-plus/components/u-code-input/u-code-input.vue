@@ -82,7 +82,12 @@
 			}
 		},
 		watch: {
+			// #ifdef VUE2
 			value: {
+			// #endif
+			// #ifdef VUE3
+			modelValue: {
+			// #endif
 				immediate: true,
 				handler(val) {
 					// 转为字符串，超出部分截掉
