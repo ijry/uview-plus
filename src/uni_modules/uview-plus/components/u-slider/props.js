@@ -29,6 +29,7 @@ export default {
 			type: [String, Number],
 			default: defprops.slider.value
 		},
+		// #endif
         // 滑块右侧已选择部分的背景色
         activeColor: {
             type: String,
