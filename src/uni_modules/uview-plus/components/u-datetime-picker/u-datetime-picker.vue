@@ -84,6 +84,16 @@
 					this.updateColumnValue(this.innerValue)
 				}
 			},
+			// #ifdef VUE3
+			modelValue(newValue) {
+				this.init()
+			},
+			// #endif
+			// #ifdef VUE2
+			value(newValue) {
+				this.init()
+			},
+			// #endif
 			propsChange() {
 				this.init()
 			}
