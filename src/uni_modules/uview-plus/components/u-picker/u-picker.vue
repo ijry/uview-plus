@@ -18,7 +18,7 @@
 				class="u-picker__view"
 				:indicatorStyle="`height: ${$u.addUnit(itemHeight)}`"
 				:value="innerIndex"
-				:immediateChange="immediateChange"
+				:immediateChange="true"
 				:style="{
 					height: `${$u.addUnit(visibleItemCount * itemHeight)}`
 				}"
