@@ -191,7 +191,8 @@
 				// 设置列表的高度为整个屏幕的高度
 				//减去this.customNavHeight，并将this.scrollViewHeight设置为maxHeight
 				//解决当u-index-list组件放在tabbar页面时,scroll-view内容较少时，还能滚动
-				this.scrollViewHeight = this.sys.windowHeight - this.customNavHeight
+				let customNavHeight = uni.$u.getPx(this.customNavHeight)
+				this.scrollViewHeight = this.sys.windowHeight - customNavHeight
 			},
 			// 索引列表被触摸
 			touchStart(e) {
