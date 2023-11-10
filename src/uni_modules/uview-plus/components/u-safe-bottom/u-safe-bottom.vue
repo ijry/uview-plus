@@ -33,7 +33,7 @@
 		computed: {
 			style() {
 				const style = {};
-				// #ifdef APP-NVUE
+				// #ifdef APP-NVUE || MP-TOUTIAO
 				// nvue下，高度使用js计算填充
 				style.height = uni.$u.addUnit(uni.$u.sys().safeAreaInsets.bottom, 'px');
 				// #endif
