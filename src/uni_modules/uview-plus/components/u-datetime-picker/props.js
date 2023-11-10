@@ -6,6 +6,11 @@ export default {
             type: Boolean,
             default: defprops.datetimePicker.show
         },
+		// 弹出的方向，可选值为 top bottom right left center
+        popupMode: {
+            type: String,
+            default: defprops.picker.popupMode
+        },
         // 是否展示顶部的操作栏
         showToolbar: {
             type: Boolean,

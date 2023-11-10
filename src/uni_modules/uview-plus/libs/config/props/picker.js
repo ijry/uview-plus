@@ -11,6 +11,7 @@ export default {
     // picker
     picker: {
         show: false,
+		popupMode: 'bottom',
         showToolbar: true,
         title: '',
         columns: () => [],

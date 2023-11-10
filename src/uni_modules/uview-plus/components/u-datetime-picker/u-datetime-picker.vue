@@ -2,6 +2,7 @@
 	<u-picker
 		ref="picker"
 		:show="show"
+		:popupMode="popupMode"
 		:closeOnClickOverlay="closeOnClickOverlay"
 		:columns="columns"
 		:title="title"
