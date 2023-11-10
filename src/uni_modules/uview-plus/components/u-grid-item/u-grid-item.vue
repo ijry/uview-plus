@@ -1,6 +1,7 @@
 <template>
 	<!-- #ifndef APP-NVUE -->
 	<view
+		v-if="parentData.col > 0"
 	    class="u-grid-item"
 	    hover-class="u-grid-item--hover-class"
 	    :hover-stay-time="200"
@@ -44,7 +45,7 @@
 		data() {
 			return {
 				parentData: {
-					col: 3, // 父组件划分的宫格数
+					col: 0, // 父组件划分的宫格数
 					border: true, // 是否显示边框，根据父组件决定
 				},
 				// #ifdef APP-NVUE
@@ -65,7 +66,11 @@
 			// #ifndef APP-NVUE
 			// vue下放到computed中，否则会因为延时造成闪烁
 			width() {
-				return 100 / Number(this.parentData.col) + '%'
+				if (this.parentData.col > 0) {
+					return 100 / Number(this.parentData.col) + '%'
+				} else {
+					return 0;
+				}
 			},
 			// #endif
 			itemStyle() {
