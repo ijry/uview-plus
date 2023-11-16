@@ -7,7 +7,7 @@
 			:min="min"
 			:max="max"
 			:step="step"
-			:value="value"
+			:value="modelValue"
 			:activeColor="activeColor"
 			:backgroundColor="inactiveColor"
 			:blockSize="$u.getPx(blockSize)"
@@ -27,7 +27,7 @@
 	export default {
 		name: 'u--slider',
 		mixins: [mpMixin, mixin, props],
-		emits: ["changing", "change"],
+		emits: ["changing", "change", "update:modelValue"],
 		methods: {
 			// 拖动过程中触发
 			changingHandler(e) {
