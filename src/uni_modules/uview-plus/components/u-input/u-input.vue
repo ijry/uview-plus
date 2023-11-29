@@ -44,6 +44,7 @@
             	    @focus="onFocus"
             	    @confirm="onConfirm"
             	    @keyboardheightchange="onkeyboardheightchange"
+					@change="onInput"
             	/>
             </view>
             <view
