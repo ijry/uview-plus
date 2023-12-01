@@ -12,7 +12,7 @@
 			:arrowDirection="expanded ? 'up' : 'down'"
 			:disabled="disabled"
 		>
-			<!-- #ifndef MP-WEIXIN -->
+			<!-- #ifndef MP-WEIXIN || MP-ALIPAY -->
 			<!-- 微信小程序不支持，因为微信中不支持 <slot name="title" slot="title" />的写法 -->
 			<template #title>
 				<slot name="title"></slot>
