@@ -141,21 +141,21 @@
 	export default {
 		data() {
 			return {
-				src1: 'https://cdn.uviewui.com/uview/album/1.jpg',
-				src2: 'https://cdn.uviewui.com/uview/album/2.jpg',
-				src3: 'https://cdn.uviewui.com/uview/album/3.jpg',
-				src4: 'https://cdn.uviewui.com/uview/album/4.jpg',
-				src5: 'https://cdn.uviewui.com/uview/album/5.jpg',
-				src6: 'https://cdn.uviewui.com/uview/album/6.jpg',
-				src7: 'https://cdn.uviewui.com/uview/album/noExist.jpg',
+				src1: './static/uview/album/1.jpg',
+				src2: './static/uview/album/2.jpg',
+				src3: './static/uview/album/3.jpg',
+				src4: './static/uview/album/4.jpg',
+				src5: './static/uview/album/5.jpg',
+				src6: './static/uview/album/6.jpg',
+				src7: './static/uview/album/noExist.jpg',
 				urls: [
-					'https://cdn.uviewui.com/uview/album/1.jpg',
-					'https://cdn.uviewui.com/uview/album/2.jpg',
-					'https://cdn.uviewui.com/uview/album/3.jpg',
-					'https://cdn.uviewui.com/uview/album/4.jpg',
-					'https://cdn.uviewui.com/uview/album/7.jpg',
-					'https://cdn.uviewui.com/uview/album/6.jpg',
-					'https://cdn.uviewui.com/uview/album/5.jpg'
+					'./static/uview/album/1.jpg',
+					'./static/uview/album/2.jpg',
+					'./static/uview/album/3.jpg',
+					'./static/uview/album/4.jpg',
+					'./static/uview/album/7.jpg',
+					'./static/uview/album/6.jpg',
+					'./static/uview/album/5.jpg'
 				]
 			}
 		},

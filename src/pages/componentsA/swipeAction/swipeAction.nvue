@@ -6,6 +6,7 @@
 				<u-swipe-action>
 					<u-swipe-action-item
 						v-if="show1"
+						:show="true"
 						:options="options1"
 						@click="click"
 					>
