@@ -48,10 +48,10 @@
 			class="u-index-list__letter"
 			ref="u-index-list__letter"
 			:style="{ top: $u.addUnit(letterInfo.top || 100) }"
-			@touchstart="touchStart"
-			@touchmove.stop.prevent="touchMove"
-			@touchend.stop.prevent="touchEnd"
-			@touchcancel.stop.prevent="touchEnd"
+			@touchstart.prevent="touchStart"
+			@touchmove.prevent="touchMove"
+			@touchend.prevent="touchEnd"
+			@touchcancel.prevent="touchEnd"
 		>
 			<view
 				class="u-index-list__letter__item"

@@ -1,4 +1,7 @@
-<template>
+<template>	
+	<!-- #ifdef MP-ALIPAY -->
+	<!-- <import-sjs from="./alipay.sjs" name="mysjs" /> -->
+	<!-- #endif -->
 	<view class="u-swipe-action-item" ref="u-swipe-action-item">
 		<view class="u-swipe-action-item__right">
 			<slot name="button">
@@ -27,12 +30,22 @@
 				</view>
 			</slot>
 		</view>
-		<!-- #ifdef APP-VUE || MP-WEIXIN || H5 || MP-QQ -->
+		<!-- #ifdef APP-VUE || MP-WEIXIN || MP-QQ -->
 		<view class="u-swipe-action-item__content" @touchstart="wxs.touchstart" @touchmove="wxs.touchmove"
 			@touchend="wxs.touchend" :status="status" :change:status="wxs.statusChange" :size="size"
 			:change:size="wxs.sizeChange">
 			<slot></slot>
 		</view>
+		<!-- #endif -->
+		<!-- #ifdef MP-ALIPAY || MP-BAIDU || MP-TOUTIAO || H5 -->
+		<view class="u-swipe-action-item__content" @click="clickHandler" @touchstart="touchstart" @touchmove="touchmove"
+			@touchend="touchend" :style="sliderStyle">
+			<slot></slot>
+		</view>
+		<!-- <view class="u-swipe-action-item__content" @touchstart="mysjs.touchstart" @touchmove="mysjs.touchmove"
+			@touchend="mysjs.touchend">
+			<slot></slot>
+		</view> -->
 		<!-- #endif -->
 		<!-- #ifdef APP-NVUE -->
 		<view class="u-swipe-action-item__content" ref="u-swipe-action-item__content" @panstart="onTouchstart"
@@ -42,7 +55,7 @@
 		<!-- #endif -->
 	</view>
 </template>
-<!-- #ifdef APP-VUE || MP-WEIXIN || H5 || MP-QQ -->
+<!-- #ifdef APP-VUE || MP-WEIXIN || MP-QQ || H5 -->
 <script src="./index.wxs" module="wxs" lang="wxs"></script>
 <!-- #endif -->
 <script>
@@ -53,8 +66,11 @@
 	// #ifdef APP-NVUE
 	import nvue from './nvue.js';
 	// #endif
-	// #ifdef APP-VUE || MP-WEIXIN || H5 || MP-QQ
+	// #ifdef APP-VUE || MP-WEIXIN || MP-QQ || H5
 	import wxs from './wxs.js';
+	// #endif
+	// #ifdef MP-ALIPAY || MP-BAIDU || MP-TOUTIAO || H5
+	import other from './other.js';
 	// #endif
 	/**
 	 * SwipeActionItem 滑动单元格子组件
@@ -81,7 +97,7 @@
 		mixins: [mpMixin, mixin, props, nvue, touch],
 		// #endif
 		// #ifdef APP-VUE || MP-WEIXIN || H5 || MP-QQ
-		mixins: [mpMixin, mixin, props, touch, wxs],
+		mixins: [mpMixin, mixin, props, touch, wxs, other],
 		// #endif
 		data() {
 			return {
@@ -93,13 +109,16 @@
 				},
 				// 当前状态，open-打开，close-关闭
 				status: 'close',
+				sliderStyle: {}
 			}
 		},
 		watch: {
 			// 由于wxs无法直接读取外部的值，需要在外部值变化时，重新执行赋值逻辑
+			// #ifndef APP-NVUE
 			wxsInit(newValue, oldValue) {
 				this.queryRect()
 			}
+			// #endif
 		},
 		computed: {
 			wxsInit() {
