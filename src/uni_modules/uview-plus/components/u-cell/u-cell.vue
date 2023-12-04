@@ -145,7 +145,7 @@
 			&__content {
 				@include flex(row);
 				align-items: center;
-				flex: 1;
+				flex: 1 0 1;
 			}
 
 			&--large {
@@ -207,10 +207,10 @@
 
 		&__value {
 			text-align: right;
+			margin-left: auto;
 			font-size: $u-cell-value-font-size;
 			line-height: $u-cell-line-height;
 			color: $u-cell-value-color;
-
 			&--large {
 				font-size: $u-cell-value-font-size-large;
 			}
