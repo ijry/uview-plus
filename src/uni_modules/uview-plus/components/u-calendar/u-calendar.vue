@@ -199,7 +199,7 @@ export default {
 			this.innerFormatter = e
 		},
 		// month组件内部选择日期后，通过事件通知给父组件
-		monthSelected(e) {
+		monthSelected(e,scene ='init') {
 			this.selected = e
 			if (!this.showConfirm) {
 				// 在不需要确认按钮的情况下，如果为单选，或者范围多选且已选长度大于2，则直接进行返还
@@ -208,7 +208,12 @@ export default {
 					this.mode === 'single' ||
 					(this.mode === 'range' && this.selected.length >= 2)
 				) {
-					this.$emit('confirm', this.selected)
+				   if( scene === 'init'){
+					 return
+				   }
+				   if( scene === 'tap') {
+					 this.$emit('confirm', this.selected)
+				   }
 				}
 			}
 		},
