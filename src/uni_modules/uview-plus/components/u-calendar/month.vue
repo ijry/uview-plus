@@ -450,7 +450,7 @@
 			},
 			setSelected(selected, event = true) {
 				this.selected = selected
-				event && this.$emit('monthSelected', this.selected)
+				event && this.$emit('monthSelected', this.selected,'tap')
 			}
 		}
 	}
