@@ -30,7 +30,7 @@
 					:key="index"
 					class="u-picker__view__column"
 				>
-					<text
+					<view
 						v-if="$u.test.array(item)"
 						class="u-picker__view__column__item u-line-1"
 						v-for="(item1, index1) in item"
@@ -40,7 +40,7 @@
 							lineHeight: $u.addUnit(itemHeight),
 							fontWeight: index1 === innerIndex[index] ? 'bold' : 'normal'
 						}"
-					>{{ getItemText(item1) }}</text>
+					>{{ getItemText(item1) }}</view>
 				</picker-view-column>
 			</picker-view>
 			<view
