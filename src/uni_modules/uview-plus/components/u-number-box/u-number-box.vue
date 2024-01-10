@@ -136,11 +136,14 @@
 			// #endif
 			// #ifdef VUE3
 			// 监听v-mode的变化，重新初始化内部的值
-			modelValue(n) {
-				if (n !== this.currentValue) {
-					this.currentValue = this.format(this.modelValue)
-				}
-			}
+			modelValue: {
+				handler: function (newV, oldV) {
+					if (newV !== this.currentValue) {
+						this.currentValue = this.format(this.modelValue)
+					}
+				},
+				immediate: true
+		}
 			// #endif
 		},
 		computed: {
