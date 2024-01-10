@@ -29,6 +29,7 @@
             @confirm="onConfirm"
             @keyboardheightchange="onKeyboardheightchange"
         ></textarea>
+		<!-- #ifndef MP-ALIPAY -->
         <text
             class="u-textarea__count"
             :style="{
@@ -37,6 +38,7 @@
             v-if="count"
             >{{ innerValue.length }}/{{ maxlength }}</text
         >
+		<!-- #endif -->
     </view>
 </template>
 
