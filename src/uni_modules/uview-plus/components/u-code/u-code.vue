@@ -18,11 +18,11 @@
 	 * @property {String}			endText			倒计结束的提示语，见官网说明（默认 '重新获取' ）
 	 * @property {Boolean}			keepRunning		是否在H5刷新或各端返回再进入时继续倒计时（ 默认false ）
 	 * @property {String}			uniqueKey		为了区分多个页面，或者一个页面多个倒计时组件本地存储的继续倒计时变了
-	 * 
+	 *
 	 * @event {Function}	change	倒计时期间，每秒触发一次
 	 * @event {Function}	start	开始倒计时触发
 	 * @event {Function}	end		结束倒计时触发
-	 * @example <u-code ref="uCode" @change="codeChange" seconds="20"></u-code> 
+	 * @example <u-code ref="uCode" @change="codeChange" seconds="20"></u-code>
 	 */
 	export default {
 		name: "u-code",
@@ -104,7 +104,7 @@
 			},
 			// 保存时间戳，为了防止倒计时尚未结束，H5刷新或者各端的右上角返回上一页再进来
 			setTimeToStorage() {
-				if(!this.keepRunning || !this.timer) return
+				if(!this.keepRunning) return
 				// 记录当前的时间戳，为了下次进入页面，如果还在倒计时内的话，继续倒计时
 				// 倒计时尚未结束，结果大于0；倒计时已经开始，就会小于初始值，如果等于初始值，说明没有开始倒计时，无需处理
 				if(this.secNum > 0 && this.secNum <= this.seconds) {
