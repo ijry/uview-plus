@@ -22,8 +22,8 @@
             ></u-icon>
         </view>
         <u-link
-            v-if="mode === 'link'"
-            :text="value"
+            v-if="mode === 'link'"			class="u-text__value"
+            :style="{fontWeight: valueStyle.fontWeight, wordWrap: valueStyle.wordWrap, fontSize: valueStyle.fontSize}"			:class="[			    type && `u-text__value--${type}`,			    lines && `u-line-${lines}`			]"			:text="value"
             :href="href"
             underLine
         ></u-link>
