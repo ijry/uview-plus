@@ -200,6 +200,6 @@
 		height: 17px;
 		color: #FFFFFF;
 		border-radius: 100px;
-		background-color: #f56c6c;
+		background-color: #f56c6c;		margin-left: auto;
 	}
 </style>

@@ -1,7 +1,7 @@
 <template>
 	<view class="u-collapse-item">
 		<u-cell
-			:title="title"
+			:title="$slots.title ? '' : title"
 			:value="value"
 			:label="label"
 			:icon="icon"
@@ -12,21 +12,16 @@
 			:arrowDirection="expanded ? 'up' : 'down'"
 			:disabled="disabled"
 		>
-			<!-- #ifndef MP-WEIXIN || MP-ALIPAY -->
 			<!-- 微信小程序不支持，因为微信中不支持 <slot name="title" slot="title" />的写法 -->
-			<template #title>
-				<slot name="title"></slot>
-			</template>
-			<template #icon>
-				<slot name="icon"></slot>
+			<template #title>				<slot name="title">					<text v-if="!$slots.title && title">						{{title}}					</text>				</slot>			</template>			<template #icon>
+				<slot name="icon">					<u-icon v-if="!$slots.icon && icon" :size="22" :name="icon"></u-icon>				</slot>
 			</template>
 			<template #value>
-				<slot name="value"></slot>
+				<slot name="value">					<text v-if="!$slots.value && value">						{{value}}					</text>				</slot>
 			</template>
 			<template #right-icon>
-				<slot name="right-icon"></slot>
+				<slot name="right-icon">				</slot>
 			</template>
-			<!-- #endif -->
 		</u-cell>
 		<view
 			class="u-collapse-item__content"
@@ -101,7 +96,7 @@
 			}
 		},
 		mounted() {
-			this.init()
+			this.init()			console.log('$slots', this.$slots)
 		},
 		methods: {
 			// 异步获取内容，或者动态修改了内容时，需要重新初始化

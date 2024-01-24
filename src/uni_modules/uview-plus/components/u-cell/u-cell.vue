@@ -11,11 +11,9 @@
 						:custom-style="iconStyle"
 						:size="size === 'large' ? 22 : 18"></u-icon>
 				</view>
-				<view class="u-cell__title">
-					<slot name="title">
-						<text v-if="title" class="u-cell__title-text" :style="[titleTextStyle]"
+				<view class="u-cell__title">					<slot name="title" v-if="$slots.title || !title">					</slot>
+						<text v-else class="u-cell__title-text" :style="[titleTextStyle]"
 							:class="[disabled && 'u-cell--disabled', size === 'large' && 'u-cell__title-text--large']">{{ title }}</text>
-					</slot>
 					<slot name="label">
 						<text class="u-cell__label" v-if="label"
 							:class="[disabled && 'u-cell--disabled', size === 'large' && 'u-cell__label--large']">{{ label }}</text>
@@ -29,10 +27,8 @@
 			</slot>
 			<view class="u-cell__right-icon-wrap" v-if="$slots['right-icon'] || isLink"
 				:class="[`u-cell__right-icon-wrap--${arrowDirection}`]">
-				<slot name="right-icon" v-if="$slots['right-icon']">
-				</slot>
-				<u-icon v-else :name="rightIcon" :custom-style="rightIconStyle" :color="disabled ? '#c8c9cc' : 'info'"
-					:size="size === 'large' ? 18 : 16"></u-icon>
+				<slot name="right-icon">
+					<u-icon v-if="rightIcon" :name="rightIcon" :custom-style="rightIconStyle" :color="disabled ? '#c8c9cc' : 'info'"						:size="size === 'large' ? 18 : 16"></u-icon>				</slot>
 			</view>
 		</view>
 		<u-line v-if="border"></u-line>
@@ -145,7 +141,7 @@
 			&__content {
 				@include flex(row);
 				align-items: center;
-				flex: 1 0 1;
+				flex: 1;
 			}
 
 			&--large {
