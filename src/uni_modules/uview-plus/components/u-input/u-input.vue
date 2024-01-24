@@ -148,10 +148,10 @@ export default {
                 // 在H5中，外部value变化后，修改input中的值，不会触发@input事件，此时手动调用值变化方法
                 if (
                     this.firstChange === false &&
-                    this.changeFromInner === false
+					this.changeFromInner === false
                 ) {
                     this.valueChange();
-                }
+                } else {					// 尝试调用u-form的验证方法					uni.$u.formValidate(this, "change");				}
                 /* #endif */
                 this.firstChange = false;
                 // 重置changeFromInner的值为false，标识下一次引起默认为外部引起的
@@ -171,7 +171,7 @@ export default {
                     this.changeFromInner === false
                 ) {
                     this.valueChange();
-                }
+                } else {					// 尝试调用u-form的验证方法					uni.$u.formValidate(this, "change");				}
                 /* #endif */
                 this.firstChange = false;
                 // 重置changeFromInner的值为false，标识下一次引起默认为外部引起的
@@ -255,7 +255,7 @@ export default {
             this.$emit("blur", event.detail.value);
             // H5端的blur会先于点击清除控件的点击click事件触发，导致focused
             // 瞬间为false，从而隐藏了清除控件而无法被点击到
-            uni.$u.sleep(50).then(() => {
+            uni.$u.sleep(150).then(() => {
                 this.focused = false;
             });
             // 尝试调用u-form的验证方法
