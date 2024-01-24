@@ -30,14 +30,14 @@
 				</view>
 			</slot>
 		</view>
-		<!-- #ifdef APP-VUE || MP-WEIXIN || MP-QQ -->
+		<!-- #ifdef APP-VUE || MP-WEIXIN || MP-QQ || H5  -->
 		<view class="u-swipe-action-item__content" @touchstart="wxs.touchstart" @touchmove="wxs.touchmove"
 			@touchend="wxs.touchend" :status="status" :change:status="wxs.statusChange" :size="size"
 			:change:size="wxs.sizeChange">
 			<slot></slot>
 		</view>
 		<!-- #endif -->
-		<!-- #ifdef MP-ALIPAY || MP-BAIDU || MP-TOUTIAO || H5 -->
+		<!-- #ifdef MP-ALIPAY || MP-BAIDU || MP-TOUTIAO-->
 		<view class="u-swipe-action-item__content" @click="clickHandler" @touchstart="touchstart" @touchmove="touchmove"
 			@touchend="touchend" :style="sliderStyle">
 			<slot></slot>
@@ -69,7 +69,7 @@
 	// #ifdef APP-VUE || MP-WEIXIN || MP-QQ || H5
 	import wxs from './wxs.js';
 	// #endif
-	// #ifdef MP-ALIPAY || MP-BAIDU || MP-TOUTIAO || H5
+	// #ifdef MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
 	import other from './other.js';
 	// #endif
 	/**
@@ -91,7 +91,7 @@
 		name: 'u-swipe-action-item',
 		emits: ['click'],
 		
-		mixins: [			mpMixin,			mixin,			// #ifndef APP-NVUE			touch,			// #endif			// #ifdef APP-NVUE			nvue,			// #endif			// #ifdef APP-VUE || MP-WEIXIN || H5 || MP-QQ			wxs,			// #endif			// #ifdef MP-ALIPAY || MP-BAIDU || MP-TOUTIAO || H5			other,			// #endif			props		],
+		mixins: [			mpMixin,			mixin,			// #ifndef APP-NVUE			touch,			// #endif			// #ifdef APP-NVUE			nvue,			// #endif			// #ifdef APP-VUE || MP-WEIXIN || H5 || MP-QQ || H5			wxs,			// #endif			// #ifdef MP-ALIPAY || MP-BAIDU || MP-TOUTIAO			other,			// #endif			props		],
 		data() {
 			return {
 				// 按钮的尺寸信息

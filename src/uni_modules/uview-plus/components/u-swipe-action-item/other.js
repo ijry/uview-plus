@@ -28,9 +28,9 @@ export default {
 	},
     methods: {
 		clickHandler() {
-		},
+		},		setStatus(status) {			this.status = status		},
 		getBtnWidth() {
-			let view = uni.createSelectorQuery().in(this).select(".u-swipe-action-item__right__button");
+			let view = uni.createSelectorQuery().in(this).select(".u-swipe-action-item__right");
 			view.fields({
 				size: true,
 				scrollOffset: true
