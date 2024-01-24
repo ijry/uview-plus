@@ -1,3 +1,10 @@
+## 3.1.45（2024-01-24）
+fix: #262ext组件为超链接的情况下size属性不生效
+fix: #263最新版本3.1.42中微信小程序u-swipe-action-item报错
+fix: #224最新版本3.1.42中微信小程序u-swipe-action-item报错
+fix: #263支持支付宝小程序
+fix: #261u-input在直接修改v-model的绑定值时，每隔一次会无法出发change事件
+优化折叠面板兼容微信小程序
 ## 3.1.42（2024-01-15）
 修复u-number-box默认值0时在小程序不显示值
 优化u-code的timer判断
