@@ -119,7 +119,12 @@
 			}
 		},
 		// 组件销毁的时候，清除定时器，否则定时器会继续存在，系统不会自动清除
+		// #ifdef VUE2
 		beforeDestroy() {
+		// #endif
+		// #ifdef VUE3
+		beforeUnmount() {
+		// #endif
 			this.setTimeToStorage()
 			clearTimeout(this.timer)
 			this.timer = null

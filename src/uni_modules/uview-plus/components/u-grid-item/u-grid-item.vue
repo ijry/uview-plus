@@ -166,7 +166,12 @@
 				}
 			}
 		},
+		// #ifdef VUE2
 		beforeDestroy() {
+		// #endif
+		// #ifdef VUE3
+		beforeUnmount() {
+		// #endif
 			// 移除事件监听，释放性能
 			uni.$off('$uGridItem')
 		}
