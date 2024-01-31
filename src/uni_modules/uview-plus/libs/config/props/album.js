@@ -10,7 +10,7 @@
 export default {
     // album 组件
     album: {
-        urls: () => [],
+        urls: [],
         keyName: '',
         singleSize: 180,
         multipleSize: 70,

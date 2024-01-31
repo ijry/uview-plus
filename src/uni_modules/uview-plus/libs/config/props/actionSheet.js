@@ -13,7 +13,7 @@ export default {
         show: false,
         title: '',
         description: '',
-        actions: () => [],
+        actions: [],
         index: '',
         cancelText: '',
         closeOnClickAction: true,

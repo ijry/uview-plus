@@ -103,7 +103,7 @@
 			// 是否为只读状态，只读状态下禁止选择日期
 			readonly: {
 				type: Boolean,
-				default: defprops.calendar.readonly
+				default: () => uni.$u.props.calendar.readonly
 			},
 			// 日期区间最多可选天数，默认无限制，mode = range时有效
 			maxRange: {

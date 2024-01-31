@@ -11,7 +11,7 @@ export default {
     // checkbox-group组件
     checkboxGroup: {
         name: '',
-        value: () => [],
+        value: [],
         shape: 'square',
         disabled: false,
         activeColor: '#2979ff',

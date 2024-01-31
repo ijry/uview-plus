@@ -20,7 +20,7 @@ export default {
         color: null,
         shape: 'circle',
         numberType: 'overflow',
-        offset: () => [],
+        offset: [],
         inverted: false,
         absolute: false
     }

@@ -14,7 +14,7 @@ export default {
 		popupMode: 'bottom',
         showToolbar: true,
         title: '',
-        columns: () => [],
+        columns: [],
         loading: false,
         itemHeight: 44,
         cancelText: '取消',
@@ -24,7 +24,7 @@ export default {
         visibleItemCount: 5,
         keyName: 'text',
         closeOnClickOverlay: false,
-        defaultIndex: () => [],
+        defaultIndex: [],
 		immediateChange: false
     }
 }

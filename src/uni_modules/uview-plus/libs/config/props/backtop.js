@@ -19,9 +19,9 @@ export default {
         bottom: 100,
         right: 20,
         zIndex: 9,
-        iconStyle: () => ({
+        iconStyle: {
             color: '#909399',
             fontSize: '19px'
-        })
+        }
     }
 }

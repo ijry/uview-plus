@@ -25,9 +25,9 @@ export default {
         lines: '',
         color: '#303133',
         size: 15,
-        iconStyle: () => ({
+        iconStyle: {
             fontSize: '15px'
-        }),
+        },
         decoration: 'none',
         margin: 0,
         lineHeight: '',

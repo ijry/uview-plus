@@ -18,7 +18,7 @@ export default {
         direction: 'top',
         zIndex: 10071,
         showCopy: true,
-        buttons: () => [],
+        buttons: [],
         overlay: true,
         showToast: true
     }
