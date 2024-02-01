@@ -11,7 +11,7 @@ export default {
 	// upload组件
 	upload: {
 		accept: 'image',
-		capture: () => ['album', 'camera'],
+		capture: ['album', 'camera'],
 		compressed: true,
 		camera: 'back',
 		maxDuration: 60,
@@ -23,11 +23,11 @@ export default {
 		disabled: false,
 		imageMode: 'aspectFill',
 		name: '',
-		sizeType: () => ['original', 'compressed'],
+		sizeType: ['original', 'compressed'],
 		multiple: false,
 		deletable: true,
 		maxSize: Number.MAX_VALUE,
-		fileList: () => [],
+		fileList: [],
 		uploadText: '',
 		width: 80,
 		height: 80,

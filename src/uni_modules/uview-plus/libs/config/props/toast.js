@@ -19,7 +19,7 @@ export default {
         show: '',
         overlay: false,
         position: 'center',
-        params: () => {},
+        params: {},
         duration: 2000,
         isTab: false,
         url: '',

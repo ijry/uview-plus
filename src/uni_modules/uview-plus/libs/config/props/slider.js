@@ -20,6 +20,6 @@ export default {
         blockColor: '#ffffff',
         showValue: false,
 		disabled:false,
-        blockStyle: () => {}
+        blockStyle: {}
     }
 }

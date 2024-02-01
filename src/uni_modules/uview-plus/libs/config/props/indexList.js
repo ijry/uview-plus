@@ -12,7 +12,7 @@ export default {
     indexList: {
         inactiveColor: '#606266',
         activeColor: '#5677fc',
-        indexList: () => [],
+        indexList: [],
         sticky: true,
         customNavHeight: 0
     }

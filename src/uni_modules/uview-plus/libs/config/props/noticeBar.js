@@ -10,7 +10,7 @@
 export default {
     // noticeBar
     noticeBar: {
-        text: () => [],
+        text: [],
         direction: 'row',
         step: false,
         icon: 'volume',
