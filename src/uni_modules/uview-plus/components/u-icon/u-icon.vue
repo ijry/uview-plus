@@ -92,12 +92,13 @@
 			uClasses() {
 				let classes = []
 				classes.push(this.customPrefix + '-' + this.name)
-				// // uView的自定义图标类名为u-iconfont
-				// if (this.customPrefix == 'uicon') {
-				// 	classes.push('u-iconfont')
-				// } else {
-				// 	classes.push(this.customPrefix)
-				// }
+				// uView的自定义图标类名为u-iconfont
+				if (this.customPrefix == 'uicon') {
+					classes.push('u-iconfont')
+				} else {
+					// 不能缺少这一步，否则自定义图标会无效
+					classes.push(this.customPrefix)
+				}
 				// 主题色，通过类配置
 				if (this.color && uni.$u.config.type.includes(this.color)) classes.push('u-icon__icon--' + this.color)
 				// 阿里，头条，百度小程序通过数组绑定类名时，无法直接使用[a, b, c]的形式，否则无法识别
@@ -134,6 +135,8 @@
 			},
 			// 通过图标名，查找对应的图标
 			icon() {
+				// 使用自定义图标的时候页面上会把name属性也展示出来，所以在这里处理一下
+				if (this.customPrefix !== "uicon") return "";
 				// 如果内置的图标中找不到对应的图标，就直接返回name值，因为用户可能传入的是unicode代码
 				return icons['uicon-' + this.name] || this.name
 			}
