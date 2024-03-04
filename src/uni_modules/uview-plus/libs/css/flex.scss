@@ -174,7 +174,9 @@
 
 // 交叉轴第一行文字基线对齐
 .u-flex-items-baseline {
+	/* #ifndef APP-NVUE */
 	align-items: baseline
+	/* #endif */
 }
 
 // 交叉轴方向拉伸对齐
