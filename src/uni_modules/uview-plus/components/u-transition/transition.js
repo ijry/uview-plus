@@ -43,9 +43,8 @@ export default {
             this.classes = classNames.enter
 			await nextTick();
 			{
-				// #ifdef H5
+                // https://github.com/umicro/uView2.0/issues/545
 				await uni.$u.sleep(20)
-				// #endif
                 // 标识动画尚未结束
                 this.$emit('enter')
                 this.transitionEnded = false
