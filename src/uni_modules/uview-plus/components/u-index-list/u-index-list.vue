@@ -310,7 +310,8 @@
 				// #endif
 				// #ifdef MP-WEIXIN
 				// 微信小程序下，scroll-view的scroll-into-view属性无法对slot中的内容的id生效，只能通过设置scrollTop的形式去移动滚动条
-				this.scrollTop = this.children[currentIndex].top
+				const customNavHeight = this.customNavHeight
+				this.scrollTop = this.children[currentIndex].top - uni.$u.getPx(customNavHeight)
 				// #endif
 				// #ifdef APP-NVUE
 				// 在nvue中，由于cell和header为同级元素，所以实际是需要对header(anchor)进行偏移
