@@ -84,6 +84,7 @@
 	 * @tutorial https://ijry.github.io/uview-plus/components/form.html
 	 * @property {String}			label			input的label提示语
 	 * @property {String}			prop			绑定的值
+	 * @property {String}			rule			绑定的规则
 	 * @property {String | Boolean}	borderBottom	是否显示表单域的下划线边框
 	 * @property {String | Number}	labelWidth		label的宽度，单位px
 	 * @property {String}			rightIcon		右侧图标

@@ -10,6 +10,11 @@ export default {
             type: String,
             default: () => uni.$u.props.formItem.prop
         },
+        // 绑定的规则
+        prop: {
+            type: String,
+            default: () => uni.$u.props.formItem.rule
+        },
         // 是否显示表单域的下划线边框
         borderBottom: {
             type: [String, Boolean],
