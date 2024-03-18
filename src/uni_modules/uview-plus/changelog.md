@@ -1,3 +1,5 @@
+## 3.1.48（2024-03-18）
+fix:[plugin:uni:pre-css] Unbalanced delimiter found in string
 ## 3.1.47（2024-03-18）
 fix: setConfig设置组件默认参数无效问题
 fix: 修复自定义图标无效问题
