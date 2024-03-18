@@ -85,40 +85,40 @@
 
 // 自动伸缩
 .u-flex-fill {
-	flex: 1 1 auto
+	flex: 1 1 auto;
 }
 
 // 边界自动伸缩
 .u-margin-top-auto,
 .u-m-t-auto {
-	margin-top: auto !important
+	margin-top: auto !important;
 }
 
 .u-margin-right-auto,
 .u-m-r-auto {
-	margin-right: auto !important
+	margin-right: auto !important;
 }
 
 .u-margin-bottom-auto,
 .u-m-b-auto {
-	margin-bottom: auto !important
+	margin-bottom: auto !important;
 }
 
 .u-margin-left-auto,
 .u-m-l-auto {
-	margin-left: auto !important
+	margin-left: auto !important;
 }
 
 .u-margin-center-auto,
 .u-m-c-auto {
 	margin-left: auto !important;
-	margin-right: auto !important
+	margin-right: auto !important;
 }
 
 .u-margin-middle-auto,
 .u-m-m-auto {
 	margin-top: auto !important;
-	margin-bottom: auto !important
+	margin-bottom: auto !important;
 }
 /* #endif */
 
@@ -134,54 +134,54 @@
 
 // 主轴起点对齐
 .u-flex-start {
-	justify-content: flex-start
+	justify-content: flex-start;
 }
 
 // 主轴中间对齐
 .u-flex-center {
-	justify-content: center
+	justify-content: center;
 }
 
 // 主轴终点对齐
 .u-flex-end {
-	justify-content: flex-end
+	justify-content: flex-end;
 }
 
 // 主轴等比间距
 .u-flex-between {
-	justify-content: space-between
+	justify-content: space-between;
 }
 
 // 主轴均分间距
 .u-flex-around {
-	justify-content: space-around
+	justify-content: space-around;
 }
 
 // 交叉轴起点对齐
 .u-flex-items-start {
-	align-items: flex-start
+	align-items: flex-start;
 }
 
 // 交叉轴中间对齐
 .u-flex-items-center {
-	align-items: center
+	align-items: center;
 }
 
 // 交叉轴终点对齐
 .u-flex-items-end {
-	align-items: flex-end
+	align-items: flex-end;
 }
 
 // 交叉轴第一行文字基线对齐
 .u-flex-items-baseline {
 	/* #ifndef APP-NVUE */
-	align-items: baseline
+	align-items: baseline;
 	/* #endif */
 }
 
 // 交叉轴方向拉伸对齐
 .u-flex-items-stretch {
-	align-items: stretch
+	align-items: stretch;
 }
 
 
@@ -189,54 +189,54 @@
 
 // 子元素交叉轴起点对齐
 .u-flex-self-start {
-	align-self: flex-start
+	align-self: flex-start;
 }
 
 // 子元素交叉轴居中对齐
 .u-flex-self-center {
-	align-self: center
+	align-self: center;
 }
 
 // 子元素交叉轴终点对齐
 .u-flex-self-end {
-	align-self: flex-end
+	align-self: flex-end;
 }
 
 // 子元素交叉轴第一行文字基线对齐
 .u-flex-self-baseline {
-	align-self: baseline
+	align-self: baseline;
 }
 
 // 子元素交叉轴方向拉伸对齐
 .u-flex-self-stretch {
-	align-self: stretch
+	align-self: stretch;
 }
 
 // 多轴交叉时的对齐方式
 
 // 起点对齐
 .u-flex-content-start {
-	align-content: flex-start
+	align-content: flex-start;
 }
 
 // 居中对齐
 .u-flex-content-center {
-	align-content: center
+	align-content: center;
 }
 
 // 终点对齐
 .u-flex-content-end {
-	align-content: flex-end
+	align-content: flex-end;
 }
 
 // 两端对齐
 .u-flex-content-between {
-	align-content: space-between
+	align-content: space-between;
 }
 
 // 均分间距
 .u-flex-content-around {
-	align-content: space-around
+	align-content: space-around;
 }
 
 // 全部居中对齐
@@ -244,17 +244,17 @@
 	justify-content: center;
 	align-items: center;
 	align-self: center;
-	align-content: center
+	align-content: center;
 }
 
 // 是否可以放大
 .u-flex-grow {
-	flex-grow: 1
+	flex-grow: 1;
 }
 
 // 是否可以缩小
 .u-flex-shrink {
-	flex-shrink: 1
+	flex-shrink: 1;
 }
 
 // 定义内外边距，历遍1-80
