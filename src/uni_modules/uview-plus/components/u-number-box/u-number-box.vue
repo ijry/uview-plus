@@ -30,6 +30,21 @@
 		</view>
 
 		<slot name="input">
+			<!-- #ifdef MP-WEIXIN -->
+			<input
+			    :disabled="disabledInput || disabled"
+			    :cursor-spacing="getCursorSpacing"
+			    :class="{ 'u-number-box__input--disabled': disabled || disabledInput }"
+			    :value="currentValue"
+			    class="u-number-box__input"
+			    @blur="onBlur"
+			    @focus="onFocus"
+			    @input="onInput"
+			    type="number"
+			    :style="[inputStyle]"
+			/>
+			<!-- #endif -->
+			<!-- #ifndef MP-WEIXIN -->
 			<input
 			    :disabled="disabledInput || disabled"
 			    :cursor-spacing="getCursorSpacing"
@@ -42,6 +57,7 @@
 			    type="number"
 			    :style="[inputStyle]"
 			/>
+			<!-- #endif -->
 		</slot>
 		<view
 		    class="u-number-box__slot"
@@ -295,6 +311,10 @@
 				}
 				formatted = this.format(formatted)
 				this.emitChange(formatted);
+				// #ifdef MP-WEIXIN 
+				return formatted
+				// #endif 
+			
 			},
 			// 发出change事件
 			emitChange(value) {
