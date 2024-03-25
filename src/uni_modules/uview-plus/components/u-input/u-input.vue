@@ -82,7 +82,7 @@ import mixin from '../../libs/mixin/mixin.js';
 /**
  * Input 输入框
  * @description  此组件为一个输入框，默认没有边框和样式，是专门为配合表单组件u-form而设计的，利用它可以快速实现表单验证，输入内容，下拉选择等功能。
- * @tutorial https://uiadmin.net/uview-plus/components/input.html
+ * @tutorial https://uview-plus.jiangruyi.com/components/input.html
  * @property {String | Number}	value					输入的值
  * @property {String}			type					输入框类型，见上方说明 （ 默认 'text' ）
  * @property {Boolean}			fixed					如果 textarea 是在一个 position:fixed 的区域，需要显示指定属性 fixed 为 true，兼容性：微信小程序、百度小程序、字节跳动小程序、QQ小程序 （ 默认 false ）
@@ -151,7 +151,10 @@ export default {
 					this.changeFromInner === false
                 ) {
                     this.valueChange();
-                } else {					// 尝试调用u-form的验证方法					uni.$u.formValidate(this, "change");				}
+                } else {
+					// 尝试调用u-form的验证方法
+					uni.$u.formValidate(this, "change");
+				}
                 /* #endif */
                 this.firstChange = false;
                 // 重置changeFromInner的值为false，标识下一次引起默认为外部引起的
@@ -171,7 +174,10 @@ export default {
                     this.changeFromInner === false
                 ) {
                     this.valueChange();
-                } else {					// 尝试调用u-form的验证方法					uni.$u.formValidate(this, "change");				}
+                } else {
+					// 尝试调用u-form的验证方法
+					uni.$u.formValidate(this, "change");
+				}
                 /* #endif */
                 this.firstChange = false;
                 // 重置changeFromInner的值为false，标识下一次引起默认为外部引起的
