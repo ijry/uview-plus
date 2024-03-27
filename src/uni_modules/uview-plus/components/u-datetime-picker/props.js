@@ -1,5 +1,18 @@
 export default {
     props: {
+        // 是否显示input
+        hasInput: {
+            type: Boolean,
+            default: () => false
+        },
+        placeholder: {
+            type: String,
+            default: () => '请选择'
+        },
+        format: {
+            type: String,
+            default: () => 'YYYY-MM-DD HH:mm'
+        },
         // 是否打开组件
         show: {
             type: Boolean,

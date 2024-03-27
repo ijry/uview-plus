@@ -1,7 +1,15 @@
 <template>
+    <view v-if="hasInput">
+        <u-input
+            :placeholder="placeholder"
+            border="surround"
+            v-model="inputValue"
+            @click="showByClickInput = !showByClickInput"
+        ></u-input>
+    </view>
 	<u-picker
 		ref="picker"
-		:show="show"
+		:show="show || (hasInput && showByClickInput)"
 		:popupMode="popupMode"
 		:closeOnClickOverlay="closeOnClickOverlay"
 		:columns="columns"
@@ -43,7 +51,7 @@
 	 * @tutorial https://ijry.github.io/uview-plus/components/datetimePicker.html
 	 * @property {Boolean}			show				用于控制选择器的弹出与收起 ( 默认 false )
 	 * @property {Boolean}			showToolbar			是否显示顶部的操作栏  ( 默认 true )
-	 * @property {String | Number}	value				绑定值
+	 * @property {String | Number}	modelValue		    绑定值
 	 * @property {String}			title				顶部标题
 	 * @property {String}			mode				展示格式 mode=date为日期选择，mode=time为时间选择，mode=year-month为年月选择，mode=datetime为日期时间选择  ( 默认 ‘datetime )
 	 * @property {Number}			maxDate				可选的最大时间  默认值为后10年
@@ -74,6 +82,9 @@
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
+                // 原来的日期选择器不方便，这里增加一个hasInput选项支持类似element的自带输入框的功能。
+                inputValue: '', // 表单显示值
+                showByClickInput: false, // 是否在hasInput模式下显示日期选择弹唱
 				columns: [],
 				innerDefaultIndex: [],
 				innerFormatter: (type, value) => value
@@ -88,6 +99,7 @@
 			// #ifdef VUE3
 			modelValue(newValue) {
 				this.init()
+                this.inputValue = dayjs(newValue).format(this.format || 'YYYY-MM-DD HH:mm')
 			},
 			// #endif
 			// #ifdef VUE2
@@ -133,6 +145,9 @@
 			},
 			// 点击工具栏的取消按钮
 			cancel() {
+                if (this.hasInput) {
+                    this.showByClickInput = false
+                }
 				this.$emit('cancel')
 			},
 			// 点击工具栏的确定按钮
@@ -141,12 +156,16 @@
 					value: this.innerValue,
 					mode: this.mode
 				})
+                this.inputValue = dayjs(this.innerValue).format(this.format || 'YYYY-MM-DD HH:mm')
 				// #ifdef VUE3
 				this.$emit('update:modelValue', this.innerValue)
 				// #endif
 				// #ifdef VUE2
 				this.$emit('input', this.innerValue)
 				// #endif
+                if (this.hasInput) {
+                    this.showByClickInput = false
+                }
 			},
 			//用正则截取输出值,当出现多组数字时,抛出错误
 			intercept(e,type){
@@ -214,7 +233,7 @@
         setTimeout(() => {
           this.updateIndexs(value)
         }, 0);
-				
+
 			},
 			// 更新索引
 			updateIndexs(value) {

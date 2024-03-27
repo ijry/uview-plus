@@ -43,7 +43,7 @@ const $u = {
     test,
     type: ['primary', 'success', 'error', 'warning', 'info'],
     http: new Request(),
-    config, // uView配置信息相关，比如版本号
+    config, // uview-plus配置信息相关，比如版本号
     zIndex,
     debounce,
     throttle,
