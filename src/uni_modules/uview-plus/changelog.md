@@ -1,3 +1,7 @@
+## 3.1.49（2024-03-27）
+日期时间组件支持自带输入框
+fix: popup弹窗滚动穿透问题
+fix: 修复小程序numberbox bug
 ## 3.1.48（2024-03-18）
 fix:[plugin:uni:pre-css] Unbalanced delimiter found in string
 ## 3.1.47（2024-03-18）
