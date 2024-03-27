@@ -68,10 +68,6 @@ const install = (Vue) => {
     // #ifndef APP-NVUE
     // 只有vue，挂载到Vue.prototype才有意义，因为nvue中全局Vue.prototype和Vue.mixin是无效的
     Vue.config.globalProperties.$u = $u
-	// 暂时兼容vue2的$nextTick写法
-    Vue.config.globalProperties.$nextTick = (cb) => {
-        cb();
-    }
     Vue.mixin(mixin)
     // #endif
 }
