@@ -6,7 +6,7 @@
         :style="[$u.addStyle(customStyle), wrapperStyle]"
     >
         <view
-            class="u-subsection__bar"
+            class="u-subsection__bar cursor-pointer"
             ref="u-subsection__bar"
             :style="[barStyle]"
             :class="[
@@ -24,7 +24,7 @@
             ]"
         ></view>
         <view
-            class="u-subsection__item"
+            class="u-subsection__item cursor-pointer"
             :class="[
                 `u-subsection__item--${index}`,
                 index < list.length - 1 &&
