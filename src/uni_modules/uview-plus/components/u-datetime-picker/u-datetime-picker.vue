@@ -287,6 +287,13 @@
 					// 进行过滤
 			        if (this.filter) {
 			            values = this.filter(type, values)
+						if (!values || (values && values.length == 0)) {
+							uni.showToast({
+								title: '日期filter结果不能为空',
+								icon: 'error',
+								mask: true
+							})
+						}
 			        }
 			        return { type, values }
 			    })
