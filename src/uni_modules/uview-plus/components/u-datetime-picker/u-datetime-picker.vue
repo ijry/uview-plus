@@ -99,7 +99,7 @@
 			// #ifdef VUE3
 			modelValue(newValue) {
 				this.init()
-                this.inputValue = dayjs(newValue).format(this.format || 'YYYY-MM-DD HH:mm')
+				this.getInputValue()
 			},
 			// #endif
 			// #ifdef VUE2
@@ -124,6 +124,34 @@
 		emits: ['close', 'cancel', 'confirm', 'change', 'update:modelValue'],
 		// #endif
 		methods: {
+			getInputValue(newValue) {
+				if (this.mode == 'time') {
+					this.inputValue = newValue
+				} else {
+					if (this.format) {
+						this.inputValue = dayjs(newValue).format(this.format)
+					} else {
+						let format = ''
+						switch (this.mode) {
+							case 'date':
+								format = 'YYYY-MM-DD'
+								break;
+							case 'year-month':
+								format = 'YYYY-MM'
+								break;
+							case 'datetime':
+								format = 'YYYY-MM-DD HH:mm'
+								break;
+							case 'time':
+								format = 'HH:mm'
+								break;
+							default:
+								break;
+						}
+						this.inputValue = dayjs(newValue).format(format)
+					}
+				}
+			},
 			init() {
 				// #ifdef VUE3
 				this.innerValue = this.correctValue(this.modelValue)
@@ -156,7 +184,7 @@
 					value: this.innerValue,
 					mode: this.mode
 				})
-                this.inputValue = dayjs(this.innerValue).format(this.format || 'YYYY-MM-DD HH:mm')
+                
 				// #ifdef VUE3
 				this.$emit('update:modelValue', this.innerValue)
 				// #endif
@@ -164,6 +192,7 @@
 				this.$emit('input', this.innerValue)
 				// #endif
                 if (this.hasInput) {
+					this.getInputValue(this.innerValue)
                     this.showByClickInput = false
                 }
 			},

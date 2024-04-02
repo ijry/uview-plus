@@ -355,7 +355,8 @@ export default {
 			this.$refs.tabs.setDx(dx);
 		},
 		animationfinish({ detail: { current } }) {
-			this.$refs.tabs.setFinishCurrent(current);
+			// this.$refs.tabs.setFinishCurrent(current);
+			this.current = current;
 			this.swiperCurrent = current;
 			this.current = current;
 		}

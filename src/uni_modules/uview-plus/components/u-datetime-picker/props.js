@@ -11,7 +11,7 @@ export default {
         },
         format: {
             type: String,
-            default: () => 'YYYY-MM-DD HH:mm'
+            default: () => ''
         },
         // 是否打开组件
         show: {
