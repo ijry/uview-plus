@@ -6,6 +6,7 @@
 	import props from './props.js';
 	import mpMixin from '../../libs/mixin/mpMixin.js';
 	import mixin from '../../libs/mixin/mixin.js';
+	import { addStyle, addUnit, deepMerge } from '../../libs/function/index.js';
 	/**
 	 * gap 间隔槽
 	 * @description 该组件一般用于内容块之间的用一个灰色块隔开的场景，方便用户风格统一，减少工作量
@@ -25,11 +26,11 @@
 			gapStyle() {
 				const style = {
 					backgroundColor: this.bgColor,
-					height: uni.$u.addUnit(this.height),
-					marginTop: uni.$u.addUnit(this.marginTop),
-					marginBottom: uni.$u.addUnit(this.marginBottom),
+					height: addUnit(this.height),
+					marginTop: addUnit(this.marginTop),
+					marginBottom: addUnit(this.marginBottom),
 				}
-				return uni.$u.deepMerge(style, uni.$u.addStyle(this.customStyle))
+				return deepMerge(style, addStyle(this.customStyle))
 			}
 		}
 	};
