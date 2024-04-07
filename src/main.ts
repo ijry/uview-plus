@@ -27,7 +27,7 @@ import mixin from './common/mixin'
 import { createSSRApp } from 'vue'
 import { createI18n } from 'vue-i18n'
 const i18n = createI18n(i18nConfig)
-import {initRequest} from './util/request/index'
+import { initRequest } from './util/request/index'
 export function createApp() {
   const app = createSSRApp(App)
   

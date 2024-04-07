@@ -435,12 +435,20 @@
 	},
 	{
 		"root": "pages/componentsD",
-		"pages": [{
-			"path": "qrcode/qrcode",
-			"style": {
-				"navigationBarTitleText": "二维码"
+		"pages": [
+			{
+				"path": "qrcode/qrcode",
+				"style": {
+					"navigationBarTitleText": "二维码"
+				}
 			}
-		}]
+			,{
+				"path": "copy/copy",
+				"style": {
+					"navigationBarTitleText": "复制"
+				}
+			}
+		]
 	},
 	{
 		"root": "pages/template",

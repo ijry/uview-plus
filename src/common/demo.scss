@@ -1,6 +1,6 @@
-.u-block{
+.u-block {
 	padding: 14px;
-	&__section{
+	&__section {
 		margin-bottom:10px;
 	}
 	&__title {
@@ -9,7 +9,7 @@
 		color: $u-content-color;
 		margin-bottom:10px;
 	}
-	&__flex{
+	&__flex {
 		/* #ifndef APP-NVUE */
 		display: flex;
 		/* #endif */
@@ -26,6 +26,8 @@
 .u-page {
 	padding: 15px 15px 40px 15px;
 	&__item {
+		flex: 1;
+		margin-bottom: 23px;
 		&__title {
 			font-size: 14px;
 			color: rgb(143, 156, 162);

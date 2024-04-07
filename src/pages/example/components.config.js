@@ -232,6 +232,12 @@ export default [{
         title: 'Modal 模态框',
         title_en: 'Modal'
     }
+	, {
+        path: '/pages/componentsD/copy/copy',
+        icon: 'copy',
+        title: 'copy 复制',
+        title_en: '复制'
+    }
         // {
         // 	path: '/pages/componentsA/fullScreen/fullScreen',
         // 	icon: 'pressingScreen',

@@ -145,6 +145,7 @@
 <style lang="scss">
 	.cell-page {
 		padding-bottom: 20px;
+		background-color: #f3f4f6;
 	}
 
 	.cell-box {
@@ -156,25 +157,29 @@
 
 		&__block {
 			// background-color: #fff;
-			margin-top: 20px;
+			margin-top: 10px;
 		}
 	}
 
 	.u-page {
 		padding: 0;
-
 		&__item {
+			margin-bottom: 10px;
 
 			&__title {
 				color: $u-tips-color;
-				background-color: $u-bg-color;
-				padding: 15px;
+				padding: 10px 15px;
+				margin-bottom: 0px;
 				font-size: 15px;
 
 				&__slot-title {
 					color: $u-primary;
 					font-size: 14px;
 				}
+			}
+
+			:deep(.u-cell-group) {
+				background-color: #fff;
 			}
 		}
 	}
@@ -200,6 +205,7 @@
 		height: 17px;
 		color: #FFFFFF;
 		border-radius: 100px;
-		background-color: #f56c6c;		margin-left: auto;
+		background-color: #f56c6c;
+		margin-left: auto;
 	}
 </style>
