@@ -16,6 +16,7 @@ $u-button-plain-u-button-warning-color:$u-error;
 
 .u-button {
 	width: 100%;
+	white-space: nowrap;
 	
 	&__text {
 		white-space: nowrap;
