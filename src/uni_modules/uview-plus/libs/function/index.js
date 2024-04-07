@@ -6,7 +6,7 @@ import { round } from './digit.js'
  * @param {number} max 
  * @param {number} value
  */
-function range(min = 0, max = 0, value = 0) {
+export function range(min = 0, max = 0, value = 0) {
 	return Math.max(min, Math.min(max, Number(value)))
 }
 
@@ -16,7 +16,7 @@ function range(min = 0, max = 0, value = 0) {
  * @param {boolean} unit 
  * @returns {number|string}
  */
-function getPx(value, unit = false) {
+export function getPx(value, unit = false) {
 	if (test.number(value)) {
 		return unit ? `${value}px` : Number(value)
 	}
@@ -32,7 +32,7 @@ function getPx(value, unit = false) {
  * @param {number} value 堵塞时间 单位ms 毫秒
  * @returns {Promise} 返回promise
  */
-function sleep(value = 30) {
+export function sleep(value = 30) {
 	return new Promise((resolve) => {
 		setTimeout(() => {
 			resolve()
@@ -44,14 +44,14 @@ function sleep(value = 30) {
  * @returns {string} 返回所在平台(小写) 
  * @link 运行期判断平台 https://uniapp.dcloud.io/frame?id=判断平台
  */
-function os() {
+export function os() {
 	return uni.getSystemInfoSync().platform.toLowerCase()
 }
 /**
  * @description 获取系统信息同步接口
  * @link 获取系统信息同步接口 https://uniapp.dcloud.io/api/system/info?id=getsysteminfosync 
  */
-function sys() {
+export function sys() {
 	return uni.getSystemInfoSync()
 }
 
@@ -60,7 +60,7 @@ function sys() {
  * @param {Number} min 最小值
  * @param {Number} max 最大值
  */
-function random(min, max) {
+export function random(min, max) {
 	if (min >= 0 && max > 0 && max >= min) {
 		const gab = max - min + 1
 		return Math.floor(Math.random() * gab + min)
@@ -73,7 +73,7 @@ function random(min, max) {
  * @param {Boolean} firstU 将返回的首字母置为"u"
  * @param {Nubmer} radix 生成uuid的基数(意味着返回的字符串都是这个基数),2-二进制,8-八进制,10-十进制,16-十六进制
  */
-function guid(len = 32, firstU = true, radix = null) {
+export function guid(len = 32, firstU = true, radix = null) {
 	const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('')
 	const uuid = []
 	radix = radix || chars.length
@@ -109,7 +109,7 @@ function guid(len = 32, firstU = true, radix = null) {
    值(默认为undefined)，就是查找最顶层的$parent
 *  @param {string|undefined} name 父组件的参数名
 */
-function $parent(name = undefined) {
+export function $parent(name = undefined) {
 	let parent = this.$parent
 	// 通过while历遍，这里主要是为了H5需要多层解析的问题
 	while (parent) {
@@ -131,7 +131,7 @@ function $parent(name = undefined) {
  * @param {String} target 转换的目的，object-转为对象，string-转为字符串
  * @returns {object|string}
  */
-function addStyle(customStyle, target = 'object') {
+export function addStyle(customStyle, target = 'object') {
 	// 字符串转字符串，对象转对象情形，直接返回
 	if (test.empty(customStyle) || typeof(customStyle) === 'object' && target === 'object' || target === 'string' &&
 		typeof(customStyle) === 'string') {
@@ -170,7 +170,7 @@ function addStyle(customStyle, target = 'object') {
  * @param {string|number} value 需要添加单位的值
  * @param {string} unit 添加的单位名 比如px
  */
-function addUnit(value = 'auto', unit = '') {
+export function addUnit(value = 'auto', unit = '') {
 	if (!unit) {
 		unit = uni.$u.config.unit || 'px'
 	}
@@ -184,7 +184,7 @@ function addUnit(value = 'auto', unit = '') {
  * @param {object} obj 需要深度克隆的对象
  * @returns {*} 克隆后的对象或者原值（不是对象）
  */
-function deepClone(obj) {
+export function deepClone(obj) {
 	// 对常见的“非”值，直接返回原来值
 	if ([null, undefined, NaN, false].includes(obj)) return obj
 	if (typeof obj !== 'object' && typeof obj !== 'function') {
@@ -206,7 +206,7 @@ function deepClone(obj) {
  * @param {object} source 拷贝的来源对象
  * @returns {object|boolean} 深度合并后的对象或者false（入参有不是对象）
  */
-function deepMerge(target = {}, source = {}) {
+export function deepMerge(target = {}, source = {}) {
 	target = deepClone(target)
 	if (typeof target !== 'object' || typeof source !== 'object') return false
 	for (const prop in source) {
@@ -234,7 +234,7 @@ function deepMerge(target = {}, source = {}) {
  * @description error提示
  * @param {*} err 错误内容
  */
-function error(err) {
+export function error(err) {
 	// 开发环境才提示，生产环境不会提示
 	if (process.env.NODE_ENV === 'development') {
 		console.error(`uView提示：${err}`)
@@ -246,7 +246,7 @@ function error(err) {
  * @param {array} array 需要打乱的数组
  * @returns {array} 打乱后的数组
  */
-function randomArray(array = []) {
+export function randomArray(array = []) {
 	// 原理是sort排序,Math.random()产生0<= x < 1之间的数,会导致x-0.05大于或者小于0
 	return array.sort(() => Math.random() - 0.5)
 }
@@ -283,7 +283,7 @@ if (!String.prototype.padStart) {
  * @param {String} fmt 格式化规则 yyyy:mm:dd|yyyy:mm|yyyy年mm月dd日|yyyy年mm月dd日 hh时MM分等,可自定义组合 默认yyyy-mm-dd
  * @returns {string} 返回格式化后的字符串
  */
- function timeFormat(dateTime = null, formatStr = 'yyyy-mm-dd') {
+export function timeFormat(dateTime = null, formatStr = 'yyyy-mm-dd') {
   let date
 	// 若传入时间为假值，则取当前时间
   if (!dateTime) {
@@ -337,7 +337,7 @@ if (!String.prototype.padStart) {
  * 如果为布尔值false，无论什么时间，都返回多久以前的格式
  * @returns {string} 转化后的内容
  */
-function timeFrom(timestamp = null, format = 'yyyy-mm-dd') {
+export function timeFrom(timestamp = null, format = 'yyyy-mm-dd') {
 	if (timestamp == null) timestamp = Number(new Date())
 	timestamp = parseInt(timestamp)
 	// 判断用户输入的时间戳是秒还是毫秒,一般前端js获取的时间戳是毫秒(13位),后端传过来的为秒(10位)
@@ -379,7 +379,7 @@ function timeFrom(timestamp = null, format = 'yyyy-mm-dd') {
  * @param String str 需要去除空格的字符串
  * @param String pos both(左右)|left|right|all 默认both
  */
-function trim(str, pos = 'both') {
+export function trim(str, pos = 'both') {
 	str = String(str)
 	if (pos == 'both') {
 		return str.replace(/^\s+|\s+$/g, '')
@@ -402,7 +402,7 @@ function trim(str, pos = 'both') {
  * @param {Boolean} isPrefix,是否自动加上"?"
  * @param {string} arrayFormat 规则 indices|brackets|repeat|comma
  */
-function queryParams(data = {}, isPrefix = true, arrayFormat = 'brackets') {
+export function queryParams(data = {}, isPrefix = true, arrayFormat = 'brackets') {
 	const prefix = isPrefix ? '?' : ''
 	const _result = []
 	if (['indices', 'brackets', 'repeat', 'comma'].indexOf(arrayFormat) == -1) arrayFormat = 'brackets'
@@ -459,7 +459,7 @@ function queryParams(data = {}, isPrefix = true, arrayFormat = 'brackets') {
  * @param {String} title 提示的内容，长度与 icon 取值有关。
  * @param {Number} duration 提示的延迟时间，单位毫秒，默认：2000
  */
-function toast(title, duration = 2000) {
+export function toast(title, duration = 2000) {
 	uni.showToast({
 		title: String(title),
 		icon: 'none',
@@ -472,7 +472,7 @@ function toast(title, duration = 2000) {
  * @param {String} type 主题名称,primary|info|error|warning|success
  * @param {boolean} fill 是否使用fill填充实体的图标
  */
-function type2icon(type = 'success', fill = false) {
+export function type2icon(type = 'success', fill = false) {
 	// 如果非预置值,默认为success
 	if (['primary', 'info', 'error', 'warning', 'success'].indexOf(type) == -1) type = 'success'
 	let iconName = ''
@@ -509,7 +509,7 @@ function type2icon(type = 'success', fill = false) {
  * @param {string} thousandsSeparator 千分位符号
  * @returns {string} 格式化后的数字
  */
-function priceFormat(number, decimals = 0, decimalPoint = '.', thousandsSeparator = ',') {
+export function priceFormat(number, decimals = 0, decimalPoint = '.', thousandsSeparator = ',') {
 	number = (`${number}`).replace(/[^0-9+-Ee.]/g, '')
 	const n = !isFinite(+number) ? 0 : +number
 	const prec = !isFinite(+decimals) ? 0 : Math.abs(decimals)
@@ -538,7 +538,7 @@ function priceFormat(number, decimals = 0, decimalPoint = '.', thousandsSeparato
  * @param {boolean} unit  提示: 如果是false 默认返回number
  * @return {string|number} 
  */
-function getDuration(value, unit = true) {
+export function getDuration(value, unit = true) {
 	const valueNum = parseInt(value)
 	if (unit) {
 		if (/s$/.test(value)) return value
@@ -553,7 +553,7 @@ function getDuration(value, unit = true) {
  * @description 日期的月或日补零操作
  * @param {String} value 需要补零的值
  */
-function padZero(value) {
+export function padZero(value) {
 	return `00${value}`.slice(-2)
 }
 
@@ -562,7 +562,7 @@ function padZero(value) {
  * @param {*} instance
  * @param {*} event
  */
-function formValidate(instance, event) {
+export function formValidate(instance, event) {
 	const formItem = uni.$u.$parent.call(instance, 'u-form-item')
 	const form = uni.$u.$parent.call(instance, 'u-form')
 	// 如果发生变化的input或者textarea等，其父组件中有u-form-item或者u-form等，就执行form的validate方法
@@ -578,7 +578,7 @@ function formValidate(instance, event) {
  * @param {string} key 需要获取的属性字段
  * @returns {*}
  */
-function getProperty(obj, key) {
+export function getProperty(obj, key) {
 	if (!obj) {
 		return
 	}
@@ -605,7 +605,7 @@ function getProperty(obj, key) {
  * @param {string} key 需要设置的属性
  * @param {string} value 设置的值
  */
-function setProperty(obj, key, value) {
+export function setProperty(obj, key, value) {
 	if (!obj) {
 		return
 	}
@@ -641,7 +641,7 @@ function setProperty(obj, key, value) {
 /**
  * @description 获取当前页面路径
  */
-function page() {
+export function page() {
 	const pages = getCurrentPages()
 	// 某些特殊情况下(比如页面进行redirectTo时的一些时机)，pages可能为空数组
 	return `/${pages[pages.length - 1].route || ''}`
@@ -650,7 +650,7 @@ function page() {
 /**
  * @description 获取当前路由栈实例数组
  */
-function pages() {
+export function pages() {
 	const pages = getCurrentPages()
 	return pages
 }
@@ -662,7 +662,7 @@ function pages() {
  * @param {object} color 修改内置color属性
  * @param {object} zIndex 修改内置zIndex属性
  */
-function setConfig({
+export function setConfig({
 	props = {},
 	config = {},
 	color = {},

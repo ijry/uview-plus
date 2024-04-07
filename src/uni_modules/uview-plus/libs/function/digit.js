@@ -5,7 +5,7 @@ let _boundaryCheckingState = true; // 是否进行越界检查的全局开关
  * @private
  * @example strip(0.09999999999999998)=0.1
  */
-function strip(num, precision = 15) {
+export function strip(num, precision = 15) {
   return +parseFloat(Number(num).toPrecision(precision));
 }
 
@@ -14,7 +14,7 @@ function strip(num, precision = 15) {
  * @private
  * @param {*number} num Input number
  */
-function digitLength(num) {
+export function digitLength(num) {
   // Get digit length of e
   const eSplit = num.toString().split(/[eE]/);
   const len = (eSplit[0].split('.')[1] || '').length - +(eSplit[1] || 0);
@@ -26,7 +26,7 @@ function digitLength(num) {
  * @private
  * @param {*number} num 输入数
  */
-function float2Fixed(num) {
+export function float2Fixed(num) {
   if (num.toString().indexOf('e') === -1) {
     return Number(num.toString().replace('.', ''));
   }
@@ -39,7 +39,7 @@ function float2Fixed(num) {
  * @private
  * @param {*number} num 输入数
  */
-function checkBoundary(num) {
+export function checkBoundary(num) {
   if (_boundaryCheckingState) {
     if (num > Number.MAX_SAFE_INTEGER || num < Number.MIN_SAFE_INTEGER) {
       console.warn(`${num} 超出了精度限制，结果可能不正确`);
@@ -53,7 +53,7 @@ function checkBoundary(num) {
  * @param {function} operation 迭代操作
  * @private
  */
-function iteratorOperation(arr, operation) {
+export function iteratorOperation(arr, operation) {
   const [num1, num2, ...others] = arr;
   let res = operation(num1, num2);
 

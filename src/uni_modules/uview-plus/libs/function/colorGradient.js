@@ -4,7 +4,7 @@
  * @param {string} endColor 结束的颜色
  * @param {number} step 颜色等分的份额
  * */
-function colorGradient(startColor = 'rgb(0, 0, 0)', endColor = 'rgb(255, 255, 255)', step = 10) {
+export function colorGradient(startColor = 'rgb(0, 0, 0)', endColor = 'rgb(255, 255, 255)', step = 10) {
     const startRGB = hexToRgb(startColor, false) // 转换为rgb数组模式
     const startR = startRGB[0]
     const startG = startRGB[1]
@@ -33,7 +33,7 @@ function colorGradient(startColor = 'rgb(0, 0, 0)', endColor = 'rgb(255, 255, 25
 }
 
 // 将hex表示方式转换为rgb表示方式(这里返回rgb数组模式)
-function hexToRgb(sColor, str = true) {
+export function hexToRgb(sColor, str = true) {
     const reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/
     sColor = String(sColor).toLowerCase()
     if (sColor && reg.test(sColor)) {
@@ -61,7 +61,7 @@ function hexToRgb(sColor, str = true) {
 }
 
 // 将rgb表示方式转换为hex表示方式
-function rgbToHex(rgb) {
+export function rgbToHex(rgb) {
     const _this = rgb
     const reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/
     if (/^(rgb|RGB)/.test(_this)) {
@@ -100,7 +100,7 @@ function rgbToHex(rgb) {
 * sHex为传入的十六进制的色值
 * alpha为rgba的透明度
 */
-function colorToRgba(color, alpha) {
+export function colorToRgba(color, alpha) {
     color = rgbToHex(color)
     // 十六进制颜色值的正则表达式
     const reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/
