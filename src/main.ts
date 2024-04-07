@@ -4,7 +4,7 @@ import App from './App'
 import store from './store'
 
 // 引入全局uview-plus
-import uviewPlus from 'uview-plus/index.js'
+import uviewPlus from '@/uni_modules/uview-plus/index.js'
 
 // i18n部分的配置
 // 引入语言包，注意路径
@@ -20,7 +20,7 @@ let i18nConfig = {
 }
 
 // 引入uView对小程序分享的mixin封装
-import mpShare from 'uview-plus/libs/mixin/mpShare.js'
+import mpShare from '@/uni_modules/uview-plus/libs/mixin/mpShare.js'
 import mixin from './common/mixin'
   
 // #ifdef VUE3

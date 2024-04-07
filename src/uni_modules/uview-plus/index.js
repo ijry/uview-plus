@@ -33,6 +33,10 @@ import color from './libs/config/color.js'
 // 平台
 import platform from './libs/function/platform'
 
+// 导出
+export * from './libs/function/index.js'
+export const http = new Request()
+
 const $u = {
     route,
     date: index.timeFormat, // 另名date
@@ -42,7 +46,7 @@ const $u = {
     colorToRgba: colorGradient.colorToRgba,
     test,
     type: ['primary', 'success', 'error', 'warning', 'info'],
-    http: new Request(),
+    http,
     config, // uview-plus配置信息相关，比如版本号
     zIndex,
     debounce,
