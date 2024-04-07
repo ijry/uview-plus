@@ -415,6 +415,11 @@ export default [{
         icon: 'transition',
         title: 'transition 动画',
         title_en: '动画'
+    }, {
+        path: '/pages/componentsD/qrcode/qrcode',
+        icon: 'qrcode',
+        title: 'qrcode 二维码',
+        title_en: '二维码'
     }]
 }
 ]

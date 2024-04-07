@@ -25,6 +25,14 @@
 
 .u-page {
 	padding: 15px 15px 40px 15px;
+	&__item {
+		&__title {
+			font-size: 14px;
+			color: rgb(143, 156, 162);
+			margin-bottom: 8px;
+			@include flex;
+		}
+	}
 }
 
 .u-demo-block {
