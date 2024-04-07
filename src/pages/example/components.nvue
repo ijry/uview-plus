@@ -30,15 +30,13 @@
 		},
 		computed: {
 			getIcon() {
-				return path => {
+				return (path: string) => {
 					return './static/uview/demo/' + path + '.png';
-					return 'https://cdn.uviewui.com/uview/example/' + path + '.png';
-					
 				}
 			},
 		},
 		methods: {
-			openPage(detail) {
+			openPage(detail: { name: string }) {
 				const path = detail.name
 				// #ifdef APP-NVUE
 				// 目前安卓nvue下，由于overflow只能为hidden，所以布局上的原因，暂不支持steps和tooltip等组件

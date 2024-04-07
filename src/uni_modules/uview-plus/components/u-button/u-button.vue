@@ -108,7 +108,7 @@
     <!-- #endif -->
 </template>
 
-<script>
+<script lang="ts">
 import button from "../../libs/mixin/button.js";
 import openType from "../../libs/mixin/openType.js";
 import mpMixin from '../../libs/mixin/mpMixin.js';
@@ -275,19 +275,19 @@ export default {
             }
         },
         // 下面为对接uniapp官方按钮开放能力事件回调的对接
-        getphonenumber(res) {
+        getphonenumber(res: any) {
             this.$emit("getphonenumber", res);
         },
-        getuserinfo(res) {
+        getuserinfo(res: any) {
             this.$emit("getuserinfo", res);
         },
-        error(res) {
+        error(res: any) {
             this.$emit("error", res);
         },
-        opensetting(res) {
+        opensetting(res: any) {
             this.$emit("opensetting", res);
         },
-        launchapp(res) {
+        launchapp(res: any) {
             this.$emit("launchapp", res);
         },
     },
