@@ -1,0 +1,32 @@
+name: Deploy to GitHub Pages
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      # 设置nodejs环境不设置nodejs18以上会报错
+      - name: NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+        # 生成静态文件
+      - name: Build
+        run: npm install && yarn build:h5
+
+        # 部署到gh-pages分支的h5目录
+      - name: Deploy
+        uses: s0/git-publish-subdir-action@develop
+        env:
+            REPO: self
+            BRANCH: gh-pages
+            FOLDER: dist/build/h5
+            GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+            TARGET_DIR: h5
