@@ -1,12 +1,11 @@
-<script>
+<script>	import { http } from '@/uni_modules/uview-plus'
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
 		},
-		onShow: function() {
+		onShow: async function() {
 			console.log('App Show')
-			console.log(uni.$u.http)
-			//uni.$u.http.get('https://baidu.com')
+			// let res = await http.get('/')			// console.log(res)
 		},
 		onHide: function() {
 			console.log('App Hide')

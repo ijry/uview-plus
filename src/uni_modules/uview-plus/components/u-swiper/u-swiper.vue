@@ -13,11 +13,10 @@
 		>
 			<u-loading-icon mode="circle"></u-loading-icon>
 		</view>
-		<swiper
-			v-else
+		<swiper			v-else
 			class="u-swiper__wrapper"
-			:style="{
-				height: $u.addUnit(height),
+			:style="{				flex: '1',
+				height: $u.addUnit(height)
 			}"
 			@change="change"
 			:circular="circular"
@@ -206,7 +205,7 @@
 
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
-
+		.u-swiper__wrapper {		flex: 1;	}
 	.u-swiper {
 		@include flex;
 		justify-content: center;
@@ -214,8 +213,7 @@
 		position: relative;
 		overflow: hidden;
 
-		&__wrapper {
-			flex: 1;
+		&__wrapper {			flex: 1;
 
 			&__item {
 				flex: 1;

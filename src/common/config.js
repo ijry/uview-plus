@@ -1,3 +1,3 @@
 export default {
-    baseUrl: 'https://api.youzixy.com'
+    baseUrl: 'https://uview-plus.lingyun.net'
 }

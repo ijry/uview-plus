@@ -49,7 +49,7 @@
 					}
 				}
 				// #endif
-				uni.$u.route({
+				uni.navigateTo({
 					url: path
 				})
 			},

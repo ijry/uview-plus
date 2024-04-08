@@ -104,67 +104,67 @@
 				current: 0,
 				currentNum: 0,
 				list: [{
-						// image: 'https://cdn.uviewui.com/uview/resources/video.mp4',
-						image: 'https://cdn.uviewui.com/uview/swiper/swiper1.png',
+						// image: 'https://uview-plus.jiangruyi.com/uview/resources/video.mp4',
+						image: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png',
 						title: '昨夜星辰昨夜风，画楼西畔桂堂东',
-						poster: 'https://cdn.uviewui.com/uview/swiper/swiper1.png'
+						poster: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png'
 					},
 					{
-						image: 'https://cdn.uviewui.com/uview/swiper/swiper2.png',
+						image: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png',
 						title: '身无彩凤双飞翼，心有灵犀一点通'
 					},
 					{
-						image: 'https://cdn.uviewui.com/uview/swiper/swiper3.png',
+						image: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png',
 						title: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳'
 					}
 				],
 				list1: [
-					'https://cdn.uviewui.com/uview/swiper/swiper1.png',
-					'https://cdn.uviewui.com/uview/swiper/swiper2.png',
-					'https://cdn.uviewui.com/uview/swiper/swiper3.png',
+					'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png',
+					'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png',
+					'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png',
 				],
 				list2: [{
-						image: 'https://cdn.uviewui.com/uview/swiper/swiper2.png',
+						image: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png',
 						title: '昨夜星辰昨夜风，画楼西畔桂堂东',
 						type: 'image',
 					},
 					{
-						image: 'https://cdn.uviewui.com/uview/swiper/swiper1.png',
+						image: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png',
 						title: '身无彩凤双飞翼，心有灵犀一点通'
 					},
 					{
-						image: 'https://cdn.uviewui.com/uview/swiper/swiper3.png',
+						image: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png',
 						title: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳'
 					}
 				],
 				list3: [
-					'https://cdn.uviewui.com/uview/swiper/swiper3.png',
-					'https://cdn.uviewui.com/uview/swiper/swiper2.png',
-					'https://cdn.uviewui.com/uview/swiper/swiper1.png',
+					'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png',
+					'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png',
+					'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png',
 				],
 				list4: [{
-						url: 'https://cdn.uviewui.com/uview/resources/video.mp4',
+						url: 'https://uview-plus.jiangruyi.com/uview/resources/video.mp4',
 						title: '昨夜星辰昨夜风，画楼西畔桂堂东',
-						poster: 'https://cdn.uviewui.com/uview/swiper/swiper1.png',
+						poster: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png',
 					},
 					{
-						url: 'https://cdn.uviewui.com/uview/swiper/swiper2.png',
+						url: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png',
 						title: '身无彩凤双飞翼，心有灵犀一点通'
 					},
 					{
-						url: 'https://cdn.uviewui.com/uview/swiper/swiper3.png',
+						url: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png',
 						title: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳'
 					}
 				],
 				list5: [
-					'https://cdn.uviewui.com/uview/swiper/swiper3.png',
-					'https://cdn.uviewui.com/uview/swiper/swiper2.png',
-					'https://cdn.uviewui.com/uview/swiper/swiper1.png',
+					'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png',
+					'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png',
+					'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png',
 				],
 				list6: [
-					'https://cdn.uviewui.com/uview/swiper/swiper2.png',
-					'https://cdn.uviewui.com/uview/swiper/swiper3.png',
-					'https://cdn.uviewui.com/uview/swiper/swiper1.png',
+					'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png',
+					'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png',
+					'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png',
 				]
 			}
 		},
