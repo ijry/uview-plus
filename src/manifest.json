@@ -2,7 +2,7 @@
     "name" : "uview-plus",
     "appid" : "__UNI__0FF8111",
     "description" : "多平台快速开发的UI框架",
-    "versionName" : "3.1.0",
+    "versionName" : "3.1.52",
     "versionCode" : 1,
     "transformPx" : false,
     "app-plus" : {
@@ -56,7 +56,8 @@
                 "abiFilters" : [ "armeabi-v7a", "arm64-v8a" ]
             },
             "ios" : {
-                "idfa" : false
+                "idfa" : false,
+                "dSYMs" : false
             },
             "sdkConfigs" : {
                 "ad" : {}
@@ -107,8 +108,8 @@
         "optimization" : {
             "subPackages" : true
         },
-		"mergeVirtualHostAttributes": true,
-		"lazyCodeLoading" : "requiredComponents",
+        "mergeVirtualHostAttributes" : true,
+        "lazyCodeLoading" : "requiredComponents",
         "usingComponents" : true
     },
     "mp-alipay" : {
@@ -153,5 +154,6 @@
             "https" : false
         }
     },
-    "vueVersion" : "3"
+    "vueVersion" : "3",
+    "locale" : "auto"
 }
