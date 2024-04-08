@@ -11,7 +11,7 @@ export default {
             default: () => uni.$u.props.formItem.prop
         },
         // 绑定的规则
-        prop: {
+        rule: {
             type: String,
             default: () => uni.$u.props.formItem.rule
         },

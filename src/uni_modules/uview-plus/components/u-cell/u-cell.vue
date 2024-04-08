@@ -211,9 +211,8 @@
 			}
 		}
 
-		&__value {
-			text-align: right;
-			margin-left: auto;
+		&__value {				text-align: right;
+			/* #ifndef APP-NVUE */			margin-left: auto;			/* #endif */	
 			font-size: $u-cell-value-font-size;
 			line-height: $u-cell-line-height;
 			color: $u-cell-value-color;

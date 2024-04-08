@@ -205,7 +205,6 @@
 		height: 17px;
 		color: #FFFFFF;
 		border-radius: 100px;
-		background-color: #f56c6c;
-		margin-left: auto;
+		background-color: #f56c6c;		/* #ifndef APP-NVUE */		margin-left: auto;		/* #endif */
 	}
 </style>

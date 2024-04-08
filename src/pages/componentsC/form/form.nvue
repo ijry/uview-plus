@@ -11,7 +11,7 @@
 			<text class="u-demo-block__title">基础使用</text>
 			<view class="u-demo-block__content">
 				<!-- 注意，如果需要兼容微信小程序，最好通过setRules方法设置rules规则 -->
-				<u--form
+				<up-form
 					labelPosition="left"
 					:model="model1"
 					ref="form1"
@@ -22,11 +22,11 @@
 						borderBottom
 						ref="item1"
 					>
-						<u--input
+						<up-input
 							v-model="model1.userInfo.name"
 							border="none"
 							placeholder="姓名,只能为中文"
-						></u--input>
+						></up-input>
 					</u-form-item>
 					<u-form-item
 						label="性别"
@@ -35,13 +35,13 @@
 						@click="showSex = true; hideKeyboard()"
 						ref="item1"
 					>
-						<u--input
+						<up-input
 							v-model="model1.userInfo.sex"
 							disabled
 							disabledColor="#ffffff"
 							placeholder="请选择性别"
 							border="none"
-						></u--input>
+						></up-input>
 						<u-icon
 							slot="right"
 							name="arrow-right"
@@ -92,11 +92,11 @@
 						borderBottom
 						ref="item3"
 					>
-						<u--textarea
+						<up-textarea
 							placeholder="不低于3个字"
 							v-model="model1.intro"
 							count
-						></u--textarea>
+						></up-textarea>
 					</u-form-item>
 					<u-form-item
 						label="住店时间"
@@ -105,13 +105,13 @@
 						borderBottom
 						@click="showCalendar = true; hideKeyboard()"
 					>
-						<u--input
+						<up-input
 							v-model="model1.hotel"
 							disabled
 							disabledColor="#ffffff"
 							placeholder="请选择住店和离店时间"
 							border="none"
-						></u--input>
+						></up-input>
 						<u-icon
 							slot="right"
 							name="arrow-right"
@@ -123,11 +123,11 @@
 						labelWidth="80"
 						borderBottom
 					>
-						<u--input
+						<up-input
 							v-model="model1.code"
 							border="none"
 							placeholder="请填写验证码"
-						></u--input>
+						></up-input>
 						<u-button
 							#right
 							@tap="getCode"
@@ -145,19 +145,19 @@
 						@click="showBirthday = true; hideKeyboard()"
 						ref="item1"
 					>
-						<u--input
+						<up-input
 							v-model="model1.userInfo.birthday"
 							disabled
 							disabledColor="#ffffff"
 							placeholder="请选择生日"
 							border="none"
-						></u--input>
+						></up-input>
 						<u-icon
 							slot="right"
 							name="arrow-right"
 						></u-icon>
 					</u-form-item>
-				</u--form>
+				</up-form>
 				<u-button
 					type="primary"
 					text="提交"
