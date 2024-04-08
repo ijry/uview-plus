@@ -31,7 +31,7 @@
 		computed: {
 			getIcon() {
 				return (path: string) => {
-					return './static/uview/demo/' + path + '.png';
+					return 'https://uview-plus.jiangruyi.com/h5/static/uview/demo/' + path + '.png';
 				}
 			},
 		},

@@ -1,7 +1,7 @@
 <template>
 	<view class="nav-wrap">
 		<view class="nav-title">
-			<u--image :showLoading="true" src="./static/uview/common/logo.png" width="70px"
+			<u--image :showLoading="true" src="https://uview-plus.jiangruyi.com/h5/static/uview/common/logo.png" width="70px"
 				height="70px" />
 			<view class="nav-info">
 				<view class="nav-info__title" @tap="jumpToWx">

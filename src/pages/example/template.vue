@@ -32,8 +32,7 @@
 		computed: {
 			getIcon() {
 				return path => {
-					return './static/uview/demo/' + path + '.png';
-					return 'https://cdn.uviewui.com/uview/example/' + path + '.png';
+					return 'https://uview-plus.jiangruyi.com/h5/static/uview/demo/' + path + '.png';
 				}
 			},
 			desc() {
