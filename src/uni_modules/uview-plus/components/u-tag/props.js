@@ -78,7 +78,10 @@ export default {
         // 内置图标，或绝对路径的图片
         icon: {
             type: String,
-            default: () => uni.$u.props.tag.icon
+            default: () => uni.$u.props.tag.icon,
+		},		iconColor: {
+            type: String,
+            default: () => uni.$u.props.tag.iconColor
         }
     }
 }

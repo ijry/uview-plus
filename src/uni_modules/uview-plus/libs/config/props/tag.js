@@ -8,22 +8,23 @@
  * @FilePath     : /u-view2.0/uview-ui/libs/config/props/tag.js
  */
 export default {
-    // tag 组件
-    tag: {
-        type: 'primary',
-        disabled: false,
-        size: 'medium',
-        shape: 'square',
-        text: '',
-        bgColor: '',
-        color: '',
-        borderColor: '',
-        closeColor: '#C6C7CB',
-        name: '',
-        plainFill: false,
-        plain: false,
-        closable: false,
-        show: true,
-        icon: ''
-    }
+	// tag 组件
+	tag: {
+		type: 'primary',
+		disabled: false,
+		size: 'medium',
+		shape: 'square',
+		text: '',
+		bgColor: '',
+		color: '',
+		borderColor: '',
+		closeColor: '#C6C7CB',
+		name: '',
+		plainFill: false,
+		plain: false,
+		closable: false,
+		show: true,
+		icon: '',
+		iconColor: ''
+	}
 }
