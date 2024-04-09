@@ -3,47 +3,47 @@
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">基础使用</text>
 			<view class="u-demo-block__content">
-				<u-subsection
+				<up-subsection
 					:list="list"
 					mode="subsection"
 					:current="current1"
 					@change="change1"
-				></u-subsection>
+				></up-subsection>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">按钮模式</text>
 			<view class="u-demo-block__content">
-				<u-subsection
+				<up-subsection
 					:list="list"
 					mode="button"
 					:current="current2"
 					@change="change2"
-				></u-subsection>
+				></up-subsection>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">更换主题</text>
 			<view class="u-demo-block__content">
-				<u-subsection
+				<up-subsection
 					:list="list"
 					mode="subsection"
 					:current="current3"
 					activeColor="#f56c6c"
 					@change="change3"
-				></u-subsection>
+				></up-subsection>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">默认位置</text>
 			<view class="u-demo-block__content">
-				<u-subsection
+				<up-subsection
 					:list="list"
 					mode="button"
 					:current="current4"
 					activeColor="#f9ae3d"
 					@change="change4"
-				></u-subsection>
+				></up-subsection>
 			</view>
 		</view>
 	</view>

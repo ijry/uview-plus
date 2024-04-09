@@ -8,12 +8,12 @@
 			    :key="index"
 			>
 				<view class="u-page__grid__item__icon">
-					<u-icon
+					<up-icon
 					    :name="item.name"
 					    size="30"
 					    color="#909399"
 						@click="test"
-					></u-icon>
+					></up-icon>
 				</view>
 				<text class="u-page__grid__item__text">{{item.name}}</text>
 			</view>

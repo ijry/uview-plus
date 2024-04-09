@@ -4,10 +4,10 @@
 			<text class="u-demo-block__title">直角边形状</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
-					<u-badge
+					<up-badge
 						:value="1500"
 						shape="horn"
-					></u-badge>
+					></up-badge>
 				</view>
 			</view>
 		</view>
@@ -15,29 +15,29 @@
 			<text class="u-demo-block__title">徽标数显示方式</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
-					<u-badge
+					<up-badge
 						:value="5132"
 						numberType="ellipsis"
-					></u-badge>
+					></up-badge>
 				</view>
 				<view class="u-page__tag-item">
-					<u-badge
+					<up-badge
 						:value="1011"
 						numberType="overflow"
-					></u-badge>
+					></up-badge>
 				</view>
 				<view class="u-page__tag-item">
-					<u-badge
+					<up-badge
 						:value="1500"
 						numberType="limit"
-					></u-badge>
+					></up-badge>
 				</view>
 
 				<view class="u-page__tag-item">
-					<u-badge
+					<up-badge
 						:value="45187"
 						numberType="limit"
-					></u-badge>
+					></up-badge>
 				</view>
 			</view>
 		</view>
@@ -45,12 +45,12 @@
 			<text class="u-demo-block__title">显示圆点</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
-					<u-badge
+					<up-badge
 						:value="1011"
 						numberType="overflow"
 						isDot
 					>
-					</u-badge>
+					</up-badge>
 				</view>
 			</view>
 		</view>
@@ -58,32 +58,32 @@
 			<text class="u-demo-block__title">自定义主题</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
-					<u-badge
+					<up-badge
 						:value="9"
 						type="error"
 					>
-					</u-badge>
+					</up-badge>
 				</view>
 				<view class="u-page__tag-item">
-					<u-badge
+					<up-badge
 						:value="9"
 						type="warning"
 					>
-					</u-badge>
+					</up-badge>
 				</view>
 				<view class="u-page__tag-item">
-					<u-badge
+					<up-badge
 						:value="9"
 						type="success"
 					>
-					</u-badge>
+					</up-badge>
 				</view>
 				<view class="u-page__tag-item">
-					<u-badge
+					<up-badge
 						:value="9"
 						type="primary"
 					>
-					</u-badge>
+					</up-badge>
 				</view>
 			</view>
 		</view>
@@ -91,36 +91,36 @@
 			<text class="u-demo-block__title">反转色</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
-					<u-badge
+					<up-badge
 						:value="9"
 						type="error"
 						inverted
 					>
-					</u-badge>
+					</up-badge>
 				</view>
 				<view class="u-page__tag-item">
-					<u-badge
+					<up-badge
 						:value="1532"
 						inverted
 						type="warning"
 					>
-					</u-badge>
+					</up-badge>
 				</view>
 				<view class="u-page__tag-item">
-					<u-badge
+					<up-badge
 						:value="12"
 						inverted
 						type="success"
 					>
-					</u-badge>
+					</up-badge>
 				</view>
 				<view class="u-page__tag-item">
-					<u-badge
+					<up-badge
 						:value="999"
 						inverted
 						type="primary"
 					>
-					</u-badge>
+					</up-badge>
 				</view>
 			</view>
 		</view>

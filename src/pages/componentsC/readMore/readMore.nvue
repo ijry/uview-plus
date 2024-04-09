@@ -1,18 +1,18 @@
 <template>
 	<view class="u-page">
-		<u-read-more
+		<up-read-more
 		    ref="uReadMore"
 		    :showHeight="showHeight"
 			toggle
 			@open="open"
 			@close="close"
 		>
-			<u-parse
+			<up-parse
 			    :content="content"
 			    @load="load"
 				:tag-style="tagStyle"
-			></u-parse>
-		</u-read-more>
+			></up-parse>
+		</up-read-more>
 	</view>
 </template>
 

@@ -14,11 +14,11 @@
 		<view class="buttom">
 			<view class="loginType">
 				<view class="wechat item">
-					<view class="icon"><u-icon size="40" name="weixin-fill" color="rgb(83,194,64)"></u-icon></view>
+					<view class="icon"><up-icon size="40" name="weixin-fill" color="rgb(83,194,64)"></up-icon></view>
 					微信
 				</view>
 				<view class="QQ item">
-					<view class="icon"><u-icon size="40" name="qq-fill" color="rgb(17,183,233)"></u-icon></view>
+					<view class="icon"><up-icon size="40" name="qq-fill" color="rgb(17,183,233)"></up-icon></view>
 					QQ
 				</view>
 			</view>

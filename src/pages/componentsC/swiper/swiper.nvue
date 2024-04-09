@@ -2,49 +2,49 @@
 	<view class="u-page">
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">基础功能</text>
-			<u-swiper
+			<up-swiper
 				:list="list1"
 				@change="change"
 				@click="click"
-			></u-swiper>
+			></up-swiper>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">带标题</text>
-			<u-swiper
+			<up-swiper
 				:list="list2"
 				keyName="image"
 				showTitle
 				:autoplay="false"
 				circular
-			></u-swiper>
+			></up-swiper>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">带指示器</text>
-			<u-swiper
+			<up-swiper
 				:list="list3"
 				indicator
 				indicatorMode="line"
 				circular
-			></u-swiper>
+			></up-swiper>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">加载中</text>
-			<u-swiper
+			<up-swiper
 				:list="list3"
 				loading
-			></u-swiper>
+			></up-swiper>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">嵌入视频</text>
-			<u-swiper
+			<up-swiper
 				:list="list4"
 				keyName="url"
 				:autoplay="false"
-			></u-swiper>
+			></up-swiper>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">自定义指示器</text>
-			<u-swiper
+			<up-swiper
 				:list="list5"
 				@change="e => current = e.current"
 				:autoplay="false"
@@ -61,12 +61,12 @@
 					>
 					</view>
 				</view>
-			</u-swiper>
-			<u-gap
+			</up-swiper>
+			<up-gap
 				bgColor="transparent"
 				height="15"
-			></u-gap>
-			<u-swiper
+			></up-gap>
+			<up-swiper
 				:list="list6"
 				@change="e => currentNum = e.current"
 				:autoplay="false"
@@ -78,12 +78,12 @@
 				>
 					<text class="indicator-num__text">{{ currentNum + 1 }}/{{ list6.length }}</text>
 				</view>
-			</u-swiper>
+			</up-swiper>
 		</view>
 		<!-- #ifndef APP-NVUE || MP-TOUTIAO -->
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">卡片式</text>
-			<u-swiper
+			<up-swiper
 				:list="list3"
 				previousMargin="30"
 				nextMargin="30"
@@ -91,7 +91,7 @@
 				:autoplay="false"
 				radius="5"
 				bgColor="#ffffff"
-			></u-swiper>
+			></up-swiper>
 		</view>
 		<!-- #endif -->
 	</view>

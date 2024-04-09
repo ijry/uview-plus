@@ -1,12 +1,12 @@
 <template>
 	<view class="u-page">
-		<!-- <u-navbar
+		<!-- <up-navbar
 			title="吸顶"
 			@leftClick="navigateBack"
 			safeAreaInsetTop
 			fixed
 			placeholder
-		></u-navbar> -->
+		></up-navbar> -->
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">基础使用</text>
 			<up-text
@@ -20,17 +20,17 @@
 			></up-text>
 			<!-- #endif -->
 		</view>
-		<u-sticky>
-			<u-button
+		<up-sticky>
+			<up-button
 				text="吸顶按钮"
 				type="success"
-			></u-button>
-		</u-sticky>
-		<u-gap
+			></up-button>
+		</up-sticky>
+		<up-gap
 			bgColor="#fff"
 			height="1500px"
-		></u-gap>
-		<u-divider text="已到底部"></u-divider>
+		></up-gap>
+		<up-divider text="已到底部"></up-divider>
 	</view>
 </template>
 

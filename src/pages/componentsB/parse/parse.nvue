@@ -1,6 +1,6 @@
 <template>
 	<view class="u-content">
-		<u-parse container-style="padding: 20px" :content="content" domain="https://6874-html-foe72-1259071903.tcb.qcloud.la/demo" lazy-load scroll-table selectable use-anchor :tag-style="tagStyle" @load="load" @ready="ready" @imgTap="imgTap" @linkTap="linkTap" />
+		<up-parse container-style="padding: 20px" :content="content" domain="https://6874-html-foe72-1259071903.tcb.qcloud.la/demo" lazy-load scroll-table selectable use-anchor :tag-style="tagStyle" @load="load" @ready="ready" @imgTap="imgTap" @linkTap="linkTap" />
 	</view>
 </template>
 

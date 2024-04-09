@@ -4,7 +4,7 @@
 			<text class="u-demo-block__title">基本案例</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
-					<u-rate size="20"></u-rate>
+					<up-rate size="20"></up-rate>
 				</view>
 			</view>
 		</view>
@@ -12,11 +12,11 @@
 			<text class="u-demo-block__title">自定义选中星星数量</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item flex">
-					<u-rate
+					<up-rate
 						size="20"
 						v-model="value"
 						@change="change"
-					></u-rate>
+					></up-rate>
 				</view>
 			</view>
 		</view>
@@ -24,7 +24,7 @@
 			<text class="u-demo-block__title">自定义星星大小</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
-					<u-rate size="30" count="4"></u-rate>
+					<up-rate size="30" count="4"></up-rate>
 				</view>
 			</view>
 		</view>
@@ -32,7 +32,7 @@
 			<text class="u-demo-block__title">是否禁用评分</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__rate-item">
-					<u-rate size="20" disabled></u-rate>
+					<up-rate size="20" disabled></up-rate>
 				</view>
 			</view>
 		</view>
@@ -40,7 +40,7 @@
       <text class="u-demo-block__title">是否只读评分</text>
       <view class="u-demo-block__content">
         <view class="u-page__rate-item">
-          <u-rate size="20" readonly></u-rate>
+          <up-rate size="20" readonly></up-rate>
         </view>
       </view>
     </view>
@@ -48,11 +48,11 @@
 			<text class="u-demo-block__title">自定义选中星星颜色</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__rate-item">
-					<u-rate
+					<up-rate
 						size="20"
 						v-model="activeColorValue"
 						activeColor="#2979ff"
-					></u-rate>
+					></up-rate>
 				</view>
 			</view>
 		</view>
@@ -60,11 +60,11 @@
 			<text class="u-demo-block__title">自定义未选中星星颜色</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__rate-item">
-					<u-rate
+					<up-rate
 						size="20"
 						v-model="value1"
 						inactiveColor="#2979ff"
-					></u-rate>
+					></up-rate>
 				</view>
 			</view>
 		</view>
@@ -72,7 +72,7 @@
 			<text class="u-demo-block__title">禁止触摸选择</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__rate-item">
-					<u-rate size="20" :touchable="false"></u-rate>
+					<up-rate size="20" :touchable="false"></up-rate>
 				</view>
 			</view>
 		</view>
@@ -80,7 +80,7 @@
 			<text class="u-demo-block__title">允许触摸选择</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__rate-item">
-					<u-rate size="20" :touchable="true"></u-rate>
+					<up-rate size="20" :touchable="true"></up-rate>
 				</view>
 			</view>
 		</view>
@@ -88,12 +88,12 @@
 			<text class="u-demo-block__title">是否允许半星</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__rate-item">
-					<u-rate
+					<up-rate
 						size="20"
 						v-model="HalfValue"
 						:allowHalf="true"
 						@change="change"
-					></u-rate>
+					></up-rate>
 				</view>
 			</view>
 		</view>
@@ -101,12 +101,12 @@
 			<text class="u-demo-block__title">自定义选中的图标</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__rate-item">
-					<u-rate
+					<up-rate
 						size="20"
 						v-model="activeIconValue"
 						inactiveIcon="heart"
 						activeIcon="heart-fill"
-					></u-rate>
+					></up-rate>
 				</view>
 			</view>
 		</view>

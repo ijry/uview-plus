@@ -5,12 +5,12 @@
 			<text class="u-block__title">苹果、香蕉和橙子哪个最甜？</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__radio-item">
-					<u-radio-group
+					<up-radio-group
 						v-model="radiovalue1"
 						placement="column"
 						@change="groupChange"
 					>
-						<u-radio
+						<up-radio
 							:customStyle="{marginBottom: '8px'}"
 							v-for="(item, index) in radiolist1"
 							:key="index"
@@ -18,8 +18,8 @@
 							:name="item.name"
 							@change="radioChange"
 						>
-						</u-radio>
-					</u-radio-group>
+						</up-radio>
+					</up-radio-group>
 				</view>
 				{{radiovalue1}}
 			</view>
@@ -29,20 +29,20 @@
 			<text class="u-block__title">王者荣耀谁最帅？</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__radio-item">
-					<u-radio-group
+					<up-radio-group
 						v-model="radiovalue2"
 						placement="column"
 						shape="square"
 					>
-						<u-radio
+						<up-radio
 							:customStyle="{marginBottom: '8px'}"
 							v-for="(item, index) in radiolist2"
 							:key="index"
 							:label="item.name"
 							:name="item.name"
 						>
-						</u-radio>
-					</u-radio-group>
+						</up-radio>
+					</up-radio-group>
 				</view>
 				{{radiovalue2}}
 			</view>
@@ -52,11 +52,11 @@
 			<text class="u-block__title">苹果、香蕉和菠萝哪个最甜？</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__radio-item">
-					<u-radio-group
+					<up-radio-group
 						v-model="radiovalue3"
 						placement="column"
 					>
-						<u-radio
+						<up-radio
 							:customStyle="{marginBottom: '8px'}"
 							v-for="(item, index) in radiolist3"
 							:key="index"
@@ -64,8 +64,8 @@
 							:name="item.name"
 							:disabled="!index"
 						>
-						</u-radio>
-					</u-radio-group>
+						</up-radio>
+					</up-radio-group>
 				</view>
 			</view>
 		</view>
@@ -74,20 +74,20 @@
 			<text class="u-block__title">狙击枪用哪个倍镜最好？</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__radio-item">
-					<u-radio-group
+					<up-radio-group
 						v-model="radiovalue4"
 						placement="column"
 						:labelDisabled="true"
 					>
-						<u-radio
+						<up-radio
 							:customStyle="{marginBottom:'8px'}"
 							v-for="(item, index) in radiolist4"
 							:key="index"
 							:label="item.name"
 							:name="item.name"
 						>
-						</u-radio>
-					</u-radio-group>
+						</up-radio>
+					</up-radio-group>
 				</view>
 			</view>
 		</view>
@@ -96,20 +96,20 @@
 			<text class="u-block__title">你比较喜欢下面哪个颜色？</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__radio-item">
-					<u-radio-group
+					<up-radio-group
 						v-model="radiovalue5"
 						placement="column"
 						activeColor="#19be6b"
 					>
-						<u-radio
+						<up-radio
 							:customStyle="{marginBottom: '8px'}"
 							v-for="(item, index) in radiolist5"
 							:key="index"
 							:label="item.name"
 							:name="item.name"
 						>
-						</u-radio>
-					</u-radio-group>
+						</up-radio>
+					</up-radio-group>
 				</view>
 			</view>
 		</view>
@@ -118,19 +118,19 @@
 			<text class="u-block__title">王者荣耀哪个英雄最美？</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__radio-item">
-					<u-radio-group
+					<up-radio-group
 						v-model="radiovalue6"
 						placement="row"
 					>
-						<u-radio
+						<up-radio
 							:customStyle="{marginRight: '16px'}"
 							v-for="(item, index) in radiolist6"
 							:key="index"
 							:label="item.name"
 							:name="item.name"
 						>
-						</u-radio>
-					</u-radio-group>
+						</up-radio>
+					</up-radio-group>
 				</view>
 			</view>
 		</view>
@@ -139,21 +139,21 @@
 			<text class="u-block__title">你觉得阿木木可爱吗？</text>
 			<view>
 				<view class="u-page__radio-item">
-					<u-radio-group
+					<up-radio-group
 						v-model="radiovalue7"
 						:borderBottom="true"
 						placement="column"
 						iconPlacement="right"
 					>
-						<u-radio
+						<up-radio
 							:customStyle="{marginBottom: '16px'}"
 							v-for="(item, index) in radiolist7"
 							:key="index"
 							:label="item.name"
 							:name="item.name"
 						>
-						</u-radio>
-					</u-radio-group>
+						</up-radio>
+					</up-radio-group>
 				</view>
 			</view>
 		</view>

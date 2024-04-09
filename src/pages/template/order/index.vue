@@ -2,7 +2,7 @@
 	<view>
 		<view class="wrap">
 			<view class="u-tabs-box">
-				<u-tabs activeColor="#f29100" ref="tabs" :list="list" :current="current" @change="change" :is-scroll="false" swiperWidth="750"></u-tabs>
+				<up-tabs activeColor="#f29100" ref="tabs" :list="list" :current="current" @change="change" :is-scroll="false" swiperWidth="750"></up-tabs>
 			</view>
 			<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 				<swiper-item class="swiper-item">
@@ -11,9 +11,9 @@
 							<view class="order" v-for="(res, index) in orderList[0]" :key="res.id">
 								<view class="top">
 									<view class="left">
-										<u-icon name="home" :size="30" color="rgb(94,94,94)"></u-icon>
+										<up-icon name="home" :size="30" color="rgb(94,94,94)"></up-icon>
 										<view class="store">{{ res.store }}</view>
-										<u-icon name="arrow-right" color="rgb(203,203,203)" :size="26"></u-icon>
+										<up-icon name="arrow-right" color="rgb(203,203,203)" :size="26"></up-icon>
 									</view>
 									<view class="right">{{ res.deal }}</view>
 								</view>
@@ -40,13 +40,13 @@
 									</text>
 								</view>
 								<view class="bottom">
-									<view class="more"><u-icon name="more-dot-fill" color="rgb(203,203,203)"></u-icon></view>
+									<view class="more"><up-icon name="more-dot-fill" color="rgb(203,203,203)"></up-icon></view>
 									<view class="logistics btn">查看物流</view>
 									<view class="exchange btn">卖了换钱</view>
 									<view class="evaluate btn">评价</view>
 								</view>
 							</view>
-							<u-loadmore :status="loadStatus[0]" bgColor="#f2f2f2"></u-loadmore>
+							<up-loadmore :status="loadStatus[0]" bgColor="#f2f2f2"></up-loadmore>
 						</view>
 					</scroll-view>
 				</swiper-item>
@@ -56,9 +56,9 @@
 							<view class="order" v-for="(res, index) in  orderList[1]" :key="res.id">
 								<view class="top">
 									<view class="left">
-										<u-icon name="home" :size="30" color="rgb(94,94,94)"></u-icon>
+										<up-icon name="home" :size="30" color="rgb(94,94,94)"></up-icon>
 										<view class="store">{{ res.store }}</view>
-										<u-icon name="arrow-right" color="rgb(203,203,203)" :size="26"></u-icon>
+										<up-icon name="arrow-right" color="rgb(203,203,203)" :size="26"></up-icon>
 									</view>
 									<view class="right">{{ res.deal }}</view>
 								</view>
@@ -85,13 +85,13 @@
 									</text>
 								</view>
 								<view class="bottom">
-									<view class="more"><u-icon name="more-dot-fill" color="rgb(203,203,203)"></u-icon></view>
+									<view class="more"><up-icon name="more-dot-fill" color="rgb(203,203,203)"></up-icon></view>
 									<view class="logistics btn">查看物流</view>
 									<view class="exchange btn">卖了换钱</view>
 									<view class="evaluate btn">评价</view>
 								</view>
 							</view>
-							<u-loadmore :status="loadStatus[1]" bgColor="#f2f2f2"></u-loadmore>
+							<up-loadmore :status="loadStatus[1]" bgColor="#f2f2f2"></up-loadmore>
 						</view>
 					</scroll-view>
 				</swiper-item>
@@ -117,9 +117,9 @@
 							<view class="order" v-for="(res, index) in  orderList[3]" :key="res.id">
 								<view class="top">
 									<view class="left">
-										<u-icon name="home" :size="30" color="rgb(94,94,94)"></u-icon>
+										<up-icon name="home" :size="30" color="rgb(94,94,94)"></up-icon>
 										<view class="store">{{ res.store }}</view>
-										<u-icon name="arrow-right" color="rgb(203,203,203)" :size="26"></u-icon>
+										<up-icon name="arrow-right" color="rgb(203,203,203)" :size="26"></up-icon>
 									</view>
 									<view class="right">{{ res.deal }}</view>
 								</view>
@@ -146,13 +146,13 @@
 									</text>
 								</view>
 								<view class="bottom">
-									<view class="more"><u-icon name="more-dot-fill" color="rgb(203,203,203)"></u-icon></view>
+									<view class="more"><up-icon name="more-dot-fill" color="rgb(203,203,203)"></up-icon></view>
 									<view class="logistics btn">查看物流</view>
 									<view class="exchange btn">卖了换钱</view>
 									<view class="evaluate btn">评价</view>
 								</view>
 							</view>
-							<u-loadmore :status="loadStatus[3]" bgColor="#f2f2f2"></u-loadmore>
+							<up-loadmore :status="loadStatus[3]" bgColor="#f2f2f2"></up-loadmore>
 						</view>
 					</scroll-view>
 				</swiper-item>

@@ -2,98 +2,98 @@
 	<view class="u-page">
 		<view class="u-page__item">
 			<text class="u-page__item__title">基础功能</text>
-			<u-tabbar
+			<up-tabbar
 			    :value="value1"
 			    @change="change1"
 			    :fixed="false"
 			    :placeholder="false"
 			    :safeAreaInsetBottom="false"
 			>
-				<u-tabbar-item
+				<up-tabbar-item
 					text="首页"
 					icon="home"
 					@click="click1"
-				></u-tabbar-item>
-				<u-tabbar-item
+				></up-tabbar-item>
+				<up-tabbar-item
 					text="放映厅"
 					icon="photo"
 					@click="click1"
-				></u-tabbar-item>
-				<u-tabbar-item
+				></up-tabbar-item>
+				<up-tabbar-item
 					text="直播"
 					icon="play-right"
 					@click="click1"
-				></u-tabbar-item>
-				<u-tabbar-item
+				></up-tabbar-item>
+				<up-tabbar-item
 					text="我的"
 					icon="account"
 					@click="click1"
-				></u-tabbar-item>
-			</u-tabbar>
+				></up-tabbar-item>
+			</up-tabbar>
 		</view>
 		<view class="u-page__item">
 			<text class="u-page__item__title">显示徽标</text>
-			<u-tabbar
+			<up-tabbar
 			    :value="value2"
 			    :placeholder="false"
 			    @change="name => value2 = name"
 			    :fixed="false"
 			    :safeAreaInsetBottom="false"
 			>
-				<u-tabbar-item
+				<up-tabbar-item
 				    text="首页"
 				    icon="home"
 				    dot
-				></u-tabbar-item>
-				<u-tabbar-item
+				></up-tabbar-item>
+				<up-tabbar-item
 				    text="放映厅"
 				    icon="photo"
 				    badge="3"
-				></u-tabbar-item>
-				<u-tabbar-item
+				></up-tabbar-item>
+				<up-tabbar-item
 				    text="直播"
 				    icon="play-right"
-				></u-tabbar-item>
-				<u-tabbar-item
+				></up-tabbar-item>
+				<up-tabbar-item
 				    text="我的"
 				    icon="account"
-				></u-tabbar-item>
-			</u-tabbar>
+				></up-tabbar-item>
+			</up-tabbar>
 		</view>
 		<view class="u-page__item">
 			<text class="u-page__item__title">匹配标签的名称</text>
-			<u-tabbar
+			<up-tabbar
 			    :placeholder="false"
 			    :value="value3"
 			    @change="name => value3 = name"
 			    :fixed="false"
 			    :safeAreaInsetBottom="false"
 			>
-				<u-tabbar-item
+				<up-tabbar-item
 				    text="首页"
 				    icon="home"
 				    name="home"
-				></u-tabbar-item>
-				<u-tabbar-item
+				></up-tabbar-item>
+				<up-tabbar-item
 				    text="放映厅"
 				    icon="photo"
 				    name="photo"
-				></u-tabbar-item>
-				<u-tabbar-item
+				></up-tabbar-item>
+				<up-tabbar-item
 				    text="直播"
 				    icon="play-right"
 				    name="play-right"
-				></u-tabbar-item>
-				<u-tabbar-item
+				></up-tabbar-item>
+				<up-tabbar-item
 				    text="我的"
 				    name="account"
 				    icon="account"
-				></u-tabbar-item>
-			</u-tabbar>
+				></up-tabbar-item>
+			</up-tabbar>
 		</view>
 		<view class="u-page__item">
 			<text class="u-page__item__title">自定义图标/颜色</text>
-			<u-tabbar
+			<up-tabbar
 			    :value="value4"
 			    @change="name => value4 = name"
 			    :fixed="false"
@@ -101,7 +101,7 @@
 			    activeColor="#d81e06"
 			    :safeAreaInsetBottom="false"
 			>
-				<u-tabbar-item text="首页">
+				<up-tabbar-item text="首页">
 					<template v-slot:active-icon>
 						<image
 						    class="u-page__item__slot-icon"
@@ -114,52 +114,52 @@
 							src="https://cdn.uviewui.com/uview/common/bell.png"
 						></image>
 					</template>
-				</u-tabbar-item>
-				<u-tabbar-item
+				</up-tabbar-item>
+				<up-tabbar-item
 				    text="放映厅"
 				    icon="photo"
-				></u-tabbar-item>
-				<u-tabbar-item
+				></up-tabbar-item>
+				<up-tabbar-item
 				    text="直播"
 				    icon="play-right"
-				></u-tabbar-item>
-				<u-tabbar-item
+				></up-tabbar-item>
+				<up-tabbar-item
 				    text="我的"
 				    icon="account"
-				></u-tabbar-item>
-			</u-tabbar>
+				></up-tabbar-item>
+			</up-tabbar>
 		</view>
 		<view class="u-page__item">
 			<text class="u-page__item__title">拦截切换事件(点击第二个标签)</text>
-			<u-tabbar
+			<up-tabbar
 			    :value="value5"
 			    :fixed="false"
 				@change="change5"
 			    :safeAreaInsetBottom="false"
 			    :placeholder="false"
 			>
-				<u-tabbar-item
+				<up-tabbar-item
 				    text="首页"
 				    icon="home"
 				>
-				</u-tabbar-item>
-				<u-tabbar-item
+				</up-tabbar-item>
+				<up-tabbar-item
 				    text="放映厅"
 				    icon="photo"
-				></u-tabbar-item>
-				<u-tabbar-item
+				></up-tabbar-item>
+				<up-tabbar-item
 				    text="直播"
 				    icon="play-right"
-				></u-tabbar-item>
-				<u-tabbar-item
+				></up-tabbar-item>
+				<up-tabbar-item
 				    text="我的"
 				    icon="account"
-				></u-tabbar-item>
-			</u-tabbar>
+				></up-tabbar-item>
+			</up-tabbar>
 		</view>
 		<view class="u-page__item">
 			<text class="u-page__item__title">去除上边框</text>
-			<u-tabbar
+			<up-tabbar
 			    :value="value7"
 			    :placeholder="false"
 				:border="false"
@@ -167,52 +167,52 @@
 			    :fixed="false"
 			    :safeAreaInsetBottom="false"
 			>
-				<u-tabbar-item
+				<up-tabbar-item
 				    text="首页"
 				    icon="home"
-				></u-tabbar-item>
-				<u-tabbar-item
+				></up-tabbar-item>
+				<up-tabbar-item
 				    text="放映厅"
 				    icon="photo"
-				></u-tabbar-item>
-				<u-tabbar-item
+				></up-tabbar-item>
+				<up-tabbar-item
 				    text="直播"
 				    icon="play-right"
-				></u-tabbar-item>
-				<u-tabbar-item
+				></up-tabbar-item>
+				<up-tabbar-item
 				    text="我的"
 				    icon="account"
-				></u-tabbar-item>
-			</u-tabbar>
+				></up-tabbar-item>
+			</up-tabbar>
 		</view>
 		<view class="u-page__item">
 			<text class="u-page__item__title">固定在底部(固定在屏幕最下方)</text>
-			<u-gap height="150"></u-gap>
-			<u-tabbar
+			<up-gap height="150"></up-gap>
+			<up-tabbar
 			    :value="value6"
 			    @change="name => value6 = name"
 			    :fixed="true"
 				:placeholder="true"
 			    :safeAreaInsetBottom="true"
 			>
-				<u-tabbar-item
+				<up-tabbar-item
 					text="首页"
 					icon="home"
 				>
-				</u-tabbar-item>
-				<u-tabbar-item
+				</up-tabbar-item>
+				<up-tabbar-item
 					text="放映厅"
 					icon="photo"
-				></u-tabbar-item>
-				<u-tabbar-item
+				></up-tabbar-item>
+				<up-tabbar-item
 					text="直播"
 					icon="play-right"
-				></u-tabbar-item>
-				<u-tabbar-item
+				></up-tabbar-item>
+				<up-tabbar-item
 					text="我的"
 					icon="account"
-				></u-tabbar-item>
-			</u-tabbar>
+				></up-tabbar-item>
+			</up-tabbar>
 		</view>
 	</view>
 </template>

@@ -1,14 +1,14 @@
 <template>
 	<view class="u-page">
-		<u-navbar
+		<up-navbar
 			title="日历"
 			@leftClick="navigateBack"
 			safeAreaInsetTop
 			fixed
 			placeholder
-		></u-navbar>
-		<u-cell-group>
-			<u-cell
+		></up-navbar>
+		<up-cell-group>
+			<up-cell
 				@click="showCalendar(index)"
 				:title="item.title"
 				v-for="(item, index) in list"
@@ -22,36 +22,36 @@
 					:src="item.iconUrl"
 					mode="widthFix"
 				></image>
-			</u-cell>
-		</u-cell-group>
-		<u-calendar
+			</up-cell>
+		</up-cell-group>
+		<up-calendar
 			:show="show1"
 			defaultDate="2022-02-15"
 			@confirm="confirm"
 			@close="close"
-		></u-calendar>
-		<u-calendar
+		></up-calendar>
+		<up-calendar
 			:show="show2"
 			mode="multiple"
 			:defaultDate="['2022-03-01']"
 			@confirm="confirm"
 			@close="close"
-		></u-calendar>
-		<u-calendar
+		></up-calendar>
+		<up-calendar
 			:show="show3"
 			mode="range"
 			@confirm="confirm"
 			@close="close"
-		></u-calendar>
-		<u-calendar
+		></up-calendar>
+		<up-calendar
 			:show="show4"
 			mode="range"
 			@confirm="confirm"
 			@close="close"
 			color="#f56c6c"
 			:defaultDate="customThemeDefaultDate"
-		></u-calendar>
-		<u-calendar
+		></up-calendar>
+		<up-calendar
 			:show="show5"
 			mode="range"
 			@confirm="confirm"
@@ -61,26 +61,26 @@
 			endText="离店"
 			confirmDisabledText="请选择离店日期"
 			:formatter="formatter"
-		></u-calendar>
-		<u-calendar
+		></up-calendar>
+		<up-calendar
 			:show="show6"
 			@confirm="confirm"
 			@close="close"
 			:maxDate="maxDate"
-		></u-calendar>
-		<u-calendar
+		></up-calendar>
+		<up-calendar
 			:show="show7"
 			@confirm="confirm"
 			@close="close"
 			showLunar
-		></u-calendar>
-		<u-calendar
+		></up-calendar>
+		<up-calendar
 			:show="show8"
 			@confirm="confirm"
 			@close="close"
 			mode="multiple"
 			:defaultDate="defaultDateMultiple"
-		></u-calendar>
+		></up-calendar>
 	</view>
 </template>
 <script>

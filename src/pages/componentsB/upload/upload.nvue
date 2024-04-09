@@ -4,14 +4,14 @@
 			<text class="u-demo-block__title">基础用法</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__upload-item">
-				<u-upload
+				<up-upload
 				    :fileList="fileList1"
 				    @afterRead="afterRead"
 				    @delete="deletePic"
 				    name="1"
 				    multiple
 				    :maxCount="10"
-				></u-upload>
+				></up-upload>
 				</view>
 			</view>
 		</view>
@@ -19,7 +19,7 @@
 			<text class="u-demo-block__title">上传视频</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__upload-item">
-				<u-upload
+				<up-upload
 				    :fileList="fileList2"
 				    @afterRead="afterRead"
 				    @delete="deletePic"
@@ -27,7 +27,7 @@
 				    multiple
 				    :maxCount="10"
 				    accept="video"
-				></u-upload>
+				></up-upload>
 				</view>
 			</view>
 		</view>
@@ -35,7 +35,7 @@
 			<text class="u-demo-block__title">文件预览</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__upload-item">
-				<u-upload
+				<up-upload
 				    :fileList="fileList3"
 				    @afterRead="afterRead"
 				    @delete="deletePic"
@@ -43,7 +43,7 @@
 				    multiple
 				    :maxCount="10"
 				    :previewFullImage="true"
-				></u-upload>
+				></up-upload>
 				</view>
 			</view>
 		</view>
@@ -51,14 +51,14 @@
 			<text class="u-demo-block__title">隐藏上传按钮</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__upload-item">
-				<u-upload
+				<up-upload
 				    :fileList="fileList4"
 				    @afterRead="afterRead"
 				    @delete="deletePic"
 				    name="4"
 				    multiple
 				    :maxCount="2"
-				></u-upload>
+				></up-upload>
 				</view>
 			</view>
 		</view>
@@ -66,14 +66,14 @@
 			<text class="u-demo-block__title">限制上传数量</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__upload-item">
-				<u-upload
+				<up-upload
 				    :fileList="fileList5"
 				    @afterRead="afterRead"
 				    @delete="deletePic"
 				    name="5"
 				    multiple
 				    :maxCount="3"
-				></u-upload>
+				></up-upload>
 				</view>
 			</view>
 		</view>
@@ -81,7 +81,7 @@
 			<text class="u-demo-block__title">自定义上传样式</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__upload-item">
-					<u-upload
+					<up-upload
 						:fileList="fileList6"
 						@afterRead="afterRead"
 						@delete="deletePic"
@@ -92,7 +92,7 @@
 						height="150"
 					>
 						<image src="https://cdn.uviewui.com/uview/demo/upload/positive.png" mode="widthFix" style="width: 250px;height: 150px;"></image>
-					</u-upload>
+					</up-upload>
 				</view>
 			</view>
 		</view>

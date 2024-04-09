@@ -1,11 +1,11 @@
 <template>
 	<view class="u-page">
-		<u-gap
+		<up-gap
 			height="30"
 			bgColor="#fff"
-		></u-gap>
-		<u-cell-group>
-			<u-cell
+		></up-gap>
+		<up-cell-group>
+			<up-cell
 				:titleStyle="{fontWeight: 500}"
 				@click="openNotify(item.notifyData)"
 				:title="item.title"
@@ -19,9 +19,9 @@
 					:src="item.iconUrl"
 					mode="widthFix"
 				></image>
-			</u-cell>
-		</u-cell-group>
-		<u-notify ref="uNotify"></u-notify>
+			</up-cell>
+		</up-cell-group>
+		<up-notify ref="uNotify"></up-notify>
 	</view>
 </template>
 

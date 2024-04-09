@@ -1,14 +1,14 @@
 <template>
 	<view class="u-page" ref="page">
-		<u-navbar
+		<up-navbar
 			title="选择器"
 			@leftClick="navigateBack"
 			safeAreaInsetTop
 			fixed
 			placeholder
-		></u-navbar>
-		<u-cell-group>
-			<u-cell
+		></up-navbar>
+		<up-cell-group>
+			<up-cell
 				@click="showPicker(index)"
 				:title="item.title"
 				v-for="(item, index) in list"
@@ -21,32 +21,32 @@
 					:src="item.iconUrl"
 					mode="widthFix"
 				></image>
-			</u-cell>
-		</u-cell-group>
-		<u-picker
+			</up-cell>
+		</up-cell-group>
+		<up-picker
 			:show="show1"
 			:columns="columns1"
 			@change="change"
 			@cancel="cancel"
 			@confirm="confirm"
-		></u-picker>
-		<u-picker
+		></up-picker>
+		<up-picker
 			:show="show2"
 			:columns="columns2"
 			:defaultIndex="[1]"
 			@cancel="cancel"
 			@confirm="confirm"
 			@change="change"
-		></u-picker>
-		<u-picker
+		></up-picker>
+		<up-picker
 			:show="show3"
 			:columns="columns3"
 			ref="uPicker3"
 			@cancel="cancel"
 			@confirm="confirm"
 			@change="changeHandler1"
-		></u-picker>
-		<u-picker
+		></up-picker>
+		<up-picker
 			:show="show4"
 			:columns="columns4"
 			@cancel="cancel"
@@ -54,16 +54,16 @@
 			:loading="loading"
 			@change="changeHandler2"
 			ref="uPicker4"
-		></u-picker>
-		<u-picker
+		></up-picker>
+		<up-picker
 			:show="show5"
 			:columns="columns5"
 			title="标题太长就会显示省略号"
 			@cancel="cancel"
 			@confirm="confirm"
 			@change="change"
-		></u-picker>
-		<u-picker
+		></up-picker>
+		<up-picker
 			:show="show6"
 			:columns="columns6"
 			closeOnClickOverlay
@@ -71,7 +71,7 @@
 			@confirm="confirm"
 			@close="close"
 			@change="change"
-		></u-picker>
+		></up-picker>
 	</view>
 </template>
 

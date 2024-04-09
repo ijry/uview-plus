@@ -99,7 +99,7 @@
 			<view class="u-demo-block__content">
 				<!-- 注意：由于兼容性差异，如果需要使用前后插槽，nvue下需使用u--input，非nvue下需使用u-input -->
 				<!-- #ifndef APP-NVUE -->
-				<u-input placeholder="前置插槽">
+				<up-input placeholder="前置插槽">
 					<!-- #endif -->
 					<!-- #ifdef APP-NVUE -->
 					<up-input placeholder="前置插槽">
@@ -111,7 +111,7 @@
 							type="tips"
 						></up-text>
 						<!-- #ifndef APP-NVUE -->
-				</u-input>
+				</up-input>
 				<!-- #endif -->
 				<!-- #ifdef APP-NVUE -->
 				</up-input>
@@ -123,37 +123,37 @@
 			>
 				<!-- 注意：由于兼容性差异，如果需要使用前后插槽，nvue下需使用u--input，非nvue下需使用u-input -->
 				<!-- #ifndef APP-NVUE -->
-				<u-input placeholder="后置插槽">
+				<up-input placeholder="后置插槽">
 					<!-- #endif -->
 					<!-- #ifdef APP-NVUE -->
 					<up-input placeholder="后置插槽">
 						<!-- #endif -->
 						<template slot="suffix">
-							<u-code
+							<up-code
 								ref="uCode"
 								@change="codeChange"
 								seconds="20"
 								changeText="X秒重新获取哈哈哈"
-							></u-code>
-							<u-button
+							></up-code>
+							<up-button
 								@tap="getCode"
 								:text="tips"
 								type="success"
 								size="mini"
-							></u-button>
+							></up-button>
 						</template>
 						<!-- #ifndef APP-NVUE -->
-				</u-input>
+				</up-input>
 				<!-- #endif -->
 				<!-- #ifdef APP-NVUE -->
 				</up-input>
 				<!-- #endif -->
 			</view>
 		</view>
-		<u-gap
+		<up-gap
 			bgColor="#fff"
 			height="50"
-		></u-gap>
+		></up-gap>
 	</view>
 </template>
 

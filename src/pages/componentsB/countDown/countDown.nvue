@@ -3,20 +3,20 @@
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">基础用法</text>
 			<view class="u-demo-block__content">
-				<u-count-down
+				<up-count-down
 				    :time="30 * 60 * 60 * 1000"
 				    format="HH:mm:ss"
 				    autoStart
 				    millisecond
 					@finish="finish"
 				>
-				</u-count-down>
+				</up-count-down>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">自定义格式</text>
 			<view class="u-demo-block__content">
-				<u-count-down
+				<up-count-down
 				    :time="30 * 60 * 60 * 1000"
 				    format="DD:HH:mm:ss"
 				    autoStart
@@ -29,25 +29,25 @@
 						<text class="time__item">{{ timeData.minutes }}&nbsp;分</text>
 						<text class="time__item">{{ timeData.seconds }}&nbsp;秒</text>
 					</view>
-				</u-count-down>
+				</up-count-down>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">毫秒级渲染</text>
 			<view class="u-demo-block__content">
-				<u-count-down
+				<up-count-down
 				    :time="30 * 60 * 60 * 1000"
 				    format="HH:mm:ss:SSS"
 				    autoStart
 				    millisecond
 				>
-				</u-count-down>
+				</up-count-down>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">自定义样式</text>
 			<view class="u-demo-block__content">
-				<u-count-down
+				<up-count-down
 				    :time="30 * 60 * 60 * 1000"
 				    format="HH:mm:ss"
 				    autoStart
@@ -67,56 +67,56 @@
 							<text class="time__custom__item">{{ timeData.seconds }}</text>
 						</view>
 					</view>
-				</u-count-down>
+				</up-count-down>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">手动控制</text>
 			<view class="u-demo-block__content">
-				<u-count-down
+				<up-count-down
 				    ref="countDown"
 				    :time="3* 1000"
 				    format="ss:SSS"
 				    :autoStart="false"
 				    millisecond
 				>
-				</u-count-down>
+				</up-count-down>
 			</view>
-			<u-grid
+			<up-grid
 			    :border="true"
 			    :customStyle="{marginTop:10+'px'}"
 			>
-				<u-grid-item @click="reset">
+				<up-grid-item @click="reset">
 					<view class="count-down__grid-item">
-						<u-icon
+						<up-icon
 						    name="reload"
 						    :size="22"
-						></u-icon>
+						></up-icon>
 						<text class="count-down__grid-item__grid-text">重置</text>
 					</view>
-				</u-grid-item>
-				<u-grid-item @click="start">
+				</up-grid-item>
+				<up-grid-item @click="start">
 					<view class="count-down__grid-item">
 						<view class="count-down__grid-item__circle">
-							<u-icon
+							<up-icon
 							    color="#fff"
 							    name="play-right-fill"
 							    :size="22"
-							></u-icon>
+							></up-icon>
 						</view>
 						<text class="count-down__grid-item__grid-text">开始</text>
 					</view>
-				</u-grid-item>
-				<u-grid-item @click="pause">
+				</up-grid-item>
+				<up-grid-item @click="pause">
 					<view class="count-down__grid-item">
-						<u-icon
+						<up-icon
 						    name="pause-circle"
 						    :size="22"
-						></u-icon>
+						></up-icon>
 						<text class="count-down__grid-item__grid-text">暂停</text>
 					</view>
-				</u-grid-item>
-			</u-grid>
+				</up-grid-item>
+			</up-grid>
 		</view>
 	</view>
 </template>

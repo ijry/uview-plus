@@ -21,7 +21,7 @@
 				<textarea placeholder-class="line" value="" placeholder="粘贴文本,可自动识别姓名和地址等" />
 				<view class="clipboard">
 					地址粘贴板
-					<u-icon name="arrow-down" class="icon" :size="20"></u-icon>
+					<up-icon name="arrow-down" class="icon" :size="20"></up-icon>
 				</view>
 			</view> -->
 		</view>
@@ -32,7 +32,7 @@
 					<text class="tags">家</text>
 					<text class="tags">公司</text>
 					<text class="tags">学校</text>
-					<view class="tags plus"><u-icon size="22" name="plus"></u-icon></view>
+					<view class="tags plus"><up-icon size="22" name="plus"></up-icon></view>
 				</view>
 			</view>
 			<view class="default">
@@ -43,7 +43,7 @@
 				<view class="right"><switch color="red" @change="setDefault" /></view>
 			</view>
 		</view>
-		<u-picker mode="region" ref="uPicker" v-model="show" />
+		<up-picker mode="region" ref="uPicker" v-model="show" />
 	</view>
 </template>
 

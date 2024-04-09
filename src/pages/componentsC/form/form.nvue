@@ -1,12 +1,12 @@
 <template>
 	<view class="u-page">
-		<u-navbar
+		<up-navbar
 			title="表单"
 			@leftClick="navigateBack"
 			safeAreaInsetTop
 			fixed
 			placeholder
-		></u-navbar>
+		></up-navbar>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">基础使用</text>
 			<view class="u-demo-block__content">
@@ -16,7 +16,7 @@
 					:model="model1"
 					ref="form1"
 				>
-					<u-form-item
+					<up-form-item
 						label="姓名"
 						prop="userInfo.name"
 						borderBottom
@@ -27,8 +27,8 @@
 							border="none"
 							placeholder="姓名,只能为中文"
 						></up-input>
-					</u-form-item>
-					<u-form-item
+					</up-form-item>
+					<up-form-item
 						label="性别"
 						prop="userInfo.sex"
 						borderBottom
@@ -42,51 +42,51 @@
 							placeholder="请选择性别"
 							border="none"
 						></up-input>
-						<u-icon
+						<up-icon
 							slot="right"
 							name="arrow-right"
-						></u-icon>
-					</u-form-item>
-					<u-form-item
+						></up-icon>
+					</up-form-item>
+					<up-form-item
 						label="水果"
 						prop="radiovalue1"
 						borderBottom
 						ref="item2"
 					>
-						<u-radio-group v-model="model1.radiovalue1">
-							<u-radio
+						<up-radio-group v-model="model1.radiovalue1">
+							<up-radio
 								:customStyle="{marginRight: '16px'}"
 								v-for="(item, index) in radiolist1"
 								:key="index"
 								:label="item.name"
 								:name="item.name"
 							>
-							</u-radio>
-						</u-radio-group>
-					</u-form-item>
-					<u-form-item
+							</up-radio>
+						</up-radio-group>
+					</up-form-item>
+					<up-form-item
 						label="兴趣爱好"
 						prop="checkboxValue1"
 						borderBottom
 						labelWidth="80"
 						ref="item3"
 					>
-						<u-checkbox-group
+						<up-checkbox-group
 							v-model="model1.checkboxValue1"
 							shape="square"
 							@change="change"
 						>
-							<u-checkbox
+							<up-checkbox
 								:customStyle="{marginRight: '16px'}"
 								v-for="(item, index) in checkboxList1"
 								:key="index"
 								:label="item.name"
 								:name="item.name"
 							>
-							</u-checkbox>
-						</u-checkbox-group>
-					</u-form-item>
-					<u-form-item
+							</up-checkbox>
+						</up-checkbox-group>
+					</up-form-item>
+					<up-form-item
 						label="简介"
 						prop="intro"
 						borderBottom
@@ -97,8 +97,8 @@
 							v-model="model1.intro"
 							count
 						></up-textarea>
-					</u-form-item>
-					<u-form-item
+					</up-form-item>
+					<up-form-item
 						label="住店时间"
 						prop="hotel"
 						labelWidth="80"
@@ -112,12 +112,12 @@
 							placeholder="请选择住店和离店时间"
 							border="none"
 						></up-input>
-						<u-icon
+						<up-icon
 							slot="right"
 							name="arrow-right"
-						></u-icon>
-					</u-form-item>
-					<u-form-item
+						></up-icon>
+					</up-form-item>
+					<up-form-item
 						label="验证码"
 						prop="code"
 						labelWidth="80"
@@ -128,7 +128,7 @@
 							border="none"
 							placeholder="请填写验证码"
 						></up-input>
-						<u-button
+						<up-button
 							#right
 							@tap="getCode"
 							:text="tips"
@@ -136,9 +136,9 @@
 							size="mini"
 							style="flex: 0.5;"
 							:disabled="disabled1"
-						></u-button>
-					</u-form-item>
-					<u-form-item
+						></up-button>
+					</up-form-item>
+					<up-form-item
 						label="生日"
 						prop="userInfo.birthday"
 						borderBottom
@@ -152,25 +152,25 @@
 							placeholder="请选择生日"
 							border="none"
 						></up-input>
-						<u-icon
+						<up-icon
 							slot="right"
 							name="arrow-right"
-						></u-icon>
-					</u-form-item>
+						></up-icon>
+					</up-form-item>
 				</up-form>
-				<u-button
+				<up-button
 					type="primary"
 					text="提交"
 					customStyle="margin-top: 50px"
 					@click="submit"
-				></u-button>
-				<u-button
+				></up-button>
+				<up-button
 					type="error"
 					text="重置"
 					customStyle="margin-top: 10px"
 					@click="reset"
-				></u-button>
-				<u-action-sheet
+				></up-button>
+				<up-action-sheet
 					:show="showSex"
 					:actions="actions"
 					title="请选择性别"
@@ -178,8 +178,8 @@
 					@close="showSex = false"
 					@select="sexSelect"
 				>
-				</u-action-sheet>
-				<u-calendar
+				</up-action-sheet>
+				<up-calendar
 					:show="showCalendar"
 					mode="range"
 					@confirm="calendarConfirm"
@@ -188,15 +188,15 @@
 					endText="离店"
 					confirmDisabledText="请选择离店日期"
 					:formatter="formatter"
-				></u-calendar>
-				<u-code
+				></up-calendar>
+				<up-code
 					ref="uCode"
 					@change="codeChange"
 					seconds="20"
 					@start="disabled1 = true"
 					@end="disabled1 = false"
-				></u-code>
-				<u-datetime-picker
+				></up-code>
+				<up-datetime-picker
 					:show="showBirthday"
 					:value="birthday"
 					mode="date"
@@ -204,7 +204,7 @@
 					@confirm="birthdayConfirm"
 					@cancel="birthdayClose"
 					@close="birthdayClose"
-				></u-datetime-picker>
+				></up-datetime-picker>
 			</view>
 		</view>
 	</view>

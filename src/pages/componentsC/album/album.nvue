@@ -22,10 +22,10 @@
 						    margin="0 0 8px 0"
 						    text="全面的组件和便捷的工具会让您信手拈来，如鱼得水"
 						></up-text>
-						<u-album
+						<up-album
 						    :urls="urls1"
 						    keyName="src2"
-						></u-album>
+						></up-album>
 					</view>
 				</view>
 			</view>
@@ -52,7 +52,7 @@
 						    margin="0 0 8px 0"
 						    text="全面的组件和便捷的工具会让您信手拈来，如鱼得水"
 						></up-text>
-						<u-album :urls="urls2"></u-album>
+						<up-album :urls="urls2"></up-album>
 					</view>
 				</view>
 			</view>
@@ -86,11 +86,11 @@
 								}"
 							></up-text>
 						</view>
-						<u-album
+						<up-album
 						    :urls="urls2"
 						    @albumWidth="width => albumWidth = width"
 						    multipleSize="68"
-						></u-album>
+						></up-album>
 					</view>
 				</view>
 			</view>
@@ -117,12 +117,12 @@
 						    margin="0 0 8px 0"
 						    text="全面的组件和便捷的工具会让您信手拈来，如鱼得水"
 						></up-text>
-						<u-album
+						<up-album
 						    :urls="urls3"
 						    rowCount="2"
 						    maxCount="4"
 						    multipleMode="scaleToFill"
-						></u-album>
+						></up-album>
 					</view>
 				</view>
 			</view>
@@ -149,12 +149,12 @@
 						    margin="0 0 8px 0"
 						    text="全面的组件和便捷的工具会让您信手拈来，如鱼得水"
 						></up-text>
-						<u-album
+						<up-album
 						    :urls="urls4"
 						    rowCount="2"
 						    maxCount="4"
 						    multipleSize="50"
-						></u-album>
+						></up-album>
 					</view>
 				</view>
 			</view>

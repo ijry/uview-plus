@@ -3,8 +3,8 @@
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">基础演示</text>
 			<view class="u-demo-block__content">
-				<u-tabs :list="list1" @click="click" :current="3">
-				</u-tabs>
+				<up-tabs :list="list1" @click="click" :current="3">
+				</up-tabs>
 			</view>
 		</view>
 		<view
@@ -13,41 +13,41 @@
 		>
 			<text class="u-demo-block__title">粘性布局</text>
 		</view>
-		<u-sticky bgColor="#fff">
-			<u-tabs
+		<up-sticky bgColor="#fff">
+			<up-tabs
 				:list="list1"
 			>
-			</u-tabs>
-		</u-sticky>
-		<u-gap
+			</up-tabs>
+		</up-sticky>
+		<up-gap
 			height="23"
 			bgColor="#fff"
-		></u-gap>
+		></up-gap>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">显示徽标</text>
 			<view class="u-demo-block__content">
-				<u-tabs :list="list2">
-				</u-tabs>
+				<up-tabs :list="list2">
+				</up-tabs>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">禁止滚动</text>
 			<view class="u-demo-block__content">
-				<u-tabs :list="list6" :scrollable="false">
-				</u-tabs>
+				<up-tabs :list="list6" :scrollable="false">
+				</up-tabs>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">禁用菜单</text>
 			<view class="u-demo-block__content">
-				<u-tabs :list="list3">
-				</u-tabs>
+				<up-tabs :list="list3">
+				</up-tabs>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">自定义样式</text>
 			<view class="u-demo-block__content">
-				<u-tabs
+				<up-tabs
 					:list="list4"
 					lineWidth="30"
 					lineColor="#f56c6c"
@@ -62,13 +62,13 @@
 					}"
 					itemStyle="padding-left: 15px; padding-right: 15px; height: 34px;"
 				>
-				</u-tabs>
+				</up-tabs>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">滑块设置背景图</text>
 			<view class="u-demo-block__content">
-				<u-tabs
+				<up-tabs
 					:list="list4"
 					lineWidth="20"
 					lineHeight="7"
@@ -84,25 +84,25 @@
 					}"
 					itemStyle="padding-left: 15px; padding-right: 15px; height: 34px;"
 				>
-				</u-tabs>
+				</up-tabs>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">右侧自定义插槽</text>
 			<view class="u-demo-block__content">
-				<u-tabs :list="list1">
+				<up-tabs :list="list1">
 					<view
 						slot="right"
 						style="padding-left: 4px;"
 						@tap="$u.toast('插槽被点击')"
 					>
-						<u-icon
+						<up-icon
 							name="list"
 							size="21"
 							bold
-						></u-icon>
+						></up-icon>
 					</view>
-				</u-tabs>
+				</up-tabs>
 			</view>
 		</view>
 	</view>

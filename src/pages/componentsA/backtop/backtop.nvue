@@ -7,25 +7,25 @@
 		<text class="u-demo-block__title">自定义backTop(滚动页面即可在右下角看到图标)</text>
 		<view class="u-demo-block__content">
 			<view class="u-page__backTop-item">
-				<u-checkbox-group
+				<up-checkbox-group
 				    placement="column"
 					shape="square"
 				    @change="checkboxChange"
 					v-model="value"
 				>
-					<u-checkbox
+					<up-checkbox
 					    :customStyle="{marginBottom: '8px'}"
 					    v-for="(item, index) in checkboxList"
 					    :key="index"
 					    :label="item.name"
 					    :name="item.name"
 					>
-					</u-checkbox>
-				</u-checkbox-group>
+					</up-checkbox>
+				</up-checkbox-group>
 			</view>
 		</view>
 	</view>
-		<u-back-top
+		<up-back-top
 		    :right="backTopData.right"
 		    :customStyle="backTopData.customStyle"
 		    :bottom="backTopData.bottom"
@@ -35,7 +35,7 @@
 			:duration="backTopData.duration"
 		    :scrollTop="scrollTop"
 			@click="click"
-		></u-back-top>
+		></up-back-top>
 	</view>
 </template>
 

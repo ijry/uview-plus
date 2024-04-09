@@ -7,8 +7,8 @@
 					<view class="name">{{ res.name }}</view>
 					<view class="like" :class="{ highlight: res.isLike }">
 						<view class="num">{{ res.likeNum }}</view>
-						<u-icon v-if="!res.isLike" name="thumb-up" :size="30" color="#9a9a9a" @click="getLike(index)"></u-icon>
-						<u-icon v-if="res.isLike" name="thumb-up-fill" :size="30" @click="getLike(index)"></u-icon>
+						<up-icon v-if="!res.isLike" name="thumb-up" :size="30" color="#9a9a9a" @click="getLike(index)"></up-icon>
+						<up-icon v-if="res.isLike" name="thumb-up-fill" :size="30" @click="getLike(index)"></up-icon>
 					</view>
 				</view>
 				<view class="content">{{ res.contentText }}</view>
@@ -19,7 +19,7 @@
 					</view>
 					<view class="all-reply" @tap="toAllReply" v-if="res.replyList != undefined">
 						共{{ res.allReply }}条回复
-						<u-icon class="more" name="arrow-right" :size="26"></u-icon>
+						<up-icon class="more" name="arrow-right" :size="26"></up-icon>
 					</view>
 				</view>
 				<view class="bottom">

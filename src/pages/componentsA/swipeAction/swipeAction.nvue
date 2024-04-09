@@ -3,8 +3,8 @@
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">演示案例</text>
 			<view class="u-page__swipe-action-item">
-				<u-swipe-action>
-					<u-swipe-action-item
+				<up-swipe-action>
+					<up-swipe-action-item
 						v-if="show1"
 						:show="true"
 						:options="options1"
@@ -15,43 +15,43 @@
 								<text class="swipe-action__content__text">基础使用</text>
 							</view>
 						</view>
-					</u-swipe-action-item>
-				</u-swipe-action>
+					</up-swipe-action-item>
+				</up-swipe-action>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">按钮组</text>
 			<view class="u-page__swipe-action-item">
-				<u-swipe-action>
-					<u-swipe-action-item :options="options2">
+				<up-swipe-action>
+					<up-swipe-action-item :options="options2">
 						<view class="swipe-action u-border-top u-border-bottom">
 							<view class="swipe-action__content">
 								<text class="swipe-action__content__text">两个按钮并列</text>
 							</view>
 						</view>
-					</u-swipe-action-item>
-				</u-swipe-action>
+					</up-swipe-action-item>
+				</up-swipe-action>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">带图标</text>
 			<view class="u-page__swipe-action-item">
-				<u-swipe-action>
-					<u-swipe-action-item :options="options3">
+				<up-swipe-action>
+					<up-swipe-action-item :options="options3">
 						<view class="swipe-action u-border-top u-border-bottom">
 							<view class="swipe-action__content">
 								<text class="swipe-action__content__text">自定义图标</text>
 							</view>
 						</view>
-					</u-swipe-action-item>
-				</u-swipe-action>
+					</up-swipe-action-item>
+				</up-swipe-action>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">组合使用</text>
 			<view class="u-page__swipe-action-item">
-				<u-swipe-action>
-					<u-swipe-action-item
+				<up-swipe-action>
+					<up-swipe-action-item
 						:options="item.options"
 						v-for="(item, index) in options4"
 						:disabled="item.disabled"
@@ -65,22 +65,22 @@
 								<text class="swipe-action__content__text">{{ item.text }}</text>
 							</view>
 						</view>
-					</u-swipe-action-item>
-				</u-swipe-action>
+					</up-swipe-action-item>
+				</up-swipe-action>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">自定义按钮形状</text>
 			<view class="u-page__swipe-action-item">
-				<u-swipe-action>
-					<u-swipe-action-item :options="options5">
+				<up-swipe-action>
+					<up-swipe-action-item :options="options5">
 						<view class="swipe-action u-border-top u-border-bottom">
 							<view class="swipe-action__content">
 								<text class="swipe-action__content__text">圆形按钮</text>
 							</view>
 						</view>
-					</u-swipe-action-item>
-				</u-swipe-action>
+					</up-swipe-action-item>
+				</up-swipe-action>
 			</view>
 		</view>
 	</view>

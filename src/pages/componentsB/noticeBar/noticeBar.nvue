@@ -3,68 +3,68 @@
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">基础功能</text>
 			<view class="u-demo-block__content">
-				<u-notice-bar
+				<up-notice-bar
 				    :text="text1"
-				></u-notice-bar>
+				></up-notice-bar>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">可关闭</text>
 			<view class="u-demo-block__content">
-				<u-notice-bar
+				<up-notice-bar
 				    :text="text5"
 					mode="closable"
-				></u-notice-bar>
+				></up-notice-bar>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">自定义横向滚动速度</text>
 			<view class="u-demo-block__content">
-				<u-notice-bar
+				<up-notice-bar
 				    :text="text2"
 					speed="250"
 					mode="closable"
-				></u-notice-bar>
+				></up-notice-bar>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">可跳转(点击右箭头)</text>
 			<view class="u-demo-block__content">
-				<u-notice-bar
+				<up-notice-bar
 				    :text="text3"
 					mode="link"
 					url="/pages/componentsB/tag/tag"
-				></u-notice-bar>
+				></up-notice-bar>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">横向步进滚动</text>
 			<view class="u-demo-block__content">
-				<u-notice-bar
+				<up-notice-bar
 				    :text="text4"
 					:step="true"
 					@click="click"
-				></u-notice-bar>
+				></up-notice-bar>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">纵向滚动</text>
 			<view class="u-demo-block__content">
-				<u-notice-bar
+				<up-notice-bar
 				    :text="text4"
 					direction="column"
 					@click="click"
-				></u-notice-bar>
+				></up-notice-bar>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">自定义样式</text>
 			<view class="u-demo-block__content">
-				<u-notice-bar
+				<up-notice-bar
 				    :text="text1"
 					color="#ffffff"
 					bgColor="#f56c6c"
-				></u-notice-bar>
+				></up-notice-bar>
 			</view>
 		</view>
 	</view>

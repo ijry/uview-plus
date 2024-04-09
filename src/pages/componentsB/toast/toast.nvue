@@ -1,12 +1,12 @@
 <template>
 	<view class="u-page">
-		<u-gap
+		<up-gap
 			height="30"
 			bgColor="#fff"
-		></u-gap>
-		<u-toast ref="uToast"></u-toast>
-		<u-cell-group title-bg-color="rgb(243, 244, 246)">
-			<u-cell
+		></up-gap>
+		<up-toast ref="uToast"></up-toast>
+		<up-cell-group title-bg-color="rgb(243, 244, 246)">
+			<up-cell
 				:titleStyle="{fontWeight: 500}"
 				:title="item.title"
 				v-for="(item, index) in list"
@@ -21,8 +21,8 @@
 				    :src="getIcon(item.icon)"
 				    mode="widthFix"
 				></image> -->
-			</u-cell>
-		</u-cell-group>
+			</up-cell>
+		</up-cell-group>
 	</view>
 </template>
 

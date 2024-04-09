@@ -1,26 +1,26 @@
 <template>
 	<view class="u-page">
-		<u-list
+		<up-list
 			@scrolltolower="scrolltolower"
 		>
-			<u-list-item
+			<up-list-item
 				v-for="(item, index) in indexList"
 				:key="index"
 			>
-				<u-cell
+				<up-cell
 					:title="`列表长度-${index + 1}`"
 				>
 					<template #icon>
-						<u-avatar
+						<up-avatar
 							shape="square"
 							size="35"
 							:src="item.url"
 							customStyle="margin: -3px 5px -3px 0"
-						></u-avatar>
+						></up-avatar>
 					</template>
-				</u-cell>
-			</u-list-item>
-		</u-list>
+				</up-cell>
+			</up-list-item>
+		</up-list>
 	</view>
 </template>
 

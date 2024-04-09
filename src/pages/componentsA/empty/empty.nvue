@@ -3,21 +3,21 @@
 		<view class="u-page__top-box">
 			<text class="u-demo-block__title">演示效果</text>
 		</view>
-		<u-empty
+		<up-empty
 			:mode="mode"
 			:icon="imgList[mode]"
 		>
-			<u-button
+			<up-button
 				size="small"
 				type="primary"
 				:style="{marginTop:10+'px'}"
 				v-if="mode=='car'"
 				text="查看更多商品"
 			>
-			</u-button>
-		</u-empty>
+			</up-button>
+		</up-empty>
 		<div class="empty-select">
-			<u-cell
+			<up-cell
 				:titleStyle="{fontWeight: 500}"
 				@click="openImg(item.imgName)"
 				:title="item.title"
@@ -31,7 +31,7 @@
 					:src="item.iconUrl"
 					mode="widthFix"
 				></image>
-			</u-cell>
+			</up-cell>
 		</div>
 	</view>
 </template>
