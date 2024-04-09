@@ -167,6 +167,11 @@
 				"style": {
 					"navigationBarTitleText": "宫格"
 				}
+			}, {
+				"path": "lazyLoad/lazyLoad",
+				"style": {
+					"navigationBarTitleText": "图片懒加载"
+				}
 			}
 		]
 	}, {
@@ -287,6 +292,11 @@
 			"path": "tabbar/tabbar",
 			"style": {
 				"navigationBarTitleText": "Tabbar"
+			}
+		}, {
+			"path": "waterfall/waterfall",
+			"style": {
+				"navigationBarTitleText": "瀑布流"
 			}
 		}]
 	}, {

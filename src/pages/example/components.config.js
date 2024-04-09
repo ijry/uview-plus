@@ -293,6 +293,12 @@ export default [{
         title: 'Sticky 吸顶',
         title_en: 'Sticky'
     },
+	{
+        path: '/pages/componentsB/waterfall/waterfall',
+        icon: 'waterfall',
+        title: 'Waterfall 瀑布流',
+        title_en: 'Waterfall'
+    },
     {
         path: '/pages/componentsA/divider/divider',
         icon: 'divider',
@@ -395,12 +401,12 @@ export default [{
         title: 'ReadMore 展开阅读更多',
         title_en: 'ReadMore'
     },
-    // {
-    // 	path: '/pages/componentsA/lazyLoad/lazyLoad',
-    // 	icon: 'lazyLoad',
-    // 	title: 'LazyLoad 懒加载（暂无）',
-    // 	title_en: 'LazyLoad',
-    // },
+    {
+    	path: '/pages/componentsA/lazyLoad/lazyLoad',
+    	icon: 'lazyLoad',
+    	title: 'LazyLoad 懒加载',
+    	title_en: 'LazyLoad',
+    },
     {
         path: '/pages/componentsA/gap/gap',
         icon: 'gap',

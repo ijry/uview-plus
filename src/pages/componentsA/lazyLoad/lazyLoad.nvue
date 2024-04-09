@@ -1,0 +1,255 @@
+<template>
+	<view class="wrap">
+		<view class="item-warp">
+			<view class="item" v-for="(item, index) in list" :key="index">
+				<up-lazy-load threshold="-450" height="200" img-mode="aspectFill" border-radius="10"
+					:image="item.src" :index="index" @statusChange="statusChange" @clickImg="clickImg"></up-lazy-load>
+			</view>
+		</view>
+		<up-loadmore :status="status" @loadmore="getData"></up-loadmore>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				list: [],
+				status: 'loadmore',
+				data: [{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png",
+					},
+					{
+						// 这里会加载失败，显示错误的占位图
+						src: "error.jpg",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png",
+					},
+					{
+						// 这里会加载失败，显示错误的占位图
+						src: "error.jpg",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper1.pngg",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png",
+					},
+					{
+						// 这里会加载失败，显示错误的占位图
+						src: "error.jpg",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png",
+					},
+					{
+						// 这里会加载失败，显示错误的占位图
+						src: "error.jpg",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png",
+					},
+					{
+						src: "https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png",
+					},
+					{
+						// 这里会加载失败，显示错误的占位图
+						src: "error.jpg",
+					}
+				]
+			}
+		},
+		onLoad() {
+			this.getData();
+		},
+		onReachBottom() {
+			this.getData();
+		},
+		methods: {
+			statusChange(status) {
+				//console.log(status);
+			},
+			clickImg(img) {
+				//console.log(img);
+			},
+			getData() {
+				let index = 0;
+				this.status = 'loading';
+				setTimeout(() => {
+					for(let i = 0; i < 10; i++) {
+						index = uni.$u.random(0, this.data.length - 1);
+						this.list.push({
+							src: this.data[index].src
+						})
+					}
+					this.status = 'loadmore';
+				}, 1500);
+			}
+		},
+	} 
+</script>
+
+<style lang="scss" scoped>
+	.wrap {
+		padding: 30rpx;
+		display: block;
+		
+	}
+	
+	.item-warp {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		flex-wrap: wrap;
+	}
+	
+	.item-warp .item {
+		flex: 0 0 700rpx;
+		height: 400rpx;
+		margin-bottom: 20rpx;
+		border-radius: 10rpx;
+		overflow: hidden;
+	}
+</style>
