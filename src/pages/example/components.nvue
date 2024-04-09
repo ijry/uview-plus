@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-	import list from "./components.config.js";
+	import list from "./components.config.js";	import { os, toast } from '@/uni_modules/uview-plus';
 	export default {
 		data() {
 			return {
@@ -39,12 +39,12 @@
 			openPage(detail: { name: string }) {
 				const path = detail.name
 				// #ifdef APP-NVUE
-				// 目前安卓nvue下，由于overflow只能为hidden，所以布局上的原因，暂不支持steps和tooltip等组件
-				if(uni.$u.os() === 'android') {
-					const noSupportForAndroid = ['steps']
+				// 目前安卓nvue下，由于overflow只能为hidden，所以布局上的原因，暂不支持steps和tooltip等组件				// 2024实测steps与tooltip均支持在安卓nvue下显示
+				if(os() === 'android') {
+					const noSupportForAndroid = []
 					for(let i = 0; i < noSupportForAndroid.length; i ++) {
 						if(path.indexOf(noSupportForAndroid[i]) > -1) {
-							return uni.$u.toast('安卓nvue下暂不支持此组件')
+							return toast('安卓nvue下暂不支持此组件')
 						}
 					}
 				}
