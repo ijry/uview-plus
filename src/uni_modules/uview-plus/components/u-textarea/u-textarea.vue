@@ -81,7 +81,7 @@ import mixin from '../../libs/mixin/mixin.js';
  * @event {Function(e)} input					当键盘输入时，触发 input 事件
  * @event {Function(e)} confirm					点击完成时， 触发 confirm 事件
  * @event {Function(e)} keyboardheightchange	键盘高度发生变化的时候触发此事件
- * @example <u--textarea v-model="value1" placeholder="请输入内容" ></u--textarea>
+ * @example <up-textarea v-model="value1" placeholder="请输入内容" ></up-textarea>
  */
 export default {
     name: "u-textarea",

@@ -29,14 +29,14 @@
 				:size="fontSize"
 				:color="color"
 			></u-icon>
-			<u--text
+			<up-text
 				v-else-if="text"
 				:text="text"
 				:size="fontSize"
 				:color="color"
 				align="center"
 				customStyle="justify-content: center"
-			></u--text>
+			></up-text>
 			<image
 				class="u-avatar__image"
 				v-else

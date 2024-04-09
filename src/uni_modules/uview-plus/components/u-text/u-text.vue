@@ -22,8 +22,8 @@
             ></u-icon>
         </view>
         <u-link
-            v-if="mode === 'link'"			class="u-text__value"
-            :style="{fontWeight: valueStyle.fontWeight, wordWrap: valueStyle.wordWrap, fontSize: valueStyle.fontSize}"			:class="[			    type && `u-text__value--${type}`,			    lines && `u-line-${lines}`			]"			:text="value"
+            v-if="mode === 'link'"			class="u-text__value"
+            :style="{fontWeight: valueStyle.fontWeight, wordWrap: valueStyle.wordWrap, fontSize: valueStyle.fontSize}"			:class="[			    type && `u-text__value--${type}`,			    lines && `u-line-${lines}`			]"			:text="value"
             :href="href"
             underLine
         ></u-link>
@@ -102,7 +102,7 @@ import props from './props.js'
  * @property {String} 					align		文本对齐方式，可选值left|center|right（默认 'left' ）
  * @property {String} 					wordWrap	文字换行，可选值break-word|normal|anywhere（默认 'normal' ）
  * @event {Function} click  点击触发事件
- * @example <u--text text="我用十年青春,赴你最后之约"></u--text>
+ * @example <up-text text="我用十年青春,赴你最后之约"></up-text>
  */
 export default {
     name: 'u--text',

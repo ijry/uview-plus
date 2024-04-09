@@ -15,83 +15,83 @@
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">可清空内容</text>
 			<view class="u-demo-block__content">
-				<u--input
+				<up-input
 					placeholder="请输入内容"
 					border="surround"
 					clearable
-				></u--input>
+				></up-input>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">数字键盘</text>
 			<view class="u-demo-block__content">
-				<u--input
+				<up-input
 					placeholder="请输入内容"
 					border="surround"
 					type="number"
 					clearable
-				></u--input>
+				></up-input>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">密码类型</text>
 			<view class="u-demo-block__content">
-				<u--input
+				<up-input
 					placeholder="请输入内容"
 					border="surround"
 					password
 					clearable
-				></u--input>
+				></up-input>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">显示下划线</text>
 			<view class="u-demo-block__content">
-				<u--input
+				<up-input
 					placeholder="请输入内容"
 					border="bottom"
 					clearable
-				></u--input>
+				></up-input>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">禁用状态</text>
 			<view class="u-demo-block__content">
-				<u--input
+				<up-input
 					placeholder="禁用状态"
 					border="surround"
 					disabled
-				></u--input>
+				></up-input>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">圆形</text>
 			<view class="u-demo-block__content">
-				<u--input
+				<up-input
 					placeholder="请输入内容"
 					border="surround"
 					shape="circle"
-				></u--input>
+				></up-input>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">前后图标</text>
 			<view class="u-demo-block__content">
-				<u--input
+				<up-input
 					placeholder="前置图标"
 					prefixIcon="search"
 					prefixIconStyle="font-size: 22px;color: #909399"
-				></u--input>
+				></up-input>
 			</view>
 			<view
 				class="u-demo-block__content"
 				style="margin-top: 15px;"
 			>
-				<u--input
+				<up-input
 					placeholder="后置图标"
 					suffixIcon="map-fill"
 					suffixIconStyle="color: #909399"
-				></u--input>
+				></up-input>
 			</view>
 		</view>
 		<view class="u-demo-block">
@@ -102,19 +102,19 @@
 				<u-input placeholder="前置插槽">
 					<!-- #endif -->
 					<!-- #ifdef APP-NVUE -->
-					<u--input placeholder="前置插槽">
+					<up-input placeholder="前置插槽">
 						<!-- #endif -->
-						<u--text
+						<up-text
 							text="http://"
 							slot="prefix"
 							margin="0 3px 0 0"
 							type="tips"
-						></u--text>
+						></up-text>
 						<!-- #ifndef APP-NVUE -->
 				</u-input>
 				<!-- #endif -->
 				<!-- #ifdef APP-NVUE -->
-				</u--input>
+				</up-input>
 				<!-- #endif -->
 			</view>
 			<view
@@ -126,7 +126,7 @@
 				<u-input placeholder="后置插槽">
 					<!-- #endif -->
 					<!-- #ifdef APP-NVUE -->
-					<u--input placeholder="后置插槽">
+					<up-input placeholder="后置插槽">
 						<!-- #endif -->
 						<template slot="suffix">
 							<u-code
@@ -146,7 +146,7 @@
 				</u-input>
 				<!-- #endif -->
 				<!-- #ifdef APP-NVUE -->
-				</u--input>
+				</up-input>
 				<!-- #endif -->
 			</view>
 		</view>

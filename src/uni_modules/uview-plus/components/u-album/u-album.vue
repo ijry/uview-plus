@@ -39,13 +39,13 @@
                     "
                     class="u-album__row__wrapper__text"
                 >
-                    <u--text
+                    <up-text
                         :text="`+${urls.length - maxCount}`"
                         color="#fff"
                         :size="multipleSize * 0.3"
                         align="center"
                         customStyle="justify-content: center"
-                    ></u--text>
+                    ></up-text>
                 </view>
             </view>
         </view>
