@@ -252,7 +252,7 @@
 					}, {
 						// 此为同步验证，可以直接返回true或者false，如果是异步验证，稍微不同，见下方说明
 						validator: (rule, value, callback) => {
-							// 调用uView自带的js验证规则，详见：https://www.uviewui.com/js/test.html
+							// 调用uview-plus自带的js验证规则，详见：https://uview-plus.jiangruyi.com/js/test.html
 							return uni.$u.test.chinese(value);
 						},
 						message: "姓名必须为中文",

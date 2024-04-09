@@ -13,7 +13,7 @@
 					</view>
 					<view class="album__content">
 						<u--text
-						    text="uView UI"
+						    text="uview-plus"
 						    type="primary"
 						    bold
 						    size="17"
@@ -43,7 +43,7 @@
 					</view>
 					<view class="album__content">
 						<u--text
-						    text="uView UI"
+						    text="uview-plus"
 						    type="primary"
 						    bold
 						    size="17"
@@ -70,7 +70,7 @@
 					</view>
 					<view class="album__content">
 						<u--text
-						    text="uView UI"
+						    text="uview-plus"
 						    type="primary"
 						    bold
 						    size="17"
@@ -108,7 +108,7 @@
 					</view>
 					<view class="album__content">
 						<u--text
-						    text="uView UI"
+						    text="uview-plus"
 						    type="primary"
 						    bold
 						    size="17"
@@ -140,7 +140,7 @@
 					</view>
 					<view class="album__content">
 						<u--text
-						    text="uView UI"
+						    text="uview-plus"
 						    type="primary"
 						    bold
 						    size="17"
