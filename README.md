@@ -22,7 +22,9 @@
 
 uview-plus，是[uni-app](https://uniapp.dcloud.io/)全面兼容nvue的uni-app生态框架，全面的组件和便捷的工具会让您信手拈来，如鱼得水。
 
-## [官方文档：https://uview-plus.jiangruyi.com/](https://uview-plus.jiangruyi.com/)## [官方文档（备用）：https://uview-plus.lingyun.net/](https://uview-plus.lingyun.net/)
+## [官方文档：https://uview-plus.jiangruyi.com/](https://uview-plus.jiangruyi.com/)
+
+## [官方文档（备用）：https://uview-plus.lingyun.net/](https://uview-plus.lingyun.net/)
 
 ### [点击加群交流反馈](https://uview-plus.jiangruyi.com/components/addQQGroup.html)
 
@@ -43,6 +45,7 @@ uview-plus，是[uni-app](https://uniapp.dcloud.io/)全面兼容nvue的uni-app�
 <br>
 <br>
 ![image](https://user-images.githubusercontent.com/3102798/197370341-2f5ca42c-7d8f-400a-bbc7-051500842fbf.png)
+![image](https://uview-plus.jiangruyi.com/common/android_qrcode.png)
 
 
 ## 链接

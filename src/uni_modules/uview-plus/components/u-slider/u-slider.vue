@@ -1,7 +1,7 @@
 <template>
 	<view
 		class="u-slider"
-		:style="[$u.addStyle(customStyle)]"
+		:style="[addStyle(customStyle)]"
 	>
 		<slider
 			:min="min"
@@ -10,7 +10,7 @@
 			:value="modelValue"
 			:activeColor="activeColor"
 			:backgroundColor="inactiveColor"
-			:blockSize="$u.getPx(blockSize)"
+			:blockSize="getPx(blockSize)"
 			:blockColor="blockColor"
 			:showValue="showValue"
 			:disabled="disabled"
@@ -23,12 +23,12 @@
 <script>
 	import props from './props.js';
 	import mpMixin from '../../libs/mixin/mpMixin.js';
-	import mixin from '../../libs/mixin/mixin.js';
+	import mixin from '../../libs/mixin/mixin.js';	import { addStyle, getPx } from '../../libs/function/index.js';
 	export default {
-		name: 'u--slider',
+		name: 'up-slider',
 		mixins: [mpMixin, mixin, props],
 		emits: ["changing", "change", "update:modelValue"],
-		methods: {
+		methods: {			addStyle,			getPx,
 			// 拖动过程中触发
 			changingHandler(e) {
 				const {
