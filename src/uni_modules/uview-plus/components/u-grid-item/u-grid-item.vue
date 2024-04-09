@@ -1,7 +1,6 @@
 <template>
 	<!-- #ifndef APP-NVUE -->
-	<view
-		v-if="parentData.col > 0"
+	<view		v-if="parentData.col > 0"
 	    class="u-grid-item"
 	    hover-class="u-grid-item--hover-class"
 	    :hover-stay-time="200"
@@ -50,6 +49,8 @@
 				},
 				// #ifdef APP-NVUE
 				width: 0, // nvue下才这么计算，vue下放到computed中，否则会因为延时造成闪烁
+				// #endif				// #ifdef MP-TOUTIAO
+				width: '100%',
 				// #endif
 				classes: [], // 类名集合，用于判断是否显示右边和下边框
 			};
@@ -59,11 +60,11 @@
 		},
 		emits: ['click'],
 		//  微信小程序中 options 选项
-		options: {
-		    virtualHost: true //将自定义节点设置成虚拟的，更加接近Vue组件的表现。我们不希望自定义组件的这个节点本身可以设置样式、响应 flex 布局等
-		},
+		// #ifdef MP-WEIXIN		options: {
+		    virtualHost: true ,//将自定义节点设置成虚拟的，更加接近Vue组件的表现。我们不希望自定义组件的这个节点本身可以设置样式、响应 flex 布局等
+		},		// #endif
 		computed: {
-			// #ifndef APP-NVUE
+			// #ifndef APP-NVUE || MP-TOUTIAO
 			// vue下放到computed中，否则会因为延时造成闪烁
 			width() {
 				if (this.parentData.col > 0) {

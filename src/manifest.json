@@ -128,7 +128,7 @@
         "appid" : ""
     },
     "mp-toutiao" : {
-        "usingComponents" : true,
+        "usingComponents" : true,		"mergeVirtualHostAttributes" : true,
         "appid" : ""
     },
     "h5" : {
