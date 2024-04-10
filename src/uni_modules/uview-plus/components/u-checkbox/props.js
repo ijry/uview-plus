@@ -64,6 +64,11 @@ export default {
         labelDisabled: {
             type: [String, Boolean],
             default: () => uni.$u.props.checkbox.labelDisabled
+        },
+		// 是否独立使用
+        usedAlone: {
+            type: [Boolean],
+            default: () => false
         }
     }
 }

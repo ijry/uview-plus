@@ -161,19 +161,23 @@
 				style.width = uni.$u.addUnit(this.elSize)
 				style.height = uni.$u.addUnit(this.elSize)
 				// 如果是图标在右边的话，移除它的右边距
-				if (this.parentData.iconPlacement === 'right') {
-					style.marginRight = 0
+				if (!this.usedAlone) {
+					if (this.parentData.iconPlacement === 'right') {
+						style.marginRight = 0
+					}
 				}
 				return style
 			},
 			checkboxStyle() {
 				const style = {}
-				if (this.parentData.borderBottom && this.parentData.placement === 'row') {
-					uni.$u.error('检测到您将borderBottom设置为true，需要同时将u-checkbox-group的placement设置为column才有效')
-				}
-				// 当父组件设置了显示下边框并且排列形式为纵向时，给内容和边框之间加上一定间隔
-				if (this.parentData.borderBottom && this.parentData.placement === 'column') {
-					style.paddingBottom = '8px'
+				if (!this.usedAlone) {
+					if (this.parentData.borderBottom && this.parentData.placement === 'row') {
+						uni.$u.error('检测到您将borderBottom设置为true，需要同时将u-checkbox-group的placement设置为column才有效')
+					}
+					// 当父组件设置了显示下边框并且排列形式为纵向时，给内容和边框之间加上一定间隔
+					if (this.parentData.borderBottom && this.parentData.placement === 'column') {
+						style.paddingBottom = '8px'
+					}
 				}
 				return uni.$u.deepMerge(style, uni.$u.addStyle(this.customStyle))
 			}
@@ -184,10 +188,12 @@
 		emits: ["change"],
 		methods: {
 			init() {
-				// 支付宝小程序不支持provide/inject，所以使用这个方法获取整个父组件，在created定义，避免循环引用
-				this.updateParentData()
-				if (!this.parent) {
-					uni.$u.error('u-checkbox必须搭配u-checkbox-group组件使用')
+				if (!this.usedAlone) {
+					// 支付宝小程序不支持provide/inject，所以使用这个方法获取整个父组件，在created定义，避免循环引用
+					this.updateParentData()
+					if (!this.parent) {
+						uni.$u.error('u-checkbox必须搭配u-checkbox-group组件使用')
+					}
 				}
 				// #ifdef VUE2
 				const value = this.parentData.value
@@ -198,7 +204,7 @@
 				// 设置初始化时，是否默认选中的状态，父组件u-checkbox-group的value可能是array，所以额外判断
 				if (this.checked) {
 					this.isChecked = true
-				} else if (uni.$u.test.array(value)) {
+				} else if (!this.usedAlone && uni.$u.test.array(value)) {
 					// 查找数组是是否存在this.name元素值
 					this.isChecked = value.some(item => {
 						return item === this.name
@@ -210,7 +216,11 @@
 			},
 			// 横向两端排列时，点击组件即可触发选中事件
 			wrapperClickHandler(e) {
-				this.parentData.iconPlacement === 'right' && this.iconClickHandler(e)
+				if (!this.usedAlone) {
+					this.parentData.iconPlacement === 'right' && this.iconClickHandler(e)
+				} else {
+					this.iconClickHandler(e)
+				}
 			},
 			// 点击图标
 			iconClickHandler(e) {
@@ -242,7 +252,9 @@
 				// 将本组件标记为与原来相反的状态
 				this.isChecked = !this.isChecked
 				this.emitEvent()
-				typeof this.parent.unCheckedOther === 'function' && this.parent.unCheckedOther(this)
+				if (!this.usedAlone) {
+					typeof this.parent.unCheckedOther === 'function' && this.parent.unCheckedOther(this)
+				}
 			}
 		},
 		watch:{
