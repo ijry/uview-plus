@@ -99,6 +99,10 @@
 					if (height > uni.$u.getPx(this.showHeight)) {
 						this.isLongContent = true
 						this.status = 'close'
+					} else {
+						// https://github.com/ijry/uview-plus/issues/270
+						this.isLongContent = false
+						this.status = 'close'
 					}
 				})
 			},
