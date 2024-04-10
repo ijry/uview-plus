@@ -1,3 +1,11 @@
+## 3.2.0（2024-04-10）
+修复轮播图在nvue显示
+修复疑似u-slider名称被占用导致slider在App下不显示
+解决微信小程序提示 Some selectors are not allowed in component wxss
+示例中u-前缀统一为up-
+增加瀑布流与图片懒加载组件
+fix: #308修复tag组件缺失iconColor参数
+fix: #297使用grid布局解决目前编译为抖音小程序无法开启virtualHost
 ## 3.1.52（2024-04-07）
 工具类方法调用import化改造
 新增up-copy复制组件
