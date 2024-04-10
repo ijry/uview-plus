@@ -44,7 +44,7 @@ uview-plus，是[uni-app](https://uniapp.dcloud.io/)全面兼容nvue的uni-app�
 您可以通过**微信**扫码，查看最佳的演示效果。
 <br>
 <br>
-![image](https://user-images.githubusercontent.com/3102798/197370341-2f5ca42c-7d8f-400a-bbc7-051500842fbf.png)
+![image](https://uview-plus.jiangruyi.com/common/h5_qrcode.png)
 ![image](https://uview-plus.jiangruyi.com/common/android_qrcode.png)
 
 
