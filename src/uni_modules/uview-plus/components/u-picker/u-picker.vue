@@ -38,7 +38,8 @@
 						:style="{
 							height: $u.addUnit(itemHeight),
 							lineHeight: $u.addUnit(itemHeight),
-							fontWeight: index1 === innerIndex[index] ? 'bold' : 'normal'
+							fontWeight: index1 === innerIndex[index] ? 'bold' : 'normal',
+							display: 'block'
 						}"
 					>{{ getItemText(item1) }}</view>
 				</picker-view-column>
