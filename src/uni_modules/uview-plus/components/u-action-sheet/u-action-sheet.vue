@@ -202,7 +202,7 @@
 	$u-action-sheet-description-font-size:13px !default;
 	$u-action-sheet-description-color:14px !default;
 	$u-action-sheet-description-margin: 18px 15px !default;
-	$u-action-sheet-item-wrap-item-padding:15px !default;
+	$u-action-sheet-item-wrap-item-padding:17px !default;
 	$u-action-sheet-item-wrap-name-font-size:16px !default;
 	$u-action-sheet-item-wrap-subname-font-size:13px !default;
 	$u-action-sheet-item-wrap-subname-color: #c0c4cc !default;

@@ -110,7 +110,7 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	$u-cell-padding: 10px 15px !default;
+	$u-cell-padding: 13px 15px !default;
 	$u-cell-font-size: 15px !default;
 	$u-cell-line-height: 24px !default;
 	$u-cell-color: $u-main-color !default;
@@ -211,8 +211,11 @@
 			}
 		}
 
-		&__value {				text-align: right;
-			/* #ifndef APP-NVUE */			margin-left: auto;			/* #endif */	
+		&__value {	
+			text-align: right;
+			/* #ifndef APP-NVUE */
+			margin-left: auto;
+			/* #endif */	
 			font-size: $u-cell-value-font-size;
 			line-height: $u-cell-line-height;
 			color: $u-cell-value-color;
