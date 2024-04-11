@@ -1,20 +1,14 @@
 export default {
     props: {
-        // 标题选中时的样式
-        activeStyle: {
-            type: [String, Object],
-            default: () => ({
-                color: '#2979ff',
-                fontSize: '14px'
-            })
+        // 菜单标题和选项的激活态颜色
+        activeColor: {
+            type: String,
+            default: '#2979ff'
         },
-        // 标题未选中时的样式
-        inactiveStyle: {
-            type: [String, Object],
-            default: () => ({
-                color: '#606266',
-                fontSize: '14px'
-            })
+        // 菜单标题和选项的未激活态颜色
+        inactiveColor: {
+            type: String,
+            default: '#606266'
         },
         // 点击遮罩是否关闭菜单
         closeOnClickMask: {

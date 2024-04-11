@@ -311,12 +311,12 @@ export default [{
     groupName: '导航组件',
     groupName_en: 'Navigation components',
     list: [
-        // {
-        // 	path: '/pages/componentsB/dropdown/dropdown',
-        // 	icon: 'dropdown',
-        // 	title: 'Dropdown 下拉菜单',
-        // 	title_en: 'Dropdown',
-        // },
+        {
+        	path: '/pages/componentsB/dropdown/dropdown',
+        	icon: 'dropdown',
+        	title: 'Dropdown 下拉菜单',
+        	title_en: 'Dropdown',
+        },
         {
             path: '/pages/componentsB/tabbar/tabbar',
             icon: 'tabbar',

@@ -1,10 +1,19 @@
 export default {
     props: {
+        // #ifdef VUE3
         // 当前选中项的value值
+        modelValue: {
+            type: [Number, String, Array],
+            default: ''
+        },
+		// #endif
+		// #ifdef VUE2
+		// 当前选中项的value值
         value: {
             type: [Number, String, Array],
             default: ''
         },
+		// #endif
         // 菜单项标题
         title: {
             type: [String, Number],
