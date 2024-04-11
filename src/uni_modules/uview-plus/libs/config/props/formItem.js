@@ -14,6 +14,7 @@ export default {
         prop: '',
         rule: '',
         borderBottom: '',
+        labelPosition: '',
         labelWidth: '',
         rightIcon: '',
         leftIcon: '',
