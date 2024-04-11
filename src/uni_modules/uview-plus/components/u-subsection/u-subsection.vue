@@ -11,14 +11,14 @@
             :style="[barStyle]"
             :class="[
                 mode === 'button' && 'u-subsection--button__bar',
-                current === 0 &&
+                innerCurrent === 0 &&
                     mode === 'subsection' &&
                     'u-subsection__bar--first',
-                current > 0 &&
-                    current < list.length - 1 &&
+                innerCurrent > 0 &&
+                innerCurrent < list.length - 1 &&
                     mode === 'subsection' &&
                     'u-subsection__bar--center',
-                current === list.length - 1 &&
+                innerCurrent === list.length - 1 &&
                     mode === 'subsection' &&
                     'u-subsection__bar--last',
             ]"
@@ -83,6 +83,7 @@ export default {
                 width: 0,
                 height: 0,
             },
+            innerCurrent: ''
         };
     },
     watch: {
@@ -92,6 +93,9 @@ export default {
         current: {
             immediate: true,
             handler(n) {
+                if (n !== this.innerCurrent) {
+                    this.innerCurrent = n
+                }
                 // #ifdef APP-NVUE
                 // 在安卓nvue上，如果通过translateX进行位移，到最后一个时，会导致右侧无法绘制圆角
                 // 故用animation模块进行位移
@@ -129,7 +133,7 @@ export default {
             // 通过translateX移动滑块，其移动的距离为索引*item的宽度
             // #ifndef APP-NVUE
             style.transform = `translateX(${
-                this.current * this.itemRect.width
+                this.innerCurrent * this.itemRect.width
             }px)`;
             // #endif
             if (this.mode === "subsection") {
@@ -156,16 +160,16 @@ export default {
             return (index) => {
                 const style = {};
                 style.fontWeight =
-                    this.bold && this.current === index ? "bold" : "normal";
+                    this.bold && this.innerCurrent === index ? "bold" : "normal";
                 style.fontSize = uni.$u.addUnit(this.fontSize);
                 // subsection模式下，激活时默认为白色的文字
                 if (this.mode === "subsection") {
                     style.color =
-                        this.current === index ? "#fff" : this.inactiveColor;
+                        this.innerCurrent === index ? "#fff" : this.inactiveColor;
                 } else {
                     // button模式下，激活时文字颜色默认为activeColor
                     style.color =
-                        this.current === index
+                        this.innerCurrent === index
                             ? this.activeColor
                             : this.inactiveColor;
                 }
@@ -179,6 +183,7 @@ export default {
 	emits: ["change"],
     methods: {
         init() {
+            this.innerCurrent = this.current
             uni.$u.sleep().then(() => this.getRect());
         },
 		// 判断展示文本
@@ -202,6 +207,7 @@ export default {
             // #endif
         },
         clickHandler(index) {
+            this.innerCurrent = index
             this.$emit("change", index);
         },
     },
