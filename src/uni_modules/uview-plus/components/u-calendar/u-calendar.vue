@@ -218,9 +218,10 @@ export default {
 			}
 		},
 		init() {
-			// 校验maxDate，不能小于当前时间
+			// 校验maxDate，不能小于minDate。
 			if (
 				this.innerMaxDate &&
+                this.innerMinDate &&
 				new Date(this.innerMaxDate).getTime() < new Date(this.innerMinDate).getTime()
 			) {
 				return uni.$u.error('maxDate不能小于minDate时间')
