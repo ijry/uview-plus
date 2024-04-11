@@ -1,11 +1,9 @@
 [*]
 #缩进风格：空格
-indent_style = tab
+indent_style = space
 #缩进大小
 indent_size = 4
 #换行符lf
-# end_of_line = lf
+end_of_line = lf
 #字符集utf-8
 charset = utf-8
-
-
