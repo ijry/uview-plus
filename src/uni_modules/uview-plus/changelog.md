@@ -1,3 +1,14 @@
+## 3.2.1（2024-04-11）
+修复演示H5二维码
+
+fix: #270 ReadMore 展开阅读更多内容变化兼容
+
+fix: #238Calendar组件maxDate修改为不能小于minDate
+
+checkbox支持独立使用
+
+修复popup中在微信小程序中真机调试滚动失效
+
 ## 3.2.0（2024-04-10）
 修复轮播图在nvue显示
 修复疑似u-slider名称被占用导致slider在App下不显示
