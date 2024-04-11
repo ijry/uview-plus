@@ -39,6 +39,9 @@
 	export default {
 		name: 'u-dropdown-item',
 		mixins: [mpMixin, mixin, props],
+        options: {
+            styleIsolation: 'shared',
+        },
 		data() {
 			return {
 				active: false, // 当前项是否处于展开状态
@@ -110,7 +113,9 @@
 
 <style scoped lang="scss">
 	@import "../../libs/css/components.scss";
-    .u-dropdown-item__options :deep(.u-cell-group) {
-        background-color: #ffffff;
+    .u-dropdown-item__options {
+        ::v-deep .u-cell-group {
+            background: #ffffff;
+        }
     }
 </style>
