@@ -123,8 +123,7 @@ export default {
 		clear() {
 			this.leftList = [];
 			this.rightList = [];
-			// 同时清除父组件列表中的数据
-			this.$emit('input', []);
+			// 同时清除父组件列表中的数据			// #ifdef VUE2			this.$emit('input', []);			// #endif			// #ifdef VUE3			this.$emit('update:modelValue', []);			// #endif
 			this.tempList = [];
 		},
 		// 清除某一条指定的数据，根据id实现

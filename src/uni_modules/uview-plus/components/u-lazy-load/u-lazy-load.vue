@@ -6,8 +6,7 @@
 	  transition: `opacity ${time / 1000}s ease-in-out`
 	}"
 	 :class="'u-lazy-item-' + elIndex">
-		<view :class="'u-lazy-item-' + elIndex">
-			<image :style="{borderRadius: borderRadius + 'rpx', height: imgHeight}" v-if="!isError" class="u-lazy-item"
+		<view :class="'u-lazy-item-' + elIndex">			<image :style="{borderRadius: borderRadius + 'rpx', height: imgHeight}" v-if="!isError" class="u-lazy-item"
 			 :src="isShow ? image : loadingImg" :mode="imgMode" @load="imgLoaded" @error="loadError" @tap="clickImg"></image>
 			<image :style="{borderRadius: borderRadius + 'rpx', height: imgHeight}" class="u-lazy-item error" v-else :src="errorImg"
 			 :mode="imgMode" @load="errorImgLoaded" @tap="clickImg"></image>
@@ -15,7 +14,7 @@
 	</view>
 </template>
 
-<script>
+<script>	import { addUnit, guid } from '../../libs/function/index.js';
 	/**
 	 * lazyLoad 懒加载
 	 * @description 懒加载使用的场景为：页面有很多图片时，APP会同时加载所有的图片，导致页面卡顿，各个位置的图片出现前后不一致等.
@@ -102,7 +101,7 @@
 				time: this.duration,
 				loadStatus: '', // 默认是懒加载中的状态
 				isError: false, // 图片加载失败
-				elIndex: this.$u.guid()
+				elIndex: guid()
 			}
 		},
 		computed: {
@@ -114,7 +113,7 @@
 			},
 			// 计算图片的高度，可能为auto，带%，或者直接数值
 			imgHeight() {
-				return this.$u.addUnit(this.height);
+				return addUnit(this.height);
 			}
 		},
 		created() {
@@ -144,7 +143,7 @@
 					this.isError = false;
 				}
 			}
-		},
+		},		emits: ['click', 'load'],
 		methods: {
 			// 用于重新初始化
 			init() {
@@ -189,7 +188,7 @@
 				observer && observer.disconnect();
 			},
 		},
-		beforeDestroy() {
+		beforeUnmount() {
 			// 销毁页面时，可能还没触发某张很底部的懒加载图片，所以把这个事件给去掉
 			//observer.disconnect();
 		},
@@ -201,24 +200,7 @@
 				});
 			})
 			// mounted的时候，不一定挂载了这个元素，延时30ms，否则会报错或者不报错，但是也没有效果
-			setTimeout(() => {
-				// 这里是组件内获取布局状态，不能用uni.createIntersectionObserver，而必须用this.createIntersectionObserver
-				this.disconnectObserver('contentObserver');
-				const contentObserver = uni.createIntersectionObserver(this);
-				// 要理解这里怎么计算的，请看这个：
-				// https://blog.csdn.net/qq_25324335/article/details/83687695
-				contentObserver.relativeToViewport({
-					bottom: this.getThreshold,
-				}).observe('.u-lazy-item-' + this.elIndex, (res) => {
-					if (res.intersectionRatio > 0) {
-						// 懒加载状态改变
-						this.isShow = true;
-						// 如果图片已经加载，去掉监听，减少性能的消耗
-						this.disconnectObserver('contentObserver');
-					}
-				})
-				this.contentObserver = contentObserver;
-			}, 30)
+			setTimeout(() => {				// 这里是组件内获取布局状态，不能用uni.createIntersectionObserver，而必须用this.createIntersectionObserver				// this.disconnectObserver('contentObserver');				const contentObserver = uni.createIntersectionObserver(this);				// 要理解这里怎么计算的，请看这个：				// https://blog.csdn.net/qq_25324335/article/details/83687695				contentObserver.relativeToViewport({					bottom: this.getThreshold,				}).observe('.u-lazy-item-' + this.elIndex, (res) => {					console.log('relativeToViewport', res)					if (res.intersectionRatio > 0) {						// 懒加载状态改变						this.isShow = true;						// 如果图片已经加载，去掉监听，减少性能的消耗						this.disconnectObserver('contentObserver');					}				})				this.contentObserver = contentObserver;			}, 30)
 		}
 	}
 </script>

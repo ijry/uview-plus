@@ -2,7 +2,7 @@
 	<view class="wrap">
 		<view class="item-warp">
 			<view class="item" v-for="(item, index) in list" :key="index">
-				<up-lazy-load threshold="-450" height="200" img-mode="aspectFill" border-radius="10"
+				<up-lazy-load threshold="-450" height="100px" img-mode="aspectFill" border-radius="10"
 					:image="item.src" :index="index" @statusChange="statusChange" @clickImg="clickImg"></up-lazy-load>
 			</view>
 		</view>
@@ -10,8 +10,7 @@
 	</view>
 </template>
 
-<script>
-	export default {
+<script>	import { random } from '@/uni_modules/uview-plus';	export default {
 		data() {
 			return {
 				list: [],
@@ -219,7 +218,7 @@
 				this.status = 'loading';
 				setTimeout(() => {
 					for(let i = 0; i < 10; i++) {
-						index = uni.$u.random(0, this.data.length - 1);
+						index = random(0, this.data.length - 1);
 						this.list.push({
 							src: this.data[index].src
 						})
@@ -235,7 +234,6 @@
 	.wrap {
 		padding: 30rpx;
 		display: block;
-		
 	}
 	
 	.item-warp {
@@ -246,8 +244,8 @@
 	}
 	
 	.item-warp .item {
-		flex: 0 0 700rpx;
-		height: 400rpx;
+		width: 700rpx;
+		height: 200rpx;
 		margin-bottom: 20rpx;
 		border-radius: 10rpx;
 		overflow: hidden;
