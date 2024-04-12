@@ -83,7 +83,8 @@ export default {
                 width: 0,
                 height: 0,
             },
-            innerCurrent: ''
+            innerCurrent: '',
+            windowResizeCallback: {}
         };
     },
     watch: {
@@ -179,6 +180,13 @@ export default {
     },
     mounted() {
         this.init();
+        this.windowResizeCallback = (res) => {
+            this.init();
+        }
+        uni.onWindowResize(this.windowResizeCallback)
+    },
+    beforeUnmount() {
+        uni.offWindowResize(this.windowResizeCallback)
     },
 	emits: ["change"],
     methods: {
@@ -227,20 +235,20 @@ export default {
 	/* #endif */
 
     &--button {
-        height: 32px;
+        height: 34px;
         background-color: rgb(238, 238, 239);
         padding: 3px;
-        border-radius: 3px;
+        border-radius: 4px;
         align-items: stretch;
 
         &__bar {
             background-color: #ffffff;
-            border-radius: 3px !important;
+            border-radius: 4px !important;
         }
     }
 
     &--subsection {
-        height: 30px;
+        height: 32px;
     }
 
     &__bar {
@@ -252,8 +260,8 @@ export default {
         /* #endif */
 
         &--first {
-            border-top-left-radius: 3px;
-            border-bottom-left-radius: 3px;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
             border-top-right-radius: 0px;
             border-bottom-right-radius: 0px;
         }
@@ -268,8 +276,8 @@ export default {
         &--last {
             border-top-left-radius: 0px;
             border-bottom-left-radius: 0px;
-            border-top-right-radius: 3px;
-            border-bottom-right-radius: 3px;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
         }
     }
 
@@ -286,18 +294,18 @@ export default {
         }
 
         &--first {
-            border-top-left-radius: 3px;
-            border-bottom-left-radius: 3px;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
         }
 
         &--last {
-            border-top-right-radius: 3px;
-            border-bottom-right-radius: 3px;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
         }
 
         &__text {
             font-size: 12px;
-            line-height: 12px;
+            line-height: 14px;
             @include flex;
             align-items: center;
             transition-property: color;
