@@ -27,11 +27,11 @@
 	padding: 15px 15px 40px 15px;
 	&__item {
 		flex: 1;
-		margin-bottom: 23px;
+		// margin-bottom: 23px;
 		&__title {
 			font-size: 14px;
 			color: rgb(143, 156, 162);
-			margin-bottom: 8px;
+			// margin-bottom: 8px;
 			@include flex;
 		}
 	}

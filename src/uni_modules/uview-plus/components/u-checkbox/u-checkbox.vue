@@ -1,12 +1,12 @@
 <template>
 	<view
-	    class="u-checkbox"
+	    class="u-checkbox cursor-pointer"
 	    :style="[checkboxStyle]"
 	    @tap.stop="wrapperClickHandler"
 	    :class="[`u-checkbox-label--${parentData.iconPlacement}`, parentData.borderBottom && parentData.placement === 'column' && 'u-border-bottom']"
 	>
 		<view
-		    class="u-checkbox__icon-wrap"
+		    class="u-checkbox__icon-wrap cursor-pointer"
 		    @tap.stop="iconClickHandler"
 		    :class="iconClasses"
 		    :style="[iconWrapStyle]"

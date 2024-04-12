@@ -1,6 +1,6 @@
 <template>
 	<view
-	    class="u-tabbar-item"
+	    class="u-tabbar-item cursor-pointer"
 	    :style="[$u.addStyle(customStyle)]"
 	    @tap="clickHandler"
 	>

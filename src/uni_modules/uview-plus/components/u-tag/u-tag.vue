@@ -4,7 +4,7 @@
 		:show="show"
 		style="display: inline-flex;"
 	>
-		<view class="u-tag-wrapper">
+		<view class="u-tag-wrapper cursor-pointer">
 			<view
 				class="u-tag"
 				:class="[`u-tag--${shape}`, !plain && `u-tag--${type}`, plain && `u-tag--${type}--plain`, `u-tag--${size}`, plain && plainFill && `u-tag--${type}--plain--fill`]"

@@ -1,6 +1,6 @@
 <template>
 	<view
-	    class="u-switch"
+	    class="u-switch cursor-pointer"
 	    :class="[disabled && 'u-switch--disabled']"
 	    :style="[switchStyle, $u.addStyle(customStyle)]"
 	    @tap="clickHandler"

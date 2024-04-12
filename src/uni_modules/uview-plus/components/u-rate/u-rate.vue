@@ -11,7 +11,7 @@
             @touchend.stop="touchEnd"
         >
             <view
-                class="u-rate__content__item"
+                class="u-rate__content__item cursor-pointer"
                 v-for="(item, index) in Number(count)"
                 :key="index"
                 :class="[elClass]"

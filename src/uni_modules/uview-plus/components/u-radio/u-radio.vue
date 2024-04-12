@@ -1,12 +1,12 @@
 <template>
 	<view
-	    class="u-radio"
+	    class="u-radio cursor-pointer"
 		@tap.stop="wrapperClickHandler"
 	    :style="[radioStyle]"
 	    :class="[`u-radio-label--${parentData.iconPlacement}`, parentData.borderBottom && parentData.placement === 'column' && 'u-border-bottom']"
 	>
 		<view
-		    class="u-radio__icon-wrap"
+		    class="u-radio__icon-wrap cursor-pointer"
 		    @tap.stop="iconClickHandler"
 		    :class="iconClasses"
 		    :style="[iconWrapStyle]"

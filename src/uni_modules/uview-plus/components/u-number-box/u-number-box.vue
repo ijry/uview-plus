@@ -1,7 +1,7 @@
 <template>
 	<view class="u-number-box">
 		<view
-		    class="u-number-box__slot"
+		    class="u-number-box__slot cursor-pointer"
 		    @tap.stop="clickHandler('minus')"
 		    @touchstart="onTouchStart('minus')"
 		    @touchend.stop="clearTimeout"
@@ -11,7 +11,7 @@
 		</view>
 		<view
 		    v-else-if="showMinus"
-		    class="u-number-box__minus"
+		    class="u-number-box__minus cursor-pointer"
 		    @tap.stop="clickHandler('minus')"
 		    @touchstart="onTouchStart('minus')"
 		    @touchend.stop="clearTimeout"
@@ -60,7 +60,7 @@
 			<!-- #endif -->
 		</slot>
 		<view
-		    class="u-number-box__slot"
+		    class="u-number-box__slot cursor-pointer"
 		    @tap.stop="clickHandler('plus')"
 		    @touchstart="onTouchStart('plus')"
 		    @touchend.stop="clearTimeout"
@@ -70,7 +70,7 @@
 		</view>
 		<view
 		    v-else-if="showPlus"
-		    class="u-number-box__plus"
+		    class="u-number-box__plus cursor-pointer"
 		    @tap.stop="clickHandler('plus')"
 		    @touchstart="onTouchStart('plus')"
 		    @touchend.stop="clearTimeout"
