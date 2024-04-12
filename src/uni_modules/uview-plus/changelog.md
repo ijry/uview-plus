@@ -1,3 +1,26 @@
+## 3.2.3（2024-04-12）
+fix: 修复square属性在小程序下无效问题
+
+fix:修复lastIndex异常导致的column异常问题
+
+fix: alipayapp picker style
+
+feat(button): 添加用户同意隐私协议事件回调
+
+fix: input switch password
+
+fix: 修复u-code组件keepRuning失效问题
+
+feat: form-item添加labelPosition属性
+
+新增dropdown组件
+
+分段器支持内部current值
+
+优化cell和action-sheet视觉大小
+
+修复tabs文字换行
+
 ## 3.2.2（2024-04-11）
 修复换行符问题
 ## 3.2.1（2024-04-11）
