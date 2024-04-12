@@ -4,7 +4,7 @@ import App from './App'
 import store from './store'
 
 // 引入全局uview-plus
-import uviewPlus from '@/uni_modules/uview-plus/index.js'
+import uviewPlus from '@/uni_modules/uview-plus'
 
 // i18n部分的配置
 // 引入语言包，注意路径
