@@ -34,8 +34,11 @@ import color from './libs/config/color.js'
 import platform from './libs/function/platform'
 
 // 导出
+const http = new Request()
+let themeType = ['primary', 'success', 'error', 'warning', 'info'];
+export { route, http, debounce, throttle, platform, themeType, mixin, mpMixin, props, color, test, zIndex }
 export * from './libs/function/index.js'
-export const http = new Request()
+export * from './libs/function/colorGradient.js'
 
 const $u = {
     route,
@@ -45,7 +48,7 @@ const $u = {
     rgbToHex: colorGradient.rgbToHex,
     colorToRgba: colorGradient.colorToRgba,
     test,
-    type: ['primary', 'success', 'error', 'warning', 'info'],
+    type: themeType,
     http,
     config, // uview-plus配置信息相关，比如版本号
     zIndex,
