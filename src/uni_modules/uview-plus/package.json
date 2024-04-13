@@ -13,6 +13,7 @@
         "uni-app",
         "ui"
     ],
+    "main": "index.js",
 	"repository": "https://github.com/ijry/uview-plus",
 	"engines": {
 		"HBuilderX": "^3.1.0"
