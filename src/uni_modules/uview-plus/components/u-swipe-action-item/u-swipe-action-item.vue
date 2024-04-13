@@ -91,7 +91,23 @@
 		name: 'u-swipe-action-item',
 		emits: ['click'],
 		
-		mixins: [			mpMixin,			mixin,			// #ifndef APP-NVUE			touch,			// #endif			// #ifdef APP-NVUE			nvue,			// #endif			// #ifdef APP-VUE || MP-WEIXIN || H5 || MP-QQ || H5			wxs,			// #endif			// #ifdef MP-ALIPAY || MP-BAIDU || MP-TOUTIAO			other,			// #endif			props		],
+		mixins: [
+			mpMixin,
+			mixin,
+			// #ifndef APP-NVUE
+			touch,
+			// #endif
+			// #ifdef APP-NVUE
+			nvue,
+			// #endif
+			// #ifdef APP-VUE || MP-WEIXIN || H5 || MP-QQ || H5
+			wxs,
+			// #endif
+			// #ifdef MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
+			other,
+			// #endif
+			props
+		],
 		data() {
 			return {
 				// 按钮的尺寸信息
@@ -171,6 +187,7 @@
 		/* #endif */
 
 		&__content {
+            transform: translateX(0px); // 修复某些情况下默认右侧按钮是展开的问题
 			background-color: #FFFFFF;
 			z-index: 10;
 		}
