@@ -99,7 +99,7 @@
     },
     "quickapp" : {},
     "mp-weixin" : {
-        "appid" : "touristappid",
+        "appid" : "wx546bb258086e3454",
         "setting" : {
             "urlCheck" : false,
             "es6" : true,
@@ -128,7 +128,8 @@
         "appid" : ""
     },
     "mp-toutiao" : {
-        "usingComponents" : true,		"mergeVirtualHostAttributes" : true,
+        "usingComponents" : true,
+        "mergeVirtualHostAttributes" : true,
         "appid" : ""
     },
     "h5" : {
