@@ -1,7 +1,7 @@
 <template>
 	<view class="u-dropdown-item" v-if="active" @touchmove.stop.prevent="() => {}" @tap.stop.prevent="() => {}">
 		<block v-if="!$slots.default && !$slots.$default">
-			<scroll-view scroll-y="true" :style="{
+			<scroll-view class="u-dropdown-item__scroll" scroll-y="true" :style="{
 				height: $u.addUnit(height)
 			}">
 				<view class="u-dropdown-item__options">
@@ -113,9 +113,7 @@
 
 <style scoped lang="scss">
 	@import "../../libs/css/components.scss";
-    .u-dropdown-item__options {
-        ::v-deep .u-cell-group {
-            background: #ffffff;
-        }
+    .u-dropdown-item__scroll {
+        background: #ffffff;
     }
 </style>
