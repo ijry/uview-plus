@@ -72,7 +72,9 @@
 				</up-collapse-item> -->
 				<up-collapse-item title="组件全面">
 					<template v-slot:icon>
-						<up-icon name="tags-fill" size="20"></up-icon>					</template>					<text class="u-collapse-content">众多组件覆盖开发过程的各个需求，组件功能丰富，多端兼容。让您快速集成，开箱即用</text>
+						<up-icon name="tags-fill" size="20"></up-icon>
+					</template>
+					<text class="u-collapse-content">众多组件覆盖开发过程的各个需求，组件功能丰富，多端兼容。让您快速集成，开箱即用</text>
 				</up-collapse-item>
 				<up-collapse-item title="众多利器" icon="tags-fill">
 					<template v-slot:value> <text class="u-page__item__title__slot-title">自定义内容</text> </template> <text
