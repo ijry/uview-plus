@@ -97,19 +97,20 @@
 			<text class="u-page__item__title">自定义插槽</text>
 			<up-cell-group>
 				<up-cell value="内容">
-					<view
-					    slot="title"
-					    class="u-slot-title"
-					>
-						<text class="u-cell-text">单元格</text>
-						<up-tag
-						    text="标签"
-						    plain
-						    size="mini"
-						    type="warning"
-						>
-						</up-tag>
-					</view>
+                    <template #title>
+                        <view
+					        class="u-slot-title"
+					    >
+                            <text class="u-cell-text">单元格</text>
+                            <up-tag
+                                text="标签"
+                                plain
+                                size="mini"
+                                type="warning"
+                            >
+                            </up-tag>
+                        </view>
+                    </template>
 				</up-cell>
 				<up-cell
 				    title="单元格"
