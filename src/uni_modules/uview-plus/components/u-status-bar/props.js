@@ -1,8 +1,9 @@
+import defProps from '../../libs/config/props.js';
 export default {
     props: {
         bgColor: {
             type: String,
-            default: () => uni.$u.props.statusBar.bgColor
+            default: () => defProps.statusBar.bgColor
         }
     }
 }

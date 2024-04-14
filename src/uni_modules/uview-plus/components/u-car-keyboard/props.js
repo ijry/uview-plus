@@ -1,3 +1,4 @@
+// import defProps from '../../libs/config/props.js';
 export default {
     props: {
         // 是否打乱键盘按键的顺序

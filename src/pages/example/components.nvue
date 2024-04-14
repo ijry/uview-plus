@@ -15,6 +15,8 @@
 				</up-cell>
 			</up-cell-group>
 		</view>
+        <up-gap height="30" bgColor="#fff"></up-gap>
+        <up-alert description ='uview-plus 2022-2024'></up-alert>
 		<up-gap height="30" bgColor="#fff"></up-gap>
 	</view>
 </template>
@@ -35,6 +37,8 @@
 				}
 			},
 		},
+        onLoad() {
+        },
 		methods: {
 			openPage(detail: { name: string }) {
 				const path = detail.name

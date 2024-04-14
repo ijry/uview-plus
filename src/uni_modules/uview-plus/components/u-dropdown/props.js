@@ -1,3 +1,4 @@
+import defProps from '../../libs/config/props.js';
 export default {
     props: {
         // 菜单标题和选项的激活态颜色

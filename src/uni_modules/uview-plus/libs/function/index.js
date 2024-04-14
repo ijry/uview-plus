@@ -229,6 +229,34 @@ export function deepMerge(target = {}, source = {}) {
 	}
 	return target
 }
+/**
+ * @description JS对象深度合并
+ * @param {object} target 需要拷贝的对象
+ * @param {object} source 拷贝的来源对象
+ * @returns {object|boolean} 深度合并后的对象或者false（入参有不是对象）
+ */
+export function shallowMerge(target, source = {}) {
+	if (typeof target !== 'object' || typeof source !== 'object') return false
+	for (const prop in source) {
+		if (!source.hasOwnProperty(prop)) continue
+		if (prop in target) {
+			if (source[prop] == null) {
+				target[prop] = source[prop]
+			}else if (typeof target[prop] !== 'object') {
+				target[prop] = source[prop]
+			} else if (typeof source[prop] !== 'object') {
+				target[prop] = source[prop]
+			} else if (target[prop].concat && source[prop].concat) {
+				target[prop] = target[prop].concat(source[prop])
+			} else {
+				target[prop] = shallowMerge(target[prop], source[prop])
+			}
+		} else {
+			target[prop] = source[prop]
+		}
+	}
+	return target
+}
 
 /**
  * @description error提示
@@ -655,28 +683,6 @@ export function pages() {
 	return pages
 }
 
-/**
- * @description 修改uView内置属性值
- * @param {object} props 修改内置props属性
- * @param {object} config 修改内置config属性
- * @param {object} color 修改内置color属性
- * @param {object} zIndex 修改内置zIndex属性
- */
-export function setConfig({
-	props = {},
-	config = {},
-	color = {},
-	zIndex = {}
-}) {
-	const {
-		deepMerge,
-	} = uni.$u
-	uni.$u.config = deepMerge(uni.$u.config, config)
-	uni.$u.props = deepMerge(uni.$u.props, props)
-	uni.$u.color = deepMerge(uni.$u.color, color)
-	uni.$u.zIndex = deepMerge(uni.$u.zIndex, zIndex)
-}
-
 export default {
 	range,
 	getPx,
@@ -690,6 +696,7 @@ export default {
 	addUnit,
 	deepClone,
 	deepMerge,
+    shallowMerge,
 	error,
 	randomArray,
 	timeFormat,
@@ -706,5 +713,5 @@ export default {
 	setProperty,
 	page,
 	pages,
-	setConfig
+	// setConfig
 }

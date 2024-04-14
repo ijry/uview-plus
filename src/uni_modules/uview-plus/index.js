@@ -1,4 +1,4 @@
-// 看到此报错，是因为没有配置vue.config.js的【transpileDependencies】，详见：https://www.uviewui.com/components/npmSetting.html#_5-cli模式额外配置
+// 看到此报错，是因为没有配置vite.config.js的【transpileDependencies】
 const pleaseSetTranspileDependencies = {}, babelTest = pleaseSetTranspileDependencies?.test
 
 // 引入全局mixin
@@ -39,6 +39,21 @@ let themeType = ['primary', 'success', 'error', 'warning', 'info'];
 export { route, http, debounce, throttle, platform, themeType, mixin, mpMixin, props, color, test, zIndex }
 export * from './libs/function/index.js'
 export * from './libs/function/colorGradient.js'
+
+/**
+ * @description 修改uView内置属性值
+ * @param {object} props 修改内置props属性
+ * @param {object} config 修改内置config属性
+ * @param {object} color 修改内置color属性
+ * @param {object} zIndex 修改内置zIndex属性
+ */
+export function setConfig(configs) {
+	index.shallowMerge(config, configs.config || {})
+	index.shallowMerge(props, configs.props || {})
+	index.shallowMerge(color, configs.color || {})
+	index.shallowMerge(zIndex, configs.zIndex || {})
+}
+index.setConfig = setConfig
 
 const $u = {
     route,

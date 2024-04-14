@@ -1,9 +1,10 @@
+import defProps from '../../libs/config/props.js';
 export default {
     props: {
         // 吸顶容器到顶部某个距离的时候，进行吸顶，在H5平台，NavigationBar为44px
         offsetTop: {
             type: [String, Number],
-            default: () => uni.$u.props.sticky.offsetTop
+            default: () => defProps.sticky.offsetTop
         },
         // 自定义导航栏的高度
         customNavHeight: {
@@ -13,28 +14,28 @@ export default {
             default: 44,
             // #endif
             // #ifndef H5
-            default: () => uni.$u.props.sticky.customNavHeight
+            default: () => defProps.sticky.customNavHeight
             // #endif
         },
         // 是否开启吸顶功能
         disabled: {
             type: Boolean,
-            default: () => uni.$u.props.sticky.disabled
+            default: () => defProps.sticky.disabled
         },
         // 吸顶区域的背景颜色
         bgColor: {
             type: String,
-            default: () => uni.$u.props.sticky.bgColor
+            default: () => defProps.sticky.bgColor
         },
         // z-index值
         zIndex: {
             type: [String, Number],
-            default: () => uni.$u.props.sticky.zIndex
+            default: () => defProps.sticky.zIndex
         },
         // 列表中的索引值
         index: {
             type: [String, Number],
-            default: () => uni.$u.props.sticky.index
+            default: () => defProps.sticky.index
         }
     }
 }

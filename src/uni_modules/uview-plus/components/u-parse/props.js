@@ -1,3 +1,4 @@
+import defProps from '../../libs/config/props.js';
 export default {
     props: {
 		containerStyle: {
@@ -7,38 +8,38 @@ export default {
         content: String,
         copyLink: {
 		  type: Boolean,
-		  default: () => uni.$u.props.parse.copyLink
+		  default: () => defProps.parse.copyLink
         },
         domain: String,
         errorImg: {
 		  type: String,
-		  default: () => uni.$u.props.parse.errorImg
+		  default: () => defProps.parse.errorImg
         },
         lazyLoad: {
 		  type: Boolean,
-		  default: () => uni.$u.props.parse.lazyLoad
+		  default: () => defProps.parse.lazyLoad
         },
         loadingImg: {
 		  type: String,
-		  default: () => uni.$u.props.parse.loadingImg
+		  default: () => defProps.parse.loadingImg
         },
         pauseVideo: {
 		  type: Boolean,
-		  default: () => uni.$u.props.parse.pauseVideo
+		  default: () => defProps.parse.pauseVideo
         },
         previewImg: {
 		  type: Boolean,
-		  default: () => uni.$u.props.parse.previewImg
+		  default: () => defProps.parse.previewImg
         },
         scrollTable: Boolean,
         selectable: Boolean,
         setTitle: {
 		  type: Boolean,
-		  default: () => uni.$u.props.parse.setTitle
+		  default: () => defProps.parse.setTitle
         },
         showImgMenu: {
 		  type: Boolean,
-		  default: () => uni.$u.props.parse.showImgMenu
+		  default: () => defProps.parse.showImgMenu
         },
         tagStyle: Object,
         useAnchor: null

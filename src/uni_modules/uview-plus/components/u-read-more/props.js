@@ -1,34 +1,35 @@
+import defProps from '../../libs/config/props.js';
 export default {
     props: {
         // 默认的显示占位高度
         showHeight: {
             type: [String, Number],
-            default: () => uni.$u.props.readMore.showHeight
+            default: () => defProps.readMore.showHeight
         },
         // 展开后是否显示"收起"按钮
         toggle: {
             type: Boolean,
-            default: () => uni.$u.props.readMore.toggle
+            default: () => defProps.readMore.toggle
         },
         // 关闭时的提示文字
         closeText: {
             type: String,
-            default: () => uni.$u.props.readMore.closeText
+            default: () => defProps.readMore.closeText
         },
         // 展开时的提示文字
         openText: {
             type: String,
-            default: () => uni.$u.props.readMore.openText
+            default: () => defProps.readMore.openText
         },
         // 提示的文字颜色
         color: {
             type: String,
-            default: () => uni.$u.props.readMore.color
+            default: () => defProps.readMore.color
         },
         // 提示文字的大小
         fontSize: {
             type: [String, Number],
-            default: () => uni.$u.props.readMore.fontSize
+            default: () => defProps.readMore.fontSize
         },
         // 是否显示阴影
         // 此参数不能写在props/readMore.js中进行默认配置，因为使用了条件编译，在外部js中
@@ -50,12 +51,12 @@ export default {
         // 段落首行缩进的字符个数
         textIndent: {
             type: String,
-            default: () => uni.$u.props.readMore.textIndent
+            default: () => defProps.readMore.textIndent
         },
         // open和close事件时，将此参数返回在回调参数中
         name: {
             type: [String, Number],
-            default: () => uni.$u.props.readMore.name
+            default: () => defProps.readMore.name
         }
     }
 }
