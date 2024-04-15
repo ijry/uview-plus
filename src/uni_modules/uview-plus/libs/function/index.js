@@ -1,4 +1,8 @@
-import test from './test.js'
+import {
+	number as testNumber,
+	array as testArray,
+	empty as testEmpty
+} from './test'
 import { round } from './digit.js'
 import config from '../config/config';
 /**
@@ -18,7 +22,7 @@ export function range(min = 0, max = 0, value = 0) {
  * @returns {number|string}
  */
 export function getPx(value, unit = false) {
-	if (test.number(value)) {
+	if (testNumber(value)) {
 		return unit ? `${value}px` : Number(value)
 	}
 	// 如果带有rpx，先取出其数值部分，再转为px值
@@ -134,7 +138,7 @@ export function $parent(name = undefined) {
  */
 export function addStyle(customStyle, target = 'object') {
 	// 字符串转字符串，对象转对象情形，直接返回
-	if (test.empty(customStyle) || typeof(customStyle) === 'object' && target === 'object' || target === 'string' &&
+	if (testEmpty(customStyle) || typeof(customStyle) === 'object' && target === 'object' || target === 'string' &&
 		typeof(customStyle) === 'string') {
 		return customStyle
 	}
@@ -177,7 +181,7 @@ export function addUnit(value = 'auto', unit = '') {
 	}
 	value = String(value)
 	// 用uView内置验证规则中的number判断是否为数值
-	return test.number(value) ? `${value}${unit}` : value
+	return testNumber(value) ? `${value}${unit}` : value
 }
 
 /**
@@ -192,7 +196,7 @@ export function deepClone(obj) {
 		// 原始类型直接返回
 		return obj
 	}
-	const o = test.array(obj) ? [] : {}
+	const o = testArray(obj) ? [] : {}
 	for (const i in obj) {
 		if (obj.hasOwnProperty(i)) {
 			o[i] = typeof obj[i] === 'object' ? deepClone(obj[i]) : obj[i]
@@ -207,8 +211,8 @@ export function deepClone(obj) {
  * @param {object} source 拷贝的来源对象
  * @returns {object|boolean} 深度合并后的对象或者false（入参有不是对象）
  */
-export function deepMerge(target = {}, source = {}) {
-	target = deepClone(target)
+export function deepMerge(targetOrigin = {}, source = {}) {
+	let target = deepClone(targetOrigin)
 	if (typeof target !== 'object' || typeof source !== 'object') return false
 	for (const prop in source) {
 		if (!source.hasOwnProperty(prop)) continue
