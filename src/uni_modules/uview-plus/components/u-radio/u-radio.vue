@@ -33,9 +33,9 @@
 </template>
 
 <script>
-	import props from './props.js';
-	import mpMixin from '../../libs/mixin/mpMixin.js';
-	import mixin from '../../libs/mixin/mixin.js';
+	import props from './props';
+	import mpMixin from '../../libs/mixin/mpMixin';
+	import mixin from '../../libs/mixin/mixin';
 	/**
 	 * radio 单选框
 	 * @description 单选框用于有一个选择，用户只能选择其中一个的场景。搭配u-radio-group使用

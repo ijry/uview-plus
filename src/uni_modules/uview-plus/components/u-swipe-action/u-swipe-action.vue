@@ -5,9 +5,9 @@
 </template>
 
 <script>
-	import props from './props.js';
-	import mpMixin from '../../libs/mixin/mpMixin.js';
-	import mixin from '../../libs/mixin/mixin.js';
+	import props from './props';
+	import mpMixin from '../../libs/mixin/mpMixin';
+	import mixin from '../../libs/mixin/mixin';
 	/**
 	 * SwipeAction 滑动单元格 
 	 * @description 该组件一般用于左滑唤出操作菜单的场景，用的最多的是左滑删除操作

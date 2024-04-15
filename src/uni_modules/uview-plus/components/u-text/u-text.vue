@@ -71,8 +71,8 @@
 
 <script>
 import value from './value.js'
-import mpMixin from '../../libs/mixin/mpMixin.js';
-import mixin from '../../libs/mixin/mixin.js';
+import mpMixin from '../../libs/mixin/mpMixin';
+import mixin from '../../libs/mixin/mixin';
 import button from '../../libs/mixin/button.js'
 import openType from '../../libs/mixin/openType.js'
 import props from './props.js'

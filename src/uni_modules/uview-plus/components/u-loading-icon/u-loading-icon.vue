@@ -58,9 +58,9 @@
 </template>
 
 <script>
-	import props from './props.js';
-	import mpMixin from '../../libs/mixin/mpMixin.js';
-	import mixin from '../../libs/mixin/mixin.js';
+	import props from './props';
+	import mpMixin from '../../libs/mixin/mpMixin';
+	import mixin from '../../libs/mixin/mixin';
 	// #ifdef APP-NVUE
 	const animation = weex.requireModule('animation');
 	// #endif

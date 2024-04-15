@@ -1,5 +1,5 @@
 <template>
-    <view :style="[$u.addStyle(customStyle)]" :class="[customClass]" class="u-cell-group">
+    <view :style="[addStyle(customStyle)]" :class="[customClass]" class="u-cell-group">
         <view v-if="title" class="u-cell-group__title">
             <slot name="title">
 				<text class="u-cell-group__title__text">{{ title }}</text>
@@ -13,9 +13,10 @@
 </template>
 
 <script>
-	import props from './props.js';
-	import mpMixin from '../../libs/mixin/mpMixin.js';
-	import mixin from '../../libs/mixin/mixin.js';
+	import props from './props';
+	import mpMixin from '../../libs/mixin/mpMixin';
+	import mixin from '../../libs/mixin/mixin';
+	import { addStyle } from '../../libs/function/index';
 	/**
 	 * cellGroup  单元格
 	 * @description cell单元格一般用于一组列表的情况，比如个人中心页，设置页等。
@@ -31,6 +32,9 @@
 	export default {
 		name: 'u-cell-group',
 		mixins: [mpMixin, mixin, props],
+		methods: {
+			addStyle
+		}
 	}
 </script>
 

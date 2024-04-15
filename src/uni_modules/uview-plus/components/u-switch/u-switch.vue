@@ -38,9 +38,9 @@
 </template>
 
 <script>
-	import props from './props.js';
-	import mpMixin from '../../libs/mixin/mpMixin.js';
-	import mixin from '../../libs/mixin/mixin.js';
+	import props from './props';
+	import mpMixin from '../../libs/mixin/mpMixin';
+	import mixin from '../../libs/mixin/mixin';
 	/**
 	 * switch 开关选择器
 	 * @description 选择开关一般用于只有两个选择，且只能选其一的场景。

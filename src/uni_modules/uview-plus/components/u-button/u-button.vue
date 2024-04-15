@@ -112,8 +112,8 @@
 <script lang="ts">
 import button from "../../libs/mixin/button.js";
 import openType from "../../libs/mixin/openType.js";
-import mpMixin from '../../libs/mixin/mpMixin.js';
-import mixin from '../../libs/mixin/mixin.js';
+import mpMixin from '../../libs/mixin/mpMixin';
+import mixin from '../../libs/mixin/mixin';
 import props from "./props.js";
 /**
  * button 按钮

@@ -44,8 +44,8 @@
 
 <script>
 import props from "./props.js";
-import mpMixin from '../../libs/mixin/mpMixin.js';
-import mixin from '../../libs/mixin/mixin.js';
+import mpMixin from '../../libs/mixin/mpMixin';
+import mixin from '../../libs/mixin/mixin';
 /**
  * Textarea 文本域
  * @description 文本域此组件满足了可能出现的表单信息补充，编辑等实际逻辑的功能，内置了字数校验等

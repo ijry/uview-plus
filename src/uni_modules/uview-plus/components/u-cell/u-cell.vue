@@ -26,7 +26,7 @@
 			<slot name="value">
 				<text class="u-cell__value"
 					:class="[disabled && 'u-cell--disabled', size === 'large' && 'u-cell__value--large']"
-					v-if="!$u.test.empty(value)">{{ value }}</text>
+					v-if="!testEmpty(value)">{{ value }}</text>
 			</slot>
 			<view class="u-cell__right-icon-wrap" v-if="$slots['right-icon'] || isLink"
 				:class="[`u-cell__right-icon-wrap--${arrowDirection}`]">
@@ -46,10 +46,11 @@
 </template>
 
 <script>
-	import props from './props.js';
-	import mpMixin from '../../libs/mixin/mpMixin.js';
-	import mixin from '../../libs/mixin/mixin.js';
-	import { addStyle } from '../../libs/function/index.js';
+	import props from './props';
+	import mpMixin from '../../libs/mixin/mpMixin';
+	import mixin from '../../libs/mixin/mixin';
+	import { addStyle } from '../../libs/function/index';
+	import test from '../../libs/function/test';
 	/**
 	 * cell  单元格
 	 * @description cell单元格一般用于一组列表的情况，比如个人中心页，设置页等。
@@ -93,6 +94,8 @@
 		},
 		emits: ['click'],
 		methods: {
+			addStyle,
+			testEmpty: test.empty,
 			// 点击cell
 			clickHandler(e) {
 				if (this.disabled) return

@@ -21,14 +21,17 @@
 </template>
 
 <script>
-	import props from './props.js';
-	import mpMixin from '../../libs/mixin/mpMixin.js';
-	import mixin from '../../libs/mixin/mixin.js';	import { addStyle, getPx } from '../../libs/function/index.js';
+	import props from './props';
+	import mpMixin from '../../libs/mixin/mpMixin';
+	import mixin from '../../libs/mixin/mixin';
+	import { addStyle, getPx } from '../../libs/function/index.js';
 	export default {
 		name: 'up-slider',
 		mixins: [mpMixin, mixin, props],
 		emits: ["changing", "change", "update:modelValue"],
-		methods: {			addStyle,			getPx,
+		methods: {
+			addStyle,
+			getPx,
 			// 拖动过程中触发
 			changingHandler(e) {
 				const {

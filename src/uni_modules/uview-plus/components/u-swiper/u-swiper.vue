@@ -13,9 +13,11 @@
 		>
 			<u-loading-icon mode="circle"></u-loading-icon>
 		</view>
-		<swiper			v-else
+		<swiper
+			v-else
 			class="u-swiper__wrapper"
-			:style="{				flex: '1',
+			:style="{
+				flex: '1',
 				height: $u.addUnit(height)
 			}"
 			@change="change"
@@ -87,11 +89,11 @@
 		</view>
 	</view>
 </template>
-
+props from './props';
 <script>
 	import props from './props.js';
-	import mpMixin from '../../libs/mixin/mpMixin.js';
-	import mixin from '../../libs/mixin/mixin.js';
+	import mpMixin from '../../libs/mixin/mpMixin';
+	import mixin from '../../libs/mixin/mixin';
 	/**
 	 * Swiper 轮播图
 	 * @description 该组件一般用于导航轮播，广告展示等场景,可开箱即用，
@@ -205,7 +207,10 @@
 
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
-		.u-swiper__wrapper {		flex: 1;	}
+	
+	.u-swiper__wrapper {
+		flex: 1;
+	}
 	.u-swiper {
 		@include flex;
 		justify-content: center;
@@ -213,7 +218,8 @@
 		position: relative;
 		overflow: hidden;
 
-		&__wrapper {			flex: 1;
+		&__wrapper {
+			flex: 1;
 
 			&__item {
 				flex: 1;

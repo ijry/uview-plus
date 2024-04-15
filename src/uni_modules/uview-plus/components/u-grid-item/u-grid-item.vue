@@ -1,6 +1,7 @@
 <template>
 	<!-- #ifndef APP-NVUE -->
-	<view		v-if="parentData.col > 0"
+	<view
+		v-if="parentData.col > 0"
 	    class="u-grid-item"
 	    hover-class="u-grid-item--hover-class"
 	    :hover-stay-time="200"
@@ -24,10 +25,10 @@
 	<!-- #endif -->
 </template>
 
-<script>
+<script>props from './props';
 	import props from './props.js';
-	import mpMixin from '../../libs/mixin/mpMixin.js';
-	import mixin from '../../libs/mixin/mixin.js';
+	import mpMixin from '../../libs/mixin/mpMixin';
+	import mixin from '../../libs/mixin/mixin';
 	/**
 	 * gridItem 提示
 	 * @description 宫格组件一般用于同时展示多个同类项目的场景，可以给宫格的项目设置徽标组件(badge)，或者图标等，也可以扩展为左右滑动的轮播形式。搭配u-grid使用
@@ -49,7 +50,8 @@
 				},
 				// #ifdef APP-NVUE
 				width: 0, // nvue下才这么计算，vue下放到computed中，否则会因为延时造成闪烁
-				// #endif				// #ifdef MP-TOUTIAO
+				// #endif
+				// #ifdef MP-TOUTIAO
 				width: '100%',
 				// #endif
 				classes: [], // 类名集合，用于判断是否显示右边和下边框
@@ -60,9 +62,11 @@
 		},
 		emits: ['click'],
 		//  微信小程序中 options 选项
-		// #ifdef MP-WEIXIN		options: {
+		// #ifdef MP-WEIXIN
+		options: {
 		    virtualHost: true ,//将自定义节点设置成虚拟的，更加接近Vue组件的表现。我们不希望自定义组件的这个节点本身可以设置样式、响应 flex 布局等
-		},		// #endif
+		},
+		// #endif
 		computed: {
 			// #ifndef APP-NVUE || MP-TOUTIAO
 			// vue下放到computed中，否则会因为延时造成闪烁

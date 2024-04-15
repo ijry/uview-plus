@@ -49,9 +49,9 @@
 	// 引入图标名称，已经对应的unicode
 	import icons from './icons'
 	
-	import props from './props.js';
-	import mpMixin from '../../libs/mixin/mpMixin.js';
-	import mixin from '../../libs/mixin/mixin.js';
+	import props from './props';
+	import mpMixin from '../../libs/mixin/mpMixin';
+	import mixin from '../../libs/mixin/mixin';
 
 	/**
 	 * icon 图标

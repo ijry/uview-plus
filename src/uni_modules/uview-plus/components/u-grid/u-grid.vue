@@ -9,9 +9,9 @@
 </template>
 
 <script>
-	import props from './props.js';
-	import mpMixin from '../../libs/mixin/mpMixin.js';
-	import mixin from '../../libs/mixin/mixin.js';
+	import props from './props';
+	import mpMixin from '../../libs/mixin/mpMixin';
+	import mixin from '../../libs/mixin/mixin';
 	/**
 	 * grid 宫格布局
 	 * @description 宫格组件一般用于同时展示多个同类项目的场景，可以给宫格的项目设置徽标组件(badge)，或者图标等，也可以扩展为左右滑动的轮播形式。
@@ -71,9 +71,13 @@
 				return uni.$u.deepMerge(style, uni.$u.addStyle(this.customStyle));
 			}
 		},
-		emits: ['click'], // 防止事件执行两次		// 20240409发现抖音小程序如果开启virtualHost会出现严重问题，几乎所有事件包括created等生命周期事件全部失效。		// #ifdef MP-WEIXIN		options: {
+		emits: ['click'], // 防止事件执行两次
+		// 20240409发现抖音小程序如果开启virtualHost会出现严重问题，几乎所有事件包括created等生命周期事件全部失效。
+		// #ifdef MP-WEIXIN
+		options: {
 		    // virtualHost: true ,//将自定义节点设置成虚拟的，更加接近Vue组件的表现。我们不希望自定义组件的这个节点本身可以设置样式、响应 flex 布局等
-		},		// #endif
+		},
+		// #endif
 		methods: {
 			// 此方法由u-grid-item触发，用于在u-grid发出事件
 			childClick(name) {
@@ -97,6 +101,12 @@
 		justify-content: center;
 		@include flex;
 		flex-wrap: wrap;
-		align-items: center;		// 在uni-app中应尽量避免使用flex布局以外的方式,因为nvue/uvue等方案都支持flex布局		// 这里使用grid布局使用为目前20240409uni-app在抖音小程序开启virtualHost时有bug，存在事件失效问题。		/* #ifdef MP-TOUTIAO */		display: grid;		grid-template-columns: repeat(v-bind(col), 1fr);		/* #endif */
+		align-items: center;
+		// 在uni-app中应尽量避免使用flex布局以外的方式,因为nvue/uvue等方案都支持flex布局
+		// 这里使用grid布局使用为目前20240409uni-app在抖音小程序开启virtualHost时有bug，存在事件失效问题。
+		/* #ifdef MP-TOUTIAO */
+		display: grid;
+		grid-template-columns: repeat(v-bind(col), 1fr);
+		/* #endif */
 	}
 </style>

@@ -21,8 +21,8 @@
 </template>
 
 <script>
-	import mpMixin from '../../libs/mixin/mpMixin.js';
-	import mixin from '../../libs/mixin/mixin.js';
+	import mpMixin from '../../libs/mixin/mpMixin';
+	import mixin from '../../libs/mixin/mixin';
 	export default {
 		name: 'u-calendar-header',
 		mixins: [mpMixin, mixin],

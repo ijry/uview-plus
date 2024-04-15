@@ -22,8 +22,8 @@
 	 */
 	import uvForm from '../u-form/u-form.vue';
 	import props from '../u-form/props.js';
-	import mpMixin from '../../libs/mixin/mpMixin.js';
-	import mixin from '../../libs/mixin/mixin.js';
+	import mpMixin from '../../libs/mixin/mpMixin';
+	import mixin from '../../libs/mixin/mixin';
 	export default {
 		// #ifdef MP-WEIXIN
 		name: 'u-form',
