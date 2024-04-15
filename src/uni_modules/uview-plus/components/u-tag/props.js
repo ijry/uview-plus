@@ -82,8 +82,8 @@ export default {
             default: () => defProps.tag.icon,
 		},
 		iconColor: {
-            type: String,defProps.
-            default: () => uni.$u.props.tag.iconColor
+            type: String,
+            default: () => defProps.tag.iconColor
         }
     }
 }
