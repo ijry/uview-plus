@@ -19,19 +19,19 @@
 				:lazy-load="lazyLoad"
 				class="u-image__image"
 				:style="{
-					borderRadius: shape == 'circle' ? '10000px' : $u.addUnit(radius),
-					width: $u.addUnit(width),
-					height: $u.addUnit(height)
+					borderRadius: shape == 'circle' ? '10000px' : addUnit(radius),
+					width: addUnit(width),
+					height: addUnit(height)
 				}"
 			></image>
 			<view
 				v-if="showLoading && loading"
 				class="u-image__loading"
 				:style="{
-					borderRadius: shape == 'circle' ? '50%' : $u.addUnit(radius),
+					borderRadius: shape == 'circle' ? '50%' : addUnit(radius),
 					backgroundColor: this.bgColor,
-					width: $u.addUnit(width),
-					height: $u.addUnit(height)
+					width: addUnit(width),
+					height: addUnit(height)
 				}"
 			>
 				<slot name="loading">
@@ -46,9 +46,9 @@
 				v-if="showError && isError && !loading"
 				class="u-image__error"
 				:style="{
-					borderRadius: shape == 'circle' ? '50%' : $u.addUnit(radius),
-					width: $u.addUnit(width),
-					height: $u.addUnit(height)
+					borderRadius: shape == 'circle' ? '50%' : addUnit(radius),
+					width: addUnit(width),
+					height: addUnit(height)
 				}"
 			>
 				<slot name="error">
@@ -67,6 +67,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addUnit, addStyle, deepMerge } from '../../libs/function/index';
 	/**
 	 * Image 图片
 	 * @description 此组件为uni-app的image组件的加强版，在继承了原有功能外，还支持淡入动画、加载中、加载失败提示、圆角值和形状等。
@@ -131,10 +132,10 @@
 			wrapStyle() {
 				let style = {};
 				// 通过调用addUnit()方法，如果有单位，如百分比，px单位等，直接返回，如果是纯粹的数值，则加上rpx单位
-				style.width = this.$u.addUnit(this.width);
-				style.height = this.$u.addUnit(this.height);
+				style.width = addUnit(this.width);
+				style.height = addUnit(this.height);
 				// 如果是显示圆形，设置一个很多的半径值即可
-				style.borderRadius = this.shape == 'circle' ? '10000px' : uni.$u.addUnit(this.radius)
+				style.borderRadius = this.shape == 'circle' ? '10000px' : addUnit(this.radius)
 				// 如果设置圆角，必须要有hidden，否则可能圆角无效
 				style.overflow = this.radius > 0 ? 'hidden' : 'visible'
 				// if (this.fade) {
@@ -144,7 +145,7 @@
 				// 	style.transitionTimingFunction = 'ease-in-out'
 				// 	style.transitionProperty = 'opacity'
 				// }
-				return uni.$u.deepMerge(style, uni.$u.addStyle(this.customStyle));
+				return deepMerge(style, addStyle(this.customStyle));
 
 			}
 		},
@@ -153,6 +154,7 @@
 		},
 		emits: ['click', 'error', 'load'],
 		methods: {
+			addUnit,
 			// 点击图片
 			onClick() {
 				this.$emit('click')

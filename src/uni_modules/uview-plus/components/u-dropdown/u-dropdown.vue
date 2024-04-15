@@ -1,7 +1,7 @@
 <template>
 	<view class="u-dropdown">
 		<view class="u-dropdown__menu" :style="{
-			height: $u.addUnit(height)
+			height: addUnit(height)
 		}" :class="{
 			'u-border-bottom': borderBottom
 		}">
@@ -9,19 +9,19 @@
 				<view class="u-flex u-flex-row">
 					<text class="u-dropdown__menu__item__text" :style="{
 						color: item.disabled ? '#c0c4cc' : (index === current || highlightIndex == index) ? activeColor : inactiveColor,
-						fontSize: $u.addUnit(titleSize)
+						fontSize: addUnit(titleSize)
 					}">{{item.title}}</text>
 					<view class="u-dropdown__menu__item__arrow" :class="{
 						'u-dropdown__menu__item__arrow--rotate': index === current
 					}">
-						<u-icon :custom-style="{display: 'flex'}" :name="menuIcon" :size="$u.addUnit(menuIconSize)" :color="index === current || highlightIndex == index ? activeColor : '#c0c4cc'"></u-icon>
+						<u-icon :custom-style="{display: 'flex'}" :name="menuIcon" :size="addUnit(menuIconSize)" :color="index === current || highlightIndex == index ? activeColor : '#c0c4cc'"></u-icon>
 					</view>
 				</view>
 			</view>
 		</view>
 		<view class="u-dropdown__content" :style="[contentStyle, {
 			transition: `opacity ${duration / 1000}s linear`,
-			top: $u.addUnit(height),
+			top: addUnit(height),
 			height: contentHeight + 'px'
 		}]"
 		 @tap="maskClick" @touchmove.stop.prevent>
@@ -37,6 +37,7 @@
     import props from './props';
     import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addUnit, sys} from '../../libs/function/index';
 	/**
 	 * dropdown 下拉菜单
 	 * @description 该组件一般用于向下展开菜单，同时可切换多个选项卡的场景
@@ -82,7 +83,7 @@
 				// 进行Y轴位移，展开状态时，恢复原位。收齐状态时，往上位移100%，进行隐藏
 				style.transform = `translateY(${this.active ? 0 : '-100%'})`
 				style['transition-duration'] = this.duration / 1000 + 's';
-				style.borderRadius = `0 0 ${this.$u.addUnit(this.borderRadius)} ${this.$u.addUnit(this.borderRadius)}`;
+				style.borderRadius = `0 0 ${addUnit(this.borderRadius)} ${addUnit(this.borderRadius)}`;
 				return style;
 			}
 		},
@@ -95,6 +96,7 @@
 		},
         emits: ['open', 'close'],
 		methods: {
+			addUnit,
 			init() {
 				// 当某个子组件内容变化时，触发父组件的init，父组件再让每一个子组件重新初始化一遍
 				// 以保证数据的正确性
@@ -164,8 +166,8 @@
 			getContentHeight() {
 				// 这里的原理为，因为dropdown组件是相对定位的，它的下拉出来的内容，必须给定一个高度
 				// 才能让遮罩占满菜单一下，直到屏幕底部的高度
-				// this.$u.sys()为uView封装的获取设备信息的方法
-				let windowHeight = this.$u.sys().windowHeight;
+				// sys()为uview-plus封装的获取设备信息的方法
+				let windowHeight = sys().windowHeight;
 				this.$uGetRect('.u-dropdown__menu').then(res => {
 					// 这里获取的是dropdown的尺寸，在H5上，uniapp获取尺寸是有bug的(以前提出修复过，后来又出现了此bug，目前hx2.8.11版本)
 					// H5端bug表现为元素尺寸的top值为导航栏底部到到元素的上边沿的距离，但是元素的bottom值确是导航栏顶部到元素底部的距离

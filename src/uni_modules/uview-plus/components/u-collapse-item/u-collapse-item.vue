@@ -39,7 +39,7 @@
 		</u-cell>
 		<view
 			class="u-collapse-item__content"
-			:animprops from './props';
+			:animation="animationData"
 			ref="animation"
 		>
 			<view
@@ -56,7 +56,9 @@
 	import props from './props.js';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
-	import { nextTick } from 'vue'
+	import { nextTick } from 'vue';
+	import { guid, sleep, error } from '../../libs/function/index';
+	import test from '../../libs/function/test';
 	// #ifdef APP-NVUE
 	const animation = uni.requireNativePlugin('animation')
 	const dom = uni.requireNativePlugin('dom')
@@ -83,7 +85,7 @@
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
-				elId: uni.$u.guid(),
+				elId: guid(),
 				// uni.createAnimation的导出数据
 				animationData: {},
 				// 是否展开状态
@@ -119,7 +121,7 @@
 				// 初始化数据
 				this.updateParentData()
 				if (!this.parent) {
-					return uni.$u.error('u-collapse-item必须要搭配u-collapse组件使用')
+					return error('u-collapse-item必须要搭配u-collapse组件使用')
 				}
 				const {
 					value,
@@ -128,13 +130,13 @@
 				} = this.parent
 
 				if (accordion) {
-					if (uni.$u.test.array(value)) {
-						return uni.$u.error('手风琴模式下，u-collapse组件的value参数不能为数组')
+					if (test.array(value)) {
+						return error('手风琴模式下，u-collapse组件的value参数不能为数组')
 					}
 					this.expanded = this.name == value
 				} else {
-					if (!uni.$u.test.array(value) && value !== null) {
-						return uni.$u.error('非手风琴模式下，u-collapse组件的value参数必须为数组')
+					if (!test.array(value) && value !== null) {
+						return error('非手风琴模式下，u-collapse组件的value参数必须为数组')
 					}
 					this.expanded = (value || []).some(item => item == this.name)
 				}
@@ -180,7 +182,7 @@
 				// 导出动画数据给面板的animationData值
 				this.animationData = animation.export()
 				// 标识动画结束
-				uni.$u.sleep(this.duration).then(() => {
+				sleep(this.duration).then(() => {
 					this.animating = false
 				})
 				// #endif

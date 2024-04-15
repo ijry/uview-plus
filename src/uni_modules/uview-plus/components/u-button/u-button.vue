@@ -22,7 +22,7 @@
         @agreeprivacyauthorization="agreeprivacyauthorization"
         :hover-class="!disabled && !loading ? 'u-button--active' : ''"
         class="u-button u-reset-button"
-        :style="[baseColor, $u.addStyle(customStyle)]"
+        :style="[baseColor, addStyle(customStyle)]"
         @tap="clickHandler"
         :class="bemClass"
     >
@@ -71,7 +71,7 @@
         "
         @tap="clickHandler"
         :class="bemClass"
-        :style="[baseColor, $u.addStyle(customStyle)]"
+        :style="[baseColor, addStyle(customStyle)]"
     >
         <template v-if="loading">
             <u-loading-icon
@@ -110,11 +110,14 @@
 </template>
 
 <script lang="ts">
-import button from "../../libs/mixin/button.js";
-import openType from "../../libs/mixin/openType.js";
+import button from "../../libs/mixin/button";
+import openType from "../../libs/mixin/openType";
 import mpMixin from '../../libs/mixin/mpMixin';
 import mixin from '../../libs/mixin/mixin';
-import props from "./props.js";
+import props from "./props";
+import { addStyle } from '../../libs/function/index';
+import { throttle } from '../../libs/function/throttle';
+import color from '../../libs/config/color';
 /**
  * button 按钮
  * @description Button 按钮
@@ -194,7 +197,7 @@ export default {
                 // 如果有设置color值，则用color值，否则使用type主题颜色
                 return this.color
                     ? this.color
-                    : uni.$u.config.color[`u-${this.type}`];
+                    : color[`u-${this.type}`];
             }
             if (this.type === "info") {
                 return "#c9c9c9";
@@ -267,11 +270,12 @@ export default {
 	emits: ['click', 'getphonenumber', 'getuserinfo',
 		'error', 'opensetting', 'launchapp', 'agreeprivacyauthorization'],
     methods: {
+        addStyle,
         clickHandler() {
             // 非禁止并且非加载中，才能点击
             if (!this.disabled && !this.loading) {
 				// 进行节流控制，每this.throttle毫秒内，只在开始处执行
-				uni.$u.throttle(() => {
+				throttle(() => {
 					this.$emit("click");
 				}, this.throttleTime);
             }

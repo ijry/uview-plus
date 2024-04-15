@@ -16,6 +16,7 @@
 import props from './props';
 import mpMixin from '../../libs/mixin/mpMixin';
 import mixin from '../../libs/mixin/mixin';
+import { addStyle } from '../../libs/function/index';
 // 组件的methods方法，由于内容较长，写在外部文件中通过mixin引入
 import transition from "./transition.js";
 /**
@@ -58,12 +59,12 @@ export default {
 				transitionTimingFunction: this.timingFunction,
 	            // #endif
 				// 避免自定义样式影响到动画属性，所以写在viewStyle前面
-	            ...uni.$u.addStyle(customStyle),
+	            ...addStyle(customStyle),
 	            ...viewStyle
 	        }
 	    }
 	},
-	// 将mixin挂在到组件中，uni.$u.mixin实际上为一个vue格式对象
+	// 将mixin挂在到组件中，实际上为一个vue格式对象。
 	mixins: [mpMixin, mixin, transition, props],
 	watch: {
 		show: {

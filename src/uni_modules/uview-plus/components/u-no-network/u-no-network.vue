@@ -46,7 +46,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
-
+	import { toast } from '../../libs/function/index';
 	/**
 	 * noNetwork 无网络提示
 	 * @description 该组件无需任何配置，引入即可，内部自动处理所有功能和事件。
@@ -94,10 +94,10 @@
 						this.networkType = res.networkType
 						this.emitEvent(this.networkType)
 						if (res.networkType == 'none') {
-							uni.$u.toast('无网络连接')
+							toast('无网络连接')
 							this.isConnected = false
 						} else {
-							uni.$u.toast('网络已连接')
+							toast('网络已连接')
 							this.isConnected = true
 						}
 					}

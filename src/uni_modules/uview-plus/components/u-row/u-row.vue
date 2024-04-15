@@ -16,6 +16,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addUnit, addStyle, deepMerge, sleep } from '../../libs/function/index';
 	/**
 	 * Row 栅格系统中的行
 	 * @description 通过基础的 12 分栏，迅速简便地创建布局 
@@ -54,10 +55,10 @@
 				}
 				// 通过给u-row左右两边的负外边距，消除u-col在有gutter时，第一个和最后一个元素的左内边距和右内边距造成的影响
 				if(this.gutter) {
-					style.marginLeft = uni.$u.addUnit(-Number(this.gutter)/2)
-					style.marginRight = uni.$u.addUnit(-Number(this.gutter)/2)
+					style.marginLeft = addUnit(-Number(this.gutter)/2)
+					style.marginRight = addUnit(-Number(this.gutter)/2)
 				}
-				return uni.$u.deepMerge(style, uni.$u.addStyle(this.customStyle))
+				return deepMerge(style, addStyle(this.customStyle))
 			}
 		},
 		emits: ["click"],
@@ -67,7 +68,7 @@
 			},
 			async getComponentWidth() {
 				// 延时一定时间，以确保节点渲染完成
-				await uni.$u.sleep()
+				await sleep()
 				return new Promise(resolve => {
 					// uView封装的获取节点的方法，详见文档
 					// #ifndef APP-NVUE

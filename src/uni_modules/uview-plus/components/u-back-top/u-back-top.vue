@@ -27,6 +27,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addUnit, addStyle, getPx, deepMerge, error } from '../../libs/function/index';
 	// #ifdef APP-NVUE
 	const dom = weex.requireModule('dom')
 	// #endif
@@ -56,8 +57,8 @@
 			backTopStyle() {
 				// 动画组件样式
 				const style = {
-					bottom: uni.$u.addUnit(this.bottom),
-					right: uni.$u.addUnit(this.right),
+					bottom: addUnit(this.bottom),
+					right: addUnit(this.right),
 					width: '40px',
 					height: '40px',
 					position: 'fixed',
@@ -66,7 +67,7 @@
 				return style
 			},
 			show() {
-				return uni.$u.getPx(this.scrollTop) > uni.$u.getPx(this.top)
+				return getPx(this.scrollTop) > getPx(this.top)
 			},
 			contentStyle() {
 				const style = {}
@@ -82,7 +83,7 @@
 				style.borderTopRightRadius = radius
 				style.borderBottomLeftRadius = radius
 				style.borderBottomRightRadius = radius
-				return uni.$u.deepMerge(style, uni.$u.addStyle(this.customStyle))
+				return deepMerge(style, addStyle(this.customStyle))
 			}
 		},
 		emits: ["click"],
@@ -90,7 +91,7 @@
 			backToTop() {
 				// #ifdef APP-NVUE
 				if (!this.$parent.$refs['u-back-top']) {
-					uni.$u.error(`nvue页面需要给页面最外层元素设置"ref='u-back-top'`)
+					error(`nvue页面需要给页面最外层元素设置"ref='u-back-top'`)
 				}
 				dom.scrollToElement(this.$parent.$refs['u-back-top'], {
 					offset: 0

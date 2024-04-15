@@ -111,6 +111,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addUnit } from '../../libs/function/index';
 	/**
 	 * ActionSheet 操作菜单
 	 * @description 本组件用于从底部弹出一个操作菜单，供用户选择并返回结果。本组件功能类似于uni的uni.showActionSheetAPI，配置更加灵活，所有平台都表现一致。
@@ -159,7 +160,7 @@
 				return (index) => {
 					let style = {};
 					if (this.actions[index].color) style.color = this.actions[index].color
-					if (this.actions[index].fontSize) style.fontSize = uni.$u.addUnit(this.actions[index].fontSize)
+					if (this.actions[index].fontSize) style.fontSize = addUnit(this.actions[index].fontSize)
 					// 选项被禁用的样式
 					if (this.actions[index].disabled) style.color = '#c0c4cc'
 					return style;

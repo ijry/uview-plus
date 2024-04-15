@@ -2,7 +2,7 @@
 	<text
 	    class="u-link"
 	    @tap.stop="openLink"
-	    :style="[linkStyle, $u.addStyle(customStyle)]"
+	    :style="[linkStyle, addStyle(customStyle)]"
 	>{{text}}</text>
 </template>
 
@@ -10,7 +10,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
-
+	import { addStyle, addUnit, getPx, toast } from '../../libs/function/index';
 	/**
 	 * link 超链接
 	 * @description 该组件为超链接组件，在不同平台有不同表现形式：在APP平台会通过plus环境打开内置浏览器，在小程序中把链接复制到粘贴板，同时提示信息，在H5中通过window.open打开链接。
@@ -33,9 +33,9 @@
 			linkStyle() {
 				const style = {
 					color: this.color,
-					fontSize: uni.$u.addUnit(this.fontSize),
+					fontSize: addUnit(this.fontSize),
 					// line-height设置为比字体大小多2px
-					lineHeight: uni.$u.addUnit(uni.$u.getPx(this.fontSize) + 2),
+					lineHeight: addUnit(getPx(this.fontSize) + 2),
 					textDecoration: this.underLine ? 'underline' : 'none'
 				}
 				// if (this.underLine) {
@@ -47,6 +47,7 @@
 		},
 		emits: ["click"],
 		methods: {
+			addStyle,
 			openLink() {
 				// #ifdef APP-PLUS
 				plus.runtime.openURL(this.href)
@@ -60,7 +61,7 @@
 					success: () => {
 						uni.hideToast();
 						this.$nextTick(() => {
-							uni.$u.toast(this.mpTips);
+							toast(this.mpTips);
 						})
 					}
 				});

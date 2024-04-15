@@ -11,6 +11,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addUnit, addStyle, deepMerge, sys } from '../../libs/function/index';
 	/**
 	 * StatbusBar 状态栏占位
 	 * @description 本组件主要用于状态填充，比如在自定导航栏的时候，它会自动适配一个恰当的状态栏高度。
@@ -30,9 +31,9 @@
 			style() {
 				const style = {}
 				// 状态栏高度，由于某些安卓和微信开发工具无法识别css的顶部状态栏变量，所以使用js获取的方式
-				style.height = uni.$u.addUnit(uni.$u.sys().statusBarHeight, 'px')
+				style.height = addUnit(sys().statusBarHeight, 'px')
 				style.backgroundColor = this.bgColor
-				return uni.$u.deepMerge(style, uni.$u.addStyle(this.customStyle))
+				return deepMerge(style, addStyle(this.customStyle))
 			}
 		},
 	}

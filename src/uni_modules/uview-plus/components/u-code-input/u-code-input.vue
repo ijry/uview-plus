@@ -13,7 +13,7 @@
 			<text
 				v-else
 				:style="{
-					fontSize: $u.addUnit(fontSize),
+					fontSize: addUnit(fontSize),
 					fontWeight: bold ? 'bold' : 'normal',
 					color: color
 				}"
@@ -37,7 +37,7 @@
 			class="u-code-input__input"
 			@input="inputHandler"
 			:style="{
-				height: $u.addUnit(size) 
+				height: addUnit(size)
 			}"
 			@focus="isFocus = true"
 			@blur="isFocus = false"
@@ -49,6 +49,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addUnit, getPx } from '../../libs/function/index';
 	/**
 	 * CodeInput 验证码输入
 	 * @description 该组件一般用于验证用户短信验证码的场景，也可以结合uview-plus的键盘组件使用
@@ -103,7 +104,6 @@
 			// 循环item的样式
 			itemStyle() {
 				return index => {
-					const addUnit = uni.$u.addUnit
 					const style = {
 						width: addUnit(this.size),
 						height: addUnit(this.size)
@@ -113,7 +113,7 @@
 						// 设置盒子的边框，如果是细边框，则设置为0.5px宽度
 						style.border = `${this.hairline ? 0.5 : 1}px solid ${this.borderColor}`
 						// 如果盒子间距为0的话
-						if (uni.$u.getPx(this.space) === 0) {
+						if (getPx(this.space) === 0) {
 							// 给第一和最后一个盒子设置圆角
 							if (index === 0) {
 								style.borderTopLeftRadius = '3px'
@@ -148,7 +148,7 @@
 			lineStyle() {
 				const style = {}
 				style.height = this.hairline ? '2px' : '4px'
-				style.width = uni.$u.addUnit(this.size)
+				style.width = addUnit(this.size)
 				// 线条模式下，背景色即为边框颜色
 				style.backgroundColor = this.borderColor
 				return style
@@ -156,6 +156,7 @@
 		},
 		emits: ["change", 'finish', "update:modelValue"],
 		methods: {
+			addUnit,
 			// 监听输入框的值发生变化
 			inputHandler(e) {
 				const value = e.detail.value

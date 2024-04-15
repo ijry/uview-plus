@@ -3,8 +3,8 @@
 		class="u-swiper"
 		:style="{
 			backgroundColor: bgColor,
-			height: $u.addUnit(height),
-			borderRadius: $u.addUnit(radius)
+			height: addUnit(height),
+			borderRadius: addUnit(radius)
 		}"
 	>
 		<view
@@ -18,7 +18,7 @@
 			class="u-swiper__wrapper"
 			:style="{
 				flex: '1',
-				height: $u.addUnit(height)
+				height: addUnit(height)
 			}"
 			@change="change"
 			:circular="circular"
@@ -27,8 +27,8 @@
 			:autoplay="autoplay"
 			:current="current"
 			:currentItemId="currentItemId"
-			:previousMargin="$u.addUnit(previousMargin)"
-			:nextMargin="$u.addUnit(nextMargin)"
+			:previousMargin="addUnit(previousMargin)"
+			:nextMargin="addUnit(nextMargin)"
 			:acceleration="acceleration"
 			:displayMultipleItems="displayMultipleItems"
 			:easingFunction="easingFunction"
@@ -50,8 +50,8 @@
 						:mode="imgMode"
 						@tap="clickHandler(index)"
 						:style="{
-							height: $u.addUnit(height),
-							borderRadius: $u.addUnit(radius)
+							height: addUnit(height),
+							borderRadius: addUnit(radius)
 						}"
 					></image>
 					<video
@@ -61,21 +61,21 @@
 						:enable-progress-gesture="false"
 						:src="getSource(item)"
 						:poster="getPoster(item)"
-						:title="showTitle && $u.test.object(item) && item.title ? item.title : ''"
+						:title="showTitle && testObject(item) && item.title ? item.title : ''"
 						:style="{
-							height: $u.addUnit(height)
+							height: addUnit(height)
 						}"
 						controls
 						@tap="clickHandler(index)"
 					></video>
 					<text
-						v-if="showTitle && $u.test.object(item) && item.title && $u.test.image(getSource(item))"
+						v-if="showTitle && testObject(item) && item.title && testImage(getSource(item))"
 						class="u-swiper__wrapper__item__wrapper__title u-line-1"
 					>{{ item.title }}</text>
 				</view>
 			</swiper-item>
 		</swiper>
-		<view class="u-swiper__indicator" :style="[$u.addStyle(indicatorStyle)]">
+		<view class="u-swiper__indicator" :style="[addStyle(indicatorStyle)]">
 			<slot name="indicator">
 				<u-swiper-indicator
 					v-if="!loading && indicator && !showTitle"
@@ -89,11 +89,12 @@
 		</view>
 	</view>
 </template>
-props from './props';
 <script>
 	import props from './props.js';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addUnit, addStyle, error } from '../../libs/function/index';
+	import test from '../../libs/function/test';
 	/**
 	 * Swiper 轮播图
 	 * @description 该组件一般用于导航轮播，广告展示等场景,可开箱即用，
@@ -149,7 +150,7 @@ props from './props';
 					// 左右流出空间的写法不支持nvue和头条
 					// 只有配置了此二值，才加上对应的圆角，以及缩放
 					if (this.nextMargin && this.previousMargin) {
-						style.borderRadius = uni.$u.addUnit(this.radius)
+						style.borderRadius = addUnit(this.radius)
 						if (index !== this.currentIndex) style.transform = 'scale(0.92)'
 					}
 					// #endif
@@ -158,10 +159,14 @@ props from './props';
 			}
 		},
 		methods: {
+			addStyle,
+			addUnit,
+			testObject: test.object,
+			testImage: test.image,
 			getItemType(item) {
-				if (typeof item === 'string') return uni.$u.test.video(this.getSource(item)) ? 'video' : 'image'
+				if (typeof item === 'string') return test.video(this.getSource(item)) ? 'video' : 'image'
 				if (typeof item === 'object' && this.keyName) {
-				if (!item.type) return uni.$u.test.video(this.getSource(item)) ? 'video' : 'image'
+				if (!item.type) return test.video(this.getSource(item)) ? 'video' : 'image'
 				if (item.type === 'image') return 'image'
 				if (item.type === 'video') return 'video'
 				return 'image'
@@ -171,7 +176,7 @@ props from './props';
 			getSource(item) {
 				if (typeof item === 'string') return item
 				if (typeof item === 'object' && this.keyName) return item[this.keyName]
-				else uni.$u.error('请按格式传递列表参数')
+				else error('请按格式传递列表参数')
 				return ''
 			},
 			// 轮播切换事件
@@ -187,7 +192,7 @@ props from './props';
 			// 切换轮播时，暂停视频播放
 			pauseVideo(index) {
 				const lastItem = this.getSource(this.list[index])
-				if (uni.$u.test.video(lastItem)) {
+				if (test.video(lastItem)) {
 					// 当视频隐藏时，暂停播放
 					const video = uni.createVideoContext(`video-${index}`, this)
 					video.pause()

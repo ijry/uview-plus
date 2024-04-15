@@ -16,6 +16,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addStyle, addUnit, deepMerge, getPx } from '../../libs/function/index';
 	/**
 	 * CodeInput 栅格系统的列 
 	 * @description 该组件一般用于Layout 布局 通过基础的 12 分栏，迅速简便地创建布局
@@ -59,8 +60,8 @@
 			colStyle() {
 				const style = {
 					// 这里写成"padding: 0 10px"的形式是因为nvue的需要
-					paddingLeft: uni.$u.addUnit(uni.$u.getPx(this.parentData.gutter)/2),
-					paddingRight: uni.$u.addUnit(uni.$u.getPx(this.parentData.gutter)/2),
+					paddingLeft: addUnit(getPx(this.parentData.gutter)/2),
+					paddingRight: addUnit(getPx(this.parentData.gutter)/2),
 					alignItems: this.uAlignItem,
 					justifyContent: this.uJustify,
 					textAlign: this.textAlign,
@@ -71,11 +72,11 @@
 					// #endif
 					// #ifdef APP-NVUE
 					// 在nvue上，由于无法使用百分比单位，这里需要获取父组件的宽度，再计算得出该有对应的百分比尺寸
-					width: uni.$u.addUnit(Math.floor(this.width / this.gridNum * Number(this.span))),
-					marginLeft: uni.$u.addUnit(Math.floor(this.width / this.gridNum * Number(this.offset))),
+					width: addUnit(Math.floor(this.width / this.gridNum * Number(this.span))),
+					marginLeft: addUnit(Math.floor(this.width / this.gridNum * Number(this.offset))),
 					// #endif
 				}
-				return uni.$u.deepMerge(style, uni.$u.addStyle(this.customStyle))
+				return deepMerge(style, addStyle(this.customStyle))
 			}
 		},
 		mounted() {

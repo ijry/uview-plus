@@ -4,7 +4,7 @@
 	    @tap="clickHandler"
 	    :style="[{
 			margin: margin,
-		}, $u.addStyle(customStyle)]"
+		}, addStyle(customStyle)]"
 	>
 		<view
 		    class="u-search__content"
@@ -46,7 +46,7 @@
 					textAlign: inputAlign,
 					color: color,
 					backgroundColor: bgColor,
-					height: $u.addUnit(height)
+					height: addUnit(height)
 				}, inputStyle]"
 			/>
 			<view
@@ -75,7 +75,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
-
+	import { addUnit, addStyle } from '../../libs/function/index';
 	/**
 	 * search 搜索框
 	 * @description 搜索组件，集成了常见搜索框所需功能，用户可以一键引入，开箱即用。
@@ -161,6 +161,8 @@
 		},
 		emits: ['clear', 'search', 'custom', 'focus', 'blur', 'click', 'clickIcon', 'update:modelValue', 'change'],
 		methods: {
+			addStyle,
+			addUnit,
 			// 目前HX2.6.9 v-model双向绑定无效，故监听input事件获取输入框内容的变化
 			inputChange(e) {
 				this.keyword = e.detail.value;

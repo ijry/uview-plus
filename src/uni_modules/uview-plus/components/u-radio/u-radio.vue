@@ -36,6 +36,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addUnit, addStyle, os, deepMerge, formValidate, error } from '../../libs/function/index';
 	/**
 	 * radio 单选框
 	 * @description 单选框用于有一个选择，用户只能选择其中一个的场景。搭配u-radio-group使用
@@ -59,7 +60,6 @@
 	 */
 	export default {
 		name: "u-radio",
-		
 		mixins: [mpMixin, mixin,props],
 		data() {
 			return {
@@ -121,7 +121,7 @@
 			},
 			// label大小
 			elLabelSize() {
-				return uni.$u.addUnit(this.labelSize ? this.labelSize : (this.parentData.labelSize ? this.parentData.labelSize :
+				return addUnit(this.labelSize ? this.labelSize : (this.parentData.labelSize ? this.parentData.labelSize :
 					'15'))
 			},
 			elIconColor() {
@@ -156,8 +156,8 @@
 				const style = {}
 				style.backgroundColor = this.checked && !this.elDisabled ? this.elActiveColor : '#ffffff'
 				style.borderColor = this.checked && !this.elDisabled ? this.elActiveColor : this.elInactiveColor
-				style.width = uni.$u.addUnit(this.elSize)
-				style.height = uni.$u.addUnit(this.elSize)
+				style.width = addUnit(this.elSize)
+				style.height = addUnit(this.elSize)
 				// 如果是图标在右边的话，移除它的右边距
 				if (this.parentData.iconPlacement === 'right') {
 					style.marginRight = 0
@@ -167,14 +167,14 @@
 			radioStyle() {
 				const style = {}
 				if(this.parentData.borderBottom && this.parentData.placement === 'row') {
-					uni.$u.error('检测到您将borderBottom设置为true，需要同时将u-radio-group的placement设置为column才有效')
+					error('检测到您将borderBottom设置为true，需要同时将u-radio-group的placement设置为column才有效')
 				}
 				// 当父组件设置了显示下边框并且排列形式为纵向时，给内容和边框之间加上一定间隔
 				if(this.parentData.borderBottom && this.parentData.placement === 'column') {
 					// ios像素密度高，需要多一点的距离
-					style.paddingBottom = uni.$u.os() === 'ios' ? '12px' : '8px'
+					style.paddingBottom = os() === 'ios' ? '12px' : '8px'
 				}
-				return uni.$u.deepMerge(style, uni.$u.addStyle(this.customStyle))
+				return deepMerge(style, addStyle(this.customStyle))
 			}
 		},
 		mounted() {
@@ -186,7 +186,7 @@
 				// 支付宝小程序不支持provide/inject，所以使用这个方法获取整个父组件，在created定义，避免循环引用
 				this.updateParentData()
 				if (!this.parent) {
-					uni.$u.error('u-radio必须搭配u-radio-group组件使用')
+					error('u-radio必须搭配u-radio-group组件使用')
 				}
 				// 设置初始化时，是否默认选中的状态
 				// #ifdef VUE3
@@ -225,7 +225,7 @@
 					this.$emit('change', this.name)
 					// 尝试调用u-form的验证方法，进行一定延迟，否则微信小程序更新可能会不及时
 					this.$nextTick(() => {
-						uni.$u.formValidate(this, 'change')
+						formValidate(this, 'change')
 					})
 				}
 			},

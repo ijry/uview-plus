@@ -1,7 +1,7 @@
 <template>
 	<view
 	    class="u-divider"
-	    :style="[$u.addStyle(customStyle)]"
+	    :style="[addStyle(customStyle)]"
 		@tap="click"
 	>
 		<u-line
@@ -32,6 +32,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addStyle, addUnit } from '../../libs/function/index';
 	/**
 	 * divider 分割线
 	 * @description 区隔内容的分割线，一般用于页面底部"没有更多"的提示。
@@ -55,7 +56,7 @@
 		computed: {
 			textStyle() {
 				const style = {}
-				style.fontSize = uni.$u.addUnit(this.textSize)
+				style.fontSize = addUnit(this.textSize)
 				style.color = this.textColor
 				return style
 			},
@@ -84,6 +85,7 @@
 		},
 		emits: ["click"],
 		methods: {
+			addStyle,
 			// divider组件被点击时触发
 			click() {
 				this.$emit('click');

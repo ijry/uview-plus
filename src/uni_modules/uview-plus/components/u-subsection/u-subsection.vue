@@ -3,7 +3,7 @@
         class="u-subsection"
         ref="u-subsection"
         :class="[`u-subsection--${mode}`]"
-        :style="[$u.addStyle(customStyle), wrapperStyle]"
+        :style="[addStyle(customStyle), wrapperStyle]"
     >
         <view
             class="u-subsection__bar cursor-pointer"
@@ -55,6 +55,7 @@ const animation = uni.requireNativePlugin("animation");
 import props from "./props.js";
 import mpMixin from '../../libs/mixin/mpMixin';
 import mixin from '../../libs/mixin/mixin';
+import { addStyle, addUnit, sleep } from '../../libs/function/index';
 /**
  * Subsection 分段器
  * @description 该分段器一般用于用户从几个选项中选择某一个的场景
@@ -102,7 +103,7 @@ export default {
                 // 故用animation模块进行位移
                 const ref = this.$refs?.["u-subsection__bar"]?.ref;
                 // 不存在ref的时候(理解为第一次初始化时，需要渲染dom，进行一定延时再获取ref)，这里的100ms是经过测试得出的结果(某些安卓需要延时久一点)，勿随意修改
-                uni.$u.sleep(ref ? 0 : 100).then(() => {
+                sleep(ref ? 0 : 100).then(() => {
                     animation.transition(this.$refs["u-subsection__bar"].ref, {
                         styles: {
                             transform: `translateX(${
@@ -162,7 +163,7 @@ export default {
                 const style = {};
                 style.fontWeight =
                     this.bold && this.innerCurrent === index ? "bold" : "normal";
-                style.fontSize = uni.$u.addUnit(this.fontSize);
+                style.fontSize = addUnit(this.fontSize);
                 // subsection模式下，激活时默认为白色的文字
                 if (this.mode === "subsection") {
                     style.color =
@@ -190,9 +191,10 @@ export default {
     },
 	emits: ["change"],
     methods: {
+        addStyle,
         init() {
             this.innerCurrent = this.current
-            uni.$u.sleep().then(() => this.getRect());
+            sleep().then(() => this.getRect());
         },
 		// 判断展示文本
 		getText(item) {

@@ -94,6 +94,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { getPx, addUnit } from '../../libs/function/index';
 	/**
 	 * numberBox 步进器
 	 * @description 该组件一般用于商城购物选择物品数量的场景。
@@ -165,14 +166,14 @@
 		computed: {
 			getCursorSpacing() {
 				// 判断传入的单位，如果为px单位，需要转成px
-				return uni.$u.getPx(this.cursorSpacing)
+				return getPx(this.cursorSpacing)
 			},
 			// 按钮的样式
 			buttonStyle() {
 				return (type) => {
 					const style = {
 						backgroundColor: this.bgColor,
-						height: uni.$u.addUnit(this.buttonSize),
+						height: addUnit(this.buttonSize),
 						color: this.color
 					}
 					if (this.isDisabled(type)) {
@@ -187,8 +188,8 @@
 				const style = {
 					color: this.color,
 					backgroundColor: this.bgColor,
-					height: uni.$u.addUnit(this.buttonSize),
-					width: uni.$u.addUnit(this.inputWidth)
+					height: addUnit(this.buttonSize),
+					width: addUnit(this.inputWidth)
 				}
 				return style
 			},

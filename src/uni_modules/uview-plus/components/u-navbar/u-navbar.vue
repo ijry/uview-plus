@@ -4,7 +4,7 @@
 			class="u-navbar__placeholder"
 			v-if="fixed && placeholder"
 			:style="{
-				height: $u.addUnit($u.getPx(height) + $u.sys().statusBarHeight,'px'),
+				height: addUnit(getPx(height) + sys().statusBarHeight,'px'),
 			}"
 		></view>
 		<view :class="[fixed && 'u-navbar--fixed']">
@@ -16,7 +16,7 @@
 				class="u-navbar__content"
 				:class="[border && 'u-border-bottom']"
 				:style="{
-					height: $u.addUnit(height),
+					height: addUnit(height),
 					backgroundColor: bgColor,
 				}"
 			>
@@ -46,8 +46,8 @@
 					<text
 						class="u-line-1 u-navbar__content__title"
 						:style="[{
-							width: $u.addUnit(titleWidth),
-						}, $u.addStyle(titleStyle)]"
+							width: addUnit(titleWidth),
+						}, addStyle(titleStyle)]"
 					>{{ title }}</text>
 				</slot>
 				<view
@@ -76,6 +76,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addUnit, addStyle, getPx, sys } from '../../libs/function/index';
 	/**
 	 * Navbar 自定义导航栏
 	 * @description 此组件一般用于在特殊情况下，需要自定义导航栏的时候用到，一般建议使用uni-app带的导航栏。
@@ -109,6 +110,10 @@
 		},
 		emits: ["leftClick", "rightClick"],
 		methods: {
+			addStyle,
+			addUnit,
+			sys,
+			getPx,
 			// 点击左侧区域
 			leftClick() {
 				// 如果配置了autoBack，自动返回上一页

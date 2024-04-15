@@ -14,7 +14,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
-
+	import { addStyle, deepMerge } from '../../libs/function/index';
 	/**
 	 * overlay 遮罩
 	 * @description 创建一个遮罩层，用于强调特定的页面元素，并阻止用户对遮罩下层的内容进行操作，一般用于弹窗场景
@@ -41,7 +41,7 @@
 					bottom: 0,
 					'background-color': `rgba(0, 0, 0, ${this.opacity})`
 				}
-				return uni.$u.deepMerge(style, uni.$u.addStyle(this.customStyle))
+				return deepMerge(style, addStyle(this.customStyle))
 			}
 		},
 		emits: ["click"],

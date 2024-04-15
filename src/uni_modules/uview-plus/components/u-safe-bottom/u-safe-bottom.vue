@@ -11,6 +11,7 @@
 	import props from "./props.js";
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addUnit, sys } from '../../libs/function/index';
 	/**
 	 * SafeBottom 底部安全区
 	 * @description 这个适配，主要是针对IPhone X等一些底部带指示条的机型，指示条的操作区域与页面底部存在重合，容易导致用户误操作，因此我们需要针对这些机型进行底部安全区适配。
@@ -35,9 +36,9 @@
 				const style = {};
 				// #ifdef APP-NVUE || MP-TOUTIAO
 				// nvue下，高度使用js计算填充
-				style.height = uni.$u.addUnit(uni.$u.sys().safeAreaInsets.bottom, 'px');
+				style.height = addUnit(sys().safeAreaInsets.bottom, 'px');
 				// #endif
-				return uni.$u.deepMerge(style, uni.$u.addStyle(this.customStyle));
+				return deepMerge(style, addStyle(this.customStyle));
 			},
 		},
 		mounted() {

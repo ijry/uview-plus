@@ -6,7 +6,7 @@
 			enable-back-to-top
 			:offset-accuracy="1"
 			:style="{
-				maxHeight: $u.addUnit(scrollViewHeight)
+				maxHeight: addUnit(scrollViewHeight)
 			}"
 			@scroll="scrollHandler"
 			ref="uList"
@@ -29,7 +29,7 @@
 			:scrollIntoView="scrollIntoView"
 			:offset-accuracy="1"
 			:style="{
-				maxHeight: $u.addUnit(scrollViewHeight)
+				maxHeight: addUnit(scrollViewHeight)
 			}"
 			scroll-y
 			@scroll="scrollHandler"
@@ -47,7 +47,7 @@
 		<view
 			class="u-index-list__letter"
 			ref="u-index-list__letter"
-			:style="{ top: $u.addUnit(letterInfo.top || 100) }"
+			:style="{ top: addUnit(letterInfo.top || 100) }"
 			@touchstart.prevent="touchStart"
 			@touchmove.prevent="touchMove"
 			@touchend.prevent="touchEnd"
@@ -73,7 +73,7 @@
 			:customStyle="{
 				position: 'fixed',
 				right: '50px',
-				top: $u.addUnit(indicatorTop),
+				top: addUnit(indicatorTop),
 				zIndex: 2
 			}"
 		>
@@ -81,8 +81,8 @@
 				class="u-index-list__indicator"
 				:class="['u-index-list__indicator--show']"
 				:style="{
-					height: $u.addUnit(indicatorHeight),
-					width: $u.addUnit(indicatorHeight)
+					height: addUnit(indicatorHeight),
+					width: addUnit(indicatorHeight)
 				}"
 			>
 				<text class="u-index-list__indicator__text">{{ uIndexList[activeIndex] }}</text>
@@ -103,6 +103,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addUnit, sys, sleep, getPx } from '../../libs/function/index';
 	// #ifdef APP-NVUE
 	// 由于weex为阿里的KPI业绩考核的产物，所以不支持百分比单位，这里需要通过dom查询组件的宽度
 	const dom = uni.requireNativePlugin('dom')
@@ -148,7 +149,7 @@
 				// scroll-view的高度
 				scrollViewHeight: 0,
 				// 系统信息
-				sys: uni.$u.sys(),
+				sys: sys(),
 				scrolling: false,
 				scrollIntoView: '',
 			}
@@ -172,7 +173,7 @@
 			uIndexList: {
 				immediate: true,
 				handler() {
-					uni.$u.sleep().then(() => {
+					sleep().then(() => {
 						this.setIndexListLetterInfo()
 					})
 				}
@@ -187,11 +188,12 @@
 			this.setIndexListLetterInfo()
 		},
 		methods: {
+			addUnit,
 			init() {
 				// 设置列表的高度为整个屏幕的高度
 				//减去this.customNavHeight，并将this.scrollViewHeight设置为maxHeight
 				//解决当u-index-list组件放在tabbar页面时,scroll-view内容较少时，还能滚动
-				let customNavHeight = uni.$u.getPx(this.customNavHeight)
+				let customNavHeight = getPx(this.customNavHeight)
 				this.scrollViewHeight = this.sys.windowHeight - customNavHeight
 			},
 			// 索引列表被触摸
@@ -226,7 +228,7 @@
 			// 触摸结束
 			touchEnd(e) {
 				// 延时一定时间后再隐藏指示器，为了让用户看的更直观，同时也是为了消除快速切换u-transition的show带来的影响
-				uni.$u.sleep(300).then(() => {
+				sleep(300).then(() => {
 					this.touching = false
 				})
 			},
@@ -254,7 +256,7 @@
 					const {
 						height
 					} = size
-					const sys = uni.$u.sys()
+					const sys = sys()
 					const windowHeight = sys.windowHeight
 					let customNavHeight = 0
 					// 消除各端导航栏非原生和原生导致的差异，让索引列表字母对屏幕垂直居中
@@ -267,7 +269,7 @@
 						customNavHeight = -(sys.statusBarHeight + 44)
 						// #endif
 					} else {
-						customNavHeight = uni.$u.getPx(this.customNavHeight)
+						customNavHeight = getPx(this.customNavHeight)
 					}
 					this.letterInfo = {
 						height,
@@ -286,7 +288,7 @@
 				} = this.letterInfo
 				// 对H5的pageY进行修正，这是由于uni-app自作多情在H5中将触摸点的坐标跟H5的导航栏结合导致的问题
 				// #ifdef H5
-				pageY += uni.$u.sys().windowTop
+				pageY += sys().windowTop
 				// #endif
 				// 对第一和最后一个字母做边界处理，因为用户可能在字母列表上触摸到两端的尽头后依然继续滑动
 				if (pageY < top) {
@@ -311,7 +313,7 @@
 				// #ifdef MP-WEIXIN
 				// 微信小程序下，scroll-view的scroll-into-view属性无法对slot中的内容的id生效，只能通过设置scrollTop的形式去移动滚动条
 				const customNavHeight = this.customNavHeight
-				this.scrollTop = this.children[currentIndex].top - uni.$u.getPx(customNavHeight)
+				this.scrollTop = this.children[currentIndex].top - getPx(customNavHeight)
 				// #endif
 				// #ifdef APP-NVUE
 				// 在nvue中，由于cell和header为同级元素，所以实际是需要对header(anchor)进行偏移
@@ -335,7 +337,7 @@
 				if (this.touching || this.scrolling) return
 				// 每过一定时间取样一次，减少资源损耗以及可能带来的卡顿
 				this.scrolling = true
-				uni.$u.sleep(10).then(() => {
+				sleep(10).then(() => {
 					this.scrolling = false
 				})
 				let scrollTop = 0

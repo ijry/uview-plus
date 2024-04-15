@@ -55,7 +55,9 @@
 <script>
 import props from './props';
 import mpMixin from '../../libs/mixin/mpMixin';
-	import mixin from '../../libs/mixin/mixin';
+import mixin from '../../libs/mixin/mixin';
+import { addUnit, sleep } from '../../libs/function/index';
+import test from '../../libs/function/test';
 // #ifdef APP-NVUE
 // 由于weex为阿里的KPI业绩考核的产物，所以不支持百分比单位，这里需要通过dom查询组件的宽度
 const dom = uni.requireNativePlugin('dom')
@@ -146,12 +148,12 @@ export default {
             return arr
         },
         imageWidth() {
-            return uni.$u.addUnit(
+            return addUnit(
                 this.urls.length === 1 ? this.singleWidth : this.multipleSize
             )
         },
         imageHeight() {
-            return uni.$u.addUnit(
+            return addUnit(
                 this.urls.length === 1 ? this.singleHeight : this.multipleSize
             )
         },
@@ -183,7 +185,7 @@ export default {
         },
         // 获取图片的路径
         getSrc(item) {
-            return uni.$u.test.object(item)
+            return test.object(item)
                 ? (this.keyName && item[this.keyName]) || item.src
                 : item
         },
@@ -212,7 +214,7 @@ export default {
         // 获取组件的宽度
         async getComponentWidth() {
             // 延时一定时间，以获取dom尺寸
-            await uni.$u.sleep(30)
+            await sleep(30)
             // #ifndef APP-NVUE
             this.$uGetRect('.u-album__row').then((size) => {
                 this.singleWidth = size.width * this.singlePercent

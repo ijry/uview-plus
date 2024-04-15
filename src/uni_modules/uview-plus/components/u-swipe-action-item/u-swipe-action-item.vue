@@ -16,7 +16,7 @@
 						}, item.style]">
 						<u-icon v-if="item.icon" :name="item.icon"
 							:color="item.style && item.style.color ? item.style.color : '#ffffff'"
-							:size="item.iconSize ? $u.addUnit(item.iconSize) : item.style && item.style.fontSize ? $u.getPx(item.style.fontSize) * 1.2 : 17"
+							:size="item.iconSize ? addUnit(item.iconSize) : item.style && item.style.fontSize ? getPx(item.style.fontSize) * 1.2 : 17"
 							:customStyle="{
 								marginRight: item.text ? '2px' : 0
 							}"></u-icon>
@@ -63,6 +63,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addUnit, getPx, sleep } from '../../libs/function/index';
 	// #ifdef APP-NVUE
 	import nvue from './nvue.js';
 	// #endif
@@ -138,11 +139,13 @@
 			this.init()
 		},
 		methods: {
+			addUnit,
+			getPx,
 			init() {
 				// 初始化父组件数据
 				this.updateParentData()
 				// #ifndef APP-NVUE
-				uni.$u.sleep().then(() => {
+				sleep().then(() => {
 					this.queryRect()
 				})
 				// #endif

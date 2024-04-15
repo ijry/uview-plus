@@ -4,7 +4,7 @@
 		v-if="show"
 		:style="[{
 			backgroundColor: bgColor
-		}, $u.addStyle(customStyle)]"
+		}, addStyle(customStyle)]"
 	>
 		<template v-if="direction === 'column' || (direction === 'row' && step)">
 			<u-column-notice
@@ -42,7 +42,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
-
+	import { addStyle } from '../../libs/function/index';
 	/**
 	 * noticeBar 滚动通知
 	 * @description 该组件用于滚动通告场景，有多种模式可供选择
@@ -76,6 +76,7 @@
 		},
 		emits: ["click", "close"],
 		methods: {
+			addStyle,
 			// 点击通告栏
 			click(index) {
 				this.$emit('click', index)

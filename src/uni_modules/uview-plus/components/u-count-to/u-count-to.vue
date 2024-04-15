@@ -2,7 +2,7 @@
 	<text
 		class="u-count-num"
 		:style="{
-			fontSize: $u.addUnit(fontSize),
+			fontSize: addUnit(fontSize),
 			fontWeight: bold ? 'bold' : 'normal',
 			color: color
 		}"
@@ -10,9 +10,10 @@
 </template>
 
 <script>
-	import props from './props';
-	import mpMixin from '../../libs/mixin/mpMixin';
-	import mixin from '../../libs/mixin/mixin';
+import props from './props';
+import mpMixin from '../../libs/mixin/mpMixin';
+import mixin from '../../libs/mixin/mixin';
+import { addUnit } from '../../libs/function/index';
 /**
  * countTo 数字滚动
  * @description 该组件一般用于需要滚动数字到某一个值的场景，目标要求是一个递增的值。
@@ -66,6 +67,7 @@ export default {
 	},
 	emits: ["end"],
 	methods: {
+		addUnit,
 		easingFn(t, b, c, d) {
 			return (c * (-Math.pow(2, (-10 * t) / d) + 1) * 1024) / 1023 + b;
 		},

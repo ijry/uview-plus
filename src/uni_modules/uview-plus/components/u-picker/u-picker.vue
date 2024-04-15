@@ -17,11 +17,11 @@
 			></u-toolbar>
 			<picker-view
 				class="u-picker__view"
-				:indicatorStyle="`height: ${$u.addUnit(itemHeight)}`"
+				:indicatorStyle="`height: ${addUnit(itemHeight)}`"
 				:value="innerIndex"
 				:immediateChange="true"
 				:style="{
-					height: `${$u.addUnit(visibleItemCount * itemHeight)}`
+					height: `${addUnit(visibleItemCount * itemHeight)}`
 				}"
 				@change="changeHandler"
 			>
@@ -31,13 +31,13 @@
 					class="u-picker__view__column"
 				>
 					<view
-						v-if="$u.test.array(item)"
+						v-if="testArray(item)"
 						class="u-picker__view__column__item u-line-1"
 						v-for="(item1, index1) in item"
 						:key="index1"
 						:style="{
-							height: $u.addUnit(itemHeight),
-							lineHeight: $u.addUnit(itemHeight),
+							height: addUnit(itemHeight),
+							lineHeight: addUnit(itemHeight),
 							fontWeight: index1 === innerIndex[index] ? 'bold' : 'normal',
 							display: 'block'
 						}"
@@ -81,6 +81,8 @@
 import props from './props';
 import mpMixin from '../../libs/mixin/mpMixin';
 import mixin from '../../libs/mixin/mixin';
+import { addUnit, deepClone, sleep } from '../../libs/function/index';
+import test from '../../libs/function/test';
 export default {
 	name: 'u-picker',
 	mixins: [mpMixin, mixin, props],
@@ -115,9 +117,11 @@ export default {
 	},
 	emits: ['close', 'cancel', 'confirm', 'change'],
 	methods: {
+		addUnit,
+		testArray: test.array,
 		// 获取item需要显示的文字，判别为对象还是文本
 		getItemText(item) {
-			if (uni.$u.test.object(item)) {
+			if (test.object(item)) {
 				return item[this.keyName]
 			} else {
 				return item
@@ -180,7 +184,7 @@ export default {
 		},
 		// 设置index索引，此方法可被外部调用设置
 		setIndexs(index, setLastIndex) {
-			this.innerIndex = uni.$u.deepClone(index)
+			this.innerIndex = deepClone(index)
 			if (setLastIndex) {
 				this.setLastIndex(index)
 			}
@@ -189,7 +193,7 @@ export default {
 		setLastIndex(index) {
 			// 当能进入此方法，意味着当前设置的各列默认索引，即为“上一次”的选中值，需要记录，是因为changeHandler中
 			// 需要拿前后的变化值进行对比，得出当前发生改变的是哪一列
-			this.lastIndex = uni.$u.deepClone(index)
+			this.lastIndex = deepClone(index)
 		},
 		// 设置对应列选项的所有值
 		setColumnValues(columnIndex, values) {
@@ -198,7 +202,7 @@ export default {
             // 替换完成之后将修改列之后的已选值置空
 			this.setLastIndex(this.innerIndex.slice(0, columnIndex))
 			// 拷贝一份原有的innerIndex做临时变量，将大于当前变化列的所有的列的默认索引设置为0
-			let tmpIndex = uni.$u.deepClone(this.innerIndex)
+			let tmpIndex = deepClone(this.innerIndex)
 			for (let i = 0; i < this.innerColumns.length; i++) {
 				if (i > this.columnIndex) {
 					tmpIndex[i] = 0
@@ -212,14 +216,14 @@ export default {
 			// 进行同步阻塞，因为外部得到change事件之后，可能需要执行setColumnValues更新列的值
 			// 索引如果在外部change的回调中调用getColumnValues的话，可能无法得到变更后的列值，这里进行一定延时，保证值的准确性
 			(async () => {
-				await uni.$u.sleep()
+				await sleep()
 			})()
 			return this.innerColumns[columnIndex]
 		},
 		// 设置整体各列的columns的值
 		setColumns(columns) {
 			// console.log(columns)
-			this.innerColumns = uni.$u.deepClone(columns)
+			this.innerColumns = deepClone(columns)
 			// 如果在设置各列数据时，没有被设置默认的各列索引defaultIndex，那么用0去填充它，数组长度为列的数量
 			if (this.innerIndex.length === 0) {
 				this.innerIndex = new Array(columns.length).fill(0)
@@ -234,7 +238,7 @@ export default {
 			// 进行同步阻塞，因为外部得到change事件之后，可能需要执行setColumnValues更新列的值
 			// 索引如果在外部change的回调中调用getValues的话，可能无法得到变更后的列值，这里进行一定延时，保证值的准确性
 			(async () => {
-				await uni.$u.sleep()
+				await sleep()
 			})()
 			return this.innerColumns.map((item, index) => item[this.innerIndex[index]])
 		}

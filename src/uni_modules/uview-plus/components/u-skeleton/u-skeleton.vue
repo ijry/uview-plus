@@ -11,8 +11,8 @@
 			    v-if="avatar"
 			    :class="[`u-skeleton__wrapper__avatar--${avatarShape}`, animate && 'animate']"
 			    :style="{
-						height: $u.addUnit(avatarSize),
-						width: $u.addUnit(avatarSize)
+						height: addUnit(avatarSize),
+						width: addUnit(avatarSize)
 					}"
 			></view>
 			<view
@@ -25,7 +25,7 @@
 				    v-if="title"
 				    :style="{
 							width: uTitleWidth,
-							height: $u.addUnit(titleHeight),
+							height: addUnit(titleHeight),
 						}"
 				    :class="[animate && 'animate']"
 				></view>
@@ -52,6 +52,8 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addUnit, sleep, error } from '../../libs/function/index';
+	import test from '../../libs/function/test';
 	// #ifdef APP-NVUE
 	// 由于weex为阿里的KPI业绩考核的产物，所以不支持百分比单位，这里需要通过dom查询组件的宽度
 	const dom = uni.requireNativePlugin('dom')
@@ -90,26 +92,26 @@
 		computed: {
 			rowsArray() {
 				if (/%$/.test(this.rowsHeight)) {
-					uni.$u.error('rowsHeight参数不支持百分比单位')
+					error('rowsHeight参数不支持百分比单位')
 				}
 				const rows = []
 				for (let i = 0; i < this.rows; i++) {
 					let item = {},
 						// 需要预防超出数组边界的情况
-						rowWidth = uni.$u.test.array(this.rowsWidth) ? (this.rowsWidth[i] || (i === this.rows - 1 ? '70%' : '100%')) : i ===
+						rowWidth = test.array(this.rowsWidth) ? (this.rowsWidth[i] || (i === this.rows - 1 ? '70%' : '100%')) : i ===
 						this.rows - 1 ? '70%' : this.rowsWidth,
-						rowHeight = uni.$u.test.array(this.rowsHeight) ? (this.rowsHeight[i] || '18px') : this.rowsHeight
+						rowHeight = test.array(this.rowsHeight) ? (this.rowsHeight[i] || '18px') : this.rowsHeight
 					// 如果有title占位图，第一个段落占位图的外边距需要大一些，如果没有title占位图，第一个段落占位图则无需外边距
 					// 之所以需要这么做，是因为weex的无能，以提升性能为借口不支持css的一些伪类
 					item.marginTop = !this.title && i === 0 ? 0 : this.title && i === 0 ? '20px' : '12px'
 					// 如果设置的为百分比的宽度，转换为px值，因为nvue不支持百分比单位
 					if (/%$/.test(rowWidth)) {
 						// 通过parseInt提取出百分比单位中的数值部分，除以100得到百分比的小数值
-						item.width = uni.$u.addUnit(this.width * parseInt(rowWidth) / 100)
+						item.width = addUnit(this.width * parseInt(rowWidth) / 100)
 					} else {
-						item.width = uni.$u.addUnit(rowWidth)
+						item.width = addUnit(rowWidth)
 					}
-					item.height = uni.$u.addUnit(rowHeight)
+					item.height = addUnit(rowHeight)
 					rows.push(item)
 				}
 				// console.log(rows);
@@ -119,11 +121,11 @@
 				let tWidth = 0
 				if (/%$/.test(this.titleWidth)) {
 					// 通过parseInt提取出百分比单位中的数值部分，除以100得到百分比的小数值
-					tWidth = uni.$u.addUnit(this.width * parseInt(this.titleWidth) / 100)
+					tWidth = addUnit(this.width * parseInt(this.titleWidth) / 100)
 				} else {
-					tWidth = uni.$u.addUnit(this.titleWidth)
+					tWidth = addUnit(this.titleWidth)
 				}
-				return uni.$u.addUnit(tWidth)
+				return addUnit(tWidth)
 			},
 			
 		},
@@ -131,6 +133,7 @@
 			this.init()
 		},
 		methods: {
+			addUnit,
 			init() {
 				this.getComponentWidth()
 				// #ifdef APP-NVUE
@@ -140,7 +143,7 @@
 			async setNvueAnimation() {
 				// #ifdef APP-NVUE
 				// 为了让opacity:1的状态保持一定时间，这里做一个延时
-				await uni.$u.sleep(500)
+				await sleep(500)
 				const skeleton = this.$refs['u-skeleton__wrapper'];
 				skeleton && this.loading && this.animate && animation.transition(skeleton, {
 					styles: {
@@ -165,7 +168,7 @@
 			// 获取组件的宽度
 			async getComponentWidth() {
 				// 延时一定时间，以获取dom尺寸
-				await uni.$u.sleep(20)
+				await sleep(20)
 				// #ifndef APP-NVUE
 				this.$uGetRect('.u-skeleton__wrapper__content').then(size => {
 					this.width = size.width

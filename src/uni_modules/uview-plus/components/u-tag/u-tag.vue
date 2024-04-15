@@ -20,7 +20,7 @@
 						v-if="icon"
 					>
 						<image
-							v-if="$u.test.image(icon)"
+							v-if="testImage(icon)"
 							:src="icon"
 							:style="[imgStyle]"
 						></image>
@@ -59,6 +59,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import test from '../../libs/function/test';
 	/**
 	 * Tag 标签
 	 * @description tag组件一般用于标记和选择，我们提供了更加丰富的表现形式，能够较全面的涵盖您的使用场景
@@ -136,6 +137,7 @@
 		},
 		emits: ["click", "close"],
 		methods: {
+			testImage: test.image,
 			// 点击关闭按钮
 			closeHandler() {
 				this.$emit('close', this.name)

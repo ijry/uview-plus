@@ -5,14 +5,14 @@
 		    v-for="(item, index) in showUrl"
 		    :key="index"
 		    :style="{
-				marginLeft: index === 0 ? 0 : $u.addUnit(-size * gap)
+				marginLeft: index === 0 ? 0 : addUnit(-size * gap)
 			}"
 		>
 			<u-avatar
 			    :size="size"
 			    :shape="shape"
 			    :mode="mode"
-			    :src="$u.test.object(item) ? keyName && item[keyName] || item.url : item"
+			    :src="testObject(item) ? keyName && item[keyName] || item.url : item"
 			></u-avatar>
 			<view
 			    class="u-avatar-group__item__show-more"
@@ -35,6 +35,8 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addUnit } from '../../libs/function/index';
+	import test from '../../libs/function/test';
 	/**
 	 * AvatarGroup  头像组
 	 * @description 本组件一般用于展示头像的地方，如个人中心，或者评论列表页的用户头像展示等场所。
@@ -67,6 +69,8 @@
 		},
 		emits: ["showMore"],
 		methods: {
+			addUnit,
+			testObject: test.object,
 			clickHandler() {
 				this.$emit('showMore')
 			}

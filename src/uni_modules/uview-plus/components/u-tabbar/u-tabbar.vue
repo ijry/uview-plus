@@ -26,6 +26,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addStyle, deepMerge, sleep } from '../../libs/function/index';
 	// #ifdef APP-NVUE
 	const dom = uni.requireNativePlugin('dom')
 	// #endif
@@ -59,7 +60,7 @@
 					zIndex: this.zIndex
 				}
 				// 合并来自父组件的customStyle样式
-				return uni.$u.deepMerge(style, uni.$u.addStyle(this.customStyle))
+				return deepMerge(style, addStyle(this.customStyle))
 			},
 			// 监听多个参数的变化，通过在computed执行对应的操作
 			updateChild() {
@@ -94,7 +95,7 @@
 			async setPlaceholderHeight() {
 				if (!this.fixed || !this.placeholder) return
 				// 延时一定时间
-				await uni.$u.sleep(20)
+				await sleep(20)
 				// #ifndef APP-NVUE
 				this.$uGetRect('.u-tabbar__content').then(({height = 50}) => {
 					// 修复IOS safearea bottom 未填充高度

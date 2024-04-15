@@ -17,6 +17,8 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addUnit, addStyle, deepMerge, getPx, guid, sys, os } from '../../libs/function/index';
+	import zIndex from '../../libs/config/zIndex';
 	/**
 	 * sticky 吸顶
 	 * @description 该组件与CSS中position: sticky属性实现的效果一致，当组件达到预设的到顶部距离时， 就会固定在指定位置，组件位置大于预设的顶部距离时，会重新按照正常的布局排列。
@@ -39,7 +41,7 @@
 			return {
 				cssSticky: false, // 是否使用css的sticky实现
 				stickyTop: 0, // 吸顶的top值，因为可能受自定义导航栏影响，最终的吸顶值非offsetTop值
-				elId: uni.$u.guid(),
+				elId: guid(),
 				left: 0, // js模式时，吸顶的内容因为处于postition: fixed模式，为了和原来保持一致的样式，需要记录并重新设置它的left，height，width属性
 				width: 'auto',
 				height: 'auto',
@@ -53,7 +55,7 @@
 					if (this.cssSticky) {
 						style.position = 'sticky'
 						style.zIndex = this.uZindex
-						style.top = uni.$u.addUnit(this.stickyTop)
+						style.top = addUnit(this.stickyTop)
 					} else {
 						style.height = this.fixed ? this.height + 'px' : 'auto'
 					}
@@ -67,7 +69,7 @@
 					// #endif
 				}
 				style.backgroundColor = this.bgColor
-				return uni.$u.deepMerge(uni.$u.addStyle(this.customStyle), style)
+				return deepMerge(addStyle(this.customStyle), style)
 			},
 			// 吸顶内容的样式
 			stickyContent() {
@@ -82,7 +84,7 @@
 				return style
 			},
 			uZindex() {
-				return this.zIndex ? this.zIndex : uni.$u.zIndex.sticky
+				return this.zIndex ? this.zIndex : zIndex.sticky
 			}
 		},
 		mounted() {
@@ -137,7 +139,7 @@
 				observer && observer.disconnect()
 			},
 			getStickyTop() {
-				this.stickyTop = uni.$u.getPx(this.offsetTop) + uni.$u.getPx(this.customNavHeight)
+				this.stickyTop = getPx(this.offsetTop) + getPx(this.customNavHeight)
 			},
 			async checkSupportCssSticky() {
 				// #ifdef H5
@@ -148,7 +150,7 @@
 				// #endif
 
 				// 如果安卓版本高于8.0，依然认为是支持css sticky的(因为安卓7在某些机型，可能不支持sticky)
-				if (uni.$u.os() === 'android' && Number(uni.$u.sys().system) > 8) {
+				if (os() === 'android' && Number(sys().system) > 8) {
 					this.cssSticky = true
 				}
 
@@ -158,7 +160,7 @@
 				// #endif
 
 				// ios上，从ios6开始，都是支持css sticky的
-				if (uni.$u.os() === 'ios') {
+				if (os() === 'ios') {
 					this.cssSticky = true
 				}
 

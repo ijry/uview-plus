@@ -42,9 +42,9 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
-	// import dayjs from '../../libs/util/dayjs.js';
-	import dayjs from 'dayjs/esm/index'
-
+	import dayjs from 'dayjs/esm/index';
+	import { range, error, padZero } from '../../libs/function/index';
+	import test from '../../libs/function/test';
 	/**
 	 * DatetimePicker 时间日期选择器
 	 * @description 此选择器用于时间日期
@@ -201,12 +201,12 @@
 				let judge = e.match(/\d+/g)
 				//判断是否掺杂数字
 				if(judge.length>1){
-					uni.$u.error("请勿在过滤或格式化函数时添加数字")
+					error("请勿在过滤或格式化函数时添加数字")
 					return 0
 				}else if(type&&judge[0].length==4){//判断是否是年份
 					return judge[0]
 				}else if(judge[0].length>2){
-					uni.$u.error("请勿在过滤或格式化函数时添加数字")
+					error("请勿在过滤或格式化函数时添加数字")
 					return 0
 				}else{
 					return judge[0]
@@ -268,7 +268,7 @@
 			updateIndexs(value) {
 				let values = []
 				const formatter = this.formatter || this.innerFormatter
-				const padZero = uni.$u.padZero
+				const padZero = padZero
 				if (this.mode === 'time') {
 					// 将time模式的时间用:分隔成数组
 				    const timeArr = value.split(':')
@@ -310,7 +310,7 @@
 			    const results = this.getRanges().map(({ type, range }) => {
 			        let values = times(range[1] - range[0] + 1, (index) => {
 			            let value = range[0] + index
-			            value = type === 'year' ? `${value}` : uni.$u.padZero(value)
+			            value = type === 'year' ? `${value}` : padZero(value)
 			            return value
 			        })
 					// 进行过滤
@@ -335,20 +335,20 @@
 			// 得出合法的时间
 			correctValue(value) {
 				const isDateMode = this.mode !== 'time'
-				if (isDateMode && !uni.$u.test.date(value)) {
+				if (isDateMode && !test.date(value)) {
 					// 如果是日期类型，但是又没有设置合法的当前时间的话，使用最小时间为当前时间
 					value = this.minDate
 				} else if (!isDateMode && !value) {
 					// 如果是时间类型，而又没有默认值的话，就用最小时间
-					value = `${uni.$u.padZero(this.minHour)}:${uni.$u.padZero(this.minMinute)}`
+					value = `${padZero(this.minHour)}:${padZero(this.minMinute)}`
 				}
 				// 时间类型
 				if (!isDateMode) {
-					if (String(value).indexOf(':') === -1) return uni.$u.error('时间错误，请传递如12:24的格式')
+					if (String(value).indexOf(':') === -1) return error('时间错误，请传递如12:24的格式')
 					let [hour, minute] = value.split(':')
 					// 对时间补零，同时控制在最小值和最大值之间
-					hour = uni.$u.padZero(uni.$u.range(this.minHour, this.maxHour, Number(hour)))
-					minute = uni.$u.padZero(uni.$u.range(this.minMinute, this.maxMinute, Number(minute)))
+					hour = padZero(range(this.minHour, this.maxHour, Number(hour)))
+					minute = padZero(range(this.minMinute, this.maxMinute, Number(minute)))
 					return `${ hour }:${ minute }`
 				} else {
 					// 如果是日期格式，控制在最小日期和最大日期之间

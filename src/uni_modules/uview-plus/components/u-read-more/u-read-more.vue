@@ -3,7 +3,7 @@
 		<view
 		    class="u-read-more__content"
 		    :style="{
-				height: isLongContent && status === 'close' ? $u.addUnit(showHeight) : $u.addUnit(contentHeight),
+				height: isLongContent && status === 'close' ? addUnit(showHeight) : addUnit(contentHeight),
 				textIndent: textIndent
 			}"
 		>
@@ -52,6 +52,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addUnit, guid, getPx, sleep } from '../../libs/function/index';
 	/**
 	 * readMore 阅读更多
 	 * @description 该组件一般用于内容较长，预先收起一部分，点击展开全部内容的场景。
@@ -76,7 +77,7 @@
 			return {
 				isLongContent: false, // 是否需要隐藏一部分内容
 				status: 'close', // 当前隐藏与显示的状态，close-收起状态，open-展开状态
-				elId: uni.$u.guid(), // 生成唯一class
+				elId: guid(), // 生成唯一class
 				contentHeight: 100, // 内容高度
 			}
 		},
@@ -92,11 +93,12 @@
 		},
 		emits: ["open", "close"],
 		methods: {
+			addUnit,
 			async init() {
 				this.getContentHeight().then(height => {
 					this.contentHeight = height
 					// 判断高度，如果真实内容高度大于占位高度，则显示收起与展开的控制按钮
-					if (height > uni.$u.getPx(this.showHeight)) {
+					if (height > getPx(this.showHeight)) {
 						this.isLongContent = true
 						this.status = 'close'
 					} else {
@@ -109,7 +111,7 @@
 			// 获取内容的高度
 			async getContentHeight() {
 				// 延时一定时间再获取节点
-				await uni.$u.sleep(30)
+				await sleep(30)
 				return new Promise(resolve => {
 					// #ifndef APP-NVUE
 					this.$uGetRect('.' + this.elId).then(res => {

@@ -2,7 +2,7 @@
 	<view class="u-dropdown-item" v-if="active" @touchmove.stop.prevent="() => {}" @tap.stop.prevent="() => {}">
 		<block v-if="!$slots.default && !$slots.$default">
 			<scroll-view class="u-dropdown-item__scroll" scroll-y="true" :style="{
-				height: $u.addUnit(height)
+				height: addUnit(height)
 			}">
 				<view class="u-dropdown-item__options">
 					<up-cell-group>
@@ -24,6 +24,7 @@
     import props from './props';
     import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addUnit, $parent } from '../../libs/function/index';
 	/**
 	 * dropdown-item 下拉菜单
 	 * @description 该组件一般用于向下展开菜单，同时可切换多个选项卡的场景
@@ -68,9 +69,10 @@
 		},
         emits: ['update:modelValue', 'change'],
 		methods: {
+			addUnit,
 			init() {
 				// 获取父组件u-dropdown
-				let parent = this.$u.$parent.call(this, 'u-dropdown');
+				let parent = $parent.call(this, 'u-dropdown');
 				if (parent) {
 					this.parent = parent;
 					// 将子组件的激活颜色配置为父组件设置的激活和未激活时的颜色

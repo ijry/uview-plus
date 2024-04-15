@@ -20,14 +20,14 @@
                         class="u-loading-page__warpper__loading-icon__img"
                         mode="widthFit"
 						:style="{
-							width: $u.addUnit(iconSize),
-						    height: $u.addUnit(iconSize)
+							width: addUnit(iconSize),
+						    height: addUnit(iconSize)
 						}"
                     ></image>
                     <u-loading-icon
                         v-else
                         :mode="loadingMode"
-                        :size="$u.addUnit(iconSize)"
+                        :size="addUnit(iconSize)"
                         :color="loadingColor"
                     ></u-loading-icon>
                 </view>
@@ -35,7 +35,7 @@
                     <text
                         class="u-loading-page__warpper__text"
                         :style="{
-                            fontSize: $u.addUnit(fontSize),
+                            fontSize: addUnit(fontSize),
                             color: color,
                         }"
                         >{{ loadingText }}</text
@@ -50,6 +50,7 @@
 import props from "./props.js";
 import mpMixin from '../../libs/mixin/mpMixin';
 import mixin from '../../libs/mixin/mixin';
+import { addUnit } from '../../libs/function/index';
 /**
  * loadingPage 加载动画
  * @description 警此组件为一个小动画，目前用在uView的loadmore加载更多和switch开关等组件的正在加载状态场景。
@@ -72,7 +73,9 @@ export default {
     data() {
         return {};
     },
-    methods: {},
+    methods: {
+        addUnit
+    }
 };
 </script>
 

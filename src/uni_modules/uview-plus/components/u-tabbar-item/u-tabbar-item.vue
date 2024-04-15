@@ -1,7 +1,7 @@
 <template>
 	<view
 	    class="u-tabbar-item cursor-pointer"
-	    :style="[$u.addStyle(customStyle)]"
+	    :style="[addStyle(customStyle)]"
 	    @tap="clickHandler"
 	>
 		<view class="u-tabbar-item__icon">
@@ -46,6 +46,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addStyle, error } from '../../libs/function/index';
 	/**
 	 * TabbarItem 底部导航栏子组件
 	 * @description 此组件提供了自定义tabbar的能力。
@@ -82,11 +83,12 @@
 		},
 		emits: ["click", "change"],
 		methods: {
+			addStyle,
 			init() {
 				// 支付宝小程序不支持provide/inject，所以使用这个方法获取整个父组件，在created定义，避免循环引用
 				this.updateParentData()
 				if (!this.parent) {
-					uni.$u.error('u-tabbar-item必须搭配u-tabbar组件使用')
+					error('u-tabbar-item必须搭配u-tabbar组件使用')
 				}
 				// 本子组件在u-tabbar的children数组中的索引
 				const index = this.parent.children.indexOf(this)

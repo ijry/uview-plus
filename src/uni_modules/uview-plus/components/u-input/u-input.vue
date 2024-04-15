@@ -79,6 +79,7 @@
 import props from "./props.js";
 import mpMixin from '../../libs/mixin/mpMixin';
 import mixin from '../../libs/mixin/mixin';
+import { addStyle, addUnit, deepMerge, formValidate, $parent, sleep, os } from '../../libs/function/index';
 /**
  * Input 输入框
  * @description  此组件为一个输入框，默认没有边框和样式，是专门为配合表单组件u-form而设计的，利用它可以快速实现表单验证，输入内容，下拉选择等功能。
@@ -153,7 +154,7 @@ export default {
                     this.valueChange();
                 } else {
 					// 尝试调用u-form的验证方法
-					uni.$u.formValidate(this, "change");
+					formValidate(this, "change");
 				}
                 /* #endif */
                 this.firstChange = false;
@@ -176,7 +177,7 @@ export default {
                     this.valueChange();
                 } else {
 					// 尝试调用u-form的验证方法
-					uni.$u.formValidate(this, "change");
+					formValidate(this, "change");
 				}
                 /* #endif */
                 this.firstChange = false;
@@ -223,13 +224,13 @@ export default {
                 style.paddingLeft = "9px";
                 style.paddingRight = "9px";
             }
-            return uni.$u.deepMerge(style, uni.$u.addStyle(this.customStyle));
+            return deepMerge(style, addStyle(this.customStyle));
         },
         // 输入框的样式
         inputStyle() {
             const style = {
                 color: this.color,
-                fontSize: uni.$u.addUnit(this.fontSize),
+                fontSize: addUnit(this.fontSize),
 				textAlign: this.inputAlign
             };
             return style;
@@ -261,11 +262,11 @@ export default {
             this.$emit("blur", event.detail.value);
             // H5端的blur会先于点击清除控件的点击click事件触发，导致focused
             // 瞬间为false，从而隐藏了清除控件而无法被点击到
-            uni.$u.sleep(150).then(() => {
+            sleep(150).then(() => {
                 this.focused = false;
             });
             // 尝试调用u-form的验证方法
-            uni.$u.formValidate(this, "blur");
+            formValidate(this, "blur");
         },
         // 输入框聚焦时触发
         onFocus(event) {
@@ -295,7 +296,7 @@ export default {
                 this.changeFromInner = true;
                 this.$emit("change", value);
                 // 尝试调用u-form的验证方法
-                uni.$u.formValidate(this, "change");
+                formValidate(this, "change");
             });
         },
         // 点击清除控件
@@ -313,8 +314,8 @@ export default {
          */
         clickHandler() {
             // #ifdef APP-NVUE
-            if (uni.$u.os() === "android") {
-                const formItem = uni.$u.$parent.call(this, "u-form-item");
+            if (os() === "android") {
+                const formItem = $parent.call(this, "u-form-item");
                 if (formItem) {
                     formItem.clickHandler();
                 }

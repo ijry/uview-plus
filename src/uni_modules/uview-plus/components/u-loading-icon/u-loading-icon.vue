@@ -1,7 +1,7 @@
 <template>
 	<view
 		class="u-loading-icon"
-		:style="[$u.addStyle(customStyle)]"
+		:style="[addStyle(customStyle)]"
 		:class="[vertical && 'u-loading-icon--vertical']"
 		v-if="show"
 	>
@@ -12,8 +12,8 @@
 			ref="ani"
 			:style="{
 				color: color,
-				width: $u.addUnit(size),
-				height: $u.addUnit(size),
+				width: addUnit(size),
+				height: addUnit(size),
 				borderTopColor: color,
 				borderBottomColor: otherBorderColor,
 				borderLeftColor: otherBorderColor,
@@ -39,8 +39,8 @@
 					:animating="true"
 					:style="{
 						color: color,
-						width: $u.addUnit(size),
-						height: $u.addUnit(size)
+						width: addUnit(size),
+						height: addUnit(size)
 					}"
 				/>
 				<!-- #endif -->
@@ -50,7 +50,7 @@
 			v-if="text"
 			class="u-loading-icon__text"
 			:style="{
-				fontSize: $u.addUnit(textSize),
+				fontSize: addUnit(textSize),
 				color: textColor,
 			}"
 		>{{text}}</text>
@@ -61,6 +61,8 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addUnit, addStyle } from '../../libs/function/index';
+	import { colorGradient } from '../../libs/function/colorGradient';
 	// #ifdef APP-NVUE
 	const animation = weex.requireModule('animation');
 	// #endif
@@ -104,7 +106,7 @@
 			// 之所以需要这么做的原因是，比如父组件传了color为红色，那么需要另外的三个边为浅红色
 			// 而不能是固定的某一个其他颜色(因为这个固定的颜色可能浅蓝，导致效果没有那么细腻良好)
 			otherBorderColor() {
-				const lightColor = uni.$u.colorGradient(this.color, '#ffffff', 100)[80]
+				const lightColor = colorGradient(this.color, '#ffffff', 100)[80]
 				if (this.mode === 'circle') {
 					return this.inactiveColor ? this.inactiveColor : lightColor
 				} else {
@@ -129,6 +131,8 @@
 			this.init()
 		},
 		methods: {
+			addUnit,
+			addStyle,
 			init() {
 				setTimeout(() => {
 					// #ifdef APP-NVUE

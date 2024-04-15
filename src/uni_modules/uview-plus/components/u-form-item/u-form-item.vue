@@ -3,7 +3,7 @@
 		<view
 			class="u-form-item__body"
 			@tap="clickHandler"
-			:style="[$u.addStyle(customStyle), {
+			:style="[addStyle(customStyle), {
                 flexDirection: (labelPosition || parentData.labelPosition) === 'left' ? 'row' : 'column'
 			}]"
 		>
@@ -14,7 +14,7 @@
 					class="u-form-item__body__left"
 					v-if="required || leftIcon || label"
 					:style="{
-						width: $u.addUnit(labelWidth || parentData.labelWidth),
+						width: addUnit(labelWidth || parentData.labelWidth),
 						marginBottom: parentData.labelPosition === 'left' ? 0 : '5px',
 					}"
 				>
@@ -62,13 +62,13 @@
 				v-if="!!message && parentData.errorType === 'message'"
 				class="u-form-item__body__right__message"
 				:style="{
-					marginLeft:  $u.addUnit(parentData.labelPosition === 'top' ? 0 : (labelWidth || parentData.labelWidth))
+					marginLeft:  addUnit(parentData.labelPosition === 'top' ? 0 : (labelWidth || parentData.labelWidth))
 				}"
 			>{{ message }}</text>
 		</slot>
 		<u-line
 			v-if="borderBottom"
-			:color="message && parentData.errorType === 'border-bottom' ? $u.color.error : propsLine.color"
+			:color="message && parentData.errorType === 'border-bottom' ? color.error : propsLine.color"
 			:customStyle="`margin-top: ${message && parentData.errorType === 'message' ? '5px' : 0}`"
 		></u-line>
 	</view>
@@ -78,6 +78,9 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import defProps from '../../libs/config/props.js';
+	import color from '../../libs/config/color';
+	import { addStyle, addUnit, getProperty, setProperty, error } from '../../libs/function/index';
 	/**
 	 * Form 表单
 	 * @description 此组件一般用于表单场景，可以配置Input输入框，Select弹出框，进行表单验证等。
@@ -118,7 +121,7 @@
 		// 组件创建完成时，将当前实例保存到u-form中
 		computed: {
 			propsLine() {
-				return uni.$u.props.line
+				return defProps.line
 			}
 		},
 		mounted() {
@@ -126,11 +129,14 @@
 		},
 		emits: ["click"],
 		methods: {
+			addStyle,
+			addUnit,
+			color,
 			init() {
 				// 父组件的实例
 				this.updateParentData()
 				if (!this.parent) {
-					uni.$u.error('u-form-item需要结合u-form组件使用')
+					error('u-form-item需要结合u-form组件使用')
 				}
 			},
 			// 获取父组件的参数
@@ -145,9 +151,9 @@
 			// 清空当前的组件的校验结果，并重置为初始值
 			resetField() {
 				// 找到原始值
-				const value = uni.$u.getProperty(this.parent.originalModel, this.prop)
+				const value = getProperty(this.parent.originalModel, this.prop)
 				// 将u-form的model的prop属性链还原原始值
-				uni.$u.setProperty(this.parent.model, this.prop, value)
+				setProperty(this.parent.model, this.prop, value)
 				// 移除校验结果
 				this.message = null
 			},

@@ -7,7 +7,7 @@
 		    class="u-alert"
 		    :class="[`u-alert--${type}--${effect}`]"
 		    @tap.stop="clickHandler"
-		    :style="[$u.addStyle(customStyle)]"
+		    :style="[addStyle(customStyle)]"
 		>
 			<view
 			    class="u-alert__icon"
@@ -29,7 +29,7 @@
 				    class="u-alert__content__title"
 				    v-if="title"
 					:style="[{
-						fontSize: $u.addUnit(fontSize),
+						fontSize: addUnit(fontSize),
 						textAlign: center ? 'center' : 'left'
 					}]"
 				    :class="[effect === 'dark' ? 'u-alert__text--dark' : `u-alert__text--${type}--light`]"
@@ -38,7 +38,7 @@
 				    class="u-alert__content__desc"
 					v-if="description"
 					:style="[{
-						fontSize: $u.addUnit(fontSize),
+						fontSize: addUnit(fontSize),
 						textAlign: center ? 'center' : 'left'
 					}]"
 				    :class="[effect === 'dark' ? 'u-alert__text--dark' : `u-alert__text--${type}--light`]"
@@ -63,6 +63,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addUnit, addStyle } from '../../libs/function/index';
 	/**
 	 * Alert  警告提示
 	 * @description 警告提示，展现需要关注的信息。
@@ -117,6 +118,8 @@
 		},
 		emits: ["click"],
 		methods: {
+			addUnit,
+			addStyle,
 			// 点击内容
 			clickHandler() {
 				this.$emit('click')

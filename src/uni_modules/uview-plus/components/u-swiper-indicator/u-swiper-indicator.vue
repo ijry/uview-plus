@@ -5,7 +5,7 @@
 			v-if="indicatorMode === 'line'"
 			:class="[`u-swiper-indicator__wrapper--${indicatorMode}`]"
 			:style="{
-				width: $u.addUnit(lineWidth * length),
+				width: addUnit(lineWidth * length),
 				backgroundColor: indicatorInactiveColor
 			}"
 		>
@@ -25,7 +25,6 @@
 				:class="[index === current && 'u-swiper-indicator__wrapper__dot--active']"
 				:style="[dotStyle(index)]"
 			>
-
 			</view>
 		</view>
 	</view>
@@ -35,6 +34,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addUnit } from '../../libs/function/index';
 	/**
 	 * SwiperIndicator 轮播图指示器
 	 * @description 该组件一般用于导航轮播，广告展示等场景,可开箱即用，
@@ -58,8 +58,8 @@
 			// 指示器为线型的样式
 			lineStyle() {
 				let style = {}
-				style.width = uni.$u.addUnit(this.lineWidth)
-				style.transform = `translateX(${ uni.$u.addUnit(this.current * this.lineWidth) })`
+				style.width = addUnit(this.lineWidth)
+				style.transform = `translateX(${ addUnit(this.current * this.lineWidth) })`
 				style.backgroundColor = this.indicatorActiveColor
 				return style
 			},
@@ -72,6 +72,9 @@
 				}
 			}
 		},
+		methods: {
+			addUnit
+		}
 	}
 </script>
 

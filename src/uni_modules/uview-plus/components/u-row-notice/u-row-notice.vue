@@ -55,6 +55,8 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addUnit, error, sleep, getPx } from '../../libs/function/index';
+	import test from '../../libs/function/test';
 	// #ifdef APP-NVUE
 	const animation = uni.requireNativePlugin('animation')
 	const dom = uni.requireNativePlugin('dom')
@@ -99,8 +101,8 @@
 					this.vue()
 					// #endif
 					
-					if(!uni.$u.test.string(newValue)) {
-						uni.$u.error('noticebar组件direction为row时，要求text参数为字符串形式')
+					if(!test.string(newValue)) {
+						error('noticebar组件direction为row时，要求text参数为字符串形式')
 					}
 				}
 			},
@@ -126,7 +128,7 @@
 			textStyle() {
 				let style = {}
 				style.color = this.color
-				style.fontSize = uni.$u.addUnit(this.fontSize)
+				style.fontSize = addUnit(this.fontSize)
 				return style
 			},
 			animationStyle() {
@@ -177,8 +179,8 @@
 				this.vue()
 				// #endif
 				
-				if(!uni.$u.test.string(this.text)) {
-					uni.$u.error('noticebar组件direction为row时，要求text参数为字符串形式')
+				if(!test.string(this.text)) {
+					error('noticebar组件direction为row时，要求text参数为字符串形式')
 				}
 			},
 			// vue版处理
@@ -187,13 +189,13 @@
 				let boxWidth = 0,
 					textWidth = 0
 				// 进行一定的延时
-				await uni.$u.sleep()
+				await sleep()
 				// 查询盒子和文字的宽度
 				textWidth = (await this.$uGetRect('.u-notice__content__text')).width
 				boxWidth = (await this.$uGetRect('.u-notice__content')).width
 				// 根据t=s/v(时间=路程/速度)，这里为何不需要加上#u-notice-box的宽度，因为中设置了.u-notice-content样式中设置了padding-left: 100%
 				// 恰巧计算出来的结果中已经包含了#u-notice-box的宽度
-				this.animationDuration = `${textWidth / uni.$u.getPx(this.speed)}s`
+				this.animationDuration = `${textWidth / getPx(this.speed)}s`
 				// 这里必须这样开始动画，否则在APP上动画速度不会改变
 				this.animationPlayState = 'paused'
 				setTimeout(() => {
@@ -208,7 +210,7 @@
 				let boxWidth = 0,
 					textWidth = 0
 				// 进行一定的延时
-				await uni.$u.sleep()
+				await sleep()
 				// 查询盒子和文字的宽度
 				textWidth = (await this.getNvueRect('u-notice__content__text')).width
 				boxWidth = (await this.getNvueRect('u-notice__content')).width
@@ -231,7 +233,7 @@
 						transform: `translateX(-${textWidth}px)`
 					},
 					// 滚动时间的计算为，时间 = 路程(boxWidth + textWidth) / 速度，最后转为毫秒
-					duration: (boxWidth + textWidth) / uni.$u.getPx(this.speed) * 1000,
+					duration: (boxWidth + textWidth) / getPx(this.speed) * 1000,
 					delay: 10
 				}, () => {
 					animation.transition(this.$refs['u-notice__content__text'], {

@@ -48,7 +48,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
-
+	import { addUnit, addStyle, deepMerge, sleep, sys } from '../../libs/function/index';
 	/**
 	 * popup 弹窗
 	 * @description 弹出层容器，用于展示弹窗、信息提示等内容，支持上、下、左、右和中部弹出。组件只提供容器，内部内容由用户自定义
@@ -100,27 +100,27 @@
 				}
 				style[this.mode] = 0
 				if (this.mode === 'left') {
-					return uni.$u.deepMerge(style, {
+					return deepMerge(style, {
 						bottom: 0,
 						top: 0,
 					})
 				} else if (this.mode === 'right') {
-					return uni.$u.deepMerge(style, {
+					return deepMerge(style, {
 						bottom: 0,
 						top: 0,
 					})
 				} else if (this.mode === 'top') {
-					return uni.$u.deepMerge(style, {
+					return deepMerge(style, {
 						left: 0,
 						right: 0
 					})
 				} else if (this.mode === 'bottom') {
-					return uni.$u.deepMerge(style, {
+					return deepMerge(style, {
 						left: 0,
 						right: 0,
 					})
 				} else if (this.mode === 'center') {
-					return uni.$u.deepMerge(style, {
+					return deepMerge(style, {
 						alignItems: 'center',
 						'justify-content': 'center',
 						top: 0,
@@ -136,7 +136,7 @@
 				// 不使用css方案，是因为nvue不支持css的iPhoneX安全区查询属性
 				const {
 					safeAreaInsets
-				} = uni.$u.sys()
+				} = sys()
 				if (this.mode !== 'center') {
 					style.flex = 1
 				}
@@ -145,7 +145,7 @@
 					style.backgroundColor = this.bgColor
 				}
 				if(this.round) {
-					const value = uni.$u.addUnit(this.round)
+					const value = addUnit(this.round)
 					if(this.mode === 'top') {
 						style.borderBottomLeftRadius = value
 						style.borderBottomRightRadius = value
@@ -156,7 +156,7 @@
 						style.borderRadius = value
 					} 
 				}
-				return uni.$u.deepMerge(style, uni.$u.addStyle(this.customStyle))
+				return deepMerge(style, addStyle(this.customStyle))
 			},
 			position() {
 				if (this.mode === 'center') {
@@ -213,7 +213,7 @@
 					// 判断如果在需要重新初始化的组件数组中名中，并且存在init方法的话，则执行
 					if (names.includes(child.$options.name) && typeof child?.init === 'function') {
 						// 需要进行一定的延时，因为初始化页面需要时间
-						uni.$u.sleep(50).then(() => {
+						sleep(50).then(() => {
 							child.init()
 						})
 					}

@@ -3,9 +3,9 @@
         <textarea
             class="u-textarea__field"
             :value="innerValue"
-            :style="{ height: $u.addUnit(height) }"
+            :style="{ height: addUnit(height) }"
             :placeholder="placeholder"
-            :placeholder-style="$u.addStyle(placeholderStyle, 'string')"
+            :placeholder-style="addStyle(placeholderStyle, 'string')"
             :placeholder-class="placeholderClass"
             :disabled="disabled"
             :focus="focus"
@@ -46,6 +46,7 @@
 import props from "./props.js";
 import mpMixin from '../../libs/mixin/mpMixin';
 import mixin from '../../libs/mixin/mixin';
+import { addStyle, addUnit, deepMerge, formValidate, os } from '../../libs/function/index';
 /**
  * Textarea 文本域
  * @description 文本域此组件满足了可能出现的表单信息补充，编辑等实际逻辑的功能，内置了字数校验等
@@ -164,20 +165,22 @@ export default {
             const style = {};
             // #ifdef APP-NVUE
             // 由于textarea在安卓nvue上的差异性，需要额外再调整其内边距
-            if (uni.$u.os() === "android") {
+            if (os() === "android") {
                 style.paddingTop = "6px";
                 style.paddingLeft = "9px";
                 style.paddingBottom = "3px";
                 style.paddingRight = "6px";
             }
             // #endif
-            return uni.$u.deepMerge(style, uni.$u.addStyle(this.customStyle));
+            return deepMerge(style, addStyle(this.customStyle));
         },
     },
     // #ifdef VUE3
     emits: ['update:modelValue', 'linechange', 'focus', 'blur', 'change', 'confirm', 'keyboardheightchange'],
     // #endif
     methods: {
+        addStyle,
+        addUnit,
 		// 在微信小程序中，不支持将函数当做props参数，故只能通过ref形式调用
 		setFormatter(e) {
 			this.innerFormatter = e
@@ -188,7 +191,7 @@ export default {
         onBlur(e) {
             this.$emit("blur", e);
             // 尝试调用u-form的验证方法
-            uni.$u.formValidate(this, "blur");
+            formValidate(this, "blur");
         },
         onLinechange(e) {
             this.$emit("linechange", e);
@@ -219,7 +222,7 @@ export default {
 		        this.changeFromInner = true;
 		        this.$emit("change", value);
 		        // 尝试调用u-form的验证方法
-		        uni.$u.formValidate(this, "change");
+		        formValidate(this, "change");
 		    });
 		},
         onConfirm(e) {

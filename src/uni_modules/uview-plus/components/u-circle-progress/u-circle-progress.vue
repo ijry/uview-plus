@@ -30,6 +30,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import {sleep } from '../../libs/function/index';
 	// #ifdef APP-NVUE
 	const animation = uni.requireNativePlugin('animation')
 	// #endif
@@ -64,7 +65,7 @@
 			}
 		},
 		mounted() {
-			uni.$u.sleep().then(() => {
+			sleep().then(() => {
 				this.rightBorderColor = 'rgb(66, 185, 131)'
 				// this.init()
 			})

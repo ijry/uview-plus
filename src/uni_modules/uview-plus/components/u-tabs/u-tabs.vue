@@ -21,7 +21,7 @@
 							:key="index"
 							@tap="clickHandler(item, index)"
 							:ref="`u-tabs__wrapper__nav__item-${index}`"
-							:style="[$u.addStyle(itemStyle), {flex: scrollable ? '' : 1}]"
+							:style="[addStyle(itemStyle), {flex: scrollable ? '' : 1}]"
 							:class="[`u-tabs__wrapper__nav__item-${index}`, item.disabled && 'u-tabs__wrapper__nav__item--disabled']"
 						>
 							<text
@@ -49,8 +49,8 @@
 							class="u-tabs__wrapper__nav__line"
 							ref="u-tabs__wrapper__nav__line"
 							:style="[{
-								width: $u.addUnit(lineWidth),
-								height: $u.addUnit(lineHeight),
+								width: addUnit(lineWidth),
+								height: addUnit(lineHeight),
 								background: lineColor,
 								backgroundSize: lineBgSize,
 							}]"
@@ -62,10 +62,10 @@
 							class="u-tabs__wrapper__nav__line"
 							ref="u-tabs__wrapper__nav__line"
 							:style="[{
-								width: $u.addUnit(lineWidth),
+								width: addUnit(lineWidth),
 								transform: `translate(${lineOffsetLeft}px)`,
 								transitionDuration: `${firstTime ? 0 : duration}ms`,
-								height: $u.addUnit(lineHeight),
+								height: addUnit(lineHeight),
 								background: lineColor,
 								backgroundSize: lineBgSize,
 							}]"
@@ -88,6 +88,8 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import defProps from '../../libs/config/props.js';
+	import { addUnit, addStyle, deepMerge, getPx, sleep, sys } from '../../libs/function/index';
 	/**
 	 * Tabs 标签
 	 * @description tabs标签组件，在标签多的时候，可以配置为左右滑动，标签少的时候，可以禁止滑动。 该组件的一个特点是配置为滚动模式时，激活的tab会自动移动到组件的中间位置。
@@ -140,18 +142,18 @@
 				return index => {
 					const style = {}
 					// 取当期是否激活的样式
-					const customeStyle = index === this.innerCurrent ? uni.$u.addStyle(this.activeStyle) : uni.$u
+					const customeStyle = index === this.innerCurrent ? addStyle(this.activeStyle) : uni.$u
 						.addStyle(
 							this.inactiveStyle)
 					// 如果当前菜单被禁用，则加上对应颜色，需要在此做处理，是因为nvue下，无法在style样式中通过!import覆盖标签的内联样式
 					if (this.list[index].disabled) {
 						style.color = '#c8c9cc'
 					}
-					return uni.$u.deepMerge(customeStyle, style)
+					return deepMerge(customeStyle, style)
 				}
 			},
 			propsBadge() {
-				return uni.$u.props.badge
+				return defProps.badge
 			}
 		},
 		async mounted() {
@@ -159,6 +161,8 @@
 		},
 		emits: ['click', 'change'],
 		methods: {
+			addStyle,
+			addUnit,
 			setLineLeft() {
 				const tabItem = this.list[this.innerCurrent];
 				if (!tabItem) {
@@ -169,7 +173,7 @@
 					.slice(0, this.innerCurrent)
 					.reduce((total, curr) => total + curr.rect.width, 0);
                 // 获取下划线的数值px表示法
-				const lineWidth = uni.$u.getPx(this.lineWidth);
+				const lineWidth = getPx(this.lineWidth);
 				this.lineOffsetLeft = lineOffsetLeft + (tabItem.rect.width - lineWidth) / 2
 				// #ifdef APP-NVUE
 				// 第一次移动滑块，无需过渡时间
@@ -213,7 +217,7 @@
 				})
 			},
 			init() {
-				uni.$u.sleep().then(() => {
+				sleep().then(() => {
 					this.resize()
 				})
 			},
@@ -227,7 +231,7 @@
 						return total + curr.rect.width
 					}, 0)
 				// 此处为屏幕宽度
-				const windowWidth = uni.$u.sys().windowWidth
+				const windowWidth = sys().windowWidth
 				// 将活动的tabs-item移动到屏幕正中间，实际上是对scroll-view的移动
 				let scrollLeft = offsetLeft - (this.tabsRect.width - tabRect.rect.width) / 2 - (windowWidth - this.tabsRect
 					.right) / 2 + this.tabsRect.left / 2

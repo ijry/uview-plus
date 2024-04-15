@@ -2,7 +2,7 @@
 	<text
 		v-if="show && ((Number(value) === 0 ? showZero : true) || isDot)"
 		:class="[isDot ? 'u-badge--dot' : 'u-badge--not-dot', inverted && 'u-badge--inverted', shape === 'horn' && 'u-badge--horn', `u-badge--${type}${inverted ? '--inverted' : ''}`]"
-		:style="[$u.addStyle(customStyle), badgeStyle]"
+		:style="[addStyle(customStyle), badgeStyle]"
 		class="u-badge"
 	>{{ isDot ? '' :showValue }}</text>
 </template>
@@ -11,6 +11,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addStyle, addUnit } from '../../libs/function/index';
 	/**
 	 * badge 徽标数
 	 * @description 该组件一般用于图标右上角显示未读的消息数量，提示用户点击，有圆点和圆包含文字两种形式。
@@ -57,8 +58,8 @@
 						// top和right分为为offset的第一个和第二个值，如果没有第二个值，则right等于top
 						const top = this.offset[0]
 						const right = this.offset[1] || top
-						style.top = uni.$u.addUnit(top)
-						style.right = uni.$u.addUnit(right)
+						style.top = addUnit(top)
+						style.right = addUnit(right)
 					}
 				}
 				return style
@@ -80,6 +81,9 @@
 						return Number(this.value)
 				}
 			},
+		},
+		methods: {
+			addStyle
 		}
 	}
 </script>

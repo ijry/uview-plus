@@ -11,6 +11,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import test from '../../libs/function/test';
 	/**
 	 * Steps 步骤条
 	 * @description 该组件一般用于完成一个任务要分几个步骤，标识目前处于第几步的场景。
@@ -50,7 +51,7 @@
 			updateChildData() {
 				this.children.map(child => {
 					// 先判断子组件是否存在对应的方法
-					uni.$u.test.func((child || {}).updateFromParent()) && child.updateFromParent()
+					test.func((child || {}).updateFromParent()) && child.updateFromParent()
 				})
 			},
 			// 接受子组件的通知，去修改其他子组件的数据

@@ -9,6 +9,8 @@
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
 	import Schema from "../../libs/util/async-validator";
+	import { toast, getProperty, setProperty, deepClone, error } from '../../libs/function/index';
+	import test from '../../libs/function/test';
 	// 去除警告信息
 	Schema.warning = function() {};
 	/**
@@ -65,7 +67,7 @@
 				immediate: true,
 				handler(n) {
 					if (!this.originalModel) {
-						this.originalModel = uni.$u.deepClone(n);
+						this.originalModel = deepClone(n);
 					}
 				},
 			},
@@ -93,7 +95,7 @@
 				// 判断是否有规则
 				if (Object.keys(rules).length === 0) return;
 				if (process.env.NODE_ENV === 'development' && Object.keys(this.model).length === 0) {
-					uni.$u.error('设置rules，model必须设置！如果已经设置，请刷新页面。');
+					error('设置rules，model必须设置！如果已经设置，请刷新页面。');
 					return;
 				};
 				this.formRules = rules;
@@ -109,8 +111,8 @@
 				// 历遍所有u-form-item，根据其prop属性，还原model的原始快照
 				this.children.map((child) => {
 					const prop = child?.prop;
-					const value = uni.$u.getProperty(this.originalModel, prop);
-					uni.$u.setProperty(this.model, prop, value);
+					const value = getProperty(this.originalModel, prop);
+					setProperty(this.model, prop, value);
 				});
 			},
 			// 清空校验结果
@@ -137,7 +139,7 @@
 						const childErrors = [];
 						if (value.includes(child.prop)) {
 							// 获取对应的属性，通过类似'a.b.c'的形式
-							const propertyVal = uni.$u.getProperty(
+							const propertyVal = getProperty(
 								this.model,
 								child.prop
 							);
@@ -167,7 +169,7 @@
 										[propertyName]: propertyVal,
 									},
 									(errors, fields) => {
-										if (uni.$u.test.array(errors)) {
+										if (test.array(errors)) {
 											errorsRes.push(...errors);
 											childErrors.push(...errors);
 										}
@@ -186,7 +188,7 @@
 			validate(callback) {
 				// 开发环境才提示，生产环境不会提示
 				if (process.env.NODE_ENV === 'development' && Object.keys(this.formRules).length === 0) {
-					uni.$u.error('未设置rules，请看文档说明！如果已经设置，请刷新页面。');
+					error('未设置rules，请看文档说明！如果已经设置，请刷新页面。');
 					return;
 				}
 				return new Promise((resolve, reject) => {
@@ -199,7 +201,7 @@
 						this.validateField(formItemProps, (errors) => {
 							if(errors.length) {
 								// 如果错误提示方式为toast，则进行提示
-								this.errorType === 'toast' && uni.$u.toast(errors[0].message)
+								this.errorType === 'toast' && toast(errors[0].message)
 								reject(errors)
 							} else {
 								resolve(true)

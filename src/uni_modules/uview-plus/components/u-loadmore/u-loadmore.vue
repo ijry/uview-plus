@@ -2,12 +2,12 @@
 	<view
 	    class="u-loadmore"
 	    :style="[
-			$u.addStyle(customStyle),
+			addStyle(customStyle),
 			{
 				backgroundColor: bgColor,
-				marginBottom: $u.addUnit(marginBottom),
-				marginTop: $u.addUnit(marginTop),
-				height: $u.addUnit(height),
+				marginBottom: addUnit(marginBottom),
+				marginTop: addUnit(marginTop),
+				height: addUnit(height),
 			},
 		]"
 	>
@@ -55,7 +55,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
-
+	import { addUnit, addStyle } from '../../libs/function/index';
 	/**
 	 * loadmore 加载更多
 	 * @description 此组件一般用于标识页面底部加载数据时的状态。
@@ -95,8 +95,8 @@
 			loadTextStyle() {
 				return {
 					color: this.color,
-					fontSize: uni.$u.addUnit(this.fontSize),
-					lineHeight: uni.$u.addUnit(this.fontSize),
+					fontSize: addUnit(this.fontSize),
+					lineHeight: addUnit(this.fontSize),
 					backgroundColor: this.bgColor,
 				}
 			},
@@ -112,6 +112,8 @@
 		},
 		emits: ["loadmore"],
 		methods: {
+			addStyle,
+			addUnit,
 			loadMore() {
 				// 只有在“加载更多”的状态下才发送点击事件，内容不满一屏时无法触发底部上拉事件，所以需要点击来触发
 				if (this.status == 'loadmore') this.$emit('loadmore');

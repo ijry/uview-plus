@@ -12,6 +12,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addStyle, deepMerge } from '../../libs/function/index';
 	/**
 	 * grid 宫格布局
 	 * @description 宫格组件一般用于同时展示多个同类项目的场景，可以给宫格的项目设置徽标组件(badge)，或者图标等，也可以扩展为左右滑动的轮播形式。
@@ -68,7 +69,7 @@
 					default:
 						style.justifyContent = 'flex-start';
 				};
-				return uni.$u.deepMerge(style, uni.$u.addStyle(this.customStyle));
+				return deepMerge(style, addStyle(this.customStyle));
 			}
 		},
 		emits: ['click'], // 防止事件执行两次

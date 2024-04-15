@@ -42,7 +42,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
-
+	import { randomArray } from '../../libs/function/index';
 	/**
 	 * keyboard 键盘组件
 	 * @description
@@ -72,19 +72,19 @@
 					if (!this.random) {
 						return [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 					} else {
-						return uni.$u.randomArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]);
+						return randomArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]);
 					}
 				} else if (!this.dotDisabled && this.mode == 'number') {
 					if (!this.random) {
 						return [1, 2, 3, 4, 5, 6, 7, 8, 9, this.dot, 0];
 					} else {
-						return uni.$u.randomArray([1, 2, 3, 4, 5, 6, 7, 8, 9, this.dot, 0]);
+						return randomArray([1, 2, 3, 4, 5, 6, 7, 8, 9, this.dot, 0]);
 					}
 				} else if (this.mode == 'card') {
 					if (!this.random) {
 						return [1, 2, 3, 4, 5, 6, 7, 8, 9, this.cardX, 0];
 					} else {
-						return uni.$u.randomArray([1, 2, 3, 4, 5, 6, 7, 8, 9, this.cardX, 0]);
+						return randomArray([1, 2, 3, 4, 5, 6, 7, 8, 9, this.cardX, 0]);
 					}
 				}
 			},

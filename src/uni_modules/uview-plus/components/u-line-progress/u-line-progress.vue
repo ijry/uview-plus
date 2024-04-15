@@ -1,14 +1,14 @@
 <template>
 	<view
 	    class="u-line-progress"
-	    :style="[$u.addStyle(customStyle)]"
+	    :style="[addStyle(customStyle)]"
 	>
 		<view
 		    class="u-line-progress__background"
 		    ref="u-line-progress__background"
 		    :style="[{
 				backgroundColor: inactiveColor,
-				height: $u.addUnit(height),
+				height: addUnit(height),
 			}]"
 		>
 		</view>
@@ -27,6 +27,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addUnit, addStyle, sleep, range } from '../../libs/function/index';
 	// #ifdef APP-NVUE
 	const dom = uni.requireNativePlugin('dom')
 	// #endif
@@ -60,20 +61,22 @@
 				let style = {}
 				style.width = this.lineWidth
 				style.backgroundColor = this.activeColor
-				style.height = uni.$u.addUnit(this.height)
+				style.height = addUnit(this.height)
 				return style
 			},
 			innserPercentage() {
 				// 控制范围在0-100之间
-				return uni.$u.range(0, 100, this.percentage)
+				return range(0, 100, this.percentage)
 			}
 		},
 		mounted() {
 			this.init()
 		},
 		methods: {
+			addStyle,
+			addUnit,
 			init() {
-				uni.$u.sleep(20).then(() => {
+				sleep(20).then(() => {
 					this.resizeProgressWidth()
 				})
 			},

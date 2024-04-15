@@ -1,7 +1,7 @@
 <template>
 	<view
 		class="u-tooltip"
-		:style="[$u.addStyle(customStyle)]"
+		:style="[addStyle(customStyle)]"
 	>
 		<u-overlay
 			:show="showTooltip && tooltipTop !== -10000 && overlay"
@@ -27,7 +27,7 @@
 				duration="300"
 				:customStyle="{
 					position: 'absolute', 
-					top: $u.addUnit(tooltipTop),
+					top: addUnit(tooltipTop),
 					zIndex: zIndex,
 					...tooltipStyle
 				}"
@@ -42,8 +42,8 @@
 						hover-class="u-tooltip__wrapper__popup__indicator--hover"
 						v-if="showCopy || buttons.length"
 						:style="[indicatorStyle, {
-							width: $u.addUnit(indicatorWidth),
-							height: $u.addUnit(indicatorWidth),
+							width: addUnit(indicatorWidth),
+							height: addUnit(indicatorWidth),
 						}]"
 					>
 						<!-- 由于nvue不支持三角形绘制，这里就做一个四方形，再旋转45deg，得到露出的一个三角 -->
@@ -93,6 +93,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addStyle, addUnit, getPx, guid, toast, sleep, sys } from '../../libs/function/index';
 	// #ifdef APP-NVUE 
 	const dom = uni.requireNativePlugin('dom')
 	// #endif
@@ -123,8 +124,8 @@
 				// 是否展示气泡
 				showTooltip: true,
 				// 生成唯一id，防止一个页面多个组件，造成干扰
-				textId: uni.$u.guid(),
-				tooltipId: uni.$u.guid(),
+				textId: guid(),
+				tooltipId: guid(),
 				// 初始时甚至为很大的值，让其移到屏幕外面，为了计算元素的尺寸
 				tooltipTop: -10000,
 				// 气泡的位置信息
@@ -161,18 +162,16 @@
 				const style = {
 						transform: `translateY(${this.direction === 'top' ? '-100%' : '100%'})`,
 					},
-					sys = uni.$u.sys(),
-					getPx = uni.$u.getPx,
-					addUnit = uni.$u.addUnit
+					sysInfo = sys()
 				if (this.tooltipInfo.width / 2 > this.textInfo.left + this.textInfo.width / 2 - this.screenGap) {
 					this.indicatorStyle = {}
 					style.left = `-${addUnit(this.textInfo.left - this.screenGap)}`
 					this.indicatorStyle.left = addUnit(this.textInfo.width / 2 - getPx(style.left) - this.indicatorWidth /
 						2)
-				} else if (this.tooltipInfo.width / 2 > sys.windowWidth - this.textInfo.right + this.textInfo.width / 2 -
+				} else if (this.tooltipInfo.width / 2 > sysInfo.windowWidth - this.textInfo.right + this.textInfo.width / 2 -
 					this.screenGap) {
 					this.indicatorStyle = {}
-					style.right = `-${addUnit(sys.windowWidth - this.textInfo.right - this.screenGap)}`
+					style.right = `-${addUnit(sysInfo.windowWidth - this.textInfo.right - this.screenGap)}`
 					this.indicatorStyle.right = addUnit(this.textInfo.width / 2 - getPx(style.right) - this
 						.indicatorWidth / 2)
 				} else {
@@ -195,6 +194,8 @@
 		},
 		emits: ["click"],
 		methods: {
+			addStyle,
+			addUnit,
 			init() {
 				this.getElRect()
 			},
@@ -240,7 +241,7 @@
 				// 调用之前，先将指示器调整到屏幕外，方便获取尺寸
 				this.showTooltip = true
 				this.tooltipTop = -10000
-				uni.$u.sleep(500).then(() => {
+				sleep(500).then(() => {
 					this.queryRect(this.tooltipId).then(size => {
 						this.tooltipInfo = size
 						// 获取气泡尺寸之后，将其隐藏，为了让下次切换气泡显示与隐藏时，有淡入淡出的效果
@@ -260,10 +261,10 @@
 					// 优先使用copyText字段，如果没有，则默认使用text字段当做复制的内容
 					data: this.copyText || this.text,
 					success: () => {
-						this.showToast && uni.$u.toast('复制成功')
+						this.showToast && toast('复制成功')
 					},
 					fail: () => {
-						this.showToast && uni.$u.toast('复制失败')
+						this.showToast && toast('复制失败')
 					},
 					complete: () => {
 						this.showTooltip = false

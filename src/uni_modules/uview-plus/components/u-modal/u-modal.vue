@@ -6,7 +6,7 @@
 		:customStyle="{
 			borderRadius: '6px', 
 			overflow: 'hidden',
-			marginTop: `-${$u.addUnit(negativeTop)}`
+			marginTop: `-${addUnit(negativeTop)}`
 		}"
 		:closeOnClickOverlay="closeOnClickOverlay"
 		:safeAreaInsetBottom="false"
@@ -16,7 +16,7 @@
 		<view
 			class="u-modal"
 			:style="{
-				width: $u.addUnit(width),
+				width: addUnit(width),
 			}"
 		>
 			<text
@@ -93,6 +93,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addUnit } from '../../libs/function/index';
 	/**
 	 * Modal 模态框
 	 * @description 弹出模态框，常用于消息提示、消息确认、在当前页面内完成特定的交互操作。
@@ -135,6 +136,7 @@
 		},
 		emits: ["confirm", "cancel", "close"],
 		methods: {
+			addUnit,
 			// 点击确定按钮
 			confirmHandler() {
 				// 如果配置了异步关闭，将按钮值为loading状态

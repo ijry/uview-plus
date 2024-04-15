@@ -41,6 +41,9 @@
 <script>
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { os, sys, deepMerge, type2icon } from '../../libs/function/index';
+	import color from '../../libs/config/color';
+	import { hexToRgb } from '../../libs/function/colorGradient';
 	/**
 	 * toast 消息提示
 	 * @description 此组件表现形式类似uni的uni.showToastAPI，但也有不同的地方。
@@ -90,7 +93,7 @@
 					return '';
 				}
 				if (['error', 'warning', 'success', 'primary'].includes(this.tmpConfig.type)) {
-					return uni.$u.type2icon(this.tmpConfig.type)
+					return type2icon(this.tmpConfig.type)
 				} else {
 					return ''
 				}
@@ -111,24 +114,24 @@
 				style.marginRight = '4px'
 				// #ifdef APP-NVUE
 				// iOSAPP下，图标有1px的向下偏移，这里进行修正
-				if (uni.$u.os() === 'ios') {
+				if (os() === 'ios') {
 					style.marginTop = '-1px'
 				}
 				// #endif
 				return style
 			},
 			loadingIconColor() {
-				let color = 'rgb(255, 255, 255)'
+				let colorTmp = 'rgb(255, 255, 255)'
 				if (['error', 'warning', 'success', 'primary'].includes(this.tmpConfig.type)) {
 					// loading-icon组件内部会对color参数进行一个透明度处理，该方法要求传入的颜色值
 					// 必须为rgb格式的，所以这里做一个处理
-					color = uni.$u.hexToRgb(uni.$u.color[this.tmpConfig.type])
+					colorTmp = hexToRgb(color[this.tmpConfig.type])
 				}
-				return color
+				return colorTmp
 			},
 			// 内容盒子的样式
 			contentStyle() {
-				const windowHeight = uni.$u.sys().windowHeight, style = {}
+				const windowHeight = sys().windowHeight, style = {}
 				let value = 0
 				// 根据top和bottom，对Y轴进行窗体高度的百分比偏移
 				if(this.tmpConfig.position === 'top') {
@@ -153,7 +156,7 @@
 			// 显示toast组件，由父组件通过this.$refs.xxx.show(options)形式调用
 			show(options) {
 				// 不将结果合并到this.config变量，避免多次调用u-toast，前后的配置造成混乱
-				this.tmpConfig = uni.$u.deepMerge(this.config, options)
+				this.tmpConfig = deepMerge(this.config, options)
 				// 清除定时器
 				this.clearTimer()
 				this.isShow = true

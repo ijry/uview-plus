@@ -50,6 +50,8 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { sleep, error } from '../../libs/function/index';
+	import color from '../../libs/config/color';
 	// #ifdef APP-NVUE
 	const dom = uni.requireNativePlugin('dom')
 	// #endif
@@ -103,7 +105,7 @@
 					style.height = this.size.height + 'px'
 					// style.top = this.size.height / 2 + 'px'
 				}
-				style.backgroundColor = this.parent.children?.[this.index + 1]?.error ? uni.$u.color.error : this.index <
+				style.backgroundColor = this.parent.children?.[this.index + 1]?.error ? color.error : this.index <
 					this
 					.parentData
 					.current ? this.parentData.activeColor : this.parentData.inactiveColor
@@ -134,7 +136,7 @@
 						color = this.parentData.activeColor
 						break
 					case 'error':
-						color = uni.$u.color.error
+						color = color.error
 						break
 					case 'process':
 						color = this.parentData.dot ? this.parentData.activeColor : 'transparent'
@@ -160,7 +162,7 @@
 		},
 		mounted() {
 			this.parent && this.parent.updateFromChild()
-			uni.$u.sleep().then(() => {
+			sleep().then(() => {
 				this.getStepsItemRect()
 			})
 		},
@@ -169,7 +171,7 @@
 				// 初始化数据
 				this.updateParentData()
 				if (!this.parent) {
-					return uni.$u.error('u-steps-item必须要搭配u-steps组件使用')
+					return error('u-steps-item必须要搭配u-steps组件使用')
 				}
 				this.index = this.parent.children.indexOf(this)
 				this.childLength = this.parent.children.length

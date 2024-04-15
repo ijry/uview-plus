@@ -7,7 +7,7 @@
 		<view
 			class="u-notify"
 			:class="[`u-notify--${tmpConfig.type}`]"
-			:style="[backgroundColor, $u.addStyle(customStyle)]"
+			:style="[backgroundColor, addStyle(customStyle)]"
 		>
 			<u-status-bar v-if="tmpConfig.safeAreaInsetTop"></u-status-bar>
 			<view class="u-notify__warpper">
@@ -23,7 +23,7 @@
 				<text
 					class="u-notify__warpper__text"
 					:style="{
-						fontSize: $u.addUnit(tmpConfig.fontSize),
+						fontSize: addUnit(tmpConfig.fontSize),
 						color: tmpConfig.color
 					}"
 				>{{ tmpConfig.message }}</text>
@@ -36,6 +36,8 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import defProps from '../../libs/config/props.js';
+	import { addUnit, addStyle, deepMerge } from '../../libs/function/index';
 	/**
 	 * notify 顶部提示
 	 * @description 该组件一般用于页面顶部向下滑出一个提示，尔后自动收起的场景
@@ -63,21 +65,21 @@
 				timer: null,
 				config: {
 					// 到顶部的距离
-					top: uni.$u.props.notify.top,
+					top: defProps.notify.top,
 					// type主题，primary，success，warning，error
-					type: uni.$u.props.notify.type,
+					type: defProps.notify.type,
 					// 字体颜色
-					color: uni.$u.props.notify.color,
+					color: defProps.notify.color,
 					// 背景颜色
-					bgColor: uni.$u.props.notify.bgColor,
+					bgColor: defProps.notify.bgColor,
 					// 展示的文字内容
-					message: uni.$u.props.notify.message,
+					message: defProps.notify.message,
 					// 展示时长，为0时不消失，单位ms
-					duration: uni.$u.props.notify.duration,
+					duration: defProps.notify.duration,
 					// 字体大小
-					fontSize: uni.$u.props.notify.fontSize,
+					fontSize: defProps.notify.fontSize,
 					// 是否留出顶部安全距离（状态栏高度）
-					safeAreaInsetTop: uni.$u.props.notify.safeAreaInsetTop
+					safeAreaInsetTop: defProps.notify.safeAreaInsetTop
 				},
 				// 合并后的配置，避免多次调用组件后，可能会复用之前使用的配置参数
 				tmpConfig: {}
@@ -94,7 +96,7 @@
 					// #endif
 				}
 				const style = {
-					top: uni.$u.addUnit(this.tmpConfig.top === 0 ? top : this.tmpConfig.top),
+					top: addUnit(this.tmpConfig.top === 0 ? top : this.tmpConfig.top),
 					// 因为组件底层为u-transition组件，必须将其设置为fixed定位
 					// 让其出现在导航栏底部
 					position: 'fixed',
@@ -135,9 +137,11 @@
 			})
 		},
 		methods: {
+			addStyle,
+			addUnit,
 			show(options) {
 				// 不将结果合并到this.config变量，避免多次调用u-toast，前后的配置造成混乱
-				this.tmpConfig = uni.$u.deepMerge(this.config, options)
+				this.tmpConfig = deepMerge(this.config, options)
 				// 任何定时器初始化之前，都要执行清除操作，否则可能会造成混乱
 				this.clearTimer()
 				this.open = true

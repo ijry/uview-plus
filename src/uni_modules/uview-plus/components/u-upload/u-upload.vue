@@ -1,5 +1,5 @@
 <template>
-	<view class="u-upload" :style="[$u.addStyle(customStyle)]">
+	<view class="u-upload" :style="[addStyle(customStyle)]">
 		<view class="u-upload__wrap" >
 			<template v-if="previewImage">
 				<view
@@ -14,8 +14,8 @@
 					    class="u-upload__wrap__preview__image"
 					    @tap="onPreviewImage(item)"
 						:style="[{
-							width: $u.addUnit(width),
-							height: $u.addUnit(height)
+							width: addUnit(width),
+							height: addUnit(height)
 						}]"
 					/>
 					<view
@@ -104,8 +104,8 @@
 				    @tap="chooseFile"
 				    :class="[disabled && 'u-upload__button--disabled']"
 					:style="[{
-						width: $u.addUnit(width),
-						height: $u.addUnit(height)
+						width: addUnit(width),
+						height: addUnit(height)
 					}]"
 				>
 					<u-icon
@@ -132,7 +132,8 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
-
+	import { addStyle, addUnit, toast } from '../../libs/function/index';
+	import test from '../../libs/function/test';
 	/**
 	 * upload 上传
 	 * @description 该组件用于上传图片场景
@@ -192,6 +193,8 @@
 		emits: ['error', 'beforeRead', 'oversize', 'afterRead', 'delete', 'clickPreview'],
 		// #endif
 		methods: {
+			addUnit,
+			addStyle,
 			formatFileList() {
 				const {
 					fileList = [], maxCount
@@ -199,8 +202,8 @@
 				const lists = fileList.map((item) =>
 					Object.assign(Object.assign({}, item), {
 						// 如果item.url为本地选择的blob文件的话，无法判断其为video还是image，此处优先通过accept做判断处理
-						isImage: this.accept === 'image' || uni.$u.test.image(item.url || item.thumb),
-						isVideo: this.accept === 'video' || uni.$u.test.video(item.url || item.thumb),
+						isImage: this.accept === 'image' || test.image(item.url || item.thumb),
+						isVideo: this.accept === 'video' || test.video(item.url || item.thumb),
 						deletable: typeof(item.deletable) === 'boolean' ? item.deletable : this.deletable,
 					})
 				);
@@ -218,7 +221,7 @@
 				// 如果用户传入的是字符串，需要格式化成数组
 				let capture;
 				try {
-					capture = uni.$u.test.array(this.capture) ? this.capture : this.capture.split(',');
+					capture = test.array(this.capture) ? this.capture : this.capture.split(',');
 				}catch(e) {
 					capture = [];
 				}
@@ -250,7 +253,7 @@
 				} = this;
 				let res = true
 				// beforeRead是否为一个方法
-				if (uni.$u.test.func(beforeRead)) {
+				if (test.func(beforeRead)) {
 					// 如果用户定义了此方法，则去执行此方法，并传入读取的文件回调
 					res = beforeRead(file, this.getDetail());
 				}
@@ -271,7 +274,7 @@
 				if (!res) {
 					return;
 				}
-				if (uni.$u.test.promise(res)) {
+				if (test.promise(res)) {
 					res.then((data) => this.onAfterRead(data || file));
 				} else {
 					this.onAfterRead(file);
@@ -317,10 +320,10 @@
 				if (!item.isImage || !this.previewFullImage) return
 				uni.previewImage({
 					// 先filter找出为图片的item，再返回filter结果中的图片url
-					urls: this.lists.filter((item) => this.accept === 'image' || uni.$u.test.image(item.url || item.thumb)).map((item) => item.url || item.thumb),
+					urls: this.lists.filter((item) => this.accept === 'image' || test.image(item.url || item.thumb)).map((item) => item.url || item.thumb),
 					current: item.url || item.thumb,
 					fail() {
-						uni.$u.toast('预览图片失败')
+						toast('预览图片失败')
 					},
 				});
 			},
@@ -342,7 +345,7 @@
 						),
 					current: index,
 					fail() {
-						uni.$u.toast('预览视频失败')
+						toast('预览视频失败')
 					},
 				});
 			},

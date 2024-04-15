@@ -28,8 +28,8 @@
 			@scrolltoupper="wxs.scrolltoupper"
 			@scrolltolower="wxs.scrolltolower"
 			:data-scrollWidth="scrollWidth"
-			:data-barWidth="$u.getPx(indicatorBarWidth)"
-			:data-indicatorWidth="$u.getPx(indicatorWidth)"
+			:data-barWidth="getPx(indicatorBarWidth)"
+			:data-indicatorWidth="getPx(indicatorWidth)"
 			:show-scrollbar="false"
 			:upper-threshold="0"
 			:lower-threshold="0"
@@ -56,7 +56,7 @@
 			<view
 				class="u-scroll-list__indicator"
 				v-if="indicator"
-				:style="[$u.addStyle(indicatorStyle)]"
+				:style="[addStyle(indicatorStyle)]"
 			>
 				<view
 					class="u-scroll-list__indicator__line"
@@ -100,6 +100,7 @@ import nvueMixin from "./nvue.js"
 import props from './props';
 import mpMixin from '../../libs/mixin/mpMixin';
 import mixin from '../../libs/mixin/mixin';
+import { addStyle, addUnit, getPx, sleep } from '../../libs/function/index';
 export default {
 	name: 'u-scroll-list',
 	// #ifndef APP-NVUE
@@ -132,14 +133,14 @@ export default {
 			style.transform = `translateX(${ x }px)`
 			// #endif
 			// 设置滑块的宽度和背景色，是每个平台都需要的
-			style.width = uni.$u.addUnit(this.indicatorBarWidth)
+			style.width = addUnit(this.indicatorBarWidth)
 			style.backgroundColor = this.indicatorActiveColor
 			return style
 		},
 		lineStyle() {
 			const style = {}
 			// 指示器整体的样式，需要设置其宽度和背景色
-			style.width = uni.$u.addUnit(this.indicatorWidth)
+			style.width = addUnit(this.indicatorWidth)
 			style.backgroundColor = this.indicatorColor
 			return style
 		}
@@ -149,6 +150,8 @@ export default {
 	},
 	emits: ["left", "right"],
 	methods: {
+		addStyle,
+		getPx,
 		init() {
 			this.getComponentWidth()
 		},
@@ -165,7 +168,7 @@ export default {
 			this.scrollEvent('right')
 			// 在普通js方案中，滚动到右边时，通过设置this.scrollInfo，模拟出滚动到右边的情况
 			// 因为上方是用过computed计算的，设置后，会自动调整滑块的位置
-			this.scrollInfo.scrollLeft = uni.$u.getPx(this.indicatorWidth) - uni.$u.getPx(this.indicatorBarWidth)
+			this.scrollInfo.scrollLeft = getPx(this.indicatorWidth) - getPx(this.indicatorBarWidth)
 		},
 		// #endif
 		//
@@ -175,7 +178,7 @@ export default {
 		// 获取组件的宽度
 		async getComponentWidth() {
 			// 延时一定时间，以获取dom尺寸
-			await uni.$u.sleep(30)
+			await sleep(30)
 			// #ifndef APP-NVUE
 			this.$uGetRect('.u-scroll-list').then(size => {
 				this.scrollWidth = size.width

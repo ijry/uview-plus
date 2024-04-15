@@ -60,6 +60,8 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { addUnit, error } from '../../libs/function/index';
+	import test from '../../libs/function/test';
 	/**
 	 * ColumnNotice 滚动通知中的垂直滚动 内部组件
 	 * @description 该组件用于滚动通告场景，是其中的垂直滚动方式
@@ -82,8 +84,8 @@
 			text: {
 				immediate: true,
 				handler(newValue, oldValue) {
-					if(!uni.$u.test.array(newValue)) {
-						uni.$u.error('noticebar组件direction为column时，要求text参数为数组形式')
+					if(!test.array(newValue)) {
+						error('noticebar组件direction为column时，要求text参数为数组形式')
 					}
 				}
 			}
@@ -93,7 +95,7 @@
 			textStyle() {
 				let style = {}
 				style.color = this.color
-				style.fontSize = uni.$u.addUnit(this.fontSize)
+				style.fontSize = addUnit(this.fontSize)
 				return style
 			},
 			// 垂直或者水平滚动

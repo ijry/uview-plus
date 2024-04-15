@@ -18,7 +18,7 @@
         <view class="u-text__prefix-icon" v-if="prefixIcon">
             <u-icon
                 :name="prefixIcon"
-                :customStyle="$u.addStyle(iconStyle)"
+                :customStyle="addStyle(iconStyle)"
             ></u-icon>
         </view>
         <u-link
@@ -63,19 +63,20 @@
         <view class="u-text__suffix-icon" v-if="suffixIcon">
             <u-icon
                 :name="suffixIcon"
-                :customStyle="$u.addStyle(iconStyle)"
+                :customStyle="addStyle(iconStyle)"
             ></u-icon>
         </view>
     </view>
 </template>
 
 <script>
+import props from './props'
 import value from './value.js'
 import mpMixin from '../../libs/mixin/mpMixin';
 import mixin from '../../libs/mixin/mixin';
-import button from '../../libs/mixin/button.js'
-import openType from '../../libs/mixin/openType.js'
-import props from './props.js'
+import button from '../../libs/mixin/button';
+import openType from '../../libs/mixin/openType';
+import { addStyle, addUnit, deepMerge } from '../../libs/function/index';
 /**
  * Text 文本
  * @description 此组件集成了文本类在项目中的常用功能，包括状态，拨打电话，格式化日期，*替换，超链接...等功能。 您大可不必在使用特殊文本时自己定义，text组件几乎涵盖您能使用的大部分场景。
@@ -119,14 +120,14 @@ export default {
                 textDecoration: this.decoration,
                 fontWeight: this.bold ? 'bold' : 'normal',
                 wordWrap: this.wordWrap,
-                fontSize: uni.$u.addUnit(this.size)
+                fontSize: addUnit(this.size)
             }
             !this.type && (style.color = this.color)
             this.isNvue && this.lines && (style.lines = this.lines)
             this.lineHeight &&
-                (style.lineHeight = uni.$u.addUnit(this.lineHeight))
+                (style.lineHeight = addUnit(this.lineHeight))
             !this.isNvue && this.block && (style.display = 'block')
-            return uni.$u.deepMerge(style, uni.$u.addStyle(this.customStyle))
+            return deepMerge(style, addStyle(this.customStyle))
         },
         isNvue() {
             let nvue = false
@@ -147,6 +148,7 @@ export default {
         return {}
     },
     methods: {
+        addStyle,
         clickHandler() {
             // 如果为手机号模式，拨打电话
             if (this.call && this.mode === 'phone') {

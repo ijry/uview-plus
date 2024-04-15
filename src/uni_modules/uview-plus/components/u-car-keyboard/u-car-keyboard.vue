@@ -71,6 +71,7 @@
 	import props from './props';
 	import mpMixin from '../../libs/mixin/mpMixin';
 	import mixin from '../../libs/mixin/mixin';
+	import { randomArray, sleep } from '../../libs/function/index';
 	/**
 	 * keyboard 键盘组件
 	 * @description 此为uView自定义的键盘面板，内含了数字键盘，车牌号键，身份证号键盘3种模式，都有可以打乱按键顺序的选项。
@@ -131,7 +132,7 @@
 				];
 				let tmp = [];
 				// 打乱顺序
-				if (this.random) data = uni.$u.randomArray(data);
+				if (this.random) data = randomArray(data);
 				// 切割成二维数组
 				tmp[0] = data.slice(0, 10);
 				tmp[1] = data.slice(10, 20);
@@ -179,7 +180,7 @@
 					'M'
 				];
 				let tmp = [];
-				if (this.random) data = uni.$u.randomArray(data);
+				if (this.random) data = randomArray(data);
 				tmp[0] = data.slice(0, 10);
 				tmp[1] = data.slice(10, 20);
 				tmp[2] = data.slice(20, 30);
@@ -196,7 +197,7 @@
 				if (this.abc) value = this.engKeyBoardList[i][j];
 				else value = this.areaList[i][j];
 				// 如果允许自动切换，则将中文状态切换为英文
-				if (!this.abc && this.autoChange) uni.$u.sleep(200).then(() => this.abc = true)
+				if (!this.abc && this.autoChange) sleep(200).then(() => this.abc = true)
 				this.$emit('change', value);
 			},
 			// 修改汽车牌键盘的输入模式，中文|英文

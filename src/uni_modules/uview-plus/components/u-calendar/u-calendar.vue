@@ -16,7 +16,7 @@
 			></uHeader>
 			<scroll-view
 				:style="{
-                    height: $u.addUnit(listHeight)
+                    height: addUnit(listHeight)
                 }"
 				scroll-y
 				@scroll="onScroll"
@@ -68,11 +68,12 @@ import uHeader from './header.vue'
 import uMonth from './month.vue'
 import props from './props.js'
 import util from './util.js'
-// import dayjs from '../../libs/util/dayjs.min.js'
 import dayjs from 'dayjs/esm/index'
 import Calendar from '../../libs/util/calendar.js'
 import mpMixin from '../../libs/mixin/mpMixin.js'
 import mixin from '../../libs/mixin/mixin.js'
+import { addUnit, range, error, padZero } from '../../libs/function/index';
+import test from '../../libs/function/test';
 /**
  * Calendar 日历
  * @description  此组件用于单个选择日期，范围选择日期等，日历被包裹在底部弹起的容器中.
@@ -152,12 +153,12 @@ export default {
 	computed: {
 		// 由于maxDate和minDate可以为字符串(2021-10-10)，或者数值(时间戳)，但是dayjs如果接受字符串形式的时间戳会有问题，这里进行处理
 		innerMaxDate() {
-			return uni.$u.test.number(this.maxDate)
+			return test.number(this.maxDate)
 				? Number(this.maxDate)
 				: this.maxDate
 		},
 		innerMinDate() {
-			return uni.$u.test.number(this.minDate)
+			return test.number(this.minDate)
 				? Number(this.minDate)
 				: this.minDate
 		},
@@ -194,6 +195,7 @@ export default {
 	},
 	emits: ["confirm", "close"],
 	methods: {
+		addUnit,
 		// 在微信小程序中，不支持将函数当做props参数，故只能通过ref形式调用
 		setFormatter(e) {
 			this.innerFormatter = e
@@ -224,7 +226,7 @@ export default {
                 this.innerMinDate &&
 				new Date(this.innerMaxDate).getTime() < new Date(this.innerMinDate).getTime()
 			) {
-				return uni.$u.error('maxDate不能小于minDate时间')
+				return error('maxDate不能小于minDate时间')
 			}
 			// 滚动区域的高度
 			this.listHeight = this.rowHeight * 5 + 30
@@ -258,7 +260,7 @@ export default {
 					.add(this.monthNum - 1, 'month')
 					.valueOf()
 			// 最大最小月份之间的共有多少个月份，
-			const months = uni.$u.range(
+			const months = range(
 				1,
 				this.monthNum,
 				this.getMonths(minDate, maxDate)
@@ -330,7 +332,7 @@ export default {
 				  year,
 				  month
 			  }) => {
-				month = uni.$u.padZero(month)
+				month = padZero(month)
 				return `${year}-${month}` === selected
 			})
 			if (_index !== -1) {
@@ -371,7 +373,7 @@ export default {
 			}
 			let selected = dayjs().format("YYYY-MM");
 			// 单选模式，可以是字符串或数组，Date对象等
-			if (!uni.$u.test.array(this.defaultDate)) {
+			if (!test.array(this.defaultDate)) {
 				selected = dayjs(this.defaultDate).format("YYYY-MM")
 			} else {
 				selected = dayjs(this.defaultDate[0]).format("YYYY-MM");
