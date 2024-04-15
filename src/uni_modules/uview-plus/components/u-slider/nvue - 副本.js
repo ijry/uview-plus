@@ -8,7 +8,7 @@ const BindingX = uni.requireNativePlugin('bindingx')
 const dom = uni.requireNativePlugin('dom')
 // nvue中用于操作元素动画的库，类似于uni.animation，只不过uni.animation不能用于nvue
 const animation = uni.requireNativePlugin('animation')
-
+import { range } from '../../libs/function/index';
 export default {
 	data() {
 		return {
@@ -141,7 +141,7 @@ export default {
 			}, (e) => {
 				if (e.state === 'end' || e.state === 'exit') {
 					// 
-					this.x = uni.$u.range(0, left + width, e.deltaX + this.x)
+					this.x = range(0, left + width, e.deltaX + this.x)
 					// 根据偏移值，得出移动的百分比，进而修改双向绑定的v-model的值
 					const value = (this.x / width) * 100
 					const percent = this.formatStep(value)

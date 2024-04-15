@@ -8,7 +8,7 @@ const BindingX = uni.requireNativePlugin('bindingx')
 const dom = uni.requireNativePlugin('dom')
 // nvue中用于操作元素动画的库，类似于uni.animation，只不过uni.animation不能用于nvue
 const animation = uni.requireNativePlugin('animation')
-
+import { range } from '../../libs/function/index';
 export default {
     data() {
         return {
@@ -180,7 +180,7 @@ export default {
         // 移动点占总长度的百分比，此处需要先除以step，是为了保证step大于1时，比如10，那么在滑动11,12px这样的
         // 距离时，实际上滑块是不会滑动的，到了16,17px，经过四舍五入后，就变成了20px，进行了下一个跳变
         format(value) {
-            return Math.round(uni.$u.range(this.min, this.max, value) / this.step) * this.step
+            return Math.round(range(this.min, this.max, value) / this.step) * this.step
         },
         getRange() {
             const {

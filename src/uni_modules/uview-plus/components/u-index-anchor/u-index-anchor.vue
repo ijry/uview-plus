@@ -56,7 +56,7 @@
 			addUnit,
 			init() {
 				// 此处会活动父组件实例，并赋值给实例的parent属性
-				const indexList = uni.$u.$parent.call(this, 'u-index-list')
+				const indexList = $parent.call(this, 'u-index-list')
 				if (!indexList) { 
 					return error('u-index-anchor必须要搭配u-index-list组件使用')
 				}

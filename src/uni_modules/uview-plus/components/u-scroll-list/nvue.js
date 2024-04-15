@@ -1,6 +1,6 @@
 // 引入bindingx，此库类似于微信小程序wxs，目的是让js运行在视图层，减少视图层和逻辑层的通信折损
 const BindingX = uni.requireNativePlugin('bindingx')
-
+import { os } from '../../libs/function/index';
 export default {
     methods: {
         // 此处不写注释，请自行体会
@@ -12,7 +12,7 @@ export default {
             const { scrollWidth } = this
             const barAllMoveWidth = this.indicatorWidth - this.indicatorBarWidth
             // 在安卓和iOS上，需要除的倍数不一样，iOS需要除以2
-            const actionNum = uni.$u.os() === 'ios' ? 2 : 1
+            const actionNum = os() === 'ios' ? 2 : 1
             const expression = `(x / ${actionNum}) / ${contentSize - scrollWidth} * ${barAllMoveWidth}`
             BindingX.bind({
                 anchor,

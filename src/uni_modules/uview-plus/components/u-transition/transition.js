@@ -23,7 +23,7 @@ const getStyle = (name) => animationMap[name]
 // #endif
 
 import { nextTick } from 'vue'
-
+import { sleep } from '../../libs/function/index';
 export default {
     methods: {
         // 组件被点击发出事件
@@ -44,7 +44,7 @@ export default {
 			await nextTick();
 			{
                 // https://github.com/umicro/uView2.0/issues/545
-				await uni.$u.sleep(20)
+				await sleep(20)
                 // 标识动画尚未结束
                 this.$emit('enter')
                 this.transitionEnded = false

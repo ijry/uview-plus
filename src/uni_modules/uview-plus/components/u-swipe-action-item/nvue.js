@@ -2,7 +2,7 @@
 const dom = uni.requireNativePlugin('dom');
 const bindingX = uni.requireNativePlugin('bindingx');
 const animation = uni.requireNativePlugin('animation');
-
+import { getPx, getDuration } from '../../libs/function/index';
 export default {
 	data() {
 		return {
@@ -99,7 +99,7 @@ export default {
 						this.$nextTick(() => {
 							this.status = deltaX <= -this.buttonsWidth ? 'open' : 'close'
 						})
-					} else if(Math.abs(deltaX) > uni.$u.getPx(this.threshold)) {
+					} else if(Math.abs(deltaX) > getPx(this.threshold)) {
 						// 在移动大于阈值、并且小于总按钮宽度时，进行自动打开或者关闭
 						// 移动距离大于0时，意味着需要关闭状态
 						if(Math.abs(deltaX) < this.buttonsWidth) {
@@ -155,7 +155,7 @@ export default {
 				styles: {
 					transform: `translateX(${x}px)`,
 				},
-				duration: uni.$u.getDuration(this.duration, false),
+				duration: getDuration(this.duration, false),
 				timingFunction: 'ease-in-out'
 			}, () => {
 				this.moving = false

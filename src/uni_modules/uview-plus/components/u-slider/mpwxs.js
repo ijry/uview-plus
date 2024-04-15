@@ -1,3 +1,4 @@
+import { sleep } from '../../libs/function/index';
 export default {
     data() {
         return {
@@ -23,7 +24,7 @@ export default {
         // 获取slider尺寸
         getSliderRect() {
             // 获取滑块条的尺寸信息
-            uni.$u.sleep().then(() => {
+            sleep().then(() => {
                 this.$uGetRect('.u-slider').then((rect) => {
                     this.info.width = rect.width
                     this.info.left = rect.left

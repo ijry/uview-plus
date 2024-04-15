@@ -1,4 +1,5 @@
 import defProps from '../../libs/config/props.js';
+import test from '../../libs/function/test';
 export default {
     props: {
         // 头像图片路径(不能为相对路径)
@@ -66,7 +67,7 @@ export default {
             type: [String, Number],
             // 校验参数规则，索引在0-19之间
             validator(n) {
-                return uni.$u.test.range(n, [0, 19]) || n === ''
+                return test.range(n, [0, 19]) || n === ''
             },
             default: () => defProps.avatar.colorIndex
         },

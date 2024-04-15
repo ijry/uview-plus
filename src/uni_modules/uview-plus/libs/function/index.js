@@ -1,5 +1,6 @@
 import test from './test.js'
 import { round } from './digit.js'
+import config from '../config/config';
 /**
  * @description 如果value小于min，取min；如果value大于max，取max
  * @param {number} min 
@@ -172,7 +173,7 @@ export function addStyle(customStyle, target = 'object') {
  */
 export function addUnit(value = 'auto', unit = '') {
 	if (!unit) {
-		unit = uni.$u.config.unit || 'px'
+		unit = config.unit || 'px'
 	}
 	value = String(value)
 	// 用uView内置验证规则中的number判断是否为数值
@@ -591,8 +592,8 @@ export function padZero(value) {
  * @param {*} event
  */
 export function formValidate(instance, event) {
-	const formItem = uni.$u.$parent.call(instance, 'u-form-item')
-	const form = uni.$u.$parent.call(instance, 'u-form')
+	const formItem = $parent.call(instance, 'u-form-item')
+	const form = $parent.call(instance, 'u-form')
 	// 如果发生变化的input或者textarea等，其父组件中有u-form-item或者u-form等，就执行form的validate方法
 	// 同时将form-item的pros传递给form，让其进行精确对象验证
 	if (formItem && form) {

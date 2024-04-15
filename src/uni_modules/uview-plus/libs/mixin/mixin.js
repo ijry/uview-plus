@@ -1,3 +1,6 @@
+import { deepMerge, $parent } from '../function/index';
+import test from '../function/test';
+import route from '../util/route';
 export default {
     // 定义每个组件都可能需要用到的外部样式以及类名
     props: {
@@ -39,7 +42,7 @@ export default {
         $u() {
             // #ifndef APP-NVUE
             // 在非nvue端，移除props，http，mixin等对象，避免在小程序setData时数据过大影响性能
-            return uni.$u.deepMerge(uni.$u, {
+            return deepMerge(uni.$u, {
                 props: undefined,
                 http: undefined,
                 mixin: undefined
@@ -90,7 +93,7 @@ export default {
             if (url) {
                 // h5官方回应：发行h5会自动摇树优化，所有使用uni的地方，都会被直接转换成具体的API调用 https://ask.dcloud.net.cn/question/161523?notification_id-1201922__rf-false__item_id-226372
                 // 使用封装的 route 进行跳转（直接调用方法），不使用 uni 对象
-                this.$u.route({ type: this.linkType, url })
+                route({ type: this.linkType, url })
                 // 执行类似uni.navigateTo的方法
                 // uni[this.linkType]({
                 //     url
@@ -122,7 +125,7 @@ export default {
             // 将父组件this中对应的参数，赋值给本组件(u-radio的this)的parentData对象中对应的属性
             // 之所以需要这么做，是因为所有端中，头条小程序不支持通过this.parent.xxx去监听父组件参数的变化
             // 此处并不会自动更新子组件的数据，而是依赖父组件u-radio-group去监听data的变化，手动调用更新子组件的方法去重新获取
-            this.parent = uni.$u.$parent.call(this, parentName)
+            this.parent = $parent.call(this, parentName)
             if (this.parent.children) {
                 // 如果父组件的children不存在本组件的实例，才将本实例添加到父组件的children中
                 this.parent.children.indexOf(this) === -1 && this.parent.children.push(this)
@@ -145,11 +148,16 @@ export default {
     },
     onReachBottom() {
         uni.$emit('uOnReachBottom')
-	},	// #ifdef VUE2	beforeDestroy() {	// #endif	// #ifdef VUE3
-	beforeUnmount() {	// #endif
+	},
+	// #ifdef VUE2
+	beforeDestroy() {
+	// #endif
+	// #ifdef VUE3
+	beforeUnmount() {
+	// #endif
         // 判断当前页面是否存在parent和chldren，一般在checkbox和checkbox-group父子联动的场景会有此情况
         // 组件销毁时，移除子组件在父组件children数组中的实例，释放资源，避免数据混乱
-        if (this.parent && uni.$u.test.array(this.parent.children)) {
+        if (this.parent && test.array(this.parent.children)) {
             // 组件销毁时，移除父组件中的children数组中对应的实例
             const childrenList = this.parent.children
             childrenList.map((child, index) => {

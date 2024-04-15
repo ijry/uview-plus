@@ -1,5 +1,5 @@
 <template>
-	<view class="u-cell" :class="[customClass]" :style="[$u.addStyle(customStyle)]"
+	<view class="u-cell" :class="[customClass]" :style="[addStyle(customStyle)]"
 		:hover-class="(!disabled && (clickable || isLink)) ? 'u-cell--clickable' : ''" :hover-stay-time="250"
 		@tap="clickHandler">
 		<view class="u-cell__body" :class="[ center && 'u-cell--center', size === 'large' && 'u-cell__body--large']">
