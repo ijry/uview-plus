@@ -44,7 +44,6 @@
             	    @focus="onFocus"
             	    @confirm="onConfirm"
             	    @keyboardheightchange="onkeyboardheightchange"
-					@change="onInput"
             	/>
             </view>
             <view
@@ -127,6 +126,8 @@ export default {
     mixins: [mpMixin, mixin, props],
     data() {
         return {
+            // 清除操作
+            clearInput: false,
             // 输入框的值
             innerValue: "",
             // 是否处于获得焦点状态
@@ -284,6 +285,10 @@ export default {
         },
         // 内容发生变化，进行处理
         valueChange() {
+            if(this.clearInput) {
+                this.innerValue = '';
+                this.clearInput = false;
+            }
             const value = this.innerValue;
             this.$nextTick(() => {
                 // #ifdef VUE3
@@ -301,6 +306,7 @@ export default {
         },
         // 点击清除控件
         onClear() {
+            this.clearInput = true;
             this.innerValue = "";
             this.$nextTick(() => {
                 this.valueChange();

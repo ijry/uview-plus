@@ -105,6 +105,7 @@
 			// #ifdef VUE2
 			value(newValue) {
 				this.init()
+				this.getInputValue()
 			},
 			// #endif
 			propsChange() {
