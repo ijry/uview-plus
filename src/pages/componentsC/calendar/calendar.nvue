@@ -81,6 +81,14 @@
 			mode="multiple"
 			:defaultDate="defaultDateMultiple"
 		></up-calendar>
+		<up-calendar
+			:show="show9"
+			@confirm="confirm"
+			@close="close"
+			:minDate="minDate"
+			maxDate="2023-07-05"
+			defaultDate="2022-09-09"
+		></up-calendar>
 	</view>
 </template>
 <script>
@@ -101,9 +109,11 @@
 				show6: false,
 				show7: false,
 				show8: false,
+				show9: false,
 				values: ['','','','','','','',''],
 				customThemeDefaultDate: [`${year}-${month}-${date}`, `${year}-${month}-${date + 5}`], 
 				customTextDefaultDate: [`${year}-${month}-${date}`],
+				minDate: `2022-08-09`,
 				maxDate: `${year}-${month}-${date + 10}`,
 				defaultDateMultiple: [`${year}-${month}-${date}`, `${year}-${month}-${date + 1}`, `${year}-${month}-${date + 2}`],
 				list: [{
@@ -132,6 +142,9 @@
 						iconUrl: 'https://cdn.uviewui.com/uview/demo/calendar/5.png'
 					},{
 						title: '默认日期',
+						iconUrl: 'https://cdn.uviewui.com/uview/demo/calendar/10.png'
+					},{
+						title: '日期最小范围',
 						iconUrl: 'https://cdn.uviewui.com/uview/demo/calendar/10.png'
 					}
 				]

@@ -130,12 +130,19 @@ export default {
 			// month组件中选择的日期数组
 			selected: [],
 			scrollIntoView: '',
+			scrollIntoViewScroll: '',
 			scrollTop:0,
 			// 过滤处理方法
 			innerFormatter: (value) => value
 		}
 	},
 	watch: {
+		scrollIntoView: {
+			immediate: true,
+			handler(n) {
+				// console.log('scrollIntoView', n)
+			}
+		},
 		selectedChange: {
 			immediate: true,
 			handler(n) {
@@ -146,7 +153,13 @@ export default {
 		show: {
 			immediate: true,
 			handler(n) {
-				this.setMonth()
+				if (n) {
+					this.setMonth()
+				} else {
+					// 关闭时重置scrollIntoView，否则会出现二次打开日历，当前月份数据显示不正确。
+					// scrollIntoView需要有一个值变动过程，才会产生作用。
+					this.scrollIntoView = ''
+				}
 			}
 		}
 	},
@@ -323,7 +336,6 @@ export default {
 					year: dayjs(minDate).add(i, 'month').year()
 				})
 			}
-
 		},
 		// 滚动到默认设置的月份
 		scrollIntoDefaultMonth(selected) {
@@ -339,6 +351,7 @@ export default {
 				// #ifndef MP-WEIXIN
 				this.$nextTick(() => {
 					this.scrollIntoView = `month-${_index}`
+					this.scrollIntoViewScroll = this.scrollIntoView
 				})
 				// #endif
 				// #ifdef MP-WEIXIN
@@ -354,6 +367,7 @@ export default {
 			for (let i = 0; i < this.months.length; i++) {
 				if (scrollTop >= (this.months[i].top || this.listHeight)) {
 					this.monthIndex = i
+					this.scrollIntoViewScroll = `month-${i}`
 				}
 			}
 		},
