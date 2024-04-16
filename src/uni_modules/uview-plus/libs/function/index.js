@@ -16,7 +16,7 @@ export function range(min = 0, max = 0, value = 0) {
 }
 
 /**
- * @description 用于获取用户传递值的px值  如果用户传递了"xxpx"或者"xxrpx"，取出其数值部分，如果是"xxxrpx"还需要用过uni.upx2px进行转换
+ * @description 用于获取用户传递值的px值  如果用户传递了"xxpx"或者"xxrpx"，取出其数值部分，如果是"xxxrpx"还需要用过uni.rpx2px进行转换
  * @param {number|string} value 用户传递值的px值
  * @param {boolean} unit 
  * @returns {number|string}
@@ -27,7 +27,7 @@ export function getPx(value, unit = false) {
 	}
 	// 如果带有rpx，先取出其数值部分，再转为px值
 	if (/(rpx|upx)$/.test(value)) {
-		return unit ? `${uni.upx2px(parseInt(value))}px` : Number(uni.upx2px(parseInt(value)))
+		return unit ? `${uni.rpx2px(parseInt(value))}px` : Number(uni.rpx2px(parseInt(value)))
 	}
 	return unit ? `${parseInt(value)}px` : parseInt(value)
 }
@@ -161,10 +161,12 @@ export function addStyle(customStyle, target = 'object') {
 	}
 	// 这里为对象转字符串形式
 	let string = ''
-	for (const i in customStyle) {
-		// 驼峰转为中划线的形式，否则css内联样式，无法识别驼峰样式属性名
-		const key = i.replace(/([A-Z])/g, '-$1').toLowerCase()
-		string += `${key}:${customStyle[i]};`
+	if (typeof customStyle === 'object') {
+		customStyle.forEach((val, i) => {
+			// 驼峰转为中划线的形式，否则css内联样式，无法识别驼峰样式属性名
+			const key = i.replace(/([A-Z])/g, '-$1').toLowerCase()
+			string += `${key}:${val};`
+		})
 	}
 	// 去除两端空格
 	return trim(string)
@@ -612,9 +614,9 @@ export function formValidate(instance, event) {
  * @returns {*}
  */
 export function getProperty(obj, key) {
-	if (!obj) {
-		return
-	}
+	if (typeof obj !== 'object' || null == obj) {
+        return ''
+    }
 	if (typeof key !== 'string' || key === '') {
 		return ''
 	}
@@ -639,7 +641,7 @@ export function getProperty(obj, key) {
  * @param {string} value 设置的值
  */
 export function setProperty(obj, key, value) {
-	if (!obj) {
+	if (typeof obj !== 'object' || null == obj) {
 		return
 	}
 	// 递归赋值

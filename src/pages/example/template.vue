@@ -20,7 +20,7 @@
 	</view>
 </template>
 
-<script>
+<script lang="ts">
 	import list from "./template.config.js";
 	export default {
 		data() {
@@ -30,11 +30,6 @@
 			}
 		},
 		computed: {
-			getIcon() {
-				return path => {
-					return 'https://uview-plus.jiangruyi.com/h5/static/uview/demo/' + path + '.png';
-				}
-			},
 			desc() {
 				return this.$t('template.desc');
 			}
@@ -45,6 +40,9 @@
 			});
 		},
 		methods: {
+			getIcon(path) {
+				return 'https://uview-plus.jiangruyi.com/h5/static/uview/demo/' + path + '.png';
+			},
 			openPage(path) {
 				this.$u.route({
 					url: path.indexOf('/page') == 0 ? path : '/pages/template/' + path + '/index'

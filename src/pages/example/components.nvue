@@ -31,15 +31,13 @@
 			}
 		},
 		computed: {
-			getIcon() {
-				return (path: string) => {
-					return 'https://uview-plus.jiangruyi.com/h5/static/uview/demo/' + path + '.png';
-				}
-			},
 		},
         onLoad() {
         },
 		methods: {
+			getIcon(path: string) {
+				return 'https://uview-plus.jiangruyi.com/h5/static/uview/demo/' + path + '.png';
+			},
 			openPage(detail: { name: string }) {
 				const path = detail.name
 				// #ifdef APP-NVUE
