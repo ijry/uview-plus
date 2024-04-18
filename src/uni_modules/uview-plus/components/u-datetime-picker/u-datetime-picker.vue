@@ -258,18 +258,16 @@
 			// 更新各列的值，进行补0、格式化等操作
 			updateColumnValue(value) {
 				this.innerValue = value
-        this.updateColumns()
-        // 延迟执行,等待u-picker组件列数据更新完后再设置选中值索引
-        setTimeout(() => {
-          this.updateIndexs(value)
-        }, 0);
-
+				this.updateColumns()
+				// 延迟执行,等待u-picker组件列数据更新完后再设置选中值索引
+				setTimeout(() => {
+				this.updateIndexs(value)
+				}, 0);
 			},
 			// 更新索引
 			updateIndexs(value) {
 				let values = []
 				const formatter = this.formatter || this.innerFormatter
-				const padZero = padZero
 				if (this.mode === 'time') {
 					// 将time模式的时间用:分隔成数组
 				    const timeArr = value.split(':')

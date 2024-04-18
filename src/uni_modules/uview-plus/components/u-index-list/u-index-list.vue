@@ -256,17 +256,17 @@
 					const {
 						height
 					} = size
-					const sys = sys()
-					const windowHeight = sys.windowHeight
+					const sysData = sys()
+					const windowHeight = sysData.windowHeight
 					let customNavHeight = 0
 					// 消除各端导航栏非原生和原生导致的差异，让索引列表字母对屏幕垂直居中
 					if (this.customNavHeight == 0) {
 						// #ifdef H5
-						customNavHeight = sys.windowTop
+						customNavHeight = sysData.windowTop
 						// #endif
 						// #ifndef H5
 						// 在非H5中，为原生导航栏，其高度不算在windowHeight内，这里设置为负值，后面相加时变成减去其高度的一半
-						customNavHeight = -(sys.statusBarHeight + 44)
+						customNavHeight = -(sysData.statusBarHeight + 44)
 						// #endif
 					} else {
 						customNavHeight = getPx(this.customNavHeight)
