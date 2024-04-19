@@ -115,7 +115,8 @@
 					labelWidth: 45,
 					// 错误提示方式
 					errorType: 'message'
-				}
+				},
+				color: color
 			}
 		},
 		// 组件创建完成时，将当前实例保存到u-form中
@@ -131,7 +132,6 @@
 		methods: {
 			addStyle,
 			addUnit,
-			color,
 			init() {
 				// 父组件的实例
 				this.updateParentData()

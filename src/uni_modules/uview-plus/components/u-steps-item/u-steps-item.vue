@@ -130,22 +130,22 @@
 				}
 			},
 			statusColor() {
-				let color = ''
+				let colorTmp = ''
 				switch (this.statusClass) {
 					case 'finish':
-						color = this.parentData.activeColor
+						colorTmp = this.parentData.activeColor
 						break
 					case 'error':
-						color = color.error
+						colorTmp = color.error
 						break
 					case 'process':
-						color = this.parentData.dot ? this.parentData.activeColor : 'transparent'
+						colorTmp = this.parentData.dot ? this.parentData.activeColor : 'transparent'
 						break
 					default:
-						color = this.parentData.inactiveColor
+						colorTmp = this.parentData.inactiveColor
 						break
 				}
-				return color
+				return colorTmp
 			},
 			contentStyle() {
 				const style = {}
