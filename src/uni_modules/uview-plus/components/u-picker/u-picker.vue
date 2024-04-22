@@ -172,7 +172,7 @@ export default {
 			this.$emit('change', {
 				// #ifndef MP-WEIXIN || MP-LARK
 				// 微信小程序不能传递this，会因为循环引用而报错
-				picker: this,
+				// picker: this,
 				// #endif
 				value: this.innerColumns.map((item, index) => item[value[index]]),
 				index,
