@@ -7,6 +7,30 @@
 			fixed
 			placeholder
 		></up-navbar>
+		<view class="u-demo-block__content" style="padding: 0 15px;">
+			<up-form
+				class="u-demo-block__content"
+				labelPosition="left"
+				ref="form1"
+			>
+				<up-form-item
+					label="姓名"
+					prop="userInfo.name"
+					borderBottom
+					ref="item1"
+				>
+					<up-input
+					></up-input>
+				</up-form-item>
+				<up-form-item borderBottom label="日期">
+					<up-datetime-picker
+					hasInput
+					placeholder="请选择日期"
+					mode="datetime"
+					></up-datetime-picker>
+				</up-form-item>
+			</up-form>
+		</view>
 		<up-cell-group>
 			<up-cell
 				@click="showDatetimePicker(index)"

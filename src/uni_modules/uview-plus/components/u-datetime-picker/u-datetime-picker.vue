@@ -1,5 +1,5 @@
 <template>
-    <view v-if="hasInput">
+    <view v-if="hasInput" class="u-datetime-picker">
         <u-input
             :placeholder="placeholder"
             border="surround"
@@ -443,4 +443,7 @@
 
 <style lang="scss" scoped>
 	@import '../../libs/css/components.scss';
+	.u-datetime-picker {
+		width: 100%;
+	}
 </style>
