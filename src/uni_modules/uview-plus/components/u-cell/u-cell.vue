@@ -30,9 +30,9 @@
 			</slot>
 			<view class="u-cell__right-icon-wrap" v-if="$slots['right-icon'] || isLink"
 				:class="[`u-cell__right-icon-wrap--${arrowDirection}`]">
-				<slot name="right-icon">
-					<u-icon v-if="rightIcon" :name="rightIcon" :custom-style="rightIconStyle" :color="disabled ? '#c8c9cc' : 'info'"
-						:size="size === 'large' ? 18 : 16"></u-icon>
+				<u-icon v-if="rightIcon && !$slots['right-icon']" :name="rightIcon" :custom-style="rightIconStyle" :color="disabled ? '#c8c9cc' : 'info'"
+					:size="size === 'large' ? 18 : 16"></u-icon>
+				<slot v-else name="right-icon">	
 				</slot>
 			</view>
 			<view class="u-cell__right-icon-wrap" v-if="$slots['righticon']"

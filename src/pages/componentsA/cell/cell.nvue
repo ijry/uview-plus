@@ -122,7 +122,7 @@
 						>99</text>
 					</template>
 					<template #right-icon>
-						0
+						1
 					</template>
 				</up-cell>
 			</up-cell-group>
