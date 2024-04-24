@@ -1,3 +1,8 @@
+## 3.2.14（2024-04-24）
+去除pleaseSetTranspileDependencies
+
+http采用useStore
+
 ## 3.2.13（2024-04-22）
 修复modal标题样式
 

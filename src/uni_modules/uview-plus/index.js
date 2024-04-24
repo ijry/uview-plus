@@ -1,5 +1,5 @@
 // 看到此报错，是因为没有配置vite.config.js的【transpileDependencies】
-const pleaseSetTranspileDependencies = {}, babelTest = pleaseSetTranspileDependencies?.test
+// const pleaseSetTranspileDependencies = {}, babelTest = pleaseSetTranspileDependencies?.test
 
 // 引入全局mixin
 import mixin from './libs/mixin/mixin.js'
