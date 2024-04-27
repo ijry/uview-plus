@@ -1,6 +1,5 @@
 import { http, toast} from '@/uni_modules/uview-plus'
-import { useStore } from 'vuex'
-const store = useStore()
+import store from '@/store'
 const requestInterceptors=(vm)=>{
 	/**
 	 * 请求拦截
