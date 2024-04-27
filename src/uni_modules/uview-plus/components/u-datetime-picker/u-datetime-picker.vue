@@ -126,6 +126,9 @@
 		// #endif
 		methods: {
 			getInputValue(newValue) {
+				if (newValue == '' || !newValue) {
+					this.inputValue = ''
+				}
 				if (this.mode == 'time') {
 					this.inputValue = newValue
 				} else {
