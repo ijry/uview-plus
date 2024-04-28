@@ -1,3 +1,5 @@
+## 3.2.15（2024-04-28）
+优化时间选择器hasInput模式初始化值
 ## 3.2.14（2024-04-24）
 去除pleaseSetTranspileDependencies
 
