@@ -27,6 +27,7 @@
 					hasInput
 					placeholder="请选择日期"
 					mode="datetime"
+					:modelValue="1714266792000"
 					></up-datetime-picker>
 				</up-form-item>
 			</up-form>

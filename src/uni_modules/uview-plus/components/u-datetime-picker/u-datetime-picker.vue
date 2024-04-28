@@ -99,13 +99,13 @@
 			// #ifdef VUE3
 			modelValue(newValue) {
 				this.init()
-				this.getInputValue()
+				// this.getInputValue(newValue)
 			},
 			// #endif
 			// #ifdef VUE2
 			value(newValue) {
 				this.init()
-				this.getInputValue()
+				// this.getInputValue(newValue)
 			},
 			// #endif
 			propsChange() {
@@ -126,8 +126,9 @@
 		// #endif
 		methods: {
 			getInputValue(newValue) {
-				if (newValue == '' || !newValue) {
+				if (newValue == '' || !newValue || newValue == undefined) {
 					this.inputValue = ''
+					return
 				}
 				if (this.mode == 'time') {
 					this.inputValue = newValue
@@ -164,6 +165,9 @@
 				this.innerValue = this.correctValue(this.value)
 				// #endif
 				this.updateColumnValue(this.innerValue)
+
+				// 初始化hasInput展示
+				this.getInputValue(this.innerValue)
 			},
 			// 在微信小程序中，不支持将函数当做props参数，故只能通过ref形式调用
 			setFormatter(e) {
