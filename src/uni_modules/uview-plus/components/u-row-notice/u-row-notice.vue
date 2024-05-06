@@ -127,6 +127,7 @@
 			// 文字内容的样式
 			textStyle() {
 				let style = {}
+				style.whiteSpace = 'nowrap !important'
 				style.color = this.color
 				style.fontSize = addUnit(this.fontSize)
 				return style

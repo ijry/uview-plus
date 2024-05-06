@@ -337,7 +337,7 @@
 					&__text {
 						font-size: 15px;
 						color: $u-content-color;
-                        white-space: nowrap;
+                        white-space: nowrap !important;
 
 						&--disabled {
 							color: $u-disabled-color !important;
