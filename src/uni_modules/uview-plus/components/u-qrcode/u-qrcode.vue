@@ -1,6 +1,6 @@
 <template>
 	<view class="u-qrcode">
-		<canvas class="u-qrcode__canvas" :canvas-id="cid" :style="{ width: size + unit, height: size + unit }" />
+		<canvas class="u-qrcode__canvas" :id="cid" :canvas-id="cid" :style="{ width: size + unit, height: size + unit }" />
 		<image v-show="show" :src="result" :style="{ width: size + unit, height: size + unit }" />
 	</view>
 </template>
