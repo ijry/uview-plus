@@ -1,6 +1,7 @@
 <template>
 	<view class="u-popup">
 		<u-overlay
+			:zIndex="zIndex"
 			:show="show"
 			@click="overlayClick"
 			v-if="overlay"
