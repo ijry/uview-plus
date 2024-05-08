@@ -4,6 +4,7 @@
 			:show="show"
 			@click="overlayClick"
 			v-if="overlay"
+			:zIndex="zIndex"
 			:duration="overlayDuration"
 			:customStyle="overlayStyle"
 			:opacity="overlayOpacity"
