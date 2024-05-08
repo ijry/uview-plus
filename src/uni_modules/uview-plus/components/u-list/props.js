@@ -70,8 +70,31 @@ export default {
         preLoadScreen: {
             type: [String, Number],
             default: () => defProps.list.preLoadScreen
-        }
-        // vue下，是否开启虚拟列表
-
+        },
+        // 开启自定义下拉刷新
+        refresherEnabled: {
+            type: Boolean,
+            default: () => false
+        },
+        // 设置自定义下拉刷新阈值	
+        refresherThreshold: {
+            type: Number,
+            default: () => 45
+        },
+        // 设置自定义下拉刷新默认样式，支持设置 black，white，none，none 表示不使用默认样式
+        refresherDefaultStyle: {
+            type: String,
+            default: () => 'black'
+        },
+        // 设置自定义下拉刷新区域背景颜色
+        refresherBackground: {
+            type: String,
+            default: () => '#FFF'
+        },
+        // 设置当前下拉刷新状态，true 表示下拉刷新已经被触发，false 表示下拉刷新未被触发
+        refresherTriggered: {
+            type: Boolean,
+            default: () => false
+        },
     }
 }

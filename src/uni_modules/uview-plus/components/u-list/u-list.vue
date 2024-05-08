@@ -28,6 +28,15 @@
 		@scroll="onScroll"
 		@scrolltolower="scrolltolower"
 		@scrolltoupper="scrolltoupper"
+		:refresher-enabled="refresherEnabled"
+		:refresher-threshold="refresherThreshold"
+		:refresher-default-style="refresherDefaultStyle"
+		:refresher-background="refresherBackground"
+		:refresher-triggered="refresherTriggered"
+		@refresherpulling="refresherpulling"
+		@refresherrefresh="refresherrefresh"
+		@refresherrestore="refresherrestore"
+		@refresherabort="refresherabort"
 	>
 		<view>
 			<slot />
@@ -104,7 +113,8 @@
 			this.anchors = []
 		},
 		mounted() {},
-		emits: ["scroll", "scrolltolower", "scrolltoupper"],
+		emits: ["scroll", "scrolltolower", "scrolltoupper",
+			"refresherpulling", "refresherrefresh", "refresherrestore", "refresherabort"],
 		methods: {
 			updateOffsetFromChild(top) {
 				this.offset = top
@@ -144,6 +154,18 @@
 					// 这一句很重要，能绝对保证在性功能障碍的webview，滚动条到顶时，取消偏移值，让页面置顶
 					this.offset = 0
 				})
+			},
+			refresherpulling(e) {
+				this.$emit('refresherpulling', e)
+			},
+			refresherrefresh(e) {
+				this.$emit('refresherrefresh', e)
+			},
+			refresherrestore(e) {
+				this.$emit('refresherrestore', e)
+			},
+			refresherabort(e) {
+				this.$emit('refresherabort', e)
 			}
 			// #endif
 		},
