@@ -92,7 +92,8 @@
 			    height="6"
 			    v-if="cancelText"
 			></u-gap>
-			<view hover-class="u-action-sheet--hover">
+			<view class="u-action-sheet__item-wrap__item u-action-sheet__cancel"
+				hover-class="u-action-sheet--hover">
 				<text
 				    @touchmove.stop.prevent
 				    :hover-stay-time="150"
