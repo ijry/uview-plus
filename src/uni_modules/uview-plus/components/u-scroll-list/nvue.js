@@ -6,7 +6,10 @@ export default {
         // 此处不写注释，请自行体会
         nvueScrollHandler(e) {
             const anchor = this.$refs['u-scroll-list__scroll-view'].ref
-            const element = this.$refs['u-scroll-list__indicator__line__bar'].ref
+            const element = {}
+            if (this.$refs['u-scroll-list__indicator__line__bar']) {
+                element = this.$refs['u-scroll-list__indicator__line__bar'].ref
+            }
             const scrollLeft = e.contentOffset.x
             const contentSize = e.contentSize.width
             const { scrollWidth } = this
