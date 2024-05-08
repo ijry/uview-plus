@@ -62,16 +62,16 @@ declare interface TabsProps {
   keyName?: string
   /**
    * 点击标签时触发
-   * @param index 标签索引值
    * @param item 传入的其他值
+   * @param index 标签索引值
    */
-  onClick?: (index: number, item: any) => any
+  onClick?: (item: any, index: number) => any
   /**
    * 标签索引改变时触发(`disalbed`时不会触发)
-   * @param index 标签索引值
    * @param item 传入的其他值
+   * @param index 标签索引值
    */
-  onChange?: (index: number, item: any) => any
+  onChange?: (item: any, index: number) => any
 }
 
 declare interface _Tabs {

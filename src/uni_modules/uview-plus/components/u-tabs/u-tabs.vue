@@ -90,6 +90,7 @@
 	import mixin from '../../libs/mixin/mixin';
 	import defProps from '../../libs/config/props.js';
 	import { addUnit, addStyle, deepMerge, getPx, sleep, sys } from '../../libs/function/index';
+import Index from '@/pages/template/login/index.vue';
 	/**
 	 * Tabs 标签
 	 * @description tabs标签组件，在标签多的时候，可以配置为左右滑动，标签少的时候，可以禁止滑动。 该组件的一个特点是配置为滚动模式时，激活的tab会自动移动到组件的中间位置。
@@ -204,7 +205,7 @@
 				this.$emit('click', {
 					...item,
 					index
-				})
+				}, index)
 				// 如果disabled状态，返回
 				if (item.disabled) return
 				this.innerCurrent = index
@@ -212,7 +213,7 @@
 				this.$emit('change', {
 					...item,
 					index
-				})
+				}, index)
 			},
 			init() {
 				sleep().then(() => {
