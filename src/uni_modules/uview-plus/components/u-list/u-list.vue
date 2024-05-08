@@ -37,6 +37,7 @@
 		@refresherrefresh="refresherrefresh"
 		@refresherrestore="refresherrestore"
 		@refresherabort="refresherabort"
+		:scroll-anchoring="true"
 	>
 		<view>
 			<slot />
