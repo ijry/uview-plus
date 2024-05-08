@@ -118,6 +118,16 @@ export default {
         label: {
             type: [String, Number, null],
             default: () => defProps.search.label
+        },
+        // 键盘弹起时，是否自动上推页面	
+        adjustPosition: {
+            type: Boolean,
+            default: () => true
+        },
+        // 键盘收起时，是否自动失去焦点	
+        autoBlur: {
+            type: Boolean,
+            default: () => false
         }
     }
 }
