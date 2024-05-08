@@ -366,6 +366,7 @@
 				// 非nvue通过detail获取滚动条位移
 				scrollTop = e.detail.scrollTop
 				// #endif
+				scrollTop += getPx(this.customNavHeight)
 				for (let i = 0; i < len; i++) {
 					const item = children[i],
 						nextItem = children[i + 1]
