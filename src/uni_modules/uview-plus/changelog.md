@@ -1,3 +1,15 @@
+## 3.2.18（2024-05-09）
+fix: 349 popup 组件设置 zIndex 属性后，组件渲染异常#
+feat: 搜索框增加adjustPosition属性
+fix: #331增加u-action-sheet__cancel
+优化mixin兼容性
+feat: #326 up-list增加下拉刷新功能
+fix: #319 优化up-tabs参数与定义匹配
+fix: index-list组件微信小程序端使用自定义导航栏异常
+fix: #285 pickerimmediateChange 写死为true
+fix: #111 u-scroll-list组件,隐藏指示器后报错, 提示找不到ref
+list增加微信小程序防抖配置
+
 ## 3.2.17（2024-05-08）
 fix: 支付宝小程序二维码渲染
 ## 3.2.16（2024-05-06）
