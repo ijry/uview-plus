@@ -52,7 +52,7 @@ declare interface _FormRef {
   /**
    * 对部分表单字段进行校验
    */
-  validateField: (value, cb: ((errorsRes) => any)) => any
+  validateField: (value, cb?: ((errorsRes) => any)) => any
   /**
    * 对整个表单进行重置，将所有字段值重置为初始值并移除校验结果
    */
