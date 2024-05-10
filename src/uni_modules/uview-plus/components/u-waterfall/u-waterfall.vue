@@ -155,8 +155,8 @@
                 if (index != -1) this.$emit('input', this.value.splice(index, 1));
                 // #endif
                 // #ifdef VUE3
-                index = this.modelvalue.findIndex(val => val[this.idKey] == id);
-                if (index != -1) this.$emit('input', this.modelvalue.splice(index, 1));
+                index = this.modelValue.findIndex(val => val[this.idKey] == id);
+                if (index != -1) this.$emit('input', this.modelValue.splice(index, 1));
                 // #endif
             },
             // 修改某条数据的某个属性
@@ -177,7 +177,7 @@
                 index = this.value.findIndex(val => val[this.idKey] == id);
                 // #endif
                 // #ifdef VUE3
-                index = this.modelvalue.findIndex(val => val[this.idKey] == id);
+                index = this.modelValue.findIndex(val => val[this.idKey] == id);
                 // #endif
                 if (index != -1) {
                     // 首先复制一份value的数据
@@ -185,7 +185,7 @@
                     let data = this.cloneData(this.value);
                     // #endif
                     // #ifdef VUE3
-                    let data = this.cloneData(this.modelvalue);
+                    let data = this.cloneData(this.modelValue);
                     // #endif
                     // 修改对应索引的key属性的值为value
                     data[index][key] = value;
