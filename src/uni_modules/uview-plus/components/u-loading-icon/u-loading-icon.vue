@@ -234,9 +234,7 @@
 	$u-loading-icon-dot-before-border-radius:40% !default;
 
 	.u-loading-icon {
-		/* #ifndef APP-NVUE */
-		// display: inline-flex;
-		/* #endif */
+		display: flex;
 		flex-direction: row;
 		align-items: center;
 		justify-content: center;
