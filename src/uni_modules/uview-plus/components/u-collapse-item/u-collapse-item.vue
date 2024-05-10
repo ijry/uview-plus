@@ -113,7 +113,7 @@
 		},
 		mounted() {
 			this.init()
-			console.log('$slots', this.$slots)
+			// console.log('$slots', this.$slots)
 		},
 		methods: {
 			// 异步获取内容，或者动态修改了内容时，需要重新初始化
