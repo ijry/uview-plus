@@ -21,13 +21,16 @@
 					<view
 					    v-else
 					    class="u-upload__wrap__preview__other"
+						@tap="onClickPreview($event, item)"
 					>
 						<u-icon
 						    color="#80CBF9"
 						    size="26"
 						    :name="item.isVideo || (item.type && item.type === 'video') ? 'movie' : 'folder'"
 						></u-icon>
-						<text class="u-upload__wrap__preview__other__text">{{item.isVideo || (item.type && item.type === 'video') ? '视频' : '文件'}}</text>
+						<text class="u-upload__wrap__preview__other__text">
+							{{item.isVideo || (item.type && item.type === 'video') ? '视频' : '文件'}}
+						</text>
 					</view>
 					<view
 					    class="u-upload__status"
@@ -335,6 +338,7 @@
 				const {
 					lists
 				} = this.data;
+				// #ifdef MP-WEIXIN
 				wx.previewMedia({
 					sources: lists
 						.filter((item) => isVideoFile(item))
@@ -348,12 +352,21 @@
 						toast('预览视频失败')
 					},
 				});
+				// #endif
 			},
 			onClickPreview(event) {
 				const {
 					index
 				} = event.currentTarget.dataset;
 				const item = this.data.lists[index];
+				if (!this.data.previewFullImage) return;
+				switch (item.type) {
+					case 'video':
+						this.onPreviewVideo(event);
+						break;
+					default:
+						break;
+				}
 				this.$emit(
 					'clickPreview',
 					Object.assign(Object.assign({}, item), this.getDetail(index))
