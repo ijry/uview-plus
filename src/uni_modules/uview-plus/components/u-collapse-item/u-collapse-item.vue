@@ -12,7 +12,7 @@
 			:arrowDirection="expanded ? 'up' : 'down'"
 			:disabled="disabled"
 		>
-			<!-- 微信小程序不支持，因为微信中不支持 <slot name="title" slot="title" />的写法 -->
+			<!-- 微信小程序不支持，因为微信中不支持 <slot name="title" #title />的写法 -->
 			<template #title>
 				<slot name="title">
 					<text v-if="!$slots.title && title">
@@ -33,6 +33,7 @@
 				</slot>
 			</template>
 			<template #right-icon>
+				<u-icon v-if="!$slots['right-icon']" :size="16" name="arrow-right"></u-icon>
 				<slot name="right-icon">
 				</slot>
 			</template>
