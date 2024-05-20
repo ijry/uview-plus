@@ -14,7 +14,7 @@
                     </view>
                     <view class="demo-shop">{{ item.shop }}</view>
                     <view class="u-close">
-                        <up-icon name="close-circle-fill" color="#fa3534" size="34" @click="remove(item.id)"></up-icon>
+                        <up-icon name="close-circle-fill" color="#fa3534" size="16" @click="remove(item.id)"></up-icon>
                     </view>
                 </view>
             </template>
@@ -163,12 +163,18 @@
         background-color: #ffffff;
         padding: 8px;
         position: relative;
-    }
-
-    .u-close {
-        position: absolute;
-        top: 32rpx;
-        right: 32rpx;
+        cursor: pointer;
+        .u-close {
+            position: absolute;
+            top: -7px;
+            right: 3px;
+            display: none;
+        }
+        &:hover {
+            .u-close {
+                display: flex;
+            }
+        }
     }
 
     .demo-img-wrap {}
