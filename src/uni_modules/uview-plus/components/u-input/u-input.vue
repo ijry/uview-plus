@@ -154,8 +154,8 @@ export default {
                 ) {
                     this.valueChange();
                 } else {
-					// 尝试调用u-form的验证方法
-					formValidate(this, "change");
+					// 尝试调用up-form的验证方法
+                    if(!this.firstChange) formValidate(this, "change");
 				}
                 /* #endif */
                 this.firstChange = false;
@@ -177,8 +177,8 @@ export default {
                 ) {
                     this.valueChange();
                 } else {
-					// 尝试调用u-form的验证方法
-					formValidate(this, "change");
+					// 尝试调用up-form的验证方法
+                    if(!this.firstChange) formValidate(this, "change");
 				}
                 /* #endif */
                 this.firstChange = false;
