@@ -54,7 +54,7 @@
 			<view
 			    class="u-search__content__icon u-search__content__close"
 			    v-if="keyword && clearabled && focused"
-			    @tap="clear"
+			    @click="clear"
 			>
 				<u-icon
 				    name="close"
