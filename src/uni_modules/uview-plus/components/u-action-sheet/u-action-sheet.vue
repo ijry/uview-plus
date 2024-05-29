@@ -93,13 +93,12 @@
 			    v-if="cancelText"
 			></u-gap>
 			<view class="u-action-sheet__item-wrap__item u-action-sheet__cancel"
-				hover-class="u-action-sheet--hover">
+				hover-class="u-action-sheet--hover" @tap="cancel">
 				<text
 				    @touchmove.stop.prevent
 				    :hover-stay-time="150"
 				    v-if="cancelText"
 				    class="u-action-sheet__cancel-text"
-				    @tap="cancel"
 				>{{cancelText}}</text>
 			</view>
 		</view>
