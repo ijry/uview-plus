@@ -327,6 +327,7 @@
 					@include flex;
 					align-items: center;
 					justify-content: center;
+					cursor: pointer;
 
 					&--disabled {
 						/* #ifndef APP-NVUE */
