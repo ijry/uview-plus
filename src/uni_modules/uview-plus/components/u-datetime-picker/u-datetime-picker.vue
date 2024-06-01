@@ -188,11 +188,6 @@
 			},
 			// 点击工具栏的确定按钮
 			confirm() {
-				this.$emit('confirm', {
-					value: this.innerValue,
-					mode: this.mode
-				})
-                
 				// #ifdef VUE3
 				this.$emit('update:modelValue', this.innerValue)
 				// #endif
@@ -203,6 +198,10 @@
 					this.getInputValue(this.innerValue)
                     this.showByClickInput = false
                 }
+				this.$emit('confirm', {
+					value: this.innerValue,
+					mode: this.mode
+				})
 			},
 			//用正则截取输出值,当出现多组数字时,抛出错误
 			intercept(e,type){
