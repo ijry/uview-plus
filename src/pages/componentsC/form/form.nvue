@@ -48,6 +48,20 @@
 						></up-icon>
 					</up-form-item>
 					<up-form-item
+						label="年龄"
+						prop="userInfo.age"
+						borderBottom
+						ref="item1"
+					>
+						<up-input
+							placeholder="请输入内容"
+							border="surround"
+							type="number"
+							v-model="model1.userInfo.age"
+							clearable
+						></up-input>
+					</up-form-item>
+					<up-form-item
 						label="水果"
 						prop="radiovalue1"
 						borderBottom
@@ -224,6 +238,7 @@
 					userInfo: {
 						name: '楼兰',
 						sex: '',
+						age: 0,
 						birthday: ''
 					},
 					radiovalue1: '苹果',

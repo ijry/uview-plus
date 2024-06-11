@@ -29,6 +29,7 @@
 					placeholder="请输入内容"
 					border="surround"
 					type="number"
+					v-model="inputNumber"
 					clearable
 				></up-input>
 			</view>
@@ -162,11 +163,15 @@
 		data() {
 			return {
 				tips: '',
-				value: ''
+				value: '',
+				inputNumber: ''
 			}
 		},
 		watch: {
 			value(newValue, oldValue) {
+				// console.log('v-model', newValue);
+			},
+			inputNumber(newValue) {
 				// console.log('v-model', newValue);
 			}
 		},
