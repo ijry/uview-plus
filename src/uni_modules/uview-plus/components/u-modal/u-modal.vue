@@ -3,6 +3,7 @@
 		mode="center"
 		:zoom="zoom"
 		:show="show"
+		:class="[customClass]"
 		:customStyle="{
 			borderRadius: '6px', 
 			overflow: 'hidden',
