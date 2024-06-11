@@ -1,5 +1,5 @@
 <template>
-	<view class="u-tabs">
+	<view class="u-tabs" :class="[customClass]">
 		<view class="u-tabs__wrapper">
 			<slot name="left" />
 			<view class="u-tabs__wrapper__scroll-view-wrapper">

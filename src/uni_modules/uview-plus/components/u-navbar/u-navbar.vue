@@ -1,5 +1,5 @@
 <template>
-	<view class="u-navbar">
+	<view class="u-navbar" :class="[customClass]">
 		<view
 			class="u-navbar__placeholder"
 			v-if="fixed && placeholder"

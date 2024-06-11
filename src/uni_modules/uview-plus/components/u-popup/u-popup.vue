@@ -1,5 +1,5 @@
 <template>
-	<view class="u-popup">
+	<view class="u-popup"  :class="[customClass]">
 		<u-overlay
 			:show="show"
 			@click="overlayClick"

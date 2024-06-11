@@ -1,7 +1,7 @@
 <template>
     <view
         class="u-text"
-        :class="[]"
+        :class="[customClass]"
         v-if="show"
         :style="{
             margin: margin,
