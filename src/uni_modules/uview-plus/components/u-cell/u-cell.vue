@@ -192,6 +192,8 @@
 
 		&__title {
 			flex: $u-cell-title-flex;
+			display: flex;
+			flex-direction: column;
 
 			&-text {
 				font-size: $u-cell-title-font-size;
