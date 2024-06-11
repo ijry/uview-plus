@@ -78,6 +78,7 @@
 import props from "./props.js";
 import mpMixin from '../../libs/mixin/mpMixin';
 import mixin from '../../libs/mixin/mixin';
+import { debounce } from '../../libs/function/debounce';
 import { addStyle, addUnit, deepMerge, formValidate, $parent, sleep, os } from '../../libs/function/index';
 /**
  * Input 输入框
@@ -140,53 +141,36 @@ export default {
 			innerFormatter: value => value
         };
     },
+    created() {
+        // 格式化过滤方法
+        if (this.formatter) {
+            this.innerFormatter = this.formatter;
+        }
+    },
     watch: {
-        // #ifdef VUE3
         modelValue: {
             immediate: true,
             handler(newVal, oldVal) {
+                console.log(newVal, oldVal)
+                if (this.changeFromInner || this.innerValue === newVal) {
+                    return;
+                }
                 this.innerValue = newVal;
-                /* #ifdef H5 */
                 // 在H5中，外部value变化后，修改input中的值，不会触发@input事件，此时手动调用值变化方法
                 if (
                     this.firstChange === false &&
 					this.changeFromInner === false
                 ) {
-                    this.valueChange();
+                    this.valueChange(this.innerValue);
                 } else {
 					// 尝试调用up-form的验证方法
                     if(!this.firstChange) formValidate(this, "change");
 				}
-                /* #endif */
                 this.firstChange = false;
                 // 重置changeFromInner的值为false，标识下一次引起默认为外部引起的
                 this.changeFromInner = false;
-            },
-        },
-        // #endif
-        // #ifdef VUE2
-        value: {
-            immediate: true,
-            handler(newVal, oldVal) {
-                this.innerValue = newVal;
-                /* #ifdef H5 */
-                // 在H5中，外部value变化后，修改input中的值，不会触发@input事件，此时手动调用值变化方法
-                if (
-                    this.firstChange === false &&
-                    this.changeFromInner === false
-                ) {
-                    this.valueChange();
-                } else {
-					// 尝试调用up-form的验证方法
-                    if(!this.firstChange) formValidate(this, "change");
-				}
-                /* #endif */
-                this.firstChange = false;
-                // 重置changeFromInner的值为false，标识下一次引起默认为外部引起的
-                this.changeFromInner = false;
-            },
-        },
-        // #endif
+            }
+        }
     },
     computed: {
         // 是否显示清除控件
@@ -248,14 +232,12 @@ export default {
         // 当键盘输入时，触发input事件
         onInput(e) {
             let { value = "" } = e.detail || {};
-            // 格式化过滤方法
-            const formatter = this.formatter || this.innerFormatter
-            const formatValue = formatter(value)
             // 为了避免props的单向数据流特性，需要先将innerValue值设置为当前值，再在$nextTick中重新赋予设置后的值才有效
-            this.innerValue = value
+            this.innerValue = value;
             this.$nextTick(() => {
+                let formatValue = this.innerFormatter(value);
             	this.innerValue = formatValue;
-            	this.valueChange();
+                this.valueChange(formatValue);
             })
         },
         // 输入框失去焦点时触发
@@ -284,22 +266,25 @@ export default {
             this.$emit("keyboardheightchange", event);
         },
         // 内容发生变化，进行处理
-        valueChange() {
+        valueChange(value, isOut = false) {
             if(this.clearInput) {
                 this.innerValue = '';
                 this.clearInput = false;
             }
-            const value = this.innerValue;
             this.$nextTick(() => {
-                // #ifdef VUE3
-                this.$emit("update:modelValue", value);
-                // #endif
-                // #ifdef VUE2
-                this.$emit("input", value);
-                // #endif
-                // 标识value值的变化是由内部引起的
-                this.changeFromInner = true;
-                this.$emit("change", value);
+                if (!isOut || this.clearInput) {
+                    // 标识value值的变化是由内部引起的
+                    this.changeFromInner = true;
+                    this.$emit("change", value);
+
+                    // #ifdef VUE3
+                    this.$emit("update:modelValue", value);
+                    // #endif
+                    // #ifdef VUE2
+                    this.$emit("input", value);
+                    // #endif
+                }
+
                 // 尝试调用u-form的验证方法
                 formValidate(this, "change");
             });
@@ -309,7 +294,7 @@ export default {
             this.clearInput = true;
             this.innerValue = "";
             this.$nextTick(() => {
-                this.valueChange();
+                this.valueChange("");
                 this.$emit("clear");
             });
         },
