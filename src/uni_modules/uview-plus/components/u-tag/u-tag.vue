@@ -36,7 +36,11 @@
 					class="u-tag__text"
 					:style="[textColor]"
 					:class="[`u-tag__text--${type}`, plain && `u-tag__text--${type}--plain`, `u-tag__text--${size}`]"
-				>{{ text }}</text>
+				>
+					<slot>
+						{{ text }}
+					</slot>
+				</text>
 			</view>
 			<view
 				class="u-tag__close"
