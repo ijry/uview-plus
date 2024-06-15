@@ -1,5 +1,7 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+
+export const props = defineMixin({
     props: {
         // 标识符
         name: {
@@ -87,6 +89,5 @@ export default {
             type: Boolean,
             default: () => defProps.checkboxGroup.borderBottom
         }
-
     }
-}
+})

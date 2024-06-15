@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // tab的数据
         list: {
@@ -47,4 +48,4 @@ export default {
 			default: () => defProps.subsection.keyName
 		}
     }
-}
+})

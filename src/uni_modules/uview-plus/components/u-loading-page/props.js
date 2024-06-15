@@ -1,5 +1,7 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+
+export const props = defineMixin({
     props: {
         // 提示内容
         loadingText: {
@@ -47,4 +49,4 @@ export default {
             default: () => defProps.loadingPage.loadingColor
         }
     }
-}
+})

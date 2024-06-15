@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // 控制打开或者关闭
         show: {
@@ -39,4 +40,4 @@ export default {
             default: () => defProps.swipeActionItem.duration
         }
     }
-}
+})

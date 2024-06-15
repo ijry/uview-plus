@@ -1,5 +1,7 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+
+export const props = defineMixin({
 	props: {
 		// 输入框的内容
 		value: {
@@ -122,4 +124,4 @@ export default {
 			default: true
 		}
 	}
-}
+})

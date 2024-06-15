@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
 		// 键盘弹起时，是否自动上推页面
 		adjustPosition: {
@@ -86,4 +87,4 @@ export default {
 			default: () => defProps.codeInput.disabledDot
 		}
     }
-}
+})

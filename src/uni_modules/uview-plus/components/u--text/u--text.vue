@@ -32,7 +32,7 @@
  * 不使用v-bind="$attrs"，而是分开独立写传参，是因为微信小程序不支持此写法
  */
 import uvText from "../u-text/u-text.vue";
-import props from "../u-text/props.js";
+import { props } from "../u-text/props.js";
 import { mpMixin } from '../../libs/mixin/mpMixin.js'
 import { mixin } from '../../libs/mixin/mixin.js'
 export default {

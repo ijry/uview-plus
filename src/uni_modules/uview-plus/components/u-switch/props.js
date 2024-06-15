@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // 是否为加载中状态
         loading: {
@@ -60,4 +61,4 @@ export default {
             default: () => defProps.switch.space
         }
     }
-}
+})

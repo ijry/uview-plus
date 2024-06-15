@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // 最小可选值
         min: {
@@ -61,4 +62,4 @@ export default {
             default: () => defProps.slider.showValue
         }
     }
-}
+})

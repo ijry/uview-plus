@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // 文字颜色
         color: {
@@ -37,4 +38,4 @@ export default {
             default: () => defProps.link.text
         }
     }
-}
+})

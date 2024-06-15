@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // 轮播的长度
         length: {
@@ -27,4 +28,4 @@ export default {
 		    default: () => defProps.swiperIndicator.indicatorMode
 		}
     }
-}
+})

@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // 组件状态，loadmore-加载前的状态，loading-加载中的状态，nomore-没有更多的状态
         status: {
@@ -92,4 +93,4 @@ export default {
             default: () => defProps.loadmore.dashed
         }
     }
-}
+})

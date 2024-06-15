@@ -90,7 +90,7 @@
 	</view>
 </template>
 <script>
-	import props from './props.js';
+	import { props } from './props.js';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
 	import { addUnit, addStyle, error } from '../../libs/function/index';

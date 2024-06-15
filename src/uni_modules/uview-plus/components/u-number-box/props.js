@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // 步进器标识符，在change回调返回
         name: {
@@ -116,4 +117,4 @@ export default {
             default: () => defProps.numberBox.iconStyle
         }
     }
-}
+})

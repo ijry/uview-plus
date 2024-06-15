@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // 倒计时时长，单位ms
         time: {
@@ -22,4 +23,4 @@ export default {
             default: () => defProps.countDown.millisecond
         }
     }
-}
+})

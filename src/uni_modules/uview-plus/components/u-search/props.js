@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // 搜索框形状，round-圆形，square-方形
         shape: {
@@ -130,4 +131,4 @@ export default {
             default: () => false
         }
     }
-}
+})

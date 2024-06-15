@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // 内置图标名称，或图片路径，建议绝对路径
         icon: {
@@ -57,4 +58,4 @@ export default {
             default: () => defProps.empty.marginTop
         }
     }
-}
+})

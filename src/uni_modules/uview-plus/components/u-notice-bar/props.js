@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // 显示的内容，数组
         text: {
@@ -68,4 +69,4 @@ export default {
             default: () => defProps.noticeBar.linkType
         }
     }
-}
+})

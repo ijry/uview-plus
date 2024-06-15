@@ -60,7 +60,7 @@
 <!-- #endif -->
 <script>
 	import { touchMixin } from '../../libs/mixin/touch'
-	import props from './props';
+	import { props } from './props';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
 	import { addUnit, getPx, sleep } from '../../libs/function/index';

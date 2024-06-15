@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // 是否显示input
         hasInput: {
@@ -141,4 +142,4 @@ export default {
             default: () => defProps.datetimePicker.defaultIndex
         }
     }
-}
+})

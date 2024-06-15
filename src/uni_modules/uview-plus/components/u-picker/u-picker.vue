@@ -78,7 +78,7 @@
  * @event {Function} change		当选择值变化时触发
  * @event {Function} confirm	点击确定按钮，返回当前选择的值
  */
-import props from './props';
+import { props } from './props';
 import { mpMixin } from '../../libs/mixin/mpMixin';
 import { mixin } from '../../libs/mixin/mixin';
 import { addUnit, deepClone, sleep } from '../../libs/function/index';

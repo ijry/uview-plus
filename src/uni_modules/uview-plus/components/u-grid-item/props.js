@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // 宫格的name
         name: {
@@ -12,4 +13,4 @@ export default {
             default: () => defProps.gridItem.bgColor
         }
     }
-}
+})

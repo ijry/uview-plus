@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // 图片地址，Array<String>|Array<Object>形式
         urls: {
@@ -57,4 +58,4 @@ export default {
             default: () => defProps.album.showMore
         }
     }
-}
+})

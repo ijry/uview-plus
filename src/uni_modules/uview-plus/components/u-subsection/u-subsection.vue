@@ -52,7 +52,7 @@
 const dom = uni.requireNativePlugin("dom");
 const animation = uni.requireNativePlugin("animation");
 // #endif
-import props from "./props.js";
+import { props } from "./props.js";
 import { mpMixin } from '../../libs/mixin/mpMixin';
 import { mixin } from '../../libs/mixin/mixin';
 import { addStyle, addUnit, sleep } from '../../libs/function/index';

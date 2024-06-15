@@ -66,7 +66,7 @@
 <script>
 import uHeader from './header.vue'
 import uMonth from './month.vue'
-import props from './props.js'
+import { props } from './props.js'
 import util from './util.js'
 import dayjs from 'dayjs/esm/index'
 import Calendar from '../../libs/util/calendar.js'

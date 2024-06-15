@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // #ifdef VUE3
         // 当前选中项的value值
@@ -43,4 +44,4 @@ export default {
             default: true
         }
     }
-}
+})

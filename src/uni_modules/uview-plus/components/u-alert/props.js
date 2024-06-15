@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // 显示文字
         title: {
@@ -42,4 +43,4 @@ export default {
             default: () => defProps.alert.fontSize
         }
     }
-}
+})

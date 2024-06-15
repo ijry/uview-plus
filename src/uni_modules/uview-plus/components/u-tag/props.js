@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // 标签类型info、primary、success、warning、error
         type: {
@@ -86,4 +87,4 @@ export default {
             default: () => defProps.tag.iconColor
         }
     }
-}
+})

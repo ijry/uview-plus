@@ -1,5 +1,7 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+
+export const props = defineMixin({
     props: {
         // 当前匹配项的name
         value: {
@@ -42,4 +44,4 @@ export default {
             default: () => defProps.tabbar.placeholder
         }
     }
-}
+})

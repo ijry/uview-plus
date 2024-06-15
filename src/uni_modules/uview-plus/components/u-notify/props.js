@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // 到顶部的距离
         top: {
@@ -47,4 +48,4 @@ export default {
             default: () => defProps.notify.safeAreaInsetTop
         }
     }
-}
+})

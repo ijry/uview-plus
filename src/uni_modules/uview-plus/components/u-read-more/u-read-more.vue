@@ -49,7 +49,7 @@
 	// #ifdef APP-NVUE
 	const dom = uni.requireNativePlugin('dom')
 	// #endif
-	import props from './props';
+	import { props } from './props';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
 	import { addUnit, guid, getPx, sleep } from '../../libs/function/index';

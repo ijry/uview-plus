@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // 页面文字提示
         tips: {
@@ -17,4 +18,4 @@ export default {
             default: () => defProps.noNetwork.image
         }
     }
-}
+})

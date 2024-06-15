@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // #ifdef VUE3
         // 用于v-model双向绑定选中的星星数量
@@ -76,4 +77,4 @@ export default {
             default: () => defProps.rate.touchable
         }
     }
-}
+})

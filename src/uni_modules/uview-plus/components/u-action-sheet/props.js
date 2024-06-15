@@ -1,5 +1,7 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+
+export const props = defineMixin({
     props: {
         // 操作菜单是否展示 （默认false）
         show: {
@@ -52,4 +54,4 @@ export default {
             default: () => defProps.actionSheet.round
         }
     }
-}
+})

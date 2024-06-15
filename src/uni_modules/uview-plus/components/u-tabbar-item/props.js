@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // item标签的名称，作为与u-tabbar的value参数匹配的标识符
         name: {
@@ -33,4 +34,4 @@ export default {
         }
 
     }
-}
+})

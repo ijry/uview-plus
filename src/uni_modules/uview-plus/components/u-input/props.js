@@ -1,5 +1,7 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+
+export const props = defineMixin({
 	props: {
 		// #ifdef VUE3
 		// 绑定的值
@@ -193,4 +195,4 @@ export default {
 			default: true
 		}
 	}
-}
+})

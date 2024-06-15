@@ -132,7 +132,7 @@
 		chooseFile
 	} from './utils';
 	import { mixinUpload } from './mixin';
-	import props from './props';
+	import { props } from './props';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
 	import { addStyle, addUnit, toast } from '../../libs/function/index';

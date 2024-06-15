@@ -36,7 +36,7 @@
 	 * 所以在nvue下，取名为u--image，内部其实还是u-iamge.vue，只不过做一层中转
 	 */
 	import uvImage from '../u-image/u-image.vue';
-	import props from '../u-image/props.js';
+	import { props } from '../u-image/props.js';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
 	export default {

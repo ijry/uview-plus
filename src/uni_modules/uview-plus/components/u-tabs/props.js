@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // 滑块的移动过渡时间，单位ms
         duration: {
@@ -62,4 +63,4 @@ export default {
 			default: () => defProps.tabs.keyName
 		}
     }
-}
+})

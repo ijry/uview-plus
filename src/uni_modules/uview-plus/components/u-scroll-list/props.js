@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // 指示器的整体宽度
         indicatorWidth: {
@@ -32,4 +33,4 @@ export default {
             default: () => defProps.scrollList.indicatorStyle
         }
     }
-}
+})

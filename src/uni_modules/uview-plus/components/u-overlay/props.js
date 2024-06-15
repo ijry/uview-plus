@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // 是否显示遮罩
         show: {
@@ -22,4 +23,4 @@ export default {
             default: () => defProps.overlay.opacity
         }
     }
-}
+})

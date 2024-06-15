@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // checkbox的名称
         name: {
@@ -72,4 +73,4 @@ export default {
             default: () => false
         }
     }
-}
+})

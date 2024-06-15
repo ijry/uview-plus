@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // 主题颜色
         type: {
@@ -108,4 +109,4 @@ export default {
             default: () => defProps.text.wordWrap
         }
     }
-}
+})

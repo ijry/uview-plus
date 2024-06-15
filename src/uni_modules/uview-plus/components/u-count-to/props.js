@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // 开始的数值，默认从0增长到某一个数
         startVal: {
@@ -57,4 +58,4 @@ export default {
             default: () => defProps.countTo.separator
         }
     }
-}
+})

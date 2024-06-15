@@ -47,7 +47,7 @@
 </template>
 
 <script>
-	import props from './props';
+	import { props } from './props';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
 	import { addUnit, addStyle, deepMerge, sleep, sys } from '../../libs/function/index';

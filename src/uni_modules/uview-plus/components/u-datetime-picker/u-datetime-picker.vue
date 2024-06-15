@@ -39,7 +39,7 @@
 	    }
 	    return result
 	}
-	import props from './props';
+	import { props } from './props';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
 	import dayjs from 'dayjs/esm/index';
@@ -442,8 +442,8 @@
 			        [`${type}Hour`]: hour,
 			        [`${type}Minute`]: minute
 			    }
-			},
-		},
+			}
+		}
 	}
 </script>
 

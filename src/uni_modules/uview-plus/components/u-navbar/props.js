@@ -1,5 +1,7 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+
+export const props = defineMixin({
 	props: {
 		// 是否开启顶部安全区适配
 		safeAreaInsetTop: {
@@ -82,4 +84,4 @@ export default {
 			default: () => defProps.navbar.titleStyle
 		}
 	}
-}
+})

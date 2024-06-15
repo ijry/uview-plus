@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // 是否展示picker弹窗
         show: {
@@ -82,4 +83,4 @@ export default {
 			default: () => defProps.picker.immediateChange
 		}
     }
-}
+})

@@ -1,5 +1,6 @@
-import defProps from '../../libs/config/props.js';
-export default {
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
+export const props = defineMixin({
     props: {
         // 是否展示骨架组件
         loading: {
@@ -57,4 +58,4 @@ export default {
             default: () => defProps.skeleton.avatarShape
         }
     }
-}
+})

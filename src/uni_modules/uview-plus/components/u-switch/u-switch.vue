@@ -38,7 +38,7 @@
 </template>
 
 <script>
-	import props from './props';
+	import { props } from './props';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
 	import { addStyle, addUnit, error } from '../../libs/function/index';

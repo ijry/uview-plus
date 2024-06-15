@@ -1,6 +1,7 @@
-import defProps from '../../libs/config/props.js';
+import { defineMixin } from '../../libs/vue'
+import defProps from '../../libs/config/props.js'
 import test from '../../libs/function/test';
-export default {
+export const props = defineMixin({
     props: {
         // 头像图片路径(不能为相对路径)
         src: {
@@ -77,4 +78,4 @@ export default {
             default: () => defProps.avatar.name
         }
     }
-}
+})

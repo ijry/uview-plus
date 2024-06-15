@@ -33,10 +33,10 @@
 </template>
 
 <script>
-	import props from './props';
+	import { props } from './props';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
-	import defProps from '../../libs/config/props.js';
+	import defProps from '../../libs/config/props.js'
 	import { addUnit, addStyle, deepMerge } from '../../libs/function/index';
 	/**
 	 * notify 顶部提示

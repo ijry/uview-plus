@@ -108,7 +108,7 @@
 <script>
 	import { openType } from '../../libs/mixin/openType'
 	import { buttonMixin } from '../../libs/mixin/button'
-	import props from './props';
+	import { props } from './props';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
 	import { addUnit } from '../../libs/function/index';
@@ -148,7 +148,7 @@
 	export default {
 		name: "u-action-sheet",
 		// 一些props参数和methods方法，通过mixin混入，因为其他文件也会用到
-		mixins: [openType, button, mixin, props],
+		mixins: [openType, buttonMixin, mixin, props],
 		data() {
 			return {
 
