@@ -76,8 +76,8 @@
 
 <script>
 import props from "./props.js";
-import mpMixin from '../../libs/mixin/mpMixin';
-import mixin from '../../libs/mixin/mixin';
+import { mpMixin } from '../../libs/mixin/mpMixin';
+import { mixin } from '../../libs/mixin/mixin';
 import { debounce } from '../../libs/function/debounce';
 import { addStyle, addUnit, deepMerge, formValidate, $parent, sleep, os } from '../../libs/function/index';
 /**

@@ -70,8 +70,8 @@ import props from './props.js'
 import util from './util.js'
 import dayjs from 'dayjs/esm/index'
 import Calendar from '../../libs/util/calendar.js'
-import mpMixin from '../../libs/mixin/mpMixin.js'
-import mixin from '../../libs/mixin/mixin.js'
+import { mpMixin } from '../../libs/mixin/mpMixin.js'
+import { mixin } from '../../libs/mixin/mixin.js'
 import { addUnit, range, error, padZero } from '../../libs/function/index';
 import test from '../../libs/function/test';
 /**

@@ -110,10 +110,10 @@
 </template>
 
 <script lang="ts">
-import button from "../../libs/mixin/button";
-import openType from "../../libs/mixin/openType";
-import mpMixin from '../../libs/mixin/mpMixin';
-import mixin from '../../libs/mixin/mixin';
+import { buttonMixin } from "../../libs/mixin/button";
+import { openType } from "../../libs/mixin/openType";
+import { mpMixin } from '../../libs/mixin/mpMixin';
+import { mixin } from '../../libs/mixin/mixin';
 import props from "./props";
 import { addStyle } from '../../libs/function/index';
 import { throttle } from '../../libs/function/throttle';

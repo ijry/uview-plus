@@ -75,8 +75,8 @@
 
 <script>
 	import props from './props';
-	import mpMixin from '../../libs/mixin/mpMixin';
-	import mixin from '../../libs/mixin/mixin';
+	import { mpMixin } from '../../libs/mixin/mpMixin';
+	import { mixin } from '../../libs/mixin/mixin';
 	import { addUnit, addStyle } from '../../libs/function/index';
 	/**
 	 * search 搜索框

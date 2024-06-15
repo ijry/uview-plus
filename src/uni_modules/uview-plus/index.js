@@ -2,9 +2,9 @@
 // const pleaseSetTranspileDependencies = {}, babelTest = pleaseSetTranspileDependencies?.test
 
 // 引入全局mixin
-import mixin from './libs/mixin/mixin.js'
+import { mixin } from './libs/mixin/mixin.js'
 // 小程序特有的mixin
-import mpMixin from './libs/mixin/mpMixin.js'
+import { mpMixin } from './libs/mixin/mpMixin.js'
 // 全局挂载引入http相关请求拦截插件
 import Request from './libs/luch-request'
 

@@ -76,8 +76,8 @@
 
 <script>
 	import props from './props';
-	import mpMixin from '../../libs/mixin/mpMixin';
-	import mixin from '../../libs/mixin/mixin';
+	import { mpMixin } from '../../libs/mixin/mpMixin';
+	import { mixin } from '../../libs/mixin/mixin';
 	import defProps from '../../libs/config/props.js';
 	import color from '../../libs/config/color';
 	import { addStyle, addUnit, getProperty, setProperty, error } from '../../libs/function/index';

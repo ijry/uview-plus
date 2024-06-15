@@ -69,8 +69,8 @@
 
 <script>
 	import props from './props';
-	import mpMixin from '../../libs/mixin/mpMixin';
-	import mixin from '../../libs/mixin/mixin';
+	import { mpMixin } from '../../libs/mixin/mpMixin';
+	import { mixin } from '../../libs/mixin/mixin';
 
 	/**
 	 * keyboard 键盘

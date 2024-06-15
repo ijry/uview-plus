@@ -59,10 +59,10 @@
 <script src="./index.wxs" module="wxs" lang="wxs"></script>
 <!-- #endif -->
 <script>
-	import touch from '../../libs/mixin/touch.js'
+	import { touchMixin } from '../../libs/mixin/touch'
 	import props from './props';
-	import mpMixin from '../../libs/mixin/mpMixin';
-	import mixin from '../../libs/mixin/mixin';
+	import { mpMixin } from '../../libs/mixin/mpMixin';
+	import { mixin } from '../../libs/mixin/mixin';
 	import { addUnit, getPx, sleep } from '../../libs/function/index';
 	// #ifdef APP-NVUE
 	import nvue from './nvue.js';
@@ -96,7 +96,7 @@
 			mpMixin,
 			mixin,
 			// #ifndef APP-NVUE
-			touch,
+			touchMixin,
 			// #endif
 			// #ifdef APP-NVUE
 			nvue,

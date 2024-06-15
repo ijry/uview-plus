@@ -106,11 +106,11 @@
 </template>
 
 <script>
-	import openType from '../../libs/mixin/openType'
-	import button from '../../libs/mixin/button'
+	import { openType } from '../../libs/mixin/openType'
+	import { buttonMixin } from '../../libs/mixin/button'
 	import props from './props';
-	import mpMixin from '../../libs/mixin/mpMixin';
-	import mixin from '../../libs/mixin/mixin';
+	import { mpMixin } from '../../libs/mixin/mpMixin';
+	import { mixin } from '../../libs/mixin/mixin';
 	import { addUnit } from '../../libs/function/index';
 	/**
 	 * ActionSheet 操作菜单

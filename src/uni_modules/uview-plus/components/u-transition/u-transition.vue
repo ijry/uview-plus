@@ -14,8 +14,8 @@
 
 <script>
 import props from './props';
-import mpMixin from '../../libs/mixin/mpMixin';
-import mixin from '../../libs/mixin/mixin';
+import { mpMixin } from '../../libs/mixin/mpMixin';
+import { mixin } from '../../libs/mixin/mixin';
 import { addStyle } from '../../libs/function/index';
 // 组件的methods方法，由于内容较长，写在外部文件中通过mixin引入
 import transition from "./transition.js";

@@ -1,7 +1,9 @@
-import { deepMerge, $parent } from '../function/index';
-import test from '../function/test';
-import route from '../util/route';
-export default {
+import { defineMixin } from '../vue'
+import { deepMerge, $parent } from '../function/index'
+import test from '../function/test'
+import route from '../util/route'
+
+export const mixin = defineMixin({
     // 定义每个组件都可能需要用到的外部样式以及类名
     props: {
         // 每个组件都有的父组件传递的样式，可以为字符串或者对象形式
@@ -169,4 +171,6 @@ export default {
             })
         }
     }
-}
+})
+
+export default mixin

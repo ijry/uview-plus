@@ -1,4 +1,6 @@
-export default {
+import { defineMixin } from '../vue'
+
+export const buttonMixin = defineMixin({
     props: {
         lang: String,
         sessionFrom: String,
@@ -10,4 +12,4 @@ export default {
         formType: String,
         openType: String
     }
-}
+})

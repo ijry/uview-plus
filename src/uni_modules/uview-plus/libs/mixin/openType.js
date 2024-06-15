@@ -1,4 +1,6 @@
-export default {
+import { defineMixin } from '../vue'
+
+export const openType = defineMixin({
     props: {
         openType: String
     },
@@ -22,4 +24,4 @@ export default {
             this.$emit('opensetting', event.detail)
         }
     }
-}
+})

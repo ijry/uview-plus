@@ -44,8 +44,8 @@
 
 <script>
 import props from "./props.js";
-import mpMixin from '../../libs/mixin/mpMixin';
-import mixin from '../../libs/mixin/mixin';
+import { mpMixin } from '../../libs/mixin/mpMixin';
+import { mixin } from '../../libs/mixin/mixin';
 import { addStyle, addUnit, deepMerge, formValidate, os } from '../../libs/function/index';
 /**
  * Textarea 文本域

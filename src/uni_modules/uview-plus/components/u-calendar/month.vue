@@ -31,8 +31,8 @@
 	// 由于nvue不支持百分比单位，需要查询宽度来计算每个日期的宽度
 	const dom = uni.requireNativePlugin('dom')
 	// #endif
-	import mpMixin from '../../libs/mixin/mpMixin';
-	import mixin from '../../libs/mixin/mixin';
+	import { mpMixin } from '../../libs/mixin/mpMixin';
+	import { mixin } from '../../libs/mixin/mixin';
 	import { addUnit, deepClone, toast, sleep } from '../../libs/function/index';
 	import { colorGradient } from '../../libs/function/colorGradient';
 	import test from '../../libs/function/test';

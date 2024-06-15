@@ -72,10 +72,10 @@
 <script>
 import props from './props'
 import value from './value.js'
-import mpMixin from '../../libs/mixin/mpMixin';
-import mixin from '../../libs/mixin/mixin';
+import { mpMixin } from '../../libs/mixin/mpMixin';
+import { mixin } from '../../libs/mixin/mixin';
 import button from '../../libs/mixin/button';
-import openType from '../../libs/mixin/openType';
+import { openType } from '../../libs/mixin/openType';
 import { addStyle, addUnit, deepMerge } from '../../libs/function/index';
 /**
  * Text 文本

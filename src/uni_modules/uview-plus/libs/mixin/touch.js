@@ -1,3 +1,5 @@
+import { defineMixin } from '../vue'
+
 const MIN_DISTANCE = 10
 
 function getDirection(x, y) {
@@ -10,7 +12,7 @@ function getDirection(x, y) {
     return ''
 }
 
-export default {
+export const touchMixin = defineMixin({
     methods: {
         getTouchPoint(e) {
             if (!e) {
@@ -56,4 +58,4 @@ export default {
             this.direction =				this.direction || getDirection(this.offsetX, this.offsetY)
         }
     }
-}
+})

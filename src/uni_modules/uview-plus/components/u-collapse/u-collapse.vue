@@ -7,8 +7,8 @@
 
 <script>
 	import props from './props';
-	import mpMixin from '../../libs/mixin/mpMixin';
-	import mixin from '../../libs/mixin/mixin';
+	import { mpMixin } from '../../libs/mixin/mpMixin';
+	import { mixin } from '../../libs/mixin/mixin';
 	/**
 	 * collapse 折叠面板 
 	 * @description 通过折叠面板收纳内容区域

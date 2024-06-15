@@ -9,8 +9,8 @@
 
 <script>
 	import props from './props';
-	import mpMixin from '../../libs/mixin/mpMixin';
-	import mixin from '../../libs/mixin/mixin';
+	import { mpMixin } from '../../libs/mixin/mpMixin';
+	import { mixin } from '../../libs/mixin/mixin';
 	import { addUnit, addStyle, deepMerge, sys } from '../../libs/function/index';
 	/**
 	 * StatbusBar 状态栏占位

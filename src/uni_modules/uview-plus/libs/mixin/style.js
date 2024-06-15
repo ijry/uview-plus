@@ -1,5 +1,7 @@
-import { addStyle, deepMerge, addUnit, trim } from '../function/index';
-export default {
+import { defineMixin } from '../vue'
+import { addStyle, deepMerge, addUnit, trim } from '../function/index'
+
+export const style = defineMixin({
     props: {
         // flex排列方式
         flexDirection: {
@@ -244,4 +246,4 @@ export default {
             return trim(unit).split(' ').map((item) => addUnit(item)).join(' ')
         }
     }
-}
+})

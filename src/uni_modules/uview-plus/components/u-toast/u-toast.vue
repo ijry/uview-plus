@@ -39,8 +39,8 @@
 </template>
 
 <script>
-	import mpMixin from '../../libs/mixin/mpMixin';
-	import mixin from '../../libs/mixin/mixin';
+	import { mpMixin } from '../../libs/mixin/mpMixin';
+	import { mixin } from '../../libs/mixin/mixin';
 	import { os, sys, deepMerge, type2icon } from '../../libs/function/index';
 	import color from '../../libs/config/color';
 	import { hexToRgb } from '../../libs/function/colorGradient';

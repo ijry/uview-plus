@@ -14,8 +14,8 @@
 
 <script>
 	import props from './props';
-	import mpMixin from '../../libs/mixin/mpMixin';
-	import mixin from '../../libs/mixin/mixin';
+	import { mpMixin } from '../../libs/mixin/mpMixin';
+	import { mixin } from '../../libs/mixin/mixin';
 	import { addStyle, addUnit, deepMerge, getPx } from '../../libs/function/index';
 	/**
 	 * CodeInput 栅格系统的列 

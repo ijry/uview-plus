@@ -55,8 +55,8 @@
 
 <script>
 	import props from './props.js';
-	import mpMixin from '../../libs/mixin/mpMixin';
-	import mixin from '../../libs/mixin/mixin';
+	import { mpMixin } from '../../libs/mixin/mpMixin';
+	import { mixin } from '../../libs/mixin/mixin';
 	import { nextTick } from 'vue';
 	import { guid, sleep, error } from '../../libs/function/index';
 	import test from '../../libs/function/test';

@@ -1,5 +1,6 @@
+import { defineMixin } from '../vue'
 
-export default {
+export const mpShare = defineMixin({
     data() {
         return {
             mpShare: {
@@ -12,4 +13,6 @@ export default {
     onShareAppMessage() {
         return this.mpShare;
     }
-}
+})
+
+export default mpShare
