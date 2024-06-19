@@ -1,6 +1,6 @@
 <template>
 	<view
-	    class="u-tabbar-item cursor-pointer"
+	    class="u-tabbar-item"
 	    :style="[addStyle(customStyle)]"
 	    @tap="clickHandler"
 	>
@@ -128,6 +128,9 @@
 		flex: 1;
 		width: 100%;
 		height: 100%;
+		/* #ifdef H5 */
+		cursor: pointer;
+		/* #endif */
 		
 		&__icon {
 			@include flex;
