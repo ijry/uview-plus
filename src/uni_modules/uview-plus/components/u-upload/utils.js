@@ -68,7 +68,8 @@ export function chooseFile({
     maxDuration,
     sizeType,
     camera,
-    maxCount
+    maxCount,
+    extension
 }) {
     return new Promise((resolve, reject) => {
         switch (accept) {
@@ -118,12 +119,16 @@ export function chooseFile({
             // #endif
             // #ifdef H5
             // 需要hx2.9.9以上才支持uni.chooseFile
-            uni.chooseFile({
+            let params = {
                 count: multiple ? maxCount : 1,
                 type: accept,
                 success: (res) => resolve(formatFile(res)),
                 fail: reject
-            })
+            }
+            if (extension.length && extension.length > 0) {
+                params.extension = extension
+            }
+            uni.chooseFile(params)
             // #endif
             break
 				// #endif
@@ -139,12 +144,16 @@ export function chooseFile({
 			// #endif
 			// #ifdef H5
 			// 需要hx2.9.9以上才支持uni.chooseFile
-			uni.chooseFile({
-				count: multiple ? maxCount : 1,
+            let paramsFile = {
+                count: multiple ? maxCount : 1,
 				type: 'all',
 				success: (res) => resolve(formatFile(res)),
 				fail: reject
-			})
+            }
+            if (extension.length && extension.length > 0) {
+                paramsFile.extension = extension
+            }
+			uni.chooseFile(paramsFile)
 			// #endif
         }
     })
