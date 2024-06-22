@@ -15,7 +15,7 @@ declare interface PopupProps {
    * 弹出方向
    * @default 'bottom'
    */
-  mode?: 'top' | 'right' | 'bottom' | 'center'
+  mode?: 'top' | 'right' | 'left'| 'bottom' | 'center'
   /**
    * 遮罩打开或收起的动画过渡时间，单位ms
    * @default 300
