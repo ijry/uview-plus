@@ -154,6 +154,7 @@
 	&__toggle {
 		@include flex;
 		justify-content: center;
+		position: relative;
 
 		&__text {
 			@include flex;
