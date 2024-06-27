@@ -1,3 +1,5 @@
+## 3.3.1（2024-06-27）
+u-button组件报错，找不到button mixins #407
 ## 3.3.0（2024-06-27）
 feat: checkbox支持label设置slot
 
