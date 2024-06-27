@@ -1,3 +1,28 @@
+## 3.3.0（2024-06-27）
+feat: checkbox支持label设置slot
+
+feat: modal增加customClass
+
+feat: navbar、popup、tabs、text支持customClass
+
+fix: cell组建缺少flex布局
+
+fix: 修复微信小程序真机调试时快速输入出现文本回退问题
+
+feat: tag增加默认slot
+
+公共mixin改造为按需导入语法
+
+refactor: 组件props混入mixin改造为按需导入语法
+
+fix: u-tabbar 安卓手机点击按钮变蓝问题 #396
+
+feat: upload组建增加extension属性
+
+fix: upload组件参数mode添加left
+
+fix: 修复阴影在非nvue时白色背景色不显示
+
 ## 3.2.24（2024-06-11）
 fix: 修复时间选择器confirm事件触发时机导致2次才会触发v-model更新
 ## 3.2.23（2024-05-30）
