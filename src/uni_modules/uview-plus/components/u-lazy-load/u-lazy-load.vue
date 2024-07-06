@@ -150,7 +150,7 @@
                 }
             }
         },
-        emits: ['click', 'load'],
+        emits: ['click', 'load', 'error'],
         methods: {
             // 用于重新初始化
             init() {
