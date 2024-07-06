@@ -151,8 +151,9 @@ export default {
         modelValue: {
             immediate: true,
             handler(newVal, oldVal) {
-                console.log(newVal, oldVal)
+                // console.log(newVal, oldVal)
                 if (this.changeFromInner || this.innerValue === newVal) {
+                    this.changeFromInner = false; // 重要否则会出现双向绑定失效问题https://github.com/ijry/uview-plus/issues/419
                     return;
                 }
                 this.innerValue = newVal;
@@ -161,7 +162,7 @@ export default {
                     this.firstChange === false &&
 					this.changeFromInner === false
                 ) {
-                    this.valueChange(this.innerValue);
+                    this.valueChange(this.innerValue, true);
                 } else {
 					// 尝试调用up-form的验证方法
                     if(!this.firstChange) formValidate(this, "change");
