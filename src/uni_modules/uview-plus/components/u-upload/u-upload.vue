@@ -231,7 +231,7 @@
 				chooseFile(
 						Object.assign({
 							accept: this.accept,
-							extension: this.extension
+							extension: this.extension,
 							multiple: this.multiple,
 							capture: capture,
 							compressed: this.compressed,

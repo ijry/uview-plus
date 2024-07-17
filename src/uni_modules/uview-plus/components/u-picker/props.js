@@ -2,6 +2,18 @@ import { defineMixin } from '../../libs/vue'
 import defProps from '../../libs/config/props.js'
 export const props = defineMixin({
     props: {
+        modelValue: {
+            type: Array,
+            default: () => []
+        },
+        hasInput: {
+            type: Boolean,
+            default: false
+        },
+        placeholder: {
+            type: String,
+            default: () => '请选择'
+        },
         // 是否展示picker弹窗
         show: {
             type: Boolean,

@@ -1,57 +1,66 @@
 <template>
-	<u-popup
-		:show="show"
-		:mode="popupMode"
-		@close="closeHandler"
-	>
-		<view class="u-picker">
-			<u-toolbar
-				v-if="showToolbar"
-				:cancelColor="cancelColor"
-				:confirmColor="confirmColor"
-				:cancelText="cancelText"
-				:confirmText="confirmText"
-				:title="title"
-				@cancel="cancel"
-				@confirm="confirm"
-			></u-toolbar>
-			<picker-view
-				class="u-picker__view"
-				:indicatorStyle="`height: ${addUnit(itemHeight)}`"
-				:value="innerIndex"
-				:immediateChange="immediateChange"
-				:style="{
-					height: `${addUnit(visibleItemCount * itemHeight)}`
-				}"
-				@change="changeHandler"
-			>
-				<picker-view-column
-					v-for="(item, index) in innerColumns"
-					:key="index"
-					class="u-picker__view__column"
+    <view class="u-picker-warrper">
+        <view v-if="hasInput" class="u-picker-input cursor-pointer" @click="showByClickInput = !showByClickInput">
+            <slot>
+                <view>
+					{{ inputLabel && inputLabel.length ? inputLabel.join('/') : placeholder }}
+				</view>
+            </slot>
+        </view>
+		<u-popup
+			:show="show || (hasInput && showByClickInput)"
+			:mode="popupMode"
+			@close="closeHandler"
+		>
+			<view class="u-picker">
+				<u-toolbar
+					v-if="showToolbar"
+					:cancelColor="cancelColor"
+					:confirmColor="confirmColor"
+					:cancelText="cancelText"
+					:confirmText="confirmText"
+					:title="title"
+					@cancel="cancel"
+					@confirm="confirm"
+				></u-toolbar>
+				<picker-view
+					class="u-picker__view"
+					:indicatorStyle="`height: ${addUnit(itemHeight)}`"
+					:value="innerIndex"
+					:immediateChange="immediateChange"
+					:style="{
+						height: `${addUnit(visibleItemCount * itemHeight)}`
+					}"
+					@change="changeHandler"
 				>
-					<view
-						v-if="testArray(item)"
-						class="u-picker__view__column__item u-line-1"
-						v-for="(item1, index1) in item"
-						:key="index1"
-						:style="{
-							height: addUnit(itemHeight),
-							lineHeight: addUnit(itemHeight),
-							fontWeight: index1 === innerIndex[index] ? 'bold' : 'normal',
-							display: 'block'
-						}"
-					>{{ getItemText(item1) }}</view>
-				</picker-view-column>
-			</picker-view>
-			<view
-				v-if="loading"
-				class="u-picker--loading"
-			>
-				<u-loading-icon mode="circle"></u-loading-icon>
+					<picker-view-column
+						v-for="(item, index) in innerColumns"
+						:key="index"
+						class="u-picker__view__column"
+					>
+						<view
+							v-if="testArray(item)"
+							class="u-picker__view__column__item u-line-1"
+							v-for="(item1, index1) in item"
+							:key="index1"
+							:style="{
+								height: addUnit(itemHeight),
+								lineHeight: addUnit(itemHeight),
+								fontWeight: index1 === innerIndex[index] ? 'bold' : 'normal',
+								display: 'block'
+							}"
+						>{{ getItemText(item1) }}</view>
+					</picker-view-column>
+				</picker-view>
+				<view
+					v-if="loading"
+					class="u-picker--loading"
+				>
+					<u-loading-icon mode="circle"></u-loading-icon>
+				</view>
 			</view>
-		</view>
-	</u-popup>
+		</u-popup>
+    </view>
 </template>
 
 <script>
@@ -96,6 +105,7 @@ export default {
 			innerColumns: [],
 			// 上一次的变化列索引
 			columnIndex: 0,
+            showByClickInput: false,
 		}
 	},
 	watch: {
@@ -116,6 +126,24 @@ export default {
 		},
 	},
 	emits: ['close', 'cancel', 'confirm', 'change'],
+    computed: {
+        inputLabel() {
+            let items = this.innerColumns.map((item, index) => item[this.innerIndex[index]])
+            let res = []
+            items.forEach(element => {
+                res.push(element[this.keyName])
+            });
+            return res
+        },
+        inputValue() {
+            let items = this.innerColumns.map((item, index) => item[this.innerIndex[index]])
+            let res = []
+            items.forEach(element => {
+                res.push(element['id'])
+            });
+            return res
+        }
+    },
 	methods: {
 		addUnit,
 		testArray: test.array,
@@ -130,15 +158,25 @@ export default {
 		// 关闭选择器
 		closeHandler() {
 			if (this.closeOnClickOverlay) {
+                if (this.hasInput) {
+                    this.showByClickInput = false
+                }
 				this.$emit('close')
 			}
 		},
 		// 点击工具栏的取消按钮
 		cancel() {
+            if (this.hasInput) {
+                this.showByClickInput = false
+            }
 			this.$emit('cancel')
 		},
 		// 点击工具栏的确定按钮
 		confirm() {
+            this.$emit('update:modelValue', this.inputValue)
+            if (this.hasInput) {
+                this.showByClickInput = false
+            }
 			this.$emit('confirm', {
 				indexs: this.innerIndex,
 				value: this.innerColumns.map((item, index) => item[this.innerIndex[index]]),
@@ -168,6 +206,8 @@ export default {
 			// 将当前的各项变化索引，设置为"上一次"的索引变化值
 			this.setLastIndex(value)
 			this.setIndexs(value)
+
+            this.$emit('update:modelValue', this.inputValue)
 
 			this.$emit('change', {
 				// #ifndef MP-WEIXIN || MP-LARK

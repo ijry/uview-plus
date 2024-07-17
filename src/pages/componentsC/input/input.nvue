@@ -9,6 +9,7 @@
 					v-model="value"
 					@change="change"
 				></up-input>
+				<up-button @click="value = Math.random().toString()">变化</up-button>
 				{{value}}
 			</view>
 		</view>

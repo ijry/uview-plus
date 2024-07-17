@@ -165,7 +165,7 @@ import color from '../../libs/config/color';
 export default {
     name: "u-button",
     // #ifdef MP
-    mixins: [mpMixin, mixin, button, openType, props],
+    mixins: [mpMixin, mixin, buttonMixin, openType, props],
     // #endif
     // #ifndef MP
     mixins: [mpMixin, mixin, props],

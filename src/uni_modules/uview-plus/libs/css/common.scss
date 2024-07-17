@@ -96,5 +96,7 @@
 }
 
 .cursor-pointer {
-    cursor: pointer;
+	/* #ifndef APP-NVUE */
+	cursor: pointer;
+	/* #endif */
 }

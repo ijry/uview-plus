@@ -8,3 +8,6 @@ export const mpMixin = defineMixin({
     }
     // #endif
 })
+
+export default mpMixin
+

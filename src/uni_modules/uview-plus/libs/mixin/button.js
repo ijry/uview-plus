@@ -13,3 +13,6 @@ export const buttonMixin = defineMixin({
         openType: String
     }
 })
+
+export default buttonMixin
+

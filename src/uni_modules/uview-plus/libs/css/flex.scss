@@ -188,6 +188,7 @@
 // 以下属于项目(子元素)的类
 
 // 子元素交叉轴起点对齐
+/* #ifndef APP-NVUE */
 .u-flex-self-start {
 	align-self: flex-start;
 }
@@ -211,7 +212,7 @@
 .u-flex-self-stretch {
 	align-self: stretch;
 }
-
+/* #endif */
 // 多轴交叉时的对齐方式
 
 // 起点对齐
