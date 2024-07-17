@@ -159,6 +159,60 @@
 				</view>
 			</view>
 		</view>
+        <view class="u-demo-block">
+            <text class="u-demo-block__title">自定义圆角</text>
+            <view class="u-demo-block__content">
+                <view class="album">
+                    <view class="album__avatar">
+                        <image
+                            src="/static/uview/common/logo.png"
+                            mode=""
+                            style="width: 32px;height: 32px;"
+                        ></image>
+                    </view>
+                    <view class="album__content">
+                        <up-text
+                            text="uview-plus"
+                            type="primary"
+                            bold
+                            size="17"
+                        ></up-text>
+                        <up-text
+                            margin="0 0 8px 0"
+                            text="全面的组件和便捷的工具会让您信手拈来，如鱼得水"
+                        ></up-text>
+                        <up-album :urls="urls2" radius="10"></up-album>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="u-demo-block">
+            <text class="u-demo-block__title">自定义形状</text>
+            <view class="u-demo-block__content">
+                <view class="album">
+                    <view class="album__avatar">
+                        <image
+                            src="/static/uview/common/logo.png"
+                            mode=""
+                            style="width: 32px;height: 32px;"
+                        ></image>
+                    </view>
+                    <view class="album__content">
+                        <up-text
+                            text="uview-plus"
+                            type="primary"
+                            bold
+                            size="17"
+                        ></up-text>
+                        <up-text
+                            margin="0 0 8px 0"
+                            text="全面的组件和便捷的工具会让您信手拈来，如鱼得水"
+                        ></up-text>
+                        <up-album :urls="urls2" shape="circle"></up-album>
+                    </view>
+                </view>
+            </view>
+        </view>
 	</view>
 </template>
 
