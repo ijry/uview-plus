@@ -59,6 +59,16 @@ declare interface AlbumProps {
    * @param width 宽度
    */
   onAlbumWidth?: (width: any) => any
+  /**
+   * 图片形状
+   * @default "square"
+   */
+  shape?: 'circle' | 'square'
+  /**
+   * 圆角，默认单位px
+   * @default 0
+   */
+  radius?: string | number
 }
 
 declare interface _Album {
