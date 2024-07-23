@@ -125,7 +125,7 @@ export default {
 			}
 		},
 	},
-	emits: ['close', 'cancel', 'confirm', 'change'],
+	emits: ['close', 'cancel', 'confirm', 'change', 'update:modelValue'],
     computed: {
         inputLabel() {
             let items = this.innerColumns.map((item, index) => item[this.innerIndex[index]])
