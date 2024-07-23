@@ -1,3 +1,10 @@
+## 3.3.6（2024-07-23）
+feat: u-album组件添加radius,shape参数，定义参考当前u-image参数
+
+fix: 修复了calendar组件title和日期title未垂直居中的问题
+
+fix: update:modelValue缺失emit定义
+
 ## 3.3.5（2024-07-10）
 picker组件支持hasInput模式
 
