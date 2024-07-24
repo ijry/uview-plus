@@ -167,12 +167,7 @@ export default {
 		getContentRef() {
 			return this.$refs['u-swipe-action-item__content'].ref
 		},
-		// #ifdef VUE2
-		beforeDestroy() {
-		// #endif
-		// #ifdef VUE3
 		beforeUnmount() {
-		// #endif
 			this.unbindBindingX()
 		}
 	}

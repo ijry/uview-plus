@@ -126,13 +126,7 @@ export default {
 			this.setContent(this.content)
 		}
 	},
-	// #ifdef VUE2
-	// beforeDestroy()
-	// #endif
-	// #ifdef VUE3
-	beforeUnmount()
-	// #endif
-	{
+	beforeUnmount() {
 		this._hook('onDetached')
 	},
 	methods: {

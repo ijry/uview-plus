@@ -141,12 +141,7 @@
 				this.timer = null
 			}
 		},
-		// #ifdef VUE2
-		beforeDestroy() {
-		// #endif
-		// #ifdef VUE3
 		beforeUnmount() {
-		// #endif
 			this.clearTimeout()
 		}
 	}
