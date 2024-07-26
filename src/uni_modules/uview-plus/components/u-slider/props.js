@@ -60,6 +60,10 @@ export const props = defineMixin({
         showValue: {
             type: Boolean,
             default: () => defProps.slider.showValue
+        },
+        height: {
+            type: String,
+            default: () => defProps.slider.height
         }
     }
 })

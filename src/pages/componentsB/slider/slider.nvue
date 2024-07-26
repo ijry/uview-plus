@@ -35,6 +35,7 @@
 				    v-model="value5"
 				    activeColor="#deab8a"
 				    blockColor="#f47920"
+					height="4px"
 				></up-slider>
 			</view>
 		</view>
