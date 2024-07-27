@@ -52,6 +52,11 @@ export const props = defineMixin({
         round: {
             type: [Boolean, String, Number],
             default: () => defProps.actionSheet.round
-        }
+        },
+        // 选项区域最大高度
+        wrapMaxHeight: {
+            type: [String],
+            default: () => defProps.actionSheet.wrapMaxHeight
+        },
     }
 })

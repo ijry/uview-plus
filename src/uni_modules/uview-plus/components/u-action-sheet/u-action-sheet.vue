@@ -34,7 +34,7 @@
 			>{{description}}</text>
 			<slot>
 				<u-line v-if="description"></u-line>
-				<view class="u-action-sheet__item-wrap">
+				<scroll-view scroll-y class="u-action-sheet__item-wrap" :style="{maxHeight: wrapMaxHeight}">
 					<view :key="index" v-for="(item, index) in actions">
 						<!-- #ifdef MP -->
 						<button
@@ -85,7 +85,7 @@
 						<!-- #endif -->
 						<u-line v-if="index !== actions.length - 1"></u-line>
 					</view>
-				</view>
+				</scroll-view>
 			</slot>
 			<u-gap
 			    bgColor="#eaeaec"
@@ -270,7 +270,7 @@
 			font-size: $u-action-sheet-cancel-text-font-size;
 			color: $u-action-sheet-cancel-text-color;
 			text-align: center;
-			padding: $u-action-sheet-cancel-text-font-size;
+			// padding: $u-action-sheet-cancel-text-font-size;
 		}
 
 		&--hover {
