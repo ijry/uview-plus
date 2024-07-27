@@ -2,6 +2,7 @@
 	<view class="u-toast">
 		<u-overlay
 			:show="isShow"
+			:zIndex="tmpConfig.overlay ? 10070 : -1"
 			:custom-style="overlayStyle"
 		>
 			<view
@@ -54,7 +55,7 @@
 	 * @property {String}			icon		图标，或者绝对路径的图片
 	 * @property {String}			type		主题类型 （默认 default）
 	 * @property {Boolean}			show		是否显示该组件 （默认 false）
-	 * @property {Boolean}			overlay		是否显示透明遮罩，防止点击穿透 （默认 false ）
+	 * @property {Boolean}			overlay		是否显示透明遮罩，防止点击穿透 （默认 true ）
 	 * @property {String}			position	位置 （默认 'center' ）
 	 * @property {Object}			params		跳转的参数 
 	 * @property {String | Number}  duration	展示时间，单位ms （默认 2000 ）
@@ -80,7 +81,7 @@
 					icon: true, // 显示的图标
 					position: 'center', // toast出现的位置
 					complete: null, // 执行完后的回调函数
-					overlay: false, // 是否防止触摸穿透
+					overlay: true, // 是否防止触摸穿透
 					loading: false, // 是否加载中状态
 				},
 				tmpConfig: {}, // 将用户配置和内置配置合并后的临时配置变量

@@ -4,7 +4,7 @@
 			height="30"
 			bgColor="#fff"
 		></up-gap>
-		<up-toast ref="uToast"></up-toast>
+		<up-toast ref="uToastRef"></up-toast>
 		<up-cell-group title-bg-color="rgb(243, 244, 246)">
 			<up-cell
 				:titleStyle="{fontWeight: 500}"
@@ -82,8 +82,9 @@
 		},
 		methods: {
 			showToast(params) {
-				this.$refs.uToast.show({
+				this.$refs.uToastRef.show({
 					...params,
+					overlay: true,
 					complete() {
 						params.url && uni.navigateTo({
 							url: params.url
