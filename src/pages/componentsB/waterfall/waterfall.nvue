@@ -163,7 +163,9 @@
         background-color: #ffffff;
         padding: 8px;
         position: relative;
+        /* #ifdef H5 */
         cursor: pointer;
+        /* #endif */
         .u-close {
             position: absolute;
             top: -7px;

@@ -338,7 +338,7 @@
 			box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 			background-color: #fff;
 			transform: scale(0.9);
-			/* #ifndef APP-NVUE */
+			/* #ifdef H5 */
 			cursor: pointer;
 			/* #endif */
 		}

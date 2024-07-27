@@ -327,12 +327,12 @@
 					@include flex;
 					align-items: center;
 					justify-content: center;
-					/* #ifndef APP-NVUE */
+					/* #ifdef H5 */
 					cursor: pointer;
 					/* #endif */
 
 					&--disabled {
-						/* #ifndef APP-NVUE */
+						/* #ifdef H5 */
 						cursor: not-allowed;
 						/* #endif */
 					}

@@ -128,7 +128,7 @@
 		flex: 1;
 		width: 100%;
 		height: 100%;
-		/* #ifndef APP-NVUE */
+		/* #ifdef H5 */
 		cursor: pointer;
 		/* #endif */
 		
