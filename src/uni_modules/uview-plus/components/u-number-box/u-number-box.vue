@@ -259,6 +259,7 @@
 				const val = this.format(this.currentValue);
 				if (val !== this.currentValue) {
 					this.currentValue = val
+					this.emitChange(val)
 				}
 			},
 			// 判断是否出于禁止操作状态
