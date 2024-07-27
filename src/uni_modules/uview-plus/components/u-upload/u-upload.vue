@@ -129,7 +129,6 @@
 				</view>
 			</template>
 		</view>
-
 	</view>
 </template>
 

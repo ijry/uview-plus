@@ -1,5 +1,5 @@
 <template>
-	<view class="u-form-item">
+	<view class="u-form-item" :class="{'u-form-item--error':(!!message && parentData.errorType === 'message')}">
 		<view
 			class="u-form-item__body"
 			@tap="clickHandler"
