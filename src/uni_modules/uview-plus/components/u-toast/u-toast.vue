@@ -93,10 +93,14 @@
 				if(!this.tmpConfig.icon || this.tmpConfig.icon == 'none') {
 					return '';
 				}
-				if (['error', 'warning', 'success', 'primary'].includes(this.tmpConfig.type)) {
-					return type2icon(this.tmpConfig.type)
+				if (this.tmpConfig.icon === true) {
+					if (['error', 'warning', 'success', 'primary'].includes(this.tmpConfig.type)) {
+						return type2icon(this.tmpConfig.type)
+					} else {
+						return ''
+					}
 				} else {
-					return ''
+					return this.tmpConfig.icon
 				}
 			},
 			overlayStyle() {
