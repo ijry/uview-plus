@@ -88,20 +88,34 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
+			<text class="u-demo-block__title">自定义内容插槽</text>
+			<view class="u-demo-block__content">
+				<up-tabs :list="list1">
+					<template #default="scope">
+						<text class="u-tabs__wrapper__nav__item__text"
+							style="color: rgb(96, 98, 102);">
+							{{scope.item[scope.keyName]}}
+						</text>
+					</template>
+				</up-tabs>
+			</view>
+		</view>
+		<view class="u-demo-block">
 			<text class="u-demo-block__title">右侧自定义插槽</text>
 			<view class="u-demo-block__content">
 				<up-tabs :list="list1">
-					<view
-						slot="right"
-						style="padding-left: 4px;"
-						@tap="$u.toast('插槽被点击')"
-					>
-						<up-icon
-							name="list"
-							size="21"
-							bold
-						></up-icon>
-					</view>
+					<template #right>
+						<view
+							style="padding-left: 4px;"
+							@tap="$u.toast('插槽被点击')"
+						>
+							<up-icon
+								name="list"
+								size="21"
+								bold
+							></up-icon>
+						</view>
+					</template>
 				</up-tabs>
 			</view>
 		</view>

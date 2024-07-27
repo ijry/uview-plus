@@ -32,15 +32,15 @@
 				>
 				</view>
 				<view class="u-slider__button-wrap" @touchstart="onTouchStart"
-						@touchmove="onTouchMove" @touchend="onTouchEnd"
-						@touchcancel="onTouchEnd" :style="{left: (getPx(barStyle.width) + getPx(blockSize)/2) + 'px'}">
-						<slot v-if="$slots.default  || $slots.$default"/>
-						<view v-else class="u-slider__button" :style="[blockStyle, {
-							height: getPx(blockSize, true),
-							width: getPx(blockSize, true),
-							backgroundColor: blockColor
-						}]"></view>
-					</view>
+					@touchmove="onTouchMove" @touchend="onTouchEnd"
+					@touchcancel="onTouchEnd" :style="{left: (getPx(barStyle.width) + getPx(blockSize)/2) + 'px'}">
+					<slot v-if="$slots.default  || $slots.$default"/>
+					<view v-else class="u-slider__button" :style="[blockStyle, {
+						height: getPx(blockSize, true),
+						width: getPx(blockSize, true),
+						backgroundColor: blockColor
+					}]"></view>
+				</view>
 			</view>
 			<view class="u-slider__show-value" v-if="showValue">{{ modelValue }}</view>
 		</template>
