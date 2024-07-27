@@ -93,8 +93,8 @@
 				<up-tabs :list="list1">
 					<template #default="scope">
 						<text class="u-tabs__wrapper__nav__item__text"
-							style="color: rgb(96, 98, 102);">
-							{{scope.item[scope.keyName]}}
+							style="color: red">
+							{{scope.item?.[scope.keyName] || '-'}}
 						</text>
 					</template>
 				</up-tabs>

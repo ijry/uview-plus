@@ -94,7 +94,13 @@
 			
 			<template v-if="isInCount">
 				<view
-				    v-if="$slots.default || $slots.$default"
+				    v-if="$slots.trigger"
+				    @tap="chooseFile"
+				>
+					<slot name="trigger" />
+				</view>
+				<view
+				    v-else-if="!$slots.trigger && ($slots.default || $slots.$default)"
 				    @tap="chooseFile"
 				>
 					<slot />

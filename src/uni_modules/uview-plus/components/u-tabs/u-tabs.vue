@@ -24,7 +24,9 @@
 							:style="[addStyle(itemStyle), {flex: scrollable ? '' : 1}]"
 							:class="[`u-tabs__wrapper__nav__item-${index}`, item.disabled && 'u-tabs__wrapper__nav__item--disabled']"
 						>
-							<slot v-if="$slots.default  || $slots.$default" :item="item" :keyName="keyName" :index="index" />
+							<slot v-if="$slots.content" name="content" :item="item" :keyName="keyName" :index="index" />
+							<slot v-else-if="!$slots.content && ($slots.default || $slots.$default)"
+								:item="item" :keyName="keyName" :index="index" />
 							<text v-else
 								:class="[item.disabled && 'u-tabs__wrapper__nav__item__text--disabled']"
 								class="u-tabs__wrapper__nav__item__text"
