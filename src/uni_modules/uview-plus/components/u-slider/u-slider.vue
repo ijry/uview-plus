@@ -3,7 +3,39 @@
 		class="u-slider"
 		:style="[addStyle(customStyle)]"
 	>
+		<template v-if="!useNative">
+			<view class="u-slider-inner" @tap="onClick"
+				:class="[disabled ? 'u-slider--disabled' : '']" :style="{
+					backgroundColor: inactiveColor
+				}"
+			>
+				<view
+					class="u-slider__gap"
+					:style="[
+						barStyle,
+						{
+							height: height,
+							backgroundColor: activeColor
+						}
+					]"
+				>
+					<view class="u-slider__button-wrap" @touchstart="onTouchStart"
+						@touchmove="onTouchMove" @touchend="onTouchEnd"
+						@touchcancel="onTouchEnd">
+						<slot v-if="$slots.default  || $slots.$default"/>
+						<view v-else class="u-slider__button" :style="[blockStyle, {
+							height: getPx(blockSize),
+							width: getPx(blockSize),
+							backgroundColor: blockColor
+						}]"></view>
+					</view>
+				</view>
+			</view>
+			<view class="u-slider__show-value" v-if="showValue">{{ modelValue }}</view>
+		</template>
 		<slider
+			class="u-slider__native"
+			v-else
 			:min="min"
 			:max="max"
 			:step="step"
@@ -25,10 +57,72 @@
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
 	import { addStyle, getPx } from '../../libs/function/index.js';
+	/**
+	 * slider 滑块选择器
+	 * @tutorial https://uview-plus.jiangruyi.com/components/slider.html
+	 * @property {Number | String} value 滑块默认值（默认0）
+	 * @property {Number | String} min 最小值（默认0）
+	 * @property {Number | String} max 最大值（默认100）
+	 * @property {Number | String} step 步长（默认1）
+	 * @property {Number | String} blockWidth 滑块宽度，高等于宽（30）
+	 * @property {Number | String} height 滑块条高度，单位rpx（默认6）
+	 * @property {String} inactiveColor 底部条背景颜色（默认#c0c4cc）
+	 * @property {String} activeColor 底部选择部分的背景颜色（默认#2979ff）
+	 * @property {String} blockColor 滑块颜色（默认#ffffff）
+	 * @property {Object} blockStyle 给滑块自定义样式，对象形式
+	 * @property {Boolean} disabled 是否禁用滑块(默认为false)
+	 * @event {Function} changing 正在滑动中
+	 * @event {Function} change 滑动结束
+	 * @example <up-slider v-model="value" />
+	 */
 	export default {
-		name: 'up-slider',
+		name: 'u-slider',
 		mixins: [mpMixin, mixin, props],
-		emits: ["changing", "change", "update:modelValue"],
+		emits: ["start", "changing", "change", "update:modelValue"],
+		data() {
+			return {
+				startX: 0,
+				status: 'end',
+				newValue: 0,
+				distanceX: 0,
+				startValue: 0,
+				barStyle: {},
+				sliderRect: {
+					left: 0,
+					width: 0
+				}
+			};
+		},
+		watch: {
+			// #ifdef VUE3
+			modelValue(n) {
+				// 只有在非滑动状态时，才可以通过value更新滑块值，这里监听，是为了让用户触发
+				if(this.status == 'end') this.updateValue(this.modelValue, false);
+			},
+			// #endif
+			// #ifdef VUE2
+			value(n) {
+				// 只有在非滑动状态时，才可以通过value更新滑块值，这里监听，是为了让用户触发
+				if(this.status == 'end') this.updateValue(this.value, false);
+			}
+			// #endif
+		},
+		created() {
+		},
+		mounted() {
+			// 获取滑块条的尺寸信息
+			if (!this.useNative) {
+				this.$uGetRect('.u-slider-inner').then(rect => {
+					this.sliderRect = rect;
+					// #ifdef VUE3
+					this.updateValue(this.modelValue, false);
+					// #endif
+					// #ifdef VUE2
+					this.updateValue(this.value, false);
+					// #endif
+				});
+			}
+		},
 		methods: {
 			addStyle,
 			getPx,
@@ -61,11 +155,156 @@
                 // #endif
 				// 触发事件
 				this.$emit('change', value)
+			},
+			onTouchStart(event) {
+				if (this.disabled) return;
+				this.startX = 0;
+				// 触摸点集
+				let touches = event.touches[0];
+				// 触摸点到屏幕左边的距离
+				this.startX = touches.clientX;
+				// 此处的this.modelValue虽为props值，但是通过$emit('update:modelValue')进行了修改
+				// #ifdef VUE3
+                this.startValue = this.format(this.modelValue);
+                // #endif
+                // #ifdef VUE2
+                this.startValue = this.format(this.value);
+                // #endif
+				// 标示当前的状态为开始触摸滑动
+				this.status = 'start';
+			},
+			onTouchMove(event) {
+				if (this.disabled) return;
+				// 连续触摸的过程会一直触发本方法，但只有手指触发且移动了才被认为是拖动了，才发出事件
+				// 触摸后第一次移动已经将status设置为moving状态，故触摸第二次移动不会触发本事件
+				if (this.status == 'start') this.$emit('start');
+				let touches = event.touches[0];
+				// 滑块的左边不一定跟屏幕左边接壤，所以需要减去最外层父元素的左边值
+				this.distanceX = touches.clientX - this.sliderRect.left;
+				// 获得移动距离对整个滑块的值，此为带有多位小数的值，不能用此更新视图
+				// 否则造成通信阻塞，需要每改变一个step值时修改一次视图
+				this.newValue = ((this.distanceX / this.sliderRect.width) * (this.max - this.min)) + parseFloat(this.min);
+				this.status = 'moving';
+				// 发出moving事件
+				this.$emit('changing');
+				this.updateValue(this.newValue, true);
+			},
+			onTouchEnd() {
+				if (this.disabled) return;
+				if (this.status === 'moving') {
+					this.updateValue(this.newValue, false);
+					this.$emit('change');
+				}
+				this.status = 'end';
+			},
+			updateValue(value, drag) {
+				// 去掉小数部分，同时也是对step步进的处理
+				const valueFormat = this.format(value);
+				// 不允许滑动的值超过max最大值
+				if(valueFormat > this.max ) {
+					valueFormat = this.max
+				}
+				// 设置移动的距离，不能用百分比，因为NVUE不支持。
+				let width = Math.min((valueFormat - this.min) / (this.max - this.min) * this.sliderRect.width, this.sliderRect.width)
+				let barStyle = {
+					width: width + 'px'
+				};
+				// 移动期间无需过渡动画
+				if (drag == true) {
+					barStyle.transition = 'none';
+				} else {
+					// 非移动期间，删掉对过渡为空的声明，让css中的声明起效
+					delete barStyle.transition;
+				}
+				// 修改value值
+				// #ifdef VUE3
+                this.$emit("update:modelValue", valueFormat);
+                // #endif
+                // #ifdef VUE2
+                this.$emit("input", valueFormat);
+                // #endif
+				this.barStyle = barStyle;
+			},
+			format(value) {
+				// 将小数变成整数，为了减少对视图的更新，造成视图层与逻辑层的阻塞
+				return Math.round(
+					Math.max(this.min, Math.min(value, this.max))
+					/ this.step
+				) * this.step;
+			},
+			onClick(event) {
+				if (this.disabled) return;
+				// 直接点击滑块的情况，计算方式与onTouchMove方法相同
+				const value = ((event.detail.x - this.sliderRect.left) / this.sliderRect.width) * 100;
+				this.updateValue(value, false);
 			}
-		},
+		}
 	}
 </script>
 
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
+	.u-slider {
+		position: relative;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+
+		&__native {
+			flex: 1;
+		}
+
+		&-inner {
+			flex: 1;
+			position: relative;
+			border-radius: 999px;
+			background-color: #ebedf0;
+			margin: 10px 18px;
+		}
+
+		&__show-value {
+			margin: 10px 18px 10px 0px;
+		}
+
+		/* #ifndef APP-NVUE */
+		&-inner:before {
+			position: absolute;
+			right: 0;
+			left: 0;
+			content: '';
+			top: -8px;
+			bottom: -8px;
+			z-index: -1;
+		}
+		/* #endif */
+
+		&__gap {
+			position: relative;
+			border-radius: 999px;
+			transition: width 0.2s;
+			background-color: #1989fa;
+		}
+
+		&__button {
+			width: 24px;
+			height: 24px;
+			border-radius: 50%;
+			box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+			background-color: #fff;
+			/* #ifndef APP-NVUE */
+			cursor: pointer;
+			/* #endif */
+		}
+
+		&__button-wrap {
+			position: absolute;
+			top: 50%;
+			right: 0;
+			transform: translate3d(50%, -50%, 0);
+		}
+
+		&--disabled {
+			opacity: 0.5;
+		}
+	}
 </style>

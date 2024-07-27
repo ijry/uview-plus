@@ -4,17 +4,19 @@
 			<text class="u-demo-block__title">基本案例</text>
 				<view class="u-page__slide-item">
 				<up-slider
+					:useNative="useNative"
 					v-model="value1"
 				></up-slider>
 			</view>
 		</view>
 			<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义范围(0—50)</text>
+			<text class="u-demo-block__title">自定义范围(10—50)</text>
 			<view class="u-page__slide-item">
 				<up-slider
+					:useNative="useNative"
 				    v-model="value2"
 					showValue
-				    min="0"
+				    min="10"
 				    max="50"
 				></up-slider>
 			</view>
@@ -23,6 +25,7 @@
 			<text class="u-demo-block__title">指定步长(每次步进5)</text>
 			<view class="u-page__slide-item">
 				<up-slider
+					:useNative="useNative"
 				    v-model="value4"
 				    :step="5"
 				></up-slider>
@@ -46,6 +49,7 @@
 	export default {
 		data() {
 			return {
+				useNative: false,
 				value1: 30,
 				value2: 30,
 				value3: 30,

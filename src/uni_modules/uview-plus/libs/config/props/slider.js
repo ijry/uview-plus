@@ -21,6 +21,7 @@ export default {
         showValue: false,
 		disabled:false,
         blockStyle: {},
+        useNative: false,
         height: '2px'
     }
 }
