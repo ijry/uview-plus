@@ -174,7 +174,7 @@
 		overflow: hidden;
 
 		&__title {
-			display: block;
+			display: flex;
 			font-size: 16px;
 			font-weight: bold;
 			color: $u-content-color;

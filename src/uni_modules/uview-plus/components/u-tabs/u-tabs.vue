@@ -327,7 +327,9 @@
 					@include flex;
 					align-items: center;
 					justify-content: center;
+					/* #ifndef APP-NVUE */
 					cursor: pointer;
+					/* #endif */
 
 					&--disabled {
 						/* #ifndef APP-NVUE */
@@ -338,7 +340,9 @@
 					&__text {
 						font-size: 15px;
 						color: $u-content-color;
+						/* #ifndef APP-NVUE */
                         white-space: nowrap !important;
+						/* #endif */
 
 						&--disabled {
 							color: $u-disabled-color !important;

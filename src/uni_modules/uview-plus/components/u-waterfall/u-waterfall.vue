@@ -216,7 +216,7 @@
         @include flex;
         flex: 1;
         flex-direction: column;
-        height: auto;
+        height: 100%;
     }
 
     .u-image {

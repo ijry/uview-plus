@@ -151,8 +151,7 @@ export const mixin = defineMixin({
     onReachBottom() {
         uni.$emit('uOnReachBottom')
 	},
-	beforeUnmount()
-    {
+	beforeUnmount() {
         // 判断当前页面是否存在parent和chldren，一般在checkbox和checkbox-group父子联动的场景会有此情况
         // 组件销毁时，移除子组件在父组件children数组中的实例，释放资源，避免数据混乱
         if (this.parent && test.array(this.parent.children)) {
