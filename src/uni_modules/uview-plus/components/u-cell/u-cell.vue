@@ -16,7 +16,7 @@
 					<slot name="title" v-if="$slots.title || !title">
 					</slot>
                     <text v-else class="u-cell__title-text" :style="[titleTextStyle]"
-                        :class="[disabled && 'u-cell--disabled', size === 'large' && 'u-cell__title-text--large']">{{ title }}</text>
+                        :class="[required && 'u-cell--required', disabled && 'u-cell--disabled', size === 'large' && 'u-cell__title-text--large']">{{ title }}</text>
 					<slot name="label">
 						<text class="u-cell__label" v-if="label"
 							:class="[disabled && 'u-cell--disabled', size === 'large' && 'u-cell__label--large']">{{ label }}</text>
@@ -229,6 +229,25 @@
 			&--large {
 				font-size: $u-cell-value-font-size-large;
 			}
+		}
+
+		&--required {
+			/* #ifndef APP-NVUE */
+			overflow: visible;
+			/* #endif */
+			@include flex;
+			align-items: center;
+		}
+
+		&--required:before {
+			position: absolute;
+			/* #ifndef APP-NVUE */
+			content: '*';
+			/* #endif */
+			left: -8px;
+			margin-top: 4rpx;
+			font-size: 14px;
+			color: $u-error;
 		}
 
 		&--clickable {

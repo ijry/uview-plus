@@ -49,6 +49,7 @@
 			<text class="u-page__item__title">显示右箭头</text>
 			<up-cell-group>
 				<up-cell
+					required
 				    title="单元格"
 				    value="组件"
 				    isLink
@@ -86,6 +87,7 @@
 			<text class="u-page__item__title">右侧内容垂直居中</text>
 			<up-cell-group>
 				<up-cell
+					required
 				    title="单元格"
 				    value="内容"
 				    label="描述信息"
