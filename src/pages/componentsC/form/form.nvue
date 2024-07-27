@@ -223,8 +223,12 @@
 		</view>
 	</view>
 </template>
-
-<script>
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import type { UniFormRef } from '@/uni_modules/uview-plus/types'
+	const form1 = ref<UniFormRef|null>(null)
+</script>
+<script lang="ts">
 	export default {
 		data() {
 			return {

@@ -47,7 +47,7 @@ declare module 'uview-plus' {
 		/** 是否对象 */
 		object(value: any): boolean;
 		/** 是否短信验证码 */
-		code(value: any, len: number = 6): boolean;
+		code(value: any, len: number): boolean;
 		/** 是否函数方法 */
 		func(value: any): boolean;
 		/** 是否promise对象 */
@@ -106,7 +106,7 @@ declare module 'uview-plus' {
 		  * @param {string} endColor 结束的颜色
 		  * @param {number} step 颜色等分的份额
 		  */
-		colorGradient: (startColor: string, endColor: string, step: number = 10) => any[];
+		colorGradient: (startColor: string, endColor: string, step: number) => any[];
 		/**
 		 * 将hex表示方式转换为rgb
 		 * @param color "#000000"-> "rgb(0,0,0)" | "rgb(0,0,0)" -> "#000000"
@@ -140,8 +140,8 @@ declare module 'uview-plus' {
 			sticky: number;
 			indexListSticky: number;
 		},
-		debounce: (func, wait = 500, immediate = false) => void;
-		throttle: (func, wait = 500, immediate = true) => void;
+		debounce: (func, wait, immediate) => void;
+		throttle: (func, wait, immediate) => void;
 		mixin: {},
 		mpMixin: {},
 		props: {},
