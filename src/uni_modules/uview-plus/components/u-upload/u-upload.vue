@@ -332,7 +332,7 @@
 				});
 			},
 			onPreviewVideo(event) {
-				if (!this.data.previewFullImage) return;
+				if (!this.previewFullImage) return;
 				const {
 					index
 				} = event.currentTarget.dataset;
@@ -360,7 +360,7 @@
 					index
 				} = event.currentTarget.dataset;
 				const item = this.data.lists[index];
-				if (!this.data.previewFullImage) return;
+				if (!this.previewFullImage) return;
 				switch (item.type) {
 					case 'video':
 						this.onPreviewVideo(event);
