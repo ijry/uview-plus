@@ -112,6 +112,7 @@ export default {
 		// 监听默认索引的变化，重新设置对应的值
 		defaultIndex: {
 			immediate: true,
+			deep:true,
 			handler(n) {
 				this.setIndexs(n, true)
 			}
