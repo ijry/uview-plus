@@ -33,7 +33,8 @@ function formatVideo(res) {
             thumb: res.thumbTempFilePath,
 			size: res.size,
 			// #ifdef H5
-			name: res.name
+			name: res.name,
+    		file: item
 			// #endif
         }
     ]
