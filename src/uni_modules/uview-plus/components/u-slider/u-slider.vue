@@ -4,32 +4,43 @@
 		:style="[addStyle(customStyle)]"
 	>
 		<template v-if="!useNative">
-			<view class="u-slider-inner" @tap="onClick"
+			<view ref="u-slider-inner" class="u-slider-inner" @tap="onClick"
 				:class="[disabled ? 'u-slider--disabled' : '']" :style="{
-					backgroundColor: inactiveColor
+					height: (getPx(blockSize)) + 'px',
 				}"
 			>
+				<view ref="u-slider__base"
+					class="u-slider__base"
+					:style="[
+						{
+							height: height,
+							backgroundColor: inactiveColor
+						}
+					]"
+				>
+				</view>
 				<view
 					class="u-slider__gap"
 					:style="[
 						barStyle,
 						{
 							height: height,
+							marginTop: '-' + height,
 							backgroundColor: activeColor
 						}
 					]"
 				>
-					<view class="u-slider__button-wrap" @touchstart="onTouchStart"
+				</view>
+				<view class="u-slider__button-wrap" @touchstart="onTouchStart"
 						@touchmove="onTouchMove" @touchend="onTouchEnd"
-						@touchcancel="onTouchEnd">
+						@touchcancel="onTouchEnd" :style="{left: (getPx(barStyle.width) + getPx(blockSize)/2) + 'px'}">
 						<slot v-if="$slots.default  || $slots.$default"/>
 						<view v-else class="u-slider__button" :style="[blockStyle, {
-							height: getPx(blockSize),
-							width: getPx(blockSize),
+							height: getPx(blockSize, true),
+							width: getPx(blockSize, true),
 							backgroundColor: blockColor
 						}]"></view>
 					</view>
-				</view>
 			</view>
 			<view class="u-slider__show-value" v-if="showValue">{{ modelValue }}</view>
 		</template>
@@ -56,7 +67,10 @@
 	import { props } from './props';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
-	import { addStyle, getPx } from '../../libs/function/index.js';
+	import { addStyle, getPx, sleep } from '../../libs/function/index.js';
+	// #ifdef APP-NVUE
+	const dom = uni.requireNativePlugin('dom')
+	// #endif
 	/**
 	 * slider 滑块选择器
 	 * @tutorial https://uview-plus.jiangruyi.com/components/slider.html
@@ -109,10 +123,11 @@
 		},
 		created() {
 		},
-		mounted() {
+		async mounted() {
 			// 获取滑块条的尺寸信息
 			if (!this.useNative) {
-				this.$uGetRect('.u-slider-inner').then(rect => {
+				// #ifndef APP-NVUE
+				this.$uGetRect('.u-slider__base').then(rect => {
 					this.sliderRect = rect;
 					// #ifdef VUE3
 					this.updateValue(this.modelValue, false);
@@ -121,6 +136,25 @@
 					this.updateValue(this.value, false);
 					// #endif
 				});
+				// #endif
+				// #ifdef APP-NVUE
+				await sleep(30) // 不延迟会出现size获取都为0的问题
+				const ref = this.$refs['u-slider__base']
+				ref &&
+					dom.getComponentRect(ref, (res) => {
+						// console.log(res)
+						this.sliderRect = {
+							left: res.size.left,
+							width: res.size.width
+						};
+						// #ifdef VUE3
+						this.updateValue(this.modelValue, false);
+						// #endif
+						// #ifdef VUE2
+						this.updateValue(this.value, false);
+						// #endif
+					})
+				// #endif
 			}
 		},
 		methods: {
@@ -154,7 +188,7 @@
                 this.$emit("input", value);
                 // #endif
 				// 触发事件
-				this.$emit('change', value)
+				this.$emit('change', value);
 			},
 			onTouchStart(event) {
 				if (this.disabled) return;
@@ -179,8 +213,16 @@
 				// 触摸后第一次移动已经将status设置为moving状态，故触摸第二次移动不会触发本事件
 				if (this.status == 'start') this.$emit('start');
 				let touches = event.touches[0];
+				console.log('touchs', touches)
 				// 滑块的左边不一定跟屏幕左边接壤，所以需要减去最外层父元素的左边值
-				this.distanceX = touches.clientX - this.sliderRect.left;
+				let clientX = 0;
+				// #ifndef APP-NVUE
+				clientX = touches.clientX;
+				// #endif
+				// #ifdef APP-NVUE
+				clientX = touches.screenX;
+				// #endif
+				this.distanceX = clientX - this.sliderRect.left;
 				// 获得移动距离对整个滑块的值，此为带有多位小数的值，不能用此更新视图
 				// 否则造成通信阻塞，需要每改变一个step值时修改一次视图
 				this.newValue = ((this.distanceX / this.sliderRect.width) * (this.max - this.min)) + parseFloat(this.min);
@@ -199,7 +241,7 @@
 			},
 			updateValue(value, drag) {
 				// 去掉小数部分，同时也是对step步进的处理
-				const valueFormat = this.format(value);
+				let valueFormat = this.format(value);
 				// 不允许滑动的值超过max最大值
 				if(valueFormat > this.max ) {
 					valueFormat = this.max
@@ -258,12 +300,16 @@
 			flex: 1;
 			position: relative;
 			border-radius: 999px;
-			background-color: #ebedf0;
-			margin: 10px 18px;
+			padding: 10px 18px;
+			justify-content: center;
 		}
 
 		&__show-value {
 			margin: 10px 18px 10px 0px;
+		}
+
+		&__base {
+			background-color: #ebedf0;
 		}
 
 		/* #ifndef APP-NVUE */
@@ -291,6 +337,7 @@
 			border-radius: 50%;
 			box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 			background-color: #fff;
+			transform: scale(0.9);
 			/* #ifndef APP-NVUE */
 			cursor: pointer;
 			/* #endif */
@@ -298,9 +345,7 @@
 
 		&__button-wrap {
 			position: absolute;
-			top: 50%;
-			right: 0;
-			transform: translate3d(50%, -50%, 0);
+			// transform: translate3d(50%, -50%, 0);
 		}
 
 		&--disabled {
