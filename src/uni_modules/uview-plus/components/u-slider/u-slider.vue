@@ -3,10 +3,10 @@
 		class="u-slider"
 		:style="[addStyle(customStyle)]"
 	>
-		<template v-if="!useNative">
+		<template v-if="!useNative || isRange">
 			<view ref="u-slider-inner" class="u-slider-inner" @tap="onClick"
 				:class="[disabled ? 'u-slider--disabled' : '']" :style="{
-					height: (getPx(blockSize)) + 'px',
+					height: (isRange && showValue) ? (getPx(blockSize) + 24) + 'px' : (getPx(blockSize)) + 'px',
 				}"
 			>
 				<view ref="u-slider__base"
@@ -31,6 +31,38 @@
 					]"
 				>
 				</view>
+				<view
+					class="u-slider__gap u-slider__gap-0"
+					:style="[
+						barStyle0,
+						{
+							height: height,
+							marginTop: '-' + height,
+							backgroundColor: inactiveColor
+						}
+					]"
+				>
+				</view>
+				<text v-if="isRange && showValue"
+					class="u-slider__show-range-value" :style="{left: (getPx(barStyle0.width) + getPx(blockSize)/2) + 'px'}">
+					{{ this.rangeValue[0] }}
+				</text>
+				<text v-if="isRange && showValue"
+					class="u-slider__show-range-value" :style="{left: (getPx(barStyle.width) + getPx(blockSize)/2) + 'px'}">
+					{{ this.rangeValue[1] }}
+				</text>
+				<template v-if="isRange">
+					<view class="u-slider__button-wrap u-slider__button-wrap-0" @touchstart="onTouchStart($event, 0)"
+						@touchmove="onTouchMove($event, 0)" @touchend="onTouchEnd($event, 0)"
+						@touchcancel="onTouchEnd($event, 0)" :style="{left: (getPx(barStyle0.width) + getPx(blockSize)/2) + 'px'}">
+						<slot v-if="$slots.default  || $slots.$default"/>
+						<view v-else class="u-slider__button" :style="[blockStyle, {
+							height: getPx(blockSize, true),
+							width: getPx(blockSize, true),
+							backgroundColor: blockColor
+						}]"></view>
+					</view>
+				</template>
 				<view class="u-slider__button-wrap" @touchstart="onTouchStart"
 					@touchmove="onTouchMove" @touchend="onTouchEnd"
 					@touchcancel="onTouchEnd" :style="{left: (getPx(barStyle.width) + getPx(blockSize)/2) + 'px'}">
@@ -42,7 +74,7 @@
 					}]"></view>
 				</view>
 			</view>
-			<view class="u-slider__show-value" v-if="showValue">{{ modelValue }}</view>
+			<view class="u-slider__show-value" v-if="showValue && !isRange">{{ modelValue }}</view>
 		</template>
 		<slider
 			class="u-slider__native"
@@ -99,7 +131,9 @@
 				status: 'end',
 				newValue: 0,
 				distanceX: 0,
+				startValue0: 0,
 				startValue: 0,
+				barStyle0: {},
 				barStyle: {},
 				sliderRect: {
 					left: 0,
@@ -129,12 +163,7 @@
 				// #ifndef APP-NVUE
 				this.$uGetRect('.u-slider__base').then(rect => {
 					this.sliderRect = rect;
-					// #ifdef VUE3
-					this.updateValue(this.modelValue, false);
-					// #endif
-					// #ifdef VUE2
-					this.updateValue(this.value, false);
-					// #endif
+					this.init()
 				});
 				// #endif
 				// #ifdef APP-NVUE
@@ -147,12 +176,7 @@
 							left: res.size.left,
 							width: res.size.width
 						};
-						// #ifdef VUE3
-						this.updateValue(this.modelValue, false);
-						// #endif
-						// #ifdef VUE2
-						this.updateValue(this.value, false);
-						// #endif
+						this.init()
 					})
 				// #endif
 			}
@@ -160,7 +184,20 @@
 		methods: {
 			addStyle,
 			getPx,
-			// 拖动过程中触发
+			init() {
+				if (this.isRange) {
+					this.updateValue(this.rangeValue[0], false, 0);
+					this.updateValue(this.rangeValue[1], false, 1);
+				} else {
+					// #ifdef VUE3
+					this.updateValue(this.modelValue, false);
+					// #endif
+					// #ifdef VUE2
+					this.updateValue(this.value, false);
+					// #endif
+				}
+			},
+			// native拖动过程中触发
 			changingHandler(e) {
 				const {
 					value
@@ -175,7 +212,7 @@
 				// 触发事件
 				this.$emit('changing', value)
 			},
-			// 滑动结束时触发
+			// native滑动结束时触发
 			changeHandler(e) {
 				const {
 					value
@@ -190,7 +227,7 @@
 				// 触发事件
 				this.$emit('change', value);
 			},
-			onTouchStart(event) {
+			onTouchStart(event, index = 1) {
 				if (this.disabled) return;
 				this.startX = 0;
 				// 触摸点集
@@ -198,22 +235,27 @@
 				// 触摸点到屏幕左边的距离
 				this.startX = touches.clientX;
 				// 此处的this.modelValue虽为props值，但是通过$emit('update:modelValue')进行了修改
-				// #ifdef VUE3
-                this.startValue = this.format(this.modelValue);
-                // #endif
-                // #ifdef VUE2
-                this.startValue = this.format(this.value);
-                // #endif
+				if (this.isRange) {
+					this.startValue0 = this.format(this.rangeValue[0], 0);
+					this.startValue = this.format(this.rangeValue[1], 1);
+				} else {
+					// #ifdef VUE3
+					this.startValue = this.format(this.modelValue);
+					// #endif
+					// #ifdef VUE2
+					this.startValue = this.format(this.value);
+					// #endif
+				}
 				// 标示当前的状态为开始触摸滑动
 				this.status = 'start';
 			},
-			onTouchMove(event) {
+			onTouchMove(event, index = 1) {
 				if (this.disabled) return;
 				// 连续触摸的过程会一直触发本方法，但只有手指触发且移动了才被认为是拖动了，才发出事件
 				// 触摸后第一次移动已经将status设置为moving状态，故触摸第二次移动不会触发本事件
 				if (this.status == 'start') this.$emit('start');
 				let touches = event.touches[0];
-				console.log('touchs', touches)
+				// console.log('touchs', touches)
 				// 滑块的左边不一定跟屏幕左边接壤，所以需要减去最外层父元素的左边值
 				let clientX = 0;
 				// #ifndef APP-NVUE
@@ -229,19 +271,19 @@
 				this.status = 'moving';
 				// 发出moving事件
 				this.$emit('changing');
-				this.updateValue(this.newValue, true);
+				this.updateValue(this.newValue, true, index);
 			},
-			onTouchEnd() {
+			onTouchEnd(event, index = 1) {
 				if (this.disabled) return;
 				if (this.status === 'moving') {
-					this.updateValue(this.newValue, false);
+					this.updateValue(this.newValue, false, index);
 					this.$emit('change');
 				}
 				this.status = 'end';
 			},
-			updateValue(value, drag) {
+			updateValue(value, drag, index = 1) {
 				// 去掉小数部分，同时也是对step步进的处理
-				let valueFormat = this.format(value);
+				let valueFormat = this.format(value, index);
 				// 不允许滑动的值超过max最大值
 				if(valueFormat > this.max ) {
 					valueFormat = this.max
@@ -259,20 +301,55 @@
 					delete barStyle.transition;
 				}
 				// 修改value值
-				// #ifdef VUE3
-                this.$emit("update:modelValue", valueFormat);
-                // #endif
-                // #ifdef VUE2
-                this.$emit("input", valueFormat);
-                // #endif
-				this.barStyle = barStyle;
+				if (this.isRange) {
+					this.rangeValue[index] = valueFormat;
+					this.$emit("update:modelValue", this.rangeValue);
+				} else {
+					// #ifdef VUE3
+					this.$emit("update:modelValue", valueFormat);
+					// #endif
+					// #ifdef VUE2
+					this.$emit("input", valueFormat);
+					// #endif
+				}
+
+				switch (index) {
+					case 0:
+						this.barStyle0 = {...barStyle};
+						break;
+					case 1:
+						this.barStyle = {...barStyle};
+						break;
+					default:
+						break;
+				}
+				
 			},
-			format(value) {
+			format(value, index = 1) {
 				// 将小数变成整数，为了减少对视图的更新，造成视图层与逻辑层的阻塞
-				return Math.round(
-					Math.max(this.min, Math.min(value, this.max))
-					/ this.step
-				) * this.step;
+				if (this.isRange) {
+					switch (index) {
+						case 0:
+							return Math.round(
+								Math.max(this.min, Math.min(value, this.rangeValue[1] - this.step,this.max))
+								/ this.step
+							) * this.step;
+							break;
+						case 1:
+							return Math.round(
+								Math.max(this.min, this.rangeValue[0] + this.step, Math.min(value, this.max))
+								/ this.step
+							) * this.step;
+							break;
+						default:
+							break;
+					}
+				} else {
+					return Math.round(
+						Math.max(this.min, Math.min(value, this.max))
+						/ this.step
+					) * this.step;
+				}
 			},
 			onClick(event) {
 				if (this.disabled) return;
@@ -306,6 +383,14 @@
 
 		&__show-value {
 			margin: 10px 18px 10px 0px;
+		}
+
+		&__show-range-value {
+			padding-top: 2px;
+			font-size: 12px;
+			line-height: 12px;
+			position: absolute;
+    		bottom: 0;
 		}
 
 		&__base {

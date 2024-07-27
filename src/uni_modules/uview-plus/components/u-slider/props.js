@@ -32,6 +32,16 @@ export const props = defineMixin({
             default: () => defProps.slider.value
         },
         // #endif
+        // 是否区间模式
+        isRange: {
+            type: Boolean,
+            default: false
+        },
+        // 双滑块时值
+        rangeValue: {
+            type: [Array],
+            default: [0, 0]
+        },
         // 滑块右侧已选择部分的背景色
         activeColor: {
             type: String,
