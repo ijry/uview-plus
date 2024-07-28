@@ -19,7 +19,8 @@ function formatImage(res) {
         thumb: item.path,
 		size: item.size,
 		// #ifdef H5
-		name: item.name
+		name: item.name,
+		file: item
 		// #endif
     }))
 }
@@ -33,7 +34,8 @@ function formatVideo(res) {
             thumb: res.thumbTempFilePath,
 			size: res.size,
 			// #ifdef H5
-			name: res.name
+			name: res.name,
+			file: res
 			// #endif
         }
     ]
@@ -45,7 +47,10 @@ function formatMedia(res) {
         type: res.type,
         url: item.tempFilePath,
         thumb: res.type === 'video' ? item.thumbTempFilePath : item.tempFilePath,
-		size: item.size
+		size: item.size,
+		// #ifdef H5
+		file: item
+		// #endif
     }))
 }
 
@@ -56,7 +61,8 @@ function formatFile(res) {
 		size:item.size,
 		// #ifdef H5
 		name: item.name,
-		type: item.type
+		type: item.type,
+		file: item
 		// #endif 
 	}))
 }
