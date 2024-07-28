@@ -189,7 +189,7 @@
 		mounted() {
 			this.init()
 		},
-		emits: ["change"],
+		emits: ["change", "update:checked"],
 		methods: {
 			init() {
 				if (!this.usedAlone) {
@@ -198,21 +198,25 @@
 					if (!this.parent) {
 						error('u-checkbox必须搭配u-checkbox-group组件使用')
 					}
-				}
-				// #ifdef VUE2
-				const value = this.parentData.value
-				// #endif
-				// #ifdef VUE3
-				const value = this.parentData.modelValue
-				// #endif
-				// 设置初始化时，是否默认选中的状态，父组件u-checkbox-group的value可能是array，所以额外判断
-				if (this.checked) {
-					this.isChecked = true
-				} else if (!this.usedAlone && test.array(value)) {
-					// 查找数组是是否存在this.name元素值
-					this.isChecked = value.some(item => {
-						return item === this.name
-					})
+					// #ifdef VUE2
+					const value = this.parentData.value
+					// #endif
+					// #ifdef VUE3
+					const value = this.parentData.modelValue
+					// #endif
+					// 设置初始化时，是否默认选中的状态，父组件u-checkbox-group的value可能是array，所以额外判断
+					if (this.checked) {
+						this.isChecked = true
+					} else if (!this.usedAlone && test.array(value)) {
+						// 查找数组是是否存在this.name元素值
+						this.isChecked = value.some(item => {
+							return item === this.name
+						})
+					}
+				} else {
+					if (this.checked) {
+						this.isChecked = true
+					}
 				}
 			},
 			updateParentData() {
@@ -244,6 +248,10 @@
 			},
 			emitEvent() {
 				this.$emit('change', this.isChecked)
+				// 双向绑定
+				if (this.usedAlone) {
+					this.$emit('update:checked', this.isChecked)
+				}
 				// 尝试调用u-form的验证方法，进行一定延迟，否则微信小程序更新可能会不及时
 				this.$nextTick(() => {
 					formValidate(this, 'change')
@@ -262,8 +270,10 @@
 			}
 		},
 		watch:{
-			checked(){
-				this.isChecked = this.checked
+			checked(newValue, oldValue){
+				if (newValue !== this.isChecked) {
+					this.isChecked = newValue
+				}
 			}
 		}
 	}
