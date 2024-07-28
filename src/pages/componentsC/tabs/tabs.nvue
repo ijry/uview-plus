@@ -103,7 +103,7 @@
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">右侧自定义插槽</text>
 			<view class="u-demo-block__content">
-				<up-tabs :list="list1">
+				<up-tabs :list="list1" v-model:current="list1Current">
 					<template #right>
 						<view
 							style="padding-left: 4px;"
@@ -117,6 +117,8 @@
 						</view>
 					</template>
 				</up-tabs>
+				<up-button type="primary" size="small" style="width: 120px;"
+					@click="nextTab">切换下一个{{ list1Current }}</up-button>
 			</view>
 		</view>
 	</view>
@@ -225,7 +227,8 @@
 					}, {
 						name: '科技'
 					}
-				]
+				],
+				list1Current: 1
 			}
 		},
 		onLoad() {
@@ -234,6 +237,13 @@
 		methods: {
 			click(item) {
 				console.log('item', item);
+			},
+			nextTab() {
+				if (this.list1.length <= (this.list1Current + 1)) {
+					this.list1Current = 0;
+				} else {
+					this.list1Current = this.list1Current + 1;
+				}
 			}
 		}
 	}

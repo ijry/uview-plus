@@ -160,7 +160,7 @@
 		async mounted() {
 			this.init()
 		},
-		emits: ['click', 'change'],
+		emits: ['click', 'change', 'update:current'],
 		methods: {
 			addStyle,
 			addUnit,
@@ -212,6 +212,7 @@
 				if (item.disabled) return
 				this.innerCurrent = index
 				this.resize()
+				this.$emit('update:current', index)
 				this.$emit('change', {
 					...item,
 					index
