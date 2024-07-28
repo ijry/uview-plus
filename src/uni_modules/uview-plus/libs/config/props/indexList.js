@@ -14,6 +14,7 @@ export default {
         activeColor: '#5677fc',
         indexList: [],
         sticky: true,
-        customNavHeight: 0
+        customNavHeight: 0,
+        safeBottomFix: false
     }
 }

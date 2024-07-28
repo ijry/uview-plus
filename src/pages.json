@@ -379,6 +379,11 @@
 				"navigationBarTitleText": "索引列表"
 			}
 		}, {
+			"path": "indexList/indexList2",
+			"style": {
+				"navigationBarTitleText": "索引列表(弹窗)"
+			}
+		}, {
 			"path": "tooltip/tooltip",
 			"style": {
 				"navigationBarTitleText": "长按提示"

@@ -26,6 +26,11 @@ export const props = defineMixin({
         customNavHeight: {
             type: [String, Number],
             default: () => defProps.indexList.customNavHeight
-        }
+        },
+        // 是否开启底部安全距离适配
+        safeBottomFix: {
+            type: Boolean,
+            default: () => defProps.indexList.safeBottomFix
+        },
     }
 })
