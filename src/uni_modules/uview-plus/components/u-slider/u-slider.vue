@@ -31,7 +31,7 @@
 					]"
 				>
 				</view>
-				<view
+				<view v-if="isRange"
 					class="u-slider__gap u-slider__gap-0"
 					:style="[
 						barStyle0,
