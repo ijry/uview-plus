@@ -20,10 +20,10 @@
 				width: addUnit(width),
 			}"
 		>
-			<text
+			<view
 				class="u-modal__title"
 				v-if="title"
-			>{{ title }}</text>
+			>{{ title }}</view>
 			<view
 				class="u-modal__content"
 				:style="{
