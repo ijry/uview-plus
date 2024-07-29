@@ -1,3 +1,48 @@
+## 3.3.7（2024-07-29）
+feat: 支持IndexList组件支持在弹窗等场景下使用及联动优化
+
+feat: popup组件支持v-model:show双向绑定
+
+feat: 优化tabs的current双向绑定
+
+fix: checkbox独立使用时checked赋初始值可以，但是手动切换时值没有做双向绑定！ #455
+
+feat: slider组件支持区间双滑块
+
+fix: toast 支持自定义图标？可传入了决对路径的 icon也没有用 #409
+
+feat: form-item校验失败时 增加class方便自定义显示错误的展示方式 #394
+
+fix: up-cell的required配置不生效 #395
+
+fix: 横向滚动组件，微信小程序编译后会有警告 #415
+
+fix: u-picker内部对默认值defaultIndex的监听 #425
+
+feat: toast 组件支持遮掩层穿透  #417
+
+fix: 兼容vue的slot编译bug #423
+
+fix: upload 微信小程序 点击预览视频报错 #424
+
+fix: u-number-box 组件修改【integer, decimalLength, min, max 】props时没有触发绑定值更新 #429
+
+feat: Tabs组件能否支持自定义插槽 #439
+
+feat: ActionSheet 可以配置最大高度吗， 我当做select使用了。 #445
+
+fix: cursor-pointer优化
+
+feat: 新版slider组件兼容NVUE改造
+
+feat: 新增slider组件手动实现以支持样式自定义
+
+perf：补充TS声明提示信息
+
+修复：ActionSheet 操作菜单cancelText属性为空DOM节点还存在并且可以点击问题
+
+fix: 去除预留的beforeDestroy兼容容易在某些sdk下不识别条件编译
+
 ## 3.3.6（2024-07-23）
 feat: u-album组件添加radius,shape参数，定义参考当前u-image参数
 
