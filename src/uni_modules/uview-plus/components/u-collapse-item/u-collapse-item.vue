@@ -33,9 +33,11 @@
 				</slot>
 			</template>
 			<template #right-icon>
-				<u-icon v-if="!$slots['right-icon']" :size="16" name="arrow-right"></u-icon>
-				<slot name="right-icon">
-				</slot>
+				<template v-if="showRight">
+					<u-icon v-if="!$slots['right-icon']" :size="16" name="arrow-right"></u-icon>
+					<slot name="right-icon">
+					</slot>
+				</template>
 			</template>
 		</u-cell>
 		<view

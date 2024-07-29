@@ -56,6 +56,11 @@ export const props = defineMixin({
         duration: {
             type: Number,
             default: () => defProps.collapseItem.duration
-        }
+        },
+        // 显示右侧图标
+        showRight: {
+            type: Boolean,
+            default: () => defProps.collapseItem.showRight
+        },
     }
 })
