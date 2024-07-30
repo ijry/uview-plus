@@ -1,7 +1,11 @@
 import { defineMixin } from '../vue'
-import { deepMerge, $parent } from '../function/index'
+import { deepMerge, $parent, sleep } from '../function/index'
 import test from '../function/test'
 import route from '../util/route'
+// #ifdef APP-NVUE
+// 由于weex为阿里的KPI业绩考核的产物，所以不支持百分比单位，这里需要通过dom查询组件的宽度
+const dom = uni.requireNativePlugin('dom')
+// #endif
 
 export const mixin = defineMixin({
     // 定义每个组件都可能需要用到的外部样式以及类名
@@ -107,6 +111,7 @@ export const mixin = defineMixin({
         // 解决办法为在组件根部再套一个没有任何作用的view元素
         $uGetRect(selector, all) {
             return new Promise((resolve) => {
+                // #ifndef APP-NVUE
                 uni.createSelectorQuery()
                     .in(this)[all ? 'selectAll' : 'select'](selector)
                     .boundingClientRect((rect) => {
@@ -118,6 +123,22 @@ export const mixin = defineMixin({
                         }
                     })
                     .exec()
+                // #endif
+                
+                // #ifdef APP-NVUE
+                sleep(30).then(() => {
+                    let selectorNvue = selector.substring(1) // 去掉开头的#或者.
+                    let selectorRef = this.$refs[selectorNvue]
+                    if (!selectorRef) {
+                        console.log('不存在元素，请检查是否设置了ref属性' + selectorNvue + '。')
+                        resolve({}) 
+                    }
+                    dom.getComponentRect(selectorRef, res => {
+                        // console.log(res)
+                        resolve(res.size)
+                    })
+                })
+                // #endif
             })
         },
         getParentData(parentName = '') {

@@ -9,8 +9,12 @@
                     <view class="demo-title">{{ item.title }}</view>
                     <view class="demo-price">{{ item.price }}元</view>
                     <view class="demo-tag">
-                        <view class="demo-tag-owner">自营</view>
-                        <view class="demo-tag-text">放心购</view>
+                        <view class="demo-tag-owner">
+							<text class="text">自营</text>
+						</view>
+                        <view class="demo-tag-text">
+							<text class="text">放心购</text>
+						</view>
                     </view>
                     <view class="demo-shop">{{ item.shop }}</view>
                     <view class="u-close">
@@ -25,8 +29,12 @@
                     <view class="demo-title">{{ item.title }}</view>
                     <view class="demo-price">{{ item.price }}元</view>
                     <view class="demo-tag">
-                        <view class="demo-tag-owner">自营</view>
-                        <view class="demo-tag-text">放心购</view>
+                        <view class="demo-tag-owner">
+                        	<text class="text">自营</text>
+                        </view>
+                        <view class="demo-tag-text">
+                        	<text class="text">放心购</text>
+                        </view>
                     </view>
                     <view class="demo-shop">{{ item.shop }}</view>
                     <view class="u-close">
@@ -205,26 +213,32 @@
 
     .demo-tag-owner {
         background-color: $u-error;
-        color: #ffffff;
         display: flex;
         align-items: center;
-        padding: 4rpx 14rpx;
-        border-radius: 50rpx;
-        font-size: 20rpx;
-        line-height: 1;
+		justify-content: center;
+        padding: 2px 7px;
+        border-radius: 20px;
+		line-height: 1;
+		.text {
+			font-size: 12px;
+			color: #ffffff;
+		}
     }
 
     .demo-tag-text {
         border: 1px solid $u-primary;
-        color: $u-primary;
         margin-left: 10px;
         border-radius: 50rpx;
         line-height: 1;
-        padding: 4rpx 14rpx;
+        padding: 2px 7px;
+        border-radius: 20px;
         display: flex;
         align-items: center;
-        border-radius: 50rpx;
-        font-size: 20rpx;
+        border-radius: 20px;
+		.text {
+			font-size: 12px;
+			 color: $u-primary;
+		}
     }
 
     .demo-price {

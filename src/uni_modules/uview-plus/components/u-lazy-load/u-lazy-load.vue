@@ -97,7 +97,7 @@
             // 图片高度，单位rpx
             height: {
                 type: [Number, String],
-                default: '450'
+                default: '200'
             }
         },
         data() {
@@ -207,9 +207,12 @@
                 });
             })
             // mounted的时候，不一定挂载了这个元素，延时30ms，否则会报错或者不报错，但是也没有效果
+           
             setTimeout(() => {
+                // #ifndef APP-NVUE
                 // 这里是组件内获取布局状态，不能用uni.createIntersectionObserver，而必须用this.createIntersectionObserver
                 // this.disconnectObserver('contentObserver');
+                // nvue 里不支持
                 const contentObserver = uni.createIntersectionObserver(this);
                 // 要理解这里怎么计算的，请看这个：
                 // https://blog.csdn.net/qq_25324335/article/details/83687695
@@ -225,6 +228,10 @@
                     }
                 })
                 this.contentObserver = contentObserver;
+                // #endif
+                // #ifdef APP-NVUE
+                this.isShow = true;
+                // #endif
             }, 30)
         }
     }
@@ -239,13 +246,13 @@
     }
 
     .u-lazy-item {
-        width: 100%;
         // 骗系统开启硬件加速
         transform: transition3d(0, 0, 0);
         /* #ifndef APP-NVUE */
         // 防止图片加载“闪一下”
         will-change: transform;
         display: block;
+        width: 100%;
         /* #endif */
     }
 </style>
