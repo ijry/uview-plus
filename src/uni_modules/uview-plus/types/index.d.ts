@@ -77,9 +77,8 @@ declare module 'uview-plus' {
 	interface Config {
 		v: string;
 		version: string;
-		type: ['primary', 'success', 'info', 'error', 'warning'];
-		color: Record<'u-primary' | 'u-warning' | 'u-success' | 'u-error' | 'u-info' | 'u-main-color' | 'u-content-color' | 'u-tips-color' | 'u-light-color', string>;
-		unit: 'px'
+		color: Partial<Color>;
+		unit: 'px' | 'rpx'
 	}
 	interface Color {
 		primary: string,
@@ -95,7 +94,7 @@ declare module 'uview-plus' {
 		borderColor: string
 	}
 	interface GlobalConfig {
-		config: Config;
+		config: Partial<Config>;
 		props: {};
 	}
 	interface $u {
@@ -149,7 +148,7 @@ declare module 'uview-plus' {
 		platform: string;
 	}
 
-	export function setConfig(config: GlobalConfig): void;
+	export function setConfig(config: Partial<GlobalConfig>): void;
 
 	global {
 		interface Uni {
