@@ -4,7 +4,9 @@
 		:style="[addStyle(customStyle)]"
 	>
 		<template v-if="!useNative || isRange">
-			<view ref="u-slider-inner" class="u-slider-inner" @tap="onClick"
+			<view ref="u-slider-inner" class="u-slider-inner" @click="onClick"
+				@onTouchStart="onTouchStart2($event, 1)" @touchmove="onTouchMove2($event, 1)"
+				@touchend="onTouchEnd2($event, 1)" @touchcancel="onTouchEnd2($event, 1)"
 				:class="[disabled ? 'u-slider--disabled' : '']" :style="{
 					height: (isRange && showValue) ? (getPx(blockSize) + 24) + 'px' : (getPx(blockSize)) + 'px',
 				}"
@@ -248,6 +250,22 @@
 				}
 				// 标示当前的状态为开始触摸滑动
 				this.status = 'start';
+
+				let clientX = 0;
+				// #ifndef APP-NVUE
+				clientX = touches.clientX;
+				// #endif
+				// #ifdef APP-NVUE
+				clientX = touches.screenX;
+				// #endif
+				this.distanceX = clientX - this.sliderRect.left;
+				// 获得移动距离对整个滑块的值，此为带有多位小数的值，不能用此更新视图
+				// 否则造成通信阻塞，需要每改变一个step值时修改一次视图
+				this.newValue = ((this.distanceX / this.sliderRect.width) * (this.max - this.min)) + parseFloat(this.min);
+				this.status = 'moving';
+				// 发出moving事件
+				this.$emit('changing');
+				this.updateValue(this.newValue, true, index);
 			},
 			onTouchMove(event, index = 1) {
 				if (this.disabled) return;
@@ -255,7 +273,7 @@
 				// 触摸后第一次移动已经将status设置为moving状态，故触摸第二次移动不会触发本事件
 				if (this.status == 'start') this.$emit('start');
 				let touches = event.touches[0];
-				// console.log('touchs', touches)
+				console.log('touchs', touches)
 				// 滑块的左边不一定跟屏幕左边接壤，所以需要减去最外层父元素的左边值
 				let clientX = 0;
 				// #ifndef APP-NVUE
@@ -280,6 +298,32 @@
 					this.$emit('change');
 				}
 				this.status = 'end';
+			},
+			onTouchStart2(event, index = 1) {
+				if (!this.isRange) {
+					this.onChangeStart(event, index);
+				}
+			},
+			onTouchMove2(event, index = 1) {
+				if (!this.isRange) {
+					this.onTouchMove(event, index);
+				}
+			},
+			onTouchEnd2(event, index = 1) {
+				if (!this.isRange) {
+					this.onTouchEnd(event, index);
+				}
+			},
+			onClick(event) {
+				if (this.disabled) return;
+				// 直接点击滑块的情况，计算方式与onTouchMove方法相同
+				// console.log('click', event)
+				// #ifndef APP-NVUE
+				// nvue下暂时无法获取坐标
+				let clientX = event.detail.x - this.sliderRect.left
+				this.newValue = ((clientX / this.sliderRect.width) * (this.max - this.min)) + parseFloat(this.min);
+				this.updateValue(this.newValue, false, 1);
+				// #endif
 			},
 			updateValue(value, drag, index = 1) {
 				// 去掉小数部分，同时也是对step步进的处理
@@ -350,12 +394,6 @@
 						/ this.step
 					) * this.step;
 				}
-			},
-			onClick(event) {
-				if (this.disabled) return;
-				// 直接点击滑块的情况，计算方式与onTouchMove方法相同
-				const value = ((event.detail.x - this.sliderRect.left) / this.sliderRect.width) * 100;
-				this.updateValue(value, false);
 			}
 		}
 	}

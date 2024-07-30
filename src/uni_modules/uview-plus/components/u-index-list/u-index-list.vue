@@ -521,7 +521,6 @@
 
 		&__letter {
 			position: absolute;
-			margin: auto;
 			right: 0;
 			text-align: center;
 			z-index: 3;
