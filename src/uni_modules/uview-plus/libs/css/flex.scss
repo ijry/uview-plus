@@ -216,6 +216,7 @@
 // 多轴交叉时的对齐方式
 
 // 起点对齐
+/* #ifndef APP-NVUE */
 .u-flex-content-start {
 	align-content: flex-start;
 }
@@ -257,6 +258,8 @@
 .u-flex-shrink {
 	flex-shrink: 1;
 }
+
+/* #endif */
 
 // 定义内外边距，历遍1-80
 @for $i from 0 through 80 {

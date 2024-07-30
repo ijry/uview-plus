@@ -244,7 +244,7 @@
 			&__popup {
 				position: relative;
 				z-index: 10;
-				transition: all 0.3s;
+				transition: transform 0.3s;
 				transform: translate3D(0, -100%, 0);
 				overflow: hidden;
 			}

@@ -242,9 +242,9 @@
         width: 100%;
         // 骗系统开启硬件加速
         transform: transition3d(0, 0, 0);
+        /* #ifndef APP-NVUE */
         // 防止图片加载“闪一下”
         will-change: transform;
-        /* #ifndef APP-NVUE */
         display: block;
         /* #endif */
     }

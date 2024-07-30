@@ -170,13 +170,15 @@
             position: absolute;
             top: -7px;
             right: 3px;
-            display: none;
+            opacity: 0;
         }
+        /* #ifdef H5 */
         &:hover {
             .u-close {
-                display: flex;
+                opacity: 1;
             }
         }
+        /* #endif */
     }
 
     .demo-img-wrap {}
@@ -190,7 +192,9 @@
         font-size: 30rpx;
         margin-top: 5px;
         color: $u-main-color;
+        /* #ifndef APP-NVUE */
         word-break: break-all;
+        /* #endif */
     }
 
     .demo-tag {

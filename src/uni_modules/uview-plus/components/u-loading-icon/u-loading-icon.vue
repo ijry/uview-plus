@@ -315,7 +315,9 @@
 			height: $u-loading-icon-dot-height;
 
 			&:before {
+				/* #ifndef APP-NVUE */
 				display: block;
+				/* #endif */
 				width: $u-loading-icon-dot-before-width;
 				height: $u-loading-icon-dot-before-height;
 				margin: $u-loading-icon-dot-before-margin;
