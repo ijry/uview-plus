@@ -1,3 +1,16 @@
+## 3.3.8（2024-07-31）
+feat: slider支持进度条任意位置触发按钮拖动
+
+fix: 修复app-vue下modal标题不居中
+
+fix: #459 TS setConfig 声明异常
+
+feat: tabs组件增加longPress长按事件
+
+feat: 新增showRight属性控制collapse右侧图标显隐
+
+fix: 优化nvue下css警告
+
 ## 3.3.7（2024-07-29）
 feat: 支持IndexList组件支持在弹窗等场景下使用及联动优化
 
