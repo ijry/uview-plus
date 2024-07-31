@@ -86,6 +86,8 @@ const dom = uni.requireNativePlugin('dom')
  * @property {Boolean}         showMore         超出maxCount时是否显示查看更多的提示 （默认 true ）
  * @property {String}          shape            图片形状，circle-圆形，square-方形 （默认 'square' ）
  * @property {String | Number} radius           圆角值，单位任意，如果为数值，则为px单位 （默认 0 ）
+ * @property {Boolean}         autoWrap         自适应换行模式，不受rowCount限制，图片会自动换行 （默认 false ）
+ * @property {String}          unit             图片单位 （默认 px ）
  * @event    {Function}        albumWidth       某些特殊的情况下，需要让文字与相册的宽度相等，这里事件的形式对外发送  （回调参数 width ）
  * @example <u-album :urls="urls2" @albumWidth="width => albumWidth = width" multipleSize="68" ></u-album>
  */
@@ -161,12 +163,12 @@ export default {
         },
         imageWidth() {
             return addUnit(
-                this.urls.length === 1 ? this.singleWidth : this.multipleSize, 'px'
+                this.urls.length === 1 ? this.singleWidth : this.multipleSize, this.unit
             )
         },
         imageHeight() {
             return addUnit(
-                this.urls.length === 1 ? this.singleHeight : this.multipleSize, 'px'
+                this.urls.length === 1 ? this.singleHeight : this.multipleSize, this.unit
             )
         },
         // 此变量无实际用途，仅仅是为了利用computed特性，让其在urls长度等变化时，重新计算图片的宽度

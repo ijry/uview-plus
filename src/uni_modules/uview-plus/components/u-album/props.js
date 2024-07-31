@@ -67,9 +67,15 @@ export const props = defineMixin({
             type: [String, Number],
             default: () => defProps.image.radius
         },
+        // 自适应换行
         autoWrap: {
             type: Boolean,
             default: () => defProps.album.autoWrap
         },
+        // 单位
+        unit: {
+            type: [String],
+            default: () => defProps.album.unit
+        }
     }
 })

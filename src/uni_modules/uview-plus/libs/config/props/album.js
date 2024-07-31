@@ -21,6 +21,7 @@ export default {
         previewFullImage: true,
         rowCount: 3,
         showMore: true,
-        autoWrap: false
+        autoWrap: false,
+        unit: 'px'
     }
 }
