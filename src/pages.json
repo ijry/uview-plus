@@ -294,6 +294,11 @@
 				"navigationBarTitleText": "Tabbar"
 			}
 		}, {
+			"path": "tabbar/tabbar2",
+			"style": {
+				"navigationBarTitleText": "Tabbar-vue"
+			}
+		}, {
 			"path": "waterfall/waterfall",
 			"style": {
 				"navigationBarTitleText": "瀑布流"

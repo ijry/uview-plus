@@ -196,7 +196,6 @@
 			    :safeAreaInsetBottom="true"
 			>
 				<up-tabbar-item
-					@click="goNext"
 					text="首页"
 					icon="home"
 				>
@@ -245,11 +244,6 @@
 			},
 			click1(e) {
 				console.log('click1', e);
-			},
-			goNext() {
-				uni.navigateTo({
-					url: 'tabbar2'
-				})
 			}
 		},
 	}
