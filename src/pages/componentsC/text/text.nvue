@@ -44,6 +44,12 @@
 					    text="信息"
 					></up-text>
 				</view>
+				<view class="u-page__text-item" style="background-color: #000;">
+					<up-text
+						text="颜色"
+						size="30rpx" color="#fff">
+					</up-text>
+				</view>
 			</view>
 		</view>
 		<view class="u-demo-block">
