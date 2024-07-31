@@ -121,7 +121,11 @@
         "optimization" : {
             "subPackages" : true
         },
-        "appid" : ""
+        "appid" : "123",
+        "setting" : {
+            "minified" : true,
+            "urlCheck" : false
+        }
     },
     "mp-baidu" : {
         "usingComponents" : true,

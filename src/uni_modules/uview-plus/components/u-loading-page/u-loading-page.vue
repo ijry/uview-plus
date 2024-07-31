@@ -9,6 +9,8 @@
             bottom: 0,
             backgroundColor: bgColor,
             display: 'flex',
+            zIndex: zIndex,
+            ...customStyle
         }"
     >
         <view class="u-loading-page">
@@ -64,6 +66,7 @@ import { addUnit } from '../../libs/function/index';
  * @property {String | Number}	fontSize		文字大小 （默认 19 ）
  * @property {String | Number}	iconSize		图标大小 （默认 28 ）
  * @property {String}			loadingColor	加载中图标的颜色，只能rgb或者十六进制颜色值 （默认 '#C8C8C8' ）
+ * @property {Number}			zIndex	        z-index层级 （默认10 ）
  * @property {Object}			customStyle		自定义样式
  * @example <u-loading mode="circle"></u-loading>
  */

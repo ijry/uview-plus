@@ -18,6 +18,7 @@ export default {
         color: '#C8C8C8',
         fontSize: 19,
         iconSize: 28,
-        loadingColor: '#C8C8C8'
+        loadingColor: '#C8C8C8',
+        zIndex: 10
     }
 }
