@@ -154,12 +154,12 @@ export default {
         },
         imageWidth() {
             return addUnit(
-                this.urls.length === 1 ? this.singleWidth : this.multipleSize
+                this.urls.length === 1 ? this.singleWidth : this.multipleSize, 'px'
             )
         },
         imageHeight() {
             return addUnit(
-                this.urls.length === 1 ? this.singleHeight : this.multipleSize
+                this.urls.length === 1 ? this.singleHeight : this.multipleSize, 'px'
             )
         },
         // 此变量无实际用途，仅仅是为了利用computed特性，让其在urls长度等变化时，重新计算图片的宽度
@@ -248,7 +248,7 @@ export default {
 
     &__row {
         @include flex(row);
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
 
         &__wrapper {
             position: relative;
