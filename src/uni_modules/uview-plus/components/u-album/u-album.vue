@@ -6,6 +6,7 @@
             v-for="(arr, index) in showUrls"
             :forComputedUse="albumWidth"
             :key="index"
+            :style="{flexWrap: autoWrap ? 'wrap' : 'nowrap'}"
         >
             <view
                 class="u-album__row__wrapper"
@@ -124,33 +125,39 @@ export default {
                     marginBottom: addUnit(space)
                 }
                 // 如果为最后一行，则每个图片都无需下边框
-                if (index1 === rowLen) style.marginBottom = 0
+                if (index1 === rowLen && !this.autoWrap) style.marginBottom = 0
                 // 每行的最右边一张和总长度的最后一张无需右边框
-                if (
-                    index2 === rowCount ||
-                    (index1 === rowLen &&
-                        index2 === this.showUrls[index1 - 1].length)
-                )
-                    style.marginRight = 0
+                if (!this.autoWrap) {
+                    if (
+                        index2 === rowCount ||
+                        (index1 === rowLen &&
+                            index2 === this.showUrls[index1 - 1].length)
+                    )
+                        style.marginRight = 0
+                }
                 return style
             }
         },
         // 将数组划分为二维数组
         showUrls() {
-            const arr = []
-            this.urls.map((item, index) => {
-                // 限制最大展示数量
-                if (index + 1 <= this.maxCount) {
-                    // 计算该元素为第几个素组内
-                    const itemIndex = Math.floor(index / this.rowCount)
-                    // 判断对应的索引是否存在
-                    if (!arr[itemIndex]) {
-                        arr[itemIndex] = []
+            if (this.autoWrap) {
+                return [ this.urls.slice(0, this.maxCount) ];
+            } else {
+                const arr = []
+                this.urls.map((item, index) => {
+                    // 限制最大展示数量
+                    if (index + 1 <= this.maxCount) {
+                        // 计算该元素为第几个素组内
+                        const itemIndex = Math.floor(index / this.rowCount)
+                        // 判断对应的索引是否存在
+                        if (!arr[itemIndex]) {
+                            arr[itemIndex] = []
+                        }
+                        arr[itemIndex].push(item)
                     }
-                    arr[itemIndex].push(item)
-                }
-            })
-            return arr
+                })
+                return arr
+            }
         },
         imageWidth() {
             return addUnit(
@@ -248,7 +255,6 @@ export default {
 
     &__row {
         @include flex(row);
-        flex-wrap: nowrap;
 
         &__wrapper {
             position: relative;

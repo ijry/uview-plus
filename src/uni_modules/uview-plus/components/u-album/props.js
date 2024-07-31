@@ -66,6 +66,10 @@ export const props = defineMixin({
         radius: {
             type: [String, Number],
             default: () => defProps.image.radius
-        }
+        },
+        autoWrap: {
+            type: Boolean,
+            default: () => defProps.album.autoWrap
+        },
     }
 })

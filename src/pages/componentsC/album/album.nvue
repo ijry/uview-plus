@@ -213,6 +213,33 @@
                 </view>
             </view>
         </view>
+		<view class="u-demo-block">
+		    <text class="u-demo-block__title">自适应自动换行</text>
+		    <view class="u-demo-block__content">
+		        <view class="album">
+		            <view class="album__avatar">
+		                <image
+		                    src="/static/uview/common/logo.png"
+		                    mode=""
+		                    style="width: 32px;height: 32px;"
+		                ></image>
+		            </view>
+		            <view class="album__content">
+		                <up-text
+		                    text="uview-plus"
+		                    type="primary"
+		                    bold
+		                    size="17"
+		                ></up-text>
+		                <up-text
+		                    margin="0 0 8px 0"
+		                    text="每行占满自动换行(不受rowCount限制)"
+		                ></up-text>
+		                <up-album :urls="urls2" :max-count="9" autoWrap></up-album>
+		            </view>
+		        </view>
+		    </view>
+		</view>
 	</view>
 </template>
 
