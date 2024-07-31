@@ -31,7 +31,9 @@
 				}"
 			>
 				<slot>
-					<text class="u-modal__content__text">{{ content }}</text>
+					<text class="u-modal__content__text" :style="{textAlign: contentTextAlign}">
+						{{ content }}
+					</text>
 				</slot>
 			</view>
 			<view

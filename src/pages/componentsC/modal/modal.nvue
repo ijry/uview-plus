@@ -32,6 +32,7 @@
 			:content="content"
 			title="标题"
 			:show="show1"
+			contentTextAlign="left"
 			@confirm="() => show1 = false"
 		></up-modal>
 		<up-modal

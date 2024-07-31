@@ -81,6 +81,11 @@ export const props = defineMixin({
         confirmButtonShape: {
             type: String,
             default: () => defProps.modal.confirmButtonShape
-        }
+        },
+        // 文案对齐方式
+        contentTextAlign: {
+            type: String,
+            default: () => defProps.modal.contentTextAlign
+        },
     }
 })
