@@ -130,8 +130,15 @@ export const mixin = defineMixin({
                     let selectorNvue = selector.substring(1) // 去掉开头的#或者.
                     let selectorRef = this.$refs[selectorNvue]
                     if (!selectorRef) {
-                        console.log('不存在元素，请检查是否设置了ref属性' + selectorNvue + '。')
-                        resolve({}) 
+                        // console.log('不存在元素，请检查是否设置了ref属性' + selectorNvue + '。')
+                        resolve({
+                            with: 0,
+                            height: 0,
+                            left: 0,
+                            right: 0,
+                            top: 0,
+                            bottom: 0
+                        }) 
                     }
                     dom.getComponentRect(selectorRef, res => {
                         // console.log(res)

@@ -441,7 +441,14 @@
 					// #endif
 
 					// #ifdef APP-NVUE
-					dom.getComponentRect(this.$refs.header, res => {
+					let headerRef = this.$refs.header
+					if (!headerRef) {
+						resolve({
+							width: 0,
+							height: 0
+						})
+					}
+					dom.getComponentRect(headerRef, res => {
 						resolve(res.size)
 					})
 					// #endif
