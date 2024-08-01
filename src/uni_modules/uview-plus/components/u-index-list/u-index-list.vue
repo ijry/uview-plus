@@ -418,7 +418,9 @@
 					return child
 				})
 				// console.log('this.children[currentIndex].top', children[currentIndex].top)
-				this.scrollTop = children[currentIndex].top - getPx(customNavHeight)
+				if (children[currentIndex]?.top) {
+					this.scrollTop = children[currentIndex].top - getPx(customNavHeight)
+				}
 				// #endif
 
 				// #ifdef APP-NVUE
