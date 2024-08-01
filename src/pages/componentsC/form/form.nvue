@@ -268,7 +268,8 @@
 						required: true,
 						message: '请填写姓名',
 						trigger: ['blur', 'change']
-					}, {
+					},
+					{
 						// 此为同步验证，可以直接返回true或者false，如果是异步验证，稍微不同，见下方说明
 						validator: (rule, value, callback) => {
 							// 调用uview-plus自带的js验证规则，详见：https://uview-plus.jiangruyi.com/js/test.html
@@ -277,7 +278,17 @@
 						message: "姓名必须为中文",
 						// 触发器可以同时用blur和change，二者之间用英文逗号隔开
 						trigger: ["change", "blur"],
-					}],
+					},
+					{
+						asyncValidator: (rule, value, callback) => {
+							setTimeout(() => {
+								callback('异步规则');
+							}, 3000)
+						},
+						// 触发器可以同时用blur和change，二者之间用英文逗号隔开
+						trigger: ["change", "blur"],
+					 } ,
+					],
 					code: {
 						type: 'string',
 						required: true,

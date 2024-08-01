@@ -134,57 +134,82 @@
 					// 如果为字符串，转为数组
 					value = [].concat(value);
 					// 历遍children所有子form-item
-					this.children.map((child) => {
-						// 用于存放form-item的错误信息
-						const childErrors = [];
-						if (value.includes(child.prop)) {
-							// 获取对应的属性，通过类似'a.b.c'的形式
-							const propertyVal = getProperty(
-								this.model,
-								child.prop
-							);
-							// 属性链数组
-							const propertyChain = child.prop.split(".");
-							const propertyName =
-								propertyChain[propertyChain.length - 1];
+					let promises = this.children.map(child => {
+						return new Promise((resolve, reject) => {
+							// 用于存放form-item的错误信息
+							const childErrors = [];
+							if (value.includes(child.prop)) {
+								// 获取对应的属性，通过类似'a.b.c'的形式
+								const propertyVal = getProperty(
+									this.model,
+									child.prop
+								);
+								// 属性链数组
+								const propertyChain = child.prop.split(".");
+								const propertyName =
+									propertyChain[propertyChain.length - 1];
 
-							const rule = this.formRules[child.rule || child.prop];
-							// 如果不存在对应的规则，直接返回，否则校验器会报错
-							if (!rule) return;
-							// rule规则可为数组形式，也可为对象形式，此处拼接成为数组
-							const rules = [].concat(rule);
+								const rule = this.formRules[child.rule || child.prop];
+								// 如果不存在对应的规则，直接返回，否则校验器会报错
+								if (!rule) {
+									resolve()
+									return;
+								}
+								// rule规则可为数组形式，也可为对象形式，此处拼接成为数组
+								const rules = [].concat(rule);
 
-							// 对rules数组进行校验
-							for (let i = 0; i < rules.length; i++) {
-								const ruleItem = rules[i];
-								// 将u-form-item的触发器转为数组形式
-								const trigger = [].concat(ruleItem?.trigger);
-								// 如果是有传入触发事件，但是此form-item却没有配置此触发器的话，不执行校验操作
-								if (event && !trigger.includes(event)) continue;
-								// 实例化校验对象，传入构造规则
-								const validator = new Schema({
-									[propertyName]: ruleItem,
-								});
-								validator.validate({
+								// 对rules数组进行校验
+								if (!rules.length) {
+									resolve()
+								}
+								for (let i = 0; i < rules.length; i++) {
+									const ruleItem = rules[i];
+									// 将u-form-item的触发器转为数组形式
+									const trigger = [].concat(ruleItem?.trigger);
+									// 如果是有传入触发事件，但是此form-item却没有配置此触发器的话，不执行校验操作
+									if (event && !trigger.includes(event)) {
+										resolve()
+										continue;
+									}
+									// 实例化校验对象，传入构造规则
+									const validator = new Schema({
+										[propertyName]: ruleItem,
+									});
+									validator.validate({
 										[propertyName]: propertyVal,
 									},
-									(errors, fields) => {
-										if (test.array(errors)) {
-											errors.forEach(element => {
-												element.prop = child.prop;
-											});
-											errorsRes.push(...errors);
-											childErrors.push(...errors);
+										(errors, fields) => {
+											if (test.array(errors)) {
+												errors.forEach(element => {
+													element.prop = child.prop;
+												});
+												errorsRes.push(...errors);
+												childErrors.push(...errors);
+											}
+											child.message =
+												childErrors[0]?.message ? childErrors[0].message : null;
+
+											if (i == (rules.length - 1)) {
+												resolve(errorsRes)
+											}
 										}
-										child.message =
-											childErrors[0]?.message ? childErrors[0].message : null;
-									}
-								);
+									)
+								}
+							} else {
+								resolve({})
 							}
-						}
+						});
 					});
-					// 执行回调函数
-					typeof callback === "function" && callback(errorsRes);
+
+					// 使用Promise.all来等待所有Promise完成  
+					Promise.all(promises)
+						.then(results => {
+							// 执行回调函数
+							typeof callback === "function" && callback(errorsRes);
+						})
+						.catch(error => {
+							console.error('An error occurred:', error);
+						});
 				});
 			},
 			// 校验全部数据
