@@ -81,7 +81,7 @@
 		&--row {
 			flex-direction: row;
 			flex: 1;
-			/* #ifdef MP-TOUTIAO */
+			/* #ifdef MP */
 			display: grid;
 			grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 			/* #endif */

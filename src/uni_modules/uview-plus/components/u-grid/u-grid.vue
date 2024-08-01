@@ -105,7 +105,7 @@
 		align-items: center;
 		// 在uni-app中应尽量避免使用flex布局以外的方式,因为nvue/uvue等方案都支持flex布局
 		// 这里使用grid布局使用为目前20240409uni-app在抖音小程序开启virtualHost时有bug，存在事件失效问题。
-		/* #ifdef MP-TOUTIAO || MP-QQ */
+		/* #ifdef MP */
 		display: grid;
 		grid-template-columns: repeat(v-bind(col), 1fr);
 		/* #endif */
