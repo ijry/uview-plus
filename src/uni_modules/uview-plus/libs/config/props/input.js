@@ -17,7 +17,7 @@ export default {
 		disabledColor: '#f5f7fa',
 		clearable: false,
 		password: false,
-		maxlength: -1,
+		maxlength: 140,
 		placeholder: null,
 		placeholderClass: 'input-placeholder',
 		placeholderStyle: 'color: #c0c4cc',
