@@ -82,7 +82,10 @@
 			itemStyle() {
 				const style = {
 					background: this.bgColor,
-					width: this.width
+					width: this.width,
+					// ifdef MP-TOUTIAO || MP-QQ
+					width: '100%'
+					// ifdef APP-NVUE
 				}
 				return deepMerge(style, addStyle(this.customStyle))
 			}
