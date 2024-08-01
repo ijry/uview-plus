@@ -8,6 +8,7 @@
 					v-model="value1"
 				></up-slider>
 			</view>
+			<up-button text="前进" @click="value1 = value1 + 1"></up-button>
 		</view>
 			<view class="u-demo-block">
 			<text class="u-demo-block__title">自定义范围(10—50)</text>
@@ -38,7 +39,7 @@
 				    v-model="value5"
 				    activeColor="#deab8a"
 				    blockColor="#f47920"
-					height="4px"
+					height="20px"
 				></up-slider>
 			</view>
 		</view>

@@ -22,6 +22,7 @@
 				>
 				</view>
 				<view
+					@click="onClick"
 					class="u-slider__gap"
 					:style="[
 						barStyle,

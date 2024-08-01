@@ -22,7 +22,7 @@
 				</view>
 			</view>
 		</view>		<view class="u-demo-block">			<text class="u-demo-block__title">单独使用checkbox</text>			<text class="u-block__title">是否同意用户协议？</text>			<view class="u-demo-block__content">				<view class="u-page__checkbox-item">					<up-checkbox						:customStyle="{marginBottom: '8px'}"						label="同意用户协议与隐私条款"						name="agree"
-						usedAlone						v-model:checked="aloneChecked"					>					</up-checkbox>					<up-button type="primary" size="small" style="width: 120px;"						@click="changeAloneChecked">切换{{aloneChecked}}</up-button>				</view>			</view>		</view>
+						usedAlone						v-model:checked="aloneChecked"					>					</up-checkbox>					<up-button type="primary" size="small" style="width: 120px;"						@click="changeAloneChecked" text="切换">{{aloneChecked}}</up-button>				</view>			</view>		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">自定义形状</text>
 			<text class="u-block__title">中国四大名著是？</text>

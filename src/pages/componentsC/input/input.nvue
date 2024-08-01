@@ -33,6 +33,7 @@
 					v-model="inputNumber"
 					clearable
 				></up-input>
+				{{ inputNumber }}
 			</view>
 		</view>
 		<view class="u-demo-block">

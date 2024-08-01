@@ -237,7 +237,8 @@
 <style lang="scss" scoped>
     .wrap {
         padding: 30rpx;
-        display: block;
+        display: flex;
+		flex-direction: column;
     }
 
     .item-warp {

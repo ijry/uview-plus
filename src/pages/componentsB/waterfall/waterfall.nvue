@@ -159,9 +159,11 @@
 
 <style>
     /* page不能写带scope的style标签中，否则无效 */
-    page {
-        background-color: rgb(240, 240, 240);
-    }
+	/* #ifndef APP-NVUE */
+	page {
+	    background-color: rgb(240, 240, 240);
+	}
+	/* #endif */
 </style>
 
 <style lang="scss" scoped>

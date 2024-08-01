@@ -226,6 +226,8 @@
     }
 
     .u-image {
+        /* #ifndef APP-NVUE */
         max-width: 100%;
+        /* #endif */
     }
 </style>
