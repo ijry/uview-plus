@@ -1,3 +1,20 @@
+## 3.3.9（2024-08-01）
+fix: 优化获取nvue元素
+
+feat: modal新增contentTextAlign设置文案对齐方式
+
+fix: 修复NVUE下tabbar文字不显示  #458
+
+feat: loading-page增加zIndex属性
+
+fix: 相册在宽度较小时换行问题
+
+feat: album相册增加自适应自动换行模式
+
+feat: album相册增加图片尺寸单位prop
+
+fix: 修复calendar日历月份居中
+
 ## 3.3.8（2024-07-31）
 feat: slider支持进度条任意位置触发按钮拖动
 
