@@ -7,6 +7,7 @@
 					<up-steps-item
 					    title="已下单"
 					    desc="10:30"
+						:itemStyle="{backgroundColor: '#eee'}"
 					>
 					</up-steps-item>
 					<up-steps-item

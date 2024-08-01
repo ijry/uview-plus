@@ -21,6 +21,11 @@ export const props = defineMixin({
         error: {
             type: Boolean,
             default: () => defProps.stepsItem.error
-        }
+        },
+        // 自定义样式
+        itemStyle: {
+            type: [Object],
+            default: {}
+        },
     }
 })

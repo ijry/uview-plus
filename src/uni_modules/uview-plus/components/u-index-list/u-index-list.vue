@@ -361,16 +361,16 @@
 				// pageY += sys().windowTop
 				// #endif
 				// 对第一和最后一个字母做边界处理，因为用户可能在字母列表上触摸到两端的尽头后依然继续滑动
-				// console.log('top1', top)
-				// console.log('height', height)
+				console.log('top1', top)
+				console.log('height', height)
 				top = top - (height / 2) // 减去transfrom的translateY值导致的高度
 				pageY = pageY - this.topOffset
 				// if (this.safeBottomFix) {
 				// 	pageY = pageY + 34
 				// }
-				// console.log('topOffset', this.topOffset)
-				// console.log('pageY', pageY)
-				// console.log('top2', top)
+				console.log('topOffset', this.topOffset)
+				console.log('pageY', pageY)
+				console.log('top2', top)
 				if (pageY < top) {
 					index = 0
 				} else if (pageY >= top + height) {
