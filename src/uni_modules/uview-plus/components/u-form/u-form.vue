@@ -170,6 +170,9 @@
 									},
 									(errors, fields) => {
 										if (test.array(errors)) {
+											errors.forEach(element => {
+												element.prop = child.prop;
+											});
 											errorsRes.push(...errors);
 											childErrors.push(...errors);
 										}
@@ -198,6 +201,7 @@
 						const formItemProps = this.children.map(
 							(item) => item.prop
 						);
+						// console.log(formItemProps)
 						this.validateField(formItemProps, (errors) => {
 							if(errors.length) {
 								// 如果错误提示方式为toast，则进行提示
