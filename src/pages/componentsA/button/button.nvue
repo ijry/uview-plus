@@ -290,6 +290,17 @@
 				</view>
 			</view>
 		</view>
+		<up-action-sheet
+			v-model:show="show"
+			:actions="[{
+					name: '选项1',
+				},
+				{
+					name: '选项2',
+				}]"
+			:closeOnClickOverlay="false"
+		>
+		</up-action-sheet>
 	</view>
 </template>
 
@@ -297,6 +308,7 @@
 	export default {
 		data() {
 			return {
+				show: false,
 				// type: 'default',
 				// disabled: false
 			}
@@ -309,6 +321,7 @@
 		},
 		methods: {
 			click() {
+				this.show = true;
 				console.log('click');
 			}
 		}

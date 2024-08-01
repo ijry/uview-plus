@@ -166,16 +166,18 @@
 				}
 			},
 		},
-		emits: ["close", "select"],
+		emits: ["close", "select", "update:show"],
 		methods: {
 			closeHandler() {
 				// 允许点击遮罩关闭时，才发出close事件
 				if(this.closeOnClickOverlay) {
+					this.$emit('update:show')
 					this.$emit('close')
 				}
 			},
 			// 点击取消按钮
 			cancel() {
+				this.$emit('update:show')
 				this.$emit('close')
 			},
 			selectHandler(index) {
@@ -183,6 +185,7 @@
 				if (item && !item.disabled && !item.loading) {
 					this.$emit('select', item)
 					if (this.closeOnClickAction) {
+						this.$emit('update:show')
 						this.$emit('close')
 					}
 				}
