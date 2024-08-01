@@ -96,6 +96,11 @@
 		created() {
 			this.init()
 		},
+		// #ifdef MP-TOUTIAO
+		options: {
+			virtualHost: false
+		},
+		// #endif
 		computed: {
 			lineStyle() {
 				const style = {}
