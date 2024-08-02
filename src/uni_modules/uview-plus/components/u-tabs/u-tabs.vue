@@ -178,6 +178,7 @@
                 // 获取下划线的数值px表示法
 				const lineWidth = getPx(this.lineWidth);
 				this.lineOffsetLeft = lineOffsetLeft + (tabItem.rect.width - lineWidth) / 2
+				console.log(lineOffsetLeft)
 				// #ifdef APP-NVUE
 				// 第一次移动滑块，无需过渡时间
 				this.animation(this.lineOffsetLeft, this.firstTime ? 0 : parseInt(this.duration))
@@ -257,6 +258,12 @@
 					return
 				}
 				Promise.all([this.getTabsRect(), this.getAllItemRect()]).then(([tabsRect, itemRect = []]) => {
+					// 兼容在swiper组件中使用
+					if (tabsRect.left > tabsRect.width) {
+						tabsRect.right = tabsRect.right - Math.floor(tabsRect.left / tabsRect.width) * tabsRect.width
+						tabsRect.left = tabsRect.left % tabsRect.width
+					}
+					// console.log(tabsRect)
 					this.tabsRect = tabsRect
 					this.scrollViewWidth = 0
 					itemRect.map((item, index) => {

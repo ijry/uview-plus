@@ -118,7 +118,43 @@
 					</template>
 				</up-tabs>
 				<up-button type="primary" size="small" style="width: 120px;"
-					@click="nextTab">切换下一个{{ list1Current }}</up-button>
+					@click="nextTab" :text="'切换下一个' + list1Current">
+				</up-button>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">在swiper中使用</text>
+			<view class="u-demo-block__content">
+				<swiper class="swiper" >
+				  <swiper-item item-id="A">
+					<up-tabs :list="list1">
+						<template #default="scope">
+							<text class="u-tabs__wrapper__nav__item__text"
+								style="color: red">
+								{{scope.item?.[scope.keyName] || '-'}}
+							</text>
+						</template>
+					</up-tabs>
+				  </swiper-item>
+				  <swiper-item item-id="A">
+				  <up-tabs
+				  	:list="list4"
+				  	lineWidth="30"
+				  	lineColor="#f56c6c"
+				  	:activeStyle="{
+				  		color: '#303133',
+				  		fontWeight: 'bold',
+				  		transform: 'scale(1.05)'
+				  	}"
+				  	:inactiveStyle="{
+				  		color: '#606266',
+				  		transform: 'scale(1)'
+				  	}"
+				  	itemStyle="padding-left: 15px; padding-right: 15px; height: 34px;"
+				  >
+				  </up-tabs>
+				  </swiper-item>
+				</swiper>
 			</view>
 		</view>
 	</view>
