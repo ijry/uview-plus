@@ -87,12 +87,12 @@
 	 * @tutorial https://ijry.github.io/uview-plus/components/form.html
 	 * @property {String}			label			input的label提示语
 	 * @property {String}			prop			绑定的值
-	 * @property {String}			rule			绑定的规则
+	 * @property {Array}			rules			绑定的规则
 	 * @property {String | Boolean}	borderBottom	是否显示表单域的下划线边框
 	 * @property {String | Number}	labelWidth		label的宽度，单位px
 	 * @property {String}			rightIcon		右侧图标
 	 * @property {String}			leftIcon		左侧图标
-	 * @property {String | Object} leftIconStyle 左侧图标的样式
+	 * @property {String | Object} leftIconStyle    左侧图标的样式
 	 * @property {Boolean}			required		是否显示左边的必填星号，只作显示用，具体校验必填的逻辑，请在rules中配置 (默认 false )
 	 *
 	 * @example <u-form-item label="姓名" prop="userInfo.name" borderBottom ref="item1"></u-form-item>
@@ -116,7 +116,8 @@
 					// 错误提示方式
 					errorType: 'message'
 				},
-				color: color
+				color: color,
+				itemRules: []
 			}
 		},
 		// 组件创建完成时，将当前实例保存到u-form中
@@ -129,6 +130,15 @@
 			this.init()
 		},
 		emits: ["click"],
+		watch: {
+			// 监听规则的变化
+			rules: {
+				immediate: true,
+				handler(n) {
+					this.setRules(n);
+				},
+			},
+		},
 		methods: {
 			addStyle,
 			addUnit,
@@ -138,6 +148,12 @@
 				if (!this.parent) {
 					error('u-form-item需要结合u-form组件使用')
 				}
+			},
+			// 手动设置校验的规则，如果规则中有函数的话，微信小程序中会过滤掉，所以只能手动调用设置规则
+			setRules(rules) {
+				// 判断是否有规则
+				if (rules.length === 0) return;
+				this.itemRules = rules;
 			},
 			// 获取父组件的参数
 			updateParentData() {

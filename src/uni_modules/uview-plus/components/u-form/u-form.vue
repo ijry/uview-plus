@@ -149,7 +149,12 @@
 								const propertyName =
 									propertyChain[propertyChain.length - 1];
 
-								const rule = this.formRules[child.rule || child.prop];
+								let rule = []
+								if (child.itemRules && child.itemRules.length > 0) {
+									rule = child.itemRules
+								} else {
+									rule = this.formRules[child.prop];
+								}
 								// 如果不存在对应的规则，直接返回，否则校验器会报错
 								if (!rule) {
 									resolve()

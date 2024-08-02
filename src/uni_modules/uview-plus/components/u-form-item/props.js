@@ -13,9 +13,9 @@ export const props = defineMixin({
             default: () => defProps.formItem.prop
         },
         // 绑定的规则
-        rule: {
-            type: String,
-            default: () => defProps.formItem.rule
+        rules: {
+            type: Array,
+            default: () => defProps.formItem.rules
         },
         // 是否显示表单域的下划线边框
         borderBottom: {

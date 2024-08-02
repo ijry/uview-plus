@@ -52,6 +52,12 @@
 						prop="userInfo.age"
 						borderBottom
 						ref="item1"
+						:rules="[{
+							type: 'string',
+							required: true,
+							message: '请填写年龄',
+							trigger: ['blur', 'change']
+						}]"
 					>
 						<up-input
 							placeholder="请输入内容"
@@ -283,7 +289,7 @@
 						asyncValidator: (rule, value, callback) => {
 							setTimeout(() => {
 								callback('异步规则');
-							}, 3000)
+							}, 1000)
 						},
 						// 触发器可以同时用blur和change，二者之间用英文逗号隔开
 						trigger: ["change", "blur"],

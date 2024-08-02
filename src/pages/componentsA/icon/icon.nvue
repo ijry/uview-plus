@@ -9,6 +9,7 @@
 			>
 				<view class="u-page__grid__item__icon">
 					<up-icon
+						stop
 					    :name="item.name"
 					    size="30"
 					    color="#909399"

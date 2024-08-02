@@ -12,7 +12,7 @@ export default {
     formItem: {
         label: '',
         prop: '',
-        rule: '',
+        rules: [],
         borderBottom: '',
         labelPosition: '',
         labelWidth: '',
