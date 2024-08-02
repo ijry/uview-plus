@@ -436,6 +436,13 @@
 			getHeaderRect() {
 				// 获取header slot的高度，因为list组件中获取元素的尺寸是没有top值的
 				return new Promise(resolve => {
+					if (!this.$slots.header) {
+						resolve({
+							width: 0,
+							height: 0
+						})
+					}
+
 					// #ifndef APP-NVUE
 					this.$uGetRect('.u-index-list__header').then(size => {
 						resolve(size)
@@ -454,7 +461,6 @@
 						resolve(res.size)
 					})
 					// #endif
-					
 				})
 			},
 			// scroll-view的滚动事件
