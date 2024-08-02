@@ -8,6 +8,8 @@
 					border="surround"
 					v-model="value"
 					@change="change"
+					confirmType="search"
+					@confirm="handleSearch"
 				></up-input>
 				<up-button @click="value = Math.random().toString()">变化</up-button>
 				{{value}}
@@ -199,6 +201,10 @@
 				}
 			},
 			change(e) {
+				console.log('change', e);
+			},
+			handleSearch(e) {
+				uni.$u.toast('@confirm触发');
 				console.log('change', e);
 			}
 		}
