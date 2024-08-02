@@ -196,6 +196,15 @@
 				immediate: true,
 				deep: true,
 			},
+			deletable(newVal) {
+				this.formatFileList()
+			},
+			maxCount(newVal) {
+				this.formatFileList()
+			},
+			accept(newVal) {
+				this.formatFileList()
+			}
 		},
 		// #ifdef VUE3
 		emits: ['error', 'beforeRead', 'oversize', 'afterRead', 'delete', 'clickPreview'],
