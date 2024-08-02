@@ -1,3 +1,20 @@
+## 3.3.10（2024-08-02）
+fix: 修复index-list偶发的滑动最后一个索引报错top不存在
+
+fix: 修复gird在QQ、抖音小程序下布局
+
+feat: 优化step支持自定义样式prop
+
+feat: action-sheet组件支持v-model:show双向绑定
+
+fix: 小程序下steps和grid都统一采用grid布局
+
+fix: 修复支付宝小程序下input类型为数字时双向绑定失效
+
+feat : form 表单 validate 校验不通过后 error增加字段prop信息  #304
+
+fix: form组件异步校异常验问题 #393
+
 ## 3.3.9（2024-08-01）
 fix: 优化获取nvue元素
 
