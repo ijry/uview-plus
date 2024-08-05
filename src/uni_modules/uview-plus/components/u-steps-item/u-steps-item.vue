@@ -4,7 +4,7 @@
 			:class="[`u-steps-item__line--${parentData.direction}`]" :style="[lineStyle]"></view>
 		<view class="u-steps-item__wrapper"
 			:class="[`u-steps-item__wrapper--${parentData.direction}`, parentData.dot && `u-steps-item__wrapper--${parentData.direction}--dot`]"
-			:style="[itemStyle]">
+			:style="[itemStyleInner]">
 			<slot name="icon">
 				<view class="u-steps-item__wrapper__dot" v-if="parentData.dot" :style="{
 						backgroundColor: statusColor
@@ -117,7 +117,7 @@
 					.current ? this.parentData.activeColor : this.parentData.inactiveColor
 				return style
 			},
-			itemStyle() {
+			itemStyleInner() {
 				return {
 					...this.itemStyle
 				}
