@@ -1,3 +1,12 @@
+## 3.3.11（2024-08-05）
+feat: 新增支持upload组件的deletable/maxCount/accept变更监听 #333
+
+feat: 新增支持tabs在swiper中使用
+
+feat: 新增FormItem支持独立设置验证规则rules
+
+fix: 修复index-list未设置$slots.header时索引高亮失效
+
 ## 3.3.10（2024-08-02）
 fix: 修复index-list偶发的滑动最后一个索引报错top不存在
 
