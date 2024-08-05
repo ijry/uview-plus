@@ -77,11 +77,11 @@ const $u = {
     platform
 }
 
-// $u挂载到uni对象上
-uni.$u = $u
-
 const install = (Vue) => {
     // 同时挂载到uni和Vue.prototype中
+    // $u挂载到uni对象上
+    uni.$u = $u
+
     // #ifndef APP-NVUE
     // 只有vue，挂载到Vue.prototype才有意义，因为nvue中全局Vue.prototype和Vue.mixin是无效的
     Vue.config.globalProperties.$u = $u
