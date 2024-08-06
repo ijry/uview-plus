@@ -1,3 +1,8 @@
+## 3.3.12（2024-08-06）
+improvement: $u挂载时机调整便于打包分离chunk
+
+fix: steps新增itemStyle属性名称冲突
+
 ## 3.3.11（2024-08-05）
 feat: 新增支持upload组件的deletable/maxCount/accept变更监听 #333
 
