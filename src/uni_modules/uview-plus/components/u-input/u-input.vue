@@ -18,6 +18,7 @@
 					为了防止type=number时，又存在password属性，type无效，此时需要设置password为undefined
 				 -->
             	<input
+                    ref="input-native"
             	    class="u-input__content__field-wrapper__field"
             	    :style="[inputStyle]"
             	    :type="type"
@@ -258,6 +259,12 @@ export default {
             this.focused = true;
             this.$emit("focus");
         },
+        focus() {
+            this.$refs['input-native'].focus();
+        },
+        blur() {
+            this.$refs['input-native'].blur();
+        }
         // 点击完成按钮时触发
         onConfirm(event) {
             this.$emit("confirm", this.innerValue);
