@@ -470,6 +470,13 @@
 				{
 					"navigationBarTitleText" : "迷你导航"
 				}
+			},
+			{
+				"path" : "box/box",
+				"style" : 
+				{
+					"navigationBarTitleText" : "盒子"
+				}
 			}
 		]
 	},
