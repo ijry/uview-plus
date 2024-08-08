@@ -333,6 +333,11 @@ export default [{
             title: 'Navbar 导航栏',
             title_en: 'Navbar'
         }, {
+            path: '/pages/componentsD/navbarMini/navbarMini',
+            icon: 'navbar',
+            title: 'NavbarMini 迷你导航栏',
+            title_en: 'Navbar'
+        }, {
             path: '/pages/componentsC/tabs/tabs',
             icon: 'tabs',
             title: 'Tabs 标签',

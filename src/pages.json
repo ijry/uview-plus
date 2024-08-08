@@ -463,6 +463,13 @@
 				"style": {
 					"navigationBarTitleText": "复制"
 				}
+			},
+			{
+				"path" : "navbarMini/navbarMini",
+				"style" : 
+				{
+					"navigationBarTitleText" : "迷你导航"
+				}
 			}
 		]
 	},
