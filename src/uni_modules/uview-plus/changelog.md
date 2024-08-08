@@ -1,3 +1,10 @@
+## 3.3.13（2024-08-08）
+feat: input支持调用原生组件的focus和blur方法
+
+improvement: grid-item条件编译优化
+
+add: 新增迷你导航组件
+
 ## 3.3.12（2024-08-06）
 improvement: $u挂载时机调整便于打包分离chunk
 
