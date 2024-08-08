@@ -81,14 +81,14 @@
 			// #endif
 			itemStyle() {
 				const style = {
-					background: this.bgColor,
-					// #ifndef MP
-					width: this.width
-					// #endif
-					// #ifdef MP
-					width: '100%'
-					// #endif
+					background: this.bgColor
 				}
+				// #ifndef MP
+				style['width'] = this.width
+				// #endif
+				// #ifdef MP
+				style['width'] = '100%'
+				// #endif
 				return deepMerge(style, addStyle(this.customStyle))
 			}
 		},
