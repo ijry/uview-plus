@@ -303,6 +303,11 @@
 			"style": {
 				"navigationBarTitleText": "瀑布流"
 			}
+		}, {
+			"path": "card/card",
+			"style": {
+				"navigationBarTitleText": "卡片"
+			}
 		}]
 	}, {
 		"root": "pages/componentsC",

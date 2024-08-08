@@ -259,6 +259,11 @@ export default [{
         title: 'Line 线条',
         title_en: 'Line'
     }, {
+		path: '/pages/componentsB/card/card',
+		icon: 'empty',
+		title: 'Card 卡片',
+		title_en: 'Card'
+    }, {
         path: '/pages/componentsA/overlay/overlay',
         icon: 'mask',
         title: 'Overlay 遮罩层',
@@ -304,6 +309,11 @@ export default [{
         icon: 'divider',
         title: 'Divider 分割线',
         title_en: 'Divider'
+    }, {
+		path: '/pages/componentsD/box/box',
+		icon: 'box',
+		title: 'Box 盒子',
+		title_en: 'Box'
     }
     ]
 },
