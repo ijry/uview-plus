@@ -259,12 +259,12 @@ export default {
             this.focused = true;
             this.$emit("focus");
         },
-        focus() {
+        doFocus() {
             this.$refs['input-native'].focus();
         },
-        blur() {
+        doBlur() {
             this.$refs['input-native'].blur();
-        }
+        },
         // 点击完成按钮时触发
         onConfirm(event) {
             this.$emit("confirm", this.innerValue);
