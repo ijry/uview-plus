@@ -1,16 +1,8 @@
 <template>
 	<view class="u-navbar-mini" :class="[customClass]">
-		<view
-			class="u-navbar-mini__placeholder"
-			v-if="fixed"
-			:style="{
-				height: addUnit(getPx(height) + sys().statusBarHeight,'px'),
-			}"
-		></view>
 		<view class="u-navbar-mini__inner" :class="[fixed && 'u-navbar-mini--fixed']">
 			<u-status-bar
 				v-if="safeAreaInsetTop"
-				:bgColor="bgColor"
 			></u-status-bar>
 			<view
 				class="u-navbar-mini__content"
@@ -112,7 +104,6 @@
 
         &__inner {
             width: 180rpx;
-            border-radius: 20px;
             overflow: hidden;
         }
 
@@ -127,8 +118,9 @@
 		&__content {
 			@include flex(row);
             padding: 0 15px;
+			border-radius: 20px;
 			align-items: center;
-			height: 44px;
+			height: 36px;
 			background-color: #9acafc;
 			position: relative;
 			justify-content: space-between;
