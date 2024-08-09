@@ -11,7 +11,8 @@
 					confirmType="search"
 					@confirm="handleSearch"
 				></up-input>
-				<up-button @click="value = Math.random().toString()">变化</up-button>
+				<up-button @click="value = Math.random().toString()"
+					style="margin-top: 10px;">变化</up-button>
 				{{value}}
 			</view>
 		</view>
@@ -46,7 +47,9 @@
 					border="surround"
 					password
 					clearable
+					v-model="inputPassword"
 				></up-input>
+				{{inputPassword}}
 			</view>
 		</view>
 		<view class="u-demo-block">
@@ -168,7 +171,8 @@
 			return {
 				tips: '',
 				value: '',
-				inputNumber: ''
+				inputNumber: '',
+				inputPassword: '123456'
 			}
 		},
 		watch: {
