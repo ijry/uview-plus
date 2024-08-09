@@ -181,8 +181,11 @@ export function addUnit(value = 'auto', unit = '') {
 	if (!unit) {
 		unit = config.unit || 'px'
 	}
+	if (unit == 'rpx') {
+		value = value * 2
+	}
 	value = String(value)
-	// 用uView内置验证规则中的number判断是否为数值
+	// 用内置验证规则中的number判断是否为数值
 	return testNumber(value) ? `${value}${unit}` : value
 }
 
