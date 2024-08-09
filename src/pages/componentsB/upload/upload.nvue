@@ -6,6 +6,8 @@
 				<view class="u-page__upload-item">
 				<up-upload
 				    :fileList="fileList1"
+					useBeforeRead
+					@beforeRead="beforeRead"
 				    @afterRead="afterRead"
 				    @delete="deletePic"
 				    name="1"
@@ -126,6 +128,9 @@
 			// 删除图片
 			deletePic(event) {
 				this[`fileList${event.name}`].splice(event.index, 1)
+			},
+			beforeRead() {
+				console.log('beforeRead')
 			},
 			// 新增图片
 			async afterRead(event) {
