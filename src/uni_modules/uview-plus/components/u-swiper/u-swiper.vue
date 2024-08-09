@@ -68,10 +68,9 @@
 						controls
 						@tap="clickHandler(index)"
 					></video>
-					<text
-						v-if="showTitle && testObject(item) && item.title && testImage(getSource(item))"
-						class="u-swiper__wrapper__item__wrapper__title u-line-1"
-					>{{ item.title }}</text>
+					<view v-if="showTitle && testObject(item) && item.title && testImage(getSource(item))" class="u-swiper__wrapper__item__wrapper__title">
+						<text class="u-line-1">{{ item.title }}</text>
+					</view>
 				</view>
 			</swiper-item>
 		</swiper>
