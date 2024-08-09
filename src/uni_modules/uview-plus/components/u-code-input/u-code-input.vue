@@ -23,8 +23,13 @@
 				v-if="mode === 'line'"
 				:style="[lineStyle]"
 			></view>
-			<!-- #ifndef APP-PLUS -->
-			<view v-if="isFocus && codeArray.length === index" :style="{backgroundColor: color}" class="u-code-input__item__cursor"></view>
+			<!-- #ifndef APP-NVUE -->
+			<view v-if="isFocus && codeArray.length === index"
+				:style="{backgroundColor: color}" class="u-code-input__item__cursor"></view>
+			<!-- #endif -->
+			<!-- #ifdef APP-NVUE -->
+			 <view v-if="isFocus && codeArray.length === index"
+			 :style="{backgroundColor: color, opacity: opacity}" class="u-code-input__item__cursor"></view>
 			<!-- #endif -->
 		</view>
 		<input
@@ -79,22 +84,51 @@
 		data() {
 			return {
 				inputValue: '',
-				isFocus: this.focus
+				isFocus: this.focus,
+				timer: null,
+				opacity: 1
 			}
 		},
 		watch: {
 			// #ifdef VUE2
 			value: {
-			// #endif
-			// #ifdef VUE3
-			modelValue: {
-			// #endif
 				immediate: true,
 				handler(val) {
 					// 转为字符串，超出部分截掉
 					this.inputValue = String(val).substring(0, this.maxlength)
 				}
 			},
+			// #endif
+			// #ifdef VUE3
+			modelValue: {
+				immediate: true,
+				handler(val) {
+					// 转为字符串，超出部分截掉
+					this.inputValue = String(val).substring(0, this.maxlength)
+				}
+			},
+			// #endif
+			isFocus: {
+				handler(val) {
+					// #ifdef APP-NVUE
+					if (val) {
+						this.timer = setInterval(() => {
+							this.opacity = Math.abs(this.opacity - 1)
+						}, 600)
+					} else {
+						clearInterval(this.timer)
+					}
+					// #endif
+				}
+			}
+		},
+		created() {
+			
+		},
+		beforeUnmount() {
+			// #ifdef APP-NVUE
+			clearInterval(this.timer)
+			// #endif
 		},
 		computed: {
 			// 根据长度，循环输入框的个数，因为头条小程序数值不能用于v-for
@@ -188,7 +222,7 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 	$u-code-input-cursor-width: 1px;
-	$u-code-input-cursor-height: 40%;
+	$u-code-input-cursor-height: 20px;
 	$u-code-input-cursor-animation-duration: 1s;
 	$u-code-input-cursor-animation-name: u-cursor-flicker;
 
@@ -223,18 +257,18 @@
 				width: 40px;
 				background-color: $u-content-color;
 			}
-			/* #ifndef APP-PLUS */
 			&__cursor {
 				position: absolute;
+				/* #ifndef APP-NVUE */
 				top: 50%;
 				left: 50%;
+				opacity: 1;
 				transform: translate(-50%,-50%);
+				/* #endif */
 				width: $u-code-input-cursor-width;
 				height: $u-code-input-cursor-height;
 				animation: $u-code-input-cursor-animation-duration u-cursor-flicker infinite;
 			}
-			/* #endif */
-			
 		}
 
 		&__input {
@@ -249,7 +283,7 @@
 		}
 	}
 	
-	/* #ifndef APP-PLUS */
+	/* #ifndef APP-NVUE */
 	@keyframes u-cursor-flicker {
 		0% {
 		    opacity: 0;
