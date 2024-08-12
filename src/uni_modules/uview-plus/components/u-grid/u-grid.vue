@@ -107,6 +107,7 @@
 		// 这里使用grid布局使用为目前20240409uni-app在抖音小程序开启virtualHost时有bug，存在事件失效问题。
 		/* #ifndef APP-NVUE */
 		display: grid;
+		grid-gap: v-bind(gap);
 		grid-template-columns: repeat(v-bind(col), 1fr);
 		/* #endif */
 	}

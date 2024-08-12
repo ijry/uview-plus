@@ -16,6 +16,11 @@ export const props = defineMixin({
         align: {
             type: String,
             default: () => defProps.grid.align
+        },
+        // 间隔
+        gap: {
+            type: String,
+            default: '0px'
         }
     }
 })
