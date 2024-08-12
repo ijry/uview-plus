@@ -1,3 +1,10 @@
+## 3.3.17（2024-08-12）
+feat: swiper组件增加默认slot便于自定义
+
+feat: grid新增间隔参数
+
+feat: picker新增toolbar-right和toolbar-bottom插槽
+
 ## 3.3.16（2024-08-12）
 fix: 解决swiper中title换行后多余的内容未被遮挡问题
 
