@@ -11,7 +11,7 @@
 			class="u-swiper__loading"
 			v-if="loading"
 		>
-			<u-loading-icon mode="circle"></u-loading-icon>
+			<up-loading-icon mode="circle"></up-loading-icon>
 		</view>
 		<swiper
 			v-else
@@ -38,52 +38,55 @@
 				v-for="(item, index) in list"
 				:key="index"
 			>
-				<view
-					class="u-swiper__wrapper__item__wrapper"
-					:style="[itemStyle(index)]"
-				>
-					<!-- 在nvue中，image图片的宽度默认为屏幕宽度，需要通过flex:1撑开，另外必须设置高度才能显示图片 -->
-					<image
-						class="u-swiper__wrapper__item__wrapper__image"
-						v-if="getItemType(item) === 'image'"
-						:src="getSource(item)"
-						:mode="imgMode"
-						@tap="clickHandler(index)"
-						:style="{
-							height: addUnit(height),
-							borderRadius: addUnit(radius)
-						}"
-					></image>
-					<video
-						class="u-swiper__wrapper__item__wrapper__video"
-						v-if="getItemType(item) === 'video'"
-						:id="`video-${index}`"
-						:enable-progress-gesture="false"
-						:src="getSource(item)"
-						:poster="getPoster(item)"
-						:title="showTitle && testObject(item) && item.title ? item.title : ''"
-						:style="{
-							height: addUnit(height)
-						}"
-						controls
-						@tap="clickHandler(index)"
-					></video>
-					<view v-if="showTitle && testObject(item) && item.title && testImage(getSource(item))" class="u-swiper__wrapper__item__wrapper__title">
-						<text class="u-line-1">{{ item.title }}</text>
+				<slot :item="item" :index="index">
+					<view
+						class="u-swiper__wrapper__item__wrapper"
+						:style="[itemStyle(index)]"
+					>
+						<!-- 在nvue中，image图片的宽度默认为屏幕宽度，需要通过flex:1撑开，另外必须设置高度才能显示图片 -->
+						<image
+							class="u-swiper__wrapper__item__wrapper__image"
+							v-if="getItemType(item) === 'image'"
+							:src="getSource(item)"
+							:mode="imgMode"
+							@tap="clickHandler(index)"
+							:style="{
+								height: addUnit(height),
+								borderRadius: addUnit(radius)
+							}"
+						></image>
+						<video
+							class="u-swiper__wrapper__item__wrapper__video"
+							v-if="getItemType(item) === 'video'"
+							:id="`video-${index}`"
+							:enable-progress-gesture="false"
+							:src="getSource(item)"
+							:poster="getPoster(item)"
+							:title="showTitle && testObject(item) && item.title ? item.title : ''"
+							:style="{
+								height: addUnit(height)
+							}"
+							controls
+							@tap="clickHandler(index)"
+						></video>
+						<view v-if="showTitle && testObject(item) && item.title && testImage(getSource(item))"
+							class="u-swiper__wrapper__item__wrapper__title">
+							<text class="u-line-1">{{ item.title }}</text>
+						</view>
 					</view>
-				</view>
+				</slot>
 			</swiper-item>
 		</swiper>
 		<view class="u-swiper__indicator" :style="[addStyle(indicatorStyle)]">
 			<slot name="indicator">
-				<u-swiper-indicator
+				<up-swiper-indicator
 					v-if="!loading && indicator && !showTitle"
 					:indicatorActiveColor="indicatorActiveColor"
 					:indicatorInactiveColor="indicatorInactiveColor"
 					:length="list.length"
 					:current="currentIndex"
 					:indicatorMode="indicatorMode"
-				></u-swiper-indicator>
+				></up-swiper-indicator>
 			</slot>
 		</view>
 	</view>
