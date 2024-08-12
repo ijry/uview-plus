@@ -29,7 +29,12 @@
 			@change="change"
 			@cancel="cancel"
 			@confirm="confirm"
-		></up-picker>
+		>
+		<template #toolbar-right>
+		</template>
+		<template #toolbar-bottom>
+		</template>
+		</up-picker>
 		<up-picker
 			:show="show2"
 			:columns="columns2"

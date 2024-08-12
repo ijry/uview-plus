@@ -22,7 +22,12 @@
 					:title="title"
 					@cancel="cancel"
 					@confirm="confirm"
-				></u-toolbar>
+				>
+					<template #right>
+						<slot name="toolbar-right"></slot>
+					</template>
+				</u-toolbar>
+				<slot name="toolbar-bottom"></slot>
 				<picker-view
 					class="u-picker__view"
 					:indicatorStyle="`height: ${addUnit(itemHeight)}`"
