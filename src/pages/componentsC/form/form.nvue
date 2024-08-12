@@ -42,10 +42,11 @@
 							placeholder="请选择性别"
 							border="none"
 						></up-input>
-						<up-icon
-							slot="right"
-							name="arrow-right"
-						></up-icon>
+						<template #right>
+							<up-icon
+								name="arrow-right"
+							></up-icon>
+						</template>
 					</up-form-item>
 					<up-form-item
 						label="年龄"
@@ -132,10 +133,11 @@
 							placeholder="请选择住店和离店时间"
 							border="none"
 						></up-input>
-						<up-icon
-							slot="right"
-							name="arrow-right"
-						></up-icon>
+						<template #right>
+							<up-icon
+								name="arrow-right"
+							></up-icon>
+						</template>
 					</up-form-item>
 					<up-form-item
 						label="验证码"
@@ -172,10 +174,11 @@
 							placeholder="请选择生日"
 							border="none"
 						></up-input>
-						<up-icon
-							slot="right"
-							name="arrow-right"
-						></up-icon>
+						<template #right>
+							<up-icon
+								name="arrow-right"
+							></up-icon>
+						</template>
 					</up-form-item>
 				</up-form>
 				<up-button

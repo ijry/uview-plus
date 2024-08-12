@@ -112,12 +112,13 @@
 					<!-- #ifdef APP-NVUE -->
 					<up-input placeholder="前置插槽">
 						<!-- #endif -->
-						<up-text
-							text="http://"
-							slot="prefix"
-							margin="0 3px 0 0"
-							type="tips"
-						></up-text>
+						<template #prefix>
+							<up-text
+								text="http://"
+								margin="0 3px 0 0"
+								type="tips"
+							></up-text>
+						</template>
 						<!-- #ifndef APP-NVUE -->
 				</up-input>
 				<!-- #endif -->
@@ -136,7 +137,7 @@
 					<!-- #ifdef APP-NVUE -->
 					<up-input placeholder="后置插槽">
 						<!-- #endif -->
-						<template slot="suffix">
+						<template #suffix>
 							<up-code
 								ref="uCode"
 								@change="codeChange"

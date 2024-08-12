@@ -20,12 +20,13 @@
 				:key="index"
 				isLink
 			>
-				<image
-					slot="icon"
-					class="u-cell-icon"
-					:src="item.iconUrl"
-					mode="widthFix"
-				></image>
+				<template #icon>
+					<image
+						class="u-cell-icon"
+						:src="item.iconUrl"
+						mode="widthFix"
+					></image>
+				</template>
 			</up-cell>
 		</up-cell-group>
 		<up-popup
@@ -47,7 +48,21 @@
 					width: ['bottom', 'top'].includes(popupData.mode) ? '750rpx' : '200px',
 					marginTop: ['left', 'right'].includes(popupData.mode) ? '480rpx' : '0',
 				}"
-			>				<view style="height: 12vh;overflow-y: scroll;margin-bottom: 10px;">					<view v-for="i in 30">						列表滚动{[i]}					</view>				</view>				<view>					<up-button						type="success"						text="点我关闭"						customStyle="width: 200rpx"						size="small"						@click="show = !show"					></up-button>				</view>
+			>
+				<view style="height: 12vh;overflow-y: scroll;margin-bottom: 10px;">
+					<view v-for="i in 30">
+						列表滚动{[i]}
+					</view>
+				</view>
+				<view>
+					<up-button
+						type="success"
+						text="点我关闭"
+						customStyle="width: 200rpx"
+						size="small"
+						@click="show = !show"
+					></up-button>
+				</view>
 			</view>
 		</up-popup>
 	</view>
@@ -171,6 +186,7 @@
 		height: 150px;
 		@include flex;
 		justify-content: center;
-		align-items: center;		flex-direction: column;
+		align-items: center;
+		flex-direction: column;
 	}
 </style>
