@@ -20,6 +20,7 @@
 					:cancelText="cancelText"
 					:confirmText="confirmText"
 					:title="title"
+					:rightSlot="toolbarRightSlot ? true : false"
 					@cancel="cancel"
 					@confirm="confirm"
 				>

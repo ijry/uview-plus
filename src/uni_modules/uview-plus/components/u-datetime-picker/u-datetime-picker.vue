@@ -23,11 +23,20 @@
 		:confirmText="confirmText"
 		:cancelColor="cancelColor"
 		:confirmColor="confirmColor"
+		:toolbarRightSlot="toolbarRightSlot"
 		@close="close"
 		@cancel="cancel"
 		@confirm="confirm"
 		@change="change"
 	>
+		<template #toolbar-right>
+			<slot name="toolbar-right">
+			</slot>
+		</template>
+		<template #toolbar-bottom>
+			<slot name="toolbar-bottom">
+			</slot>
+		</template>
 	</u-picker>
 </template>
 

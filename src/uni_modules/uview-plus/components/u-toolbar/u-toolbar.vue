@@ -27,20 +27,23 @@
 		<view
 			class="u-toolbar__right"
 		>
-			<slot name="right">
-				<view
-					class="u-toolbar__confirm__wrapper"
-					hover-class="u-hover-class"
-				>
-					<text
-						class="u-toolbar__wrapper__confirm"
-						@tap="confirm"
-						:style="{
-						color: confirmColor
-					}"
-					>{{ confirmText }}</text>
-				</view>
-			</slot>
+			<view
+				v-if="!rightSlot"
+				class="u-toolbar__confirm__wrapper"
+				hover-class="u-hover-class"
+			>
+				<text
+					class="u-toolbar__wrapper__confirm"
+					@tap="confirm"
+					:style="{
+					color: confirmColor
+				}"
+				>{{ confirmText }}</text>
+			</view>
+			<template v-else>
+				<slot name="right">
+				</slot>
+			</template>
 		</view>
 	</view>
 </template>
@@ -66,6 +69,9 @@
 		name: 'u-toolbar',
 		mixins: [mpMixin, mixin, props],
 		emits: ["confirm", "cancel"],
+		created() {
+			console.log(this.$slots)
+		},
 		methods: {
 			// 点击取消按钮
 			cancel() {

@@ -24,11 +24,12 @@
 				</up-form-item>
 				<up-form-item borderBottom label="日期">
 					<up-datetime-picker
-					hasInput
-					placeholder="请选择日期"
-					mode="datetime"
-					:modelValue="1714266792000"
-					></up-datetime-picker>
+						hasInput
+						placeholder="请选择日期"
+						mode="datetime"
+						:modelValue="1714266792000"
+						>
+					</up-datetime-picker>
 				</up-form-item>
 			</up-form>
 		</view>
@@ -58,7 +59,11 @@
 			@cancel="cancel"
 			@change="change"
 			@close="close"
-		></up-datetime-picker>
+		>
+			<template #toolbar-right>
+				右侧
+			</template>
+		</up-datetime-picker>
 		<up-datetime-picker
 			:show="show2"
 			v-model="value2"

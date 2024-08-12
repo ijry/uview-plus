@@ -30,8 +30,10 @@
 			@change="change"
 			@cancel="cancel"
 			@confirm="confirm"
+			toolbarRightSlot
 		>
 		<template #toolbar-right>
+			<view style="padding-right: 10px;">右侧</view>
 		</template>
 		<template #toolbar-bottom>
 		</template>

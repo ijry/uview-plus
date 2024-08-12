@@ -31,6 +31,11 @@ export const props = defineMixin({
         title: {
             type: String,
             default: () => defProps.toolbar.title
+        },
+        // 开启右侧插槽
+        rightSlot: {
+            type: Boolean,
+            default: false
         }
     }
 })

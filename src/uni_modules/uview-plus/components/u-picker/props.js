@@ -93,6 +93,11 @@ export const props = defineMixin({
 		immediateChange: {
 			type: Boolean,
 			default: () => defProps.picker.immediateChange
-		}
+		},
+        // 工具栏右侧插槽是否开启
+        toolbarRightSlot: {
+			type: Boolean,
+			default: false
+		},
     }
 })
