@@ -43,6 +43,20 @@
 			></up-swiper>
 		</view>
 		<view class="u-demo-block">
+			<text class="u-demo-block__title">自定义内容</text>
+			<up-swiper
+				:list="list2"
+				keyName="image"
+				showTitle
+				:autoplay="false"
+				circular
+			>
+				<template #default="scope">
+					<image :src="scope.item.image"></image>
+				</template>
+			</up-swiper>
+		</view>
+		<view class="u-demo-block">
 			<text class="u-demo-block__title">自定义指示器</text>
 			<up-swiper
 				:list="list5"
