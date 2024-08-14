@@ -181,7 +181,7 @@ export function addUnit(value = 'auto', unit = '') {
 	if (!unit) {
 		unit = config.unit || 'px'
 	}
-	if (unit == 'rpx') {
+	if (unit == 'rpx' && testNumber(String(value))) {
 		value = value * 2
 	}
 	value = String(value)
