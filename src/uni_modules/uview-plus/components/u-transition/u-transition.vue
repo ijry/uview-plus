@@ -18,7 +18,7 @@ import { mpMixin } from '../../libs/mixin/mpMixin';
 import { mixin } from '../../libs/mixin/mixin';
 import { addStyle } from '../../libs/function/index';
 // 组件的methods方法，由于内容较长，写在外部文件中通过mixin引入
-import transition from "./transition.js";
+import transitionMixin from "./transitionMixin.js";
 /**
  * transition  动画组件
  * @description
@@ -65,7 +65,7 @@ export default {
 	    }
 	},
 	// 将mixin挂在到组件中，实际上为一个vue格式对象。
-	mixins: [mpMixin, mixin, transition, props],
+	mixins: [mpMixin, mixin, transitionMixin, props],
 	watch: {
 		show: {
 			handler(newVal) {

@@ -178,7 +178,6 @@
                 // 获取下划线的数值px表示法
 				const lineWidth = getPx(this.lineWidth);
 				this.lineOffsetLeft = lineOffsetLeft + (tabItem.rect.width - lineWidth) / 2
-				console.log(lineOffsetLeft)
 				// #ifdef APP-NVUE
 				// 第一次移动滑块，无需过渡时间
 				this.animation(this.lineOffsetLeft, this.firstTime ? 0 : parseInt(this.duration))

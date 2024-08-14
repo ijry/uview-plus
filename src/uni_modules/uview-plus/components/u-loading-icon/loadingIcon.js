@@ -7,7 +7,7 @@
  * @lastTime     : 2021-08-20 17:45:47
  * @FilePath     : /u-view2.0/uview-ui/libs/config/props/loadingIcon.js
  */
-import config from '../config'
+import config from '../../libs/config/config'
 
 const {
     color
