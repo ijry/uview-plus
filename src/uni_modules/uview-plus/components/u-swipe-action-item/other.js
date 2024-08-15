@@ -14,7 +14,7 @@ export default {
 			if (this.disabled) return
 			// 打开或关闭单元格
 			if (newValue === 'close' && this.status === 'open') {
-				this.closeSwipeAction(instance, ownerInstance)
+				this.closeSwipeAction()
 			} else if(newValue === 'open' && this.status === 'close') {
 				this.openSwipeAction()
 			}
@@ -28,7 +28,13 @@ export default {
 	},
     methods: {
 		clickHandler() {
-		},		setStatus(status) {			this.status = status		},
+		},
+		closeHandler() {
+			this.closeSwipeAction()
+        },
+		setStatus(status) {
+			this.status = status
+		},
 		getBtnWidth() {
 			let view = uni.createSelectorQuery().in(this).select(".u-swipe-action-item__right");
 			view.fields({
@@ -49,8 +55,9 @@ export default {
 			this.state.startX = touches[0].pageX
 			this.state.startY = touches[0].pageY
 			
-			// todo关闭其它
-			// this.$parent && this.$parent.closeOther(this)
+			// 关闭其它
+			// console.log(this.parent)
+			this.parent && this.parent.closeOther(this)
         },
         touchmove(event) {
             // console.log(event)

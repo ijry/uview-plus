@@ -101,7 +101,7 @@
 			// #ifdef APP-NVUE
 			nvue,
 			// #endif
-			// #ifdef APP-VUE || MP-WEIXIN || H5 || MP-QQ || H5
+			// #ifdef APP-VUE || MP-WEIXIN || MP-QQ || H5
 			wxs,
 			// #endif
 			// #ifdef MP-ALIPAY || MP-BAIDU || MP-TOUTIAO
@@ -137,6 +137,9 @@
 		},
 		mounted() {
 			this.init()
+		},
+		beforeUmount() {
+			this.closeHandler()
 		},
 		methods: {
 			addUnit,
