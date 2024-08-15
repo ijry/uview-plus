@@ -1,7 +1,17 @@
 <template>
-	<view class="u-qrcode">
-		<canvas class="u-qrcode__canvas" :id="cid" :canvas-id="cid" :style="{ width: size + unit, height: size + unit }" />
-		<image v-show="show" :src="result" :style="{ width: size + unit, height: size + unit }" />
+	<view class="u-qrcode" @longpress="longpress">
+		<view class="u-qrcode__content" @click="preview">
+			<canvas class="u-qrcode__canvas"
+				:id="cid" :canvas-id="cid" :style="{ width: size + unit, height: size + unit }" />
+			<view v-if="showLoading && loading" class="u-qrcode__loading"
+				:style="{ width: size + unit, height: size + unit }">
+				<up-loading-icon vertical :text="loadingText" textSize="14px"></up-loading-icon>
+			</view>
+			<!-- <image v-show="show" :src="result" :style="{ width: size + unit, height: size + unit }" /> -->
+		</view>
+		<!-- <up-action-sheet :actions="list" cancelText="取消"
+			v-model:show="popupShow" @select="selectClick">
+		</up-action-sheet> -->
 	</view>
 </template>
 
@@ -73,23 +83,32 @@ export default {
 		},
 		loadingText: {
 			type: String,
-			default: '二维码生成中'
+			default: '生成中'
 		},
 	},
+	emits: ['result', 'longpress'],
 	data() {
 		return {
+			loading: false,
 			result: '',
+			popupShow: false,
+			list: [
+				{
+					name: '保存二维码',
+				}
+			]
 		}
 	},
 	methods: {
 		_makeCode() {
 			let that = this
 			if (!this._empty(this.val)) {
+				this.loading = true
 				qrcode = new QRCode({
 					context: that, // 上下文环境
 					canvasId: that.cid, // canvas-id
 					usingComponents: that.usingComponents, // 是否是自定义组件
-					showLoading: that.showLoading, // 是否显示loading
+					showLoading: false, // 是否显示loading
 					loadingText: that.loadingText, // loading文字
 					text: that.val, // 生成内容
 					size: that.size, // 二维码大小
@@ -130,9 +149,42 @@ export default {
 				});
 			}
 		},
+		preview() {
+			// 预览图片
+			console.log(this.result)
+			uni.previewImage({
+				urls: [this.result],
+				longPressActions: {
+					itemList: ['保存二维码图片'],
+					success: function(data) {
+						// console.log('选中了第' + (data.tapIndex + 1) + '个按钮,第' + (data.index + 1) + '张图片');
+						switch (data.tapIndex) {
+							case 0:
+								that._saveCode();
+								break;
+						}
+					},
+					fail: function(err) {
+						console.log(err.errMsg);
+					}
+				}
+			});
+		},
+		longpress() {
+			this.$emit('longpress', this.result)
+		},
+		selectClick(index) {
+			switch (index) {
+				case 0:
+					alert('保存二维码')
+					this._saveCode();
+					break;
+			}
+		},
 		_result(res) {
+			this.loading = false;
 			this.result = res;
-			this.$emit('result', res)
+			this.$emit('result', res);
 		},
 		_empty(v) {
 			let tp = typeof v,
@@ -187,13 +239,26 @@ export default {
 </script>
 <style lang="scss" scoped>
 .u-qrcode {
-	position: relative;
+	&__loading {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: #f7f7f7;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+	}
+	&__content {
+		position: relative;
 
-	&__canvas {
-		position: fixed;
-		top: -99999rpx;
-		left: -99999rpx;
-		z-index: -99999;
+		&__canvas {
+			position: fixed;
+			top: -99999rpx;
+			left: -99999rpx;
+			z-index: -99999;
+		}
 	}
 }
 </style>
