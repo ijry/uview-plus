@@ -6,6 +6,11 @@ export const props = defineMixin({
         autoClose: {
             type: Boolean,
             default: () => defProps.swipeAction.autoClose
+        },
+        // 是否存在打开的按钮组
+        opendItem: {
+            type: Boolean,
+            default: false
         }
     }
 })

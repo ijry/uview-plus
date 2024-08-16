@@ -35,6 +35,7 @@
 				return [this.autoClose]
 			}
 		},
+		emits: ['opendItem:update'],
 		watch: {
 			// 当父组件需要子组件需要共享的参数发生了变化，手动通知子组件
 			parentData() {
@@ -45,6 +46,11 @@
 					})
 				}
 			},
+			opendItem(val) {
+				if (val == false) {
+					this.closeAll()
+				}
+			}
 		},
 		created() {
 			this.children = []
@@ -59,6 +65,15 @@
 						}
 					})
 				}
+			},
+			closeAll() {
+				// 关闭所有单元格
+				this.children.map((item, index) => {
+					item.closeHandler()
+				})
+			},
+			setOpendItem(ins) {
+				this.$emit('opendItem:update', true)
 			}
 		}
 	}

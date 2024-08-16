@@ -127,8 +127,13 @@
 			// #ifndef APP-NVUE
 			wxsInit(newValue, oldValue) {
 				this.queryRect()
-			}
+			},
 			// #endif
+			status(newValue) {
+				if (newValue === 'open') {
+					this.parent && this.parent.setOpendItem(this)
+				}
+			}
 		},
 		computed: {
 			wxsInit() {
