@@ -1,43 +1,46 @@
 <template>
-    <view v-if="hasInput" class="u-datetime-picker">
-        <u-input
-            :placeholder="placeholder"
-			:readonly="!!showByClickInput"
-            border="surround"
-            v-model="inputValue"
+    <view class="u-datetime-picker">
+        <view v-if="hasInput" class="u-datetime-picker__has-input"
             @click="showByClickInput = !showByClickInput"
-        ></u-input>
+        >
+            <up-input
+                :placeholder="placeholder"
+                :readonly="!!showByClickInput"
+                border="surround"
+                v-model="inputValue"
+            ></up-input>
+        </view>
+        <u-picker
+            ref="picker"
+            :show="show || (hasInput && showByClickInput)"
+            :popupMode="popupMode"
+            :closeOnClickOverlay="closeOnClickOverlay"
+            :columns="columns"
+            :title="title"
+            :itemHeight="itemHeight"
+            :showToolbar="showToolbar"
+            :visibleItemCount="visibleItemCount"
+            :defaultIndex="innerDefaultIndex"
+            :cancelText="cancelText"
+            :confirmText="confirmText"
+            :cancelColor="cancelColor"
+            :confirmColor="confirmColor"
+            :toolbarRightSlot="toolbarRightSlot"
+            @close="close"
+            @cancel="cancel"
+            @confirm="confirm"
+            @change="change"
+        >
+            <template #toolbar-right>
+                <slot name="toolbar-right">
+                </slot>
+            </template>
+            <template #toolbar-bottom>
+                <slot name="toolbar-bottom">
+                </slot>
+            </template>
+        </u-picker>
     </view>
-	<u-picker
-		ref="picker"
-		:show="show || (hasInput && showByClickInput)"
-		:popupMode="popupMode"
-		:closeOnClickOverlay="closeOnClickOverlay"
-		:columns="columns"
-		:title="title"
-		:itemHeight="itemHeight"
-		:showToolbar="showToolbar"
-		:visibleItemCount="visibleItemCount"
-		:defaultIndex="innerDefaultIndex"
-		:cancelText="cancelText"
-		:confirmText="confirmText"
-		:cancelColor="cancelColor"
-		:confirmColor="confirmColor"
-		:toolbarRightSlot="toolbarRightSlot"
-		@close="close"
-		@cancel="cancel"
-		@confirm="confirm"
-		@change="change"
-	>
-		<template #toolbar-right>
-			<slot name="toolbar-right">
-			</slot>
-		</template>
-		<template #toolbar-bottom>
-			<slot name="toolbar-bottom">
-			</slot>
-		</template>
-	</u-picker>
 </template>
 
 <script>
@@ -460,6 +463,10 @@
 <style lang="scss" scoped>
 	@import '../../libs/css/components.scss';
 	.u-datetime-picker {
-		width: 100%;
+        &__has-input {
+            /* #ifndef APP-NVUE */
+            width: 100%;
+            /* #endif */
+        }
 	}
 </style>
