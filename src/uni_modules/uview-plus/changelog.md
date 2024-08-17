@@ -1,3 +1,10 @@
+## 3.3.23（2024-08-17）
+feat: swipe-action增加closeAll方法
+
+fix: 兼容tabs在某些场景下index小于0时自动设置为0
+
+add: 通用mixin新增navTo页面跳转方法
+
 ## 3.3.21（2024-08-15）
 improvement: 优化二维码组件loading及支持预览与长按事件 #351
 
