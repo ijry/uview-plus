@@ -234,6 +234,9 @@
 			},
 			setScrollLeft() {
 				// 当前活动tab的布局信息，有tab菜单的width和left(为元素左边界到父元素左边界的距离)等信息
+				if (this.innerCurrent < 0) {
+                    this.innerCurrent = 0;
+                }
 				const tabRect = this.list[this.innerCurrent]
 				// 累加得到当前item到左边的距离
 				const offsetLeft = this.list
@@ -359,9 +362,7 @@
 					&__text {
 						font-size: 15px;
 						color: $u-content-color;
-						/* #ifndef APP-NVUE */
                         white-space: nowrap !important;
-						/* #endif */
 
 						&--disabled {
 							color: $u-disabled-color !important;
