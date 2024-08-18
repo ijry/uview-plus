@@ -4,4 +4,4 @@ export const props = defineMixin({
     props: {
 
     }
-}
+})
