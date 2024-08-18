@@ -151,7 +151,7 @@ export default {
 		},
 		preview() {
 			// 预览图片
-			console.log(this.result)
+			// console.log(this.result)
 			uni.previewImage({
 				urls: [this.result],
 				longPressActions: {

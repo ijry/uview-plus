@@ -219,7 +219,7 @@
                 contentObserver.relativeToViewport({
                     bottom: this.getThreshold,
                 }).observe('.u-lazy-item-' + this.elIndex, (res) => {
-                    console.log('relativeToViewport', res)
+                    // console.log('relativeToViewport', res)
                     if (res.intersectionRatio > 0) {
                         // 懒加载状态改变
                         this.isShow = true;

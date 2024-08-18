@@ -361,16 +361,16 @@
 				// pageY += sys().windowTop
 				// #endif
 				// 对第一和最后一个字母做边界处理，因为用户可能在字母列表上触摸到两端的尽头后依然继续滑动
-				console.log('top1', top)
-				console.log('height', height)
+				// console.log('top1', top)
+				// console.log('height', height)
 				top = top - (height / 2) // 减去transfrom的translateY值导致的高度
 				pageY = pageY - this.topOffset
 				// if (this.safeBottomFix) {
 				// 	pageY = pageY + 34
 				// }
-				console.log('topOffset', this.topOffset)
-				console.log('pageY', pageY)
-				console.log('top2', top)
+				// console.log('topOffset', this.topOffset)
+				// console.log('pageY', pageY)
+				// console.log('top2', top)
 				if (pageY < top) {
 					index = 0
 				} else if (pageY >= top + height) {
@@ -401,7 +401,7 @@
 				const header = await this.getHeaderRect()
 				// item的top值，在nvue下，模拟出的anchor的top，类似非nvue下的index-item的top
 				let top = header.height
-				console.log(top)
+				// console.log(top)
 				const anchors = this.anchors
 				// 由于list组件无法获取cell的top值，这里通过header slot和各个item之间的height，模拟出类似非nvue下的位置信息
 				let children = this.children.map((item, index) => {
@@ -426,7 +426,7 @@
 				// #ifdef APP-NVUE
 				// 在nvue中，由于cell和header为同级元素，所以实际是需要对header(anchor)进行偏移
 				const anchor = `u-index-anchor-${this.uIndexList[currentIndex]}`
-				console.log(anchor)
+				// console.log(anchor)
 				dom.scrollToElement(this.anchors[currentIndex].$refs[anchor], {
 					offset: 0,
 					animated: false

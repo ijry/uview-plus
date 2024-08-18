@@ -70,7 +70,7 @@
 		mixins: [mpMixin, mixin, props],
 		emits: ["confirm", "cancel"],
 		created() {
-			console.log(this.$slots)
+			// console.log(this.$slots)
 		},
 		methods: {
 			// 点击取消按钮
