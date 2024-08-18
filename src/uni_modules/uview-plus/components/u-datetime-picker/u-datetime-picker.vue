@@ -91,7 +91,7 @@
 	 * @example  <u-datetime-picker :show="show" :value="value1"  mode="datetime" ></u-datetime-picker>
 	 */
 	export default {
-		name: 'datetime-picker',
+		name: 'up-datetime-picker',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {

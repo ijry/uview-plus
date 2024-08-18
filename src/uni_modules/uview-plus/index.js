@@ -77,7 +77,46 @@ const $u = {
     platform
 }
 
+export const mount$u = function() {
+    uni.$u = $u
+}
+
+// #ifdef H5
+const importFn = import.meta.glob('./components/u-*/u-*.vue', { eager: true })
+let components = [];
+
+// 批量注册全局组件
+for (const key in importFn) {
+    let component = importFn[key].default;
+    if (component.name && component.name.indexOf('u--') !== 0) {
+        const name = component.name.replace(/u-([a-zA-Z0-9-_]+)/g, 'up-$1');
+        component.name = name;
+        console.log('component', component.name)
+        component.install = function (Vue) {
+            Vue.component(component.name, component);
+        };
+        
+        // 导入组件
+        components.push(component);
+    }
+}
+// #endif
+
+function toCamelCase(str) {
+    return str.replace(/-([a-z])/g, function(match, group1) {
+      return group1.toUpperCase();
+    }).replace(/^[a-z]/, function(match) {
+      return match.toUpperCase();
+    });
+}
+
 const install = (Vue) => {
+    // #ifdef H5
+    components.forEach(function(component) {
+        Vue.component(component.name, component);
+    });
+    // #endif
+
     // 同时挂载到uni和Vue.prototype中
     // $u挂载到uni对象上
     uni.$u = $u

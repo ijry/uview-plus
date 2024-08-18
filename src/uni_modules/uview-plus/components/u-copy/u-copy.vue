@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-    name: "xy-copy",
+    name: "up-copy",
     props: {
         content: {
             type: String,
