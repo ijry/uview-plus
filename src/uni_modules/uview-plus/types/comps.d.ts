@@ -86,13 +86,15 @@ declare module '@vue/runtime-core' {
     // 其他组件
     ['up-parse']: typeof import('./comps/parse')['Parse']
     ['up-code-input']: typeof import('./comps/codeInput')['CodeInput']
-    ['up-load-more']: typeof import('./comps/loadMore')['LoadMore']
+    ['up-loadmore']: typeof import('./comps/loadMore')['LoadMore']
     ['up-read-more']: typeof import('./comps/readMore')['ReadMore']
     ['up-gap']: typeof import('./comps/gap')['Gap']
     ['up-avatar']: typeof import('./comps/avatar')['Avatar']
     ['up-avatar-group']: typeof import('./comps/avatarGroup')['AvatarGroup']
     ['up-link']: typeof import('./comps/link')['Link']
     ['up-transition']: typeof import('./comps/transition')['Transition']
+    ['up-status-bar']: typeof import('./comps/statusBar')['StatusBar']
+    ['up-safe-bottom']: typeof import('./comps/safeBottom')['SafeBottom']
   }
 }
 
