@@ -15,7 +15,7 @@ declare interface ButtonProps {
    * 按钮的大小
    * @default "normal"
    */
-  size?: 'normal' | 'large' | 'mini'
+  size?: 'normal' | 'large' | 'small' | 'mini'
   /**
    * 按钮外观形状
    * @default "square"
