@@ -1,3 +1,8 @@
+## 3.3.24（2024-08-19）
+fix: 修复时间选择器hasInput模式小程序不生效
+
+feat: 支持H5导入所有组件
+
 ## 3.3.23（2024-08-17）
 feat: swipe-action增加closeAll方法
 
