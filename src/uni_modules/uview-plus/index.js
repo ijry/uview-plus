@@ -82,15 +82,13 @@ export const mount$u = function() {
 }
 
 // #ifdef H5
-const importFn = import.meta.glob('./components/u-*/u-*.vue', { eager: true })
+const importFn = import.meta.glob('./components/up-*/up-*.vue', { eager: true })
 let components = [];
 
 // 批量注册全局组件
 for (const key in importFn) {
     let component = importFn[key].default;
-    if (component.name && component.name.indexOf('u--') !== 0) {
-        const name = component.name.replace(/u-([a-zA-Z0-9-_]+)/g, 'up-$1');
-        component.name = name;
+    if (component.name) {
         // console.log('component', component.name)
         component.install = function (Vue) {
             Vue.component(component.name, component);
