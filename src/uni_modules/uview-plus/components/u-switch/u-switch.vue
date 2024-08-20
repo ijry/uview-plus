@@ -1,38 +1,44 @@
 <template>
 	<view
-	    class="u-switch cursor-pointer"
-	    :class="[disabled && 'u-switch--disabled']"
+	    class="up-switch cursor-pointer"
+	    :class="[disabled && 'up-switch--disabled']"
 	    :style="[switchStyle, addStyle(customStyle)]"
 	    @tap="clickHandler"
 	>
 		<view
-		    class="u-switch__bg"
+		    class="up-switch__bg"
 		    :style="[bgStyle]"
 		>
 		</view>
 		<view
-		    class="u-switch__node"
+		    class="up-switch__node"
 		    <!-- #ifdef VUE3 -->
-			:class="[modelValue && 'u-switch__node--on']"
+			:class="[modelValue && 'up-switch__node--on']"
 			<!-- #endif -->
 			<!-- #ifdef VUE2 -->
-			:class="[value && 'u-switch__node--on']"
+			:class="[value && 'up-switch__node--on']"
 			<!-- #endif -->
 		    :style="[nodeStyle]"
-		    ref="u-switch__node"
+		    ref="up-switch__node"
 		>
-			<u-loading-icon
+			<!-- #ifdef VUE3 -->
+			<up-loading-icon
 			    :show="loading"
 			    mode="circle"
 			    timingFunction='linear'
-			    <!-- #ifdef VUE3 -->
 				:color="modelValue ? activeColor : '#AAABAD'"
-				<!-- #endif -->
-				<!-- #ifdef VUE2 -->
-				:color="value ? activeColor : '#AAABAD'"
-				<!-- #endif -->
 			    :size="size * 0.6"
 			/>
+			<!-- #endif -->
+			<!-- #ifdef VUE2 -->
+			<up-loading-icon
+			    :show="loading"
+			    mode="circle"
+			    timingFunction='linear'
+				:color="value ? activeColor : '#AAABAD'"
+			    :size="size * 0.6"
+			/>
+			<!-- #endif -->
 		</view>
 	</view>
 </template>
@@ -59,10 +65,10 @@
 	 * @property {Object}						customStyle		定义需要用到的外部样式
 	 *
 	 * @event {Function} change 在switch打开或关闭时触发
-	 * @example <u-switch v-model="checked" active-color="red" inactive-color="#eee"></u-switch>
+	 * @example <up-switch v-model="checked" active-color="red" inactive-color="#eee"></up-switch>
 	 */
 	export default {
-		name: "u-switch",
+		name: "up-switch",
 		mixins: [mpMixin, mixin,props],
 		watch: {
 			// #ifdef VUE3
@@ -167,7 +173,7 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-switch {
+	.up-switch {
 		@include flex(row);
 		/* #ifndef APP-NVUE */
 		box-sizing: border-box;

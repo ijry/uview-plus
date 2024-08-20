@@ -1,20 +1,20 @@
 <template>
-	<view class="u-navbar-mini" :class="[customClass]">
-		<view class="u-navbar-mini__inner" :class="[fixed && 'u-navbar-mini--fixed']">
-			<u-status-bar
+	<view class="up-navbar-mini" :class="[customClass]">
+		<view class="up-navbar-mini__inner" :class="[fixed && 'up-navbar-mini--fixed']">
+			<up-status-bar
 				v-if="safeAreaInsetTop"
-			></u-status-bar>
+			></up-status-bar>
 			<view
-				class="u-navbar-mini__content"
-				:class="[border && 'u-border-bottom']"
+				class="up-navbar-mini__content"
+				:class="[border && 'up-border-bottom']"
 				:style="{
 					height: addUnit(height),
 					backgroundColor: bgColor,
 				}"
 			>
 				<view
-					class="u-navbar-mini__content__left"
-					hover-class="u-navbar-mini__content__left--hover"
+					class="up-navbar-mini__content__left"
+					hover-class="up-navbar-mini__content__left--hover"
 					hover-start-time="150"
 					@tap="leftClick"
 				>
@@ -30,7 +30,7 @@
 					<up-line direction="col" color="#fff" length="16px"></up-line>
 				</view>
                 <view
-					class="u-navbar-mini__content__center" @tap="homeClick">
+					class="up-navbar-mini__content__center" @tap="homeClick">
                     <slot name="center">
                         <up-icon name="home" :size="iconSize" :color="iconColor"></up-icon>
                     </slot>
@@ -62,10 +62,10 @@
 	 * @property {Object | String}	titleStyle			标题的样式，对象或字符串
 	 * @event {Function} leftClick		点击左侧区域
 	 * @event {Function} rightClick		点击右侧区域
-	 * @example <u-navbar-mini @click-left="onClickBack"></u-navbar-mini>
+	 * @example <up-navbar-mini @click-left="onClickBack"></up-navbar-mini>
 	 */
 	export default {
-		name: 'u-navbar-mini',
+		name: 'up-navbar-mini',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -99,7 +99,7 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-navbar-mini {
+	.up-navbar-mini {
 
         &__inner {
             width: 180rpx;

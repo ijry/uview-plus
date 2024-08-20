@@ -1,6 +1,6 @@
 <template>
 	<view
-	    class="u-radio-group"
+	    class="up-radio-group"
 	    :class="bemClass"
 	>
 		<slot></slot>
@@ -14,7 +14,7 @@
 
 	/**
 	 * radioRroup 单选框父组件
-	 * @description 单选框用于有一个选择，用户只能选择其中一个的场景。搭配u-radio使用
+	 * @description 单选框用于有一个选择，用户只能选择其中一个的场景。搭配up-radio使用
 	 * @tutorial https://ijry.github.io/uview-plus/components/radio.html
 	 * @property {String | Number | Boolean}	value 			绑定的值
 	 * @property {Boolean}						disabled		是否禁用所有radio（默认 false ）
@@ -34,14 +34,14 @@
 	 * @property {String}						iconPlacement	图标与文字的对齐方式 （默认 'left' ）
      * @property {Object}						customStyle		组件的样式，对象形式
 	 * @event {Function} change 任一个radio状态发生变化时触发
-	 * @example <u-radio-group v-model="value"></u-radio-group>
+	 * @example <up-radio-group v-model="value"></up-radio-group>
 	 */
 	export default {
-		name: 'u-radio-group',
+		name: 'up-radio-group',
 		mixins: [mpMixin, mixin, props],
 		computed: {
-			// 这里computed的变量，都是子组件u-radio需要用到的，由于头条小程序的兼容性差异，子组件无法实时监听父组件参数的变化
-			// 所以需要手动通知子组件，这里返回一个parentData变量，供watch监听，在其中去通知每一个子组件重新从父组件(u-radio-group)
+			// 这里computed的变量，都是子组件up-radio需要用到的，由于头条小程序的兼容性差异，子组件无法实时监听父组件参数的变化
+			// 所以需要手动通知子组件，这里返回一个parentData变量，供watch监听，在其中去通知每一个子组件重新从父组件(up-radio-group)
 			// 拉取父组件新的变化后的参数
 			parentData() {
 				// #ifdef VUE3
@@ -66,7 +66,7 @@
 			parentData() {
 				if (this.children.length) {
 					this.children.map(child => {
-						// 判断子组件(u-radio)如果有init方法的话，就就执行(执行的结果是子组件重新从父组件拉取了最新的值)
+						// 判断子组件(up-radio)如果有init方法的话，就就执行(执行的结果是子组件重新从父组件拉取了最新的值)
 						typeof(child.init) === 'function' && child.init()
 					})
 				}
@@ -111,7 +111,7 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-radio-group {
+	.up-radio-group {
 		flex: 1;
 
 		&--row {

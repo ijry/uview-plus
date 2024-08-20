@@ -1,11 +1,11 @@
 <template>
 	<view
-	    class="u-icon"
+	    class="up-icon"
 	    @tap="clickHandler"
-	    :class="['u-icon--' + labelPos]"
+	    :class="['up-icon--' + labelPos]"
 	>
 		<image
-		    class="u-icon__img"
+		    class="up-icon__img"
 		    v-if="isImg"
 		    :src="name"
 		    :mode="imgMode"
@@ -13,7 +13,7 @@
 		></image>
 		<text
 		    v-else
-		    class="u-icon__icon"
+		    class="up-icon__icon"
 		    :class="uClasses"
 		    :style="[iconStyle, addStyle(customStyle)]"
 		    :hover-class="hoverClass"
@@ -21,7 +21,7 @@
 		<!-- 这里进行空字符串判断，如果仅仅是v-if="label"，可能会出现传递0的时候，结果也无法显示 -->
 		<text
 		    v-if="label !== ''" 
-		    class="u-icon__label"
+		    class="up-icon__label"
 		    :style="{
 			color: labelColor,
 			fontSize: addUnit(labelSize),
@@ -58,7 +58,7 @@
 	 * @description 基于字体的图标集，包含了大多数常见场景的图标。
 	 * @tutorial https://ijry.github.io/uview-plus/components/icon.html
 	 * @property {String}			name			图标名称，见示例图标集
-	 * @property {String}			color			图标颜色,可接受主题色 （默认 color['u-content-color'] ）
+	 * @property {String}			color			图标颜色,可接受主题色 （默认 color['up-content-color'] ）
 	 * @property {String | Number}	size			图标字体大小，单位px （默认 '16px' ）
 	 * @property {Boolean}			bold			是否显示粗体 （默认 false ）
 	 * @property {String | Number}	index			点击图标的时候传递事件出去的index（用于区分点击了哪一个）
@@ -67,7 +67,7 @@
 	 * @property {String | Number}	label			图标右侧的label文字
 	 * @property {String}			labelPos		label相对于图标的位置，只能right或bottom （默认 'right' ）
 	 * @property {String | Number}	labelSize		label字体大小，单位px （默认 '15px' ）
-	 * @property {String}			labelColor		图标右侧的label文字颜色 （ 默认 color['u-content-color'] ）
+	 * @property {String}			labelColor		图标右侧的label文字颜色 （ 默认 color['up-content-color'] ）
 	 * @property {String | Number}	space			label与图标的距离，单位px （默认 '3px' ）
 	 * @property {String}			imgMode			图片的mode
 	 * @property {String | Number}	width			显示图片小图标时的宽度
@@ -77,10 +77,10 @@
 	 * @property {Object}			customStyle		icon的样式，对象形式
 	 * @event {Function} click 点击图标时触发
 	 * @event {Function} touchstart 事件触摸时触发
-	 * @example <u-icon name="photo" color="#2979ff" size="28"></u-icon>
+	 * @example <up-icon name="photo" color="#2979ff" size="28"></up-icon>
 	 */
 	export default {
-		name: 'u-icon',
+		name: 'up-icon',
 		data() {
 			return {
 
@@ -92,15 +92,15 @@
 			uClasses() {
 				let classes = []
 				classes.push(this.customPrefix + '-' + this.name)
-				// uView的自定义图标类名为u-iconfont
+				// uView的自定义图标类名为up-iconfont
 				if (this.customPrefix == 'uicon') {
-					classes.push('u-iconfont')
+					classes.push('up-iconfont')
 				} else {
 					// 不能缺少这一步，否则自定义图标会无效
 					classes.push(this.customPrefix)
 				}
 				// 主题色，通过类配置
-				if (this.color && config.type.includes(this.color)) classes.push('u-icon__icon--' + this.color)
+				if (this.color && config.type.includes(this.color)) classes.push('up-icon__icon--' + this.color)
 				// 阿里，头条，百度小程序通过数组绑定类名时，无法直接使用[a, b, c]的形式，否则无法识别
 				// 故需将其拆成一个字符串的形式，通过空格隔开各个类名
 				//#ifdef MP-ALIPAY || MP-TOUTIAO || MP-BAIDU
@@ -157,12 +157,12 @@
 	@import "../../libs/css/components.scss";
 
 	// 变量定义
-	$u-icon-primary: $u-primary !default;
-	$u-icon-success: $u-success !default;
-	$u-icon-info: $u-info !default;
-	$u-icon-warning: $u-warning !default;
-	$u-icon-error: $u-error !default;
-	$u-icon-label-line-height:1 !default;
+	$up-icon-primary: $up-primary !default;
+	$up-icon-success: $up-success !default;
+	$up-icon-info: $up-info !default;
+	$up-icon-warning: $up-warning !default;
+	$up-icon-error: $up-error !default;
+	$up-icon-label-line-height:1 !default;
 
 	/* #ifndef APP-NVUE */
 	// 非nvue下加载字体
@@ -173,7 +173,7 @@
 
 	/* #endif */
 
-	.u-icon {
+	.up-icon {
 		/* #ifndef APP-NVUE */
 		display: flex;
 		/* #endif */
@@ -206,23 +206,23 @@
 			align-items: center;
 
 			&--primary {
-				color: $u-icon-primary;
+				color: $up-icon-primary;
 			}
 
 			&--success {
-				color: $u-icon-success;
+				color: $up-icon-success;
 			}
 
 			&--error {
-				color: $u-icon-error;
+				color: $up-icon-error;
 			}
 
 			&--warning {
-				color: $u-icon-warning;
+				color: $up-icon-warning;
 			}
 
 			&--info {
-				color: $u-icon-info;
+				color: $up-icon-info;
 			}
 		}
 
@@ -235,7 +235,7 @@
 
 		&__label {
 			/* #ifndef APP-NVUE */
-			line-height: $u-icon-label-line-height;
+			line-height: $up-icon-label-line-height;
 			/* #endif */
 		}
 	}

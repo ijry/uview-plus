@@ -1,11 +1,11 @@
 <template>
-	<view class="u-char-box">
-		<view class="u-char-flex">
-			<input :disabled="disabledKeyboard" :value="valueModel" type="number" :focus="focus" :maxlength="maxlength" class="u-input" @input="getVal"/>
+	<view class="up-char-box">
+		<view class="up-char-flex">
+			<input :disabled="disabledKeyboard" :value="valueModel" type="number" :focus="focus" :maxlength="maxlength" class="up-input" @input="getVal"/>
 			<view v-for="(item, index) in loopCharArr" :key="index">
-				<view :class="[breathe && charArrLength == index ? 'u-breathe' : '', 'u-char-item',
-				charArrLength === index && mode == 'box' ? 'u-box-active' : '',
-				mode === 'box' ? 'u-box' : '']" :style="{
+				<view :class="[breathe && charArrLength == index ? 'up-breathe' : '', 'up-char-item',
+				charArrLength === index && mode == 'box' ? 'up-box-active' : '',
+				mode === 'box' ? 'up-box' : '']" :style="{
 					fontWeight: bold ? 'bold' : 'normal',
 					fontSize: fontSize + 'rpx',
 					width: width + 'rpx',
@@ -13,19 +13,19 @@
 					color: inactiveColor,
 					borderColor: charArrLength === index && mode == 'box' ? activeColor : inactiveColor
 				}">
-					<view class="u-placeholder-line" :style="{
+					<view class="up-placeholder-line" :style="{
 							display: charArrLength === index ? 'block' : 'none',
 							height: width * 0.5 +'rpx'
 						}"
 						v-if="mode !== 'middleLine'"
 					></view>
-					<view v-if="mode === 'middleLine' && charArrLength <= index" :class="[breathe && charArrLength == index ? 'u-breathe' : '', charArrLength === index ? 'u-middle-line-active' : '']"
-					 class="u-middle-line" :style="{height: bold ? '4px' : '2px', background: charArrLength === index ? activeColor : inactiveColor}"></view>
-					<view v-if="mode === 'bottomLine'" :class="[breathe && charArrLength == index ? 'u-breathe' : '', charArrLength === index ? 'u-bottom-line-active' : '']"
-					 class="u-bottom-line" :style="{height: bold ? '4px' : '2px', background: charArrLength === index ? activeColor : inactiveColor}"></view>
+					<view v-if="mode === 'middleLine' && charArrLength <= index" :class="[breathe && charArrLength == index ? 'up-breathe' : '', charArrLength === index ? 'up-middle-line-active' : '']"
+					 class="up-middle-line" :style="{height: bold ? '4px' : '2px', background: charArrLength === index ? activeColor : inactiveColor}"></view>
+					<view v-if="mode === 'bottomLine'" :class="[breathe && charArrLength == index ? 'up-breathe' : '', charArrLength === index ? 'up-bottom-line-active' : '']"
+					 class="up-bottom-line" :style="{height: bold ? '4px' : '2px', background: charArrLength === index ? activeColor : inactiveColor}"></view>
 					<block v-if="!dotFill"> {{ charArr[index] ? charArr[index] : ''}}</block>
 					<block v-else>
-						<text class="u-dot">{{ charArr[index] ? '●' : ''}}</text>
+						<text class="up-dot">{{ charArr[index] ? '●' : ''}}</text>
 					</block>
 				</view>
 			</view>
@@ -52,10 +52,10 @@
 	 * @property {Boolean} disabled-keyboard 禁止点击输入框唤起系统键盘（默认false）
 	 * @event {Function} change 输入内容发生改变时触发，具体见官网说明
 	 * @event {Function} finish 输入字符个数达maxlength值时触发，见官网说明
-	 * @example <u-message-input mode="bottomLine"></u-message-input>
+	 * @example <up-message-input mode="bottomLine"></up-message-input>
 	 */
 	export default {
-		name: "u-message-input",
+		name: "up-message-input",
 		props: {
 			// 最大输入长度
 			maxlength: {
@@ -146,7 +146,7 @@
 			// 是否显示呼吸灯效果
 			animationClass() {
 				return (index) => {
-					if (this.breathe && this.charArr.length == index) return 'u-breathe';
+					if (this.breathe && this.charArr.length == index) return 'up-breathe';
 					else return '';
 				}
 			},
@@ -203,18 +203,18 @@
 		}
 	}
 
-	.u-char-box {
+	.up-char-box {
 		text-align: center;
 	}
 
-	.u-char-flex {
+	.up-char-flex {
 		@include vue-flex;
 		justify-content: center;
 		flex-wrap: wrap;
 		position: relative;
 	}
 
-	.u-input {
+	.up-input {
 		position: absolute;
 		top: 0;
 		left: -100%;
@@ -226,48 +226,48 @@
 		background: none;
 	}
 
-	.u-char-item {
+	.up-char-item {
 		position: relative;
 		width: 90rpx;
 		height: 90rpx;
 		margin: 10rpx 10rpx;
 		font-size: 60rpx;
 		font-weight: bold;
-		color: $u-main-color;
+		color: $up-main-color;
 		line-height: 90rpx;
 		@include vue-flex;
 		justify-content: center;
 		align-items: center;
 	}
 
-	.u-middle-line {
+	.up-middle-line {
 		border: none;
 	}
 
-	.u-box {
+	.up-box {
 		box-sizing: border-box;
 		border: 2rpx solid #cccccc;
 		border-radius: 6rpx;
 	}
 
-	.u-box-active {
+	.up-box-active {
 		overflow: hidden;
 		animation-timing-function: ease-in-out;
 		animation-duration: 1500ms;
 		animation-iteration-count: infinite;
 		animation-direction: alternate;
-		border: 2rpx solid $u-primary;
+		border: 2rpx solid $up-primary;
 	}
 
-	.u-middle-line-active {
-		background: $u-primary;
+	.up-middle-line-active {
+		background: $up-primary;
 	}
 
-	.u-breathe {
+	.up-breathe {
 		animation: breathe 2s infinite ease;
 	}
 
-	.u-placeholder-line {
+	.up-placeholder-line {
 		/* #ifndef APP-NVUE */
 		display: none;
 		/* #endif */
@@ -281,16 +281,16 @@
 		animation: twinkling 1.5s infinite ease;
 	}
 
-	.u-animation-breathe {
+	.up-animation-breathe {
 		animation-name: breathe;
 	}
 
-	.u-dot {
+	.up-dot {
 		font-size: 34rpx;
 		line-height: 34rpx;
 	}
 
-	.u-middle-line {
+	.up-middle-line {
 		height: 4px;
 		background: #000000;
 		width: 80%;
@@ -301,11 +301,11 @@
 		transform: translate(-50%, -50%);
 	}
 
-	.u-bottom-line-active {
-		background: $u-primary;
+	.up-bottom-line-active {
+		background: $up-primary;
 	}
 
-	.u-bottom-line {
+	.up-bottom-line {
 		height: 4px;
 		background: #000000;
 		width: 80%;

@@ -1,69 +1,69 @@
 <template>
-	<view class="u-navbar" :class="[customClass]">
+	<view class="up-navbar" :class="[customClass]">
 		<view
-			class="u-navbar__placeholder"
+			class="up-navbar__placeholder"
 			v-if="fixed && placeholder"
 			:style="{
 				height: addUnit(getPx(height) + sys().statusBarHeight,'px'),
 			}"
 		></view>
-		<view :class="[fixed && 'u-navbar--fixed']">
-			<u-status-bar
+		<view :class="[fixed && 'up-navbar--fixed']">
+			<up-status-bar
 				v-if="safeAreaInsetTop"
 				:bgColor="bgColor"
-			></u-status-bar>
+			></up-status-bar>
 			<view
-				class="u-navbar__content"
-				:class="[border && 'u-border-bottom']"
+				class="up-navbar__content"
+				:class="[border && 'up-border-bottom']"
 				:style="{
 					height: addUnit(height),
 					backgroundColor: bgColor,
 				}"
 			>
 				<view
-					class="u-navbar__content__left"
-					hover-class="u-navbar__content__left--hover"
+					class="up-navbar__content__left"
+					hover-class="up-navbar__content__left--hover"
 					hover-start-time="150"
 					@tap="leftClick"
 				>
 					<slot name="left">
-						<u-icon
+						<up-icon
 							v-if="leftIcon"
 							:name="leftIcon"
 							:size="leftIconSize"
 							:color="leftIconColor"
-						></u-icon>
+						></up-icon>
 						<text
 							v-if="leftText"
 							:style="{
 								color: leftIconColor
 							}"
-							class="u-navbar__content__left__text"
+							class="up-navbar__content__left__text"
 						>{{ leftText }}</text>
 					</slot>
 				</view>
 				<slot name="center">
 					<text
-						class="u-line-1 u-navbar__content__title"
+						class="up-line-1 up-navbar__content__title"
 						:style="[{
 							width: addUnit(titleWidth),
 						}, addStyle(titleStyle)]"
 					>{{ title }}</text>
 				</slot>
 				<view
-					class="u-navbar__content__right"
+					class="up-navbar__content__right"
 					v-if="$slots.right || rightIcon || rightText"
 					@tap="rightClick"
 				>
 					<slot name="right">
-						<u-icon
+						<up-icon
 							v-if="rightIcon"
 							:name="rightIcon"
 							size="20"
-						></u-icon>
+						></up-icon>
 						<text
 							v-if="rightText"
-							class="u-navbar__content__right__text"
+							class="up-navbar__content__right__text"
 						>{{ rightText }}</text>
 					</slot>
 				</view>
@@ -99,10 +99,10 @@
 	 * @property {Object | String}	titleStyle			标题的样式，对象或字符串
 	 * @event {Function} leftClick		点击左侧区域
 	 * @event {Function} rightClick		点击右侧区域
-	 * @example <u-navbar title="剑未配妥，出门已是江湖" left-text="返回" right-text="帮助" @click-left="onClickBack" @click-right="onClickRight"></u-navbar>
+	 * @example <up-navbar title="剑未配妥，出门已是江湖" left-text="返回" right-text="帮助" @click-left="onClickBack" @click-right="onClickRight"></up-navbar>
 	 */
 	export default {
-		name: 'u-navbar',
+		name: 'up-navbar',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -133,7 +133,7 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-navbar {
+	.up-navbar {
 
 		&--fixed {
 			position: fixed;
@@ -177,7 +177,7 @@
 			&__title {
 				text-align: center;
 				font-size: 16px;
-				color: $u-main-color;
+				color: $up-main-color;
 			}
 
 			&__right {

@@ -1,9 +1,9 @@
 <template>
-	<view class="u-upload" :style="[addStyle(customStyle)]">
-		<view class="u-upload__wrap" >
+	<view class="up-upload" :style="[addStyle(customStyle)]">
+		<view class="up-upload__wrap" >
 			<template v-if="previewImage">
 				<view
-				    class="u-upload__wrap__preview"
+				    class="up-upload__wrap__preview"
 				    v-for="(item, index) in lists"
 				    :key="index"
 				>
@@ -11,7 +11,7 @@
 					    v-if="item.isImage || (item.type && item.type === 'image')"
 					    :src="item.thumb || item.url"
 					    :mode="imageMode"
-					    class="u-upload__wrap__preview__image"
+					    class="up-upload__wrap__preview__image"
 					    @tap="onPreviewImage(item)"
 						:style="[{
 							width: addUnit(width),
@@ -20,30 +20,30 @@
 					/>
 					<view
 					    v-else
-					    class="u-upload__wrap__preview__other"
+					    class="up-upload__wrap__preview__other"
 						@tap="onClickPreview($event, item)"
 					>
-						<u-icon
+						<up-icon
 						    color="#80CBF9"
 						    size="26"
 						    :name="item.isVideo || (item.type && item.type === 'video') ? 'movie' : 'folder'"
-						></u-icon>
-						<text class="u-upload__wrap__preview__other__text">
+						></up-icon>
+						<text class="up-upload__wrap__preview__other__text">
 							{{item.isVideo || (item.type && item.type === 'video') ? '视频' : '文件'}}
 						</text>
 					</view>
 					<view
-					    class="u-upload__status"
+					    class="up-upload__status"
 					    v-if="item.status === 'uploading' || item.status === 'failed'"
 					>
-						<view class="u-upload__status__icon">
-							<u-icon
+						<view class="up-upload__status__icon">
+							<up-icon
 							    v-if="item.status === 'failed'"
 							    name="close-circle"
 							    color="#ffffff"
 							    size="25"
 							/>
-							<u-loading-icon
+							<up-loading-icon
 							    size="22"
 							    mode="circle"
 							    color="#ffffff"
@@ -52,39 +52,39 @@
 						</view>
 						<text
 						    v-if="item.message"
-						    class="u-upload__status__message"
+						    class="up-upload__status__message"
 						>{{ item.message }}</text>
 					</view>
 					<view
-					    class="u-upload__deletable"
+					    class="up-upload__deletable"
 					    v-if="item.status !== 'uploading' && (deletable || item.deletable)"
 					    @tap.stop="deleteItem(index)"
 					>
-						<view class="u-upload__deletable__icon">
-							<u-icon
+						<view class="up-upload__deletable__icon">
+							<up-icon
 							    name="close"
 							    color="#ffffff"
 							    size="10"
-							></u-icon>
+							></up-icon>
 						</view>
 					</view>
 					<view
-					    class="u-upload__success"
+					    class="up-upload__success"
 					    v-if="item.status === 'success'"
 					>
 						<!-- #ifdef APP-NVUE -->
 						<image
 						    :src="successIcon"
-						    class="u-upload__success__icon"
+						    class="up-upload__success__icon"
 						></image>
 						<!-- #endif -->
 						<!-- #ifndef APP-NVUE -->
-						<view class="u-upload__success__icon">
-							<u-icon
+						<view class="up-upload__success__icon">
+							<up-icon
 							    name="checkmark"
 							    color="#ffffff"
 							    size="12"
-							></u-icon>
+							></up-icon>
 						</view>
 						<!-- #endif -->
 					</view>
@@ -107,24 +107,24 @@
 				</view>
 				<view
 				    v-else
-				    class="u-upload__button"
-				    :hover-class="!disabled ? 'u-upload__button--hover' : ''"
+				    class="up-upload__button"
+				    :hover-class="!disabled ? 'up-upload__button--hover' : ''"
 				    hover-stay-time="150"
 				    @tap="chooseFile"
-				    :class="[disabled && 'u-upload__button--disabled']"
+				    :class="[disabled && 'up-upload__button--disabled']"
 					:style="[{
 						width: addUnit(width),
 						height: addUnit(height)
 					}]"
 				>
-					<u-icon
+					<up-icon
 					    :name="uploadIcon"
 					    size="26"
 					    :color="uploadIconColor"
-					></u-icon>
+					></up-icon>
 					<text
 					    v-if="uploadText"
-					    class="u-upload__button__text"
+					    class="up-upload__button__text"
 					>{{ uploadText }}</text>
 				</view>
 			</template>
@@ -173,10 +173,10 @@
 	 * @event {Function} oversize		文件超出大小限制
 	 * @event {Function} clickPreview	点击预览图片
 	 * @event {Function} delete 		删除图片
-	 * @example <u-upload :action="action" :fileList="fileList" ></u-upload>
+	 * @example <up-upload :action="action" :fileList="fileList" ></up-upload>
 	 */
 	export default {
-		name: "u-upload",
+		name: "up-upload",
 		mixins: [mpMixin, mixin, mixinUpload, props],
 		data() {
 			return {
@@ -393,59 +393,59 @@
 
 <style lang="scss" scoped>
 	@import '../../libs/css/components.scss';
-	$u-upload-preview-border-radius: 2px !default;
-	$u-upload-preview-margin: 0 8px 8px 0 !default;
-	$u-upload-image-width:80px !default;
-	$u-upload-image-height:$u-upload-image-width;
-	$u-upload-other-bgColor: rgb(242, 242, 242) !default;
-	$u-upload-other-flex:1 !default;
-	$u-upload-text-font-size:11px !default;
-	$u-upload-text-color:$u-tips-color !default;
-	$u-upload-text-margin-top:2px !default;
-	$u-upload-deletable-right:0 !default;
-	$u-upload-deletable-top:0 !default;
-	$u-upload-deletable-bgColor:rgb(55, 55, 55) !default;
-	$u-upload-deletable-height:14px !default;
-	$u-upload-deletable-width:$u-upload-deletable-height;
-	$u-upload-deletable-boder-bottom-left-radius:100px !default;
-	$u-upload-deletable-zIndex:3 !default;
-	$u-upload-success-bottom:0 !default;
-	$u-upload-success-right:0 !default;
-	$u-upload-success-border-style:solid !default;
-	$u-upload-success-border-top-color:transparent !default;
-	$u-upload-success-border-left-color:transparent !default;
-	$u-upload-success-border-bottom-color: $u-success !default;
-	$u-upload-success-border-right-color:$u-upload-success-border-bottom-color;
-	$u-upload-success-border-width:9px !default;
-	$u-upload-icon-top:0px !default;
-	$u-upload-icon-right:0px !default;
-	$u-upload-icon-h5-top:1px !default;
-	$u-upload-icon-h5-right:0 !default;
-	$u-upload-icon-width:16px !default;
-	$u-upload-icon-height:$u-upload-icon-width;
-	$u-upload-success-icon-bottom:-10px !default;
-	$u-upload-success-icon-right:-10px !default;
-	$u-upload-status-right:0 !default;
-	$u-upload-status-left:0 !default;
-	$u-upload-status-bottom:0 !default;
-	$u-upload-status-top:0 !default;
-	$u-upload-status-bgColor:rgba(0, 0, 0, 0.5) !default;
-	$u-upload-status-icon-Zindex:1 !default;
-	$u-upload-message-font-size:12px !default;
-	$u-upload-message-color:#FFFFFF !default;
-	$u-upload-message-margin-top:5px !default;
-	$u-upload-button-width:80px !default;
-	$u-upload-button-height:$u-upload-button-width;
-	$u-upload-button-bgColor:rgb(244, 245, 247) !default;
-	$u-upload-button-border-radius:2px !default;
-	$u-upload-botton-margin: 0 8px 8px 0 !default;
-	$u-upload-text-font-size:11px !default;
-	$u-upload-text-color:$u-tips-color !default;
-	$u-upload-text-margin-top: 2px !default;
-	$u-upload-hover-bgColor:rgb(230, 231, 233) !default;
-	$u-upload-disabled-opacity:.5 !default;
+	$up-upload-preview-border-radius: 2px !default;
+	$up-upload-preview-margin: 0 8px 8px 0 !default;
+	$up-upload-image-width:80px !default;
+	$up-upload-image-height:$up-upload-image-width;
+	$up-upload-other-bgColor: rgb(242, 242, 242) !default;
+	$up-upload-other-flex:1 !default;
+	$up-upload-text-font-size:11px !default;
+	$up-upload-text-color:$up-tips-color !default;
+	$up-upload-text-margin-top:2px !default;
+	$up-upload-deletable-right:0 !default;
+	$up-upload-deletable-top:0 !default;
+	$up-upload-deletable-bgColor:rgb(55, 55, 55) !default;
+	$up-upload-deletable-height:14px !default;
+	$up-upload-deletable-width:$up-upload-deletable-height;
+	$up-upload-deletable-boder-bottom-left-radius:100px !default;
+	$up-upload-deletable-zIndex:3 !default;
+	$up-upload-success-bottom:0 !default;
+	$up-upload-success-right:0 !default;
+	$up-upload-success-border-style:solid !default;
+	$up-upload-success-border-top-color:transparent !default;
+	$up-upload-success-border-left-color:transparent !default;
+	$up-upload-success-border-bottom-color: $up-success !default;
+	$up-upload-success-border-right-color:$up-upload-success-border-bottom-color;
+	$up-upload-success-border-width:9px !default;
+	$up-upload-icon-top:0px !default;
+	$up-upload-icon-right:0px !default;
+	$up-upload-icon-h5-top:1px !default;
+	$up-upload-icon-h5-right:0 !default;
+	$up-upload-icon-width:16px !default;
+	$up-upload-icon-height:$up-upload-icon-width;
+	$up-upload-success-icon-bottom:-10px !default;
+	$up-upload-success-icon-right:-10px !default;
+	$up-upload-status-right:0 !default;
+	$up-upload-status-left:0 !default;
+	$up-upload-status-bottom:0 !default;
+	$up-upload-status-top:0 !default;
+	$up-upload-status-bgColor:rgba(0, 0, 0, 0.5) !default;
+	$up-upload-status-icon-Zindex:1 !default;
+	$up-upload-message-font-size:12px !default;
+	$up-upload-message-color:#FFFFFF !default;
+	$up-upload-message-margin-top:5px !default;
+	$up-upload-button-width:80px !default;
+	$up-upload-button-height:$up-upload-button-width;
+	$up-upload-button-bgColor:rgb(244, 245, 247) !default;
+	$up-upload-button-border-radius:2px !default;
+	$up-upload-botton-margin: 0 8px 8px 0 !default;
+	$up-upload-text-font-size:11px !default;
+	$up-upload-text-color:$up-tips-color !default;
+	$up-upload-text-margin-top: 2px !default;
+	$up-upload-hover-bgColor:rgb(230, 231, 233) !default;
+	$up-upload-disabled-opacity:.5 !default;
 
-	.u-upload {
+	.up-upload {
 		@include flex(column);
 		flex: 1;
 
@@ -455,30 +455,30 @@
 			flex: 1;
 
 			&__preview {
-				border-radius: $u-upload-preview-border-radius;
-				margin: $u-upload-preview-margin;
+				border-radius: $up-upload-preview-border-radius;
+				margin: $up-upload-preview-margin;
 				position: relative;
 				overflow: hidden;
 				@include flex;
 
 				&__image {
-					width: $u-upload-image-width;
-					height: $u-upload-image-height;
+					width: $up-upload-image-width;
+					height: $up-upload-image-height;
 				}
 
 				&__other {
-					width: $u-upload-image-width;
-					height: $u-upload-image-height;
-					background-color: $u-upload-other-bgColor;
-					flex: $u-upload-other-flex;
+					width: $up-upload-image-width;
+					height: $up-upload-image-height;
+					background-color: $up-upload-other-bgColor;
+					flex: $up-upload-other-flex;
 					@include flex(column);
 					justify-content: center;
 					align-items: center;
 
 					&__text {
-						font-size: $u-upload-text-font-size;
-						color: $u-upload-text-color;
-						margin-top: $u-upload-text-margin-top;
+						font-size: $up-upload-text-font-size;
+						color: $up-upload-text-color;
+						margin-top: $up-upload-text-margin-top;
 					}
 				}
 			}
@@ -486,43 +486,43 @@
 
 		&__deletable {
 			position: absolute;
-			top: $u-upload-deletable-top;
-			right: $u-upload-deletable-right;
-			background-color: $u-upload-deletable-bgColor;
-			height: $u-upload-deletable-height;
-			width: $u-upload-deletable-width;
+			top: $up-upload-deletable-top;
+			right: $up-upload-deletable-right;
+			background-color: $up-upload-deletable-bgColor;
+			height: $up-upload-deletable-height;
+			width: $up-upload-deletable-width;
 			@include flex;
-			border-bottom-left-radius: $u-upload-deletable-boder-bottom-left-radius;
+			border-bottom-left-radius: $up-upload-deletable-boder-bottom-left-radius;
 			align-items: center;
 			justify-content: center;
-			z-index: $u-upload-deletable-zIndex;
+			z-index: $up-upload-deletable-zIndex;
 
 			&__icon {
 				position: absolute;
 				transform: scale(0.7);
-				top: $u-upload-icon-top;
-				right: $u-upload-icon-right;
+				top: $up-upload-icon-top;
+				right: $up-upload-icon-right;
 				/* #ifdef H5 */
-				top: $u-upload-icon-h5-top;
-				right: $u-upload-icon-h5-right;
+				top: $up-upload-icon-h5-top;
+				right: $up-upload-icon-h5-right;
 				/* #endif */
 			}
 		}
 
 		&__success {
 			position: absolute;
-			bottom: $u-upload-success-bottom;
-			right: $u-upload-success-right;
+			bottom: $up-upload-success-bottom;
+			right: $up-upload-success-right;
 			@include flex;
 			// 由于weex(nvue)为阿里巴巴的KPI(部门业绩考核)的laji产物，不支持css绘制三角形
 			// 所以在nvue下使用图片，非nvue下使用css实现
 			/* #ifndef APP-NVUE */
-			border-style: $u-upload-success-border-style;
-			border-top-color: $u-upload-success-border-top-color;
-			border-left-color: $u-upload-success-border-left-color;
-			border-bottom-color: $u-upload-success-border-bottom-color;
-			border-right-color: $u-upload-success-border-right-color;
-			border-width: $u-upload-success-border-width;
+			border-style: $up-upload-success-border-style;
+			border-top-color: $up-upload-success-border-top-color;
+			border-left-color: $up-upload-success-border-left-color;
+			border-bottom-color: $up-upload-success-border-bottom-color;
+			border-right-color: $up-upload-success-border-right-color;
+			border-width: $up-upload-success-border-width;
 			align-items: center;
 			justify-content: center;
 			/* #endif */
@@ -531,36 +531,36 @@
 				/* #ifndef APP-NVUE */
 				position: absolute;
 				transform: scale(0.7);
-				bottom: $u-upload-success-icon-bottom;
-				right: $u-upload-success-icon-right;
+				bottom: $up-upload-success-icon-bottom;
+				right: $up-upload-success-icon-right;
 				/* #endif */
 				/* #ifdef APP-NVUE */
-				width: $u-upload-icon-width;
-				height: $u-upload-icon-height;
+				width: $up-upload-icon-width;
+				height: $up-upload-icon-height;
 				/* #endif */
 			}
 		}
 
 		&__status {
 			position: absolute;
-			top: $u-upload-status-top;
-			bottom: $u-upload-status-bottom;
-			left: $u-upload-status-left;
-			right: $u-upload-status-right;
-			background-color: $u-upload-status-bgColor;
+			top: $up-upload-status-top;
+			bottom: $up-upload-status-bottom;
+			left: $up-upload-status-left;
+			right: $up-upload-status-right;
+			background-color: $up-upload-status-bgColor;
 			@include flex(column);
 			align-items: center;
 			justify-content: center;
 
 			&__icon {
 				position: relative;
-				z-index: $u-upload-status-icon-Zindex;
+				z-index: $up-upload-status-icon-Zindex;
 			}
 
 			&__message {
-				font-size: $u-upload-message-font-size;
-				color: $u-upload-message-color;
-				margin-top: $u-upload-message-margin-top;
+				font-size: $up-upload-message-font-size;
+				color: $up-upload-message-color;
+				margin-top: $up-upload-message-margin-top;
 			}
 		}
 
@@ -568,27 +568,27 @@
 			@include flex(column);
 			align-items: center;
 			justify-content: center;
-			width: $u-upload-button-width;
-			height: $u-upload-button-height;
-			background-color: $u-upload-button-bgColor;
-			border-radius: $u-upload-button-border-radius;
-			margin: $u-upload-botton-margin;
+			width: $up-upload-button-width;
+			height: $up-upload-button-height;
+			background-color: $up-upload-button-bgColor;
+			border-radius: $up-upload-button-border-radius;
+			margin: $up-upload-botton-margin;
 			/* #ifndef APP-NVUE */
 			box-sizing: border-box;
 			/* #endif */
 
 			&__text {
-				font-size: $u-upload-text-font-size;
-				color: $u-upload-text-color;
-				margin-top: $u-upload-text-margin-top;
+				font-size: $up-upload-text-font-size;
+				color: $up-upload-text-color;
+				margin-top: $up-upload-text-margin-top;
 			}
 
 			&--hover {
-				background-color: $u-upload-hover-bgColor;
+				background-color: $up-upload-hover-bgColor;
 			}
 
 			&--disabled {
-				opacity: $u-upload-disabled-opacity;
+				opacity: $up-upload-disabled-opacity;
 			}
 		}
 	}

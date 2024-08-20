@@ -1,5 +1,5 @@
 <template>
-    <u-transition
+    <up-transition
         :show="loading"
         :custom-style="{
             position: 'fixed',
@@ -13,29 +13,29 @@
             ...customStyle
         }"
     >
-        <view class="u-loading-page">
-            <view class="u-loading-page__warpper">
-                <view class="u-loading-page__warpper__loading-icon">
+        <view class="up-loading-page">
+            <view class="up-loading-page__warpper">
+                <view class="up-loading-page__warpper__loading-icon">
                     <image
                         v-if="image"
                         :src="image"
-                        class="u-loading-page__warpper__loading-icon__img"
+                        class="up-loading-page__warpper__loading-icon__img"
                         mode="widthFit"
 						:style="{
 							width: addUnit(iconSize),
 						    height: addUnit(iconSize)
 						}"
                     ></image>
-                    <u-loading-icon
+                    <up-loading-icon
                         v-else
                         :mode="loadingMode"
                         :size="addUnit(iconSize)"
                         :color="loadingColor"
-                    ></u-loading-icon>
+                    ></up-loading-icon>
                 </view>
                 <slot>
                     <text
-                        class="u-loading-page__warpper__text"
+                        class="up-loading-page__warpper__text"
                         :style="{
                             fontSize: addUnit(fontSize),
                             color: color,
@@ -45,7 +45,7 @@
                 </slot>
             </view>
         </view>
-    </u-transition>
+    </up-transition>
 </template>
 
 <script>
@@ -68,10 +68,10 @@ import { addUnit } from '../../libs/function/index';
  * @property {String}			loadingColor	加载中图标的颜色，只能rgb或者十六进制颜色值 （默认 '#C8C8C8' ）
  * @property {Number}			zIndex	        z-index层级 （默认10 ）
  * @property {Object}			customStyle		自定义样式
- * @example <u-loading mode="circle"></u-loading>
+ * @example <up-loading mode="circle"></up-loading>
  */
 export default {
-    name: "u-loading-page",
+    name: "up-loading-page",
     mixins: [mpMixin, mixin, props],
     data() {
         return {};
@@ -87,9 +87,9 @@ export default {
 
 $text-color: rgb(200, 200, 200) !default;
 $text-size: 19px !default;
-$u-loading-icon-margin-bottom: 10px !default;
+$up-loading-icon-margin-bottom: 10px !default;
 
-.u-loading-page {
+.up-loading-page {
     @include flex(column);
     flex: 1;
     align-items: center;
@@ -106,7 +106,7 @@ $u-loading-icon-margin-bottom: 10px !default;
         @include flex(column);
 
         &__loading-icon {
-            margin-bottom: $u-loading-icon-margin-bottom;
+            margin-bottom: $up-loading-icon-margin-bottom;
 
             &__img {
                 width: 40px;

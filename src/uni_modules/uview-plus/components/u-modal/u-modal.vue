@@ -1,5 +1,5 @@
 <template>
-	<u-popup
+	<up-popup
 		mode="center"
 		:zoom="zoom"
 		:show="show"
@@ -15,72 +15,72 @@
 		@click="clickHandler"
 	>
 		<view
-			class="u-modal"
+			class="up-modal"
 			:style="{
 				width: addUnit(width),
 			}"
 		>
 			<view
-				class="u-modal__title"
+				class="up-modal__title"
 				v-if="title"
 			>{{ title }}</view>
 			<view
-				class="u-modal__content"
+				class="up-modal__content"
 				:style="{
 					paddingTop: `${title ? 12 : 25}px`
 				}"
 			>
 				<slot>
-					<text class="u-modal__content__text" :style="{textAlign: contentTextAlign}">
+					<text class="up-modal__content__text" :style="{textAlign: contentTextAlign}">
 						{{ content }}
 					</text>
 				</slot>
 			</view>
 			<view
-				class="u-modal__button-group--confirm-button"
+				class="up-modal__button-group--confirm-button"
 				v-if="$slots.confirmButton"
 			>
 				<slot name="confirmButton"></slot>
 			</view>
 			<template v-else>
-				<u-line></u-line>
+				<up-line></up-line>
 				<view
-					class="u-modal__button-group"
+					class="up-modal__button-group"
 					:style="{
 						flexDirection: buttonReverse ? 'row-reverse' : 'row'
 					}"
 				>
 					<view
-						class="u-modal__button-group__wrapper u-modal__button-group__wrapper--cancel"
+						class="up-modal__button-group__wrapper up-modal__button-group__wrapper--cancel"
 						:hover-stay-time="150"
-						hover-class="u-modal__button-group__wrapper--hover"
-						:class="[showCancelButton && !showConfirmButton && 'u-modal__button-group__wrapper--only-cancel']"
+						hover-class="up-modal__button-group__wrapper--hover"
+						:class="[showCancelButton && !showConfirmButton && 'up-modal__button-group__wrapper--only-cancel']"
 						v-if="showCancelButton"
 						@tap="cancelHandler"
 					>
 						<text
-							class="u-modal__button-group__wrapper__text"
+							class="up-modal__button-group__wrapper__text"
 							:style="{
 								color: cancelColor
 							}"
 						>{{ cancelText }}</text>
 					</view>
-					<u-line
+					<up-line
 						direction="column"
 						v-if="showConfirmButton && showCancelButton"
-					></u-line>
+					></up-line>
 					<view
-						class="u-modal__button-group__wrapper u-modal__button-group__wrapper--confirm"
+						class="up-modal__button-group__wrapper up-modal__button-group__wrapper--confirm"
 						:hover-stay-time="150"
-						hover-class="u-modal__button-group__wrapper--hover"
-						:class="[!showCancelButton && showConfirmButton && 'u-modal__button-group__wrapper--only-confirm']"
+						hover-class="up-modal__button-group__wrapper--hover"
+						:class="[!showCancelButton && showConfirmButton && 'up-modal__button-group__wrapper--only-confirm']"
 						v-if="showConfirmButton"
 						@tap="confirmHandler"
 					>
-						<u-loading-icon v-if="loading"></u-loading-icon>
+						<up-loading-icon v-if="loading"></up-loading-icon>
 						<text
 							v-else
-							class="u-modal__button-group__wrapper__text"
+							class="up-modal__button-group__wrapper__text"
 							:style="{
 								color: confirmColor
 							}"
@@ -89,7 +89,7 @@
 				</view>
 			</template>
 		</view>
-	</u-popup>
+	</up-popup>
 </template>
 
 <script>
@@ -120,10 +120,10 @@
 	 * @event {Function} confirm	点击确认按钮时触发
 	 * @event {Function} cancel		点击取消按钮时触发
 	 * @event {Function} close		点击遮罩关闭出发，closeOnClickOverlay为true有效
-	 * @example <u-loadmore :status="status" icon-type="iconType" load-text="loadText" />
+	 * @example <up-modal v-model:show="show" title="标题"></up-modal>
 	 */
 	export default {
-		name: 'u-modal',
+		name: 'up-modal',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -168,11 +168,11 @@
 
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
-	$u-modal-border-radius: 6px;
+	$up-modal-border-radius: 6px;
 
-	.u-modal {
+	.up-modal {
 		width: 650rpx;
-		border-radius: $u-modal-border-radius;
+		border-radius: $up-modal-border-radius;
 		overflow: hidden;
 
 		&__title {
@@ -182,7 +182,7 @@
 			align-items: center;
 			font-size: 16px;
 			font-weight: bold;
-			color: $u-content-color;
+			color: $up-content-color;
 			text-align: center;
 			padding-top: 25px;
 		}
@@ -194,7 +194,7 @@
 
 			&__text {
 				font-size: 15px;
-				color: $u-content-color;
+				color: $up-content-color;
 				flex: 1;
 			}
 		}
@@ -216,20 +216,20 @@
 				
 				&--confirm,
 				&--only-cancel {
-					border-bottom-right-radius: $u-modal-border-radius;
+					border-bottom-right-radius: $up-modal-border-radius;
 				}
 				
 				&--cancel,
 				&--only-confirm {
-					border-bottom-left-radius: $u-modal-border-radius;
+					border-bottom-left-radius: $up-modal-border-radius;
 				}
 
 				&--hover {
-					background-color: $u-bg-color;
+					background-color: $up-bg-color;
 				}
 
 				&__text {
-					color: $u-content-color;
+					color: $up-content-color;
 					font-size: 16px;
 					text-align: center;
 				}

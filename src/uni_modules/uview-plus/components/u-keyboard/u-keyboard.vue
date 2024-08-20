@@ -1,5 +1,5 @@
 <template>
-	<u-popup
+	<up-popup
 	    :overlay="overlay"
 	    :closeOnClickOverlay="closeOnClickOverlay"
 	    mode="bottom"
@@ -12,18 +12,18 @@
 			backgroundColor: 'rgb(214, 218, 220)'
 		}"
 	>
-		<view class="u-keyboard">
+		<view class="up-keyboard">
 			<slot />
 			<view
-			    class="u-keyboard__tooltip"
+			    class="up-keyboard__tooltip"
 			    v-if="tooltip"
 			>
 				<view
-				    hover-class="u-hover-class"
+				    hover-class="up-hover-class"
 				    :hover-stay-time="100"
 				>
 					<text
-					    class="u-keyboard__tooltip__item u-keyboard__tooltip__cancel"
+					    class="up-keyboard__tooltip__item up-keyboard__tooltip__cancel"
 					    v-if="showCancel"
 					    @tap="onCancel"
 					>{{showCancel && cancelText}}</text>
@@ -31,40 +31,40 @@
 				<view>
 					<text
 					    v-if="showTips"
-					    class="u-keyboard__tooltip__item u-keyboard__tooltip__tips"
+					    class="up-keyboard__tooltip__item up-keyboard__tooltip__tips"
 					>{{tips ? tips : mode == 'number' ? '数字键盘' : mode == 'card' ? '身份证键盘' : '车牌号键盘'}}</text>
 				</view>
 				<view
-				    hover-class="u-hover-class"
+				    hover-class="up-hover-class"
 				    :hover-stay-time="100"
 				>
 					<text
 					    v-if="showConfirm"
 					    @tap="onConfirm"
-					    class="u-keyboard__tooltip__item u-keyboard__tooltip__submit"
-					    hover-class="u-hover-class"
+					    class="up-keyboard__tooltip__item up-keyboard__tooltip__submit"
+					    hover-class="up-hover-class"
 					>{{showConfirm && confirmText}}</text>
 				</view>
 			</view>
 			<template v-if="mode == 'number' || mode == 'card'">
-				<u-number-keyboard
+				<up-number-keyboard
 				    :random="random"
 				    @backspace="backspace"
 				    @change="change"
 				    :mode="mode"
 				    :dotDisabled="dotDisabled"
-				></u-number-keyboard>
+				></up-number-keyboard>
 			</template>
 			<template v-else>
-				<u-car-keyboard
+				<up-car-keyboard
 				    :random="random"
 					:autoChange="autoChange"
 				    @backspace="backspace"
 				    @change="change"
-				></u-car-keyboard>
+				></up-car-keyboard>
 			</template>
 		</view>
-	</u-popup>
+	</up-popup>
 </template>
 
 <script>
@@ -96,10 +96,10 @@
 	 * @event {Function} cancel 键盘顶部工具条左边的"取消"按钮被点击
 	 * @event {Function} confirm 键盘顶部工具条右边的"完成"按钮被点击
 	 * @event {Function} backspace 键盘退格键被点击
-	 * @example <u-keyboard mode="number" v-model="show"></u-keyboard>
+	 * @example <up-keyboard mode="number" v-model="show"></up-keyboard>
 	 */
 	export default {
-		name: "u-keyboard",
+		name: "up-keyboard",
 		data() {
 			return {
 
@@ -134,7 +134,7 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-keyboard {
+	.up-keyboard {
 
 		&__tooltip {
 			@include flex;
@@ -151,7 +151,7 @@
 
 			&__submit {
 				text-align: right;
-				color: $u-primary;
+				color: $up-primary;
 			}
 
 			&__cancel {
@@ -160,7 +160,7 @@
 			}
 
 			&__tips {
-				color: $u-tips-color;
+				color: $up-tips-color;
 			}
 		}
 	}

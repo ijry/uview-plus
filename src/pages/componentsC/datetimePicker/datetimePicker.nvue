@@ -1,5 +1,5 @@
 <template>
-	<view class="u-page">
+	<view class="up-page">
 		<up-navbar
 			title="datetimePicker 时间日期选择器"
 			@leftClick="navigateBack"
@@ -242,7 +242,7 @@
 </script>
 
 <style lang="scss">
-	.u-page {
+	.up-page {
 		padding: 0;
 	}
 </style>

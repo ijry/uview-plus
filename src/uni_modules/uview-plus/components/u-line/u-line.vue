@@ -1,6 +1,6 @@
 <template>
 	<view
-	    class="u-line"
+	    class="up-line"
 	    :style="[lineStyle]"
 	>
 
@@ -23,10 +23,10 @@
 	 * @property {String | Number}	margin		线条与上下左右元素的间距，字符串形式，如"30px"  (默认 0 )
 	 * @property {Boolean}			dashed		是否虚线，true-虚线，false-实线 (默认 false )
 	 * @property {Object}			customStyle	定义需要用到的外部样式
-	 * @example <u-line color="red"></u-line>
+	 * @example <up-line color="red"></up-line>
 	 */
 	export default {
-		name: 'u-line',
+		name: 'up-line',
 		mixins: [mpMixin, mixin, props],
 		computed: {
 			lineStyle() {
@@ -57,7 +57,7 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-line {
+	.up-line {
 		/* #ifndef APP-NVUE */
 		vertical-align: middle;
 		/* #endif */

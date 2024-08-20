@@ -1,15 +1,15 @@
 <template>
-    <view class="u-album">
+    <view class="up-album">
         <view
-            class="u-album__row"
-            ref="u-album__row"
+            class="up-album__row"
+            ref="up-album__row"
             v-for="(arr, index) in showUrls"
             :forComputedUse="albumWidth"
             :key="index"
             :style="{flexWrap: autoWrap ? 'wrap' : 'nowrap'}"
         >
             <view
-                class="u-album__row__wrapper"
+                class="up-album__row__wrapper"
                 v-for="(item, index1) in arr"
                 :key="index1"
                 :style="[imageStyle(index + 1, index1 + 1)]"
@@ -39,7 +39,7 @@
                         index === showUrls.length - 1 &&
                         index1 === showUrls[showUrls.length - 1].length - 1
                     "
-                    class="u-album__row__wrapper__text"
+                    class="up-album__row__wrapper__text"
                     :style="{
 					    borderRadius: shape == 'circle' ? '50%' : addUnit(radius),
 				    }"
@@ -89,10 +89,10 @@ const dom = uni.requireNativePlugin('dom')
  * @property {Boolean}         autoWrap         自适应换行模式，不受rowCount限制，图片会自动换行 （默认 false ）
  * @property {String}          unit             图片单位 （默认 px ）
  * @event    {Function}        albumWidth       某些特殊的情况下，需要让文字与相册的宽度相等，这里事件的形式对外发送  （回调参数 width ）
- * @example <u-album :urls="urls2" @albumWidth="width => albumWidth = width" multipleSize="68" ></u-album>
+ * @example <up-album :urls="urls2" @albumWidth="width => albumWidth = width" multipleSize="68" ></up-album>
  */
 export default {
-    name: 'u-album',
+    name: 'up-album',
     mixins: [mpMixin, mixin, props],
     data() {
         return {
@@ -231,14 +231,14 @@ export default {
             // 延时一定时间，以获取dom尺寸
             await sleep(30)
             // #ifndef APP-NVUE
-            this.$uGetRect('.u-album__row').then((size) => {
+            this.$uGetRect('.up-album__row').then((size) => {
                 this.singleWidth = size.width * this.singlePercent
             })
             // #endif
 
             // #ifdef APP-NVUE
-            // 这里ref="u-album__row"所在的标签为通过for循环出来，导致this.$refs['u-album__row']是一个数组
-            const ref = this.$refs['u-album__row'][0]
+            // 这里ref="up-album__row"所在的标签为通过for循环出来，导致this.$refs['up-album__row']是一个数组
+            const ref = this.$refs['up-album__row'][0]
             ref &&
                 dom.getComponentRect(ref, (res) => {
                     this.singleWidth = res.size.width * this.singlePercent
@@ -252,7 +252,7 @@ export default {
 <style lang="scss" scoped>
 @import '../../libs/css/components.scss';
 
-.u-album {
+.up-album {
     @include flex(column);
 
     &__row {

@@ -1,30 +1,30 @@
 <template>
 	<view
-	    class="u-divider"
+	    class="up-divider"
 	    :style="[addStyle(customStyle)]"
 		@tap="click"
 	>
-		<u-line
+		<up-line
 		    :color="lineColor"
 		    :customStyle="leftLineStyle"
 		    :hairline="hairline"
 			:dashed="dashed"
-		></u-line>
+		></up-line>
 		<text
 		    v-if="dot"
-		    class="u-divider__dot"
+		    class="up-divider__dot"
 		>●</text>
 		<text
 		    v-else-if="text"
-		    class="u-divider__text"
+		    class="up-divider__text"
 		    :style="[textStyle]"
 		>{{text}}</text>
-		<u-line
+		<up-line
 		    :color="lineColor"
 		    :customStyle="rightLineStyle"
 		    :hairline="hairline"
 			:dashed="dashed"
-		></u-line>
+		></up-line>
 	</view>
 </template>
 
@@ -48,10 +48,10 @@
 	 * @property {Object}			customStyle		定义需要用到的外部样式
 	 *
 	 * @event {Function}	click	divider组件被点击时触发
-	 * @example <u-divider :color="color">锦瑟无端五十弦</u-divider>
+	 * @example <up-divider :color="color">锦瑟无端五十弦</up-divider>
 	 */
 	export default {
-		name:'u-divider',
+		name:'up-divider',
 		mixins: [mpMixin, mixin, props],
 		computed: {
 			textStyle() {
@@ -96,26 +96,26 @@
 
 <style lang="scss" scoped>
 	@import '../../libs/css/components.scss';
-	$u-divider-margin:15px 0 !default;
-	$u-divider-text-margin:0 15px !default;
-	$u-divider-dot-font-size:12px !default;
-	$u-divider-dot-margin:0 12px !default;
-	$u-divider-dot-color: #c0c4cc !default;
+	$up-divider-margin:15px 0 !default;
+	$up-divider-text-margin:0 15px !default;
+	$up-divider-dot-font-size:12px !default;
+	$up-divider-dot-margin:0 12px !default;
+	$up-divider-dot-color: #c0c4cc !default;
 
-	.u-divider {
+	.up-divider {
 		@include flex;
 		flex-direction: row;
 		align-items: center;
-		margin: $u-divider-margin;
+		margin: $up-divider-margin;
 
 		&__text {
-			margin: $u-divider-text-margin;
+			margin: $up-divider-text-margin;
 		}
 
 		&__dot {
-			font-size: $u-divider-dot-font-size;
-			margin: $u-divider-dot-margin;
-			color: $u-divider-dot-color;
+			font-size: $up-divider-dot-font-size;
+			margin: $up-divider-dot-margin;
+			color: $up-divider-dot-color;
 		}
 	}
 </style>

@@ -1,8 +1,8 @@
 <template>
-	<view class="u-circle-progress">
-		<view class="u-circle-progress__left">
+	<view class="up-circle-progress">
+		<view class="up-circle-progress__left">
 			<view
-			    class="u-circle-progress__left__circle"
+			    class="up-circle-progress__left__circle"
 			    :style="[leftSyle]"
 			    ref="left-circle"
 			>
@@ -10,17 +10,17 @@
 			</view>
 		</view>
 		<view
-		    class="u-circle-progress__right"
+		    class="up-circle-progress__right"
 		>
 			<view
-			    class="u-circle-progress__right__circle"
+			    class="up-circle-progress__right__circle"
 			    ref="right-circle"
 				:style="[rightSyle]"
 			>
 
 			</view>
 		</view>
-		<view class="u-circle-progress__circle">
+		<view class="up-circle-progress__circle">
 
 		</view>
 	</view>
@@ -42,7 +42,7 @@
 	 * @example
 	 */
 	export default {
-		name: 'u-circle-progress',
+		name: 'up-circle-progress',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -114,7 +114,7 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-circle-progress {
+	.up-circle-progress {
 		@include flex(row);
 		position: relative;
 		border-radius: 100px;

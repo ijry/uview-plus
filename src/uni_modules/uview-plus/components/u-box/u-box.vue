@@ -1,15 +1,15 @@
 <template>
-	<view class="u-box" :style="[{height: height}, addStyle(customStyle)]">
-        <view class="u-box__left" :style="{borderRadius: borderRadius, backgroundColor: bgColors[0]}">
+	<view class="up-box" :style="[{height: height}, addStyle(customStyle)]">
+        <view class="up-box__left" :style="{borderRadius: borderRadius, backgroundColor: bgColors[0]}">
             <slot name="left">左</slot>
         </view>
-        <view class="u-box__gap" :style="{width: gap, height: height}"></view>
-        <view class="u-box__right">
-            <view class="u-box__right-top" :style="{borderRadius: borderRadius, backgroundColor: bgColors[1]}">
+        <view class="up-box__gap" :style="{width: gap, height: height}"></view>
+        <view class="up-box__right">
+            <view class="up-box__right-top" :style="{borderRadius: borderRadius, backgroundColor: bgColors[1]}">
                 <slot name="rightTop">右上</slot>
             </view>
-            <view class="u-box__right-gap" :style="{height: gap}"></view>
-            <view class="u-box__right-bottom" :style="{borderRadius: borderRadius, backgroundColor: bgColors[2]}">
+            <view class="up-box__right-gap" :style="{height: gap}"></view>
+            <view class="up-box__right-bottom" :style="{borderRadius: borderRadius, backgroundColor: bgColors[2]}">
                 <slot name="rightBottom">右下</slot>
             </view>
         </view>
@@ -53,7 +53,7 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-box {
+	.up-box {
         /* #ifndef APP-NVUE */
         /* #endif */
         @include flex();

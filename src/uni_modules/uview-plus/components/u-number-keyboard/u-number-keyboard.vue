@@ -1,38 +1,38 @@
 <template>
 	<view
-		class="u-keyboard"
+		class="up-keyboard"
 		@touchmove.stop.prevent="noop"
 	>
 		<view
-			class="u-keyboard__button-wrapper"
+			class="up-keyboard__button-wrapper"
 			v-for="(item, index) in numList"
 			:key="index"
 		>
 			<view
-				class="u-keyboard__button-wrapper__button"
+				class="up-keyboard__button-wrapper__button"
 				:style="[itemStyle(index)]"
 				@tap="keyboardClick(item)"
-				hover-class="u-hover-class"
+				hover-class="up-hover-class"
 				:hover-stay-time="200"
 			>
-				<text class="u-keyboard__button-wrapper__button__text">{{ item }}</text>
+				<text class="up-keyboard__button-wrapper__button__text">{{ item }}</text>
 			</view>
 		</view>
 		<view
-			class="u-keyboard__button-wrapper"
+			class="up-keyboard__button-wrapper"
 		>
 			<view
-				class="u-keyboard__button-wrapper__button u-keyboard__button-wrapper__button--gray"
-				hover-class="u-hover-class"
+				class="up-keyboard__button-wrapper__button up-keyboard__button-wrapper__button--gray"
+				hover-class="up-hover-class"
 				:hover-stay-time="200"
 				@touchstart.stop="backspaceClick"
 				@touchend="clearTimer"
 			>
-				<u-icon
+				<up-icon
 					name="backspace"
 					color="#303133"
 					size="28"
-				></u-icon>
+				></up-icon>
 			</view>
 		</view>
 	</view>
@@ -134,65 +134,65 @@
 
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
-	$u-number-keyboard-background-color:rgb(224, 228, 230) !default;
-	$u-number-keyboard-padding:8px 10rpx 8px 10rpx !default;
-	$u-number-keyboard-button-width:222rpx !default;
-	$u-number-keyboard-button-margin:4px 6rpx !default;
-	$u-number-keyboard-button-border-top-left-radius:4px !default;
-	$u-number-keyboard-button-border-top-right-radius:4px !default;
-	$u-number-keyboard-button-border-bottom-left-radius:4px !default;
-	$u-number-keyboard-button-border-bottom-right-radius:4px !default;
-	$u-number-keyboard-button-height: 90rpx!default;
-	$u-number-keyboard-button-background-color:#FFFFFF !default;
-	$u-number-keyboard-button-box-shadow:0 2px 0px #BBBCBE !default;
-	$u-number-keyboard-text-font-size:20px !default;
-	$u-number-keyboard-text-font-weight:500 !default;
-	$u-number-keyboard-text-color:$u-main-color !default;
-	$u-number-keyboard-gray-background-color:rgb(200, 202, 210) !default;
-	$u-number-keyboard-u-hover-class-background-color: #BBBCC6 !default;
+	$up-number-keyboard-background-color:rgb(224, 228, 230) !default;
+	$up-number-keyboard-padding:8px 10rpx 8px 10rpx !default;
+	$up-number-keyboard-button-width:222rpx !default;
+	$up-number-keyboard-button-margin:4px 6rpx !default;
+	$up-number-keyboard-button-border-top-left-radius:4px !default;
+	$up-number-keyboard-button-border-top-right-radius:4px !default;
+	$up-number-keyboard-button-border-bottom-left-radius:4px !default;
+	$up-number-keyboard-button-border-bottom-right-radius:4px !default;
+	$up-number-keyboard-button-height: 90rpx!default;
+	$up-number-keyboard-button-background-color:#FFFFFF !default;
+	$up-number-keyboard-button-box-shadow:0 2px 0px #BBBCBE !default;
+	$up-number-keyboard-text-font-size:20px !default;
+	$up-number-keyboard-text-font-weight:500 !default;
+	$up-number-keyboard-text-color:$up-main-color !default;
+	$up-number-keyboard-gray-background-color:rgb(200, 202, 210) !default;
+	$up-number-keyboard-up-hover-class-background-color: #BBBCC6 !default;
 
-	.u-keyboard {
+	.up-keyboard {
 		@include flex;
 		flex-direction: row;
 		justify-content: space-around;
-		background-color: $u-number-keyboard-background-color;
+		background-color: $up-number-keyboard-background-color;
 		flex-wrap: wrap;
-		padding: $u-number-keyboard-padding;
+		padding: $up-number-keyboard-padding;
 
 		&__button-wrapper {
-			box-shadow: $u-number-keyboard-button-box-shadow;
-			margin: $u-number-keyboard-button-margin;
-			border-top-left-radius: $u-number-keyboard-button-border-top-left-radius;
-			border-top-right-radius: $u-number-keyboard-button-border-top-right-radius;
-			border-bottom-left-radius: $u-number-keyboard-button-border-bottom-left-radius;
-			border-bottom-right-radius: $u-number-keyboard-button-border-bottom-right-radius;
+			box-shadow: $up-number-keyboard-button-box-shadow;
+			margin: $up-number-keyboard-button-margin;
+			border-top-left-radius: $up-number-keyboard-button-border-top-left-radius;
+			border-top-right-radius: $up-number-keyboard-button-border-top-right-radius;
+			border-bottom-left-radius: $up-number-keyboard-button-border-bottom-left-radius;
+			border-bottom-right-radius: $up-number-keyboard-button-border-bottom-right-radius;
 
 			&__button {
-				width: $u-number-keyboard-button-width;
-				height: $u-number-keyboard-button-height;
-				background-color: $u-number-keyboard-button-background-color;
+				width: $up-number-keyboard-button-width;
+				height: $up-number-keyboard-button-height;
+				background-color: $up-number-keyboard-button-background-color;
 				@include flex;
 				justify-content: center;
 				align-items: center;
-				border-top-left-radius: $u-number-keyboard-button-border-top-left-radius;
-				border-top-right-radius: $u-number-keyboard-button-border-top-right-radius;
-				border-bottom-left-radius: $u-number-keyboard-button-border-bottom-left-radius;
-				border-bottom-right-radius: $u-number-keyboard-button-border-bottom-right-radius;
+				border-top-left-radius: $up-number-keyboard-button-border-top-left-radius;
+				border-top-right-radius: $up-number-keyboard-button-border-top-right-radius;
+				border-bottom-left-radius: $up-number-keyboard-button-border-bottom-left-radius;
+				border-bottom-right-radius: $up-number-keyboard-button-border-bottom-right-radius;
 
 				&__text {
-					font-size: $u-number-keyboard-text-font-size;
-					font-weight: $u-number-keyboard-text-font-weight;
-					color: $u-number-keyboard-text-color;
+					font-size: $up-number-keyboard-text-font-size;
+					font-weight: $up-number-keyboard-text-font-weight;
+					color: $up-number-keyboard-text-color;
 				}
 
 				&--gray {
-					background-color: $u-number-keyboard-gray-background-color;
+					background-color: $up-number-keyboard-gray-background-color;
 				}
 			}
 		}
 	}
 
-	.u-hover-class {
-		background-color: $u-number-keyboard-u-hover-class-background-color;
+	.up-hover-class {
+		background-color: $up-number-keyboard-up-hover-class-background-color;
 	}
 </style>

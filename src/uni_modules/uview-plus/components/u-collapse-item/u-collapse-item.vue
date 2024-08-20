@@ -1,6 +1,6 @@
 <template>
-	<view class="u-collapse-item">
-		<u-cell
+	<view class="up-collapse-item">
+		<up-cell
 			:title="$slots.title ? '' : title"
 			:value="value"
 			:label="label"
@@ -22,7 +22,7 @@
 			</template>
 			<template #icon>
 				<slot name="icon">
-					<u-icon v-if="!$slots.icon && icon" :size="22" :name="icon"></u-icon>
+					<up-icon v-if="!$slots.icon && icon" :size="22" :name="icon"></up-icon>
 				</slot>
 			</template>
 			<template #value>
@@ -34,24 +34,24 @@
 			</template>
 			<template #right-icon>
 				<template v-if="showRight">
-					<u-icon v-if="!$slots['right-icon']" :size="16" name="arrow-right"></u-icon>
+					<up-icon v-if="!$slots['right-icon']" :size="16" name="arrow-right"></up-icon>
 					<slot name="right-icon">
 					</slot>
 				</template>
 			</template>
-		</u-cell>
+		</up-cell>
 		<view
-			class="u-collapse-item__content"
+			class="up-collapse-item__content"
 			:animation="animationData"
 			ref="animation"
 		>
 			<view
-				class="u-collapse-item__content__text content-class"
+				class="up-collapse-item__content__text content-class"
 				:id="elId"
 				:ref="elId"
 			><slot /></view>
 		</view>
-		<u-line v-if="parentData.border"></u-line>
+		<up-line v-if="parentData.border"></up-line>
 	</view>
 </template>
 
@@ -68,7 +68,7 @@
 	// #endif
 	/**
 	 * collapseItem 折叠面板Item
-	 * @description 通过折叠面板收纳内容区域（搭配u-collapse使用）
+	 * @description 通过折叠面板收纳内容区域（搭配up-collapse使用）
 	 * @tutorial https://ijry.github.io/uview-plus/components/collapse.html
 	 * @property {String}			title 		标题
 	 * @property {String}			value 		标题右侧内容
@@ -81,10 +81,10 @@
 	 * @property {String | Number}	name		唯一标识符
 	 * @property {String}			icon		标题左侧图片，可为绝对路径的图片或内置图标
 	 * @event {Function}			change 			某个item被打开或者收起时触发
-	 * @example <u-collapse-item :title="item.head" v-for="(item, index) in itemList" :key="index">{{item.body}}</u-collapse-item>
+	 * @example <up-collapse-item :title="item.head" v-for="(item, index) in itemList" :key="index">{{item.body}}</up-collapse-item>
 	 */
 	export default {
-		name: "u-collapse-item",
+		name: "up-collapse-item",
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -97,7 +97,7 @@
 				showBorder: false,
 				// 是否动画中，如果是则不允许继续触发点击
 				animating: false,
-				// 父组件u-collapse的参数
+				// 父组件up-collapse的参数
 				parentData: {
 					accordion: false,
 					border: false
@@ -124,7 +124,7 @@
 				// 初始化数据
 				this.updateParentData()
 				if (!this.parent) {
-					return error('u-collapse-item必须要搭配u-collapse组件使用')
+					return error('up-collapse-item必须要搭配up-collapse组件使用')
 				}
 				const {
 					value,
@@ -134,12 +134,12 @@
 
 				if (accordion) {
 					if (test.array(value)) {
-						return error('手风琴模式下，u-collapse组件的value参数不能为数组')
+						return error('手风琴模式下，up-collapse组件的value参数不能为数组')
 					}
 					this.expanded = this.name == value
 				} else {
 					if (!test.array(value) && value !== null) {
-						return error('非手风琴模式下，u-collapse组件的value参数必须为数组')
+						return error('非手风琴模式下，up-collapse组件的value参数必须为数组')
 					}
 					this.expanded = (value || []).some(item => item == this.name)
 				}
@@ -149,7 +149,7 @@
 			},
 			updateParentData() {
 				// 此方法在mixin中
-				this.getParentData('u-collapse')
+				this.getParentData('up-collapse')
 			},
 			async setContentAnimate() {
 				// 每次面板打开或者收起时，都查询元素尺寸
@@ -225,7 +225,7 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-collapse-item {
+	.up-collapse-item {
 
 		&__content {
 			overflow: hidden;
@@ -233,7 +233,7 @@
 
 			&__text {
 				padding: 12px 15px;
-				color: $u-content-color;
+				color: $up-content-color;
 				font-size: 14px;
 				line-height: 18px;
 			}

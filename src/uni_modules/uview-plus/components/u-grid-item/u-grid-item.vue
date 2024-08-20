@@ -2,8 +2,8 @@
 	<!-- #ifndef APP-NVUE -->
 	<view
 		v-if="parentData.col > 0"
-	    class="u-grid-item"
-	    hover-class="u-grid-item--hover-class"
+	    class="up-grid-item"
+	    hover-class="up-grid-item--hover-class"
 	    :hover-stay-time="200"
 	    @tap="clickHandler"
 	    :class="classes"
@@ -14,7 +14,7 @@
 	<!-- #endif -->
 	<!-- #ifdef APP-NVUE -->
 	<view
-	    class="u-grid-item"
+	    class="up-grid-item"
 	    :hover-stay-time="200"
 	    @tap="clickHandler"
 	    :class="classes"
@@ -32,16 +32,16 @@
 	import { addStyle, deepMerge } from '../../libs/function/index';
 	/**
 	 * gridItem 提示
-	 * @description 宫格组件一般用于同时展示多个同类项目的场景，可以给宫格的项目设置徽标组件(badge)，或者图标等，也可以扩展为左右滑动的轮播形式。搭配u-grid使用
+	 * @description 宫格组件一般用于同时展示多个同类项目的场景，可以给宫格的项目设置徽标组件(badge)，或者图标等，也可以扩展为左右滑动的轮播形式。搭配up-grid使用
 	 * @tutorial https://ijry.github.io/uview-plus/components/grid.html
 	 * @property {String | Number}	name		宫格的name ( 默认 null )
 	 * @property {String}			bgColor		宫格的背景颜色 （默认 'transparent' ）
 	 * @property {Object}			customStyle	自定义样式，对象形式
 	 * @event {Function} click 点击宫格触发
-	 * @example <u-grid-item></u-grid-item>
+	 * @example <up-grid-item></up-grid-item>
 	 */
 	export default {
-		name: "u-grid-item",
+		name: "up-grid-item",
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -81,7 +81,7 @@
 		},
 		methods: {
 			init() {
-				// 用于在父组件u-grid的children中被添加入子组件时，
+				// 用于在父组件up-grid的children中被添加入子组件时，
 				// 重新计算item的边框
 				uni.$on('$uGridItem', () => {
 					this.gridItemClasses()
@@ -101,7 +101,7 @@
 			// 获取父组件的参数
 			updateParentData() {
 				// 此方法写在mixin中
-				this.getParentData('u-grid');
+				this.getParentData('up-grid');
 			},
 			clickHandler() {
 				let name = this.name
@@ -131,7 +131,7 @@
 				const dom = uni.requireNativePlugin('dom')
 				return new Promise(resolve => {
 					// 调用父组件的ref
-					dom.getComponentRect(this.parent.$refs['u-grid'], res => {
+					dom.getComponentRect(this.parent.$refs['up-grid'], res => {
 						resolve(res.size.width)
 					})
 				})
@@ -145,14 +145,14 @@
 							const len = this.parent.children.length
 							// 贴近右边屏幕边沿的child，并且最后一个（比如只有横向2个的时候），无需右边框
 							if((index + 1) % this.parentData.col !== 0 && index + 1 !== len) {
-								classes.push('u-border-right')
+								classes.push('up-border-right')
 							}
 							// 总的宫格数量对列数取余的值
 							// 如果取余后，值为0，则意味着要将最后一排的宫格，都不需要下边框
 							const lessNum = len % this.parentData.col === 0 ? this.parentData.col : len % this.parentData.col
 							// 最下面的一排child，无需下边框
 							if(index < len - lessNum) {
-								classes.push('u-border-bottom')
+								classes.push('up-border-bottom')
 							}
 						}
 					})
@@ -173,13 +173,13 @@
 
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
-      $u-grid-item-hover-class-opcatiy:.5 !default;
-      $u-grid-item-margin-top:1rpx !default;
-      $u-grid-item-border-right-width:0.5px !default;
-      $u-grid-item-border-bottom-width:0.5px !default;
-      $u-grid-item-border-right-color:$u-border-color !default;
-      $u-grid-item-border-bottom-color:$u-border-color !default;
-	.u-grid-item {
+      $up-grid-item-hover-class-opcatiy:.5 !default;
+      $up-grid-item-margin-top:1rpx !default;
+      $up-grid-item-border-right-width:0.5px !default;
+      $up-grid-item-border-bottom-width:0.5px !default;
+      $up-grid-item-border-right-color:$up-border-color !default;
+      $up-grid-item-border-bottom-color:$up-border-color !default;
+	.up-grid-item {
 		align-items: center;
 		justify-content: center;
 		position: relative;
@@ -195,24 +195,24 @@
 		/* #endif */
 
 		/* #ifdef MP-WEIXIN */
-		margin-top:$u-grid-item-margin-top;
+		margin-top:$up-grid-item-margin-top;
 		/* #endif */
 
 		&--hover-class {
-			opacity:$u-grid-item-hover-class-opcatiy;
+			opacity:$up-grid-item-hover-class-opcatiy;
 		}
 	}
 
 	/* #ifdef APP-NVUE */
 	// 由于nvue不支持组件内引入app.vue中再引入的样式，所以需要写在这里
-	.u-border-right {
-		border-right-width:$u-grid-item-border-right-width;
-		border-color: $u-grid-item-border-right-color;
+	.up-border-right {
+		border-right-width:$up-grid-item-border-right-width;
+		border-color: $up-grid-item-border-right-color;
 	}
 
-	.u-border-bottom {
-		border-bottom-width:$u-grid-item-border-bottom-width;
-		border-color:$u-grid-item-border-bottom-color;
+	.up-border-bottom {
+		border-bottom-width:$up-grid-item-border-bottom-width;
+		border-color:$up-grid-item-border-bottom-color;
 	}
 
 	/* #endif */

@@ -1,66 +1,66 @@
 <template>
 	<view
-		class="u-keyboard"
+		class="up-keyboard"
 		@touchmove.stop.prevent="noop"
 	>
 		<view
 			v-for="(group, i) in abc ? engKeyBoardList : areaList"
 			:key="i"
-			class="u-keyboard__button"
+			class="up-keyboard__button"
 			:index="i"
-			:class="[i + 1 === 4 && 'u-keyboard__button--center']"
+			:class="[i + 1 === 4 && 'up-keyboard__button--center']"
 		>
 			<view
 				v-if="i === 3"
-				class="u-keyboard__button__inner-wrapper"
+				class="up-keyboard__button__inner-wrapper"
 			>
 				<view
-					class="u-keyboard__button__inner-wrapper__left"
-					hover-class="u-hover-class"
+					class="up-keyboard__button__inner-wrapper__left"
+					hover-class="up-hover-class"
 					:hover-stay-time="200"
 					@tap="changeCarInputMode"
 				>
 					<text
-						class="u-keyboard__button__inner-wrapper__left__lang"
-						:class="[!abc && 'u-keyboard__button__inner-wrapper__left__lang--active']"
+						class="up-keyboard__button__inner-wrapper__left__lang"
+						:class="[!abc && 'up-keyboard__button__inner-wrapper__left__lang--active']"
 					>中</text>
-					<text class="u-keyboard__button__inner-wrapper__left__line">/</text>
+					<text class="up-keyboard__button__inner-wrapper__left__line">/</text>
 					<text
-						class="u-keyboard__button__inner-wrapper__left__lang"
-						:class="[abc && 'u-keyboard__button__inner-wrapper__left__lang--active']"
+						class="up-keyboard__button__inner-wrapper__left__lang"
+						:class="[abc && 'up-keyboard__button__inner-wrapper__left__lang--active']"
 					>英</text>
 				</view>
 			</view>
 			<view
-				class="u-keyboard__button__inner-wrapper"
+				class="up-keyboard__button__inner-wrapper"
 				v-for="(item, j) in group"
 				:key="j"
 			>
 				<view
-					class="u-keyboard__button__inner-wrapper__inner"
+					class="up-keyboard__button__inner-wrapper__inner"
 					:hover-stay-time="200"
 					@tap="carInputClick(i, j)"
-					hover-class="u-hover-class"
+					hover-class="up-hover-class"
 				>
-					<text class="u-keyboard__button__inner-wrapper__inner__text">{{ item }}</text>
+					<text class="up-keyboard__button__inner-wrapper__inner__text">{{ item }}</text>
 				</view>
 			</view>
 			<view
 				v-if="i === 3"
 				@touchstart="backspaceClick"
 				@touchend="clearTimer"
-				class="u-keyboard__button__inner-wrapper"
+				class="up-keyboard__button__inner-wrapper"
 			>
 				<view
-					class="u-keyboard__button__inner-wrapper__right"
-					hover-class="u-hover-class"
+					class="up-keyboard__button__inner-wrapper__right"
+					hover-class="up-hover-class"
 					:hover-stay-time="200"
 				>
-					<u-icon
+					<up-icon
 						size="28"
 						name="backspace"
 						color="#303133"
-					></u-icon>
+					></up-icon>
 				</view>
 			</view>
 		</view>
@@ -79,10 +79,10 @@
 	 * @property {Boolean} random 是否打乱键盘的顺序
 	 * @event {Function} change 点击键盘触发
 	 * @event {Function} backspace 点击退格键触发
-	 * @example <u-keyboard ref="uKeyboard" mode="car" v-model="show"></u-keyboard>
+	 * @example <up-keyboard ref="uKeyboard" mode="car" v-model="show"></up-keyboard>
 	 */
 	export default {
-		name: "u-keyboard",
+		name: "up-keyboard",
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -223,32 +223,32 @@
 
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
-	$u-car-keyboard-background-color: rgb(224, 228, 230) !default;
-	$u-car-keyboard-padding:6px 0 6px !default;
-	$u-car-keyboard-button-inner-width:64rpx !default;
-	$u-car-keyboard-button-inner-background-color:#FFFFFF !default;
-	$u-car-keyboard-button-height:80rpx !default;
-	$u-car-keyboard-button-inner-box-shadow:0 1px 0px #999992 !default;
-	$u-car-keyboard-button-border-radius:4px !default;
-	$u-car-keyboard-button-inner-margin:8rpx 5rpx !default;
-	$u-car-keyboard-button-text-font-size:16px !default;
-	$u-car-keyboard-button-text-color:$u-main-color !default;
-	$u-car-keyboard-center-inner-margin: 0 4rpx !default;
-	$u-car-keyboard-special-button-width:134rpx !default;
-	$u-car-keyboard-lang-font-size:16px !default;
-	$u-car-keyboard-lang-color:$u-main-color !default;
-	$u-car-keyboard-active-color:$u-primary !default;
-	$u-car-keyboard-line-font-size:15px !default;
-	$u-car-keyboard-line-color:$u-main-color !default;
-	$u-car-keyboard-line-margin:0 1px !default;
-	$u-car-keyboard-u-hover-class-background-color:#BBBCC6 !default;
+	$up-car-keyboard-background-color: rgb(224, 228, 230) !default;
+	$up-car-keyboard-padding:6px 0 6px !default;
+	$up-car-keyboard-button-inner-width:64rpx !default;
+	$up-car-keyboard-button-inner-background-color:#FFFFFF !default;
+	$up-car-keyboard-button-height:80rpx !default;
+	$up-car-keyboard-button-inner-box-shadow:0 1px 0px #999992 !default;
+	$up-car-keyboard-button-border-radius:4px !default;
+	$up-car-keyboard-button-inner-margin:8rpx 5rpx !default;
+	$up-car-keyboard-button-text-font-size:16px !default;
+	$up-car-keyboard-button-text-color:$up-main-color !default;
+	$up-car-keyboard-center-inner-margin: 0 4rpx !default;
+	$up-car-keyboard-special-button-width:134rpx !default;
+	$up-car-keyboard-lang-font-size:16px !default;
+	$up-car-keyboard-lang-color:$up-main-color !default;
+	$up-car-keyboard-active-color:$up-primary !default;
+	$up-car-keyboard-line-font-size:15px !default;
+	$up-car-keyboard-line-color:$up-main-color !default;
+	$up-car-keyboard-line-margin:0 1px !default;
+	$up-car-keyboard-up-hover-class-background-color:#BBBCC6 !default;
 
-	.u-keyboard {
+	.up-keyboard {
 		@include flex(column);
 		justify-content: space-around;
-		background-color: $u-car-keyboard-background-color;
+		background-color: $up-car-keyboard-background-color;
 		align-items: stretch;
-		padding: $u-car-keyboard-padding;
+		padding: $up-car-keyboard-padding;
 
 		&__button {
 			@include flex;
@@ -258,50 +258,50 @@
 			/* #endif */
 
 			&__inner-wrapper {
-				box-shadow: $u-car-keyboard-button-inner-box-shadow;
-				margin: $u-car-keyboard-button-inner-margin;
-				border-radius: $u-car-keyboard-button-border-radius;
+				box-shadow: $up-car-keyboard-button-inner-box-shadow;
+				margin: $up-car-keyboard-button-inner-margin;
+				border-radius: $up-car-keyboard-button-border-radius;
 
 				&__inner {
 					@include flex;
 					justify-content: center;
 					align-items: center;
-					width: $u-car-keyboard-button-inner-width;
-					background-color: $u-car-keyboard-button-inner-background-color;
-					height: $u-car-keyboard-button-height;
-					border-radius: $u-car-keyboard-button-border-radius;
+					width: $up-car-keyboard-button-inner-width;
+					background-color: $up-car-keyboard-button-inner-background-color;
+					height: $up-car-keyboard-button-height;
+					border-radius: $up-car-keyboard-button-border-radius;
 
 					&__text {
-						font-size: $u-car-keyboard-button-text-font-size;
-						color: $u-car-keyboard-button-text-color;
+						font-size: $up-car-keyboard-button-text-font-size;
+						color: $up-car-keyboard-button-text-color;
 					}
 				}
 
 				&__left,
 				&__right {
-					border-radius: $u-car-keyboard-button-border-radius;
-					width: $u-car-keyboard-special-button-width;
-					height: $u-car-keyboard-button-height;
-					background-color: $u-car-keyboard-u-hover-class-background-color;
+					border-radius: $up-car-keyboard-button-border-radius;
+					width: $up-car-keyboard-special-button-width;
+					height: $up-car-keyboard-button-height;
+					background-color: $up-car-keyboard-up-hover-class-background-color;
 					@include flex;
 					justify-content: center;
 					align-items: center;
-					box-shadow: $u-car-keyboard-button-inner-box-shadow;
+					box-shadow: $up-car-keyboard-button-inner-box-shadow;
 				}
 
 				&__left {
 					&__line {
-						font-size: $u-car-keyboard-line-font-size;
-						color: $u-car-keyboard-line-color;
-						margin: $u-car-keyboard-line-margin;
+						font-size: $up-car-keyboard-line-font-size;
+						color: $up-car-keyboard-line-color;
+						margin: $up-car-keyboard-line-margin;
 					}
 
 					&__lang {
-						font-size: $u-car-keyboard-lang-font-size;
-						color: $u-car-keyboard-lang-color;
+						font-size: $up-car-keyboard-lang-font-size;
+						color: $up-car-keyboard-lang-color;
 
 						&--active {
-							color: $u-car-keyboard-active-color;
+							color: $up-car-keyboard-active-color;
 						}
 					}
 				}
@@ -309,7 +309,7 @@
 		}
 	}
 
-	.u-hover-class {
-		background-color: $u-car-keyboard-u-hover-class-background-color;
+	.up-hover-class {
+		background-color: $up-car-keyboard-up-hover-class-background-color;
 	}
 </style>

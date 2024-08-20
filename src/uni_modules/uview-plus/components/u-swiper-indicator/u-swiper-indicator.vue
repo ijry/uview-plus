@@ -1,28 +1,28 @@
 <template>
-	<view class="u-swiper-indicator">
+	<view class="up-swiper-indicator">
 		<view
-			class="u-swiper-indicator__wrapper"
+			class="up-swiper-indicator__wrapper"
 			v-if="indicatorMode === 'line'"
-			:class="[`u-swiper-indicator__wrapper--${indicatorMode}`]"
+			:class="[`up-swiper-indicator__wrapper--${indicatorMode}`]"
 			:style="{
 				width: addUnit(lineWidth * length),
 				backgroundColor: indicatorInactiveColor
 			}"
 		>
 			<view
-				class="u-swiper-indicator__wrapper--line__bar"
+				class="up-swiper-indicator__wrapper--line__bar"
 				:style="[lineStyle]"
 			></view>
 		</view>
 		<view
-			class="u-swiper-indicator__wrapper"
+			class="up-swiper-indicator__wrapper"
 			v-if="indicatorMode === 'dot'"
 		>
 			<view
-				class="u-swiper-indicator__wrapper__dot"
+				class="up-swiper-indicator__wrapper__dot"
 				v-for="(item, index) in length"
 				:key="index"
-				:class="[index === current && 'u-swiper-indicator__wrapper__dot--active']"
+				:class="[index === current && 'up-swiper-indicator__wrapper__dot--active']"
 				:style="[dotStyle(index)]"
 			>
 			</view>
@@ -44,10 +44,10 @@
 	 * @property {String}			indicatorActiveColor	指示器非激活颜色
 	 * @property {String}			indicatorInactiveColor	指示器的激活颜色
 	 * @property {String}			indicatorMode			指示器模式（默认 'line' ）
-	 * @example	<u-swiper :list="list4" indicator keyName="url" :autoplay="false"></u-swiper>
+	 * @example	<up-swiper :list="list4" indicator keyName="url" :autoplay="false"></up-swiper>
 	 */
 	export default {
-		name: 'u-swiper-indicator',
+		name: 'up-swiper-indicator',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -81,7 +81,7 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-swiper-indicator {
+	.up-swiper-indicator {
 
 		&__wrapper {
 			@include flex;

@@ -1,27 +1,27 @@
 <template>
     <view
-        class="u-rate"
+        class="up-rate"
         :id="elId"
-        ref="u-rate"
+        ref="up-rate"
         :style="[addStyle(customStyle)]"
     >
         <view
-            class="u-rate__content"
+            class="up-rate__content"
             @touchmove.stop="touchMove"
             @touchend.stop="touchEnd"
         >
             <view
-                class="u-rate__content__item cursor-pointer"
+                class="up-rate__content__item cursor-pointer"
                 v-for="(item, index) in Number(count)"
                 :key="index"
                 :class="[elClass]"
             >
                 <view
-                    class="u-rate__content__item__icon-wrap"
-                    ref="u-rate__content__item__icon-wrap"
+                    class="up-rate__content__item__icon-wrap"
+                    ref="up-rate__content__item__icon-wrap"
                     @tap.stop="clickHandler($event, index + 1)"
                 >
-                    <u-icon
+                    <up-icon
                         :name="
                             Math.floor(activeIndex) > index
                                 ? activeIcon
@@ -38,18 +38,18 @@
                             padding: `0 ${addUnit(gutter / 2)}`,
                         }"
                         :size="size"
-                    ></u-icon>
+                    ></up-icon>
                 </view>
                 <view
                     v-if="allowHalf"
                     @tap.stop="clickHandler($event, index + 1)"
-                    class="u-rate__content__item__icon-wrap u-rate__content__item__icon-wrap--half"
+                    class="up-rate__content__item__icon-wrap up-rate__content__item__icon-wrap--half"
                     :style="[{
                         width: addUnit(rateWidth / 2),
                     }]"
-                    ref="u-rate__content__item__icon-wrap"
+                    ref="up-rate__content__item__icon-wrap"
                 >
-                    <u-icon
+                    <up-icon
                         :name="
                             Math.ceil(activeIndex) > index
                                 ? activeIcon
@@ -66,7 +66,7 @@
                             padding: `0 ${addUnit(gutter / 2)}`
                         }"
                         :size="size"
-                    ></u-icon>
+                    ></up-icon>
                 </view>
             </view>
         </view>
@@ -100,10 +100,10 @@
 	 * @property {Boolean}			touchable		是否可以通过滑动手势选择评分 （默认 'true' ）
 	 * @property {Object}			customStyle		组件的样式，对象形式
 	 * @event {Function} change 选中的星星发生变化时触发
-	 * @example <u-rate :count="count" :value="2"></u-rate>
+	 * @example <up-rate :count="count" :value="2"></up-rate>
 	 */
 	export default {
-		name: "u-rate",
+		name: "up-rate",
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -157,7 +157,7 @@
 				});
 				// #endif
 				// #ifdef APP-NVUE
-				dom.getComponentRect(this.$refs["u-rate"], (res) => {
+				dom.getComponentRect(this.$refs["up-rate"], (res) => {
 					this.rateBoxLeft = res.size.left;
 				});
 				// #endif
@@ -172,7 +172,7 @@
 				// #endif
 				// #ifdef APP-NVUE
 				dom.getComponentRect(
-					this.$refs["u-rate__content__item__icon-wrap"][0],
+					this.$refs["up-rate__content__item__icon-wrap"][0],
 					(res) => {
 						this.rateWidth = res.size.width;
 					}
@@ -288,16 +288,16 @@
 
 <style lang="scss" scoped>
 @import "../../libs/css/components.scss";
-$u-rate-margin: 0 !default;
-$u-rate-padding: 0 !default;
-$u-rate-item-icon-wrap-half-top: 0 !default;
-$u-rate-item-icon-wrap-half-left: 0 !default;
+$up-rate-margin: 0 !default;
+$up-rate-padding: 0 !default;
+$up-rate-item-icon-wrap-half-top: 0 !default;
+$up-rate-item-icon-wrap-half-left: 0 !default;
 
-.u-rate {
+.up-rate {
     @include flex;
     align-items: center;
-    margin: $u-rate-margin;
-    padding: $u-rate-padding;
+    margin: $up-rate-margin;
+    padding: $up-rate-padding;
     /* #ifndef APP-NVUE */
     touch-action: none;
     /* #endif */
@@ -312,15 +312,15 @@ $u-rate-item-icon-wrap-half-left: 0 !default;
 		        &--half {
 		            position: absolute;
 		            overflow: hidden;
-		            top: $u-rate-item-icon-wrap-half-top;
-		            left: $u-rate-item-icon-wrap-half-left;
+		            top: $up-rate-item-icon-wrap-half-top;
+		            left: $up-rate-item-icon-wrap-half-left;
 		        }
 		    }
 		}
     }
 }
 
-.u-icon {
+.up-icon {
     /* #ifndef APP-NVUE */
     box-sizing: border-box;
     /* #endif */

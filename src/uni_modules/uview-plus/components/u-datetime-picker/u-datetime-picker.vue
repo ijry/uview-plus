@@ -1,6 +1,6 @@
 <template>
-    <view class="u-datetime-picker">
-        <view v-if="hasInput" class="u-datetime-picker__has-input"
+    <view class="up-datetime-picker">
+        <view v-if="hasInput" class="up-datetime-picker__has-input"
             @click="showByClickInput = !showByClickInput"
         >
             <up-input
@@ -10,7 +10,7 @@
                 v-model="inputValue"
             ></up-input>
         </view>
-        <u-picker
+        <up-picker
             ref="picker"
             :show="show || (hasInput && showByClickInput)"
             :popupMode="popupMode"
@@ -39,7 +39,7 @@
                 <slot name="toolbar-bottom">
                 </slot>
             </template>
-        </u-picker>
+        </up-picker>
     </view>
 </template>
 
@@ -88,7 +88,7 @@
 	 * @event {Function} confirm 点击确定按钮，返回当前选择的值
 	 * @event {Function} change 当选择值变化时触发
 	 * @event {Function} cancel 点击取消按钮
-	 * @example  <u-datetime-picker :show="show" :value="value1"  mode="datetime" ></u-datetime-picker>
+	 * @example  <up-datetime-picker :show="show" :value="value1"  mode="datetime" ></up-datetime-picker>
 	 */
 	export default {
 		name: 'up-datetime-picker',
@@ -278,7 +278,7 @@
 			updateColumnValue(value) {
 				this.innerValue = value
 				this.updateColumns()
-				// 延迟执行,等待u-picker组件列数据更新完后再设置选中值索引
+				// 延迟执行,等待up-picker组件列数据更新完后再设置选中值索引
 				setTimeout(() => {
 				this.updateIndexs(value)
 				}, 0);
@@ -462,11 +462,11 @@
 
 <style lang="scss" scoped>
 	@import '../../libs/css/components.scss';
-	.u-datetime-picker {
+	.up-datetime-picker {
+		/* #ifndef APP-NVUE */
+		width: 100%;
+        /* #endif */
         &__has-input {
-            /* #ifndef APP-NVUE */
-            width: 100%;
-            /* #endif */
         }
 	}
 </style>

@@ -1,7 +1,7 @@
 <template>
 	<view
 	    :style="[style]"
-	    class="u-status-bar"
+	    class="up-status-bar"
 	>
 		<slot />
 	</view>
@@ -18,10 +18,10 @@
 	 * @tutorial https://uview-plus.jiangruyi.com/components/statusBar.html
 	 * @property {String}			bgColor			背景色 (默认 'transparent' )
 	 * @property {String | Object}	customStyle		自定义样式 
-	 * @example <u-status-bar></u-status-bar>
+	 * @example <up-status-bar></up-status-bar>
 	 */
 	export default {
-		name: 'u-status-bar',
+		name: 'up-status-bar',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -40,7 +40,7 @@
 </script>
 
 <style lang="scss" scoped>
-	.u-status-bar {
+	.up-status-bar {
 		// nvue会默认100%，如果nvue下，显式写100%的话，会导致宽度不为100%而异常
 		/* #ifndef APP-NVUE */
 		width: 100%;

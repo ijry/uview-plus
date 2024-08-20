@@ -127,7 +127,7 @@ export default {
 		queryRect() {
 			// 历遍所有按钮数组，通过getRectByDom返回一个promise
 			const promiseAll = this.options.map((item, index) => {
-				return this.getRectByDom(this.$refs[`u-swipe-action-item__right__button-${index}`][0])
+				return this.getRectByDom(this.$refs[`up-swipe-action-item__right__button-${index}`][0])
 			})
 			// 通过promise.all方法，让所有按钮的查询结果返回一个数组的形式
 			Promise.all(promiseAll).then(sizes => {
@@ -165,7 +165,7 @@ export default {
 		},
 		// 获取元素ref
 		getContentRef() {
-			return this.$refs['u-swipe-action-item__content'].ref
+			return this.$refs['up-swipe-action-item__content'].ref
 		},
 		beforeUnmount() {
 			this.unbindBindingX()

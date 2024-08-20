@@ -1,7 +1,7 @@
 <template>
-	<view class="u-number-box">
+	<view class="up-number-box">
 		<view
-		    class="u-number-box__slot cursor-pointer"
+		    class="up-number-box__slot cursor-pointer"
 		    @tap.stop="clickHandler('minus')"
 		    @touchstart="onTouchStart('minus')"
 		    @touchend.stop="clearTimeout"
@@ -11,22 +11,22 @@
 		</view>
 		<view
 		    v-else-if="showMinus"
-		    class="u-number-box__minus cursor-pointer"
+		    class="up-number-box__minus cursor-pointer"
 		    @tap.stop="clickHandler('minus')"
 		    @touchstart="onTouchStart('minus')"
 		    @touchend.stop="clearTimeout"
-		    hover-class="u-number-box__minus--hover"
+		    hover-class="up-number-box__minus--hover"
 		    hover-stay-time="150"
-		    :class="{ 'u-number-box__minus--disabled': isDisabled('minus') }"
+		    :class="{ 'up-number-box__minus--disabled': isDisabled('minus') }"
 		    :style="[buttonStyle('minus')]"
 		>
-			<u-icon
+			<up-icon
 			    name="minus"
 			    :color="isDisabled('minus') ? '#c8c9cc' : '#323233'"
 			    size="15"
 			    bold
 				:customStyle="iconStyle"
-			></u-icon>
+			></up-icon>
 		</view>
 
 		<slot name="input">
@@ -34,9 +34,9 @@
 			<input
 			    :disabled="disabledInput || disabled"
 			    :cursor-spacing="getCursorSpacing"
-			    :class="{ 'u-number-box__input--disabled': disabled || disabledInput }"
+			    :class="{ 'up-number-box__input--disabled': disabled || disabledInput }"
 			    :value="currentValue"
-			    class="u-number-box__input"
+			    class="up-number-box__input"
 			    @blur="onBlur"
 			    @focus="onFocus"
 			    @input="onInput"
@@ -48,9 +48,9 @@
 			<input
 			    :disabled="disabledInput || disabled"
 			    :cursor-spacing="getCursorSpacing"
-			    :class="{ 'u-number-box__input--disabled': disabled || disabledInput }"
+			    :class="{ 'up-number-box__input--disabled': disabled || disabledInput }"
 			    v-model="currentValue"
-			    class="u-number-box__input"
+			    class="up-number-box__input"
 			    @blur="onBlur"
 			    @focus="onFocus"
 			    @input="onInput"
@@ -60,7 +60,7 @@
 			<!-- #endif -->
 		</slot>
 		<view
-		    class="u-number-box__slot cursor-pointer"
+		    class="up-number-box__slot cursor-pointer"
 		    @tap.stop="clickHandler('plus')"
 		    @touchstart="onTouchStart('plus')"
 		    @touchend.stop="clearTimeout"
@@ -70,22 +70,22 @@
 		</view>
 		<view
 		    v-else-if="showPlus"
-		    class="u-number-box__plus cursor-pointer"
+		    class="up-number-box__plus cursor-pointer"
 		    @tap.stop="clickHandler('plus')"
 		    @touchstart="onTouchStart('plus')"
 		    @touchend.stop="clearTimeout"
-		    hover-class="u-number-box__plus--hover"
+		    hover-class="up-number-box__plus--hover"
 		    hover-stay-time="150"
-		    :class="{ 'u-number-box__minus--disabled': isDisabled('plus') }"
+		    :class="{ 'up-number-box__minus--disabled': isDisabled('plus') }"
 		    :style="[buttonStyle('plus')]"
 		>
-			<u-icon
+			<up-icon
 			    name="plus"
 			    :color="isDisabled('plus') ? '#c8c9cc' : '#323233'"
 			    size="15"
 			    bold
 				:customStyle="iconStyle"
-			></u-icon>
+			></up-icon>
 		</view>
 	</view>
 </template>
@@ -125,10 +125,10 @@
 	 * @event {Function}	onBlur	输入框失去焦点
 	 * @event {Function}	onInput	输入框值发生变化
 	 * @event {Function}	onChange
-	 * @example <u-number-box v-model="value" @change="valChange"></u-number-box>
+	 * @example <up-number-box v-model="value" @change="valChange"></up-number-box>
 	 */
 	export default {
-		name: 'u-number-box',
+		name: 'up-number-box',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -395,19 +395,19 @@
 <style lang="scss" scoped>
 	@import '../../libs/css/components.scss';
 
-	$u-numberBox-hover-bgColor: #E6E6E6 !default;
-	$u-numberBox-disabled-color: #c8c9cc !default;
-	$u-numberBox-disabled-bgColor: #f7f8fa !default;
-	$u-numberBox-plus-radius: 4px !default;
-	$u-numberBox-minus-radius: 4px !default;
-	$u-numberBox-input-text-align: center !default;
-	$u-numberBox-input-font-size: 15px !default;
-	$u-numberBox-input-padding: 0 !default;
-	$u-numberBox-input-margin: 0 2px !default;
-	$u-numberBox-input-disabled-color: #c8c9cc !default;
-	$u-numberBox-input-disabled-bgColor: #f2f3f5 !default;
+	$up-number-box-hover-bgColor: #E6E6E6 !default;
+	$up-number-box-disabled-color: #c8c9cc !default;
+	$up-number-box-disabled-bgColor: #f7f8fa !default;
+	$up-number-box-plus-radius: 4px !default;
+	$up-number-box-minus-radius: 4px !default;
+	$up-number-box-input-text-align: center !default;
+	$up-number-box-input-font-size: 15px !default;
+	$up-number-box-input-padding: 0 !default;
+	$up-number-box-input-margin: 0 2px !default;
+	$up-number-box-input-disabled-color: #c8c9cc !default;
+	$up-number-box-input-disabled-bgColor: #f2f3f5 !default;
 
-	.u-number-box {
+	.up-number-box {
 		@include flex(row);
 		align-items: center;
 
@@ -428,38 +428,38 @@
 			/* #endif */
 
 			&--hover {
-				background-color: $u-numberBox-hover-bgColor !important;
+				background-color: $up-number-box-hover-bgColor !important;
 			}
 
 			&--disabled {
-				color: $u-numberBox-disabled-color;
-				background-color: $u-numberBox-disabled-bgColor;
+				color: $up-number-box-disabled-color;
+				background-color: $up-number-box-disabled-bgColor;
 			}
 		}
 
 		&__plus {
-			border-top-right-radius: $u-numberBox-plus-radius;
-			border-bottom-right-radius: $u-numberBox-plus-radius;
+			border-top-right-radius: $up-number-box-plus-radius;
+			border-bottom-right-radius: $up-number-box-plus-radius;
 		}
 
 		&__minus {
-			border-top-left-radius: $u-numberBox-minus-radius;
-			border-bottom-left-radius: $u-numberBox-minus-radius;
+			border-top-left-radius: $up-number-box-minus-radius;
+			border-bottom-left-radius: $up-number-box-minus-radius;
 		}
 
 		&__input {
 			position: relative;
-			text-align: $u-numberBox-input-text-align;
-			font-size: $u-numberBox-input-font-size;
-			padding: $u-numberBox-input-padding;
-			margin: $u-numberBox-input-margin;
+			text-align: $up-number-box-input-text-align;
+			font-size: $up-number-box-input-font-size;
+			padding: $up-number-box-input-padding;
+			margin: $up-number-box-input-margin;
 			@include flex;
 			align-items: center;
 			justify-content: center;
 
 			&--disabled {
-				color: $u-numberBox-input-disabled-color;
-				background-color: $u-numberBox-input-disabled-bgColor;
+				color: $up-number-box-input-disabled-color;
+				background-color: $up-number-box-input-disabled-bgColor;
 			}
 		}
 	}

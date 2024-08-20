@@ -1,7 +1,7 @@
 <template>
-	<view class="u-form-item" :class="{'u-form-item--error':(!!message && parentData.errorType === 'message')}">
+	<view class="up-form-item" :class="{'up-form-item--error':(!!message && parentData.errorType === 'message')}">
 		<view
-			class="u-form-item__body"
+			class="up-form-item__body"
 			@tap="clickHandler"
 			:style="[addStyle(customStyle), {
                 flexDirection: (labelPosition || parentData.labelPosition) === 'left' ? 'row' : 'column'
@@ -11,7 +11,7 @@
 			<slot name="label">
 				<!-- {{required}} -->
 				<view
-					class="u-form-item__body__left"
+					class="up-form-item__body__left"
 					v-if="required || leftIcon || label"
 					:style="{
 						width: addUnit(labelWidth || parentData.labelWidth),
@@ -19,23 +19,23 @@
 					}"
 				>
 					<!-- 为了块对齐 -->
-					<view class="u-form-item__body__left__content">
+					<view class="up-form-item__body__left__content">
 						<!-- nvue不支持伪元素before -->
 						<text
 							v-if="required"
-							class="u-form-item__body__left__content__required"
+							class="up-form-item__body__left__content__required"
 						>*</text>
 						<view
-							class="u-form-item__body__left__content__icon"
+							class="up-form-item__body__left__content__icon"
 							v-if="leftIcon"
 						>
-							<u-icon
+							<up-icon
 								:name="leftIcon"
 								:custom-style="leftIconStyle"
-							></u-icon>
+							></up-icon>
 						</view>
 						<text
-							class="u-form-item__body__left__content__label"
+							class="up-form-item__body__left__content__label"
 							:style="[parentData.labelStyle, {
 								justifyContent: parentData.labelAlign === 'left' ? 'flex-start' : parentData.labelAlign === 'center' ? 'center' : 'flex-end'
 							}]"
@@ -43,9 +43,9 @@
 					</view>
 				</view>
 			</slot>
-			<view class="u-form-item__body__right">
-				<view class="u-form-item__body__right__content">
-					<view class="u-form-item__body__right__content__slot">
+			<view class="up-form-item__body__right">
+				<view class="up-form-item__body__right__content">
+					<view class="up-form-item__body__right__content__slot">
 						<slot />
 					</view>
 					<view
@@ -60,17 +60,17 @@
 		<slot name="error">
 			<text
 				v-if="!!message && parentData.errorType === 'message'"
-				class="u-form-item__body__right__message"
+				class="up-form-item__body__right__message"
 				:style="{
 					marginLeft:  addUnit(parentData.labelPosition === 'top' ? 0 : (labelWidth || parentData.labelWidth))
 				}"
 			>{{ message }}</text>
 		</slot>
-		<u-line
+		<up-line
 			v-if="borderBottom"
 			:color="message && parentData.errorType === 'border-bottom' ? color.error : propsLine.color"
 			:customStyle="`margin-top: ${message && parentData.errorType === 'message' ? '5px' : 0}`"
-		></u-line>
+		></up-line>
 	</view>
 </template>
 
@@ -95,10 +95,10 @@
 	 * @property {String | Object} leftIconStyle    左侧图标的样式
 	 * @property {Boolean}			required		是否显示左边的必填星号，只作显示用，具体校验必填的逻辑，请在rules中配置 (默认 false )
 	 *
-	 * @example <u-form-item label="姓名" prop="userInfo.name" borderBottom ref="item1"></u-form-item>
+	 * @example <up-form-item label="姓名" prop="userInfo.name" borderBottom ref="item1"></up-form-item>
 	 */
 	export default {
-		name: 'u-form-item',
+		name: 'up-form-item',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -120,7 +120,7 @@
 				itemRules: []
 			}
 		},
-		// 组件创建完成时，将当前实例保存到u-form中
+		// 组件创建完成时，将当前实例保存到up-form中
 		computed: {
 			propsLine() {
 				return defProps.line
@@ -146,7 +146,7 @@
 				// 父组件的实例
 				this.updateParentData()
 				if (!this.parent) {
-					error('u-form-item需要结合u-form组件使用')
+					error('up-form-item需要结合up-form组件使用')
 				}
 			},
 			// 手动设置校验的规则，如果规则中有函数的话，微信小程序中会过滤掉，所以只能手动调用设置规则
@@ -158,9 +158,9 @@
 			// 获取父组件的参数
 			updateParentData() {
 				// 此方法写在mixin中
-				this.getParentData('u-form');
+				this.getParentData('up-form');
 			},
-			// 移除u-form-item的校验结果
+			// 移除up-form-item的校验结果
 			clearValidate() {
 				this.message = null
 			},
@@ -168,7 +168,7 @@
 			resetField() {
 				// 找到原始值
 				const value = getProperty(this.parent.originalModel, this.prop)
-				// 将u-form的model的prop属性链还原原始值
+				// 将up-form的model的prop属性链还原原始值
 				setProperty(this.parent.model, this.prop, value)
 				// 移除校验结果
 				this.message = null
@@ -184,10 +184,10 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-form-item {
+	.up-form-item {
 		@include flex(column);
 		font-size: 14px;
-		color: $u-main-color;
+		color: $up-main-color;
 
 		&__body {
 			@include flex;
@@ -211,7 +211,7 @@
 					&__required {
 						position: absolute;
 						left: -9px;
-						color: $u-error;
+						color: $up-error;
 						line-height: 20px;
 						font-size: 20px;
 						top: 3px;
@@ -221,7 +221,7 @@
 						@include flex;
 						align-items: center;
 						flex: 1;
-						color: $u-main-color;
+						color: $up-main-color;
 						font-size: 15px;
 					}
 				}
@@ -245,7 +245,7 @@
 
 					&__icon {
 						margin-left: 10rpx;
-						color: $u-light-color;
+						color: $up-light-color;
 						font-size: 30rpx;
 					}
 				}
@@ -253,7 +253,7 @@
 				&__message {
 					font-size: 12px;
 					line-height: 12px;
-					color: $u-error;
+					color: $up-error;
 				}
 			}
 		}

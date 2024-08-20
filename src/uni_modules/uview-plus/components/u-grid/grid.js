@@ -1,11 +1,11 @@
 /*
- * @Author       : LQ
+ * @Author       : LQ,jry
  * @Description  :
- * @version      : 1.0
+ * @version      : 3.0
  * @Date         : 2021-08-20 16:44:21
- * @LastAuthor   : LQ
- * @lastTime     : 2021-08-20 17:05:57
- * @FilePath     : /u-view2.0/uview-ui/libs/config/props/grid.js
+ * @LastAuthor   : jry
+ * @lastTime     : 2024-08-20 14:20:58
+ * @FilePath     : /uview-plus/libs/config/props/grid.js
  */
 export default {
     // grid组件

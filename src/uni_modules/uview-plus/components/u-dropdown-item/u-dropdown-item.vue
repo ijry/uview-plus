@@ -1,10 +1,10 @@
 <template>
-	<view class="u-dropdown-item" v-if="active" @touchmove.stop.prevent="() => {}" @tap.stop.prevent="() => {}">
+	<view class="up-dropdown-item" v-if="active" @touchmove.stop.prevent="() => {}" @tap.stop.prevent="() => {}">
 		<block v-if="!$slots.default && !$slots.$default">
-			<scroll-view class="u-dropdown-item__scroll" scroll-y="true" :style="{
+			<scroll-view class="up-dropdown-item__scroll" scroll-y="true" :style="{
 				height: addUnit(height)
 			}">
-				<view class="u-dropdown-item__options">
+				<view class="up-dropdown-item__options">
 					<up-cell-group>
 						<up-cell @click="cellClick(item.value)" :arrow="false" :title="item.label" v-for="(item, index) in options"
 						 :key="index" :title-style="{
@@ -35,10 +35,10 @@
 	 * @property {Boolean} disabled 是否禁用此选项卡（默认false）
 	 * @property {String | Number} duration 选项卡展开和收起的过渡时间，单位ms（默认300）
 	 * @property {String | Number} height 弹窗下拉内容的高度(内容超出将会滚动)（默认auto）
-	 * @example <u-dropdown-item title="标题"></u-dropdown-item>
+	 * @example <up-dropdown-item title="标题"></up-dropdown-item>
 	 */
 	export default {
-		name: 'u-dropdown-item',
+		name: 'up-dropdown-item',
 		mixins: [mpMixin, mixin, props],
         options: {
             styleIsolation: 'shared',
@@ -51,7 +51,7 @@
 			}
 		},
 		computed: {
-			// 监听props是否发生了变化，有些值需要传递给父组件u-dropdown，无法双向绑定
+			// 监听props是否发生了变化，有些值需要传递给父组件up-dropdown，无法双向绑定
 			propsChange() {
 				return `${this.title}-${this.disabled}`;
 			}
@@ -71,8 +71,8 @@
 		methods: {
 			addUnit,
 			init() {
-				// 获取父组件u-dropdown
-				let parent = $parent.call(this, 'u-dropdown');
+				// 获取父组件up-dropdown
+				let parent = $parent.call(this, 'up-dropdown');
 				if (parent) {
 					this.parent = parent;
 					// 将子组件的激活颜色配置为父组件设置的激活和未激活时的颜色
@@ -101,7 +101,7 @@
 		        // #ifdef VUE3
                 this.$emit('update:modelValue', value);
                 // #endif
-				// 通知父组件(u-dropdown)收起菜单
+				// 通知父组件(up-dropdown)收起菜单
 				this.parent.close();
 				// 发出事件，抛出当前勾选项的value
 				this.$emit('change', value);
@@ -115,7 +115,7 @@
 
 <style scoped lang="scss">
 	@import "../../libs/css/components.scss";
-    .u-dropdown-item__scroll {
+    .up-dropdown-item__scroll {
         background: #ffffff;
     }
 </style>

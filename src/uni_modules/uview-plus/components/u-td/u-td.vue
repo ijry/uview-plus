@@ -1,5 +1,5 @@
 <template>
-	<view class="u-td">
+	<view class="up-td">
 		
 	</view>
 </template>
@@ -17,7 +17,7 @@
 	 * @example
 	 */
 	export default {
-		name: 'u-td',
+		name: 'up-td',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {

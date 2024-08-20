@@ -1,9 +1,9 @@
 <template>
-    <view class="u-waterfall">
-        <view ref="u-left-column" id="u-left-column" class="u-column">
+    <view class="up-waterfall">
+        <view ref="up-left-column" id="up-left-column" class="up-column">
             <slot name="left" :leftList="leftList"></slot>
         </view>
-        <view ref="u-right-column" id="u-right-column" class="u-column">
+        <view ref="up-right-column" id="up-right-column" class="up-column">
             <slot name="right" :rightList="rightList"></slot>
         </view>
     </view>
@@ -16,12 +16,12 @@
      * @tutorial https://uview-plus.jiangruyi.com/components/waterfall.html
      * @property {Array} flow-list 用于渲染的数据
      * @property {String Number} add-time 单条数据添加到队列的时间间隔，单位ms，见上方注意事项说明（默认200）
-     * @example <u-waterfall :flowList="flowList"></u-waterfall>
+     * @example <up-waterfall :flowList="flowList"></up-waterfall>
      */
     import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
     export default {
-        name: "u-waterfall",
+        name: "up-waterfall",
         props: {
             // #ifdef VUE2
             value: {
@@ -93,8 +93,8 @@
         methods: {
             async splitData() {
                 if (!this.tempList.length) return;
-                let leftRect = await this.$uGetRect('#u-left-column');
-                let rightRect = await this.$uGetRect('#u-right-column');
+                let leftRect = await this.$uGetRect('#up-left-column');
+                let rightRect = await this.$uGetRect('#up-right-column');
                 // 如果左边小于或等于右边，就添加到左边，否则添加到右边
                 let item = this.tempList[0];
                 // 解决多次快速上拉后，可能数据会乱的问题，因为经过上面的两个await节点查询阻塞一定时间，加上后面的定时器干扰
@@ -209,13 +209,13 @@
 <style lang="scss" scoped>
     @import "../../libs/css/components.scss";
 
-    .u-waterfall {
+    .up-waterfall {
         @include flex;
         flex-direction: row;
         align-items: flex-start;
     }
 
-    .u-column {
+    .up-column {
         @include flex;
         flex: 1;
         flex-direction: column;
@@ -225,7 +225,7 @@
         /* #endif */
     }
 
-    .u-image {
+    .up-image {
         /* #ifndef APP-NVUE */
         max-width: 100%;
         /* #endif */

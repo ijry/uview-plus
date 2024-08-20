@@ -25,7 +25,7 @@ export default {
         getSliderRect() {
             // 获取滑块条的尺寸信息
             sleep().then(() => {
-                this.$uGetRect('.u-slider').then((rect) => {
+                this.$uGetRect('.up-slider').then((rect) => {
                     this.info.width = rect.width
                     this.info.left = rect.left
                 })

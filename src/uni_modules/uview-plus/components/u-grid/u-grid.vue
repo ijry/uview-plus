@@ -1,7 +1,7 @@
 <template>
 	<view
-	    class="u-grid"
-		ref='u-grid'
+	    class="up-grid"
+		ref='up-grid'
 	    :style="[gridStyle]"
 	>
 		<slot />
@@ -22,10 +22,10 @@
 	 * @property {String}			align		宫格对齐方式，表现为数量少的时候，靠左，居中，还是靠右 （默认 'left' ）
 	 * @property {Object}			customStyle	定义需要用到的外部样式
 	 * @event {Function} click 点击宫格触发
-	 * @example <u-grid :col="3" @click="click"></u-grid>
+	 * @example <up-grid :col="3" @click="click"></up-grid>
 	 */
 	export default {
-		name: 'u-grid',
+		name: 'up-grid',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -38,7 +38,7 @@
 			parentData() {
 				if (this.children.length) {
 					this.children.map(child => {
-						// 判断子组件(u-radio)如果有updateParentData方法的话，就就执行(执行的结果是子组件重新从父组件拉取了最新的值)
+						// 判断子组件(up-radio)如果有updateParentData方法的话，就就执行(执行的结果是子组件重新从父组件拉取了最新的值)
 						typeof(child.updateParentData) == 'function' && child.updateParentData();
 					})
 				}
@@ -80,7 +80,7 @@
 		},
 		// #endif
 		methods: {
-			// 此方法由u-grid-item触发，用于在u-grid发出事件
+			// 此方法由up-grid-item触发，用于在up-grid发出事件
 			childClick(name) {
 				this.$emit('click', name)
 			}
@@ -90,10 +90,10 @@
 
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
-     $u-grid-width:100% !default;
-	.u-grid {
+    $up-grid-width:100% !default;
+	.up-grid {
 		/* #ifdef APP-NVUE */
-		width: $u-grid-width;
+		width: $up-grid-width;
 		position: relative;
 		box-sizing: border-box;
 		overflow: hidden;

@@ -1,9 +1,9 @@
 <template>
-	<view class="u-qrcode" @longpress="longpress">
-		<view class="u-qrcode__content" @click="preview">
-			<canvas class="u-qrcode__canvas"
+	<view class="up-qrcode" @longpress="longpress">
+		<view class="up-qrcode__content" @click="preview">
+			<canvas class="up-qrcode__canvas"
 				:id="cid" :canvas-id="cid" :style="{ width: size + unit, height: size + unit }" />
-			<view v-if="showLoading && loading" class="u-qrcode__loading"
+			<view v-if="showLoading && loading" class="up-qrcode__loading"
 				:style="{ width: size + unit, height: size + unit }">
 				<up-loading-icon vertical :text="loadingText" textSize="14px"></up-loading-icon>
 			</view>
@@ -19,11 +19,11 @@
 import QRCode from "./qrcode.js"
 let qrcode
 export default {
-	name: "u-qrcode",
+	name: "up-qrcode",
 	props: {
 		cid: {
 			type: String,
-			default: 'u-qrcode-canvas' + Math.random().toString()
+			default: 'up-qrcode-canvas' + Math.random().toString()
 		},
 		size: {
 			type: Number,
@@ -238,7 +238,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.u-qrcode {
+.up-qrcode {
 	&__loading {
 		display: flex;
 		justify-content: center;

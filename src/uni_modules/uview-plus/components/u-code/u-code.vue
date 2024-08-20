@@ -1,5 +1,5 @@
 <template>
-	<view class="u-code">
+	<view class="up-code">
 		<!-- 此组件功能由js完成，无需写html逻辑 -->
 	</view>
 </template>
@@ -22,10 +22,10 @@
 	 * @event {Function}	change	倒计时期间，每秒触发一次
 	 * @event {Function}	start	开始倒计时触发
 	 * @event {Function}	end		结束倒计时触发
-	 * @example <u-code ref="uCode" @change="codeChange" seconds="20"></u-code>
+	 * @example <up-code ref="uCode" @change="codeChange" seconds="20"></up-code>
 	 */
 	export default {
-		name: "u-code",
+		name: "up-code",
 		mixins: [mpMixin, mixin,props],
 		data() {
 			return {

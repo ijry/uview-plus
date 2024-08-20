@@ -17,7 +17,7 @@
 	 * @example 
 	 */
 	export default {
-		name: 'u-tabs-item',
+		name: 'up-tabs-item',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {

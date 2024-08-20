@@ -1,5 +1,5 @@
 <template>
-	<view class="u-gap" :style="[gapStyle]"></view>
+	<view class="up-gap" :style="[gapStyle]"></view>
 </template>
 
 <script>
@@ -17,10 +17,10 @@
 	 * @property {String | Number}	marginBottom	与后一个组件的距离，单位px （默认 0 ）
 	 * @property {Object}			customStyle		定义需要用到的外部样式
 	 * 
-	 * @example <u-gap height="80" bg-color="#bbb"></u-gap>
+	 * @example <up-gap height="80" bg-color="#bbb"></up-gap>
 	 */
 	export default {
-		name: "u-gap",
+		name: "up-gap",
 		mixins: [mpMixin, mixin, props],
 		computed: {
 			gapStyle() {

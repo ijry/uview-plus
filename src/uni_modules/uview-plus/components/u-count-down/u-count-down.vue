@@ -1,7 +1,7 @@
 <template>
-	<view class="u-count-down">
+	<view class="up-count-down">
 		<slot>
-			<text class="u-count-down__text">{{ formattedTime }}</text>
+			<text class="up-count-down__text">{{ formattedTime }}</text>
 		</slot>
 	</view>
 </template>
@@ -16,7 +16,7 @@
 		parseTimeData
 	} from './utils';
 	/**
-	 * u-count-down 倒计时
+	 * up-count-down 倒计时
 	 * @description 该组件一般使用于某个活动的截止时间上，通过数字的变化，给用户明确的时间感受，提示用户进行某一个行为操作。
 	 * @tutorial https://uview-plus.jiangruyi.com/components/countDown.html
 	 * @property {String | Number}	time		倒计时时长，单位ms （默认 0 ）
@@ -28,10 +28,10 @@
 	 * @event {Function} start	开始倒计时
 	 * @event {Function} pause	暂停倒计时 
 	 * @event {Function} reset	重设倒计时，若 auto-start 为 true，重设后会自动开始倒计时 
-	 * @example <u-count-down :time="time"></u-count-down>
+	 * @example <up-count-down :time="time"></up-count-down>
 	 */
 	export default {
-		name: 'u-count-down',
+		name: 'up-count-down',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -152,15 +152,15 @@
 	scoped
 >
 	@import "../../libs/css/components.scss";
-	$u-count-down-text-color:$u-content-color !default;
-	$u-count-down-text-font-size:15px !default;
-	$u-count-down-text-line-height:22px !default;
+	$up-count-down-text-color:$up-content-color !default;
+	$up-count-down-text-font-size:15px !default;
+	$up-count-down-text-line-height:22px !default;
 
-	.u-count-down {
+	.up-count-down {
 		&__text {
-			color: $u-count-down-text-color;
-			font-size: $u-count-down-text-font-size;
-			line-height: $u-count-down-text-line-height;
+			color: $up-count-down-text-color;
+			font-size: $up-count-down-text-font-size;
+			line-height: $up-count-down-text-line-height;
 		}
 	}
 </style>

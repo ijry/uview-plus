@@ -1,9 +1,9 @@
 <template>
 	<text
 		v-if="show && ((Number(value) === 0 ? showZero : true) || isDot)"
-		:class="[isDot ? 'u-badge--dot' : 'u-badge--not-dot', inverted && 'u-badge--inverted', shape === 'horn' && 'u-badge--horn', `u-badge--${type}${inverted ? '--inverted' : ''}`]"
+		:class="[isDot ? 'up-badge--dot' : 'up-badge--not-dot', inverted && 'up-badge--inverted', shape === 'horn' && 'up-badge--horn', `up-badge--${type}${inverted ? '--inverted' : ''}`]"
 		:style="[addStyle(customStyle), badgeStyle]"
-		class="u-badge"
+		class="up-badge"
 	>{{ isDot ? '' :showValue }}</text>
 </template>
 
@@ -31,10 +31,10 @@
 	 * @property {Boolean} 			inverted	是否反转背景和字体颜色（默认 false ）
 	 * @property {Boolean} 			absolute	是否绝对定位（默认 false ）
 	 * @property {Object}			customStyle	定义需要用到的外部样式
-	 * @example <u-badge :type="type" :count="count"></u-badge>
+	 * @example <up-badge :type="type" :count="count"></up-badge>
 	 */
 	export default {
-		name: 'u-badge',
+		name: 'up-badge',
 		mixins: [mpMixin, props, mixin],
 		computed: {
 			// 是否将badge中心与父组件右上角重合
@@ -91,35 +91,35 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	$u-badge-primary: $u-primary !default;
-	$u-badge-error: $u-error !default;
-	$u-badge-success: $u-success !default;
-	$u-badge-info: $u-info !default;
-	$u-badge-warning: $u-warning !default;
-	$u-badge-dot-radius: 100px !default;
-	$u-badge-dot-size: 8px !default;
-	$u-badge-dot-right: 4px !default;
-	$u-badge-dot-top: 0 !default;
-	$u-badge-text-font-size: 11px !default;
-	$u-badge-text-right: 10px !default;
-	$u-badge-text-padding: 2px 5px !default;
-	$u-badge-text-align: center !default;
-	$u-badge-text-color: #FFFFFF !default;
+	$up-badge-primary: $up-primary !default;
+	$up-badge-error: $up-error !default;
+	$up-badge-success: $up-success !default;
+	$up-badge-info: $up-info !default;
+	$up-badge-warning: $up-warning !default;
+	$up-badge-dot-radius: 100px !default;
+	$up-badge-dot-size: 8px !default;
+	$up-badge-dot-right: 4px !default;
+	$up-badge-dot-top: 0 !default;
+	$up-badge-text-font-size: 11px !default;
+	$up-badge-text-right: 10px !default;
+	$up-badge-text-padding: 2px 5px !default;
+	$up-badge-text-align: center !default;
+	$up-badge-text-color: #FFFFFF !default;
 
-	.u-badge {
-		border-top-right-radius: $u-badge-dot-radius;
-		border-top-left-radius: $u-badge-dot-radius;
-		border-bottom-left-radius: $u-badge-dot-radius;
-		border-bottom-right-radius: $u-badge-dot-radius;
+	.up-badge {
+		border-top-right-radius: $up-badge-dot-radius;
+		border-top-left-radius: $up-badge-dot-radius;
+		border-bottom-left-radius: $up-badge-dot-radius;
+		border-bottom-right-radius: $up-badge-dot-radius;
 		@include flex;
-		line-height: $u-badge-text-font-size;
-		text-align: $u-badge-text-align;
-		font-size: $u-badge-text-font-size;
-		color: $u-badge-text-color;
+		line-height: $up-badge-text-font-size;
+		text-align: $up-badge-text-align;
+		font-size: $up-badge-text-font-size;
+		color: $up-badge-text-color;
 
 		&--dot {
-			height: $u-badge-dot-size;
-			width: $u-badge-dot-size;
+			height: $up-badge-dot-size;
+			width: $up-badge-dot-size;
 		}
 		
 		&--inverted {
@@ -127,7 +127,7 @@
 		}
 		
 		&--not-dot {
-			padding: $u-badge-text-padding;
+			padding: $up-badge-text-padding;
 		}
 
 		&--horn {
@@ -135,43 +135,43 @@
 		}
 
 		&--primary {
-			background-color: $u-badge-primary;
+			background-color: $up-badge-primary;
 		}
 		
 		&--primary--inverted {
-			color: $u-badge-primary;
+			color: $up-badge-primary;
 		}
 
 		&--error {
-			background-color: $u-badge-error;
+			background-color: $up-badge-error;
 		}
 		
 		&--error--inverted {
-			color: $u-badge-error;
+			color: $up-badge-error;
 		}
 
 		&--success {
-			background-color: $u-badge-success;
+			background-color: $up-badge-success;
 		}
 		
 		&--success--inverted {
-			color: $u-badge-success;
+			color: $up-badge-success;
 		}
 
 		&--info {
-			background-color: $u-badge-info;
+			background-color: $up-badge-info;
 		}
 		
 		&--info--inverted {
-			color: $u-badge-info;
+			color: $up-badge-info;
 		}
 
 		&--warning {
-			background-color: $u-badge-warning;
+			background-color: $up-badge-warning;
 		}
 		
 		&--warning--inverted {
-			color: $u-badge-warning;
+			color: $up-badge-warning;
 		}
 	}
 </style>

@@ -181,7 +181,7 @@
 				}
 			}
 
-			:deep(.u-cell-group) {
+			:deep(.up-cell-group) {
 				background-color: #fff;
 			}
 		}

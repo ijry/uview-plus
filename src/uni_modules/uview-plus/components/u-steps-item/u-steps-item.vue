@@ -1,36 +1,36 @@
 <template>
-	<view class="u-steps-item" ref="u-steps-item" :class="[`u-steps-item--${parentData.direction}`]">
-		<view class="u-steps-item__line" v-if="index + 1 < childLength"
-			:class="[`u-steps-item__line--${parentData.direction}`]" :style="[lineStyle]"></view>
-		<view class="u-steps-item__wrapper"
-			:class="[`u-steps-item__wrapper--${parentData.direction}`, parentData.dot && `u-steps-item__wrapper--${parentData.direction}--dot`]"
+	<view class="up-steps-item" ref="up-steps-item" :class="[`up-steps-item--${parentData.direction}`]">
+		<view class="up-steps-item__line" v-if="index + 1 < childLength"
+			:class="[`up-steps-item__line--${parentData.direction}`]" :style="[lineStyle]"></view>
+		<view class="up-steps-item__wrapper"
+			:class="[`up-steps-item__wrapper--${parentData.direction}`, parentData.dot && `up-steps-item__wrapper--${parentData.direction}--dot`]"
 			:style="[itemStyleInner]">
 			<slot name="icon">
-				<view class="u-steps-item__wrapper__dot" v-if="parentData.dot" :style="{
+				<view class="up-steps-item__wrapper__dot" v-if="parentData.dot" :style="{
 						backgroundColor: statusColor
 					}">
 
 				</view>
-				<view class="u-steps-item__wrapper__icon" v-else-if="parentData.activeIcon || parentData.inactiveIcon">
-					<u-icon :name="index <= parentData.current ? parentData.activeIcon : parentData.inactiveIcon"
+				<view class="up-steps-item__wrapper__icon" v-else-if="parentData.activeIcon || parentData.inactiveIcon">
+					<up-icon :name="index <= parentData.current ? parentData.activeIcon : parentData.inactiveIcon"
 						:size="iconSize"
 						:color="index <= parentData.current ? parentData.activeColor : parentData.inactiveColor">
-					</u-icon>
+					</up-icon>
 				</view>
 				<view v-else :style="{
 						backgroundColor: statusClass === 'process' ? parentData.activeColor : 'transparent',
 						borderColor: statusColor
-					}" class="u-steps-item__wrapper__circle">
+					}" class="up-steps-item__wrapper__circle">
 					<text v-if="statusClass === 'process' || statusClass === 'wait'"
-						class="u-steps-item__wrapper__circle__text" :style="{
+						class="up-steps-item__wrapper__circle__text" :style="{
 							color: index == parentData.current ? '#ffffff' : parentData.inactiveColor
 						}">{{ index + 1}}</text>
-					<u-icon v-else :color="statusClass === 'error' ? 'error' : parentData.activeColor" size="12"
-						:name="statusClass === 'error' ? 'close' : 'checkmark'"></u-icon>
+					<up-icon v-else :color="statusClass === 'error' ? 'error' : parentData.activeColor" size="12"
+						:name="statusClass === 'error' ? 'close' : 'checkmark'"></up-icon>
 				</view>
 			</slot>
 		</view>
-		<view class="u-steps-item__content" :class="[`u-steps-item__content--${parentData.direction}`]"
+		<view class="up-steps-item__content" :class="[`up-steps-item__content--${parentData.direction}`]"
 			:style="[contentStyle]">
 			<up-text :text="title" :type="parentData.current == index ? 'main' : 'content'" lineHeight="20px"
 				:size="parentData.current == index ? 14 : 13"></up-text>
@@ -39,9 +39,9 @@
 			</slot>
 		</view>
 		<!-- <view
-		    class="u-steps-item__line"
+		    class="up-steps-item__line"
 		    v-if="showLine && parentData.direction === 'column'"
-			:class="[`u-steps-item__line--${parentData.direction}`]"
+			:class="[`up-steps-item__line--${parentData.direction}`]"
 		    :style="[lineStyle]"
 		></view> -->
 	</view>
@@ -58,16 +58,16 @@
 	// #endif
 	/**
 	 * StepsItem 步骤条的子组件
-	 * @description 本组件需要和u-steps配合使用
+	 * @description 本组件需要和up-steps配合使用
 	 * @tutorial https://uview-plus.jiangruyi.com/components/steps.html
 	 * @property {String}			title			标题文字
 	 * @property {String}			current			描述文本
 	 * @property {String | Number}	iconSize		图标大小  (默认 17 )
 	 * @property {Boolean}			error			当前步骤是否处于失败状态  (默认 false )
-	 * @example <u-steps current="0"><u-steps-item title="已出库" desc="10:35" ></u-steps-item></u-steps>
+	 * @example <up-steps current="0"><up-steps-item title="已出库" desc="10:35" ></up-steps-item></up-steps>
 	 */
 	export default {
-		name: 'u-steps-item',
+		name: 'up-steps-item',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -182,14 +182,14 @@
 				// 初始化数据
 				this.updateParentData()
 				if (!this.parent) {
-					return error('u-steps-item必须要搭配u-steps组件使用')
+					return error('up-steps-item必须要搭配up-steps组件使用')
 				}
 				this.index = this.parent.children.indexOf(this)
 				this.childLength = this.parent.children.length
 			},
 			updateParentData() {
 				// 此方法在mixin中
-				this.getParentData('u-steps')
+				this.getParentData('up-steps')
 			},
 			// 父组件数据发生变化
 			updateFromParent() {
@@ -198,13 +198,13 @@
 			// 获取组件的尺寸，用于设置横线的位置
 			getStepsItemRect() {
 				// #ifndef APP-NVUE
-				this.$uGetRect('.u-steps-item').then(size => {
+				this.$uGetRect('.up-steps-item').then(size => {
 					this.size = size
 				})
 				// #endif
 
 				// #ifdef APP-NVUE
-				dom.getComponentRect(this.$refs['u-steps-item'], res => {
+				dom.getComponentRect(this.$refs['up-steps-item'], res => {
 					const {
 						size
 					} = res
@@ -219,7 +219,7 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-steps-item {
+	.up-steps-item {
 		flex: 1;
 		@include flex;
 
@@ -273,7 +273,7 @@
 				/* #endif */
 				border-radius: 100px;
 				border-width: 1px;
-				border-color: $u-tips-color;
+				border-color: $up-tips-color;
 				border-style: solid;
 				@include flex(row);
 				align-items: center;
@@ -281,7 +281,7 @@
 				transition: background-color 0.3s;
 
 				&__text {
-					color: $u-tips-color;
+					color: $up-tips-color;
 					font-size: 11px;
 					@include flex(row);
 					align-items: center;
@@ -295,7 +295,7 @@
 				width: 10px;
 				height: 10px;
 				border-radius: 100px;
-				background-color: $u-content-color;
+				background-color: $up-content-color;
 			}
 		}
 
@@ -316,7 +316,7 @@
 
 		&__line {
 			position: absolute;
-			background: $u-tips-color;
+			background: $up-tips-color;
 
 			&--row {
 				top: 10px;

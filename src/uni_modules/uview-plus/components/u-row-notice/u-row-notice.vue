@@ -1,27 +1,27 @@
 <template>
 	<view
-		class="u-notice"
+		class="up-notice"
 		@tap="clickHandler"
 	>
 		<slot name="icon">
 			<view
-				class="u-notice__left-icon"
+				class="up-notice__left-icon"
 				v-if="icon"
 			>
-				<u-icon
+				<up-icon
 					:name="icon"
 					:color="color"
 					size="19"
-				></u-icon>
+				></up-icon>
 			</view>
 		</slot>
 		<view
-			class="u-notice__content"
-			ref="u-notice__content"
+			class="up-notice__content"
+			ref="up-notice__content"
 		>
 			<view
-				ref="u-notice__content__text"
-				class="u-notice__content__text"
+				ref="up-notice__content__text"
+				class="up-notice__content__text"
 				:style="[animationStyle]"
 			>
 				<text
@@ -32,22 +32,22 @@
 			</view>
 		</view>
 		<view
-			class="u-notice__right-icon"
+			class="up-notice__right-icon"
 			v-if="['link', 'closable'].includes(mode)"
 		>
-			<u-icon
+			<up-icon
 				v-if="mode === 'link'"
 				name="arrow-right"
 				:size="17"
 				:color="color"
-			></u-icon>
-			<u-icon
+			></up-icon>
+			<up-icon
 				v-if="mode === 'closable'"
 				@click="close"
 				name="close"
 				:size="16"
 				:color="color"
-			></u-icon>
+			></up-icon>
 		</view>
 	</view>
 </template>
@@ -78,7 +78,7 @@
 	 * @example 
 	 */
 	export default {
-		name: 'u-row-notice',
+		name: 'up-row-notice',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -192,10 +192,10 @@
 				// 进行一定的延时
 				await sleep()
 				// 查询盒子和文字的宽度
-				textWidth = (await this.$uGetRect('.u-notice__content__text')).width
-				boxWidth = (await this.$uGetRect('.u-notice__content')).width
-				// 根据t=s/v(时间=路程/速度)，这里为何不需要加上#u-notice-box的宽度，因为中设置了.u-notice-content样式中设置了padding-left: 100%
-				// 恰巧计算出来的结果中已经包含了#u-notice-box的宽度
+				textWidth = (await this.$uGetRect('.up-notice__content__text')).width
+				boxWidth = (await this.$uGetRect('.up-notice__content')).width
+				// 根据t=s/v(时间=路程/速度)，这里为何不需要加上#up-notice-box的宽度，因为中设置了.up-notice-content样式中设置了padding-left: 100%
+				// 恰巧计算出来的结果中已经包含了#up-notice-box的宽度
 				this.animationDuration = `${textWidth / getPx(this.speed)}s`
 				// 这里必须这样开始动画，否则在APP上动画速度不会改变
 				this.animationPlayState = 'paused'
@@ -213,10 +213,10 @@
 				// 进行一定的延时
 				await sleep()
 				// 查询盒子和文字的宽度
-				textWidth = (await this.getNvueRect('u-notice__content__text')).width
-				boxWidth = (await this.getNvueRect('u-notice__content')).width
+				textWidth = (await this.getNvueRect('up-notice__content__text')).width
+				boxWidth = (await this.getNvueRect('up-notice__content')).width
 				// 将文字移动到盒子的右边沿，之所以需要这么做，是因为nvue不支持100%单位，否则可以通过css设置
-				animation.transition(this.$refs['u-notice__content__text'], {
+				animation.transition(this.$refs['up-notice__content__text'], {
 					styles: {
 						transform: `translateX(${boxWidth}px)`
 					},
@@ -228,7 +228,7 @@
 			},
 			loopAnimation(textWidth, boxWidth) {
 				// #ifdef APP-NVUE
-				animation.transition(this.$refs['u-notice__content__text'], {
+				animation.transition(this.$refs['up-notice__content__text'], {
 					styles: {
 						// 目标移动终点为-textWidth，也即当文字的最右边贴到盒子的左边框的位置
 						transform: `translateX(-${textWidth}px)`
@@ -237,7 +237,7 @@
 					duration: (boxWidth + textWidth) / getPx(this.speed) * 1000,
 					delay: 10
 				}, () => {
-					animation.transition(this.$refs['u-notice__content__text'], {
+					animation.transition(this.$refs['up-notice__content__text'], {
 						styles: {
 							// 重新将文字移动到盒子的右边沿
 							transform: `translateX(${this.stopAnimation ? 0 : boxWidth}px)`
@@ -284,7 +284,7 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-notice {
+	.up-notice {
 		@include flex;
 		align-items: center;
 		justify-content: space-between;
@@ -308,13 +308,13 @@
 
 			&__text {
 				font-size: 14px;
-				color: $u-warning;
+				color: $up-warning;
 				/* #ifndef APP-NVUE */
 				// 这一句很重要，为了能让滚动左右连接起来
 				padding-left: 100%;
 				word-break: keep-all;
 				white-space: nowrap;
-				animation: u-loop-animation 10s linear infinite both;
+				animation: up-loop-animation 10s linear infinite both;
 				/* #endif */
 				@include flex(row);
 				line-height: 100%;
@@ -324,7 +324,7 @@
 	}
 
 	/* #ifndef APP-NVUE */
-	@keyframes u-loop-animation {
+	@keyframes up-loop-animation {
 		0% {
 			transform: translate3d(0, 0, 0);
 		}

@@ -1,9 +1,9 @@
 <template>
 	<view
-	    class="u-col"
-		ref="u-col"
+	    class="up-col"
+		ref="up-col"
 	    :class="[
-			'u-col-' + span
+			'up-col-' + span
 		]"
 	    :style="[colStyle]"
 	    @tap="clickHandler"
@@ -28,10 +28,10 @@
 	 * @property {String}			textAlign	文字水平对齐方式 (默认 'left' ) 
 	 * @property {Object}			customStyle	定义需要用到的外部样式
 	 * @event {Function}	click	col被点击，会阻止事件冒泡到row
-	 * @example	 <u-col  span="3" offset="3" > <view class="demo-layout bg-purple"></view> </u-col>
+	 * @example	 <up-col  span="3" offset="3" > <view class="demo-layout bg-purple"></view> </up-col>
 	 */
 	export default {
-		name: 'u-col',
+		name: 'up-col',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -90,7 +90,7 @@
 				this.width = await this.parent.getComponentWidth()
 			},
 			updateParentData() {
-				this.getParentData('u-row')
+				this.getParentData('up-row')
 			},
 			clickHandler(e) {
 				this.$emit('click');
@@ -102,7 +102,7 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-col {
+	.up-col {
 		padding: 0;
 		/* #ifndef APP-NVUE */
 		box-sizing:border-box;
@@ -114,55 +114,55 @@
 
 	// nvue下百分比无效
 	/* #ifndef APP-NVUE */
-	.u-col-0 {
+	.up-col-0 {
 		width: 0;
 	}
 
-	.u-col-1 {
+	.up-col-1 {
 		width: calc(100%/12);
 	}
 
-	.u-col-2 {
+	.up-col-2 {
 		width: calc(100%/12 * 2);
 	}
 
-	.u-col-3 {
+	.up-col-3 {
 		width: calc(100%/12 * 3);
 	}
 
-	.u-col-4 {
+	.up-col-4 {
 		width: calc(100%/12 * 4);
 	}
 
-	.u-col-5 {
+	.up-col-5 {
 		width: calc(100%/12 * 5);
 	}
 
-	.u-col-6 {
+	.up-col-6 {
 		width: calc(100%/12 * 6);
 	}
 
-	.u-col-7 {
+	.up-col-7 {
 		width: calc(100%/12 * 7);
 	}
 
-	.u-col-8 {
+	.up-col-8 {
 		width: calc(100%/12 * 8);
 	}
 
-	.u-col-9 {
+	.up-col-9 {
 		width: calc(100%/12 * 9);
 	}
 
-	.u-col-10 {
+	.up-col-10 {
 		width: calc(100%/12 * 10);
 	}
 
-	.u-col-11 {
+	.up-col-11 {
 		width: calc(100%/12 * 11);
 	}
 
-	.u-col-12 {
+	.up-col-12 {
 		width: calc(100%/12 * 12);
 	}
 

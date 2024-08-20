@@ -1,18 +1,18 @@
 <template>
 	<view
-		class="u-slider"
+		class="up-slider"
 		:style="[addStyle(customStyle)]"
 	>
 		<template v-if="!useNative || isRange">
-			<view ref="u-slider-inner" class="u-slider-inner" @click="onClick"
+			<view ref="up-slider-inner" class="up-slider-inner" @click="onClick"
 				@onTouchStart="onTouchStart2($event, 1)" @touchmove="onTouchMove2($event, 1)"
 				@touchend="onTouchEnd2($event, 1)" @touchcancel="onTouchEnd2($event, 1)"
-				:class="[disabled ? 'u-slider--disabled' : '']" :style="{
+				:class="[disabled ? 'up-slider--disabled' : '']" :style="{
 					height: (isRange && showValue) ? (getPx(blockSize) + 24) + 'px' : (getPx(blockSize)) + 'px',
 				}"
 			>
-				<view ref="u-slider__base"
-					class="u-slider__base"
+				<view ref="up-slider__base"
+					class="up-slider__base"
 					:style="[
 						{
 							height: height,
@@ -23,7 +23,7 @@
 				</view>
 				<view
 					@click="onClick"
-					class="u-slider__gap"
+					class="up-slider__gap"
 					:style="[
 						barStyle,
 						{
@@ -35,7 +35,7 @@
 				>
 				</view>
 				<view v-if="isRange"
-					class="u-slider__gap u-slider__gap-0"
+					class="up-slider__gap up-slider__gap-0"
 					:style="[
 						barStyle0,
 						{
@@ -47,41 +47,41 @@
 				>
 				</view>
 				<text v-if="isRange && showValue"
-					class="u-slider__show-range-value" :style="{left: (getPx(barStyle0.width) + getPx(blockSize)/2) + 'px'}">
+					class="up-slider__show-range-value" :style="{left: (getPx(barStyle0.width) + getPx(blockSize)/2) + 'px'}">
 					{{ this.rangeValue[0] }}
 				</text>
 				<text v-if="isRange && showValue"
-					class="u-slider__show-range-value" :style="{left: (getPx(barStyle.width) + getPx(blockSize)/2) + 'px'}">
+					class="up-slider__show-range-value" :style="{left: (getPx(barStyle.width) + getPx(blockSize)/2) + 'px'}">
 					{{ this.rangeValue[1] }}
 				</text>
 				<template v-if="isRange">
-					<view class="u-slider__button-wrap u-slider__button-wrap-0" @touchstart="onTouchStart($event, 0)"
+					<view class="up-slider__button-wrap up-slider__button-wrap-0" @touchstart="onTouchStart($event, 0)"
 						@touchmove="onTouchMove($event, 0)" @touchend="onTouchEnd($event, 0)"
 						@touchcancel="onTouchEnd($event, 0)" :style="{left: (getPx(barStyle0.width) + getPx(blockSize)/2) + 'px'}">
 						<slot v-if="$slots.default  || $slots.$default"/>
-						<view v-else class="u-slider__button" :style="[blockStyle, {
+						<view v-else class="up-slider__button" :style="[blockStyle, {
 							height: getPx(blockSize, true),
 							width: getPx(blockSize, true),
 							backgroundColor: blockColor
 						}]"></view>
 					</view>
 				</template>
-				<view class="u-slider__button-wrap" @touchstart="onTouchStart"
+				<view class="up-slider__button-wrap" @touchstart="onTouchStart"
 					@touchmove="onTouchMove" @touchend="onTouchEnd"
 					@touchcancel="onTouchEnd" :style="{left: (getPx(barStyle.width) + getPx(blockSize)/2) + 'px'}">
 					<slot v-if="$slots.default  || $slots.$default"/>
-					<view v-else class="u-slider__button" :style="[blockStyle, {
+					<view v-else class="up-slider__button" :style="[blockStyle, {
 						height: getPx(blockSize, true),
 						width: getPx(blockSize, true),
 						backgroundColor: blockColor
 					}]"></view>
 				</view>
 			</view>
-			<view class="u-slider__show-value" v-if="showValue && !isRange">{{ modelValue }}</view>
+			<view class="up-slider__show-value" v-if="showValue && !isRange">{{ modelValue }}</view>
 		</template>
 		<slider
-			class="u-slider__native"
 			v-else
+			class="up-slider__native"
 			:min="min"
 			:max="max"
 			:step="step"
@@ -125,7 +125,7 @@
 	 * @example <up-slider v-model="value" />
 	 */
 	export default {
-		name: 'u-slider',
+		name: 'up-slider',
 		mixins: [mpMixin, mixin, props],
 		emits: ["start", "changing", "change", "update:modelValue"],
 		data() {
@@ -164,14 +164,14 @@
 			// 获取滑块条的尺寸信息
 			if (!this.useNative) {
 				// #ifndef APP-NVUE
-				this.$uGetRect('.u-slider__base').then(rect => {
+				this.$uGetRect('.up-slider__base').then(rect => {
 					this.sliderRect = rect;
 					this.init()
 				});
 				// #endif
 				// #ifdef APP-NVUE
 				await sleep(30) // 不延迟会出现size获取都为0的问题
-				const ref = this.$refs['u-slider__base']
+				const ref = this.$refs['up-slider__base']
 				ref &&
 					dom.getComponentRect(ref, (res) => {
 						// console.log(res)
@@ -402,7 +402,7 @@
 
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
-	.u-slider {
+	.up-slider {
 		position: relative;
 		display: flex;
 		flex-direction: row;

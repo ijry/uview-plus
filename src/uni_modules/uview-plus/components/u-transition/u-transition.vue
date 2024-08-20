@@ -1,8 +1,8 @@
 <template>
 	<view
 		v-if="inited"
-		class="u-transition"
-		ref="u-transition"
+		class="up-transition"
+		ref="up-transition"
 		@tap="clickHandler"
 		:class="classes"
 		:style="[mergeStyle]"
@@ -37,7 +37,7 @@ import transitionMixin from "./transitionMixin.js";
  * @example
  */
 export default {
-	name: 'u-transition',
+	name: 'up-transition',
 	data() {
 		return {
 			inited: false, // 是否显示/隐藏组件
@@ -92,5 +92,5 @@ export default {
 @import './vue.ani-style.scss';
 /* #endif */
 
-.u-transition {}
+.up-transition {}
 </style>

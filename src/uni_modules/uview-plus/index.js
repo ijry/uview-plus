@@ -91,7 +91,7 @@ for (const key in importFn) {
     if (component.name && component.name.indexOf('u--') !== 0) {
         const name = component.name.replace(/u-([a-zA-Z0-9-_]+)/g, 'up-$1');
         component.name = name;
-        console.log('component', component.name)
+        // console.log('component', component.name)
         component.install = function (Vue) {
             Vue.component(component.name, component);
         };

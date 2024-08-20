@@ -71,9 +71,9 @@ function updateSliderPlacement(instance, ownerInstance, value, event) {
 		percent = Math.max(mp.min, Math.min(value, mp.max))
 	}
 	// 返回组件的实例
-	var gapInstance = ownerInstance.selectComponent('.u-slider__gap')
+	var gapInstance = ownerInstance.selectComponent('.up-slider__gap')
 	// 在移动期间，不允许transition动画，否则会造成卡顿
-	gapInstance[event === 'click' ? 'addClass' : 'removeClass']('u-slider__gap--ani')
+	gapInstance[event === 'click' ? 'addClass' : 'removeClass']('up-slider__gap--ani')
 	// 调用逻辑层的方法，修改v-model绑定的值
 	ownerInstance.callMethod('updateValue', Math.round(percent))
 	if(event) {

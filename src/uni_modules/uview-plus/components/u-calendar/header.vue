@@ -1,21 +1,21 @@
 <template>
-	<view class="u-calendar-header u-border-bottom">
+	<view class="up-calendar-header up-border-bottom">
 		<text
-			class="u-calendar-header__title"
+			class="up-calendar-header__title"
 			v-if="showTitle"
 		>{{ title }}</text>
 		<text
-			class="u-calendar-header__subtitle"
+			class="up-calendar-header__subtitle"
 			v-if="showSubtitle"
 		>{{ subtitle }}</text>
-		<view class="u-calendar-header__weekdays">
-			<text class="u-calendar-header__weekdays__weekday">一</text>
-			<text class="u-calendar-header__weekdays__weekday">二</text>
-			<text class="u-calendar-header__weekdays__weekday">三</text>
-			<text class="u-calendar-header__weekdays__weekday">四</text>
-			<text class="u-calendar-header__weekdays__weekday">五</text>
-			<text class="u-calendar-header__weekdays__weekday">六</text>
-			<text class="u-calendar-header__weekdays__weekday">日</text>
+		<view class="up-calendar-header__weekdays">
+			<text class="up-calendar-header__weekdays__weekday">一</text>
+			<text class="up-calendar-header__weekdays__weekday">二</text>
+			<text class="up-calendar-header__weekdays__weekday">三</text>
+			<text class="up-calendar-header__weekdays__weekday">四</text>
+			<text class="up-calendar-header__weekdays__weekday">五</text>
+			<text class="up-calendar-header__weekdays__weekday">六</text>
+			<text class="up-calendar-header__weekdays__weekday">日</text>
 		</view>
 	</view>
 </template>
@@ -24,7 +24,7 @@
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
 	export default {
-		name: 'u-calendar-header',
+		name: 'up-calendar-header',
 		mixins: [mpMixin, mixin],
 		props: {
 			// 标题
@@ -64,14 +64,14 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-calendar-header {
+	.up-calendar-header {
 		display: flex;
 		flex-direction: column;
 		padding-bottom: 4px;
 
 		&__title {
 			font-size: 16px;
-			color: $u-main-color;
+			color: $up-main-color;
 			text-align: center;
 			height: 42px;
 			line-height: 42px;
@@ -80,7 +80,7 @@
 
 		&__subtitle {
 			font-size: 14px;
-			color: $u-main-color;
+			color: $up-main-color;
 			height: 40px;
 			text-align: center;
 			line-height: 40px;
@@ -93,7 +93,7 @@
 
 			&__weekday {
 				font-size: 13px;
-				color: $u-main-color;
+				color: $up-main-color;
 				line-height: 30px;
 				flex: 1;
 				text-align: center;

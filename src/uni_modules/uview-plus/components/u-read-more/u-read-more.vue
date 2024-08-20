@@ -1,28 +1,28 @@
 <template>
-	<view class="u-read-more">
+	<view class="up-read-more">
 		<view
-		    class="u-read-more__content"
+		    class="up-read-more__content"
 		    :style="{
 				height: isLongContent && status === 'close' ? addUnit(showHeight) : addUnit(contentHeight),
 				textIndent: textIndent
 			}"
 		>
 			<view
-			    class="u-read-more__content__inner"
-			    ref="u-read-more__content__inner"
+			    class="up-read-more__content__inner"
+			    ref="up-read-more__content__inner"
 			    :class="[elId]"
 			>
 				<slot></slot>
 			</view>
 		</view>
 		<view
-		    class="u-read-more__toggle"
+		    class="up-read-more__toggle"
 		    :style="[innerShadowStyle]"
 		    v-if="isLongContent"
 		>
 			<slot name="toggle">
 				<view
-				    class="u-read-more__toggle__text"
+				    class="up-read-more__toggle__text"
 				    @tap="toggleReadMore"
 				>
 					<up-text
@@ -32,12 +32,12 @@
 					    :lineHeight="fontSize"
 					    margin="0 5px 0 0"
 					></up-text>
-					<view class="u-read-more__toggle__icon">
-						<u-icon
+					<view class="up-read-more__toggle__icon">
+						<up-icon
 						    :color="color"
 						    :size="fontSize + 2"
 						    :name="status === 'close' ? 'arrow-down' : 'arrow-up'"
-						></u-icon>
+						></up-icon>
 					</view>
 				</view>
 			</slot>
@@ -68,10 +68,10 @@
 	 * @property {String | Number}	name		用于在 open 和 close 事件中当作回调参数返回
 	 * @event {Function} open 内容被展开时触发
 	 * @event {Function} close 内容被收起时触发
-	 * @example <u-read-more><rich-text :nodes="content"></rich-text></u-read-more>
+	 * @example <up-read-more><rich-text :nodes="content"></rich-text></up-read-more>
 	 */
 	export default {
-		name: 'u-read-more',
+		name: 'up-read-more',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -120,7 +120,7 @@
 					// #endif
 
 					// #ifdef APP-NVUE
-					const ref = this.$refs['u-read-more__content__inner']
+					const ref = this.$refs['up-read-more__content__inner']
 					dom.getComponentRect(ref, (res) => {
 						resolve(res.size.height)
 					})
@@ -142,11 +142,11 @@
 <style lang="scss" scoped>
 @import "../../libs/css/components.scss";
 
-.u-read-more {
+.up-read-more {
 
 	&__content {
 		overflow: hidden;
-		color: $u-content-color;
+		color: $up-content-color;
 		font-size: 15px;
 		text-align: left;
 	}

@@ -1,44 +1,44 @@
 
 <template>
-	<u-popup
+	<up-popup
 	    :show="show"
 	    mode="bottom"
 	    @close="closeHandler"
 	    :safeAreaInsetBottom="safeAreaInsetBottom"
 	    :round="round"
 	>
-		<view class="u-action-sheet">
+		<view class="up-action-sheet">
 			<view
-			    class="u-action-sheet__header"
+			    class="up-action-sheet__header"
 			    v-if="title"
 			>
-				<text class="u-action-sheet__header__title u-line-1">{{title}}</text>
+				<text class="up-action-sheet__header__title up-line-1">{{title}}</text>
 				<view
-				    class="u-action-sheet__header__icon-wrap"
+				    class="up-action-sheet__header__icon-wrap"
 				    @tap.stop="cancel"
 				>
-					<u-icon
+					<up-icon
 					    name="close"
 					    size="17"
 					    color="#c8c9cc"
 					    bold
-					></u-icon>
+					></up-icon>
 				</view>
 			</view>
 			<text
-			    class="u-action-sheet__description"
+			    class="up-action-sheet__description"
 				:style="[{
 					marginTop: `${title && description ? 0 : '18px'}`
 				}]"
 			    v-if="description"
 			>{{description}}</text>
 			<slot>
-				<u-line v-if="description"></u-line>
-				<scroll-view scroll-y class="u-action-sheet__item-wrap" :style="{maxHeight: wrapMaxHeight}">
+				<up-line v-if="description"></up-line>
+				<scroll-view scroll-y class="up-action-sheet__item-wrap" :style="{maxHeight: wrapMaxHeight}">
 					<view :key="index" v-for="(item, index) in actions">
 						<!-- #ifdef MP -->
 						<button
-						    class="u-reset-button"
+						    class="up-reset-button"
 						    :openType="item.openType"
 						    @getuserinfo="onGetUserInfo"
 						    @contact="onContact"
@@ -54,26 +54,26 @@
 						    :show-message-card="showMessageCard"
 						    :app-parameter="appParameter"
 						    @tap="selectHandler(index)"
-						    :hover-class="!item.disabled && !item.loading ? 'u-action-sheet--hover' : ''"
+						    :hover-class="!item.disabled && !item.loading ? 'up-action-sheet--hover' : ''"
 						>
 							<!-- #endif -->
 							<view
-							    class="u-action-sheet__item-wrap__item"
+							    class="up-action-sheet__item-wrap__item"
 							    @tap.stop="selectHandler(index)"
-							    :hover-class="!item.disabled && !item.loading ? 'u-action-sheet--hover' : ''"
+							    :hover-class="!item.disabled && !item.loading ? 'up-action-sheet--hover' : ''"
 							    :hover-stay-time="150"
 							>
 								<template v-if="!item.loading">
 									<text
-									    class="u-action-sheet__item-wrap__item__name"
+									    class="up-action-sheet__item-wrap__item__name"
 									    :style="[itemStyle(index)]"
 									>{{ item.name }}</text>
 									<text
 									    v-if="item.subname"
-									    class="u-action-sheet__item-wrap__item__subname"
+									    class="up-action-sheet__item-wrap__item__subname"
 									>{{ item.subname }}</text>
 								</template>
-								<u-loading-icon
+								<up-loading-icon
 								    v-else
 								    custom-class="van-action-sheet__loading"
 								    size="18"
@@ -83,25 +83,25 @@
 							<!-- #ifdef MP -->
 						</button>
 						<!-- #endif -->
-						<u-line v-if="index !== actions.length - 1"></u-line>
+						<up-line v-if="index !== actions.length - 1"></up-line>
 					</view>
 				</scroll-view>
 			</slot>
-			<u-gap
+			<up-gap
 			    bgColor="#eaeaec"
 			    height="6"
 			    v-if="cancelText"
-			></u-gap>
-			<view class="u-action-sheet__item-wrap__item u-action-sheet__cancel"
-				hover-class="u-action-sheet--hover" @tap="cancel" v-if="cancelText">
+			></up-gap>
+			<view class="up-action-sheet__item-wrap__item up-action-sheet__cancel"
+				hover-class="up-action-sheet--hover" @tap="cancel" v-if="cancelText">
 				<text
 				    @touchmove.stop.prevent
 				    :hover-stay-time="150"
-				    class="u-action-sheet__cancel-text"
+				    class="up-action-sheet__cancel-text"
 				>{{cancelText}}</text>
 			</view>
 		</view>
-	</u-popup>
+	</up-popup>
 </template>
 
 <script>
@@ -142,10 +142,10 @@
 	 * @event {Function} error			当使用开放能力时，发生错误的回调，openType="error"时有效
 	 * @event {Function} launchapp		打开 APP 成功的回调，openType="launchApp"时有效
 	 * @event {Function} opensetting	在打开授权设置页后回调，openType="openSetting"时有效
-	 * @example <u-action-sheet :actions="list" :title="title" :show="show"></u-action-sheet>
+	 * @example <up-action-sheet :actions="list" :title="title" :show="show"></up-action-sheet>
 	 */
 	export default {
-		name: "u-action-sheet",
+		name: "up-action-sheet",
 		// 一些props参数和methods方法，通过mixin混入，因为其他文件也会用到
 		mixins: [openType, buttonMixin, mixin, props],
 		data() {
@@ -196,88 +196,88 @@
 
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
-	$u-action-sheet-reset-button-width:100% !default;
-	$u-action-sheet-title-font-size: 16px !default;
-	$u-action-sheet-title-padding: 12px 30px !default;
-	$u-action-sheet-title-color: $u-main-color !default;
-	$u-action-sheet-header-icon-wrap-right:15px !default;
-	$u-action-sheet-header-icon-wrap-top:15px !default;
-	$u-action-sheet-description-font-size:13px !default;
-	$u-action-sheet-description-color:14px !default;
-	$u-action-sheet-description-margin: 18px 15px !default;
-	$u-action-sheet-item-wrap-item-padding:17px !default;
-	$u-action-sheet-item-wrap-name-font-size:16px !default;
-	$u-action-sheet-item-wrap-subname-font-size:13px !default;
-	$u-action-sheet-item-wrap-subname-color: #c0c4cc !default;
-	$u-action-sheet-item-wrap-subname-margin-top:10px !default;
-	$u-action-sheet-cancel-text-font-size:16px !default;
-	$u-action-sheet-cancel-text-color:$u-content-color !default;
-	$u-action-sheet-cancel-text-font-size:15px !default;
-	$u-action-sheet-cancel-text-hover-background-color:rgb(242, 243, 245) !default;
+	$up-action-sheet-reset-button-width:100% !default;
+	$up-action-sheet-title-font-size: 16px !default;
+	$up-action-sheet-title-padding: 12px 30px !default;
+	$up-action-sheet-title-color: $up-main-color !default;
+	$up-action-sheet-header-icon-wrap-right:15px !default;
+	$up-action-sheet-header-icon-wrap-top:15px !default;
+	$up-action-sheet-description-font-size:13px !default;
+	$up-action-sheet-description-color:14px !default;
+	$up-action-sheet-description-margin: 18px 15px !default;
+	$up-action-sheet-item-wrap-item-padding:17px !default;
+	$up-action-sheet-item-wrap-name-font-size:16px !default;
+	$up-action-sheet-item-wrap-subname-font-size:13px !default;
+	$up-action-sheet-item-wrap-subname-color: #c0c4cc !default;
+	$up-action-sheet-item-wrap-subname-margin-top:10px !default;
+	$up-action-sheet-cancel-text-font-size:16px !default;
+	$up-action-sheet-cancel-text-color:$up-content-color !default;
+	$up-action-sheet-cancel-text-font-size:15px !default;
+	$up-action-sheet-cancel-text-hover-background-color:rgb(242, 243, 245) !default;
 
-	.u-reset-button {
-		width: $u-action-sheet-reset-button-width;
+	.up-reset-button {
+		width: $up-action-sheet-reset-button-width;
 	}
 
-	.u-action-sheet {
+	.up-action-sheet {
 		text-align: center;
 		&__header {
 			position: relative;
-			padding: $u-action-sheet-title-padding;
+			padding: $up-action-sheet-title-padding;
 			&__title {
-				font-size: $u-action-sheet-title-font-size;
-				color: $u-action-sheet-title-color;
+				font-size: $up-action-sheet-title-font-size;
+				color: $up-action-sheet-title-color;
 				font-weight: bold;
 				text-align: center;
 			}
 
 			&__icon-wrap {
 				position: absolute;
-				right: $u-action-sheet-header-icon-wrap-right;
-				top: $u-action-sheet-header-icon-wrap-top;
+				right: $up-action-sheet-header-icon-wrap-right;
+				top: $up-action-sheet-header-icon-wrap-top;
 			}
 		}
 
 		&__description {
-			font-size: $u-action-sheet-description-font-size;
-			color: $u-tips-color;
-			margin: $u-action-sheet-description-margin;
+			font-size: $up-action-sheet-description-font-size;
+			color: $up-tips-color;
+			margin: $up-action-sheet-description-margin;
 			text-align: center;
 		}
 
 		&__item-wrap {
 
 			&__item {
-				padding: $u-action-sheet-item-wrap-item-padding;
+				padding: $up-action-sheet-item-wrap-item-padding;
 				@include flex;
 				align-items: center;
 				justify-content: center;
 				flex-direction: column;
 
 				&__name {
-					font-size: $u-action-sheet-item-wrap-name-font-size;
-					color: $u-main-color;
+					font-size: $up-action-sheet-item-wrap-name-font-size;
+					color: $up-main-color;
 					text-align: center;
 				}
 
 				&__subname {
-					font-size: $u-action-sheet-item-wrap-subname-font-size;
-					color: $u-action-sheet-item-wrap-subname-color;
-					margin-top: $u-action-sheet-item-wrap-subname-margin-top;
+					font-size: $up-action-sheet-item-wrap-subname-font-size;
+					color: $up-action-sheet-item-wrap-subname-color;
+					margin-top: $up-action-sheet-item-wrap-subname-margin-top;
 					text-align: center;
 				}
 			}
 		}
 
 		&__cancel-text {
-			font-size: $u-action-sheet-cancel-text-font-size;
-			color: $u-action-sheet-cancel-text-color;
+			font-size: $up-action-sheet-cancel-text-font-size;
+			color: $up-action-sheet-cancel-text-color;
 			text-align: center;
-			// padding: $u-action-sheet-cancel-text-font-size;
+			// padding: $up-action-sheet-cancel-text-font-size;
 		}
 
 		&--hover {
-			background-color: $u-action-sheet-cancel-text-hover-background-color;
+			background-color: $up-action-sheet-cancel-text-hover-background-color;
 		}
 	}
 </style>

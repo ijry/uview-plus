@@ -1,7 +1,7 @@
 <template>
-    <view class="u-textarea" :class="textareaClass" :style="[textareaStyle]">
+    <view class="up-textarea" :class="textareaClass" :style="[textareaStyle]">
         <textarea
-            class="u-textarea__field"
+            class="up-textarea__field"
             :value="innerValue"
             :style="{ height: addUnit(height) }"
             :placeholder="placeholder"
@@ -31,7 +31,7 @@
         ></textarea>
 		<!-- #ifndef MP-ALIPAY -->
         <text
-            class="u-textarea__count"
+            class="up-textarea__count"
             :style="{
                 'background-color': disabled ? 'transparent' : '#fff',
             }"
@@ -85,7 +85,7 @@ import { addStyle, addUnit, deepMerge, formValidate, os } from '../../libs/funct
  * @example <up-textarea v-model="value1" placeholder="请输入内容" ></up-textarea>
  */
 export default {
-    name: "u-textarea",
+    name: "up-textarea",
     mixins: [mpMixin, mixin, props],
 	data() {
 		return {
@@ -151,13 +151,13 @@ export default {
             let classes = [],
                 { border, disabled } = this;
             border === "surround" &&
-                (classes = classes.concat(["u-border", "u-textarea--radius"]));
+                (classes = classes.concat(["up-border", "up-textarea--radius"]));
             border === "bottom" &&
                 (classes = classes.concat([
-                    "u-border-bottom",
-                    "u-textarea--no-radius",
+                    "up-border-bottom",
+                    "up-textarea--no-radius",
                 ]));
-            disabled && classes.push("u-textarea--disabled");
+            disabled && classes.push("up-textarea--disabled");
             return classes.join(" ");
         },
         // 组件的样式
@@ -190,7 +190,7 @@ export default {
         },
         onBlur(e) {
             this.$emit("blur", e);
-            // 尝试调用u-form的验证方法
+            // 尝试调用up-form的验证方法
             formValidate(this, "blur");
         },
         onLinechange(e) {
@@ -221,7 +221,7 @@ export default {
 		        // 标识value值的变化是由内部引起的
 		        this.changeFromInner = true;
 		        this.$emit("change", value);
-		        // 尝试调用u-form的验证方法
+		        // 尝试调用up-form的验证方法
 		        formValidate(this, "change");
 		    });
 		},
@@ -238,7 +238,7 @@ export default {
 <style lang="scss" scoped>
 @import "../../libs/css/components.scss";
 
-.u-textarea {
+.up-textarea {
     border-radius: 4px;
     background-color: #fff;
     position: relative;
@@ -261,7 +261,7 @@ export default {
     &__field {
         flex: 1;
         font-size: 15px;
-        color: $u-content-color;
+        color: $up-content-color;
 		width: 100%;
     }
 
@@ -270,7 +270,7 @@ export default {
         right: 5px;
         bottom: 2px;
         font-size: 12px;
-        color: $u-tips-color;
+        color: $up-tips-color;
         background-color: #ffffff;
         padding: 1px 4px;
     }

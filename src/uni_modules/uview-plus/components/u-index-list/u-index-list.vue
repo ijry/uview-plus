@@ -1,5 +1,5 @@
 <template>
-	<view ref="u-index-list" class="u-index-list">
+	<view ref="up-index-list" class="up-index-list">
 		<!-- #ifdef APP-NVUE -->
 		<list
 			:scrollTop="scrollTop"
@@ -9,8 +9,8 @@
 				maxHeight: addUnit(scrollViewHeight)
 			}"
 			@scroll="scrollHandler"
-			ref="u-index-list__scroll-view"
-			class="u-index-list__scroll-view"
+			ref="up-index-list__scroll-view"
+			class="up-index-list__scroll-view"
 		>
 			<cell
 				v-if="$slots.header"
@@ -34,21 +34,21 @@
 			}"
 			scroll-y
 			@scroll="scrollHandler"
-			ref="u-index-list__scroll-view"
-			class="u-index-list__scroll-view"
+			ref="up-index-list__scroll-view"
+			class="up-index-list__scroll-view"
 		>
-			<view class="u-index-list__header" v-if="$slots.header">
+			<view class="up-index-list__header" v-if="$slots.header">
 				<slot name="header" />
 			</view>
 			<slot />
-			<view class="u-index-list__footer" v-if="$slots.footer">
+			<view class="up-index-list__footer" v-if="$slots.footer">
 				<slot name="footer" />
 			</view>
 		</scroll-view>
 		<!-- #endif -->
 		<view
-			class="u-index-list__letter"
-			ref="u-index-list__letter"
+			class="up-index-list__letter"
+			ref="up-index-list__letter"
 			:style="{top: addUnit(letterInfo.top) , transform: 'translateY(-50%)'}"
 			@touchstart.prevent="touchStart"
 			@touchmove.prevent="touchMove"
@@ -56,7 +56,7 @@
 			@touchcancel.prevent="touchEnd"
 		>
 			<view
-				class="u-index-list__letter__item"
+				class="up-index-list__letter__item"
 				v-for="(item, index) in uIndexList"
 				:key="index"
 				:style="{
@@ -64,12 +64,12 @@
 				}"
 			>
 				<text
-					class="u-index-list__letter__item__index"
+					class="up-index-list__letter__item__index"
 					:style="{color: activeIndex === index ? '#fff' : inactiveColor}"
 				>{{ item }}</text>
 			</view>
 		</view>
-		<u-transition
+		<up-transition
 			mode="fade"
 			:show="touching"
 			:customStyle="{
@@ -80,16 +80,16 @@
 			}"
 		>
 			<view
-				class="u-index-list__indicator"
-				:class="['u-index-list__indicator--show']"
+				class="up-index-list__indicator"
+				:class="['up-index-list__indicator--show']"
 				:style="{
 					height: addUnit(indicatorHeight),
 					width: addUnit(indicatorHeight)
 				}"
 			>
-				<text class="u-index-list__indicator__text">{{ uIndexList[activeIndex] }}</text>
+				<text class="up-index-list__indicator__text">{{ uIndexList[activeIndex] }}</text>
 			</view>
-		</u-transition>
+		</up-transition>
 	</view>
 </template>
 
@@ -122,7 +122,7 @@
 	 * @property {String | Number}	customNavHeight	自定义导航栏的高度 ( 默认 0 )
 	 * */ 
 	export default {
-		name: 'u-index-list',
+		name: 'up-index-list',
 		mixins: [mpMixin, mixin, props],
 		// #ifdef MP-WEIXIN
 		// 将自定义节点设置成虚拟的，更加接近Vue组件的表现，能更好的使用flex属性
@@ -200,7 +200,7 @@
 			init() {
 				// 设置列表的高度为整个屏幕的高度
 				//减去this.customNavHeight，并将this.scrollViewHeight设置为maxHeight
-				//解决当u-index-list组件放在tabbar页面时,scroll-view内容较少时，还能滚动
+				//解决当up-index-list组件放在tabbar页面时,scroll-view内容较少时，还能滚动
 				let customNavHeight = getPx(this.customNavHeight)
 				// this.scrollViewHeight = this.sys.windowHeight - customNavHeight
 				this.getIndexListRect().then(async sizeScroll => {
@@ -256,7 +256,7 @@
 			},
 			// 触摸结束
 			touchEnd(e) {
-				// 延时一定时间后再隐藏指示器，为了让用户看的更直观，同时也是为了消除快速切换u-transition的show带来的影响
+				// 延时一定时间后再隐藏指示器，为了让用户看的更直观，同时也是为了消除快速切换up-transition的show带来的影响
 				sleep(300).then(() => {
 					this.touching = false
 				})
@@ -266,13 +266,13 @@
 				return new Promise(resolve => {
 					// 延时一定时间，以获取dom尺寸
 					// #ifndef APP-NVUE
-					this.$uGetRect('.u-index-list__letter').then(size => {
+					this.$uGetRect('.up-index-list__letter').then(size => {
 						resolve(size)
 					})
 					// #endif
 
 					// #ifdef APP-NVUE
-					const ref = this.$refs['u-index-list__letter']
+					const ref = this.$refs['up-index-list__letter']
 					dom.getComponentRect(ref, res => {
 						resolve(res.size)
 					})
@@ -283,13 +283,13 @@
 				return new Promise(resolve => {
 					// 延时一定时间，以获取dom尺寸
 					// #ifndef APP-NVUE
-					this.$uGetRect('.u-index-list__scroll-view').then(size => {
+					this.$uGetRect('.up-index-list__scroll-view').then(size => {
 						resolve(size)
 					})
 					// #endif
 
 					// #ifdef APP-NVUE
-					const ref = this.$refs['u-index-list__scroll-view']
+					const ref = this.$refs['up-index-list__scroll-view']
 					dom.getComponentRect(ref, res => {
 						resolve(res.size)
 					})
@@ -300,13 +300,13 @@
 				return new Promise(resolve => {
 					// 延时一定时间，以获取dom尺寸
 					// #ifndef APP-NVUE
-					this.$uGetRect('.u-index-list').then(size => {
+					this.$uGetRect('.up-index-list').then(size => {
 						resolve(size)
 					})
 					// #endif
 
 					// #ifdef APP-NVUE
-					const ref = this.$refs['u-index-list']
+					const ref = this.$refs['up-index-list']
 					dom.getComponentRect(ref, res => {
 						resolve(res.size)
 					})
@@ -389,8 +389,8 @@
 				if (currentIndex === this.activeIndex) return
 				this.activeIndex = currentIndex
 				// #ifndef APP-NVUE || MP-WEIXIN
-				// 在非nvue中，由于anchor和item都在u-index-item中，所以需要对index-item进行偏移
-				this.scrollIntoView = `u-index-item-${this.uIndexList[currentIndex].charCodeAt(0)}`
+				// 在非nvue中，由于anchor和item都在up-index-item中，所以需要对index-item进行偏移
+				this.scrollIntoView = `up-index-item-${this.uIndexList[currentIndex].charCodeAt(0)}`
 				// #endif
 
 				// #ifdef MP-WEIXIN
@@ -425,7 +425,7 @@
 
 				// #ifdef APP-NVUE
 				// 在nvue中，由于cell和header为同级元素，所以实际是需要对header(anchor)进行偏移
-				const anchor = `u-index-anchor-${this.uIndexList[currentIndex]}`
+				const anchor = `up-index-anchor-${this.uIndexList[currentIndex]}`
 				// console.log(anchor)
 				dom.scrollToElement(this.anchors[currentIndex].$refs[anchor], {
 					offset: 0,
@@ -444,7 +444,7 @@
 					}
 
 					// #ifndef APP-NVUE
-					this.$uGetRect('.u-index-list__header').then(size => {
+					this.$uGetRect('.up-index-list__header').then(size => {
 						resolve(size)
 					})
 					// #endif
@@ -532,7 +532,7 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-index-list {
+	.up-index-list {
 
 		&__letter {
 			position: absolute;
@@ -552,7 +552,7 @@
 				justify-content: center;
 
 				&--active {
-					background-color: $u-primary;
+					background-color: $up-primary;
 				}
 
 				&__index {

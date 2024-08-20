@@ -1,11 +1,11 @@
 <template>
-	<u-transition
+	<up-transition
 		mode="fade"
 		:show="show"
 		:duration="fade ? 1000 : 0"
 	>
 		<view
-			class="u-image"
+			class="up-image"
 			@tap="onClick"
 			:style="[wrapStyle, backgroundStyle]"
 		>
@@ -17,7 +17,7 @@
 				@load="onLoadHandler"
 				:show-menu-by-longpress="showMenuByLongpress"
 				:lazy-load="lazyLoad"
-				class="u-image__image"
+				class="up-image__image"
 				:style="{
 					borderRadius: shape == 'circle' ? '10000px' : addUnit(radius),
 					width: addUnit(width),
@@ -26,7 +26,7 @@
 			></image>
 			<view
 				v-if="showLoading && loading"
-				class="u-image__loading"
+				class="up-image__loading"
 				:style="{
 					borderRadius: shape == 'circle' ? '50%' : addUnit(radius),
 					backgroundColor: this.bgColor,
@@ -35,16 +35,16 @@
 				}"
 			>
 				<slot name="loading">
-					<u-icon
+					<up-icon
 						:name="loadingIcon"
 						:width="width"
 						:height="height"
-					></u-icon>
+					></up-icon>
 				</slot>
 			</view>
 			<view
 				v-if="showError && isError && !loading"
-				class="u-image__error"
+				class="up-image__error"
 				:style="{
 					borderRadius: shape == 'circle' ? '50%' : addUnit(radius),
 					width: addUnit(width),
@@ -52,15 +52,15 @@
 				}"
 			>
 				<slot name="error">
-					<u-icon
+					<up-icon
 						:name="errorIcon"
 						:width="width"
 						:height="height"
-					></u-icon>
+					></up-icon>
 				</slot>
 			</view>
 		</view>
-	</u-transition>
+	</up-transition>
 </template>
 
 <script>
@@ -92,10 +92,10 @@
 	 * @event {Function}	click	点击图片时触发
 	 * @event {Function}	error	图片加载失败时触发
 	 * @event {Function} load 图片加载成功时触发
-	 * @example <u-image width="100%" height="300px" :src="src"></u-image>
+	 * @example <up-image width="100%" height="300px" :src="src"></up-image>
 	 */
 	export default {
-		name: 'u-image',
+		name: 'up-image',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -202,15 +202,15 @@
 <style lang="scss" scoped>
 	@import '../../libs/css/components.scss';
 
-	$u-image-error-top:0px !default;
-	$u-image-error-left:0px !default;
-	$u-image-error-width:100% !default;
-	$u-image-error-hight:100% !default;
-	$u-image-error-background-color:$u-bg-color !default;
-	$u-image-error-color:$u-tips-color !default;
-	$u-image-error-font-size: 46rpx !default;
+	$up-image-error-top:0px !default;
+	$up-image-error-left:0px !default;
+	$up-image-error-width:100% !default;
+	$up-image-error-hight:100% !default;
+	$up-image-error-background-color:$up-bg-color !default;
+	$up-image-error-color:$up-tips-color !default;
+	$up-image-error-font-size: 46rpx !default;
 
-	.u-image {
+	.up-image {
 		position: relative;
 		transition: opacity 0.5s ease-in-out;
 
@@ -222,16 +222,16 @@
 		&__loading,
 		&__error {
 			position: absolute;
-			top: $u-image-error-top;
-			left: $u-image-error-left;
-			width: $u-image-error-width;
-			height: $u-image-error-hight;
+			top: $up-image-error-top;
+			left: $up-image-error-left;
+			width: $up-image-error-width;
+			height: $up-image-error-hight;
 			@include flex;
 			align-items: center;
 			justify-content: center;
-			background-color: $u-image-error-background-color;
-			color: $u-image-error-color;
-			font-size: $u-image-error-font-size;
+			background-color: $up-image-error-background-color;
+			color: $up-image-error-color;
+			font-size: $up-image-error-font-size;
 		}
 	}
 </style>

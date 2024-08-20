@@ -1,18 +1,18 @@
 <template>
 	<view
-		class="u-toolbar"
+		class="up-toolbar"
 		@touchmove.stop.prevent="noop"
 		v-if="show"
 	>
 		<view
-			class="u-toolbar__left"
+			class="up-toolbar__left"
 		>
 			<view
-				class="u-toolbar__cancel__wrapper"
-				hover-class="u-hover-class"
+				class="up-toolbar__cancel__wrapper"
+				hover-class="up-hover-class"
 			>
 				<text
-					class="u-toolbar__wrapper__cancel"
+					class="up-toolbar__wrapper__cancel"
 					@tap="cancel"
 					:style="{
 						color: cancelColor
@@ -21,19 +21,19 @@
 			</view>
 		</view>
 		<text
-			class="u-toolbar__title u-line-1"
+			class="up-toolbar__title up-line-1"
 			v-if="title"
 		>{{ title }}</text>
 		<view
-			class="u-toolbar__right"
+			class="up-toolbar__right"
 		>
 			<view
 				v-if="!rightSlot"
-				class="u-toolbar__confirm__wrapper"
-				hover-class="u-hover-class"
+				class="up-toolbar__confirm__wrapper"
+				hover-class="up-hover-class"
 			>
 				<text
-					class="u-toolbar__wrapper__confirm"
+					class="up-toolbar__wrapper__confirm"
 					@tap="confirm"
 					:style="{
 					color: confirmColor
@@ -66,7 +66,7 @@
 	 * @example 
 	 */
 	export default {
-		name: 'u-toolbar',
+		name: 'up-toolbar',
 		mixins: [mpMixin, mixin, props],
 		emits: ["confirm", "cancel"],
 		created() {
@@ -88,7 +88,7 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-toolbar {
+	.up-toolbar {
 		height: 42px;
 		@include flex;
 		justify-content: space-between;
@@ -96,14 +96,14 @@
 
 		&__wrapper {
 			&__cancel {
-				color: $u-tips-color;
+				color: $up-tips-color;
 				font-size: 15px;
 				padding: 0 15px;
 			}
 		}
 
 		&__title {
-			color: $u-main-color;
+			color: $up-main-color;
 			padding: 0 60rpx;
 			font-size: 16px;
 			flex: 1;
@@ -116,7 +116,7 @@
 				@include flex;
 			}
 			&__confirm {
-				color: $u-primary;
+				color: $up-primary;
 				font-size: 15px;
 				padding: 0 15px;
 			}

@@ -1,13 +1,13 @@
 <template>
 	<view
-		class="u-notice-bar"
+		class="up-notice-bar"
 		v-if="show"
 		:style="[{
 			backgroundColor: bgColor
 		}, addStyle(customStyle)]"
 	>
 		<template v-if="direction === 'column' || (direction === 'row' && step)">
-			<u-column-notice
+			<up-column-notice
 				:color="color"
 				:bgColor="bgColor"
 				:text="text"
@@ -19,10 +19,10 @@
 				:duration="duration"
 				@close="close"
 				@click="click"
-			></u-column-notice>
+			></up-column-notice>
 		</template>
 		<template v-else>
-			<u-row-notice
+			<up-row-notice
 				:color="color"
 				:bgColor="bgColor"
 				:text="text"
@@ -34,7 +34,7 @@
 				:icon="icon"
 				@close="close"
 				@click="click"
-			></u-row-notice>
+			></up-row-notice>
 		</template>
 	</view>
 </template>
@@ -64,10 +64,10 @@
 	 * 
 	 * @event {Function}			click			点击通告文字触发
 	 * @event {Function}			close			点击右侧关闭图标触发
-	 * @example <u-notice-bar :more-icon="true" :list="list"></u-notice-bar>
+	 * @example <up-notice-bar :more-icon="true" :list="list"></up-notice-bar>
 	 */
 	export default {
-		name: "u-notice-bar",
+		name: "up-notice-bar",
 		mixins: [mpMixin, mixin,props],
 		data() {
 			return {
@@ -97,7 +97,7 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-notice-bar {
+	.up-notice-bar {
 		overflow: hidden;
 		padding: 9px 12px;
 		flex: 1;

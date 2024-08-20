@@ -1,39 +1,39 @@
 <template>
-	<view class="u-tabs" :class="[customClass]">
-		<view class="u-tabs__wrapper">
+	<view class="up-tabs" :class="[customClass]">
+		<view class="up-tabs__wrapper">
 			<slot name="left" />
-			<view class="u-tabs__wrapper__scroll-view-wrapper">
+			<view class="up-tabs__wrapper__scroll-view-wrapper">
 				<scroll-view
 					:scroll-x="scrollable"
 					:scroll-left="scrollLeft"
 					scroll-with-animation
-					class="u-tabs__wrapper__scroll-view"
+					class="up-tabs__wrapper__scroll-view"
 					:show-scrollbar="false"
-					ref="u-tabs__wrapper__scroll-view"
+					ref="up-tabs__wrapper__scroll-view"
 				>
 					<view
-						class="u-tabs__wrapper__nav"
-						ref="u-tabs__wrapper__nav"
+						class="up-tabs__wrapper__nav"
+						ref="up-tabs__wrapper__nav"
 					>
 						<view
-							class="u-tabs__wrapper__nav__item"
+							class="up-tabs__wrapper__nav__item"
 							v-for="(item, index) in list"
 							:key="index"
 							@tap="clickHandler(item, index)"
 							@longpress="longPressHandler(item,index)"
-							:ref="`u-tabs__wrapper__nav__item-${index}`"
+							:ref="`up-tabs__wrapper__nav__item-${index}`"
 							:style="[addStyle(itemStyle), {flex: scrollable ? '' : 1}]"
-							:class="[`u-tabs__wrapper__nav__item-${index}`, item.disabled && 'u-tabs__wrapper__nav__item--disabled']"
+							:class="[`up-tabs__wrapper__nav__item-${index}`, item.disabled && 'up-tabs__wrapper__nav__item--disabled']"
 						>
 							<slot v-if="$slots.content" name="content" :item="item" :keyName="keyName" :index="index" />
 							<slot v-else-if="!$slots.content && ($slots.default || $slots.$default)"
 								:item="item" :keyName="keyName" :index="index" />
 							<text v-else
-								:class="[item.disabled && 'u-tabs__wrapper__nav__item__text--disabled']"
-								class="u-tabs__wrapper__nav__item__text"
+								:class="[item.disabled && 'up-tabs__wrapper__nav__item__text--disabled']"
+								class="up-tabs__wrapper__nav__item__text"
 								:style="[textStyle(index)]"
 							>{{ item[keyName] }}</text>
-							<u-badge
+							<up-badge
 								:show="!!(item.badge && (item.badge.show || item.badge.isDot || item.badge.value))"
 								:isDot="item.badge && item.badge.isDot || propsBadge.isDot"
 								:value="item.badge && item.badge.value || propsBadge.value"
@@ -46,12 +46,12 @@
 								:numberType="item.badge && item.badge.numberType || propsBadge.numberType"
 								:inverted="item.badge && item.badge.inverted || propsBadge.inverted"
 								customStyle="margin-left: 4px;"
-							></u-badge>
+							></up-badge>
 						</view>
 						<!-- #ifdef APP-NVUE -->
 						<view
-							class="u-tabs__wrapper__nav__line"
-							ref="u-tabs__wrapper__nav__line"
+							class="up-tabs__wrapper__nav__line"
+							ref="up-tabs__wrapper__nav__line"
 							:style="[{
 								width: addUnit(lineWidth),
 								height: addUnit(lineHeight),
@@ -63,8 +63,8 @@
 						<!-- #endif -->
 						<!-- #ifndef APP-NVUE -->
 						<view
-							class="u-tabs__wrapper__nav__line"
-							ref="u-tabs__wrapper__nav__line"
+							class="up-tabs__wrapper__nav__line"
+							ref="up-tabs__wrapper__nav__line"
 							:style="[{
 								width: addUnit(lineWidth),
 								transform: `translate(${lineOffsetLeft}px)`,
@@ -104,10 +104,10 @@
 	 * @event {Function(index)} change 标签改变时触发 index: 点击了第几个tab，索引从0开始
 	 * @event {Function(index)} click 点击标签时触发 index: 点击了第几个tab，索引从0开始
 	 * @event {Function(index)} longPress 长按标签时触发 index: 点击了第几个tab，索引从0开始
-	 * @example <u-tabs :list="list" :is-scroll="false" :current="current" @change="change" @longPress="longPress"></u-tabs>
+	 * @example <up-tabs :list="list" :is-scroll="false" :current="current" @change="change" @longPress="longPress"></up-tabs>
 	 */
 	export default {
-		name: 'u-tabs',
+		name: 'up-tabs',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -194,7 +194,7 @@
 			// nvue下设置滑块的位置
 			animation(x, duration = 0) {
 				// #ifdef APP-NVUE
-				const ref = this.$refs['u-tabs__wrapper__nav__line']
+				const ref = this.$refs['up-tabs__wrapper__nav__line']
 				animation.transition(ref, {
 					styles: {
 						transform: `translateX(${x}px)`
@@ -282,14 +282,14 @@
 			// 获取导航菜单的尺寸
 			getTabsRect() {
 				return new Promise(resolve => {
-					this.queryRect('u-tabs__wrapper__scroll-view').then(size => resolve(size))
+					this.queryRect('up-tabs__wrapper__scroll-view').then(size => resolve(size))
 				})
 			},
 			// 获取所有标签的尺寸
 			getAllItemRect() {
 				return new Promise(resolve => {
 					const promiseAllArr = this.list.map((item, index) => this.queryRect(
-						`u-tabs__wrapper__nav__item-${index}`, true))
+						`up-tabs__wrapper__nav__item-${index}`, true))
 					Promise.all(promiseAllArr).then(sizes => resolve(sizes))
 				})
 			},
@@ -322,7 +322,7 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-tabs {
+	.up-tabs {
 
 		&__wrapper {
 			@include flex;
@@ -361,18 +361,18 @@
 
 					&__text {
 						font-size: 15px;
-						color: $u-content-color;
+						color: $up-content-color;
                         white-space: nowrap !important;
 
 						&--disabled {
-							color: $u-disabled-color !important;
+							color: $up-disabled-color !important;
 						}
 					}
 				}
 
 				&__line {
 					height: 3px;
-					background: $u-primary;
+					background: $up-primary;
 					width: 30px;
 					position: absolute;
 					bottom: 2px;

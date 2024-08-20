@@ -2,25 +2,25 @@
 	<!-- #ifdef MP-ALIPAY -->
 	<!-- <import-sjs from="./alipay.sjs" name="mysjs" /> -->
 	<!-- #endif -->
-	<view class="u-swipe-action-item" ref="u-swipe-action-item">
-		<view class="u-swipe-action-item__right">
+	<view class="up-swipe-action-item" ref="up-swipe-action-item">
+		<view class="up-swipe-action-item__right">
 			<slot name="button">
-				<view v-for="(item,index) in options" :key="index" class="u-swipe-action-item__right__button"
-					:ref="`u-swipe-action-item__right__button-${index}`" :style="[{
+				<view v-for="(item,index) in options" :key="index" class="up-swipe-action-item__right__button"
+					:ref="`up-swipe-action-item__right__button-${index}`" :style="[{
 						alignItems: item.style && item.style.borderRadius ? 'center' : 'stretch'
 					}]" @tap="buttonClickHandler(item, index)">
-					<view class="u-swipe-action-item__right__button__wrapper" :style="[{
+					<view class="up-swipe-action-item__right__button__wrapper" :style="[{
 							backgroundColor: item.style && item.style.backgroundColor ? item.style.backgroundColor : '#C7C6CD',
 							borderRadius: item.style && item.style.borderRadius ? item.style.borderRadius : '0',
 							padding: item.style && item.style.borderRadius ? '0' : '0 15px',
 						}, item.style]">
-						<u-icon v-if="item.icon" :name="item.icon"
+						<up-icon v-if="item.icon" :name="item.icon"
 							:color="item.style && item.style.color ? item.style.color : '#ffffff'"
 							:size="item.iconSize ? addUnit(item.iconSize) : item.style && item.style.fontSize ? getPx(item.style.fontSize) * 1.2 : 17"
 							:customStyle="{
 								marginRight: item.text ? '2px' : 0
-							}"></u-icon>
-						<text v-if="item.text" class="u-swipe-action-item__right__button__wrapper__text u-line-1"
+							}"></up-icon>
+						<text v-if="item.text" class="up-swipe-action-item__right__button__wrapper__text up-line-1"
 							:style="[{
 								color: item.style && item.style.color ? item.style.color : '#ffffff',
 								fontSize: item.style && item.style.fontSize ? item.style.fontSize : '16px',
@@ -31,24 +31,24 @@
 			</slot>
 		</view>
 		<!-- #ifdef APP-VUE || MP-WEIXIN || MP-QQ || H5  -->
-		<view class="u-swipe-action-item__content" @touchstart="wxs.touchstart" @touchmove="wxs.touchmove"
+		<view class="up-swipe-action-item__content" @touchstart="wxs.touchstart" @touchmove="wxs.touchmove"
 			@touchend="wxs.touchend" :status="status" :change:status="wxs.statusChange" :size="size"
 			:change:size="wxs.sizeChange">
 			<slot></slot>
 		</view>
 		<!-- #endif -->
 		<!-- #ifdef MP-ALIPAY || MP-BAIDU || MP-TOUTIAO-->
-		<view class="u-swipe-action-item__content" @click="clickHandler" @touchstart="touchstart" @touchmove="touchmove"
+		<view class="up-swipe-action-item__content" @click="clickHandler" @touchstart="touchstart" @touchmove="touchmove"
 			@touchend="touchend" :style="sliderStyle">
 			<slot></slot>
 		</view>
-		<!-- <view class="u-swipe-action-item__content" @touchstart="mysjs.touchstart" @touchmove="mysjs.touchmove"
+		<!-- <view class="up-swipe-action-item__content" @touchstart="mysjs.touchstart" @touchmove="mysjs.touchmove"
 			@touchend="mysjs.touchend">
 			<slot></slot>
 		</view> -->
 		<!-- #endif -->
 		<!-- #ifdef APP-NVUE -->
-		<view class="u-swipe-action-item__content" ref="u-swipe-action-item__content" @panstart="onTouchstart"
+		<view class="up-swipe-action-item__content" ref="up-swipe-action-item__content" @panstart="onTouchstart"
 			@tap="clickHandler">
 			<slot></slot>
 		</view>
@@ -86,10 +86,10 @@
 	 * @property {String | Number}	duration		动画过渡时间，单位ms（默认 350 ）
 	 * @event {Function(index)}	open	组件打开时触发
 	 * @event {Function(index)}	close	组件关闭时触发
-	 * @example	<u-swipe-action><u-swipe-action-item :options="options1" ></u-swipe-action-item></u-swipe-action>
+	 * @example	<up-swipe-action><up-swipe-action-item :options="options1" ></up-swipe-action-item></up-swipe-action>
 	 */
 	export default {
-		name: 'u-swipe-action-item',
+		name: 'up-swipe-action-item',
 		emits: ['click'],
 		
 		mixins: [
@@ -113,7 +113,7 @@
 			return {
 				// 按钮的尺寸信息
 				size: {},
-				// 父组件u-swipe-action的参数
+				// 父组件up-swipe-action的参数
 				parentData: {
 					autoClose: true,
 				},
@@ -160,12 +160,12 @@
 			},
 			updateParentData() {
 				// 此方法在mixin中
-				this.getParentData('u-swipe-action')
+				this.getParentData('up-swipe-action')
 			},
 			// #ifndef APP-NVUE
 			// 查询节点
 			queryRect() {
-				this.$uGetRect('.u-swipe-action-item__right__button', true).then(buttons => {
+				this.$uGetRect('.up-swipe-action-item__right__button', true).then(buttons => {
 					this.size = {
 						buttons,
 						show: this.show,
@@ -190,7 +190,7 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-swipe-action-item {
+	.up-swipe-action-item {
 		position: relative;
 		overflow: hidden;
 		/* #ifndef APP-NVUE || MP-WEIXIN */

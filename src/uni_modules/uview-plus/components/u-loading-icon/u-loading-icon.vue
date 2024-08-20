@@ -1,14 +1,14 @@
 <template>
 	<view
-		class="u-loading-icon"
+		class="up-loading-icon"
 		:style="[addStyle(customStyle)]"
-		:class="[vertical && 'u-loading-icon--vertical']"
+		:class="[vertical && 'up-loading-icon--vertical']"
 		v-if="show"
 	>
 		<view
 			v-if="!webviewHide"
-			class="u-loading-icon__spinner"
-			:class="[`u-loading-icon__spinner--${mode}`]"
+			class="up-loading-icon__spinner"
+			:class="[`up-loading-icon__spinner--${mode}`]"
 			ref="ani"
 			:style="{
 				color: color,
@@ -27,7 +27,7 @@
 				<view
 					v-for="(item, index) in array12"
 					:key="index"
-					class="u-loading-icon__dot"
+					class="up-loading-icon__dot"
 				>
 				</view>
 				<!-- #endif -->
@@ -35,7 +35,7 @@
 				<!-- 此组件内部图标部分无法设置宽高，即使通过width和height配置了也无效 -->
 				<loading-indicator
 					v-if="!webviewHide"
-					class="u-loading-indicator"
+					class="up-loading-indicator"
 					:animating="true"
 					:style="{
 						color: color,
@@ -48,7 +48,7 @@
 		</view>
 		<text
 			v-if="text"
-			class="u-loading-icon__text"
+			class="up-loading-icon__text"
 			:style="{
 				fontSize: addUnit(textSize),
 				color: textColor,
@@ -71,8 +71,8 @@
 	 * @description 警此组件为一个小动画，目前用在uView的loadmore加载更多和switch开关等组件的正在加载状态场景。
 	 * @tutorial https://ijry.github.io/uview-plus/components/loading.html
 	 * @property {Boolean}			show			是否显示组件  (默认 true)
-	 * @property {String}			color			动画活动区域的颜色，只对 mode = flower 模式有效（默认color['u-tips-color']）
-	 * @property {String}			textColor		提示文本的颜色（默认color['u-tips-color']）
+	 * @property {String}			color			动画活动区域的颜色，只对 mode = flower 模式有效（默认color['up-tips-color']）
+	 * @property {String}			textColor		提示文本的颜色（默认color['up-tips-color']）
 	 * @property {Boolean}			vertical		文字和图标是否垂直排列 (默认 false )
 	 * @property {String}			mode			模式选择，见官网说明（默认 'circle' ）
 	 * @property {String | Number}	size			加载图标的大小，单位px （默认 24 ）
@@ -82,10 +82,10 @@
 	 * @property {String | Number}	duration		动画执行周期时间（默认 1200）
 	 * @property {String}			inactiveColor	mode=circle时的暗边颜色 
 	 * @property {Object}			customStyle		定义需要用到的外部样式
-	 * @example <u-loading mode="circle"></u-loading>
+	 * @example <up-loading mode="circle"></up-loading>
 	 */
 	export default {
-		name: 'u-loading-icon',
+		name: 'up-loading-icon',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -194,92 +194,92 @@
 
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
-	$u-loading-icon-color: #c8c9cc !default;
-	$u-loading-icon-text-margin-left:4px !default;
-	$u-loading-icon-text-color:$u-content-color !default;
-	$u-loading-icon-text-font-size:14px !default;
-	$u-loading-icon-text-line-height:20px !default;
-	$u-loading-width:30px !default;
-	$u-loading-height:30px !default;
-	$u-loading-max-width:100% !default;
-	$u-loading-max-height:100% !default;
-	$u-loading-semicircle-border-width: 2px !default;
-	$u-loading-semicircle-border-color:transparent !default;
-	$u-loading-semicircle-border-top-right-radius: 100px !default;
-	$u-loading-semicircle-border-top-left-radius: 100px !default;
-	$u-loading-semicircle-border-bottom-left-radius: 100px !default;
-	$u-loading-semicircle-border-bottom-right-radiu: 100px !default;
-	$u-loading-semicircle-border-style: solid !default;
-	$u-loading-circle-border-top-right-radius: 100px !default;
-	$u-loading-circle-border-top-left-radius: 100px !default;
-	$u-loading-circle-border-bottom-left-radius: 100px !default;
-	$u-loading-circle-border-bottom-right-radiu: 100px !default;
-	$u-loading-circle-border-width:2px !default;
-	$u-loading-circle-border-top-color:#e5e5e5 !default;
-	$u-loading-circle-border-right-color:$u-loading-circle-border-top-color !default;
-	$u-loading-circle-border-bottom-color:$u-loading-circle-border-top-color !default;
-	$u-loading-circle-border-left-color:$u-loading-circle-border-top-color !default;
-	$u-loading-circle-border-style:solid !default;
-	$u-loading-icon-host-font-size:0px !default;
-	$u-loading-icon-host-line-height:1 !default;
-	$u-loading-icon-vertical-margin:6px 0 0 !default;
-	$u-loading-icon-dot-top:0 !default;
-	$u-loading-icon-dot-left:0 !default;
-	$u-loading-icon-dot-width:100% !default;
-	$u-loading-icon-dot-height:100% !default;
-	$u-loading-icon-dot-before-width:2px !default;
-	$u-loading-icon-dot-before-height:25% !default;
-	$u-loading-icon-dot-before-margin:0 auto !default;
-	$u-loading-icon-dot-before-background-color:currentColor !default;
-	$u-loading-icon-dot-before-border-radius:40% !default;
+	$up-loading-icon-color: #c8c9cc !default;
+	$up-loading-icon-text-margin-left:4px !default;
+	$up-loading-icon-text-color:$up-content-color !default;
+	$up-loading-icon-text-font-size:14px !default;
+	$up-loading-icon-text-line-height:20px !default;
+	$up-loading-width:30px !default;
+	$up-loading-height:30px !default;
+	$up-loading-max-width:100% !default;
+	$up-loading-max-height:100% !default;
+	$up-loading-semicircle-border-width: 2px !default;
+	$up-loading-semicircle-border-color:transparent !default;
+	$up-loading-semicircle-border-top-right-radius: 100px !default;
+	$up-loading-semicircle-border-top-left-radius: 100px !default;
+	$up-loading-semicircle-border-bottom-left-radius: 100px !default;
+	$up-loading-semicircle-border-bottom-right-radiu: 100px !default;
+	$up-loading-semicircle-border-style: solid !default;
+	$up-loading-circle-border-top-right-radius: 100px !default;
+	$up-loading-circle-border-top-left-radius: 100px !default;
+	$up-loading-circle-border-bottom-left-radius: 100px !default;
+	$up-loading-circle-border-bottom-right-radiu: 100px !default;
+	$up-loading-circle-border-width:2px !default;
+	$up-loading-circle-border-top-color:#e5e5e5 !default;
+	$up-loading-circle-border-right-color:$up-loading-circle-border-top-color !default;
+	$up-loading-circle-border-bottom-color:$up-loading-circle-border-top-color !default;
+	$up-loading-circle-border-left-color:$up-loading-circle-border-top-color !default;
+	$up-loading-circle-border-style:solid !default;
+	$up-loading-icon-host-font-size:0px !default;
+	$up-loading-icon-host-line-height:1 !default;
+	$up-loading-icon-vertical-margin:6px 0 0 !default;
+	$up-loading-icon-dot-top:0 !default;
+	$up-loading-icon-dot-left:0 !default;
+	$up-loading-icon-dot-width:100% !default;
+	$up-loading-icon-dot-height:100% !default;
+	$up-loading-icon-dot-before-width:2px !default;
+	$up-loading-icon-dot-before-height:25% !default;
+	$up-loading-icon-dot-before-margin:0 auto !default;
+	$up-loading-icon-dot-before-background-color:currentColor !default;
+	$up-loading-icon-dot-before-border-radius:40% !default;
 
-	.u-loading-icon {
+	.up-loading-icon {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
 		justify-content: center;
-		color: $u-loading-icon-color;
+		color: $up-loading-icon-color;
 
 		&__text {
-			margin-left: $u-loading-icon-text-margin-left;
-			color: $u-loading-icon-text-color;
-			font-size: $u-loading-icon-text-font-size;
-			line-height: $u-loading-icon-text-line-height;
+			margin-left: $up-loading-icon-text-margin-left;
+			color: $up-loading-icon-text-color;
+			font-size: $up-loading-icon-text-font-size;
+			line-height: $up-loading-icon-text-line-height;
 		}
 
 		&__spinner {
-			width: $u-loading-width;
-			height: $u-loading-height;
+			width: $up-loading-width;
+			height: $up-loading-height;
 			position: relative;
 			/* #ifndef APP-NVUE */
 			box-sizing: border-box;
-			max-width: $u-loading-max-width;
-			max-height: $u-loading-max-height;
-			animation: u-rotate 1s linear infinite;
+			max-width: $up-loading-max-width;
+			max-height: $up-loading-max-height;
+			animation: up-rotate 1s linear infinite;
 			/* #endif */
 		}
 
 		&__spinner--semicircle {
-			border-width: $u-loading-semicircle-border-width;
-			border-color: $u-loading-semicircle-border-color;
-			border-top-right-radius: $u-loading-semicircle-border-top-right-radius;
-			border-top-left-radius: $u-loading-semicircle-border-top-left-radius;
-			border-bottom-left-radius: $u-loading-semicircle-border-bottom-left-radius;
-			border-bottom-right-radius: $u-loading-semicircle-border-bottom-right-radiu;
-			border-style: $u-loading-semicircle-border-style;
+			border-width: $up-loading-semicircle-border-width;
+			border-color: $up-loading-semicircle-border-color;
+			border-top-right-radius: $up-loading-semicircle-border-top-right-radius;
+			border-top-left-radius: $up-loading-semicircle-border-top-left-radius;
+			border-bottom-left-radius: $up-loading-semicircle-border-bottom-left-radius;
+			border-bottom-right-radius: $up-loading-semicircle-border-bottom-right-radiu;
+			border-style: $up-loading-semicircle-border-style;
 		}
 
 		&__spinner--circle {
-			border-top-right-radius: $u-loading-circle-border-top-right-radius;
-			border-top-left-radius: $u-loading-circle-border-top-left-radius;
-			border-bottom-left-radius: $u-loading-circle-border-bottom-left-radius;
-			border-bottom-right-radius: $u-loading-circle-border-bottom-right-radiu;
-			border-width: $u-loading-circle-border-width;
-			border-top-color: $u-loading-circle-border-top-color;
-			border-right-color: $u-loading-circle-border-right-color;
-			border-bottom-color: $u-loading-circle-border-bottom-color;
-			border-left-color: $u-loading-circle-border-left-color;
-			border-style: $u-loading-circle-border-style;
+			border-top-right-radius: $up-loading-circle-border-top-right-radius;
+			border-top-left-radius: $up-loading-circle-border-top-left-radius;
+			border-bottom-left-radius: $up-loading-circle-border-bottom-left-radius;
+			border-bottom-right-radius: $up-loading-circle-border-bottom-right-radiu;
+			border-width: $up-loading-circle-border-width;
+			border-top-color: $up-loading-circle-border-top-color;
+			border-right-color: $up-loading-circle-border-right-color;
+			border-bottom-color: $up-loading-circle-border-bottom-color;
+			border-left-color: $up-loading-circle-border-left-color;
+			border-style: $up-loading-circle-border-style;
 		}
 
 		&--vertical {
@@ -289,11 +289,11 @@
 
 	/* #ifndef APP-NVUE */
 	:host {
-		font-size: $u-loading-icon-host-font-size;
-		line-height: $u-loading-icon-host-line-height;
+		font-size: $up-loading-icon-host-font-size;
+		line-height: $up-loading-icon-host-line-height;
 	}
 
-	.u-loading-icon {
+	.up-loading-icon {
 		&__spinner--spinner {
 			animation-timing-function: steps(12)
 		}
@@ -303,39 +303,39 @@
 		}
 
 		&--vertical &__text {
-			margin: $u-loading-icon-vertical-margin;
-			color: $u-content-color;
+			margin: $up-loading-icon-vertical-margin;
+			color: $up-content-color;
 		}
 
 		&__dot {
 			position: absolute;
-			top: $u-loading-icon-dot-top;
-			left: $u-loading-icon-dot-left;
-			width: $u-loading-icon-dot-width;
-			height: $u-loading-icon-dot-height;
+			top: $up-loading-icon-dot-top;
+			left: $up-loading-icon-dot-left;
+			width: $up-loading-icon-dot-width;
+			height: $up-loading-icon-dot-height;
 
 			&:before {
 				/* #ifndef APP-NVUE */
 				display: block;
 				/* #endif */
-				width: $u-loading-icon-dot-before-width;
-				height: $u-loading-icon-dot-before-height;
-				margin: $u-loading-icon-dot-before-margin;
-				background-color: $u-loading-icon-dot-before-background-color;
-				border-radius: $u-loading-icon-dot-before-border-radius;
+				width: $up-loading-icon-dot-before-width;
+				height: $up-loading-icon-dot-before-height;
+				margin: $up-loading-icon-dot-before-margin;
+				background-color: $up-loading-icon-dot-before-background-color;
+				border-radius: $up-loading-icon-dot-before-border-radius;
 				content: " "
 			}
 		}
 	}
 
 	@for $i from 1 through 12 {
-		.u-loading-icon__dot:nth-of-type(#{$i}) {
+		.up-loading-icon__dot:nth-of-type(#{$i}) {
 			transform: rotate($i * 30deg);
 			opacity: 1 - 0.0625 * ($i - 1);
 		}
 	}
 
-	@keyframes u-rotate {
+	@keyframes up-rotate {
 		0% {
 			transform: rotate(0deg)
 		}

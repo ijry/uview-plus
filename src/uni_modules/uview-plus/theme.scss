@@ -1,39 +1,72 @@
-// 此文件为uView的主题变量，这些变量目前只能通过uni.scss引入才有效，另外由于
+// 此文件为uview-plus的主题变量，这些变量目前只能通过uni.scss引入才有效，另外由于
 // uni.scss中引入的样式会同时混入到全局样式文件和单独每一个页面的样式中，造成微信程序包太大，
 // 故uni.scss只建议放scss变量名相关样式，其他的样式可以通过main.js或者App.vue引入
 
-$u-main-color: #303133;
-$u-content-color: #606266;
-$u-tips-color: #909193;
-$u-light-color: #c0c4cc;
-$u-border-color: #dadbde;
-$u-bg-color: #f3f4f6;
-$u-disabled-color: #c8c9cc;
+$up-main-color: #303133;
+$up-content-color: #606266;
+$up-tips-color: #909193;
+$up-light-color: #c0c4cc;
+$up-border-color: #dadbde;
+$up-bg-color: #f3f4f6;
+$up-disabled-color: #c8c9cc;
 
-$u-primary: #3c9cff;
-$u-primary-dark: #398ade;
-$u-primary-disabled: #9acafc;
-$u-primary-light: #ecf5ff;
+$up-primary: #3c9cff;
+$up-primary-dark: #398ade;
+$up-primary-disabled: #9acafc;
+$up-primary-light: #ecf5ff;
 
-$u-warning: #f9ae3d;
-$u-warning-dark: #f1a532;
-$u-warning-disabled: #f9d39b;
-$u-warning-light: #fdf6ec;
+$up-warning: #f9ae3d;
+$up-warning-dark: #f1a532;
+$up-warning-disabled: #f9d39b;
+$up-warning-light: #fdf6ec;
 
-$u-success: #5ac725;
-$u-success-dark: #53c21d;
-$u-success-disabled: #a9e08f;
-$u-success-light: #f5fff0;
+$up-success: #5ac725;
+$up-success-dark: #53c21d;
+$up-success-disabled: #a9e08f;
+$up-success-light: #f5fff0;
 
-$u-error: #f56c6c;
-$u-error-dark: #e45656;
-$u-error-disabled: #f7b2b2;
-$u-error-light: #fef0f0;
+$up-error: #f56c6c;
+$up-error-dark: #e45656;
+$up-error-disabled: #f7b2b2;
+$up-error-light: #fef0f0;
 
-$u-info: #909399;
-$u-info-dark: #767a82;
-$u-info-disabled: #c4c6c9;
-$u-info-light: #f4f4f5;
+$up-info: #909399;
+$up-info-dark: #767a82;
+$up-info-disabled: #c4c6c9;
+$up-info-light: #f4f4f5;
+
+$u-main-color: $up-main-color;
+$u-content-color: $up-content-color;
+$u-tips-color: $up-tips-color;
+$u-light-color: $up-light-color;
+$u-border-color: $up-border-color;
+$u-bg-color: $up-bg-color;
+$u-disabled-color: $up-disabled-color;
+
+$u-primary: $up-primary;
+$u-primary-dark: $up-primary-dark;
+$u-primary-disabled: $up-primary-disabled;
+$u-primary-light: $up-primary-light;
+
+$u-warning: $up-warning;
+$u-warning-dark: $up-warning-dark;
+$u-warning-disabled: $up-warning-disabled;
+$u-warning-light: $up-warning-light;
+
+$u-success: $up-success;
+$u-success-dark: $up-success-dark;
+$u-success-disabled: $up-success-disabled;
+$u-success-light: $up-success-light;
+
+$u-error: $up-error;
+$u-error-dark: $up-error-dark;
+$u-error-disabled: $up-error-disabled;
+$u-error-light: $up-error-light;
+
+$u-info: $up-info;
+$u-info-dark: $up-info-dark;
+$u-info-disabled: $up-info-disabled;
+$u-info-light: $up-info-light;
 
 // scss混入，为了少写几行#ifndef
 @mixin flex($direction: row) {

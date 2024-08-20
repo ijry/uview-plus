@@ -1,18 +1,18 @@
 <template>
 	<view
-		class="u-notice"
+		class="up-notice"
 		@tap="clickHandler"
 	>
 		<slot name="icon">
 			<view
-				class="u-notice__left-icon"
+				class="up-notice__left-icon"
 				v-if="icon"
 			>
-				<u-icon
+				<up-icon
 					:name="icon"
 					:color="color"
 					size="19"
-				></u-icon>
+				></up-icon>
 			</view>
 		</slot>
 		<swiper
@@ -21,37 +21,37 @@
 			circular
 			:interval="duration"
 			:autoplay="true"
-			class="u-notice__swiper"
+			class="up-notice__swiper"
 			@change="noticeChange"
 		>
 			<swiper-item
 				v-for="(item, index) in text"
 				:key="index"
-				class="u-notice__swiper__item"
+				class="up-notice__swiper__item"
 			>
 				<text
-					class="u-notice__swiper__item__text u-line-1"
+					class="up-notice__swiper__item__text up-line-1"
 					:style="[textStyle]"
 				>{{ item }}</text>
 			</swiper-item>
 		</swiper>
 		<view
-			class="u-notice__right-icon"
+			class="up-notice__right-icon"
 			v-if="['link', 'closable'].includes(mode)"
 		>
-			<u-icon
+			<up-icon
 				v-if="mode === 'link'"
 				name="arrow-right"
 				:size="17"
 				:color="color"
-			></u-icon>
-			<u-icon
+			></up-icon>
+			<up-icon
 				v-if="mode === 'closable'"
 				name="close"
 				:size="16"
 				:color="color"
 				@click="close"
-			></u-icon>
+			></up-icon>
 		</view>
 	</view>
 </template>
@@ -129,7 +129,7 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-notice {
+	.up-notice {
 		@include flex;
 		align-items: center;
 		justify-content: space-between;
@@ -157,7 +157,7 @@
 
 				&__text {
 					font-size: 14px;
-					color: $u-warning;
+					color: $up-warning;
 				}
 			}
 		}

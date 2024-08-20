@@ -1,6 +1,6 @@
 <template>
 	<text
-		class="u-count-num"
+		class="up-count-num"
 		:style="{
 			fontSize: addUnit(fontSize),
 			fontWeight: bold ? 'bold' : 'normal',
@@ -30,10 +30,10 @@ import { addUnit } from '../../libs/function/index';
  * @property {Boolean}			bold		字体是否加粗（默认 false ）
  * @property {String}			separator	千位分隔符，见官网说明
  * @event {Function} end 数值滚动到目标值时触发
- * @example <u-count-to ref="uCountTo" :end-val="endVal" :autoplay="autoplay"></u-count-to>
+ * @example <up-count-to ref="uCountTo" :end-val="endVal" :autoplay="autoplay"></up-count-to>
  */
 export default {
-	name: 'u-count-to',
+	name: 'up-count-to',
 	data() {
 		return {
 			localStartVal: this.startVal,
@@ -180,7 +180,7 @@ export default {
 <style lang="scss" scoped>
 @import "../../libs/css/components.scss";
 
-.u-count-num {
+.up-count-num {
 	/* #ifndef APP-NVUE */
 	display: inline-flex;
 	/* #endif */

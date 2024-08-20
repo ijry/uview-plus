@@ -38,7 +38,7 @@ function scrolltoupper(event, ownerInstance) {
 }
 
 function setBarStyle(ownerInstance, x) {
-	ownerInstance.selectComponent('.u-scroll-list__indicator__line__bar') && ownerInstance.selectComponent('.u-scroll-list__indicator__line__bar').setStyle({
+	ownerInstance.selectComponent('.up-scroll-list__indicator__line__bar') && ownerInstance.selectComponent('.up-scroll-list__indicator__line__bar').setStyle({
 		transform: 'translateX(' + x + 'px)'
 	})
 }

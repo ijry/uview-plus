@@ -1,8 +1,8 @@
 <template>
 	<view
-		class="u-safe-bottom"
+		class="up-safe-bottom"
 		:style="[style]"
-		:class="[!isNvue && 'u-safe-area-inset-bottom']"
+		:class="[!isNvue && 'up-safe-area-inset-bottom']"
 	>
 	</view>
 </template>
@@ -20,10 +20,10 @@
 	 * @property {Object}	customStyle	定义需要用到的外部样式
 	 *
 	 * @event {Function()}
-	 * @example <u-status-bar></u-status-bar>
+	 * @example <up-safe-bottom></up-safe-bottom>
 	 */
 	export default {
-		name: "u-safe-bottom",
+		name: "up-safe-bottom",
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -51,7 +51,7 @@
 </script>
 
 <style lang="scss" scoped>
-	.u-safe-bottom {
+	.up-safe-bottom {
 		/* #ifndef APP-NVUE */
 		width: 100%;
 		/* #endif */

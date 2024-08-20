@@ -1,45 +1,45 @@
 <template>
     <view
-        class="u-subsection"
-        ref="u-subsection"
-        :class="[`u-subsection--${mode}`]"
+        class="up-subsection"
+        ref="up-subsection"
+        :class="[`up-subsection--${mode}`]"
         :style="[addStyle(customStyle), wrapperStyle]"
     >
         <view
-            class="u-subsection__bar cursor-pointer"
-            ref="u-subsection__bar"
+            class="up-subsection__bar cursor-pointer"
+            ref="up-subsection__bar"
             :style="[barStyle]"
             :class="[
-                mode === 'button' && 'u-subsection--button__bar',
+                mode === 'button' && 'up-subsection--button__bar',
                 innerCurrent === 0 &&
                     mode === 'subsection' &&
-                    'u-subsection__bar--first',
+                    'up-subsection__bar--first',
                 innerCurrent > 0 &&
                 innerCurrent < list.length - 1 &&
                     mode === 'subsection' &&
-                    'u-subsection__bar--center',
+                    'up-subsection__bar--center',
                 innerCurrent === list.length - 1 &&
                     mode === 'subsection' &&
-                    'u-subsection__bar--last',
+                    'up-subsection__bar--last',
             ]"
         ></view>
         <view
-            class="u-subsection__item cursor-pointer"
+            class="up-subsection__item cursor-pointer"
             :class="[
-                `u-subsection__item--${index}`,
+                `up-subsection__item--${index}`,
                 index < list.length - 1 &&
-                    'u-subsection__item--no-border-right',
-                index === 0 && 'u-subsection__item--first',
-                index === list.length - 1 && 'u-subsection__item--last',
+                    'up-subsection__item--no-border-right',
+                index === 0 && 'up-subsection__item--first',
+                index === list.length - 1 && 'up-subsection__item--last',
             ]"
-            :ref="`u-subsection__item--${index}`"
+            :ref="`up-subsection__item--${index}`"
             :style="[itemStyle(index)]"
             @tap="clickHandler(index)"
             v-for="(item, index) in list"
             :key="index"
         >
             <text
-                class="u-subsection__item__text"
+                class="up-subsection__item__text"
                 :style="[textStyle(index)]"
                 >{{ getText(item) }}</text
             >
@@ -72,10 +72,10 @@ import { addStyle, addUnit, sleep } from '../../libs/function/index';
  * @property {String}	        keyName	        从`list`元素对象中读取的键名（默认 'name' ）
  *
  * @event {Function} change		分段器选项发生改变时触发  回调 index：选项的index索引值，从0开始
- * @example <u-subsection :list="list" :current="curNow" @change="sectionChange"></u-subsection>
+ * @example <up-subsection :list="list" :current="curNow" @change="sectionChange"></up-subsection>
  */
 export default {
-    name: "u-subsection",
+    name: "up-subsection",
     mixins: [mpMixin, mixin, props],
     data() {
         return {
@@ -101,10 +101,10 @@ export default {
                 // #ifdef APP-NVUE
                 // 在安卓nvue上，如果通过translateX进行位移，到最后一个时，会导致右侧无法绘制圆角
                 // 故用animation模块进行位移
-                const ref = this.$refs?.["u-subsection__bar"]?.ref;
+                const ref = this.$refs?.["up-subsection__bar"]?.ref;
                 // 不存在ref的时候(理解为第一次初始化时，需要渲染dom，进行一定延时再获取ref)，这里的100ms是经过测试得出的结果(某些安卓需要延时久一点)，勿随意修改
                 sleep(ref ? 0 : 100).then(() => {
-                    animation.transition(this.$refs["u-subsection__bar"].ref, {
+                    animation.transition(this.$refs["up-subsection__bar"].ref, {
                         styles: {
                             transform: `translateX(${
                                 n * this.itemRect.width
@@ -203,13 +203,13 @@ export default {
         // 获取组件的尺寸
         getRect() {
             // #ifndef APP-NVUE
-            this.$uGetRect(".u-subsection__item--0").then((size) => {
+            this.$uGetRect(".up-subsection__item--0").then((size) => {
                 this.itemRect = size;
             });
             // #endif
 
             // #ifdef APP-NVUE
-            const ref = this.$refs["u-subsection__item--0"][0];
+            const ref = this.$refs["up-subsection__item--0"][0];
             ref &&
                 dom.getComponentRect(ref, (res) => {
                     this.itemRect = res.size;
@@ -227,7 +227,7 @@ export default {
 <style lang="scss" scoped>
 @import "../../libs/css/components.scss";
 
-.u-subsection {
+.up-subsection {
     @include flex;
     position: relative;
     overflow: hidden;

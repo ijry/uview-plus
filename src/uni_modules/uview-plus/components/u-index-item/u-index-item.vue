@@ -1,11 +1,11 @@
 <template>
 	<!-- #ifdef APP-NVUE -->
-	<cell ref="u-index-item">
+	<cell ref="up-index-item">
 		<!-- #endif -->
 		<view
-			class="u-index-item"
-			:id="`u-index-item-${id}`"
-			:class="[`u-index-item-${id}`]"
+			class="up-index-item"
+			:id="`up-index-item-${id}`"
+			:class="[`up-index-item-${id}`]"
 		>
 			<slot />
 		</view>
@@ -32,7 +32,7 @@
 	 * @example
 	 */
 	export default {
-		name: 'u-index-item',
+		name: 'up-index-item',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -43,7 +43,7 @@
 			}
 		},
 		created() {
-			// 子组件u-index-anchor的实例
+			// 子组件up-index-anchor的实例
 			this.anchor = {}
 		},
 		mounted() {
@@ -52,9 +52,9 @@
 		methods: {
 			init() {
 				// 此处会活动父组件实例，并赋值给实例的parent属性
-				this.getParentData('u-index-list')
+				this.getParentData('up-index-list')
 				if (!this.parent) {
-					return error('u-index-item必须要搭配u-index-list组件使用')
+					return error('up-index-item必须要搭配up-index-list组件使用')
 				}
 				sleep().then(() =>{
 					this.getIndexItemRect().then(size => {
@@ -67,13 +67,13 @@
 			getIndexItemRect() {
 				return new Promise(resolve => {
 					// #ifndef APP-NVUE
-					this.$uGetRect('.u-index-item').then(size => {
+					this.$uGetRect('.up-index-item').then(size => {
 						resolve(size)
 					})
 					// #endif
 
 					// #ifdef APP-NVUE
-					const ref = this.$refs['u-index-item']
+					const ref = this.$refs['up-index-item']
 					dom.getComponentRect(ref, res => {
 						resolve(res.size)
 					})

@@ -1,13 +1,13 @@
 <template>
 	<view
-	    class="u-search"
+	    class="up-search"
 	    @tap="clickHandler"
 	    :style="[{
 			margin: margin,
 		}, addStyle(customStyle)]"
 	>
 		<view
-		    class="u-search__content"
+		    class="up-search__content"
 		    :style="{
 				backgroundColor: bgColor,
 				borderRadius: shape == 'round' ? '100px' : '4px',
@@ -16,16 +16,16 @@
 		>
 			<template v-if="$slots.label || label !== null">
 				<slot name="label">
-					<text class="u-search__content__label">{{ label }}</text>
+					<text class="up-search__content__label">{{ label }}</text>
 				</slot>
 			</template>
-			<view class="u-search__content__icon">
-				<u-icon
+			<view class="up-search__content__icon">
+				<up-icon
 					@tap="clickIcon"
 				    :size="searchIconSize"
 				    :name="searchIcon"
 				    :color="searchIconColor ? searchIconColor : color"
-				></u-icon>
+				></up-icon>
 			</view>
 			<input
 			    confirm-type="search"
@@ -39,10 +39,10 @@
 			    :maxlength="maxlength"
 				:adjust-position="adjustPosition"
 				:auto-blur="autoBlur"
-			    placeholder-class="u-search__content__input--placeholder"
+			    placeholder-class="up-search__content__input--placeholder"
 			    :placeholder="placeholder"
 			    :placeholder-style="`color: ${placeholderColor}`"
-			    class="u-search__content__input"
+			    class="up-search__content__input"
 			    type="text"
 			    :style="[{
 					textAlign: inputAlign,
@@ -52,22 +52,22 @@
 				}, inputStyle]"
 			/>
 			<view
-			    class="u-search__content__icon u-search__content__close"
+			    class="up-search__content__icon up-search__content__close"
 			    v-if="keyword && clearabled && focused"
 			    @click="clear"
 			>
-				<u-icon
+				<up-icon
 				    name="close"
 				    size="11"
 				    color="#ffffff"
 					customStyle="line-height: 12px"
-				></u-icon>
+				></up-icon>
 			</view>
 		</view>
 		<text
 		    :style="[actionStyle]"
-		    class="u-search__action"
-		    :class="[(showActionBtn || show) && 'u-search__action--active']"
+		    class="up-search__action"
+		    :class="[(showActionBtn || show) && 'up-search__action--active']"
 		    @tap.stop.prevent="custom"
 		>{{ actionText }}</text>
 	</view>
@@ -113,10 +113,10 @@
 	 * @event {Function} search 用户确定搜索时触发，用户按回车键，或者手机键盘右下角的"搜索"键时触发
 	 * @event {Function} custom 用户点击右侧控件时触发
 	 * @event {Function} clear 用户点击清除按钮时触发
-	 * @example <u-search placeholder="日照香炉生紫烟" v-model="keyword"></u-search>
+	 * @example <up-search placeholder="日照香炉生紫烟" v-model="keyword"></up-search>
 	 */
 	export default {
-		name: "u-search",
+		name: "up-search",
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -231,23 +231,23 @@
 
 <style lang="scss" scoped>
 @import "../../libs/css/components.scss";
-$u-search-content-padding: 0 10px !default;
-$u-search-label-color: $u-main-color !default;
-$u-search-label-font-size: 14px !default;
-$u-search-label-margin: 0 4px !default;
-$u-search-close-size: 20px !default;
-$u-search-close-radius: 100px !default;
-$u-search-close-bgColor: #C6C7CB !default;
-$u-search-close-transform: scale(0.82) !default;
-$u-search-input-font-size: 14px !default;
-$u-search-input-margin: 0 5px !default;
-$u-search-input-color: $u-main-color !default;
-$u-search-input-placeholder-color: $u-tips-color !default;
-$u-search-action-font-size: 14px !default;
-$u-search-action-color: $u-main-color !default;
-$u-search-action-width: 0 !default;
-$u-search-action-active-width: 40px !default;
-$u-search-action-margin-left: 5px !default;
+$up-search-content-padding: 0 10px !default;
+$up-search-label-color: $up-main-color !default;
+$up-search-label-font-size: 14px !default;
+$up-search-label-margin: 0 4px !default;
+$up-search-close-size: 20px !default;
+$up-search-close-radius: 100px !default;
+$up-search-close-bgColor: #C6C7CB !default;
+$up-search-close-transform: scale(0.82) !default;
+$up-search-input-font-size: 14px !default;
+$up-search-input-margin: 0 5px !default;
+$up-search-input-color: $up-main-color !default;
+$up-search-input-placeholder-color: $up-tips-color !default;
+$up-search-action-font-size: 14px !default;
+$up-search-action-color: $up-main-color !default;
+$up-search-action-width: 0 !default;
+$up-search-action-active-width: 40px !default;
+$up-search-action-margin-left: 5px !default;
 
 /* #ifdef H5 */
 // iOS15在H5下，hx的某些版本，input type=search时，会多了一个搜索图标，进行移除
@@ -256,7 +256,7 @@ $u-search-action-margin-left: 5px !default;
 }
 /* #endif */
 
-.u-search {
+.up-search {
 	@include flex(row);
 	align-items: center;
 	flex: 1;
@@ -264,7 +264,7 @@ $u-search-action-margin-left: 5px !default;
 	&__content {
 		@include flex;
 		align-items: center;
-		padding: $u-search-content-padding;
+		padding: $up-search-content-padding;
 		flex: 1;
 		justify-content: space-between;
 		border-width: 1px;
@@ -278,42 +278,42 @@ $u-search-action-margin-left: 5px !default;
 		}
 
 		&__label {
-			color: $u-search-label-color;
-			font-size: $u-search-label-font-size;
-			margin: $u-search-label-margin;
+			color: $up-search-label-color;
+			font-size: $up-search-label-font-size;
+			margin: $up-search-label-margin;
 		}
 
 		&__close {
-			width: $u-search-close-size;
-			height: $u-search-close-size;
-			border-top-left-radius: $u-search-close-radius;
-			border-top-right-radius: $u-search-close-radius;
-			border-bottom-left-radius: $u-search-close-radius;
-			border-bottom-right-radius: $u-search-close-radius;
-			background-color: $u-search-close-bgColor;
+			width: $up-search-close-size;
+			height: $up-search-close-size;
+			border-top-left-radius: $up-search-close-radius;
+			border-top-right-radius: $up-search-close-radius;
+			border-bottom-left-radius: $up-search-close-radius;
+			border-bottom-right-radius: $up-search-close-radius;
+			background-color: $up-search-close-bgColor;
 			@include flex(row);
 			align-items: center;
 			justify-content: center;
-			transform: $u-search-close-transform;
+			transform: $up-search-close-transform;
 		}
 
 		&__input {
 			flex: 1;
-			font-size: $u-search-input-font-size;
+			font-size: $up-search-input-font-size;
 			line-height: 1;
-			margin: $u-search-input-margin;
-			color: $u-search-input-color;
+			margin: $up-search-input-margin;
+			color: $up-search-input-color;
 
 			&--placeholder {
-				color: $u-search-input-placeholder-color;
+				color: $up-search-input-placeholder-color;
 			}
 		}
 	}
 
 	&__action {
-		font-size: $u-search-action-font-size;
-		color: $u-search-action-color;
-		width: $u-search-action-width;
+		font-size: $up-search-action-font-size;
+		color: $up-search-action-color;
+		width: $up-search-action-width;
 		overflow: hidden;
 		transition-property: width;
 		transition-duration: 0.3s;
@@ -323,8 +323,8 @@ $u-search-action-margin-left: 5px !default;
 		text-align: center;
 
 		&--active {
-			width: $u-search-action-active-width;
-			margin-left: $u-search-action-margin-left;
+			width: $up-search-action-active-width;
+			margin-left: $up-search-action-margin-left;
 		}
 	}
 }

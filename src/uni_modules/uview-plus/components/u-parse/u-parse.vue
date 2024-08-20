@@ -46,7 +46,7 @@ const plugins = []
 const dom = weex.requireModule('dom')
 // #endif
 export default {
-	name: 'u-parse',
+	name: 'up-parse',
 	data() {
 		return {
 			nodes: [],

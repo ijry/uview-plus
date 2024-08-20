@@ -3,10 +3,10 @@
 	<cell>
 		<!-- #endif -->
 		<view
-			class="u-list-item"
-			:ref="`u-list-item-${anchor}`"
-			:anchor="`u-list-item-${anchor}`"
-			:class="[`u-list-item-${anchor}`]"
+			class="up-list-item"
+			:ref="`up-list-item-${anchor}`"
+			:anchor="`up-list-item-${anchor}`"
+			:class="[`up-list-item-${anchor}`]"
 		>
 			<slot />
 		</view>
@@ -28,10 +28,10 @@
 	 * @description 该组件为高性能列表组件
 	 * @tutorial https://ijry.github.io/uview-plus/components/list.html
 	 * @property {String | Number}	anchor	用于滚动到指定item
-	 * @example <u-list-ite v-for="(item, index) in indexList" :key="index" ></u-list-item>
+	 * @example <up-list-item v-for="(item, index) in indexList" :key="index" ></up-list-item>
 	 */
 	export default {
-		name: 'u-list-item',
+		name: 'up-list-item',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -74,10 +74,10 @@
 			},
 			updateParentData() {
 				// 此方法在mixin中
-				this.getParentData('u-list')
+				this.getParentData('up-list')
 			},
 			resize() {
-				this.queryRect(`u-list-item-${this.anchor}`).then(size => {
+				this.queryRect(`up-list-item-${this.anchor}`).then(size => {
 					const lastChild = this.parent.children[this.index - 1]
 					this.rect = size
 					const preLoadScreen = this.uList.preLoadScreen
@@ -115,5 +115,5 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-list-item {}
+	.up-list-item {}
 </style>

@@ -1,7 +1,7 @@
 <template>
 	<view
-	    class="u-steps"
-	    :class="[`u-steps--${direction}`]"
+	    class="up-steps"
+	    :class="[`up-steps--${direction}`]"
 	>
 		<slot></slot>
 	</view>
@@ -23,10 +23,10 @@
 	 * @property {String}			activeIcon		激活状态的图标
 	 * @property {String}			inactiveIcon	未激活状态图标 
 	 * @property {Boolean}			dot				是否显示点类型 (默认 false )
-	 * @example <u-steps current="0"><u-steps-item title="已出库" desc="10:35" ></u-steps-item></u-steps>
+	 * @example <up-steps current="0"><up-steps-item title="已出库" desc="10:35" ></up-steps-item></up-steps>
 	 */
 	export default {
-		name: 'u-steps',
+		name: 'up-steps',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -71,7 +71,7 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-steps {
+	.up-steps {
 		@include flex;
 
 		&--column {

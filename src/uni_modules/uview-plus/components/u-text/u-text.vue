@@ -1,6 +1,6 @@
 <template>
     <view
-        class="u-text"
+        class="up-text"
         :class="[customClass]"
         v-if="show"
         :style="{
@@ -10,26 +10,26 @@
         @tap="clickHandler"
     >
         <text
-            :class="['u-text__price', type && `u-text__value--${type}`]"
+            :class="['up-text__price', type && `up-text__value--${type}`]"
             v-if="mode === 'price'"
             :style="[valueStyle]"
             >￥</text
         >
-        <view class="u-text__prefix-icon" v-if="prefixIcon">
-            <u-icon
+        <view class="up-text__prefix-icon" v-if="prefixIcon">
+            <up-icon
                 :name="prefixIcon"
                 :customStyle="addStyle(iconStyle)"
-            ></u-icon>
+            ></up-icon>
         </view>
-        <u-link
-            v-if="mode === 'link'"			class="u-text__value"
-            :style="{fontWeight: valueStyle.fontWeight, wordWrap: valueStyle.wordWrap, fontSize: valueStyle.fontSize}"			:class="[			    type && `u-text__value--${type}`,			    lines && `u-line-${lines}`			]"			:text="value"
+        <up-link
+            v-if="mode === 'link'"			class="up-text__value"
+            :style="{fontWeight: valueStyle.fontWeight, wordWrap: valueStyle.wordWrap, fontSize: valueStyle.fontSize}"			:class="[			    type && `up-text__value--${type}`,			    lines && `up-line-${lines}`			]"			:text="value"
             :href="href"
             underLine
-        ></u-link>
+        ></up-link>
         <template v-else-if="openType && isMp">
             <button
-                class="u-reset-button u-text__value"
+                class="up-reset-button up-text__value"
                 :style="[valueStyle]"
                 :data-index="index"
                 :openType="openType"
@@ -52,19 +52,19 @@
         </template>
         <text
             v-else
-            class="u-text__value"
+            class="up-text__value"
             :style="[valueStyle]"
             :class="[
-                type && `u-text__value--${type}`,
-                lines && `u-line-${lines}`
+                type && `up-text__value--${type}`,
+                lines && `up-line-${lines}`
             ]"
             >{{ value }}</text
         >
-        <view class="u-text__suffix-icon" v-if="suffixIcon">
-            <u-icon
+        <view class="up-text__suffix-icon" v-if="suffixIcon">
+            <up-icon
                 :name="suffixIcon"
                 :customStyle="addStyle(iconStyle)"
-            ></u-icon>
+            ></up-icon>
         </view>
     </view>
 </template>
@@ -165,7 +165,7 @@ export default {
 <style lang="scss" scoped>
 @import '../../libs/css/components.scss';
 
-.u-text {
+.up-text {
     @include flex(row);
     align-items: center;
     flex-wrap: nowrap;
@@ -176,52 +176,52 @@ export default {
 
     &__price {
         font-size: 14px;
-        color: $u-content-color;
+        color: $up-content-color;
     }
 
     &__value {
         font-size: 14px;
         @include flex;
-        color: $u-content-color;
+        color: $up-content-color;
         flex-wrap: wrap;
         // flex: 1;
         text-overflow: ellipsis;
         align-items: center;
 
         &--primary {
-            color: $u-primary;
+            color: $up-primary;
         }
 
         &--warning {
-            color: $u-warning;
+            color: $up-warning;
         }
 
         &--success {
-            color: $u-success;
+            color: $up-success;
         }
 
         &--info {
-            color: $u-info;
+            color: $up-info;
         }
 
         &--error {
-            color: $u-error;
+            color: $up-error;
         }
 
         &--main {
-            color: $u-main-color;
+            color: $up-main-color;
         }
 
         &--content {
-            color: $u-content-color;
+            color: $up-content-color;
         }
 
         &--tips {
-            color: $u-tips-color;
+            color: $up-tips-color;
         }
 
         &--light {
-            color: $u-light-color;
+            color: $up-light-color;
         }
     }
 }

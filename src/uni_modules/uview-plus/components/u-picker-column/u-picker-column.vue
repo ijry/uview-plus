@@ -1,7 +1,6 @@
 <template>
 	<picker-view-column>
-		<view class="u-picker-column">
-
+		<view class="up-picker-column">
 		</view>
 	</picker-view-column>
 </template>
@@ -19,7 +18,7 @@
 	 * @example
 	 */
 	export default {
-		name: 'u-picker-column',
+		name: 'up-picker-column',
 		mixins: [mpMixin, mixin, props],
 	}
 </script>

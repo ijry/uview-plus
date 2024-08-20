@@ -8,10 +8,10 @@ import animationMap from './nvue-ani-map.js'
 // #ifndef APP-NVUE
 // 定义类名，通过给元素动态切换类名，赋予元素一定的css动画样式
 const getClassNames = (name) => ({
-    enter: `u-${name}-enter u-${name}-enter-active`,
-    'enter-to': `u-${name}-enter-to u-${name}-enter-active`,
-    leave: `u-${name}-leave u-${name}-leave-active`,
-    'leave-to': `u-${name}-leave-to u-${name}-leave-active`
+    enter: `up-${name}-enter up-${name}-enter-active`,
+    'enter-to': `up-${name}-enter-to up-${name}-enter-active`,
+    leave: `up-${name}-leave up-${name}-leave-active`,
+    'leave-to': `up-${name}-leave-to up-${name}-leave-active`
 })
 // #endif
 
@@ -102,8 +102,8 @@ export default {
                     .then(() => {
                         // 组件开始进入前的事件
                         this.$emit('enter')
-                        // nvue的transition动画模块需要通过ref调用组件，注意此处的ref不同于vue的this.$refs['u-transition']用法
-                        animation.transition(this.$refs['u-transition'].ref, {
+                        // nvue的transition动画模块需要通过ref调用组件，注意此处的ref不同于vue的this.$refs['up-transition']用法
+                        animation.transition(this.$refs['up-transition'].ref, {
                             styles: currentStyle['enter-to'],
                             duration: this.duration,
                             timingFunction: this.timingFunction,
@@ -134,7 +134,7 @@ export default {
                     this.transitionEnded = false
                     // 动画正在离场的状态
                     this.$emit('leave')
-                    animation.transition(this.$refs['u-transition'].ref, {
+                    animation.transition(this.$refs['up-transition'].ref, {
                         styles: currentStyle['leave-to'],
                         duration: this.duration,
                         timingFunction: this.timingFunction,

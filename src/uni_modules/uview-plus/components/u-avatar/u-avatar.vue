@@ -1,7 +1,7 @@
 <template>
 	<view
-		class="u-avatar"
-		:class="[`u-avatar--${shape}`]"
+		class="up-avatar"
+		:class="[`up-avatar--${shape}`]"
 		:style="[{
 			backgroundColor: (text || icon) ? (randomBgColor ? colors[colorIndex !== '' ? colorIndex : random(0, 19)] : bgColor) : 'transparent',
 			width: addUnit(size),
@@ -23,12 +23,12 @@
 			<!-- #ifndef MP-WEIXIN && MP-QQ && MP-BAIDU  -->
 			<template v-if="mpAvatar && allowMp"></template>
 			<!-- #endif -->
-			<u-icon
+			<up-icon
 				v-else-if="icon"
 				:name="icon"
 				:size="fontSize"
 				:color="color"
-			></u-icon>
+			></up-icon>
 			<up-text
 				v-else-if="text"
 				:text="text"
@@ -38,9 +38,9 @@
 				customStyle="justify-content: center"
 			></up-text>
 			<image
-				class="u-avatar__image"
+				class="up-avatar__image"
 				v-else
-				:class="[`u-avatar__image--${shape}`]"
+				:class="[`up-avatar__image--${shape}`]"
 				:src="avatarUrl || defaultUrl"
 				:mode="mode"
 				@error="errorHandler"
@@ -82,10 +82,10 @@
 	 * @property {Object}			customStyle		定义需要用到的外部样式
 	 *
 	 * @event    {Function}        click       点击组件时触发   index: 用户传递的标识符
-	 * @example  <u-avatar :src="src" mode="square"></u-avatar>
+	 * @example  <up-avatar :src="src" mode="square"></up-avatar>
 	 */
 	export default {
-		name: 'u-avatar',
+		name: 'up-avatar',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -153,7 +153,7 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-avatar {
+	.up-avatar {
 		@include flex;
 		align-items: center;
 		justify-content: center;

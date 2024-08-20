@@ -1,19 +1,19 @@
 <template>
 	<view
-	    class="u-radio cursor-pointer"
+	    class="up-radio cursor-pointer"
 		@tap.stop="wrapperClickHandler"
 	    :style="[radioStyle]"
-	    :class="[`u-radio-label--${parentData.iconPlacement}`, parentData.borderBottom && parentData.placement === 'column' && 'u-border-bottom']"
+	    :class="[`up-radio-label--${parentData.iconPlacement}`, parentData.borderBottom && parentData.placement === 'column' && 'up-border-bottom']"
 	>
 		<view
-		    class="u-radio__icon-wrap cursor-pointer"
+		    class="up-radio__icon-wrap cursor-pointer"
 		    @tap.stop="iconClickHandler"
 		    :class="iconClasses"
 		    :style="[iconWrapStyle]"
 		>
 			<slot name="icon">
-				<u-icon
-				    class="u-radio__icon-wrap__icon"
+				<up-icon
+				    class="up-radio__icon-wrap__icon"
 				    name="checkbox-mark"
 				    :size="elIconSize"
 				    :color="elIconColor"
@@ -21,7 +21,7 @@
 			</slot>
 		</view>
 		<text
-			class="u-radio__text"
+			class="up-radio__text"
 		    @tap.stop="labelClickHandler"
 		    :style="{
 				color: elDisabled ? elInactiveColor : elLabelColor,
@@ -39,7 +39,7 @@
 	import { addUnit, addStyle, os, deepMerge, formValidate, error } from '../../libs/function/index';
 	/**
 	 * radio 单选框
-	 * @description 单选框用于有一个选择，用户只能选择其中一个的场景。搭配u-radio-group使用
+	 * @description 单选框用于有一个选择，用户只能选择其中一个的场景。搭配up-radio-group使用
 	 * @tutorial https://ijry.github.io/uview-plus/components/radio.html
 	 * @property {String | Number}	name			radio的名称
 	 * @property {String}			shape			形状，square为方形，circle为圆型
@@ -56,10 +56,10 @@
 	 * @property {Object}			customStyle		组件的样式，对象形式
 	 * 
 	 * @event {Function} change 某个radio状态发生变化时触发(选中状态)
-	 * @example <u-radio :labelDisabled="false">门掩黄昏，无计留春住</u-radio>
+	 * @example <up-radio :labelDisabled="false">门掩黄昏，无计留春住</up-radio>
 	 */
 	export default {
-		name: "u-radio",
+		name: "up-radio",
 		mixins: [mpMixin, mixin,props],
 		data() {
 			return {
@@ -85,7 +85,7 @@
 			}
 		},
 		computed: {
-			// 是否禁用，如果父组件u-raios-group禁用的话，将会忽略子组件的配置
+			// 是否禁用，如果父组件up-raios-group禁用的话，将会忽略子组件的配置
 			elDisabled() {
 				return this.disabled !== '' ? this.disabled : this.parentData.disabled !== null ? this.parentData.disabled : false;
 			},
@@ -138,12 +138,12 @@
 			iconClasses() {
 				let classes = []
 				// 组件的形状
-				classes.push('u-radio__icon-wrap--' + this.elShape)
+				classes.push('up-radio__icon-wrap--' + this.elShape)
 				if (this.elDisabled) {
-					classes.push('u-radio__icon-wrap--disabled')
+					classes.push('up-radio__icon-wrap--disabled')
 				}
 				if (this.checked && this.elDisabled) {
-					classes.push('u-radio__icon-wrap--disabled--checked')
+					classes.push('up-radio__icon-wrap--disabled--checked')
 				}
 				// 支付宝，头条小程序无法动态绑定一个数组类名，否则解析出来的结果会带有","，而导致失效
 				// #ifdef MP-ALIPAY || MP-TOUTIAO
@@ -167,7 +167,7 @@
 			radioStyle() {
 				const style = {}
 				if(this.parentData.borderBottom && this.parentData.placement === 'row') {
-					error('检测到您将borderBottom设置为true，需要同时将u-radio-group的placement设置为column才有效')
+					error('检测到您将borderBottom设置为true，需要同时将up-radio-group的placement设置为column才有效')
 				}
 				// 当父组件设置了显示下边框并且排列形式为纵向时，给内容和边框之间加上一定间隔
 				if(this.parentData.borderBottom && this.parentData.placement === 'column') {
@@ -186,7 +186,7 @@
 				// 支付宝小程序不支持provide/inject，所以使用这个方法获取整个父组件，在created定义，避免循环引用
 				this.updateParentData()
 				if (!this.parent) {
-					error('u-radio必须搭配u-radio-group组件使用')
+					error('up-radio必须搭配up-radio-group组件使用')
 				}
 				// 设置初始化时，是否默认选中的状态
 				// #ifdef VUE3
@@ -197,7 +197,7 @@
 				// #endif
 			},
 			updateParentData() {
-				this.getParentData('u-radio-group')
+				this.getParentData('up-radio-group')
 			},
 			// 点击图标
 			iconClickHandler(e) {
@@ -220,18 +220,18 @@
 				}
 			},
 			emitEvent() {
-				// u-radio的checked不为true时(意味着未选中)，才发出事件，避免多次点击触发事件
+				// up-radio的checked不为true时(意味着未选中)，才发出事件，避免多次点击触发事件
 				if (!this.checked) {
 					this.$emit('change', this.name)
-					// 尝试调用u-form的验证方法，进行一定延迟，否则微信小程序更新可能会不及时
+					// 尝试调用up-form的验证方法，进行一定延迟，否则微信小程序更新可能会不及时
 					this.$nextTick(() => {
 						formValidate(this, 'change')
 					})
 				}
 			},
 			// 改变组件选中状态
-			// 这里的改变的依据是，更改本组件的checked值为true，同时通过父组件遍历所有u-radio实例
-			// 将本组件外的其他u-radio的checked都设置为false(都被取消选中状态)，因而只剩下一个为选中状态
+			// 这里的改变的依据是，更改本组件的checked值为true，同时通过父组件遍历所有up-radio实例
+			// 将本组件外的其他up-radio的checked都设置为false(都被取消选中状态)，因而只剩下一个为选中状态
 			setRadioCheckedStatus() {
 				this.emitEvent()
 				// 将本组件标记为选中状态
@@ -244,25 +244,25 @@
 
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
-	$u-radio-wrap-margin-right:6px !default;
-	$u-radio-wrap-font-size:20px !default;
-	$u-radio-wrap-border-width:1px !default;
-	$u-radio-wrap-border-color: #c8c9cc !default;
-	$u-radio-line-height:0 !default;
-	$u-radio-circle-border-radius:100% !default;
-	$u-radio-square-border-radius:3px !default;
-	$u-radio-checked-color:#fff !default;
-	$u-radio-checked-background-color:red !default;
-	$u-radio-checked-border-color: #2979ff !default;
-	$u-radio-disabled-background-color:#ebedf0 !default;
-	$u-radio-disabled--checked-color:#c8c9cc !default;
-	$u-radio-label-margin-left: 5px !default;
-	$u-radio-label-margin-right:12px !default;
-	$u-radio-label-color:$u-content-color !default;
-	$u-radio-label-font-size:15px !default;
-	$u-radio-label-disabled-color:#c8c9cc !default;
+	$up-radio-wrap-margin-right:6px !default;
+	$up-radio-wrap-font-size:20px !default;
+	$up-radio-wrap-border-width:1px !default;
+	$up-radio-wrap-border-color: #c8c9cc !default;
+	$up-radio-line-height:0 !default;
+	$up-radio-circle-border-radius:100% !default;
+	$up-radio-square-border-radius:3px !default;
+	$up-radio-checked-color:#fff !default;
+	$up-radio-checked-background-color:red !default;
+	$up-radio-checked-border-color: #2979ff !default;
+	$up-radio-disabled-background-color:#ebedf0 !default;
+	$up-radio-disabled--checked-color:#c8c9cc !default;
+	$up-radio-label-margin-left: 5px !default;
+	$up-radio-label-margin-right:12px !default;
+	$up-radio-label-color:$up-content-color !default;
+	$up-radio-label-font-size:15px !default;
+	$up-radio-label-disabled-color:#c8c9cc !default;
 	
-	.u-radio {
+	.up-radio {
 		/* #ifndef APP-NVUE */
 		@include flex(row);
 		/* #endif */
@@ -288,46 +288,46 @@
 			transition-property: border-color, background-color, color;
 			transition-duration: 0.2s;
 			/* #endif */
-			color: $u-content-color;
+			color: $up-content-color;
 			@include flex;
 			align-items: center;
 			justify-content: center;
 			color: transparent;
 			text-align: center;
-			margin-right: $u-radio-wrap-margin-right;
-			font-size: $u-radio-wrap-font-size;
-			border-width: $u-radio-wrap-border-width;
-			border-color: $u-radio-wrap-border-color;
+			margin-right: $up-radio-wrap-margin-right;
+			font-size: $up-radio-wrap-font-size;
+			border-width: $up-radio-wrap-border-width;
+			border-color: $up-radio-wrap-border-color;
 			border-style: solid;
 
 			/* #ifdef MP-TOUTIAO */
 			// 头条小程序兼容性问题，需要设置行高为0，否则图标偏下
 			&__icon {
-				line-height: $u-radio-line-height;
+				line-height: $up-radio-line-height;
 			}
 
 			/* #endif */
 
 			&--circle {
-				border-radius: $u-radio-circle-border-radius;
+				border-radius: $up-radio-circle-border-radius;
 			}
 
 			&--square {
-				border-radius: $u-radio-square-border-radius;
+				border-radius: $up-radio-square-border-radius;
 			}
 
 			&--checked {
-				color: $u-radio-checked-color;
-				background-color: $u-radio-checked-background-color;
-				border-color: $u-radio-checked-border-color;
+				color: $up-radio-checked-color;
+				background-color: $up-radio-checked-background-color;
+				border-color: $up-radio-checked-border-color;
 			}
 
 			&--disabled {
-				background-color: $u-radio-disabled-background-color !important;
+				background-color: $up-radio-disabled-background-color !important;
 			}
 
 			&--disabled--checked {
-				color: $u-radio-disabled--checked-color !important;
+				color: $up-radio-disabled--checked-color !important;
 			}
 		}
 
@@ -335,13 +335,13 @@
 			/* #ifndef APP-NVUE */
 			word-wrap: break-word;
 			/* #endif */
-			margin-left: $u-radio-label-margin-left;
-			margin-right: $u-radio-label-margin-right;
-			color: $u-radio-label-color;
-			font-size: $u-radio-label-font-size;
+			margin-left: $up-radio-label-margin-left;
+			margin-right: $up-radio-label-margin-right;
+			color: $up-radio-label-color;
+			font-size: $up-radio-label-font-size;
 
 			&--disabled {
-				color: $u-radio-label-disabled-color;
+				color: $up-radio-label-disabled-color;
 			}
 		}
 	}

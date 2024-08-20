@@ -1,13 +1,13 @@
 <template>
-	<u-transition
+	<up-transition
 		mode="fade"
 		:show="show"
 		style="display: inline-flex;"
 	>
-		<view class="u-tag-wrapper cursor-pointer">
+		<view class="up-tag-wrapper cursor-pointer">
 			<view
-				class="u-tag"
-				:class="[`u-tag--${shape}`, !plain && `u-tag--${type}`, plain && `u-tag--${type}--plain`, `u-tag--${size}`, plain && plainFill && `u-tag--${type}--plain--fill`]"
+				class="up-tag"
+				:class="[`up-tag--${shape}`, !plain && `up-tag--${type}`, plain && `up-tag--${type}--plain`, `up-tag--${size}`, plain && plainFill && `up-tag--${type}--plain--fill`]"
 				@tap.stop="clickHandler"
 				:style="[{
 					marginRight: closable ? '10px' : 0,
@@ -16,7 +16,7 @@
 			>
 				<slot name="icon">
 					<view
-						class="u-tag__icon"
+						class="up-tag__icon"
 						v-if="icon"
 					>
 						<image
@@ -24,18 +24,18 @@
 							:src="icon"
 							:style="[imgStyle]"
 						></image>
-						<u-icon
+						<up-icon
 							v-else
 							:color="elIconColor"
 							:name="icon"
 							:size="iconSize"
-						></u-icon>
+						></up-icon>
 					</view>
 				</slot>
 				<text
-					class="u-tag__text"
+					class="up-tag__text"
 					:style="[textColor]"
-					:class="[`u-tag__text--${type}`, plain && `u-tag__text--${type}--plain`, `u-tag__text--${size}`]"
+					:class="[`up-tag__text--${type}`, plain && `up-tag__text--${type}--plain`, `up-tag__text--${size}`]"
 				>
 					<slot>
 						{{ text }}
@@ -43,20 +43,20 @@
 				</text>
 			</view>
 			<view
-				class="u-tag__close"
-				:class="[`u-tag__close--${size}`]"
+				class="up-tag__close"
+				:class="[`up-tag__close--${size}`]"
 				v-if="closable"
 				@tap.stop="closeHandler"
 				:style="{backgroundColor: closeColor}"
 			>
-				<u-icon
+				<up-icon
 					name="close"
 					:size="closeSize"
 					color="#ffffff"
-				></u-icon>
+				></up-icon>
 			</view>
 		</view>
-	</u-transition>
+	</up-transition>
 </template>
 
 <script>
@@ -85,10 +85,10 @@
 	 * @property {String}			icon		内置图标，或绝对路径的图片
 	 * @event {Function(index)} click 点击标签时触发 index: 传递的index参数值
 	 * @event {Function(index)} close closable为true时，点击标签关闭按钮触发 index: 传递的index参数值	
-	 * @example <u-tag text="标签" type="error" plain plainFill></u-tag>
+	 * @example <up-tag text="标签" type="error" plain plainFill></up-tag>
 	 */
 	export default {
-		name: 'u-tag',
+		name: 'up-tag',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -160,11 +160,11 @@
 >
 	@import "../../libs/css/components.scss";
 
-	.u-tag-wrapper {
+	.up-tag-wrapper {
 		position: relative;
 	}
 
-	.u-tag {
+	.up-tag {
 		@include flex;
 		align-items: center;
 		border-style: solid;
@@ -217,14 +217,14 @@
 		}
 
 		&--primary {
-			background-color: $u-primary;
+			background-color: $up-primary;
 			border-width: 1px;
-			border-color: $u-primary;
+			border-color: $up-primary;
 		}
 
 		&--primary--plain {
 			border-width: 1px;
-			border-color: $u-primary;
+			border-color: $up-primary;
 		}
 
 		&--primary--plain--fill {
@@ -236,18 +236,18 @@
 		}
 
 		&__text--primary--plain {
-			color: $u-primary;
+			color: $up-primary;
 		}
 
 		&--error {
-			background-color: $u-error;
+			background-color: $up-error;
 			border-width: 1px;
-			border-color: $u-error;
+			border-color: $up-error;
 		}
 
 		&--error--plain {
 			border-width: 1px;
-			border-color: $u-error;
+			border-color: $up-error;
 		}
 
 		&--error--plain--fill {
@@ -259,18 +259,18 @@
 		}
 
 		&__text--error--plain {
-			color: $u-error;
+			color: $up-error;
 		}
 
 		&--warning {
-			background-color: $u-warning;
+			background-color: $up-warning;
 			border-width: 1px;
-			border-color: $u-warning;
+			border-color: $up-warning;
 		}
 
 		&--warning--plain {
 			border-width: 1px;
-			border-color: $u-warning;
+			border-color: $up-warning;
 		}
 
 		&--warning--plain--fill {
@@ -282,18 +282,18 @@
 		}
 
 		&__text--warning--plain {
-			color: $u-warning;
+			color: $up-warning;
 		}
 
 		&--success {
-			background-color: $u-success;
+			background-color: $up-success;
 			border-width: 1px;
-			border-color: $u-success;
+			border-color: $up-success;
 		}
 
 		&--success--plain {
 			border-width: 1px;
-			border-color: $u-success;
+			border-color: $up-success;
 		}
 
 		&--success--plain--fill {
@@ -305,18 +305,18 @@
 		}
 
 		&__text--success--plain {
-			color: $u-success;
+			color: $up-success;
 		}
 
 		&--info {
-			background-color: $u-info;
+			background-color: $up-info;
 			border-width: 1px;
-			border-color: $u-info;
+			border-color: $up-info;
 		}
 
 		&--info--plain {
 			border-width: 1px;
-			border-color: $u-info;
+			border-color: $up-info;
 		}
 
 		&--info--plain--fill {
@@ -328,7 +328,7 @@
 		}
 
 		&__text--info--plain {
-			color: $u-info;
+			color: $up-info;
 		}
 
 		&__close {

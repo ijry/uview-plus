@@ -1,34 +1,37 @@
 <template>
-	<view class="u-dropdown">
-		<view class="u-dropdown__menu" :style="{
+	<view class="up-dropdown">
+		<view class="up-dropdown__menu" :style="{
 			height: addUnit(height)
 		}" :class="{
-			'u-border-bottom': borderBottom
+			'up-border-bottom': borderBottom
 		}">
-			<view class="u-dropdown__menu__item" v-for="(item, index) in menuList" :key="index" @tap.stop="menuClick(index)">
-				<view class="u-flex u-flex-row">
-					<text class="u-dropdown__menu__item__text" :style="{
+			<view class="up-dropdown__menu__item" v-for="(item, index) in menuList" :key="index" @tap.stop="menuClick(index)">
+				<view class="up-flex up-flex-row">
+					<text class="up-dropdown__menu__item__text" :style="{
 						color: item.disabled ? '#c0c4cc' : (index === current || highlightIndex == index) ? activeColor : inactiveColor,
 						fontSize: addUnit(titleSize)
 					}">{{item.title}}</text>
-					<view class="u-dropdown__menu__item__arrow" :class="{
-						'u-dropdown__menu__item__arrow--rotate': index === current
+					<view class="up-dropdown__menu__item__arrow" :class="{
+						'up-dropdown__menu__item__arrow--rotate': index === current
 					}">
-						<u-icon :custom-style="{display: 'flex'}" :name="menuIcon" :size="addUnit(menuIconSize)" :color="index === current || highlightIndex == index ? activeColor : '#c0c4cc'"></u-icon>
+						<up-icon :custom-style="{display: 'flex'}"
+							:name="menuIcon" :size="addUnit(menuIconSize)"
+							:color="index === current || highlightIndex == index ? activeColor : '#c0c4cc'">
+						</up-icon>
 					</view>
 				</view>
 			</view>
 		</view>
-		<view class="u-dropdown__content" :style="[contentStyle, {
+		<view class="up-dropdown__content" :style="[contentStyle, {
 			transition: `opacity ${duration / 1000}s linear`,
 			top: addUnit(height),
 			height: contentHeight + 'px'
 		}]"
 		 @tap="maskClick" @touchmove.stop.prevent>
-			<view @tap.stop.prevent class="u-dropdown__content__popup" :style="[popupStyle]">
+			<view @tap.stop.prevent class="up-dropdown__content__popup" :style="[popupStyle]">
 				<slot></slot>
 			</view>
-			<view class="u-dropdown__content__mask"></view>
+			<view class="up-dropdown__content__mask"></view>
 		</view>
 	</view>
 </template>
@@ -53,10 +56,10 @@
 	 * @property {String | Number} title-size 标题的字体大小，单位任意，数值默认为rpx单位（默认28）
 	 * @event {Function} open 下拉菜单被打开时触发
 	 * @event {Function} close 下拉菜单被关闭时触发
-	 * @example <u-dropdown></u-dropdown>
+	 * @example <up-dropdown></up-dropdown>
 	 */
 	export default {
-		name: 'u-dropdown',
+		name: 'up-dropdown',
         mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -88,7 +91,7 @@
 			}
 		},
 		created() {
-			// 引用所有子组件(u-dropdown-item)的this，不能在data中声明变量，否则在微信小程序会造成循环引用而报错
+			// 引用所有子组件(up-dropdown-item)的this，不能在data中声明变量，否则在微信小程序会造成循环引用而报错
 			this.children = [];
 		},
 		mounted() {
@@ -168,7 +171,7 @@
 				// 才能让遮罩占满菜单一下，直到屏幕底部的高度
 				// sys()为uview-plus封装的获取设备信息的方法
 				let windowHeight = sys().windowHeight;
-				this.$uGetRect('.u-dropdown__menu').then(res => {
+				this.$uGetRect('.up-dropdown__menu').then(res => {
 					// 这里获取的是dropdown的尺寸，在H5上，uniapp获取尺寸是有bug的(以前提出修复过，后来又出现了此bug，目前hx2.8.11版本)
 					// H5端bug表现为元素尺寸的top值为导航栏底部到到元素的上边沿的距离，但是元素的bottom值确是导航栏顶部到元素底部的距离
 					// 二者是互相矛盾的，本质原因是H5端导航栏非原生，uni的开发者大意造成
@@ -183,7 +186,7 @@
 <style scoped lang="scss">
 	@import "../../libs/css/components.scss";
 
-	.u-dropdown {
+	.up-dropdown {
 		flex: 1;
 		width: 100%;
 		position: relative;
@@ -200,13 +203,13 @@
 				justify-content: center;
 				align-items: center;
 
-                .u-flex-row {
+                .up-flex-row {
                     flex-direction: row;
                 }
 
 				&__text {
 					font-size: 28rpx;
-					color: $u-content-color;
+					color: $up-content-color;
 				}
 
 				&__arrow {

@@ -1,13 +1,13 @@
 <template>
-	<view class="u-code-input">
+	<view class="up-code-input">
 		<view
-			class="u-code-input__item"
+			class="up-code-input__item"
 			:style="[itemStyle(index)]"
 			v-for="(item, index) in codeLength"
 			:key="index"
 		>
 			<view
-				class="u-code-input__item__dot"
+				class="up-code-input__item__dot"
 				v-if="dot && codeArray.length > index"
 			></view>
 			<text
@@ -19,17 +19,17 @@
 				}"
 			>{{codeArray[index]}}</text>
 			<view
-				class="u-code-input__item__line"
+				class="up-code-input__item__line"
 				v-if="mode === 'line'"
 				:style="[lineStyle]"
 			></view>
 			<!-- #ifndef APP-NVUE -->
 			<view v-if="isFocus && codeArray.length === index"
-				:style="{backgroundColor: color}" class="u-code-input__item__cursor"></view>
+				:style="{backgroundColor: color}" class="up-code-input__item__cursor"></view>
 			<!-- #endif -->
 			<!-- #ifdef APP-NVUE -->
 			 <view v-if="isFocus && codeArray.length === index"
-			 :style="{backgroundColor: color, opacity: opacity}" class="u-code-input__item__cursor"></view>
+			 :style="{backgroundColor: color, opacity: opacity}" class="up-code-input__item__cursor"></view>
 			<!-- #endif -->
 		</view>
 		<input
@@ -39,7 +39,7 @@
 			:value="inputValue"
 			:maxlength="maxlength"
 			:adjustPosition="adjustPosition"
-			class="u-code-input__input"
+			class="up-code-input__input"
 			@input="inputHandler"
 			:style="{
 				height: addUnit(size)
@@ -76,10 +76,10 @@
 	 * 
 	 * @event {Function}	change	输入内容发生改变时触发，具体见上方说明			value：当前输入的值
 	 * @event {Function}	finish	输入字符个数达maxlength值时触发，见上方说明	value：当前输入的值
-	 * @example	<u-code-input v-model="value4" :focus="true"></u-code-input>
+	 * @example	<up-code-input v-model="value4" :focus="true"></up-code-input>
 	 */
 	export default {
-		name: 'u-code-input',
+		name: 'up-code-input',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -221,12 +221,12 @@
 
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
-	$u-code-input-cursor-width: 1px;
-	$u-code-input-cursor-height: 20px;
-	$u-code-input-cursor-animation-duration: 1s;
-	$u-code-input-cursor-animation-name: u-cursor-flicker;
+	$up-code-input-cursor-width: 1px;
+	$up-code-input-cursor-height: 20px;
+	$up-code-input-cursor-animation-duration: 1s;
+	$up-code-input-cursor-animation-name: up-cursor-flicker;
 
-	.u-code-input {
+	.up-code-input {
 		@include flex;
 		position: relative;
 		overflow: hidden;
@@ -239,14 +239,14 @@
 
 			&__text {
 				font-size: 15px;
-				color: $u-content-color;
+				color: $up-content-color;
 			}
 
 			&__dot {
 				width: 7px;
 				height: 7px;
 				border-radius: 100px;
-				background-color: $u-content-color;
+				background-color: $up-content-color;
 			}
 
 			&__line {
@@ -255,7 +255,7 @@
 				height: 4px;
 				border-radius: 100px;
 				width: 40px;
-				background-color: $u-content-color;
+				background-color: $up-content-color;
 			}
 			&__cursor {
 				position: absolute;
@@ -265,9 +265,9 @@
 				opacity: 1;
 				transform: translate(-50%,-50%);
 				/* #endif */
-				width: $u-code-input-cursor-width;
-				height: $u-code-input-cursor-height;
-				animation: $u-code-input-cursor-animation-duration u-cursor-flicker infinite;
+				width: $up-code-input-cursor-width;
+				height: $up-code-input-cursor-height;
+				animation: $up-code-input-cursor-animation-duration up-cursor-flicker infinite;
 			}
 		}
 
@@ -284,7 +284,7 @@
 	}
 	
 	/* #ifndef APP-NVUE */
-	@keyframes u-cursor-flicker {
+	@keyframes up-cursor-flicker {
 		0% {
 		    opacity: 0;
 		}

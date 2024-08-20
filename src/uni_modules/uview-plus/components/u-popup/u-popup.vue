@@ -1,6 +1,6 @@
 <template>
-	<view class="u-popup"  :class="[customClass]">
-		<u-overlay
+	<view class="up-popup"  :class="[customClass]">
+		<up-overlay
 			:show="show"
 			@click="overlayClick"
 			v-if="overlay"
@@ -8,8 +8,8 @@
 			:duration="overlayDuration"
 			:customStyle="overlayStyle"
 			:opacity="overlayOpacity"
-		></u-overlay>
-		<u-transition
+		></up-overlay>
+		<up-transition
 			:show="show"
 			:customStyle="transitionStyle"
 			:mode="position"
@@ -18,30 +18,30 @@
 			@click="clickHandler"
 		>
 			<view
-				class="u-popup__content"
+				class="up-popup__content"
 				:style="[contentStyle]"
 				@tap.stop="noop"
 			>
-				<u-status-bar v-if="safeAreaInsetTop"></u-status-bar>
+				<up-status-bar v-if="safeAreaInsetTop"></up-status-bar>
 				<slot></slot>
 				<view
 					v-if="closeable"
 					@tap.stop="close"
-					class="u-popup__content__close"
-					:class="['u-popup__content__close--' + closeIconPos]"
-					hover-class="u-popup__content__close--hover"
+					class="up-popup__content__close"
+					:class="['up-popup__content__close--' + closeIconPos]"
+					hover-class="up-popup__content__close--hover"
 					hover-stay-time="150"
 				>
-					<u-icon
+					<up-icon
 						name="close"
 						color="#909399"
 						size="18"
 						bold
-					></u-icon>
+					></up-icon>
 				</view>
-				<u-safe-bottom v-if="safeAreaInsetBottom"></u-safe-bottom>
+				<up-safe-bottom v-if="safeAreaInsetBottom"></up-safe-bottom>
 			</view>
-		</u-transition>
+		</up-transition>
 	</view>
 </template>
 
@@ -72,10 +72,10 @@
 	 * @property {Object}			customStyle			组件的样式，对象形式
 	 * @event {Function} open 弹出层打开
 	 * @event {Function} close 弹出层收起
-	 * @example <u-popup v-model="show"><text>出淤泥而不染，濯清涟而不妖</text></u-popup>
+	 * @example <up-popup v-model="show"><text>出淤泥而不染，濯清涟而不妖</text></up-popup>
 	 */
 	export default {
-		name: 'u-popup',
+		name: 'up-popup',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -194,7 +194,7 @@
 				this.$emit('open')
 			},
 			clickHandler() {
-				// 由于中部弹出时，其u-transition占据了整个页面相当于遮罩，此时需要发出遮罩点击事件，是否无法通过点击遮罩关闭弹窗
+				// 由于中部弹出时，其up-transition占据了整个页面相当于遮罩，此时需要发出遮罩点击事件，是否无法通过点击遮罩关闭弹窗
 				if(this.mode === 'center') {
 					this.overlayClick()
 				}
@@ -203,10 +203,10 @@
 			// #ifdef MP-WEIXIN
 			retryComputedComponentRect(children) {
 				// 组件内部需要计算节点的组件
-				const names = ['u-calendar-month', 'u-album', 'u-collapse-item', 'u-dropdown', 'u-index-item', 'u-index-list',
-					'u-line-progress', 'u-list-item', 'u-rate', 'u-read-more', 'u-row', 'u-row-notice', 'u-scroll-list',
-					'u-skeleton', 'u-slider', 'u-steps-item', 'u-sticky', 'u-subsection', 'u-swipe-action-item', 'u-tabbar',
-					'u-tabs', 'u-tooltip'
+				const names = ['up-calendar-month', 'up-album', 'up-collapse-item', 'up-dropdown', 'up-index-item', 'up-index-list',
+					'up-line-progress', 'up-list-item', 'up-rate', 'up-read-more', 'up-row', 'up-row-notice', 'up-scroll-list',
+					'up-skeleton', 'up-slider', 'up-steps-item', 'up-sticky', 'up-subsection', 'up-swipe-action-item', 'up-tabbar',
+					'up-tabs', 'up-tooltip'
 				]
 				// 历遍所有的子组件节点
 				for (let i = 0; i < children.length; i++) {
@@ -233,14 +233,14 @@
 
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
-	$u-popup-flex:1 !default;
-	$u-popup-content-background-color: #fff !default;
+	$up-popup-flex:1 !default;
+	$up-popup-content-background-color: #fff !default;
 
-	.u-popup {
-		flex: $u-popup-flex;
+	.up-popup {
+		flex: $up-popup-flex;
 
 		&__content {
-			background-color: $u-popup-content-background-color;
+			background-color: $up-popup-content-background-color;
 			position: relative;
 
 			&--round-top {

@@ -1,19 +1,19 @@
 <template>
-    <view class="u-picker-warrper">
-        <view v-if="hasInput" class="u-picker-input cursor-pointer" @click="showByClickInput = !showByClickInput">
+    <view class="up-picker-warrper">
+        <view v-if="hasInput" class="up-picker-input cursor-pointer" @click="showByClickInput = !showByClickInput">
             <slot>
                 <view>
 					{{ inputLabel && inputLabel.length ? inputLabel.join('/') : placeholder }}
 				</view>
             </slot>
         </view>
-		<u-popup
+		<up-popup
 			:show="show || (hasInput && showByClickInput)"
 			:mode="popupMode"
 			@close="closeHandler"
 		>
-			<view class="u-picker">
-				<u-toolbar
+			<view class="up-picker">
+				<up-toolbar
 					v-if="showToolbar"
 					:cancelColor="cancelColor"
 					:confirmColor="confirmColor"
@@ -27,10 +27,10 @@
 					<template #right>
 						<slot name="toolbar-right"></slot>
 					</template>
-				</u-toolbar>
+				</up-toolbar>
 				<slot name="toolbar-bottom"></slot>
 				<picker-view
-					class="u-picker__view"
+					class="up-picker__view"
 					:indicatorStyle="`height: ${addUnit(itemHeight)}`"
 					:value="innerIndex"
 					:immediateChange="immediateChange"
@@ -42,11 +42,11 @@
 					<picker-view-column
 						v-for="(item, index) in innerColumns"
 						:key="index"
-						class="u-picker__view__column"
+						class="up-picker__view__column"
 					>
 						<view
 							v-if="testArray(item)"
-							class="u-picker__view__column__item u-line-1"
+							class="up-picker__view__column__item up-line-1"
 							v-for="(item1, index1) in item"
 							:key="index1"
 							:style="{
@@ -60,18 +60,18 @@
 				</picker-view>
 				<view
 					v-if="loading"
-					class="u-picker--loading"
+					class="up-picker--loading"
 				>
-					<u-loading-icon mode="circle"></u-loading-icon>
+					<up-loading-icon mode="circle"></up-loading-icon>
 				</view>
 			</view>
-		</u-popup>
+		</up-popup>
     </view>
 </template>
 
 <script>
 /**
- * u-picker
+ * up-picker
  * @description 选择器
  * @property {Boolean}			show				是否显示picker弹窗（默认 false ）
  * @property {Boolean}			showToolbar			是否显示顶部的操作栏（默认 true ）
@@ -99,7 +99,7 @@ import { mixin } from '../../libs/mixin/mixin';
 import { addUnit, deepClone, sleep } from '../../libs/function/index';
 import test from '../../libs/function/test';
 export default {
-	name: 'u-picker',
+	name: 'up-picker',
 	mixins: [mpMixin, mixin, props],
 	data() {
 		return {
@@ -296,7 +296,7 @@ export default {
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-picker {
+	.up-picker {
 		position: relative;
 
 		&__view {
@@ -315,7 +315,7 @@ export default {
 					/* #ifndef APP-NVUE */
 					display: block;
 					/* #endif */
-					color: $u-main-color;
+					color: $up-main-color;
 
 					&--disabled {
 						/* #ifndef APP-NVUE */

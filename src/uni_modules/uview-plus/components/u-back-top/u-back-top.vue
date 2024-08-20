@@ -1,26 +1,26 @@
 <template>
-	<u-transition
+	<up-transition
 	    mode="fade"
 	    :customStyle="backTopStyle"
 	    :show="show"
 	>
 		<view
-		    class="u-back-top"
+		    class="up-back-top"
 			:style="[contentStyle]"
 		    v-if="!$slots.default && !$slots.$default"
 			@click="backToTop"
 		>
-			<u-icon
+			<up-icon
 			    :name="icon"
 			    :custom-style="iconStyle"
-			></u-icon>
+			></up-icon>
 			<text
 			    v-if="text"
-			    class="u-back-top__text"
+			    class="up-back-top__text"
 			>{{text}}</text>
 		</view>
 		<slot v-else />
-	</u-transition>
+	</up-transition>
 </template>
 
 <script>
@@ -48,10 +48,10 @@
 	 * @property {Object<Object>}  	iconStyle 	图标的样式，对象形式   （默认 {color: '#909399',fontSize: '19px'}）
 	 * @property {Object}			customStyle	定义需要用到的外部样式
 	 * 
-	 * @example <u-back-top :scrollTop="scrollTop"></u-back-top>
+	 * @example <up-back-top :scrollTop="scrollTop"></up-back-top>
 	 */
 	export default {
-		name: 'u-back-top',
+		name: 'up-back-top',
 		mixins: [mpMixin, mixin, props],
 		computed: {
 			backTopStyle() {
@@ -90,10 +90,10 @@
 		methods: {
 			backToTop() {
 				// #ifdef APP-NVUE
-				if (!this.$parent.$refs['u-back-top']) {
-					error(`nvue页面需要给页面最外层元素设置"ref='u-back-top'`)
+				if (!this.$parent.$refs['up-back-top']) {
+					error(`nvue页面需要给页面最外层元素设置"ref='up-back-top'`)
 				}
-				dom.scrollToElement(this.$parent.$refs['u-back-top'], {
+				dom.scrollToElement(this.$parent.$refs['up-back-top'], {
 					offset: 0
 				})
 				// #endif
@@ -112,21 +112,21 @@
 
 <style lang="scss" scoped>
 	@import '../../libs/css/components.scss';
-     $u-back-top-flex:1 !default;
-     $u-back-top-height:100% !default;
-     $u-back-top-background-color:#E1E1E1 !default;
-     $u-back-top-tips-font-size:12px !default;
-	.u-back-top {
+     $up-back-top-flex:1 !default;
+     $up-back-top-height:100% !default;
+     $up-back-top-background-color:#E1E1E1 !default;
+     $up-back-top-tips-font-size:12px !default;
+	.up-back-top {
 		@include flex;
 		flex-direction: column;
 		align-items: center;
-		flex:$u-back-top-flex;
-		height: $u-back-top-height;
+		flex:$up-back-top-flex;
+		height: $up-back-top-height;
 		justify-content: center;
-		background-color: $u-back-top-background-color;
+		background-color: $up-back-top-background-color;
 
 		&__tips {
-			font-size:$u-back-top-tips-font-size;
+			font-size:$up-back-top-tips-font-size;
 			transform: scale(0.8);
 		}
 	}

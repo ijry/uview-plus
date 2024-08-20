@@ -1,25 +1,25 @@
 <template>
-    <view class="u-input" :class="inputClass" :style="[wrapperStyle]">
-        <view class="u-input__content">
+    <view class="up-input" :class="inputClass" :style="[wrapperStyle]">
+        <view class="up-input__content">
             <view
-                class="u-input__content__prefix-icon"
+                class="up-input__content__prefix-icon"
                 v-if="prefixIcon || $slots.prefix"
             >
                 <slot name="prefix">
-                    <u-icon
+                    <up-icon
                         :name="prefixIcon"
                         size="18"
                         :customStyle="prefixIconStyle"
-                    ></u-icon>
+                    ></up-icon>
                 </slot>
             </view>
-            <view class="u-input__content__field-wrapper" @tap="clickHandler">
+            <view class="up-input__content__field-wrapper" @tap="clickHandler">
 				<!-- 根据uni-app的input组件文档，H5和APP中只要声明了password参数(无论true还是false)，type均失效，此时
 					为了防止type=number时，又存在password属性，type无效，此时需要设置password为undefined
 				 -->
             	<input
                     ref="input-native"
-            	    class="u-input__content__field-wrapper__field"
+            	    class="up-input__content__field-wrapper__field"
             	    :style="[inputStyle]"
             	    :type="type"
             	    :focus="focus"
@@ -48,27 +48,27 @@
             	/>
             </view>
             <view
-                class="u-input__content__clear"
+                class="up-input__content__clear"
                 v-if="isShowClear"
                 @click="onClear"
             >
-                <u-icon
+                <up-icon
                     name="close"
                     size="11"
                     color="#ffffff"
                     customStyle="line-height: 12px"
-                ></u-icon>
+                ></up-icon>
             </view>
             <view
-                class="u-input__content__subfix-icon"
+                class="up-input__content__subfix-icon"
                 v-if="suffixIcon || $slots.suffix"
             >
                 <slot name="suffix">
-                    <u-icon
+                    <up-icon
                         :name="suffixIcon"
                         size="18"
                         :customStyle="suffixIconStyle"
-                    ></u-icon>
+                    ></up-icon>
                 </slot>
             </view>
         </view>
@@ -83,7 +83,7 @@ import { debounce } from '../../libs/function/debounce';
 import { addStyle, addUnit, deepMerge, formValidate, $parent, sleep, os } from '../../libs/function/index';
 /**
  * Input 输入框
- * @description  此组件为一个输入框，默认没有边框和样式，是专门为配合表单组件u-form而设计的，利用它可以快速实现表单验证，输入内容，下拉选择等功能。
+ * @description  此组件为一个输入框，默认没有边框和样式，是专门为配合表单组件up-form而设计的，利用它可以快速实现表单验证，输入内容，下拉选择等功能。
  * @tutorial https://uview-plus.jiangruyi.com/components/input.html
  * @property {String | Number}	value					输入的值
  * @property {String}			type					输入框类型，见上方说明 （ 默认 'text' ）
@@ -121,10 +121,10 @@ import { addStyle, addUnit, deepMerge, formValidate, $parent, sleep, os } from '
  * @property {String}			shape					输入框形状，circle-圆形，square-方形 （ 默认 'square' ）
  * @property {Object}			customStyle				定义需要用到的外部样式
  * @property {Boolean}			ignoreCompositionEvent	是否忽略组件内对文本合成系统事件的处理。
- * @example <u-input v-model="value" :password="true" suffix-icon="lock-fill" />
+ * @example <up-input v-model="value" :password="true" suffix-icon="lock-fill" />
  */
 export default {
-    name: "u-input",
+    name: "up-input",
     mixins: [mpMixin, mixin, props],
     data() {
         return {
@@ -185,12 +185,12 @@ export default {
             let classes = [],
                 { border, disabled, shape } = this;
             border === "surround" &&
-                (classes = classes.concat(["u-border", "u-input--radius"]));
-            classes.push(`u-input--${shape}`);
+                (classes = classes.concat(["up-border", "up-input--radius"]));
+            classes.push(`up-input--${shape}`);
             border === "bottom" &&
                 (classes = classes.concat([
-                    "u-border-bottom",
-                    "u-input--no-radius",
+                    "up-border-bottom",
+                    "up-input--no-radius",
                 ]));
             return classes.join(" ");
         },
@@ -251,7 +251,7 @@ export default {
             sleep(150).then(() => {
                 this.focused = false;
             });
-            // 尝试调用u-form的验证方法
+            // 尝试调用up-form的验证方法
             formValidate(this, "blur");
         },
         // 输入框聚焦时触发
@@ -294,7 +294,7 @@ export default {
                     // #endif
                 }
 
-                // 尝试调用u-form的验证方法
+                // 尝试调用up-form的验证方法
                 formValidate(this, "change");
             });
         },
@@ -309,13 +309,13 @@ export default {
         },
         /**
          * 在安卓nvue上，事件无法冒泡
-         * 在某些时间，我们希望监听u-from-item的点击事件，此时会导致点击u-form-item内的u-input后
-         * 无法触发u-form-item的点击事件，这里通过手动调用u-form-item的方法进行触发
+         * 在某些时间，我们希望监听up-from-item的点击事件，此时会导致点击up-form-item内的up-input后
+         * 无法触发up-form-item的点击事件，这里通过手动调用up-form-item的方法进行触发
          */
         clickHandler() {
             // #ifdef APP-NVUE
             if (os() === "android") {
-                const formItem = $parent.call(this, "u-form-item");
+                const formItem = $parent.call(this, "up-form-item");
                 if (formItem) {
                     formItem.clickHandler();
                 }
@@ -329,7 +329,7 @@ export default {
 <style lang="scss" scoped>
 @import "../../libs/css/components.scss";
 
-.u-input {
+.up-input {
     @include flex(row);
     align-items: center;
     justify-content: space-between;
@@ -363,7 +363,7 @@ export default {
 			&__field {
 				line-height: 26px;
 				text-align: left;
-				color: $u-main-color;
+				color: $up-main-color;
 				height: 24px;
 				font-size: 15px;
 				flex: 1;

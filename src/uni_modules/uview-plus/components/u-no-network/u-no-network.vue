@@ -1,5 +1,5 @@
 <template>
-	<u-overlay
+	<up-overlay
 	    :show="!isConnected"
 		:zIndex="zIndex"
 	    @touchmove.stop.prevent="noop"
@@ -10,36 +10,36 @@
 		}"
 	>
 		<view
-		    class="u-no-network"
+		    class="up-no-network"
 		>
-			<u-icon
+			<up-icon
 			    :name="image"
 			    size="150"
 			    imgMode="widthFit"
-			    class="u-no-network__error-icon"
-			></u-icon>
-			<text class="u-no-network__tips">{{tips}}</text>
+			    class="up-no-network__error-icon"
+			></up-icon>
+			<text class="up-no-network__tips">{{tips}}</text>
 			<!-- 只有APP平台，才能跳转设置页，因为需要调用plus环境 -->
 			<!-- #ifdef APP-PLUS -->
-			<view class="u-no-network__app">
-				<text class="u-no-network__app__setting">请检查网络，或前往</text>
+			<view class="up-no-network__app">
+				<text class="up-no-network__app__setting">请检查网络，或前往</text>
 				<text
-				    class="u-no-network__app__to-setting"
+				    class="up-no-network__app__to-setting"
 				    @tap="openSettings"
 				>设置</text>
 			</view>
 			<!-- #endif -->
-			<view class="u-no-network__retry">
-				<u-button
+			<view class="up-no-network__retry">
+				<up-button
 				    size="mini"
 				    text="重试"
 				    type="primary"
 					plain
 				    @click="retry"
-				></u-button>
+				></up-button>
 			</view>
 		</view>
-	</u-overlay>
+	</up-overlay>
 </template>
 
 <script>
@@ -55,10 +55,10 @@
 	 * @property {String | Number}	zIndex	组件的z-index值 
 	 * @property {String}			image	无网络的图片提示，可用的src地址或base64图片 
 	 * @event {Function}			retry	用户点击页面的"重试"按钮时触发
-	 * @example <u-no-network></u-no-network>
+	 * @example <up-no-network></up-no-network>
 	 */
 	export default {
-		name: "u-no-network",
+		name: "up-no-network",
 		mixins: [mpMixin, mixin,props],
 		data() {
 			return {
@@ -186,14 +186,14 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-no-network {
+	.up-no-network {
 		@include flex(column);
 		justify-content: center;
 		align-items: center;
 		margin-top: -100px;
 
 		&__tips {
-			color: $u-tips-color;
+			color: $up-tips-color;
 			font-size: 14px;
 			margin-top: 15px;
 		}
@@ -203,13 +203,13 @@
 			margin-top: 6px;
 
 			&__setting {
-				color: $u-light-color;
+				color: $up-light-color;
 				font-size: 13px;
 			}
 
 			&__to-setting {
 				font-size: 13px;
-				color: $u-primary;
+				color: $up-primary;
 				margin-left: 3px;
 			}
 		}

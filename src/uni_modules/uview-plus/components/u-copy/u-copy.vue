@@ -1,5 +1,5 @@
 <template>
-	<view @click="handleClick">
+	<view class="up-copy" @click="handleClick">
         <slot>复制</slot>
     </view>
 </template>

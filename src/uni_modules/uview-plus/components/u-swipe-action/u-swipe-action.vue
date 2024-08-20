@@ -1,5 +1,5 @@
 <template>
-	<view class="u-swipe-action">
+	<view class="up-swipe-action">
 		<slot></slot>
 	</view>
 </template>
@@ -14,10 +14,10 @@
 	 * @tutorial https://ijry.github.io/uview-plus/components/swipeAction.html
 	 * @property {Boolean}	autoClose	是否自动关闭其他swipe按钮组
 	 * @event {Function(index)}	click	点击组件时触发
-	 * @example	<u-swipe-action><u-swipe-action-item :rightOptions="options1" ></u-swipe-action-item></u-swipe-action>
+	 * @example	<up-swipe-action><up-swipe-action-item :rightOptions="options1" ></up-swipe-action-item></up-swipe-action>
 	 */
 	export default {
-		name: 'u-swipe-action',
+		name: 'up-swipe-action',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {}
@@ -28,8 +28,8 @@
 			}
 		},
 		computed: {
-			// 这里computed的变量，都是子组件u-swipe-action-item需要用到的，由于头条小程序的兼容性差异，子组件无法实时监听父组件参数的变化
-			// 所以需要手动通知子组件，这里返回一个parentData变量，供watch监听，在其中去通知每一个子组件重新从父组件(u-swipe-action-item)
+			// 这里computed的变量，都是子组件up-swipe-action-item需要用到的，由于头条小程序的兼容性差异，子组件无法实时监听父组件参数的变化
+			// 所以需要手动通知子组件，这里返回一个parentData变量，供watch监听，在其中去通知每一个子组件重新从父组件(up-swipe-action-item)
 			// 拉取父组件新的变化后的参数
 			parentData() {
 				return [this.autoClose]
@@ -41,7 +41,7 @@
 			parentData() {
 				if (this.children.length) {
 					this.children.map(child => {
-						// 判断子组件(u-swipe-action-item)如果有updateParentData方法的话，就就执行(执行的结果是子组件重新从父组件拉取了最新的值)
+						// 判断子组件(up-swipe-action-item)如果有updateParentData方法的话，就就执行(执行的结果是子组件重新从父组件拉取了最新的值)
 						typeof(child.updateParentData) === 'function' && child.updateParentData()
 					})
 				}

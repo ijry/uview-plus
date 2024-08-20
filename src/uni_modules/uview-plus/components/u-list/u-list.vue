@@ -1,7 +1,7 @@
 <template>
 	<!-- #ifdef APP-NVUE -->
 	<list
-		class="u-list"
+		class="up-list"
 		:enableBackToTop="enableBackToTop"
 		:loadmoreoffset="lowerThreshold"
 		:showScrollbar="showScrollbar"
@@ -15,7 +15,7 @@
 	<!-- #endif -->
 	<!-- #ifndef APP-NVUE -->
 	<scroll-view
-		class="u-list"
+		class="up-list"
 		:scroll-into-view="scrollIntoView"
 		:style="[listStyle]"
 		:scroll-y="scrollable"
@@ -74,10 +74,10 @@
 	 * @property {String ｜ Number}	preLoadScreen		列表前后预渲染的屏数，1代表一个屏幕的高度，1.5代表1个半屏幕高度  （默认 1 ）
 	 * @property {Object}			customStyle			定义需要用到的外部样式
 	 *
-	 * @example <u-list @scrolltolower="scrolltolower"></u-list>
+	 * @example <up-list @scrolltolower="scrolltolower"></up-list>
 	 */
 	export default {
-		name: 'u-list',
+		name: 'up-list',
 		mixins: [mpMixin, mixin, props],
 		watch: {
 			scrollIntoView(n) {
@@ -133,7 +133,7 @@
 			},
 			scrollIntoViewById(id) {
 				// #ifdef APP-NVUE
-				// 根据id参数，找到所有u-list-item中匹配的节点，再通过dom模块滚动到对应的位置
+				// 根据id参数，找到所有up-list-item中匹配的节点，再通过dom模块滚动到对应的位置
 				const item = this.refs.find(item => item.$refs[id] ? true : false)
 				dom.scrollToElement(item.$refs[id], {
 					// 是否需要滚动动画
@@ -176,7 +176,7 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-list {
+	.up-list {
 		@include flex(column);
 
 	}

@@ -1,11 +1,11 @@
 /*
- * @Author       : LQ
+ * @Author       : LQ,jry
  * @Description  :
- * @version      : 1.0
+ * @version      : 3.0
  * @Date         : 2021-08-20 16:44:21
- * @LastAuthor   : LQ
- * @lastTime     : 2021-08-20 18:00:14
- * @FilePath     : /u-view2.0/uview-ui/libs/config/props/icon.js
+ * @LastAuthor   : jry
+ * @lastTime     : 2024-08-20 14:20:58
+ * @FilePath     : /uview-plus/libs/config/props/icon.js
  */
 import config from '../../libs/config/config'
 
@@ -16,7 +16,7 @@ export default {
     // icon组件
     icon: {
         name: '',
-        color: color['u-content-color'],
+        color: color['up-content-color'],
         size: '16px',
         bold: false,
         index: '',
@@ -25,7 +25,7 @@ export default {
         label: '',
         labelPos: 'right',
         labelSize: '15px',
-        labelColor: color['u-content-color'],
+        labelColor: color['up-content-color'],
         space: '3px',
         imgMode: '',
         width: '',

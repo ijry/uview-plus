@@ -1,19 +1,19 @@
 <template>
 	<view
-		class="u-scroll-list"
-		ref="u-scroll-list"
+		class="up-scroll-list"
+		ref="up-scroll-list"
 	>
 		<!-- #ifdef APP-NVUE -->
 		<!-- nvue使用bindingX实现，以得到更好的性能 -->
 		<scroller
-			class="u-scroll-list__scroll-view"
-			ref="u-scroll-list__scroll-view"
+			class="up-scroll-list__scroll-view"
+			ref="up-scroll-list__scroll-view"
 			scroll-direction="horizontal"
 			:show-scrollbar="false"
 			:offset-accuracy="1"
 			@scroll="nvueScrollHandler"
 		>
-			<view class="u-scroll-list__scroll-view__content">
+			<view class="up-scroll-list__scroll-view__content">
 				<slot />
 			</view>
 		</scroller>
@@ -22,7 +22,7 @@
 		<!-- #ifdef MP-WEIXIN || APP-VUE || H5 || MP-QQ -->
 		<!-- 以上平台，支持wxs -->
 		<scroll-view
-			class="u-scroll-list__scroll-view scroll-view-native"
+			class="up-scroll-list__scroll-view scroll-view-native"
 			scroll-x
 			enable-flex
 			@scroll="wxs.scroll"
@@ -39,7 +39,7 @@
 			<!-- #ifndef APP-NVUE || MP-WEIXIN || H5 || APP-VUE || MP-QQ -->
 			<!-- 非以上平台，只能使用普通js实现 -->
 			<scroll-view
-				class="u-scroll-list__scroll-view scroll-view-js"
+				class="up-scroll-list__scroll-view scroll-view-js"
 				scroll-x
 				@scroll="scrollHandler"
 				@scrolltoupper="scrolltoupperHandler"
@@ -49,24 +49,24 @@
 				:lower-threshold="0"
 			>
 				<!-- #endif -->
-				<view class="u-scroll-list__scroll-view__content">
+				<view class="up-scroll-list__scroll-view__content">
 					<slot />
 				</view>
 			</scroll-view>
 			<!-- #endif -->
 			<view
-				class="u-scroll-list__indicator"
+				class="up-scroll-list__indicator"
 				v-if="indicator"
 				:style="[addStyle(indicatorStyle)]"
 			>
 				<view
-					class="u-scroll-list__indicator__line"
+					class="up-scroll-list__indicator__line"
 					:style="[lineStyle]"
 				>
 					<view
-						class="u-scroll-list__indicator__line__bar"
+						class="up-scroll-list__indicator__line__bar"
 						:style="[barStyle]"
-						ref="u-scroll-list__indicator__line__bar"
+						ref="up-scroll-list__indicator__line__bar"
 					></view>
 				</view>
 			</view>
@@ -103,7 +103,7 @@ import { mpMixin } from '../../libs/mixin/mpMixin';
 import { mixin } from '../../libs/mixin/mixin';
 import { addStyle, addUnit, getPx, sleep } from '../../libs/function/index';
 export default {
-	name: 'u-scroll-list',
+	name: 'up-scroll-list',
 	// #ifndef APP-NVUE
 	mixins: [mpMixin, mixin, props],
 	// #endif
@@ -181,13 +181,13 @@ export default {
 			// 延时一定时间，以获取dom尺寸
 			await sleep(30)
 			// #ifndef APP-NVUE
-			this.$uGetRect('.u-scroll-list').then(size => {
+			this.$uGetRect('.up-scroll-list').then(size => {
 				this.scrollWidth = size.width
 			})
 			// #endif
 
 			// #ifdef APP-NVUE
-			const ref = this.$refs['u-scroll-list']
+			const ref = this.$refs['up-scroll-list']
 			ref && dom.getComponentRect(ref, (res) => {
 				this.scrollWidth = res.size.width
 			})
@@ -200,7 +200,7 @@ export default {
 <style lang="scss" scoped>
 @import "../../libs/css/components.scss";
 
-.u-scroll-list {
+.up-scroll-list {
 	padding-bottom: 10px;
 
 	&__scroll-view {

@@ -1,16 +1,16 @@
 <template>
 	<view
-		class="u-tooltip"
+		class="up-tooltip"
 		:style="[addStyle(customStyle)]"
 	>
-		<u-overlay
+		<up-overlay
 			:show="showTooltip && tooltipTop !== -10000 && overlay"
 			customStyle="backgroundColor: rgba(0, 0, 0, 0)"
 			@click="overlayClickHandler"
-		></u-overlay>
-		<view class="u-tooltip__wrapper">
+		></up-overlay>
+		<view class="up-tooltip__wrapper">
 			<text
-				class="u-tooltip__wrapper__text"
+				class="up-tooltip__wrapper__text"
 				:id="textId"
 				:ref="textId"
 				:userSelect="false"
@@ -21,7 +21,7 @@
 					backgroundColor: bgColor && showTooltip && tooltipTop !== -10000 ? bgColor : 'transparent'
 				}"
 			>{{ text }}</text>
-			<u-transition
+			<up-transition
 				mode="fade"
 				:show="showTooltip"
 				duration="300"
@@ -33,13 +33,13 @@
 				}"
 			>
 				<view
-					class="u-tooltip__wrapper__popup"
+					class="up-tooltip__wrapper__popup"
 					:id="tooltipId"
 					:ref="tooltipId"
 				>
 					<view
-						class="u-tooltip__wrapper__popup__indicator"
-						hover-class="u-tooltip__wrapper__popup__indicator--hover"
+						class="up-tooltip__wrapper__popup__indicator"
+						hover-class="up-tooltip__wrapper__popup__indicator--hover"
 						v-if="showCopy || buttons.length"
 						:style="[indicatorStyle, {
 							width: addUnit(indicatorWidth),
@@ -48,43 +48,43 @@
 					>
 						<!-- 由于nvue不支持三角形绘制，这里就做一个四方形，再旋转45deg，得到露出的一个三角 -->
 					</view>
-					<view class="u-tooltip__wrapper__popup__list">
+					<view class="up-tooltip__wrapper__popup__list">
 						<view
 							v-if="showCopy"
-							class="u-tooltip__wrapper__popup__list__btn"
-							hover-class="u-tooltip__wrapper__popup__list__btn--hover"
+							class="up-tooltip__wrapper__popup__list__btn"
+							hover-class="up-tooltip__wrapper__popup__list__btn--hover"
 							@tap="setClipboardData"
 						>
 							<text
-								class="u-tooltip__wrapper__popup__list__btn__text"
+								class="up-tooltip__wrapper__popup__list__btn__text"
 							>复制</text>
 						</view>
-						<u-line
+						<up-line
 							direction="column"
 							color="#8d8e90"
 							v-if="showCopy && buttons.length > 0"
 							length="18"
-						></u-line>
+						></up-line>
 						<block v-for="(item , index) in buttons" :key="index">
 							<view
-								class="u-tooltip__wrapper__popup__list__btn"
-								hover-class="u-tooltip__wrapper__popup__list__btn--hover"
+								class="up-tooltip__wrapper__popup__list__btn"
+								hover-class="up-tooltip__wrapper__popup__list__btn--hover"
 							>
 								<text
-									class="u-tooltip__wrapper__popup__list__btn__text"
+									class="up-tooltip__wrapper__popup__list__btn__text"
 									@tap="btnClickHandler(index)"
 								>{{ item }}</text>
 							</view>
-							<u-line
+							<up-line
 								direction="column"
 								color="#8d8e90"
 								v-if="index < buttons.length - 1"
 								length="18"
-							></u-line>
+							></up-line>
 						</block>
 					</view>
 				</view>
-			</u-transition>
+			</up-transition>
 		</view>
 	</view>
 </template>
@@ -117,7 +117,7 @@
 	 * @example 
 	 */
 	export default {
-		name: 'u-tooltip',
+		name: 'up-tooltip',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -278,7 +278,7 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-tooltip {
+	.up-tooltip {
 		position: relative;
 		@include flex;
 

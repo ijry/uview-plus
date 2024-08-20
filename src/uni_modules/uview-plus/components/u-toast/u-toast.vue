@@ -1,41 +1,41 @@
 <template>
-	<view class="u-toast">
-		<u-overlay
+	<view class="up-toast">
+		<up-overlay
 			:show="isShow"
 			:zIndex="tmpConfig.overlay ? 10070 : -1"
 			:custom-style="overlayStyle"
 		>
 			<view
-				class="u-toast__content"
+				class="up-toast__content"
 				:style="[contentStyle]"
-				:class="['u-type-' + tmpConfig.type, (tmpConfig.type === 'loading' || tmpConfig.loading) ?  'u-toast__content--loading' : '']"
+				:class="['up-type-' + tmpConfig.type, (tmpConfig.type === 'loading' || tmpConfig.loading) ?  'up-toast__content--loading' : '']"
 			>
-				<u-loading-icon
+				<up-loading-icon
 					v-if="tmpConfig.type === 'loading'"
 					mode="circle"
 					color="rgb(255, 255, 255)"
 					inactiveColor="rgb(120, 120, 120)"
 					size="25"
-				></u-loading-icon>
-				<u-icon
+				></up-loading-icon>
+				<up-icon
 					v-else-if="tmpConfig.type !== 'defalut' && iconName"
 					:name="iconName"
 					size="17"
 					:color="tmpConfig.type"
 					:customStyle="iconStyle"
-				></u-icon>
-				<u-gap
+				></up-icon>
+				<up-gap
 					v-if="tmpConfig.type === 'loading' || tmpConfig.loading"
 					height="12"
 					bgColor="transparent"
-				></u-gap>
+				></up-gap>
 				<text
-					class="u-toast__content__text"
-					:class="['u-toast__content__text--' + tmpConfig.type]"
+					class="up-toast__content__text"
+					:class="['up-toast__content__text--' + tmpConfig.type]"
 					style="max-width: 400rpx;"
 				>{{ tmpConfig.message }}</text>
 			</view>
-		</u-overlay>
+		</up-overlay>
 	</view>
 </template>
 
@@ -65,10 +65,10 @@
 	 * @property {Boolean}			back		结束toast是否自动返回上一页 （默认 false ）
 	 * @property {Object}			customStyle	组件的样式，对象形式
 	 * @event {Function} show 显示toast，如需一进入页面就显示toast，请在onReady生命周期调用
-	 * @example <u-toast ref="uToast" />
+	 * @example <up-toast ref="uToast" />
 	 */
 	export default {
-		name: 'u-toast',
+		name: 'up-toast',
 		mixins: [mpMixin, mixin],
 		data() {
 			return {
@@ -160,7 +160,7 @@
 		methods: {
 			// 显示toast组件，由父组件通过this.$refs.xxx.show(options)形式调用
 			show(options) {
-				// 不将结果合并到this.config变量，避免多次调用u-toast，前后的配置造成混乱
+				// 不将结果合并到this.config变量，避免多次调用up-toast，前后的配置造成混乱
 				this.tmpConfig = deepMerge(this.config, options)
 				// 清除定时器
 				this.clearTimer()
@@ -192,41 +192,41 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	$u-toast-color:#fff !default;
-	$u-toast-border-radius:4px !default;
-	$u-toast-border-background-color:#585858 !default;
-	$u-toast-border-font-size:14px !default;
-	$u-toast-border-padding:12px 20px !default;
-	$u-toast-loading-border-padding: 20px 20px !default;
-	$u-toast-content-text-color:#fff !default;
-	$u-toast-content-text-font-size:15px !default;
-	$u-toast-u-icon:10rpx !default;
-	$u-toast-u-type-primary-color:$u-primary !default;
-	$u-toast-u-type-primary-background-color:#ecf5ff !default;
-	$u-toast-u-type-primary-border-color:rgb(215, 234, 254) !default;
-	$u-toast-u-type-primary-border-width:1px !default;
-	$u-toast-u-type-success-color: $u-success !default;
-	$u-toast-u-type-success-background-color: #dbf1e1 !default;
-	$u-toast-u-type-success-border-color: #BEF5C8 !default;
-	$u-toast-u-type-success-border-width: 1px !default;
-	$u-toast-u-type-error-color:$u-error !default;
-	$u-toast-u-type-error-background-color:#fef0f0 !default;
-	$u-toast-u-type-error-border-color:#fde2e2 !default;
-	$u-toast-u-type-error-border-width: 1px !default;
-	$u-toast-u-type-warning-color:$u-warning !default;
-	$u-toast-u-type-warning-background-color:#fdf6ec !default;
-	$u-toast-u-type-warning-border-color:#faecd8 !default;
-	$u-toast-u-type-warning-border-width: 1px !default;
-	$u-toast-u-type-default-color:#fff !default;
-	$u-toast-u-type-default-background-color:#585858 !default;
+	$up-toast-color:#fff !default;
+	$up-toast-border-radius:4px !default;
+	$up-toast-border-background-color:#585858 !default;
+	$up-toast-border-font-size:14px !default;
+	$up-toast-border-padding:12px 20px !default;
+	$up-toast-loading-border-padding: 20px 20px !default;
+	$up-toast-content-text-color:#fff !default;
+	$up-toast-content-text-font-size:15px !default;
+	$up-toast-up-icon:10rpx !default;
+	$up-toast-up-type-primary-color:$up-primary !default;
+	$up-toast-up-type-primary-background-color:#ecf5ff !default;
+	$up-toast-up-type-primary-border-color:rgb(215, 234, 254) !default;
+	$up-toast-up-type-primary-border-width:1px !default;
+	$up-toast-up-type-success-color: $up-success !default;
+	$up-toast-up-type-success-background-color: #dbf1e1 !default;
+	$up-toast-up-type-success-border-color: #BEF5C8 !default;
+	$up-toast-up-type-success-border-width: 1px !default;
+	$up-toast-up-type-error-color:$up-error !default;
+	$up-toast-up-type-error-background-color:#fef0f0 !default;
+	$up-toast-up-type-error-border-color:#fde2e2 !default;
+	$up-toast-up-type-error-border-width: 1px !default;
+	$up-toast-up-type-warning-color:$up-warning !default;
+	$up-toast-up-type-warning-background-color:#fdf6ec !default;
+	$up-toast-up-type-warning-border-color:#faecd8 !default;
+	$up-toast-up-type-warning-border-width: 1px !default;
+	$up-toast-up-type-default-color:#fff !default;
+	$up-toast-up-type-default-background-color:#585858 !default;
 
-	.u-toast {
+	.up-toast {
 		&__content {
 			@include flex;
-			padding: $u-toast-border-padding;
-			border-radius: $u-toast-border-radius;
-			background-color: $u-toast-border-background-color;
-			color: $u-toast-color;
+			padding: $up-toast-border-padding;
+			border-radius: $up-toast-border-radius;
+			background-color: $up-toast-border-background-color;
+			color: $up-toast-color;
 			align-items: center;
 			/* #ifndef APP-NVUE */
 			max-width: 600rpx;
@@ -235,67 +235,67 @@
 
 			&--loading {
 				flex-direction: column;
-				padding: $u-toast-loading-border-padding;
+				padding: $up-toast-loading-border-padding;
 			}
 
 			&__text {
-				color: $u-toast-content-text-color;
-				font-size: $u-toast-content-text-font-size;
-				line-height: $u-toast-content-text-font-size;
+				color: $up-toast-content-text-color;
+				font-size: $up-toast-content-text-font-size;
+				line-height: $up-toast-content-text-font-size;
 
 				&--default {
-					color: $u-toast-content-text-color;
+					color: $up-toast-content-text-color;
 				}
 
 				&--error {
-					color: $u-error;
+					color: $up-error;
 				}
 
 				&--primary {
-					color: $u-primary;
+					color: $up-primary;
 				}
 
 				&--success {
-					color: $u-success;
+					color: $up-success;
 				}
 
 				&--warning {
-					color: $u-warning;
+					color: $up-warning;
 				}
 			}
 		}
 	}
 
-	.u-type-primary {
-		color: $u-toast-u-type-primary-color;
-		background-color: $u-toast-u-type-primary-background-color;
-		border-color: $u-toast-u-type-primary-border-color;
-		border-width: $u-toast-u-type-primary-border-width;
+	.up-type-primary {
+		color: $up-toast-up-type-primary-color;
+		background-color: $up-toast-up-type-primary-background-color;
+		border-color: $up-toast-up-type-primary-border-color;
+		border-width: $up-toast-up-type-primary-border-width;
 	}
 
-	.u-type-success {
-		color: $u-toast-u-type-success-color;
-		background-color: $u-toast-u-type-success-background-color;
-		border-color: $u-toast-u-type-success-border-color;
+	.up-type-success {
+		color: $up-toast-up-type-success-color;
+		background-color: $up-toast-up-type-success-background-color;
+		border-color: $up-toast-up-type-success-border-color;
 		border-width: 1px;
 	}
 
-	.u-type-error {
-		color: $u-toast-u-type-error-color;
-		background-color: $u-toast-u-type-error-background-color;
-		border-color: $u-toast-u-type-error-border-color;
-		border-width: $u-toast-u-type-error-border-width;
+	.up-type-error {
+		color: $up-toast-up-type-error-color;
+		background-color: $up-toast-up-type-error-background-color;
+		border-color: $up-toast-up-type-error-border-color;
+		border-width: $up-toast-up-type-error-border-width;
 	}
 
-	.u-type-warning {
-		color: $u-toast-u-type-warning-color;
-		background-color: $u-toast-u-type-warning-background-color;
-		border-color: $u-toast-u-type-warning-border-color;
+	.up-type-warning {
+		color: $up-toast-up-type-warning-color;
+		background-color: $up-toast-up-type-warning-background-color;
+		border-color: $up-toast-up-type-warning-border-color;
 		border-width: 1px;
 	}
 
-	.u-type-default {
-		color: $u-toast-u-type-default-color;
-		background-color: $u-toast-u-type-default-background-color;
+	.up-type-default {
+		color: $up-toast-up-type-default-color;
+		background-color: $up-toast-up-type-default-background-color;
 	}
 </style>

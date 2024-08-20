@@ -1,16 +1,16 @@
 <template>
-    <view class="u-wrap" :style="{
+    <view class="up-wrap" :style="{
 		opacity: Number(opacity),
 		borderRadius: borderRadius + 'rpx',
 		// 因为time值需要改变,所以不直接用duration值(不能改变父组件prop传过来的值)
 		transition: `opacity ${time / 1000}s ease-in-out`
-	}" :class="'u-lazy-item-' + elIndex">
-        <view :class="'u-lazy-item-' + elIndex">
+	}" :class="'up-lazy-item-' + elIndex">
+        <view :class="'up-lazy-item-' + elIndex">
             <image :style="{ borderRadius: borderRadius + 'rpx', height: imgHeight }" v-if="!isError"
-                class="u-lazy-item" :src="isShow ? image : loadingImg" :mode="imgMode" @load="imgLoaded"
+                class="up-lazy-item" :src="isShow ? image : loadingImg" :mode="imgMode" @load="imgLoaded"
                 @error="loadError" @tap="clickImg">
             </image>
-            <image :style="{ borderRadius: borderRadius + 'rpx', height: imgHeight }" class="u-lazy-item error" v-else
+            <image :style="{ borderRadius: borderRadius + 'rpx', height: imgHeight }" class="up-lazy-item error" v-else
                 :src="errorImg" :mode="imgMode" @load="errorImgLoaded" @tap="clickImg"></image>
         </view>
     </view>
@@ -39,10 +39,10 @@
      * @event {Function} click 点击图片时触发
      * @event {Function} load 图片加载成功时触发
      * @event {Function} error 图片加载失败时触发
-     * @example <u-lazy-load :image="image" :loading-img="loadingImg" :error-img="errorImg"></u-lazy-load>
+     * @example <up-lazy-load :image="image" :loading-img="loadingImg" :error-img="errorImg"></up-lazy-load>
      */
     export default {
-        name: 'u-lazy-load',
+        name: 'up-lazy-load',
         props: {
             index: {
                 type: [Number, String]
@@ -218,7 +218,7 @@
                 // https://blog.csdn.net/qq_25324335/article/details/83687695
                 contentObserver.relativeToViewport({
                     bottom: this.getThreshold,
-                }).observe('.u-lazy-item-' + this.elIndex, (res) => {
+                }).observe('.up-lazy-item-' + this.elIndex, (res) => {
                     // console.log('relativeToViewport', res)
                     if (res.intersectionRatio > 0) {
                         // 懒加载状态改变
@@ -240,12 +240,12 @@
 <style scoped lang="scss">
     @import "../../libs/css/components.scss";
 
-    .u-wrap {
+    .up-wrap {
         background-color: #eee;
         overflow: hidden;
     }
 
-    .u-lazy-item {
+    .up-lazy-item {
         // 骗系统开启硬件加速
         transform: transition3d(0, 0, 0);
         /* #ifndef APP-NVUE */

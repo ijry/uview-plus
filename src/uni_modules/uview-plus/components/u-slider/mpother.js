@@ -21,7 +21,7 @@ export default {
         getSliderRect() {
             // 获取滑块条的尺寸信息
             setTimeout(() => {
-                this.$uGetRect('.u-slider').then((rect) => {
+                this.$uGetRect('.up-slider').then((rect) => {
                     this.sliderRect = rect
                     this.updateSliderPlacement(this.value, true)
                 })

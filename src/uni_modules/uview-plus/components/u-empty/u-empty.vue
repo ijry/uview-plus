@@ -1,16 +1,16 @@
 <template>
 	<view
-	    class="u-empty"
+	    class="up-empty"
 	    :style="[emptyStyle]"
 	    v-if="show"
 	>
-		<u-icon
+		<up-icon
 		    v-if="!isSrc"
 		    :name="mode === 'message' ? 'chat' : `empty-${mode}`"
 		    :size="iconSize"
 		    :color="iconColor"
 		    margin-top="14"
-		></u-icon>
+		></up-icon>
 		<image
 		    v-else
 		    :style="{
@@ -21,10 +21,10 @@
 		    mode="widthFix"
 		></image>
 		<text
-		    class="u-empty__text"
+		    class="up-empty__text"
 		    :style="[textStyle]"
 		>{{text ? text : icons[mode]}}</text>
-		<view class="u-empty__wrap" v-if="$slots.default || $slots.$default">
+		<view class="up-empty__wrap" v-if="$slots.default || $slots.$default">
 			<slot />
 		</view>
 	</view>
@@ -54,10 +54,10 @@
 	 * 
 	 * @event {Function} click 点击组件时触发
 	 * @event {Function} close 点击关闭按钮时触发
-	 * @example <u-empty text="所谓伊人，在水一方" mode="list"></u-empty>
+	 * @example <up-empty text="所谓伊人，在水一方" mode="list"></up-empty>
 	 */
 	export default {
-		name: "u-empty",
+		name: "up-empty",
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -108,10 +108,10 @@
 
 <style lang="scss" scoped>
 	@import '../../libs/css/components.scss';
-	$u-empty-text-margin-top:20rpx !default;
-	$u-empty-slot-margin-top:20rpx !default;
+	$up-empty-text-margin-top:20rpx !default;
+	$up-empty-slot-margin-top:20rpx !default;
 
-	.u-empty {
+	.up-empty {
 		@include flex;
 		flex-direction: column;
 		justify-content: center;
@@ -121,13 +121,13 @@
 			@include flex;
 			justify-content: center;
 			align-items: center;
-			margin-top: $u-empty-text-margin-top;
+			margin-top: $up-empty-text-margin-top;
 		}
 	}
-		.u-slot-wrap {
-			@include flex;
-			justify-content: center;
-			align-items: center;
-			margin-top:$u-empty-slot-margin-top;
-		}
+	.up-slot-wrap {
+		@include flex;
+		justify-content: center;
+		align-items: center;
+		margin-top:$up-empty-slot-margin-top;
+	}
 </style>

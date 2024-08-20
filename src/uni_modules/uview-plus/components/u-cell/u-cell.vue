@@ -1,48 +1,48 @@
 <template>
-	<view class="u-cell" :class="[customClass]" :style="[addStyle(customStyle)]"
-		:hover-class="(!disabled && (clickable || isLink)) ? 'u-cell--clickable' : ''" :hover-stay-time="250"
+	<view class="up-cell" :class="[customClass]" :style="[addStyle(customStyle)]"
+		:hover-class="(!disabled && (clickable || isLink)) ? 'up-cell--clickable' : ''" :hover-stay-time="250"
 		@tap="clickHandler">
-		<view class="u-cell__body" :class="[ center && 'u-cell--center', size === 'large' && 'u-cell__body--large']">
-			<view class="u-cell__body__content">
-				<view class="u-cell__left-icon-wrap" v-if="$slots.icon || icon">
+		<view class="up-cell__body" :class="[ center && 'up-cell--center', size === 'large' && 'up-cell__body--large']">
+			<view class="up-cell__body__content">
+				<view class="up-cell__left-icon-wrap" v-if="$slots.icon || icon">
 					<slot name="icon" v-if="$slots.icon">
 					</slot>
-					<u-icon v-else :name="icon"
+					<up-icon v-else :name="icon"
 						:custom-style="iconStyle"
-						:size="size === 'large' ? 22 : 18"></u-icon>
+						:size="size === 'large' ? 22 : 18"></up-icon>
 				</view>
-				<view class="u-cell__title">
+				<view class="up-cell__title">
                     <!-- 将slot与默认内容用if/else分开主要是因为微信小程序不支持slot嵌套传递，这样才能解决collapse组件的slot不失效问题，label暂时未用到。 -->
 					<slot name="title" v-if="$slots.title || !title">
 					</slot>
-                    <text v-else class="u-cell__title-text" :style="[titleTextStyle]"
-                        :class="[required && 'u-cell--required', disabled && 'u-cell--disabled', size === 'large' && 'u-cell__title-text--large']">{{ title }}</text>
+                    <text v-else class="up-cell__title-text" :style="[titleTextStyle]"
+                        :class="[required && 'up-cell--required', disabled && 'up-cell--disabled', size === 'large' && 'up-cell__title-text--large']">{{ title }}</text>
 					<slot name="label">
-						<text class="u-cell__label" v-if="label"
-							:class="[disabled && 'u-cell--disabled', size === 'large' && 'u-cell__label--large']">{{ label }}</text>
+						<text class="up-cell__label" v-if="label"
+							:class="[disabled && 'up-cell--disabled', size === 'large' && 'up-cell__label--large']">{{ label }}</text>
 					</slot>
 				</view>
 			</view>
 			<slot name="value">
-				<text class="u-cell__value"
-					:class="[disabled && 'u-cell--disabled', size === 'large' && 'u-cell__value--large']"
+				<text class="up-cell__value"
+					:class="[disabled && 'up-cell--disabled', size === 'large' && 'up-cell__value--large']"
 					v-if="!testEmpty(value)">{{ value }}</text>
 			</slot>
-			<view class="u-cell__right-icon-wrap" v-if="$slots['right-icon'] || isLink"
-				:class="[`u-cell__right-icon-wrap--${arrowDirection}`]">
-				<u-icon v-if="rightIcon && !$slots['right-icon']" :name="rightIcon"
+			<view class="up-cell__right-icon-wrap" v-if="$slots['right-icon'] || isLink"
+				:class="[`up-cell__right-icon-wrap--${arrowDirection}`]">
+				<up-icon v-if="rightIcon && !$slots['right-icon']" :name="rightIcon"
 					:custom-style="rightIconStyle" :color="disabled ? '#c8c9cc' : 'info'"
-					:size="size === 'large' ? 18 : 16"></u-icon>
+					:size="size === 'large' ? 18 : 16"></up-icon>
 				<slot v-else name="right-icon">
 				</slot>
 			</view>
-			<view class="u-cell__right-icon-wrap" v-if="$slots['righticon']"
-				:class="[`u-cell__right-icon-wrap--${arrowDirection}`]">
+			<view class="up-cell__right-icon-wrap" v-if="$slots['righticon']"
+				:class="[`up-cell__right-icon-wrap--${arrowDirection}`]">
 				<slot name="righticon">
 				</slot>
 			</view>
 		</view>
-		<u-line v-if="border"></u-line>
+		<up-line v-if="border"></up-line>
 	</view>
 </template>
 
@@ -81,7 +81,7 @@
 	 * @example 该组件需要搭配cell-group组件使用，见官方文档示例
 	 */
 	export default {
-		name: 'u-cell',
+		name: 'up-cell',
 		data() {
 			return {
 
@@ -115,42 +115,42 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	$u-cell-padding: 13px 15px !default;
-	$u-cell-font-size: 15px !default;
-	$u-cell-line-height: 24px !default;
-	$u-cell-color: $u-main-color !default;
-	$u-cell-icon-size: 16px !default;
-	$u-cell-title-font-size: 15px !default;
-	$u-cell-title-line-height: 22px !default;
-	$u-cell-title-color: $u-main-color !default;
-	$u-cell-label-font-size: 12px !default;
-	$u-cell-label-color: $u-tips-color !default;
-	$u-cell-label-line-height: 18px !default;
-	$u-cell-value-font-size: 14px !default;
-	$u-cell-value-color: $u-content-color !default;
-	$u-cell-clickable-color: $u-bg-color !default;
-	$u-cell-disabled-color: #c8c9cc !default;
-	$u-cell-padding-top-large: 13px !default;
-	$u-cell-padding-bottom-large: 13px !default;
-	$u-cell-value-font-size-large: 15px !default;
-	$u-cell-label-font-size-large: 14px !default;
-	$u-cell-title-font-size-large: 16px !default;
-	$u-cell-left-icon-wrap-margin-right: 4px !default;
-	$u-cell-right-icon-wrap-margin-left: 4px !default;
-	$u-cell-title-flex:1 !default;
-	$u-cell-label-margin-top:5px !default;
+	$up-cell-padding: 13px 15px !default;
+	$up-cell-font-size: 15px !default;
+	$up-cell-line-height: 24px !default;
+	$up-cell-color: $up-main-color !default;
+	$up-cell-icon-size: 16px !default;
+	$up-cell-title-font-size: 15px !default;
+	$up-cell-title-line-height: 22px !default;
+	$up-cell-title-color: $up-main-color !default;
+	$up-cell-label-font-size: 12px !default;
+	$up-cell-label-color: $up-tips-color !default;
+	$up-cell-label-line-height: 18px !default;
+	$up-cell-value-font-size: 14px !default;
+	$up-cell-value-color: $up-content-color !default;
+	$up-cell-clickable-color: $up-bg-color !default;
+	$up-cell-disabled-color: #c8c9cc !default;
+	$up-cell-padding-top-large: 13px !default;
+	$up-cell-padding-bottom-large: 13px !default;
+	$up-cell-value-font-size-large: 15px !default;
+	$up-cell-label-font-size-large: 14px !default;
+	$up-cell-title-font-size-large: 16px !default;
+	$up-cell-left-icon-wrap-margin-right: 4px !default;
+	$up-cell-right-icon-wrap-margin-left: 4px !default;
+	$up-cell-title-flex:1 !default;
+	$up-cell-label-margin-top:5px !default;
 
 
-	.u-cell {
+	.up-cell {
 		&__body {
 			@include flex();
 			/* #ifndef APP-NVUE */
 			box-sizing: border-box;
 			/* #endif */
-			padding: $u-cell-padding;
-			font-size: $u-cell-font-size;
-			color: $u-cell-color;
-			// line-height: $u-cell-line-height;
+			padding: $up-cell-padding;
+			font-size: $up-cell-font-size;
+			color: $up-cell-color;
+			// line-height: $up-cell-line-height;
 			align-items: center;
 
 			&__content {
@@ -160,8 +160,8 @@
 			}
 
 			&--large {
-				padding-top: $u-cell-padding-top-large;
-				padding-bottom: $u-cell-padding-bottom-large;
+				padding-top: $up-cell-padding-top-large;
+				padding-bottom: $up-cell-padding-bottom-large;
 			}
 		}
 
@@ -169,16 +169,16 @@
 		&__right-icon-wrap {
 			@include flex();
 			align-items: center;
-			// height: $u-cell-line-height;
-			font-size: $u-cell-icon-size;
+			// height: $up-cell-line-height;
+			font-size: $up-cell-icon-size;
 		}
 
 		&__left-icon-wrap {
-			margin-right: $u-cell-left-icon-wrap-margin-right;
+			margin-right: $up-cell-left-icon-wrap-margin-right;
 		}
 
 		&__right-icon-wrap {
-			margin-left: $u-cell-right-icon-wrap-margin-left;
+			margin-left: $up-cell-right-icon-wrap-margin-left;
 			transition: transform 0.3s;
 
 			&--up {
@@ -191,30 +191,30 @@
 		}
 
 		&__title {
-			flex: $u-cell-title-flex;
+			flex: $up-cell-title-flex;
 			display: flex;
 			flex-direction: column;
 
 			&-text {
-				font-size: $u-cell-title-font-size;
-				line-height: $u-cell-title-line-height;
-				color: $u-cell-title-color;
+				font-size: $up-cell-title-font-size;
+				line-height: $up-cell-title-line-height;
+				color: $up-cell-title-color;
 
 				&--large {
-					font-size: $u-cell-title-font-size-large;
+					font-size: $up-cell-title-font-size-large;
 				}
 			}
 
 		}
 
 		&__label {
-			margin-top: $u-cell-label-margin-top;
-			font-size: $u-cell-label-font-size;
-			color: $u-cell-label-color;
-			line-height: $u-cell-label-line-height;
+			margin-top: $up-cell-label-margin-top;
+			font-size: $up-cell-label-font-size;
+			color: $up-cell-label-color;
+			line-height: $up-cell-label-line-height;
 
 			&--large {
-				font-size: $u-cell-label-font-size-large;
+				font-size: $up-cell-label-font-size-large;
 			}
 		}
 
@@ -223,11 +223,11 @@
 			/* #ifndef APP-NVUE */
 			margin-left: auto;
 			/* #endif */	
-			font-size: $u-cell-value-font-size;
-			line-height: $u-cell-line-height;
-			color: $u-cell-value-color;
+			font-size: $up-cell-value-font-size;
+			line-height: $up-cell-line-height;
+			color: $up-cell-value-color;
 			&--large {
-				font-size: $u-cell-value-font-size-large;
+				font-size: $up-cell-value-font-size-large;
 			}
 		}
 
@@ -247,15 +247,15 @@
 			left: -8px;
 			margin-top: 4rpx;
 			font-size: 14px;
-			color: $u-error;
+			color: $up-error;
 		}
 
 		&--clickable {
-			background-color: $u-cell-clickable-color;
+			background-color: $up-cell-clickable-color;
 		}
 
 		&--disabled {
-			color: $u-cell-disabled-color;
+			color: $up-cell-disabled-color;
 			/* #ifndef APP-NVUE */
 			cursor: not-allowed;
 			/* #endif */

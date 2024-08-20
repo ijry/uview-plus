@@ -596,14 +596,14 @@ export function padZero(value) {
 }
 
 /**
- * @description 在u-form的子组件内容发生变化，或者失去焦点时，尝试通知u-form执行校验方法
+ * @description 在up-form的子组件内容发生变化，或者失去焦点时，尝试通知up-form执行校验方法
  * @param {*} instance
  * @param {*} event
  */
 export function formValidate(instance, event) {
-	const formItem = $parent.call(instance, 'u-form-item')
-	const form = $parent.call(instance, 'u-form')
-	// 如果发生变化的input或者textarea等，其父组件中有u-form-item或者u-form等，就执行form的validate方法
+	const formItem = $parent.call(instance, 'up-form-item')
+	const form = $parent.call(instance, 'up-form')
+	// 如果发生变化的input或者textarea等，其父组件中有up-form-item或者up-form等，就执行form的validate方法
 	// 同时将form-item的pros传递给form，让其进行精确对象验证
 	if (formItem && form) {
 		form.validateField(formItem.prop, () => {}, event)

@@ -1,13 +1,13 @@
 <template>
-	<u-transition
+	<up-transition
 	    :show="show"
-	    custom-class="u-overlay"
+	    custom-class="up-overlay"
 	    :duration="duration"
 	    :custom-style="overlayStyle"
 	    @click="clickHandler"
 	>
 		<slot />
-	</u-transition>
+	</up-transition>
 </template>
 
 <script>
@@ -25,10 +25,10 @@
 	 * @property {String | Number}	opacity		不透明度值，当做rgba的第四个参数 （默认 0.5 ）
 	 * @property {Object}			customStyle	定义需要用到的外部样式
 	 * @event {Function} click 点击遮罩发送事件
-	 * @example <u-overlay :show="show" @click="show = false"></u-overlay>
+	 * @example <up-overlay :show="show" @click="show = false"></up-overlay>
 	 */
 	export default {
-		name: "u-overlay",
+		name: "up-overlay",
 		mixins: [mpMixin, mixin,props],
 		computed: {
 			overlayStyle() {
@@ -55,17 +55,17 @@
 
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
-     $u-overlay-top:0 !default;
-     $u-overlay-left:0 !default;
-     $u-overlay-width:100% !default;
-     $u-overlay-height:100% !default;
-     $u-overlay-background-color:rgba(0, 0, 0, .7) !default;
-	.u-overlay {
+     $up-overlay-top:0 !default;
+     $up-overlay-left:0 !default;
+     $up-overlay-width:100% !default;
+     $up-overlay-height:100% !default;
+     $up-overlay-background-color:rgba(0, 0, 0, .7) !default;
+	.up-overlay {
 		position: fixed;
-		top:$u-overlay-top;
-		left:$u-overlay-left;
-		width: $u-overlay-width;
-		height:$u-overlay-height;
-		background-color:$u-overlay-background-color;
+		top:$up-overlay-top;
+		left:$up-overlay-left;
+		width: $up-overlay-width;
+		height:$up-overlay-height;
+		background-color:$up-overlay-background-color;
 	}
 </style>

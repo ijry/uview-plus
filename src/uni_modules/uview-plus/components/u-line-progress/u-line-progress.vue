@@ -1,11 +1,11 @@
 <template>
 	<view
-	    class="u-line-progress"
+	    class="up-line-progress"
 	    :style="[addStyle(customStyle)]"
 	>
 		<view
-		    class="u-line-progress__background"
-		    ref="u-line-progress__background"
+		    class="up-line-progress__background"
+		    ref="up-line-progress__background"
 		    :style="[{
 				backgroundColor: inactiveColor,
 				height: addUnit(height),
@@ -13,11 +13,11 @@
 		>
 		</view>
 		<view
-		    class="u-line-progress__line"
+		    class="up-line-progress__line"
 		    :style="[progressStyle]"
 		> 
 			<slot>
-				<text v-if="showText && percentage >= 10" class="u-line-progress__text">{{innserPercentage + '%'}}</text>
+				<text v-if="showText && percentage >= 10" class="up-line-progress__text">{{innserPercentage + '%'}}</text>
 			</slot> 
 		</view>
 	</view>
@@ -41,10 +41,10 @@
 	 * @property {Boolean}			showText		是否在进度条内部显示百分比的值 ( 默认 true )
 	 * @property {String | Number}	height			进度条的高度，单位px ( 默认 12 )
 	 * 
-	 * @example <u-line-progress :percent="70" :show-percent="true"></u-line-progress>
+	 * @example <up-line-progress :percent="70" :show-percent="true"></up-line-progress>
 	 */
 	export default {
-		name: "u-line-progress",
+		name: "up-line-progress",
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -82,13 +82,13 @@
 			},
 			getProgressWidth() {
 				// #ifndef APP-NVUE
-				return this.$uGetRect('.u-line-progress__background')
+				return this.$uGetRect('.up-line-progress__background')
 				// #endif
 
 				// #ifdef APP-NVUE
 				// 返回一个promise
 				return new Promise(resolve => {
-					dom.getComponentRect(this.$refs['u-line-progress__background'], (res) => {
+					dom.getComponentRect(this.$refs['up-line-progress__background'], (res) => {
 						resolve(res.size)
 					})
 				})
@@ -110,7 +110,7 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-line-progress {
+	.up-line-progress {
 		align-items: stretch;
 		position: relative;
 		@include flex(row);

@@ -1,12 +1,12 @@
 <template>
-    <view :style="[addStyle(customStyle)]" :class="[customClass]" class="u-cell-group">
-        <view v-if="title" class="u-cell-group__title">
+    <view :style="[addStyle(customStyle)]" :class="[customClass]" class="up-cell-group">
+        <view v-if="title" class="up-cell-group__title">
             <slot name="title">
-				<text class="u-cell-group__title__text">{{ title }}</text>
+				<text class="up-cell-group__title__text">{{ title }}</text>
 			</slot>
         </view>
-        <view class="u-cell-group__wrapper">
-			<u-line v-if="border"></u-line>
+        <view class="up-cell-group__wrapper">
+			<up-line v-if="border"></up-line>
             <slot />
         </view>
     </view>
@@ -27,10 +27,10 @@
 	 * @property {Object}	customStyle	定义需要用到的外部样式
 	 * 
 	 * @event {Function} click 	点击cell列表时触发
-	 * @example <u-cell-group title="设置喜好">
+	 * @example <up-cell-group title="设置喜好">
 	 */
 	export default {
-		name: 'u-cell-group',
+		name: 'up-cell-group',
 		mixins: [mpMixin, mixin, props],
 		methods: {
 			addStyle
@@ -41,21 +41,21 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 	
-	$u-cell-group-title-padding: 16px 16px 8px !default;
-	$u-cell-group-title-font-size: 15px !default;
-	$u-cell-group-title-line-height: 16px !default;
-	$u-cell-group-title-color: $u-main-color !default;
+	$up-cell-group-title-padding: 16px 16px 8px !default;
+	$up-cell-group-title-font-size: 15px !default;
+	$up-cell-group-title-line-height: 16px !default;
+	$up-cell-group-title-color: $up-main-color !default;
 
-    .u-cell-group {
+    .up-cell-group {
 		flex: 1;
 		
         &__title {
-            padding: $u-cell-group-title-padding;
+            padding: $up-cell-group-title-padding;
 
             &__text {
-                font-size: $u-cell-group-title-font-size;
-                line-height: $u-cell-group-title-line-height;
-                color: $u-cell-group-title-color;
+                font-size: $up-cell-group-title-font-size;
+                line-height: $up-cell-group-title-line-height;
+                color: $up-cell-group-title-color;
             }
         }
 		

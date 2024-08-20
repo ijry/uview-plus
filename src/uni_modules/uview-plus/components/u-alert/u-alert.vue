@@ -1,62 +1,62 @@
 <template>
-	<u-transition
+	<up-transition
 	    mode="fade"
 	    :show="show"
 	>
 		<view
-		    class="u-alert"
-		    :class="[`u-alert--${type}--${effect}`]"
+		    class="up-alert"
+		    :class="[`up-alert--${type}--${effect}`]"
 		    @tap.stop="clickHandler"
 		    :style="[addStyle(customStyle)]"
 		>
 			<view
-			    class="u-alert__icon"
+			    class="up-alert__icon"
 			    v-if="showIcon"
 			>
-				<u-icon
+				<up-icon
 				    :name="iconName"
 				    size="18"
 				    :color="iconColor"
-				></u-icon>
+				></up-icon>
 			</view>
 			<view
-			    class="u-alert__content"
+			    class="up-alert__content"
 			    :style="[{
 					paddingRight: closable ? '20px' : 0
 				}]"
 			>
 				<text
-				    class="u-alert__content__title"
+				    class="up-alert__content__title"
 				    v-if="title"
 					:style="[{
 						fontSize: addUnit(fontSize),
 						textAlign: center ? 'center' : 'left'
 					}]"
-				    :class="[effect === 'dark' ? 'u-alert__text--dark' : `u-alert__text--${type}--light`]"
+				    :class="[effect === 'dark' ? 'up-alert__text--dark' : `up-alert__text--${type}--light`]"
 				>{{ title }}</text>
 				<text
-				    class="u-alert__content__desc"
+				    class="up-alert__content__desc"
 					v-if="description"
 					:style="[{
 						fontSize: addUnit(fontSize),
 						textAlign: center ? 'center' : 'left'
 					}]"
-				    :class="[effect === 'dark' ? 'u-alert__text--dark' : `u-alert__text--${type}--light`]"
+				    :class="[effect === 'dark' ? 'up-alert__text--dark' : `up-alert__text--${type}--light`]"
 				>{{ description }}</text>
 			</view>
 			<view
-			    class="u-alert__close"
+			    class="up-alert__close"
 			    v-if="closable"
 			    @tap.stop="closeHandler"
 			>
-				<u-icon
+				<up-icon
 				    name="close"
 				    :color="iconColor"
 				    size="15"
-				></u-icon>
+				></up-icon>
 			</view>
 		</view>
-	</u-transition>
+	</up-transition>
 </template>
 
 <script>
@@ -79,10 +79,10 @@
 	 * @property {String | Number}	fontSize    字体大小  （默认 14 ）
 	 * @property {Object}			customStyle	定义需要用到的外部样式
 	 * @event    {Function}        click       点击组件时触发
-	 * @example  <u-alert :title="title"  type = "warning" :closable="closable" :description = "description"></u-alert>
+	 * @example  <up-alert :title="title"  type = "warning" :closable="closable" :description = "description"></up-alert>
 	 */
 	export default {
-		name: 'u-alert',
+		name: 'up-alert',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -135,9 +135,9 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-alert {
+	.up-alert {
 		position: relative;
-		background-color: $u-primary;
+		background-color: $up-primary;
 		padding: 8px 10px;
 		@include flex(row);
 		align-items: center;
@@ -147,7 +147,7 @@
 		border-bottom-right-radius: 4px;
 
 		&--primary--dark {
-			background-color: $u-primary;
+			background-color: $up-primary;
 		}
 
 		&--primary--light {
@@ -155,7 +155,7 @@
 		}
 
 		&--error--dark {
-			background-color: $u-error;
+			background-color: $up-error;
 		}
 
 		&--error--light {
@@ -163,7 +163,7 @@
 		}
 
 		&--success--dark {
-			background-color: $u-success;
+			background-color: $up-success;
 		}
 
 		&--success--light {
@@ -171,7 +171,7 @@
 		}
 
 		&--warning--dark {
-			background-color: $u-warning;
+			background-color: $up-warning;
 		}
 
 		&--warning--light {
@@ -179,7 +179,7 @@
 		}
 
 		&--info--dark {
-			background-color: $u-info;
+			background-color: $up-info;
 		}
 
 		&--info--light {
@@ -195,7 +195,7 @@
 			flex: 1;
 
 			&__title {
-				color: $u-main-color;
+				color: $up-main-color;
 				font-size: 14px;
 				font-weight: bold;
 				color: #fff;
@@ -203,7 +203,7 @@
 			}
 
 			&__desc {
-				color: $u-main-color;
+				color: $up-main-color;
 				font-size: 14px;
 				flex-wrap: wrap;
 				color: #fff;
@@ -217,27 +217,27 @@
 
 		&__text--primary--light,
 		&__text--primary--light {
-			color: $u-primary;
+			color: $up-primary;
 		}
 
 		&__text--success--light,
 		&__text--success--light {
-			color: $u-success;
+			color: $up-success;
 		}
 
 		&__text--warning--light,
 		&__text--warning--light {
-			color: $u-warning;
+			color: $up-warning;
 		}
 
 		&__text--error--light,
 		&__text--error--light {
-			color: $u-error;
+			color: $up-error;
 		}
 
 		&__text--info--light,
 		&__text--info--light {
-			color: $u-info;
+			color: $up-info;
 		}
 
 		&__close {

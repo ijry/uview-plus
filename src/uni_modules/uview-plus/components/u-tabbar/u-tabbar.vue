@@ -1,19 +1,19 @@
 <template>
-	<view class="u-tabbar">
+	<view class="up-tabbar">
 		<view
-		    class="u-tabbar__content"
-		    ref="u-tabbar__content"
+		    class="up-tabbar__content"
+		    ref="up-tabbar__content"
 		    @touchmove.stop.prevent="noop"
-		    :class="[border && 'u-border-top', fixed && 'u-tabbar--fixed']"
+		    :class="[border && 'up-border-top', fixed && 'up-tabbar--fixed']"
 		    :style="[tabbarStyle]"
 		>
-			<view class="u-tabbar__content__item-wrapper">
+			<view class="up-tabbar__content__item-wrapper">
 				<slot />
 			</view>
-			<u-safe-bottom v-if="safeAreaInsetBottom"></u-safe-bottom>
+			<up-safe-bottom v-if="safeAreaInsetBottom"></up-safe-bottom>
 		</view>
 		<view
-		    class="u-tabbar__placeholder"
+		    class="up-tabbar__placeholder"
 			v-if="placeholder"
 		    :style="{
 				height: placeholderHeight + 'px',
@@ -44,10 +44,10 @@
 	 * @property {Boolean}			placeholder			fixed定位固定在底部时，是否生成一个等高元素防止塌陷（默认 true ）
 	 * @property {Object}			customStyle			定义需要用到的外部样式
 	 * 
-	 * @example <u-tabbar :value="value2" :placeholder="false" @change="name => value2 = name" :fixed="false" :safeAreaInsetBottom="false"><u-tabbar-item text="首页" icon="home" dot ></u-tabbar-item></u-tabbar>
+	 * @example <up-tabbar :value="value2" :placeholder="false" @change="name => value2 = name" :fixed="false" :safeAreaInsetBottom="false"><up-tabbar-item text="首页" icon="home" dot ></up-tabbar-item></up-tabbar>
 	 */
 	export default {
-		name: 'u-tabbar',
+		name: 'up-tabbar',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -97,14 +97,14 @@
 				// 延时一定时间
 				await sleep(20)
 				// #ifndef APP-NVUE
-				this.$uGetRect('.u-tabbar__content').then(({height = 50}) => {
+				this.$uGetRect('.up-tabbar__content').then(({height = 50}) => {
 					// 修复IOS safearea bottom 未填充高度
 					this.placeholderHeight = height
 				})
 				// #endif
 
 				// #ifdef APP-NVUE
-				dom.getComponentRect(this.$refs['u-tabbar__content'], (res) => {
+				dom.getComponentRect(this.$refs['up-tabbar__content'], (res) => {
 					const {
 						size
 					} = res
@@ -119,7 +119,7 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-tabbar {
+	.up-tabbar {
 		@include flex(column);
 		flex: 1;
 		justify-content: center;

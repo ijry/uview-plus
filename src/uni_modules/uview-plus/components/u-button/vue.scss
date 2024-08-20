@@ -1,20 +1,20 @@
 // nvue下hover-class无效
-$u-button-before-top:50% !default;
-$u-button-before-left:50% !default;
-$u-button-before-width:100% !default;
-$u-button-before-height:100% !default;
-$u-button-before-transform:translate(-50%, -50%) !default;
-$u-button-before-opacity:0 !default;
-$u-button-before-background-color:#000 !default;
-$u-button-before-border-color:#000 !default;
-$u-button-active-before-opacity:.15 !default;
-$u-button-icon-margin-left:4px !default;
-$u-button-plain-u-button-info-color:$u-info;
-$u-button-plain-u-button-success-color:$u-success;
-$u-button-plain-u-button-error-color:$u-error;
-$u-button-plain-u-button-warning-color:$u-error;
+$up-button-before-top:50% !default;
+$up-button-before-left:50% !default;
+$up-button-before-width:100% !default;
+$up-button-before-height:100% !default;
+$up-button-before-transform:translate(-50%, -50%) !default;
+$up-button-before-opacity:0 !default;
+$up-button-before-background-color:#000 !default;
+$up-button-before-border-color:#000 !default;
+$up-button-active-before-opacity:.15 !default;
+$up-button-icon-margin-left:4px !default;
+$up-button-plain-up-button-info-color:$up-info;
+$up-button-plain-up-button-success-color:$up-success;
+$up-button-plain-up-button-error-color:$up-error;
+$up-button-plain-up-button-warning-color:$up-error;
 
-.u-button {
+.up-button {
 	width: 100%;
 	white-space: nowrap;
 	
@@ -25,17 +25,17 @@ $u-button-plain-u-button-warning-color:$u-error;
 	
 	&:before {
 		position: absolute;
-		top:$u-button-before-top;
-		left:$u-button-before-left;
-		width:$u-button-before-width;
-		height:$u-button-before-height;
+		top:$up-button-before-top;
+		left:$up-button-before-left;
+		width:$up-button-before-width;
+		height:$up-button-before-height;
 		border: inherit;
 		border-radius: inherit;
-		transform:$u-button-before-transform;
-		opacity:$u-button-before-opacity;
+		transform:$up-button-before-transform;
+		opacity:$up-button-before-opacity;
 		content: " ";
-		background-color:$u-button-before-background-color;
-		border-color:$u-button-before-border-color;
+		background-color:$up-button-before-background-color;
+		border-color:$up-button-before-border-color;
 	}
 	
 	&--active {
@@ -46,36 +46,36 @@ $u-button-plain-u-button-warning-color:$u-error;
 	
 	&__icon+&__text:not(:empty),
 	&__loading-text {
-		margin-left:$u-button-icon-margin-left;
+		margin-left:$up-button-icon-margin-left;
 	}
 	
 	&--plain {
-		&.u-button--primary {
-			color: $u-primary;
+		&.up-button--primary {
+			color: $up-primary;
 		}
 	}
 	
 	&--plain {
-		&.u-button--info {
-			color:$u-button-plain-u-button-info-color;
+		&.up-button--info {
+			color:$up-button-plain-up-button-info-color;
 		}
 	}
 	
 	&--plain {
-		&.u-button--success {
-			color:$u-button-plain-u-button-success-color;
+		&.up-button--success {
+			color:$up-button-plain-up-button-success-color;
 		}
 	}
 	
 	&--plain {
-		&.u-button--error {
-			color:$u-button-plain-u-button-error-color;
+		&.up-button--error {
+			color:$up-button-plain-up-button-error-color;
 		}
 	}
 	
 	&--plain {
-		&.u-button--warning {
-			color:$u-button-plain-u-button-warning-color;
+		&.up-button--warning {
+			color:$up-button-plain-up-button-warning-color;
 		}
 	}
 }

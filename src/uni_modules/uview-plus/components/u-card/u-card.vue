@@ -1,8 +1,8 @@
 <template>
 	<view
-		class="u-card"
+		class="up-card"
 		@tap.stop="click"
-		:class="{ 'u-border': border, 'u-card-full': full, 'u-card--border': getPx(borderRadius) > 0 }"
+		:class="{ 'up-border': border, 'up-card-full': full, 'up-card--border': getPx(borderRadius) > 0 }"
 		:style="{
 			borderRadius: addUnit(borderRadius),
 			margin: margin,
@@ -11,18 +11,18 @@
 	>
 		<view
 			v-if="showHead"
-			class="u-card__head"
+			class="up-card__head"
 			:style="[{padding: addUnit(paddingHead || padding)}, headStyle]"
 			:class="{
-				'u-border-bottom': headBorderBottom
+				'up-border-bottom': headBorderBottom
 			}"
 			@tap="headClick"
 		>
-			<view v-if="!$slots.head" class="u-flex u-row-between">
-				<view class="u-card__head--left u-flex u-line-1" v-if="title">
+			<view v-if="!$slots.head" class="up-flex up-row-between">
+				<view class="up-card__head--left up-flex up-line-1" v-if="title">
 					<image
 						:src="thumb"
-						class="u-card__head--left__thumb"
+						class="up-card__head--left__thumb"
 						mode="aspectFill"
 						v-if="thumb"
 						:style="{ 
@@ -32,7 +32,7 @@
 						}"
 					></image>
 					<text
-						class="u-card__head--left__title u-line-1"
+						class="up-card__head--left__title up-line-1"
 						:style="{
 							fontSize: addUnit(titleSize),
 							color: titleColor
@@ -41,9 +41,9 @@
 						{{ title }}
 					</text>
 				</view>
-				<view class="u-card__head--right u-line-1" v-if="subTitle">
+				<view class="up-card__head--right up-line-1" v-if="subTitle">
 					<text
-						class="u-card__head__title__text"
+						class="up-card__head__title__text"
 						:style="{
 							fontSize: addUnit(subTitleSize),
 							color: subTitleColor
@@ -55,15 +55,15 @@
 			</view>
 			<slot name="head" v-else />
 		</view>
-		<view @tap="bodyClick" class="u-card__body"
+		<view @tap="bodyClick" class="up-card__body"
 			:style="[{padding: addUnit(paddingBody || padding)}, bodyStyle]"><slot name="body" /></view>
 		<view
 			v-if="showFoot"
-			class="u-card__foot"
+			class="up-card__foot"
 			 @tap="footClick"
 			:style="[{padding: $slots.foot ? addUnit(paddingFoot || padding) : 0}, footStyle]"
 			:class="{
-				'u-border-top': footBorderTop
+				'up-border-top': footBorderTop
 			}"
 		>
 			<slot name="foot" />
@@ -106,7 +106,7 @@
      * @event {Function} head-click 卡片头部被点击时触发
      * @event {Function} body-click 卡片主体部分被点击时触发
      * @event {Function} foot-click 卡片底部部分被点击时触发
-     * @example <u-card paddingFoot="2px 15px" title="card"></u-card>
+     * @example <up-card paddingFoot="2px 15px" title="card"></up-card>
      */
     export default {
         name: 'up-card',
@@ -138,7 +138,7 @@
 <style lang="scss" scoped>
 @import "../../libs/css/components.scss";
 	
-.u-card {
+.up-card {
 	position: relative;
 	overflow: hidden;
 	font-size: 28rpx;
@@ -158,7 +158,7 @@
 
 	&__head {
 		&--left {
-			color: $u-main-color;
+			color: $up-main-color;
 			
 			&__thumb {
 				margin-right: 16rpx;
@@ -170,17 +170,17 @@
 		}
 
 		&--right {
-			color: $u-tips-color;
+			color: $up-tips-color;
 			margin-left: 6rpx;
 		}
 	}
 
 	&__body {
-		color: $u-content-color;
+		color: $up-content-color;
 	}
 
 	&__foot {
-		color: $u-tips-color;
+		color: $up-tips-color;
 	}
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-	<view class="u-form">
+	<view class="up-form">
 		<slot />
 	</view>
 </template>
@@ -28,11 +28,11 @@
 	 * @example <up-formlabelPosition="left" :model="model1" :rules="rules" ref="form1"></up-form>
 	 */
 	export default {
-		name: "u-form",
+		name: "up-form",
 		mixins: [mpMixin, mixin, props],
 		provide() {
 			return {
-				uForm: this,
+				upForm: this,
 			};
 		},
 		data() {
@@ -52,11 +52,11 @@
 					this.setRules(n);
 				},
 			},
-			// 监听属性的变化，通知子组件u-form-item重新获取信息
+			// 监听属性的变化，通知子组件up-form-item重新获取信息
 			propsChange(n) {
 				if (this.children?.length) {
 					this.children.map((child) => {
-						// 判断子组件(u-form-item)如果有updateParentData方法的话，就就执行(执行的结果是子组件重新从父组件拉取了最新的值)
+						// 判断子组件(up-form-item)如果有updateParentData方法的话，就就执行(执行的结果是子组件重新从父组件拉取了最新的值)
 						typeof child.updateParentData == "function" &&
 							child.updateParentData();
 					});
@@ -85,7 +85,7 @@
 			},
 		},
 		created() {
-			// 存储当前form下的所有u-form-item的实例
+			// 存储当前form下的所有up-form-item的实例
 			// 不能定义在data中，否则微信小程序会造成循环引用而报错
 			this.children = [];
 		},
@@ -102,13 +102,13 @@
 				// 重新将规则赋予Validator
 				this.validator = new Schema(rules);
 			},
-			// 清空所有u-form-item组件的内容，本质上是调用了u-form-item组件中的resetField()方法
+			// 清空所有up-form-item组件的内容，本质上是调用了up-form-item组件中的resetField()方法
 			resetFields() {
 				this.resetModel();
 			},
 			// 重置model为初始值的快照
 			resetModel(obj) {
-				// 历遍所有u-form-item，根据其prop属性，还原model的原始快照
+				// 历遍所有up-form-item，根据其prop属性，还原model的原始快照
 				this.children.map((child) => {
 					const prop = child?.prop;
 					const value = getProperty(this.originalModel, prop);
@@ -119,7 +119,7 @@
 			clearValidate(props) {
 				props = [].concat(props);
 				this.children.map((child) => {
-					// 如果u-form-item的prop在props数组中，则清除对应的校验结果信息
+					// 如果up-form-item的prop在props数组中，则清除对应的校验结果信息
 					if (props[0] === undefined || props.includes(child.prop)) {
 						child.message = null;
 					}
@@ -169,7 +169,7 @@
 								}
 								for (let i = 0; i < rules.length; i++) {
 									const ruleItem = rules[i];
-									// 将u-form-item的触发器转为数组形式
+									// 将up-form-item的触发器转为数组形式
 									const trigger = [].concat(ruleItem?.trigger);
 									// 如果是有传入触发事件，但是此form-item却没有配置此触发器的话，不执行校验操作
 									if (event && !trigger.includes(event)) {

@@ -1,27 +1,27 @@
 <template>
-	<view class="u-skeleton">
+	<view class="up-skeleton">
 		<view
-		    class="u-skeleton__wrapper"
-		    ref="u-skeleton__wrapper"
+		    class="up-skeleton__wrapper"
+		    ref="up-skeleton__wrapper"
 		    v-if="loading"
 			style="display: flex; flex-direction: row;"
 		>
 			<view
-			    class="u-skeleton__wrapper__avatar"
+			    class="up-skeleton__wrapper__avatar"
 			    v-if="avatar"
-			    :class="[`u-skeleton__wrapper__avatar--${avatarShape}`, animate && 'animate']"
+			    :class="[`up-skeleton__wrapper__avatar--${avatarShape}`, animate && 'animate']"
 			    :style="{
 						height: addUnit(avatarSize),
 						width: addUnit(avatarSize)
 					}"
 			></view>
 			<view
-			    class="u-skeleton__wrapper__content"
-			    ref="u-skeleton__wrapper__content"
+			    class="up-skeleton__wrapper__content"
+			    ref="up-skeleton__wrapper__content"
 				style="flex: 1;"
 			>
 				<view
-				    class="u-skeleton__wrapper__content__title"
+				    class="up-skeleton__wrapper__content__title"
 				    v-if="title"
 				    :style="{
 							width: uTitleWidth,
@@ -30,7 +30,7 @@
 				    :class="[animate && 'animate']"
 				></view>
 				<view
-				    class="u-skeleton__wrapper__content__rows"
+				    class="up-skeleton__wrapper__content__rows"
 				    :class="[animate && 'animate']"
 				    v-for="(item, index) in rowsArray"
 				    :key="index"
@@ -74,10 +74,10 @@
 	 * @property {Boolean}					avatar		是否展示头像占位图 (默认 false )
 	 * @property {String | Number}			avatarSize	头像占位图大小 (默认 32 )
 	 * @property {String}					avatarShape	头像占位图的形状，circle-圆形，square-方形 (默认 'circle' )
-	 * @example <u-search placeholder="日照香炉生紫烟" v-model="keyword"></u-search>
+	 * @example <up-search placeholder="日照香炉生紫烟" v-model="keyword"></up-search>
 	 */
 	export default {
-		name: 'u-skeleton',
+		name: 'up-skeleton',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -144,7 +144,7 @@
 				// #ifdef APP-NVUE
 				// 为了让opacity:1的状态保持一定时间，这里做一个延时
 				await sleep(500)
-				const skeleton = this.$refs['u-skeleton__wrapper'];
+				const skeleton = this.$refs['up-skeleton__wrapper'];
 				skeleton && this.loading && this.animate && animation.transition(skeleton, {
 					styles: {
 						opacity: 0.5
@@ -170,13 +170,13 @@
 				// 延时一定时间，以获取dom尺寸
 				await sleep(20)
 				// #ifndef APP-NVUE
-				this.$uGetRect('.u-skeleton__wrapper__content').then(size => {
+				this.$uGetRect('.up-skeleton__wrapper__content').then(size => {
 					this.width = size.width
 				})
 				// #endif
 
 				// #ifdef APP-NVUE
-				const ref = this.$refs['u-skeleton__wrapper__content']
+				const ref = this.$refs['up-skeleton__wrapper__content']
 				ref && dom.getComponentRect(ref, (res) => {
 					this.width = res.size.width
 				})
@@ -199,7 +199,7 @@
 		/* #endif */
 	}
 
-	.u-skeleton {
+	.up-skeleton {
 		flex: 1;
 		
 		&__wrapper {

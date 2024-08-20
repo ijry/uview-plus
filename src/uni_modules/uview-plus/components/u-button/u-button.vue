@@ -20,35 +20,35 @@
         @opensetting="opensetting"
         @launchapp="launchapp"
         @agreeprivacyauthorization="agreeprivacyauthorization"
-        :hover-class="!disabled && !loading ? 'u-button--active' : ''"
-        class="u-button u-reset-button"
+        :hover-class="!disabled && !loading ? 'up-button--active' : ''"
+        class="up-button up-reset-button"
         :style="[baseColor, addStyle(customStyle)]"
         @tap="clickHandler"
         :class="bemClass"
     >
         <template v-if="loading">
-            <u-loading-icon
+            <up-loading-icon
                 :mode="loadingMode"
                 :size="loadingSize * 1.15"
                 :color="loadingColor"
-            ></u-loading-icon>
+            ></up-loading-icon>
             <text
-                class="u-button__loading-text"
+                class="up-button__loading-text"
                 :style="[{ fontSize: textSize + 'px' }]"
                 >{{ loadingText || text }}</text
             >
         </template>
         <template v-else>
-            <u-icon
+            <up-icon
                 v-if="icon"
                 :name="icon"
                 :color="iconColorCom"
                 :size="textSize * 1.35"
                 :customStyle="{ marginRight: '2px' }"
-            ></u-icon>
+            ></up-icon>
             <slot>
                 <text
-                    class="u-button__text"
+                    class="up-button__text"
                     :style="[{ fontSize: textSize + 'px' }]"
                     >{{ text }}</text
                 >
@@ -61,12 +61,12 @@
     <view
         :hover-start-time="Number(hoverStartTime)"
         :hover-stay-time="Number(hoverStayTime)"
-        class="u-button"
+        class="up-button"
         :hover-class="
             !disabled && !loading && !color && (plain || type === 'info')
-                ? 'u-button--active--plain'
+                ? 'up-button--active--plain'
                 : !disabled && !loading && !plain
-                ? 'u-button--active'
+                ? 'up-button--active'
                 : ''
         "
         @tap="clickHandler"
@@ -74,34 +74,34 @@
         :style="[baseColor, addStyle(customStyle)]"
     >
         <template v-if="loading">
-            <u-loading-icon
+            <up-loading-icon
                 :mode="loadingMode"
                 :size="loadingSize * 1.15"
                 :color="loadingColor"
-            ></u-loading-icon>
+            ></up-loading-icon>
             <text
-                class="u-button__loading-text"
+                class="up-button__loading-text"
                 :style="[nvueTextStyle]"
-                :class="[plain && `u-button__text--plain--${type}`]"
+                :class="[plain && `up-button__text--plain--${type}`]"
                 >{{ loadingText || text }}</text
             >
         </template>
         <template v-else>
-            <u-icon
+            <up-icon
                 v-if="icon"
                 :name="icon"
                 :color="iconColorCom"
                 :size="textSize * 1.35"
-            ></u-icon>
+            ></up-icon>
             <text
-                class="u-button__text"
+                class="up-button__text"
                 :style="[
                     {
                         marginLeft: icon ? '2px' : 0,
                     },
                     nvueTextStyle,
                 ]"
-                :class="[plain && `u-button__text--plain--${type}`]"
+                :class="[plain && `up-button__text--plain--${type}`]"
                 >{{ text }}</text
             >
         </template>
@@ -160,10 +160,10 @@ import color from '../../libs/config/color';
  * @event {Function}	opensetting		在打开授权设置页并关闭后回调
  * @event {Function}	launchapp		打开 APP 成功的回调
  * @event {Function}	agreeprivacyauthorization	用户同意隐私协议事件回调
- * @example <u-button>月落</u-button>
+ * @example <up-button>月落</up-button>
  */
 export default {
-    name: "u-button",
+    name: "up-button",
     // #ifdef MP
     mixins: [mpMixin, mixin, buttonMixin, openType, props],
     // #endif
@@ -197,7 +197,7 @@ export default {
                 // 如果有设置color值，则用color值，否则使用type主题颜色
                 return this.color
                     ? this.color
-                    : color[`u-${this.type}`];
+                    : color[`up-${this.type}`];
             }
             if (this.type === "info") {
                 return "#c9c9c9";
@@ -206,7 +206,7 @@ export default {
         },
         iconColorCom() {
             // 如果是镂空状态，设置了color就用color值，否则使用主题颜色，
-            // u-icon的color能接受一个主题颜色的值
+            // up-icon的color能接受一个主题颜色的值
 			if (this.iconColor) return this.iconColor;
 			if (this.plain) {
                 return this.color ? this.color : this.type;
@@ -314,64 +314,64 @@ export default {
 @import "./nvue.scss";
 /* #endif */
 
-$u-button-u-button-height: 40px !default;
-$u-button-text-font-size: 15px !default;
-$u-button-loading-text-font-size: 15px !default;
-$u-button-loading-text-margin-left: 4px !default;
-$u-button-large-width: 100% !default;
-$u-button-large-height: 50px !default;
-$u-button-normal-padding: 0 12px !default;
-$u-button-large-padding: 0 15px !default;
-$u-button-normal-font-size: 14px !default;
-$u-button-small-min-width: 60px !default;
-$u-button-small-height: 30px !default;
-$u-button-small-padding: 0px 8px !default;
-$u-button-mini-padding: 0px 8px !default;
-$u-button-small-font-size: 12px !default;
-$u-button-mini-height: 22px !default;
-$u-button-mini-font-size: 10px !default;
-$u-button-mini-min-width: 50px !default;
-$u-button-disabled-opacity: 0.5 !default;
-$u-button-info-color: #323233 !default;
-$u-button-info-background-color: #fff !default;
-$u-button-info-border-color: #ebedf0 !default;
-$u-button-info-border-width: 1px !default;
-$u-button-info-border-style: solid !default;
-$u-button-success-color: #fff !default;
-$u-button-success-background-color: $u-success !default;
-$u-button-success-border-color: $u-button-success-background-color !default;
-$u-button-success-border-width: 1px !default;
-$u-button-success-border-style: solid !default;
-$u-button-primary-color: #fff !default;
-$u-button-primary-background-color: $u-primary !default;
-$u-button-primary-border-color: $u-button-primary-background-color !default;
-$u-button-primary-border-width: 1px !default;
-$u-button-primary-border-style: solid !default;
-$u-button-error-color: #fff !default;
-$u-button-error-background-color: $u-error !default;
-$u-button-error-border-color: $u-button-error-background-color !default;
-$u-button-error-border-width: 1px !default;
-$u-button-error-border-style: solid !default;
-$u-button-warning-color: #fff !default;
-$u-button-warning-background-color: $u-warning !default;
-$u-button-warning-border-color: $u-button-warning-background-color !default;
-$u-button-warning-border-width: 1px !default;
-$u-button-warning-border-style: solid !default;
-$u-button-block-width: 100% !default;
-$u-button-circle-border-top-right-radius: 100px !default;
-$u-button-circle-border-top-left-radius: 100px !default;
-$u-button-circle-border-bottom-left-radius: 100px !default;
-$u-button-circle-border-bottom-right-radius: 100px !default;
-$u-button-square-border-top-right-radius: 3px !default;
-$u-button-square-border-top-left-radius: 3px !default;
-$u-button-square-border-bottom-left-radius: 3px !default;
-$u-button-square-border-bottom-right-radius: 3px !default;
-$u-button-icon-min-width: 1em !default;
-$u-button-plain-background-color: #fff !default;
-$u-button-hairline-border-width: 0.5px !default;
+$up-button-up-button-height: 40px !default;
+$up-button-text-font-size: 15px !default;
+$up-button-loading-text-font-size: 15px !default;
+$up-button-loading-text-margin-left: 4px !default;
+$up-button-large-width: 100% !default;
+$up-button-large-height: 50px !default;
+$up-button-normal-padding: 0 12px !default;
+$up-button-large-padding: 0 15px !default;
+$up-button-normal-font-size: 14px !default;
+$up-button-small-min-width: 60px !default;
+$up-button-small-height: 30px !default;
+$up-button-small-padding: 0px 8px !default;
+$up-button-mini-padding: 0px 8px !default;
+$up-button-small-font-size: 12px !default;
+$up-button-mini-height: 22px !default;
+$up-button-mini-font-size: 10px !default;
+$up-button-mini-min-width: 50px !default;
+$up-button-disabled-opacity: 0.5 !default;
+$up-button-info-color: #323233 !default;
+$up-button-info-background-color: #fff !default;
+$up-button-info-border-color: #ebedf0 !default;
+$up-button-info-border-width: 1px !default;
+$up-button-info-border-style: solid !default;
+$up-button-success-color: #fff !default;
+$up-button-success-background-color: $up-success !default;
+$up-button-success-border-color: $up-button-success-background-color !default;
+$up-button-success-border-width: 1px !default;
+$up-button-success-border-style: solid !default;
+$up-button-primary-color: #fff !default;
+$up-button-primary-background-color: $up-primary !default;
+$up-button-primary-border-color: $up-button-primary-background-color !default;
+$up-button-primary-border-width: 1px !default;
+$up-button-primary-border-style: solid !default;
+$up-button-error-color: #fff !default;
+$up-button-error-background-color: $up-error !default;
+$up-button-error-border-color: $up-button-error-background-color !default;
+$up-button-error-border-width: 1px !default;
+$up-button-error-border-style: solid !default;
+$up-button-warning-color: #fff !default;
+$up-button-warning-background-color: $up-warning !default;
+$up-button-warning-border-color: $up-button-warning-background-color !default;
+$up-button-warning-border-width: 1px !default;
+$up-button-warning-border-style: solid !default;
+$up-button-block-width: 100% !default;
+$up-button-circle-border-top-right-radius: 100px !default;
+$up-button-circle-border-top-left-radius: 100px !default;
+$up-button-circle-border-bottom-left-radius: 100px !default;
+$up-button-circle-border-bottom-right-radius: 100px !default;
+$up-button-square-border-top-right-radius: 3px !default;
+$up-button-square-border-top-left-radius: 3px !default;
+$up-button-square-border-bottom-left-radius: 3px !default;
+$up-button-square-border-bottom-right-radius: 3px !default;
+$up-button-icon-min-width: 1em !default;
+$up-button-plain-background-color: #fff !default;
+$up-button-hairline-border-width: 0.5px !default;
 
-.u-button {
-    height: $u-button-u-button-height;
+.up-button {
+    height: $up-button-up-button-height;
     position: relative;
     align-items: center;
     justify-content: center;
@@ -382,122 +382,122 @@ $u-button-hairline-border-width: 0.5px !default;
     flex-direction: row;
 
     &__text {
-        font-size: $u-button-text-font-size;
+        font-size: $up-button-text-font-size;
     }
 
     &__loading-text {
-        font-size: $u-button-loading-text-font-size;
-        margin-left: $u-button-loading-text-margin-left;
+        font-size: $up-button-loading-text-font-size;
+        margin-left: $up-button-loading-text-margin-left;
     }
 
     &--large {
         /* #ifndef APP-NVUE */
-        width: $u-button-large-width;
+        width: $up-button-large-width;
         /* #endif */
-        height: $u-button-large-height;
-        padding: $u-button-large-padding;
+        height: $up-button-large-height;
+        padding: $up-button-large-padding;
     }
 
     &--normal {
-        padding: $u-button-normal-padding;
-        font-size: $u-button-normal-font-size;
+        padding: $up-button-normal-padding;
+        font-size: $up-button-normal-font-size;
     }
 
     &--small {
         /* #ifndef APP-NVUE */
-        min-width: $u-button-small-min-width;
+        min-width: $up-button-small-min-width;
         /* #endif */
-        height: $u-button-small-height;
-        padding: $u-button-small-padding;
-        font-size: $u-button-small-font-size;
+        height: $up-button-small-height;
+        padding: $up-button-small-padding;
+        font-size: $up-button-small-font-size;
     }
 
     &--mini {
-        height: $u-button-mini-height;
-        font-size: $u-button-mini-font-size;
+        height: $up-button-mini-height;
+        font-size: $up-button-mini-font-size;
         /* #ifndef APP-NVUE */
-        min-width: $u-button-mini-min-width;
+        min-width: $up-button-mini-min-width;
         /* #endif */
-        padding: $u-button-mini-padding;
+        padding: $up-button-mini-padding;
     }
 
     &--disabled {
-        opacity: $u-button-disabled-opacity;
+        opacity: $up-button-disabled-opacity;
     }
 
     &--info {
-        color: $u-button-info-color;
-        background-color: $u-button-info-background-color;
-        border-color: $u-button-info-border-color;
-        border-width: $u-button-info-border-width;
-        border-style: $u-button-info-border-style;
+        color: $up-button-info-color;
+        background-color: $up-button-info-background-color;
+        border-color: $up-button-info-border-color;
+        border-width: $up-button-info-border-width;
+        border-style: $up-button-info-border-style;
     }
 
     &--success {
-        color: $u-button-success-color;
-        background-color: $u-button-success-background-color;
-        border-color: $u-button-success-border-color;
-        border-width: $u-button-success-border-width;
-        border-style: $u-button-success-border-style;
+        color: $up-button-success-color;
+        background-color: $up-button-success-background-color;
+        border-color: $up-button-success-border-color;
+        border-width: $up-button-success-border-width;
+        border-style: $up-button-success-border-style;
     }
 
     &--primary {
-        color: $u-button-primary-color;
-        background-color: $u-button-primary-background-color;
-        border-color: $u-button-primary-border-color;
-        border-width: $u-button-primary-border-width;
-        border-style: $u-button-primary-border-style;
+        color: $up-button-primary-color;
+        background-color: $up-button-primary-background-color;
+        border-color: $up-button-primary-border-color;
+        border-width: $up-button-primary-border-width;
+        border-style: $up-button-primary-border-style;
     }
 
     &--error {
-        color: $u-button-error-color;
-        background-color: $u-button-error-background-color;
-        border-color: $u-button-error-border-color;
-        border-width: $u-button-error-border-width;
-        border-style: $u-button-error-border-style;
+        color: $up-button-error-color;
+        background-color: $up-button-error-background-color;
+        border-color: $up-button-error-border-color;
+        border-width: $up-button-error-border-width;
+        border-style: $up-button-error-border-style;
     }
 
     &--warning {
-        color: $u-button-warning-color;
-        background-color: $u-button-warning-background-color;
-        border-color: $u-button-warning-border-color;
-        border-width: $u-button-warning-border-width;
-        border-style: $u-button-warning-border-style;
+        color: $up-button-warning-color;
+        background-color: $up-button-warning-background-color;
+        border-color: $up-button-warning-border-color;
+        border-width: $up-button-warning-border-width;
+        border-style: $up-button-warning-border-style;
     }
 
     &--block {
         @include flex;
-        width: $u-button-block-width;
+        width: $up-button-block-width;
     }
 
     &--circle {
-        border-top-right-radius: $u-button-circle-border-top-right-radius;
-        border-top-left-radius: $u-button-circle-border-top-left-radius;
-        border-bottom-left-radius: $u-button-circle-border-bottom-left-radius;
-        border-bottom-right-radius: $u-button-circle-border-bottom-right-radius;
+        border-top-right-radius: $up-button-circle-border-top-right-radius;
+        border-top-left-radius: $up-button-circle-border-top-left-radius;
+        border-bottom-left-radius: $up-button-circle-border-bottom-left-radius;
+        border-bottom-right-radius: $up-button-circle-border-bottom-right-radius;
     }
 
     &--square {
-        border-bottom-left-radius: $u-button-square-border-top-right-radius;
-        border-bottom-right-radius: $u-button-square-border-top-left-radius;
-        border-top-left-radius: $u-button-square-border-bottom-left-radius;
-        border-top-right-radius: $u-button-square-border-bottom-right-radius;
+        border-bottom-left-radius: $up-button-square-border-top-right-radius;
+        border-bottom-right-radius: $up-button-square-border-top-left-radius;
+        border-top-left-radius: $up-button-square-border-bottom-left-radius;
+        border-top-right-radius: $up-button-square-border-bottom-right-radius;
     }
 
     &__icon {
         /* #ifndef APP-NVUE */
-        min-width: $u-button-icon-min-width;
+        min-width: $up-button-icon-min-width;
         line-height: inherit !important;
         vertical-align: top;
         /* #endif */
     }
 
     &--plain {
-        background-color: $u-button-plain-background-color;
+        background-color: $up-button-plain-background-color;
     }
 
     &--hairline {
-        border-width: $u-button-hairline-border-width !important;
+        border-width: $up-button-hairline-border-width !important;
     }
 }
 </style>

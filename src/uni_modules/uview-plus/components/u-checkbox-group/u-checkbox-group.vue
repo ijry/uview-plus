@@ -1,6 +1,6 @@
 <template>
 	<view
-	    class="u-checkbox-group"
+	    class="up-checkbox-group"
 	    :class="bemClass"
 	>
 		<slot></slot>
@@ -32,14 +32,14 @@
 	 * @property {Boolean}			borderBottom	placement为row时，是否显示下边框 （默认 false ）
 	 * @event {Function}	change	任一个checkbox状态发生变化时触发，回调为一个对象
 	 * @event {Function}	input	修改通过v-model绑定的值时触发，回调为一个对象
-	 * @example <u-checkbox-group></u-checkbox-group>
+	 * @example <up-checkbox-group></up-checkbox-group>
 	 */
 	export default {
-		name: 'u-checkbox-group',
+		name: 'up-checkbox-group',
 		mixins: [mpMixin, mixin,props],
 		computed: {
-			// 这里computed的变量，都是子组件u-checkbox需要用到的，由于头条小程序的兼容性差异，子组件无法实时监听父组件参数的变化
-			// 所以需要手动通知子组件，这里返回一个parentData变量，供watch监听，在其中去通知每一个子组件重新从父组件(u-checkbox-group)
+			// 这里computed的变量，都是子组件up-checkbox需要用到的，由于头条小程序的兼容性差异，子组件无法实时监听父组件参数的变化
+			// 所以需要手动通知子组件，这里返回一个parentData变量，供watch监听，在其中去通知每一个子组件重新从父组件(up-checkbox-group)
 			// 拉取父组件新的变化后的参数
 			parentData() {
 			  return [
@@ -71,7 +71,7 @@
 			  handler() {
 				if (this.children.length) {
 				  this.children.map((child) => {
-					// 判断子组件(u-checkbox)如果有init方法的话，就就执行(执行的结果是子组件重新从父组件拉取了最新的值)
+					// 判断子组件(up-checkbox)如果有init方法的话，就就执行(执行的结果是子组件重新从父组件拉取了最新的值)
 					typeof child.init === "function" && child.init();
 				  });
 				}
@@ -117,7 +117,7 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-checkbox-group {
+	.up-checkbox-group {
 
 		&--row {
 			/* #ifndef APP-NVUE */

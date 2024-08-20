@@ -1,24 +1,24 @@
 <template>
-	<view class="u-calendar-month-wrapper" ref="u-calendar-month-wrapper">
-		<view v-for="(item, index) in months" :key="index" :class="[`u-calendar-month-${index}`]"
-			:ref="`u-calendar-month-${index}`" :id="`month-${index}`">
-			<text v-if="index !== 0" class="u-calendar-month__title">{{ item.year }}年{{ item.month }}月</text>
-			<view class="u-calendar-month__days">
-				<view v-if="showMark" class="u-calendar-month__days__month-mark-wrapper">
-					<text class="u-calendar-month__days__month-mark-wrapper__text">{{ item.month }}</text>
+	<view class="up-calendar-month-wrapper" ref="up-calendar-month-wrapper">
+		<view v-for="(item, index) in months" :key="index" :class="[`up-calendar-month-${index}`]"
+			:ref="`up-calendar-month-${index}`" :id="`month-${index}`">
+			<text v-if="index !== 0" class="up-calendar-month__title">{{ item.year }}年{{ item.month }}月</text>
+			<view class="up-calendar-month__days">
+				<view v-if="showMark" class="up-calendar-month__days__month-mark-wrapper">
+					<text class="up-calendar-month__days__month-mark-wrapper__text">{{ item.month }}</text>
 				</view>
-				<view class="u-calendar-month__days__day" v-for="(item1, index1) in item.date" :key="index1"
+				<view class="up-calendar-month__days__day" v-for="(item1, index1) in item.date" :key="index1"
 					:style="[dayStyle(index, index1, item1)]" @tap="clickHandler(index, index1, item1)"
-					:class="[item1.selected && 'u-calendar-month__days__day__select--selected']">
-					<view class="u-calendar-month__days__day__select" :style="[daySelectStyle(index, index1, item1)]">
-						<text class="u-calendar-month__days__day__select__info"
-							:class="[item1.disabled && 'u-calendar-month__days__day__select__info--disabled']"
+					:class="[item1.selected && 'up-calendar-month__days__day__select--selected']">
+					<view class="up-calendar-month__days__day__select" :style="[daySelectStyle(index, index1, item1)]">
+						<text class="up-calendar-month__days__day__select__info"
+							:class="[item1.disabled && 'up-calendar-month__days__day__select__info--disabled']"
 							:style="[textStyle(item1)]">{{ item1.day }}</text>
 						<text v-if="getBottomInfo(index, index1, item1)"
-							class="u-calendar-month__days__day__select__buttom-info"
-							:class="[item1.disabled && 'u-calendar-month__days__day__select__buttom-info--disabled']"
+							class="up-calendar-month__days__day__select__buttom-info"
+							:class="[item1.disabled && 'up-calendar-month__days__day__select__buttom-info--disabled']"
 							:style="[textStyle(item1)]">{{ getBottomInfo(index, index1, item1) }}</text>
-						<text v-if="item1.dot" class="u-calendar-month__days__day__select__dot"></text>
+						<text v-if="item1.dot" class="up-calendar-month__days__day__select__dot"></text>
 					</view>
 				</view>
 			</view>
@@ -39,7 +39,7 @@
 	import defProps from '../../libs/config/props';
 	import dayjs from 'dayjs/esm/index'
 	export default {
-		name: 'u-calendar-month',
+		name: 'up-calendar-month',
 		mixins: [mpMixin, mixin],
 		props: {
 			// 是否显示月份背景色
@@ -304,12 +304,12 @@
 			// 获取月份数据区域的宽度，因为nvue不支持百分比，所以无法通过css设置每个日期item的宽度
 			getWrapperWidth() {
 				// #ifdef APP-NVUE
-				dom.getComponentRect(this.$refs['u-calendar-month-wrapper'], res => {
+				dom.getComponentRect(this.$refs['up-calendar-month-wrapper'], res => {
 					this.width = res.size.width
 				})
 				// #endif
 				// #ifndef APP-NVUE
-				this.$uGetRect('.u-calendar-month-wrapper').then(size => {
+				this.$uGetRect('.up-calendar-month-wrapper').then(size => {
 					this.width = size.width
 				})
 				// #endif
@@ -317,7 +317,7 @@
 			getMonthRect() {
 				// 获取每个月份数据的尺寸，用于父组件在scroll-view滚动事件中，监听当前滚动到了第几个月份
 				const promiseAllArr = this.months.map((item, index) => this.getMonthRectByPromise(
-					`u-calendar-month-${index}`))
+					`up-calendar-month-${index}`))
 				// 一次性返回
 				Promise.all(promiseAllArr).then(
 					sizes => {
@@ -461,11 +461,11 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	.u-calendar-month-wrapper {
+	.up-calendar-month-wrapper {
 		margin-top: 4px;
 	}
 
-	.u-calendar-month {
+	.up-calendar-month {
 
 		&__title {
 			display: flex;
@@ -473,7 +473,7 @@
 			font-size: 14px;
 			line-height: 42px;
 			height: 42px;
-			color: $u-main-color;
+			color: $up-main-color;
 			text-align: center;
 			font-weight: bold;
 		}
@@ -519,14 +519,14 @@
 						width: 7px;
 						height: 7px;
 						border-radius: 100px;
-						background-color: $u-error;
+						background-color: $up-error;
 						position: absolute;
 						top: 12px;
 						right: 7px;
 					}
 
 					&__buttom-info {
-						color: $u-content-color;
+						color: $up-content-color;
 						text-align: center;
 						position: absolute;
 						bottom: 5px;
@@ -558,7 +558,7 @@
 					}
 
 					&--selected {
-						background-color: $u-primary;
+						background-color: $up-primary;
 						@include flex;
 						justify-content: center;
 						align-items: center;

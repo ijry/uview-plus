@@ -1,27 +1,27 @@
 <template>
-	<u-transition
+	<up-transition
 		mode="slide-down"
 		:customStyle="containerStyle"
 		:show="open"
 	>
 		<view
-			class="u-notify"
-			:class="[`u-notify--${tmpConfig.type}`]"
+			class="up-notify"
+			:class="[`up-notify--${tmpConfig.type}`]"
 			:style="[backgroundColor, addStyle(customStyle)]"
 		>
-			<u-status-bar v-if="tmpConfig.safeAreaInsetTop"></u-status-bar>
-			<view class="u-notify__warpper">
+			<up-status-bar v-if="tmpConfig.safeAreaInsetTop"></up-status-bar>
+			<view class="up-notify__warpper">
 				<slot name="icon">
-					<u-icon
+					<up-icon
 						v-if="['success', 'warning', 'error'].includes(tmpConfig.type)"
 						:name="tmpConfig.icon"
 						:color="tmpConfig.color"
 						:size="1.3 * tmpConfig.fontSize"
 						:customStyle="{marginRight: '4px'}"
-					></u-icon>
+					></up-icon>
 				</slot>
 				<text
-					class="u-notify__warpper__text"
+					class="up-notify__warpper__text"
 					:style="{
 						fontSize: addUnit(tmpConfig.fontSize),
 						color: tmpConfig.color
@@ -29,7 +29,7 @@
 				>{{ tmpConfig.message }}</text>
 			</view>
 		</view>
-	</u-transition>
+	</up-transition>
 </template>
 
 <script>
@@ -53,10 +53,10 @@
 	 * @property {Object}			customStyle			组件的样式，对象形式
 	 * @event {Function}	open	开启组件时调用的函数
 	 * @event {Function}	close	关闭组件式调用的函数
-	 * @example <u-notify message="Hi uView"></u-notify>
+	 * @example <up-notify message="Hi uView"></up-notify>
 	 */
 	export default {
-		name: 'u-notify',
+		name: 'up-notify',
 		mixins: [mpMixin, mixin,props],
 		data() {
 			return {
@@ -97,7 +97,7 @@
 				}
 				const style = {
 					top: addUnit(this.tmpConfig.top === 0 ? top : this.tmpConfig.top),
-					// 因为组件底层为u-transition组件，必须将其设置为fixed定位
+					// 因为组件底层为up-transition组件，必须将其设置为fixed定位
 					// 让其出现在导航栏底部
 					position: 'fixed',
 					left: 0,
@@ -140,7 +140,7 @@
 			addStyle,
 			addUnit,
 			show(options) {
-				// 不将结果合并到this.config变量，避免多次调用u-toast，前后的配置造成混乱
+				// 不将结果合并到this.config变量，避免多次调用up-toast，前后的配置造成混乱
 				this.tmpConfig = deepMerge(this.config, options)
 				// 任何定时器初始化之前，都要执行清除操作，否则可能会造成混乱
 				this.clearTimer()
@@ -175,16 +175,16 @@
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
 
-	$u-notify-padding: 8px 10px !default;
-	$u-notify-text-font-size: 15px !default;
-	$u-notify-primary-bgColor: $u-primary !default;
-	$u-notify-success-bgColor: $u-success !default;
-	$u-notify-error-bgColor: $u-error !default;
-	$u-notify-warning-bgColor: $u-warning !default;
+	$up-notify-padding: 8px 10px !default;
+	$up-notify-text-font-size: 15px !default;
+	$up-notify-primary-bgColor: $up-primary !default;
+	$up-notify-success-bgColor: $up-success !default;
+	$up-notify-error-bgColor: $up-error !default;
+	$up-notify-warning-bgColor: $up-warning !default;
 
 
-	.u-notify {
-		padding: $u-notify-padding;
+	.up-notify {
+		padding: $up-notify-padding;
 
 		&__warpper {
 			@include flex;
@@ -193,25 +193,25 @@
 			justify-content: center;
 
 			&__text {
-				font-size: $u-notify-text-font-size;
+				font-size: $up-notify-text-font-size;
 				text-align: center;
 			}
 		}
 
 		&--primary {
-			background-color: $u-notify-primary-bgColor;
+			background-color: $up-notify-primary-bgColor;
 		}
 
 		&--success {
-			background-color: $u-notify-success-bgColor;
+			background-color: $up-notify-success-bgColor;
 		}
 
 		&--error {
-			background-color: $u-notify-error-bgColor;
+			background-color: $up-notify-error-bgColor;
 		}
 
 		&--warning {
-			background-color: $u-notify-warning-bgColor;
+			background-color: $up-notify-warning-bgColor;
 		}
 	}
 </style>

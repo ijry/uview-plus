@@ -1,6 +1,6 @@
 <template>
 	<text
-	    class="u-link"
+	    class="up-link"
 	    @tap.stop="openLink"
 	    :style="[linkStyle, addStyle(customStyle)]"
 	>{{text}}</text>
@@ -15,7 +15,7 @@
 	 * link 超链接
 	 * @description 该组件为超链接组件，在不同平台有不同表现形式：在APP平台会通过plus环境打开内置浏览器，在小程序中把链接复制到粘贴板，同时提示信息，在H5中通过window.open打开链接。
 	 * @tutorial https://ijry.github.io/uview-plus/components/link.html
-	 * @property {String}			color		文字颜色 （默认 color['u-primary'] ）
+	 * @property {String}			color		文字颜色 （默认 color['up-primary'] ）
 	 * @property {String ｜ Number}	fontSize	字体大小，单位px （默认 15 ）
 	 * @property {Boolean}			underLine	是否显示下划线 （默认 false ）
 	 * @property {String}			href		跳转的链接，要带上http(s)
@@ -24,10 +24,10 @@
 	 * @property {String}			text		超链接的问题，不使用slot形式传入，是因为nvue下无法修改颜色 
 	 * @property {Object}			customStyle	定义需要用到的外部样式
 	 * 
-	 * @example <u-link href="http://www.uviewui.com">蜀道难，难于上青天</u-link>
+	 * @example <up-link href="http://www.uviewui.com">蜀道难，难于上青天</up-link>
 	 */
 	export default {
-		name: "u-link",
+		name: "up-link",
 		mixins: [mpMixin, mixin, props],
 		computed: {
 			linkStyle() {
@@ -74,11 +74,11 @@
 
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
-	$u-link-line-height:1 !default;
+	$up-link-line-height:1 !default;
 
-	.u-link {
+	.up-link {
 		/* #ifndef APP-NVUE */
-		line-height: $u-link-line-height;
+		line-height: $up-link-line-height;
 		/* #endif */
 		@include flex;
 		flex-wrap: wrap;

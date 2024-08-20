@@ -1,12 +1,12 @@
 <template>
 	<view
-		class="u-sticky"
+		class="up-sticky"
 		:id="elId"
 		:style="[style]"
 	>
 		<view
 			:style="[stickyContent]"
-			class="u-sticky__content"
+			class="up-sticky__content"
 		>
 			<slot />
 		</view>
@@ -32,10 +32,10 @@
 	 * @property {Object}			customStyle		组件的样式，对象形式
 	 * @event {Function} fixed		组件吸顶时触发
 	 * @event {Function} unfixed	组件取消吸顶时触发
-	 * @example <u-sticky offsetTop="200"><view>塞下秋来风景异，衡阳雁去无留意</view></u-sticky>
+	 * @example <up-sticky offsetTop="200"><view>塞下秋来风景异，衡阳雁去无留意</view></up-sticky>
 	 */
 	export default {
-		name: 'u-sticky',
+		name: 'up-sticky',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -174,7 +174,7 @@
 				// 方法内进行判断，避免在其他平台生成无用代码
 				// #ifdef APP-VUE || MP-WEIXIN || MP-TOUTIAO
 				return new Promise(resolve => {
-					uni.createSelectorQuery().in(this).select('.u-sticky').fields({
+					uni.createSelectorQuery().in(this).select('.up-sticky').fields({
 						computedStyle: ["position"]
 					}).exec(e => {
 						resolve('sticky' === e[0].position)
@@ -207,7 +207,7 @@
 </script>
 
 <style lang="scss" scoped>
-	.u-sticky {
+	.up-sticky {
 		/* #ifdef APP-VUE || MP-WEIXIN || MP-TOUTIAO */
 		// 此处默认写sticky属性，是为了给微信和APP通过uni.createSelectorQuery查询是否支持css sticky使用
 		position: sticky;
