@@ -1,11 +1,11 @@
 <template>
 	<view class="nav-wrap">
 		<view class="nav-title">
-			<u--image :showLoading="true" src="https://uview-plus.jiangruyi.com/h5/static/uview/common/logo.png" width="70px"
+			<up-image :showLoading="true" src="https://uview-plus.jiangruyi.com/h5/static/uview/common/logo.png" width="70px"
 				height="70px" />
 			<view class="nav-info">
 				<view class="nav-info__title" @tap="jumpToWx">
-					<text class="nav-info__title__text">uview-plus3</text>
+					<text class="nav-info__title__text">uview-plus</text>
 					<!-- #ifdef MP-WEIXIN -->
 					<!-- uni-app不支持text内部的text组件的tap事件，所以放到外部响应tap -->
 					<text class="nav-info__title__jump">查看演示</text>
