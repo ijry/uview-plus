@@ -21,7 +21,7 @@ export default {
         bold: false,
         index: '',
         hoverClass: '',
-        customPrefix: 'uicon',
+        customPrefix: 'upicon',
         label: '',
         labelPos: 'right',
         labelSize: '15px',

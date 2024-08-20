@@ -41,7 +41,7 @@
 	const fontUrl = 'https://at.alicdn.com/t/font_2225171_8kdcwk4po24.ttf'
 	const domModule = weex.requireModule('dom')
 	domModule.addRule('fontFace', {
-		'fontFamily': "uicon-iconfont",
+		'fontFamily': "upicon-iconfont",
 		'src': `url('${fontUrl}')`
 	})
 	// #endif
@@ -63,7 +63,7 @@
 	 * @property {Boolean}			bold			是否显示粗体 （默认 false ）
 	 * @property {String | Number}	index			点击图标的时候传递事件出去的index（用于区分点击了哪一个）
 	 * @property {String}			hoverClass		图标按下去的样式类，用法同uni的view组件的hoverClass参数，详情见官网
-	 * @property {String}			customPrefix	自定义扩展前缀，方便用户扩展自己的图标库 （默认 'uicon' ）
+	 * @property {String}			customPrefix	自定义扩展前缀，方便用户扩展自己的图标库 （默认 'upicon' ）
 	 * @property {String | Number}	label			图标右侧的label文字
 	 * @property {String}			labelPos		label相对于图标的位置，只能right或bottom （默认 'right' ）
 	 * @property {String | Number}	labelSize		label字体大小，单位px （默认 '15px' ）
@@ -92,8 +92,8 @@
 			uClasses() {
 				let classes = []
 				classes.push(this.customPrefix + '-' + this.name)
-				// uView的自定义图标类名为up-iconfont
-				if (this.customPrefix == 'uicon') {
+				// uview-plus的自定义图标类名为up-iconfont
+				if (this.customPrefix == 'upicon') {
 					classes.push('up-iconfont')
 				} else {
 					// 不能缺少这一步，否则自定义图标会无效
@@ -136,9 +136,9 @@
 			// 通过图标名，查找对应的图标
 			icon() {
 				// 使用自定义图标的时候页面上会把name属性也展示出来，所以在这里处理一下
-				if (this.customPrefix !== "uicon") return "";
+				if (this.customPrefix !== "upicon") return "";
 				// 如果内置的图标中找不到对应的图标，就直接返回name值，因为用户可能传入的是unicode代码
-				return icons['uicon-' + this.name] || this.name
+				return icons['upicon-' + this.name] || this.name
 			}
 		},
 		methods: {
@@ -167,7 +167,7 @@
 	/* #ifndef APP-NVUE */
 	// 非nvue下加载字体
 	@font-face {
-		font-family: 'uicon-iconfont';
+		font-family: 'upicon-iconfont';
 		src: url('https://at.alicdn.com/t/font_2225171_8kdcwk4po24.ttf') format('truetype');
 	}
 
@@ -200,7 +200,7 @@
 		}
 
 		&__icon {
-			font-family: uicon-iconfont;
+			font-family: upicon-iconfont;
 			position: relative;
 			@include flex;
 			align-items: center;
