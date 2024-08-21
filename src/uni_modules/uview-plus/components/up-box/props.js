@@ -23,5 +23,35 @@ export const propsBox = defineMixin({
             type: [String],
             default: "15px"
         },
+        // 左侧图标
+        leftIcon: {
+            type: [String],
+            default: ""
+        },
+        // 左侧文案
+        leftTitle: {
+            type: [String],
+            default: "左"
+        },
+        // 右上图标
+        rightTopIcon: {
+            type: [String],
+            default: ""
+        },
+        // 右上文案
+        rightTopTitle: {
+            type: [String],
+            default: "右上"
+        },
+        // 右下图标
+        rightBottomIcon: {
+            type: [String],
+            default: ""
+        },
+        // 右下文案
+        rightBottomTitle: {
+            type: [String],
+            default: "右下"
+        },
     }
 })
