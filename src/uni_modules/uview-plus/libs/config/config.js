@@ -26,7 +26,16 @@ export default {
         'u-main-color': '#303133',
         'u-content-color': '#606266',
         'u-tips-color': '#909399',
-        'u-light-color': '#c0c4cc'
+        'u-light-color': '#c0c4cc',
+        'up-primary': '#2979ff',
+        'up-warning': '#ff9900',
+        'up-success': '#19be6b',
+        'up-error': '#fa3534',
+        'up-info': '#909399',
+        'up-main-color': '#303133',
+        'up-content-color': '#606266',
+        'up-tips-color': '#909399',
+        'up-light-color': '#c0c4cc'
     },
 	// 默认单位，可以通过配置为rpx，那么在用于传入组件大小参数为数值时，就默认为rpx
 	unit: 'px'

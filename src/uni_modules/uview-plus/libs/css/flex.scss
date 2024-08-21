@@ -30,42 +30,55 @@
 // flex布局
 .u-flex,
 .u-flex-row,
-.u-flex-x {
+.u-flex-x,
+.up-flex,
+.up-flex-row,
+.up-flex-x {
 	@include flex;
 }
 
 .u-flex-y,
-.u-flex-column {
+.u-flex-column,
+.up-flex-y,
+.up-flex-column {
 	@include flex(column);
 }
 
-.u-flex-x-center {
+.u-flex-x-center,
+.up-flex-x-center {
 	@include flex;
 	justify-content: center;
 }
 
-.u-flex-xy-center {
+.u-flex-xy-center,
+.up-flex-xy-center {
 	@include flex;
 	justify-content: center;
 	align-items: center;
 }
 
-.u-flex-y-center {
+.u-flex-y-center,
+.up-flex-y-center {
 	@include flex;
 	align-items: center;
 }
 
-.u-flex-x-left {
+.u-flex-x-left,
+.up-flex-x-left {
 	@include flex;
 }
 
 .u-flex-x-reverse,
-.u-flex-row-reverse {
+.u-flex-row-reverse,
+.up-flex-x-reverse,
+.up-flex-row-reverse  {
 	flex-direction: row-reverse;
 }
 
 .u-flex-y-reverse,
-.u-flex-column-reverse {
+.u-flex-column-reverse,
+.up-flex-y-reverse,
+.up-flex-column-reverse {
 	flex-direction: column-reverse;
 }
 
@@ -74,113 +87,143 @@
 // nvue下只能写成class="u-flex-x u-flex-x-reverse的形式"
 .u-flex.u-flex-reverse,
 .u-flex-row.u-flex-reverse,
-.u-flex-x.u-flex-reverse {
+.u-flex-x.u-flex-reverse,
+.up-flex.up-flex-reverse,
+.up-flex-row.up-flex-reverse,
+.up-flex-x.up-flex-reverse {
 	flex-direction: row-reverse;
 }
 
 .u-flex-column.u-flex-reverse,
-.u-flex-y.u-flex-reverse {
+.u-flex-y.u-flex-reverse,
+.up-flex-column.up-flex-reverse,
+.up-flex-y.up-flex-reverse {
 	flex-direction: column-reverse;
 }
 
 // 自动伸缩
-.u-flex-fill {
+.u-flex-fill,
+.u-flex-fillp {
 	flex: 1 1 auto;
 }
 
 // 边界自动伸缩
 .u-margin-top-auto,
-.u-m-t-auto {
+.u-m-t-auto,
+.up-margin-top-auto,
+.up-m-t-auto {
 	margin-top: auto !important;
 }
 
 .u-margin-right-auto,
-.u-m-r-auto {
+.u-m-r-auto,
+.up-margin-right-auto,
+.up-m-r-auto {
 	margin-right: auto !important;
 }
 
 .u-margin-bottom-auto,
-.u-m-b-auto {
+.u-m-b-auto,
+.up-margin-bottom-auto,
+.up-m-b-auto {
 	margin-bottom: auto !important;
 }
 
 .u-margin-left-auto,
-.u-m-l-auto {
+.u-m-l-auto,
+.up-margin-left-auto,
+.up-m-l-auto {
 	margin-left: auto !important;
 }
 
 .u-margin-center-auto,
-.u-m-c-auto {
+.u-m-c-auto,
+.up-margin-center-auto,
+.up-m-c-auto {
 	margin-left: auto !important;
 	margin-right: auto !important;
 }
 
 .u-margin-middle-auto,
-.u-m-m-auto {
+.u-m-m-auto,
+.up-margin-middle-auto,
+.up-m-m-auto {
 	margin-top: auto !important;
 	margin-bottom: auto !important;
 }
 /* #endif */
 
 // 换行
-.u-flex-wrap {
+.u-flex-wrap,
+.up-flex-wrap {
 	flex-wrap: wrap;
 }
 
 // 反向换行
-.u-flex-wrap-reverse {
+.u-flex-wrap-reverse,
+.up-flex-wrap-reverse {
 	flex-wrap: wrap-reverse;
 }
 
 // 主轴起点对齐
-.u-flex-start {
+.u-flex-start,
+.up-flex-start {
 	justify-content: flex-start;
 }
 
 // 主轴中间对齐
-.u-flex-center {
+.u-flex-center,
+.up-flex-center {
 	justify-content: center;
 }
 
 // 主轴终点对齐
-.u-flex-end {
+.u-flex-end,
+.up-flex-end {
 	justify-content: flex-end;
 }
 
 // 主轴等比间距
-.u-flex-between {
+.u-flex-between,
+.up-flex-between {
 	justify-content: space-between;
 }
 
 // 主轴均分间距
-.u-flex-around {
+.u-flex-around,
+.up-flex-around {
 	justify-content: space-around;
 }
 
 // 交叉轴起点对齐
-.u-flex-items-start {
+.u-flex-items-start,
+.up-flex-items-start {
 	align-items: flex-start;
 }
 
 // 交叉轴中间对齐
-.u-flex-items-center {
+.u-flex-items-center,
+.up-flex-items-center {
 	align-items: center;
 }
 
 // 交叉轴终点对齐
-.u-flex-items-end {
+.u-flex-items-end,
+.up-flex-items-end {
 	align-items: flex-end;
 }
 
 // 交叉轴第一行文字基线对齐
-.u-flex-items-baseline {
+.u-flex-items-baseline,
+.up-flex-items-baseline {
 	/* #ifndef APP-NVUE */
 	align-items: baseline;
 	/* #endif */
 }
 
 // 交叉轴方向拉伸对齐
-.u-flex-items-stretch {
+.u-flex-items-stretch,
+.up-flex-items-stretch {
 	align-items: stretch;
 }
 
@@ -189,27 +232,32 @@
 
 // 子元素交叉轴起点对齐
 /* #ifndef APP-NVUE */
-.u-flex-self-start {
+.u-flex-self-start,
+.up-flex-self-start {
 	align-self: flex-start;
 }
 
 // 子元素交叉轴居中对齐
-.u-flex-self-center {
+.u-flex-self-center,
+.up-flex-self-center {
 	align-self: center;
 }
 
 // 子元素交叉轴终点对齐
-.u-flex-self-end {
+.u-flex-self-end,
+.up-flex-self-end {
 	align-self: flex-end;
 }
 
 // 子元素交叉轴第一行文字基线对齐
-.u-flex-self-baseline {
+.u-flex-self-baseline,
+.up-flex-self-baseline {
 	align-self: baseline;
 }
 
 // 子元素交叉轴方向拉伸对齐
-.u-flex-self-stretch {
+.u-flex-self-stretch,
+.up-flex-self-stretch {
 	align-self: stretch;
 }
 /* #endif */
@@ -217,32 +265,38 @@
 
 // 起点对齐
 /* #ifndef APP-NVUE */
-.u-flex-content-start {
+.u-flex-content-start,
+.up-flex-content-start {
 	align-content: flex-start;
 }
 
 // 居中对齐
-.u-flex-content-center {
+.u-flex-content-center,
+.up-flex-content-center {
 	align-content: center;
 }
 
 // 终点对齐
-.u-flex-content-end {
+.u-flex-content-end,
+.up-flex-content-end {
 	align-content: flex-end;
 }
 
 // 两端对齐
-.u-flex-content-between {
+.u-flex-content-between,
+.up-flex-content-between {
 	align-content: space-between;
 }
 
 // 均分间距
-.u-flex-content-around {
+.u-flex-content-around,
+.up-flex-content-around {
 	align-content: space-around;
 }
 
 // 全部居中对齐
-.u-flex-middle {
+.u-flex-middle,
+.up-flex-middle {
 	justify-content: center;
 	align-items: center;
 	align-self: center;
@@ -250,12 +304,14 @@
 }
 
 // 是否可以放大
-.u-flex-grow {
+.u-flex-grow,
+.up-flex-grow {
 	flex-grow: 1;
 }
 
 // 是否可以缩小
-.u-flex-shrink {
+.u-flex-shrink,
+.up-flex-shrink {
 	flex-shrink: 1;
 }
 
@@ -265,36 +321,42 @@
 @for $i from 0 through 80 {
 	// 只要双数和能被5除尽的数
 	@if $i % 2 == 0 or $i % 5 == 0 {
-		// 得出：u-margin-30或者u-m-30
-		.u-margin-#{$i}, .u-m-#{$i} {
+		// 得出：up-margin-30或者u-m-30
+		.u-margin-#{$i}, .u-m-#{$i},
+		.up-margin-#{$i}, .up-m-#{$i} {
 			margin: $i + rpx!important;
 		}
 		
-		// 得出：u-padding-30或者u-p-30
-		.u-padding-#{$i}, .u-p-#{$i} {
+		// 得出：up-padding-30或者u-p-30
+		.u-padding-#{$i}, .u-p-#{$i},
+		.up-padding-#{$i}, .up-p-#{$i} {
 			padding: $i + rpx!important;
 		}
 		
 		@each $short, $long in l left, t top, r right, b bottom {
-			// 缩写版，结果如： u-m-l-30
+			// 缩写版，结果如： up-m-l-30
 			// 定义外边距
-			.u-m-#{$short}-#{$i} {
+			.u-m-#{$short}-#{$i},
+			.up-m-#{$short}-#{$i} {
 				margin-#{$long}: $i + rpx!important;
 			}
 			
 			// 定义内边距
-			.u-p-#{$short}-#{$i} {
+			.u-p-#{$short}-#{$i},
+			.up-p-#{$short}-#{$i} {
 				padding-#{$long}: $i + rpx!important;
 			}
 			
-			// 完整版，结果如：u-margin-left-30
+			// 完整版，结果如：up-margin-left-30
 			// 定义外边距
-			.u-margin-#{$long}-#{$i} {
+			.u-margin-#{$long}-#{$i},
+			.up-margin-#{$long}-#{$i} {
 				margin-#{$long}: $i + rpx!important;
 			}
 			
 			// 定义内边距
-			.u-padding-#{$long}-#{$i} {
+			.u-padding-#{$long}-#{$i},
+			.up-padding-#{$long}-#{$i} {
 				padding-#{$long}: $i + rpx!important;
 			}
 		}
