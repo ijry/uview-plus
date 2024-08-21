@@ -414,6 +414,8 @@
 
 		&-inner {
 			flex: 1;
+			display: flex;
+			flex-direction: column;
 			position: relative;
 			border-radius: 999px;
 			padding: 10px 18px;
