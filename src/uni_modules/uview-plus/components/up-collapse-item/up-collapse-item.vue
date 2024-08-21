@@ -56,10 +56,10 @@
 </template>
 
 <script>
+	import { nextTick } from 'vue';
 	import { props } from './props.js';
 	import { mpMixin } from '../../libs/mixin/mpMixin.js';
 	import { mixin } from '../../libs/mixin/mixin.js';
-	import { nextTick } from 'vue';
 	import { guid, sleep, error } from '../../libs/function/index.js';
 	import test from '../../libs/function/test.js';
 	// #ifdef APP-NVUE

@@ -136,7 +136,7 @@
 	import {
 		chooseFile
 	} from './utils';
-	import { mixinUpload } from './mixin';
+	import { mixinUpload } from './mixin.js';
 	import { props } from './props.js';
 	import { mpMixin } from '../../libs/mixin/mpMixin.js';
 	import { mixin } from '../../libs/mixin/mixin.js';

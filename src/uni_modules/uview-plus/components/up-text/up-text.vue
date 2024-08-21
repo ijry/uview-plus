@@ -74,8 +74,8 @@ import { props } from './props'
 import value from './value.js'
 import { mpMixin } from '../../libs/mixin/mpMixin.js';
 import { mixin } from '../../libs/mixin/mixin.js';
-import { buttonMixin } from '../../libs/mixin/button';
-import { openType } from '../../libs/mixin/openType';
+import { buttonMixin } from '../../libs/mixin/button.js';
+import { openType } from '../../libs/mixin/openType.js';
 import { addStyle, addUnit, deepMerge } from '../../libs/function/index.js';
 /**
  * Text 文本

@@ -116,7 +116,7 @@ import { mpMixin } from '../../libs/mixin/mpMixin.js';
 import { mixin } from '../../libs/mixin/mixin.js';
 import { propsButton } from "./props.js";
 import { addStyle } from '../../libs/function/index.js';
-import { throttle } from '../../libs/function/throttle';
+import { throttle } from '../../libs/function/throttle.js';
 import color from '../../libs/config/color.js';
 /**
  * button 按钮
@@ -278,6 +278,8 @@ export default {
 				throttle(() => {
 					this.$emit("click");
 				}, this.throttleTime);
+            } else {
+                console.log("按钮被禁用或处于加载中状态");
             }
         },
         // 下面为对接uniapp官方按钮开放能力事件回调的对接

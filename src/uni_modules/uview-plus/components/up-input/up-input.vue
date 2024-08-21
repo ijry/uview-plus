@@ -79,7 +79,7 @@
 import { props } from "./props.js";
 import { mpMixin } from '../../libs/mixin/mpMixin.js';
 import { mixin } from '../../libs/mixin/mixin.js';
-import { debounce } from '../../libs/function/debounce';
+import { debounce } from '../../libs/function/debounce.js';
 import { addStyle, addUnit, deepMerge, formValidate, $parent, sleep, os } from '../../libs/function/index.js';
 /**
  * Input 输入框

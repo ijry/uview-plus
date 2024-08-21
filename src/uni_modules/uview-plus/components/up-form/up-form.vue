@@ -8,7 +8,7 @@
 	import { props } from "./props.js";
 	import { mpMixin } from '../../libs/mixin/mpMixin.js';
 	import { mixin } from '../../libs/mixin/mixin.js';
-	import Schema from "../../libs/util/async-validator";
+	import Schema from "../../libs/util/async-validator.js";
 	import { toast, getProperty, setProperty, deepClone, error } from '../../libs/function/index.js';
 	import test from '../../libs/function/test.js';
 	// 去除警告信息
