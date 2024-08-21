@@ -1,113 +1,107 @@
-import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props'
+import { defineMixin } from '../../libs/vue.uts'
+import defProps from '../../libs/config/props.uts'
 
 export const propsCell = defineMixin({
     props: {
         // 标题
         title: {
-            type: [String, Number],
-            default: () => defProps.cell.title
+            type: String,
+            default: defProps.getString('cell.title')
         },
         // 标题下方的描述信息
         label: {
-            type: [String, Number],
-            default: () => defProps.cell.label
+            type: String,
+            default: defProps.getString('cell.label')
         },
         // 右侧的内容
         value: {
-            type: [String, Number],
-            default: () => defProps.cell.value
+            type: String,
+            default: defProps.getString('cell.value')
         },
         // 左侧图标名称，或者图片链接(本地文件建议使用绝对地址)
         icon: {
             type: String,
-            default: () => defProps.cell.icon
+            default: defProps.getString('cell.icon')
         },
         // 是否禁用cell
         disabled: {
             type: Boolean,
-            default: () => defProps.cell.disabled
+            default: defProps.getBoolean('cell.disabled')
         },
         // 是否显示下边框
         border: {
             type: Boolean,
-            default: () => defProps.cell.border
+            default: defProps.getBoolean('cell.border')
         },
         // 内容是否垂直居中(主要是针对右侧的value部分)
         center: {
             type: Boolean,
-            default: () => defProps.cell.center
+            default: defProps.getBoolean('cell.center')
         },
         // 点击后跳转的URL地址
         url: {
             type: String,
-            default: () => defProps.cell.url
+            default: defProps.getString('cell.url')
         },
         // 链接跳转的方式，内部使用的是uView封装的route方法，可能会进行拦截操作
         linkType: {
             type: String,
-            default: () => defProps.cell.linkType
+            default: defProps.getString('cell.linkType')
         },
         // 是否开启点击反馈(表现为点击时加上灰色背景)
         clickable: {
             type: Boolean,
-            default: () => defProps.cell.clickable
+            default: defProps.getBoolean('cell.clickable')
         },
         // 是否展示右侧箭头并开启点击反馈
         isLink: {
             type: Boolean,
-            default: () => defProps.cell.isLink
+            default: defProps.getBoolean('cell.isLink')
         },
         // 是否显示表单状态下的必填星号(此组件可能会内嵌入input组件)
         required: {
             type: Boolean,
-            default: () => defProps.cell.required
+            default: defProps.getBoolean('cell.required')
         },
         // 右侧的图标箭头
         rightIcon: {
             type: String,
-            default: () => defProps.cell.rightIcon
+            default: defProps.getString('cell.rightIcon')
         },
         // 右侧箭头的方向，可选值为：left，up，down
         arrowDirection: {
             type: String,
-            default: () => defProps.cell.arrowDirection
+            default: defProps.getString('cell.arrowDirection')
         },
         // 左侧图标样式
         iconStyle: {
-            type: [Object, String],
-            default: () => {
-				return defProps.cell.iconStyle
-			}
+            type: Object,
+            default: defProps.getAny('cell.iconStyle')
         },
         // 右侧箭头图标的样式
         rightIconStyle: {
-            type: [Object, String],
-            default: () => {
-				return defProps.cell.rightIconStyle
-			}
+            type: Object,
+            default: defProps.getAny('cell.rightIconStyle')
         },
         // 标题的样式
         titleStyle: {
-            type: [Object, String],
-			default: () => {
-				return defProps.cell.titleStyle
-			}
+            type: Object,
+    		default: defProps.getAny('cell.titleStyle')
         },
         // 单位元的大小，可选值为large
         size: {
             type: String,
-            default: () => defProps.cell.size
+            default: defProps.getString('cell.size')
         },
         // 点击cell是否阻止事件传播
         stop: {
             type: Boolean,
-            default: () => defProps.cell.stop
+            default: defProps.getBoolean('cell.stop')
         },
         // 标识符，cell被点击时返回
         name: {
-            type: [Number, String],
-            default: () => defProps.cell.name
+            type: String,
+            default: defProps.getString('cell.name')
         }
     }
 })

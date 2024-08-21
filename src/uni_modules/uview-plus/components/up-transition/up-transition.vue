@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { props } from './props';
+import { propsTransition } from './props';
 import { mpMixin } from '../../libs/mixin/mpMixin';
 import { mixin } from '../../libs/mixin/mixin';
 import { addStyle } from '../../libs/function/index';
@@ -65,7 +65,7 @@ export default {
 	    }
 	},
 	// 将mixin挂在到组件中，实际上为一个vue格式对象。
-	mixins: [mpMixin, mixin, transitionMixin, props],
+	mixins: [mpMixin, mixin, transitionMixin, propsTransition],
 	watch: {
 		show: {
 			handler(newVal) {

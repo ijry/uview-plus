@@ -1,5 +1,5 @@
 <template>
-	<up-transition
+	<view
 		mode="fade"
 		:show="show"
 		:duration="fade ? 1000 : 0"
@@ -10,12 +10,10 @@
 			:style="[wrapStyle, backgroundStyle]"
 		>
 			<image
-				v-if="!isError"
 				:src="src"
 				:mode="mode"
 				@error="onErrorHandler"
 				@load="onLoadHandler"
-				:show-menu-by-longpress="showMenuByLongpress"
 				:lazy-load="lazyLoad"
 				class="up-image__image"
 				:style="{
@@ -60,10 +58,11 @@
 				</slot>
 			</view>
 		</view>
-	</up-transition>
+	</view>
 </template>
 
 <script>
+	import { nextTick } from 'vue';
 	import { propsImage } from './props';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
@@ -74,10 +73,10 @@
 	 * @tutorial https://uview-plus.jiangruyi.com/components/image.html
 	 * @property {String}			src 				图片地址
 	 * @property {String}			mode 				裁剪模式，见官网说明 （默认 'aspectFill' ）
-	 * @property {String | Number}	width 				宽度，单位任意，如果为数值，则为px单位 （默认 '300' ）
-	 * @property {String | Number}	height 				高度，单位任意，如果为数值，则为px单位 （默认 '225' ）
+	 * @property {String }			width 				宽度，单位任意，如果为数值，则为px单位 （默认 '300' ）
+	 * @property {String }			height 				高度，单位任意，如果为数值，则为px单位 （默认 '225' ）
 	 * @property {String}			shape 				图片形状，circle-圆形，square-方形 （默认 'square' ）
-	 * @property {String | Number}	radius		 		圆角值，单位任意，如果为数值，则为px单位 （默认 0 ）
+	 * @property {String}			radius		 		圆角值，单位任意，如果为数值，则为px单位 （默认 0 ）
 	 * @property {Boolean}			lazyLoad			是否懒加载，仅微信小程序、App、百度小程序、字节跳动小程序有效 （默认 true ）
 	 * @property {Boolean}			showMenuByLongpress	是否开启长按图片显示识别小程序码菜单，仅微信小程序有效 （默认 true ）
 	 * @property {String}			loadingIcon 		加载中的图标，或者小图片 （默认 'photo' ）
@@ -86,7 +85,7 @@
 	 * @property {Boolean}			showError 			是否显示加载错误的图标或者自定义的slot （默认 true ）
 	 * @property {Boolean}			fade 				是否需要淡入效果 （默认 true ）
 	 * @property {Boolean}			webp 				只支持网络资源，只对微信小程序有效 （默认 false ）
-	 * @property {String | Number}	duration 			搭配fade参数的过渡时间，单位ms （默认 500 ）
+	 * @property {Number}			duration 			搭配fade参数的过渡时间，单位ms （默认 500 ）
 	 * @property {String}			bgColor 			背景颜色，用于深色页面加载图片时，为了和背景色融合  (默认 '#f3f4f6' )
 	 * @property {Object}			customStyle  		定义需要用到的外部样式
 	 * @event {Function}	click	点击图片时触发
@@ -94,6 +93,7 @@
 	 * @event {Function} load 图片加载成功时触发
 	 * @example <up-image width="100%" height="300px" :src="src"></up-image>
 	 */
+	import defProps from '../../libs/config/props'
 	export default {
 		name: 'up-image',
 		mixins: [mpMixin, mixin, propsImage],
@@ -106,7 +106,7 @@
 				// 不透明度，为了实现淡入淡出的效果
 				opacity: 1,
 				// 过渡时间，因为props的值无法修改，故需要一个中间值
-				durationTime: this.duration,
+				// durationTime: this.duration,
 				// 图片加载完成时，去掉背景颜色，因为如果是png图片，就会显示灰色的背景
 				backgroundStyle: {},
 				// 用于fade模式的控制组件显示与否
@@ -116,11 +116,10 @@
 		watch: {
 			src: {
 				immediate: true,
-				handler(n) {
-					if (!n) {
+				handler(n: string) :void {
+					if (n == '') {
 						// 如果传入null或者''，或者false，或者undefined，标记为错误状态
 						this.isError = true
-						
 					} else {
 						this.isError = false;
 						this.loading = true;
@@ -129,24 +128,21 @@
 			}
 		},
 		computed: {
-			wrapStyle() {
+			wrapStyle(): any {
 				let style = {};
 				// 通过调用addUnit()方法，如果有单位，如百分比，px单位等，直接返回，如果是纯粹的数值，则加上rpx单位
-				style.width = addUnit(this.width);
-				style.height = addUnit(this.height);
+				style['width'] = addUnit(this.width);
+				style['height'] = addUnit(this.height);
 				// 如果是显示圆形，设置一个很多的半径值即可
-				style.borderRadius = this.shape == 'circle' ? '10000px' : addUnit(this.radius)
+				style['borderRadius'] = this.shape == 'circle' ? '10000px' : addUnit(this.radius)
 				// 如果设置圆角，必须要有hidden，否则可能圆角无效
-				style.overflow = this.radius > 0 ? 'hidden' : 'visible'
+				if (this.radius != null) {
+					style['overflow'] = parseInt(this.radius as String) > 0 ? 'hidden' : 'visible'
+				}
 				// if (this.fade) {
 				// 	style.opacity = this.opacity
-				// 	// nvue下，这几个属性必须要分开写
-				// 	style.transitionDuration = `${this.durationTime}ms`
-				// 	style.transitionTimingFunction = 'ease-in-out'
-				// 	style.transitionProperty = 'opacity'
 				// }
 				return deepMerge(style, addStyle(this.customStyle));
-
 			}
 		},
 		mounted() {
@@ -154,19 +150,24 @@
 		},
 		emits: ['click', 'error', 'load'],
 		methods: {
-			addUnit,
+			addStyle(val: any): any {
+				return addStyle(val)
+			},
+			addUnit(val: any): any {
+				return addUnit(val)
+			},
 			// 点击图片
-			onClick() {
+			onClick(e: any) {
 				this.$emit('click')
 			},
 			// 图片加载失败
-			onErrorHandler(err) {
+			onErrorHandler(err: any) {
 				this.loading = false
 				this.isError = true
 				this.$emit('error', err)
 			},
 			// 图片加载完成，标记loading结束
-			onLoadHandler(event) {
+			onLoadHandler(event: any) {
 				this.loading = false
 				this.isError = false
 				this.$emit('load', event)

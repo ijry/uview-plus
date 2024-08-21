@@ -1,0 +1,8 @@
+// #ifdef APP
+export * from 'vue'
+// #endif
+// #ifdef WEB
+export const defineMixin = (options: any) => {
+	return options
+}
+// #endif

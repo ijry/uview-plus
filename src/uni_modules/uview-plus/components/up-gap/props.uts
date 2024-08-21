@@ -1,0 +1,28 @@
+import { defineMixin } from '../../libs/vue.uts'
+import defProps from '../../libs/config/props.uts'
+let gap = defProps['gap'] as UTSJSONObject
+
+export const propsGap = defineMixin({
+    props: {
+        // 背景颜色（默认transparent）
+        bgColor: {
+            type: String,
+            default: gap['bgColor']
+        },
+        // 分割槽高度，单位px（默认30）
+        height: {
+            type: Number,
+            default: gap['height']
+        },
+        // 与上一个组件的距离
+        marginTop: {
+            type: Number,
+            default: gap['marginTop']
+        },
+        // 与下一个组件的距离
+        marginBottom: {
+            type: Number,
+            default: gap['marginBottom']
+        }
+    }
+})

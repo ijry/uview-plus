@@ -1,0 +1,27 @@
+// 引入全局mixin
+import { mixin } from './libs/mixin/mixin'
+// 小程序特有的mixin
+import { mpMixin } from './libs/mixin/mpMixin'
+
+export function loadFont() {
+	uni.loadFontFace({
+	  global: true,
+	  family: 'iconfont',
+	  source: "url('/static/iconfont/iconfont.ttf')", // 需使用url方法包裹。本地字体请放在/static目录下，否则打包时不会把字体文件打进去。也支持网络字体
+	  success() {
+		console.log('global loadFontFace uni.ttf success')
+	  },
+	  fail(error) {
+		console.warn('global loadFontFace uni.ttf fail', error.errMsg)
+	  }
+	})
+}
+
+const install = (Vue: any) :void => {
+    // Vue.config.globalProperties.$u = $u
+    Vue.mixin(mixin)
+}
+
+export default {
+    install
+}

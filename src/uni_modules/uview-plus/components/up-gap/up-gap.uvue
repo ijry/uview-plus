@@ -3,10 +3,10 @@
 </template>
 
 <script>
-	import { propsGap } from './props';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
-	import { addStyle, addUnit, deepMerge } from '../../libs/function/index.js';
+	import { propsGap } from './props';
+	import { addStyle, addUnit, deepMerge } from '../../libs/function/index';
 	/**
 	 * gap 间隔槽
 	 * @description 该组件一般用于内容块之间的用一个灰色块隔开的场景，方便用户风格统一，减少工作量
@@ -23,14 +23,17 @@
 		name: "up-gap",
 		mixins: [mpMixin, mixin, propsGap],
 		computed: {
-			gapStyle() {
-				const style = {
+			gapStyle(): any {
+				let style = {
 					backgroundColor: this.bgColor,
-					height: addUnit(this.height),
-					marginTop: addUnit(this.marginTop),
-					marginBottom: addUnit(this.marginBottom),
-				}
-				return deepMerge(style, addStyle(this.customStyle))
+					// height: addUnit(this.height),
+					// marginTop: addUnit(this.marginTop),
+					// marginBottom: addUnit(this.marginBottom)
+				} as UTSJSONObject
+				return deepMerge(
+					style,
+					addStyle(this.customStyle)
+				)
 			}
 		}
 	};

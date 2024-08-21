@@ -35,17 +35,6 @@
 </template>
 
 <script>
-	// #ifdef APP-NVUE
-	// nvue通过weex的dom模块引入字体，相关文档地址如下：
-	// https://weex.apache.org/zh/docs/modules/dom.html#addrule
-	const fontUrl = 'https://at.alicdn.com/t/font_2225171_8kdcwk4po24.ttf'
-	const domModule = weex.requireModule('dom')
-	domModule.addRule('fontFace', {
-		'fontFamily': "upicon-iconfont",
-		'src': `url('${fontUrl}')`
-	})
-	// #endif
-
 	// 引入图标名称，已经对应的unicode
 	import icons from './icons'
 	import { propsIcon } from './props';
@@ -70,9 +59,9 @@
 	 * @property {String}			labelColor		图标右侧的label文字颜色 （ 默认 color['up-content-color'] ）
 	 * @property {String | Number}	space			label与图标的距离，单位px （默认 '3px' ）
 	 * @property {String}			imgMode			图片的mode
-	 * @property {String | Number}	width			显示图片小图标时的宽度
-	 * @property {String | Number}	height			显示图片小图标时的高度
-	 * @property {String | Number}	top				图标在垂直方向上的定位 用于解决某些情况下，让图标垂直居中的用途  （默认 0 ）
+	 * @property {String}	width			显示图片小图标时的宽度
+	 * @property {String}	height			显示图片小图标时的高度
+	 * @property {String}	top				图标在垂直方向上的定位 用于解决某些情况下，让图标垂直居中的用途  （默认 0 ）
 	 * @property {Boolean}			stop			是否阻止事件传播 （默认 false ）
 	 * @property {Object}			customStyle		icon的样式，对象形式
 	 * @event {Function} click 点击图标时触发
@@ -89,8 +78,8 @@
 		emits: ['click'],
 		mixins: [mpMixin, mixin, propsIcon],
 		computed: {
-			uClasses() {
-				let classes = []
+			uClasses() : any {
+				let classes:Array<string> = []
 				classes.push(this.customPrefix + '-' + this.name)
 				// uview-plus的自定义图标类名为up-iconfont
 				if (this.customPrefix == 'upicon') {
@@ -100,17 +89,15 @@
 					classes.push(this.customPrefix)
 				}
 				// 主题色，通过类配置
-				if (this.color && config.type.includes(this.color)) classes.push('up-icon__icon--' + this.color)
+				// if (this.color != ''
+				// 	&& config.getArray('type')?.includes(this.color) as Boolean
+				// ) classes.push('up-icon__icon--' + this.color)
 				// 阿里，头条，百度小程序通过数组绑定类名时，无法直接使用[a, b, c]的形式，否则无法识别
 				// 故需将其拆成一个字符串的形式，通过空格隔开各个类名
-				//#ifdef MP-ALIPAY || MP-TOUTIAO || MP-BAIDU
-				classes = classes.join(' ')
-				//#endif
-				return classes
+				return classes.join(' ')
 			},
-			iconStyle() {
-				let style = {}
-				style = {
+			iconStyle(): any {
+				let style = {
 					fontSize: addUnit(this.size),
 					lineHeight: addUnit(this.size),
 					fontWeight: this.bold ? 'bold' : 'normal',
@@ -118,36 +105,50 @@
 					top: addUnit(this.top)
 				}
 				// 非主题色值时，才当作颜色值
-				if (this.color && !config.type.includes(this.color)) style.color = this.color
+				let types = config.getArray('type')
+				console.log('###', types)
+				// if (this.color != '' && types.includes(this.color)) {
+				// 	style['color'] = this.color
+				// }
 
 				return style
 			},
 			// 判断传入的name属性，是否图片路径，只要带有"/"均认为是图片形式
-			isImg() {
+			isImg(): any {
 				return this.name.indexOf('/') !== -1
 			},
-			imgStyle() {
+			imgStyle(): any {
 				let style = {}
 				// 如果设置width和height属性，则优先使用，否则使用size属性
-				style.width = this.width ? addUnit(this.width) : addUnit(this.size)
-				style.height = this.height ? addUnit(this.height) : addUnit(this.size)
+				style['width'] = this.width != '' ? addUnit(this.width) : addUnit(this.size)
+				style['height'] = this.height != '' ? addUnit(this.height) : addUnit(this.size)
 				return style
 			},
 			// 通过图标名，查找对应的图标
-			icon() {
+			icon(): string {
 				// 使用自定义图标的时候页面上会把name属性也展示出来，所以在这里处理一下
 				if (this.customPrefix !== "upicon") return "";
 				// 如果内置的图标中找不到对应的图标，就直接返回name值，因为用户可能传入的是unicode代码
-				return icons['upicon-' + this.name] || this.name
+				if (icons['upicon-' + this.name] != null) {
+					return icons['upicon-' + this.name] as string
+				} else {
+					return this.name
+				}
 			}
 		},
+		created() {
+		},
 		methods: {
-			addStyle,
-			addUnit,
-			clickHandler(e) {
+			addStyle(val: any): any {
+				return addStyle(val)
+			},
+			addUnit(val: any): string {
+				return addUnit(val)
+			},
+			clickHandler(e: any) {
 				this.$emit('click', this.index)
 				// 是否阻止事件冒泡
-				this.stop && this.preventEvent(e)
+			// 	this.stop && this.preventEvent(e)
 			}
 		}
 	}
@@ -155,6 +156,7 @@
 
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
+	@import "/static/iconfont/iconfont.css";
 
 	// 变量定义
 	$up-icon-primary: $up-primary !default;
@@ -164,19 +166,8 @@
 	$up-icon-error: $up-error !default;
 	$up-icon-label-line-height:1 !default;
 
-	/* #ifndef APP-NVUE */
-	// 非nvue下加载字体
-	@font-face {
-		font-family: 'upicon-iconfont';
-		src: url('https://at.alicdn.com/t/font_2225171_8kdcwk4po24.ttf') format('truetype');
-	}
-
-	/* #endif */
-
 	.up-icon {
-		/* #ifndef APP-NVUE */
 		display: flex;
-		/* #endif */
 		align-items: center;
 
 		&--left {
@@ -200,10 +191,10 @@
 		}
 
 		&__icon {
-			font-family: upicon-iconfont;
+			font-family: iconfont;
 			position: relative;
-			@include flex;
-			align-items: center;
+			// @include flex;
+			// align-items: center;
 
 			&--primary {
 				color: $up-icon-primary;
@@ -227,16 +218,12 @@
 		}
 
 		&__img {
-			/* #ifndef APP-NVUE */
 			height: auto;
-			will-change: transform;
-			/* #endif */
+			// will-change: transform;
 		}
 
 		&__label {
-			/* #ifndef APP-NVUE */
 			line-height: $up-icon-label-line-height;
-			/* #endif */
 		}
 	}
 </style>

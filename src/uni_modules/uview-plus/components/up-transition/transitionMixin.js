@@ -23,7 +23,7 @@ const getStyle = (name) => animationMap[name]
 // #endif
 
 import { nextTick } from 'vue'
-import { sleep } from '../../libs/function/index';
+import { sleep } from '../../libs/function/index.js';
 export default {
     methods: {
         // 组件被点击发出事件
