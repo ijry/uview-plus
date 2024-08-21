@@ -52,12 +52,12 @@
 	    }
 	    return result
 	}
-	import { props } from './props';
-	import { mpMixin } from '../../libs/mixin/mpMixin';
-	import { mixin } from '../../libs/mixin/mixin';
+	import { props } from './props.js';
+	import { mpMixin } from '../../libs/mixin/mpMixin.js';
+	import { mixin } from '../../libs/mixin/mixin.js';
 	import dayjs from 'dayjs/esm/index';
-	import { range, error, padZero } from '../../libs/function/index';
-	import test from '../../libs/function/test';
+	import { range, error, padZero } from '../../libs/function/index.js';
+	import test from '../../libs/function/test.js';
 	/**
 	 * DatetimePicker 时间日期选择器
 	 * @description 此选择器用于时间日期

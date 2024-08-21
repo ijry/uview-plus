@@ -8,10 +8,10 @@
 </template>
 
 <script>
-	import { propsLine } from './props';
-	import { mpMixin } from '../../libs/mixin/mpMixin';
-	import { mixin } from '../../libs/mixin/mixin';
-	import { addUnit, addStyle, deepMerge } from '../../libs/function/index';
+	import { propsLine } from './props.js';
+	import { mpMixin } from '../../libs/mixin/mpMixin.js';
+	import { mixin } from '../../libs/mixin/mixin.js';
+	import { addUnit, addStyle, deepMerge } from '../../libs/function/index.js';
 	/**
 	 * line 线条
 	 * @description 此组件一般用于显示一根线条，用于分隔内容块，有横向和竖向两种模式，且能设置0.5px线条，使用也很简单

@@ -39,10 +39,10 @@
 	</view>
 </template>
 <script>
-	import { props } from './props';
-	import { mpMixin } from '../../libs/mixin/mpMixin';
-	import { mixin } from '../../libs/mixin/mixin';
-	import { addStyle } from '../../libs/function/index';
+	import { props } from './props.js';
+	import { mpMixin } from '../../libs/mixin/mpMixin.js';
+	import { mixin } from '../../libs/mixin/mixin.js';
+	import { addStyle } from '../../libs/function/index.js';
 	/**
 	 * noticeBar 滚动通知
 	 * @description 该组件用于滚动通告场景，有多种模式可供选择

@@ -11,10 +11,10 @@
 </template>
 
 <script>
-	import { props } from './props';
-	import { mpMixin } from '../../libs/mixin/mpMixin';
-	import { mixin } from '../../libs/mixin/mixin';
-	import { addStyle, deepMerge } from '../../libs/function/index';
+	import { props } from './props.js';
+	import { mpMixin } from '../../libs/mixin/mpMixin.js';
+	import { mixin } from '../../libs/mixin/mixin.js';
+	import { addStyle, deepMerge } from '../../libs/function/index.js';
 	/**
 	 * overlay 遮罩
 	 * @description 创建一个遮罩层，用于强调特定的页面元素，并阻止用户对遮罩下层的内容进行操作，一般用于弹窗场景

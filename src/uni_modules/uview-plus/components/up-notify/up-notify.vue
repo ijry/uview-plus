@@ -33,11 +33,11 @@
 </template>
 
 <script>
-	import { props } from './props';
-	import { mpMixin } from '../../libs/mixin/mpMixin';
-	import { mixin } from '../../libs/mixin/mixin';
+	import { props } from './props.js';
+	import { mpMixin } from '../../libs/mixin/mpMixin.js';
+	import { mixin } from '../../libs/mixin/mixin.js';
 	import defProps from '../../libs/config/props.js'
-	import { addUnit, addStyle, deepMerge } from '../../libs/function/index';
+	import { addUnit, addStyle, deepMerge } from '../../libs/function/index.js';
 	/**
 	 * notify 顶部提示
 	 * @description 该组件一般用于页面顶部向下滑出一个提示，尔后自动收起的场景

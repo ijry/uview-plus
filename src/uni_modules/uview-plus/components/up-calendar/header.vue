@@ -21,8 +21,8 @@
 </template>
 
 <script>
-	import { mpMixin } from '../../libs/mixin/mpMixin';
-	import { mixin } from '../../libs/mixin/mixin';
+	import { mpMixin } from '../../libs/mixin/mpMixin.js';
+	import { mixin } from '../../libs/mixin/mixin.js';
 	export default {
 		name: 'up-calendar-header',
 		mixins: [mpMixin, mixin],

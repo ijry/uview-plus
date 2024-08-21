@@ -93,11 +93,11 @@
  * @event {Function} change		当选择值变化时触发
  * @event {Function} confirm	点击确定按钮，返回当前选择的值
  */
-import { props } from './props';
-import { mpMixin } from '../../libs/mixin/mpMixin';
-import { mixin } from '../../libs/mixin/mixin';
-import { addUnit, deepClone, sleep } from '../../libs/function/index';
-import test from '../../libs/function/test';
+import { props } from './props.js';
+import { mpMixin } from '../../libs/mixin/mpMixin.js';
+import { mixin } from '../../libs/mixin/mixin.js';
+import { addUnit, deepClone, sleep } from '../../libs/function/index.js';
+import test from '../../libs/function/test.js';
 export default {
 	name: 'up-picker',
 	mixins: [mpMixin, mixin, props],

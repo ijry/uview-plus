@@ -43,10 +43,10 @@
 </template>
 
 <script>
-	import { props } from './props';
-	import { mpMixin } from '../../libs/mixin/mpMixin';
-	import { mixin } from '../../libs/mixin/mixin';
-	import { addStyle, error } from '../../libs/function/index';
+	import { props } from './props.js';
+	import { mpMixin } from '../../libs/mixin/mpMixin.js';
+	import { mixin } from '../../libs/mixin/mixin.js';
+	import { addStyle, error } from '../../libs/function/index.js';
 	/**
 	 * TabbarItem 底部导航栏子组件
 	 * @description 此组件提供了自定义tabbar的能力。

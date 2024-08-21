@@ -31,12 +31,12 @@
 	// 由于nvue不支持百分比单位，需要查询宽度来计算每个日期的宽度
 	const dom = uni.requireNativePlugin('dom')
 	// #endif
-	import { mpMixin } from '../../libs/mixin/mpMixin';
-	import { mixin } from '../../libs/mixin/mixin';
-	import { addUnit, deepClone, toast, sleep } from '../../libs/function/index';
-	import { colorGradient } from '../../libs/function/colorGradient';
-	import test from '../../libs/function/test';
-	import defProps from '../../libs/config/props';
+	import { mpMixin } from '../../libs/mixin/mpMixin.js';
+	import { mixin } from '../../libs/mixin/mixin.js';
+	import { addUnit, deepClone, toast, sleep } from '../../libs/function/index.js';
+	import { colorGradient } from '../../libs/function/colorGradient.js';
+	import test from '../../libs/function/test.js';
+	import defProps from '../../libs/config/props.js';
 	import dayjs from 'dayjs/esm/index'
 	export default {
 		name: 'up-calendar-month',

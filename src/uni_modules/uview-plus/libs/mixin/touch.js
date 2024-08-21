@@ -1,4 +1,4 @@
-import { defineMixin } from '../vue'
+import { defineMixin } from '../vue.js'
 
 const MIN_DISTANCE = 10
 

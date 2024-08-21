@@ -1,5 +1,5 @@
-import { defineMixin } from '../vue'
-import { addStyle, deepMerge, addUnit, trim } from '../function/index'
+import { defineMixin } from '../vue.js'
+import { addStyle, deepMerge, addUnit, trim } from '../function/index.js'
 
 export const style = defineMixin({
     props: {

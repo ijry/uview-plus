@@ -29,10 +29,10 @@
 </template>
 
 <script>
-	import { props } from './props';
-	import { mpMixin } from '../../libs/mixin/mpMixin';
-	import { mixin } from '../../libs/mixin/mixin';
-	import { addStyle, addUnit } from '../../libs/function/index';
+	import { props } from './props.js';
+	import { mpMixin } from '../../libs/mixin/mpMixin.js';
+	import { mixin } from '../../libs/mixin/mixin.js';
+	import { addStyle, addUnit } from '../../libs/function/index.js';
 	/**
 	 * divider 分割线
 	 * @description 区隔内容的分割线，一般用于页面底部"没有更多"的提示。

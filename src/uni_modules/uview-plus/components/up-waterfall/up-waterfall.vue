@@ -18,8 +18,8 @@
      * @property {String Number} add-time 单条数据添加到队列的时间间隔，单位ms，见上方注意事项说明（默认200）
      * @example <up-waterfall :flowList="flowList"></up-waterfall>
      */
-    import { mpMixin } from '../../libs/mixin/mpMixin';
-	import { mixin } from '../../libs/mixin/mixin';
+    import { mpMixin } from '../../libs/mixin/mpMixin.js';
+	import { mixin } from '../../libs/mixin/mixin.js';
     export default {
         name: "up-waterfall",
         props: {

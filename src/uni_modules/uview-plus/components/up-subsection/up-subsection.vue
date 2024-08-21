@@ -53,9 +53,9 @@ const dom = uni.requireNativePlugin("dom");
 const animation = uni.requireNativePlugin("animation");
 // #endif
 import { props } from "./props.js";
-import { mpMixin } from '../../libs/mixin/mpMixin';
-import { mixin } from '../../libs/mixin/mixin';
-import { addStyle, addUnit, sleep } from '../../libs/function/index';
+import { mpMixin } from '../../libs/mixin/mpMixin.js';
+import { mixin } from '../../libs/mixin/mixin.js';
+import { addStyle, addUnit, sleep } from '../../libs/function/index.js';
 /**
  * Subsection 分段器
  * @description 该分段器一般用于用户从几个选项中选择某一个的场景

@@ -13,10 +13,10 @@
 </template>
 
 <script>
-	import { props } from './props';
-	import { mpMixin } from '../../libs/mixin/mpMixin';
-	import { mixin } from '../../libs/mixin/mixin';
-	import { addStyle, addUnit, deepMerge, getPx } from '../../libs/function/index';
+	import { props } from './props.js';
+	import { mpMixin } from '../../libs/mixin/mpMixin.js';
+	import { mixin } from '../../libs/mixin/mixin.js';
+	import { addStyle, addUnit, deepMerge, getPx } from '../../libs/function/index.js';
 	/**
 	 * CodeInput 栅格系统的列 
 	 * @description 该组件一般用于Layout 布局 通过基础的 12 分栏，迅速简便地创建布局

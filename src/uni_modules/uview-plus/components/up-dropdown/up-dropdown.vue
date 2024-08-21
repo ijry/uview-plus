@@ -37,10 +37,10 @@
 </template>
 
 <script>
-    import { props } from './props';
-    import { mpMixin } from '../../libs/mixin/mpMixin';
-	import { mixin } from '../../libs/mixin/mixin';
-	import { addUnit, sys} from '../../libs/function/index';
+    import { props } from './props.js';
+    import { mpMixin } from '../../libs/mixin/mpMixin.js';
+	import { mixin } from '../../libs/mixin/mixin.js';
+	import { addUnit, sys} from '../../libs/function/index.js';
 	/**
 	 * dropdown 下拉菜单
 	 * @description 该组件一般用于向下展开菜单，同时可切换多个选项卡的场景

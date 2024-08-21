@@ -72,11 +72,11 @@
 <script>
 import { props } from './props'
 import value from './value.js'
-import { mpMixin } from '../../libs/mixin/mpMixin';
-import { mixin } from '../../libs/mixin/mixin';
+import { mpMixin } from '../../libs/mixin/mpMixin.js';
+import { mixin } from '../../libs/mixin/mixin.js';
 import { buttonMixin } from '../../libs/mixin/button';
 import { openType } from '../../libs/mixin/openType';
-import { addStyle, addUnit, deepMerge } from '../../libs/function/index';
+import { addStyle, addUnit, deepMerge } from '../../libs/function/index.js';
 /**
  * Text 文本
  * @description 此组件集成了文本类在项目中的常用功能，包括状态，拨打电话，格式化日期，*替换，超链接...等功能。 您大可不必在使用特殊文本时自己定义，text组件几乎涵盖您能使用的大部分场景。

@@ -72,8 +72,8 @@ import dayjs from 'dayjs/esm/index'
 import Calendar from '../../libs/util/calendar.js'
 import { mpMixin } from '../../libs/mixin/mpMixin.js'
 import { mixin } from '../../libs/mixin/mixin.js'
-import { addUnit, range, error, padZero } from '../../libs/function/index';
-import test from '../../libs/function/test';
+import { addUnit, range, error, padZero } from '../../libs/function/index.js';
+import test from '../../libs/function/test.js';
 /**
  * Calendar 日历
  * @description  此组件用于单个选择日期，范围选择日期等，日历被包裹在底部弹起的容器中.

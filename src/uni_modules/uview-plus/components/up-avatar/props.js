@@ -1,6 +1,6 @@
-import { defineMixin } from '../../libs/vue'
+import { defineMixin } from '../../libs/vue.js'
 import defProps from '../../libs/config/props.js'
-import test from '../../libs/function/test';
+import test from '../../libs/function/test.js';
 export const props = defineMixin({
     props: {
         // 头像图片路径(不能为相对路径)

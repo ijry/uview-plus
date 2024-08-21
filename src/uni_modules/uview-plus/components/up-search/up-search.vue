@@ -74,10 +74,10 @@
 </template>
 
 <script>
-	import { props } from './props';
-	import { mpMixin } from '../../libs/mixin/mpMixin';
-	import { mixin } from '../../libs/mixin/mixin';
-	import { addUnit, addStyle } from '../../libs/function/index';
+	import { props } from './props.js';
+	import { mpMixin } from '../../libs/mixin/mpMixin.js';
+	import { mixin } from '../../libs/mixin/mixin.js';
+	import { addUnit, addStyle } from '../../libs/function/index.js';
 	/**
 	 * search 搜索框
 	 * @description 搜索组件，集成了常见搜索框所需功能，用户可以一键引入，开箱即用。

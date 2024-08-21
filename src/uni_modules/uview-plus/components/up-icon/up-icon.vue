@@ -47,12 +47,12 @@
 	// #endif
 
 	// 引入图标名称，已经对应的unicode
-	import icons from './icons'
-	import { propsIcon } from './props';
-	import { mpMixin } from '../../libs/mixin/mpMixin';
-	import { mixin } from '../../libs/mixin/mixin';
-	import { addUnit, addStyle } from '../../libs/function/index';
-	import config from '../../libs/config/config';
+	import icons from './icons.js'
+	import { propsIcon } from './props.js';
+	import { mpMixin } from '../../libs/mixin/mpMixin.js';
+	import { mixin } from '../../libs/mixin/mixin.js';
+	import { addUnit, addStyle } from '../../libs/function/index.js';
+	import config from '../../libs/config/config.js';
 	/**
 	 * icon 图标
 	 * @description 基于字体的图标集，包含了大多数常见场景的图标。

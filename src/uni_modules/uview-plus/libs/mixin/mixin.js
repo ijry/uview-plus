@@ -1,7 +1,7 @@
-import { defineMixin } from '../vue'
-import { deepMerge, $parent, sleep } from '../function/index'
-import test from '../function/test'
-import route from '../util/route'
+import { defineMixin } from '../vue.js'
+import { deepMerge, $parent, sleep } from '../function/index.js'
+import test from '../function/test.js'
+import route from '../util/route.js'
 // #ifdef APP-NVUE
 // 由于weex为阿里的KPI业绩考核的产物，所以不支持百分比单位，这里需要通过dom查询组件的宽度
 const dom = uni.requireNativePlugin('dom')

@@ -72,10 +72,10 @@
 </template>
 
 <script>
-    import { propsCard } from './props';
-    import { mpMixin } from '../../libs/mixin/mpMixin';
-    import { mixin } from '../../libs/mixin/mixin';
-    import { addStyle, addUnit, getPx } from '../../libs/function/index';
+    import { propsCard } from './props.js';
+    import { mpMixin } from '../../libs/mixin/mpMixin.js';
+    import { mixin } from '../../libs/mixin/mixin.js';
+    import { addStyle, addUnit, getPx } from '../../libs/function/index.js';
     /**
      * card 卡片
      * @description 卡片组件一般用于多个列表条目，且风格统一的场景

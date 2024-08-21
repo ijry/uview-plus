@@ -75,12 +75,12 @@
 </template>
 
 <script>
-	import { props } from './props';
-	import { mpMixin } from '../../libs/mixin/mpMixin';
-	import { mixin } from '../../libs/mixin/mixin';
+	import { props } from './props.js';
+	import { mpMixin } from '../../libs/mixin/mpMixin.js';
+	import { mixin } from '../../libs/mixin/mixin.js';
 	import defProps from '../../libs/config/props.js'
-	import color from '../../libs/config/color';
-	import { addStyle, addUnit, getProperty, setProperty, error } from '../../libs/function/index';
+	import color from '../../libs/config/color.js';
+	import { addStyle, addUnit, getProperty, setProperty, error } from '../../libs/function/index.js';
 	/**
 	 * Form 表单
 	 * @description 此组件一般用于表单场景，可以配置Input输入框，Select弹出框，进行表单验证等。

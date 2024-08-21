@@ -13,10 +13,10 @@
 </template>
 
 <script>
-import { propsTransition } from './props';
-import { mpMixin } from '../../libs/mixin/mpMixin';
-import { mixin } from '../../libs/mixin/mixin';
-import { addStyle } from '../../libs/function/index';
+import { propsTransition } from './props.js';
+import { mpMixin } from '../../libs/mixin/mpMixin.js';
+import { mixin } from '../../libs/mixin/mixin.js';
+import { addStyle } from '../../libs/function/index.js';
 // 组件的methods方法，由于内容较长，写在外部文件中通过mixin引入
 import transitionMixin from "./transitionMixin.js";
 /**

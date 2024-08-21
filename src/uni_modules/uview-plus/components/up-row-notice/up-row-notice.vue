@@ -52,11 +52,11 @@
 	</view>
 </template>
 <script>
-	import { props } from './props';
-	import { mpMixin } from '../../libs/mixin/mpMixin';
-	import { mixin } from '../../libs/mixin/mixin';
-	import { addUnit, error, sleep, getPx } from '../../libs/function/index';
-	import test from '../../libs/function/test';
+	import { props } from './props.js';
+	import { mpMixin } from '../../libs/mixin/mpMixin.js';
+	import { mixin } from '../../libs/mixin/mixin.js';
+	import { addUnit, error, sleep, getPx } from '../../libs/function/index.js';
+	import test from '../../libs/function/test.js';
 	// #ifdef APP-NVUE
 	const animation = uni.requireNativePlugin('animation')
 	const dom = uni.requireNativePlugin('dom')

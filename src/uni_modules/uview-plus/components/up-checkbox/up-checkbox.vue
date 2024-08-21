@@ -34,11 +34,11 @@
 </template>
 
 <script>
-	import { props } from './props';
-	import { mpMixin } from '../../libs/mixin/mpMixin';
-	import { mixin } from '../../libs/mixin/mixin';
-	import { addStyle, addUnit, deepMerge, formValidate, error } from '../../libs/function/index';
-	import test from '../../libs/function/test';
+	import { props } from './props.js';
+	import { mpMixin } from '../../libs/mixin/mpMixin.js';
+	import { mixin } from '../../libs/mixin/mixin.js';
+	import { addStyle, addUnit, deepMerge, formValidate, error } from '../../libs/function/index.js';
+	import test from '../../libs/function/test.js';
 	/**
 	 * checkbox  复选框
 	 * @description 复选框组件一般用于需要多个选择的场景，该组件功能完整，使用方便

@@ -32,11 +32,11 @@
 </template>
 
 <script>
-	import { propsBox } from './props';
-	import { mpMixin } from '../../libs/mixin/mpMixin';
-	import { mixin } from '../../libs/mixin/mixin';
-	import { addStyle } from '../../libs/function/index';
-	import test from '../../libs/function/test';
+	import { propsBox } from './props.js';
+	import { mpMixin } from '../../libs/mixin/mpMixin.js';
+	import { mixin } from '../../libs/mixin/mixin.js';
+	import { addStyle } from '../../libs/function/index.js';
+	import test from '../../libs/function/test.js';
 	/**
 	 * box 盒子
 	 * @description box盒子一般为左边一个盒子，右侧两个等高的半盒组成，常用于App首页座位重点突出。

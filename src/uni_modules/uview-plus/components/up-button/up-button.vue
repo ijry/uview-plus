@@ -110,14 +110,14 @@
 </template>
 
 <script lang="ts">
-import { buttonMixin } from "../../libs/mixin/button";
-import { openType } from "../../libs/mixin/openType";
-import { mpMixin } from '../../libs/mixin/mpMixin';
-import { mixin } from '../../libs/mixin/mixin';
-import { propsButton } from "./props";
-import { addStyle } from '../../libs/function/index';
+import { buttonMixin } from "../../libs/mixin/button.js";
+import { openType } from "../../libs/mixin/openType.js";
+import { mpMixin } from '../../libs/mixin/mpMixin.js';
+import { mixin } from '../../libs/mixin/mixin.js';
+import { propsButton } from "./props.js";
+import { addStyle } from '../../libs/function/index.js';
 import { throttle } from '../../libs/function/throttle';
-import color from '../../libs/config/color';
+import color from '../../libs/config/color.js';
 /**
  * button 按钮
  * @description Button 按钮

@@ -1,5 +1,5 @@
-import { error, priceFormat, timeFormat } from '../../libs/function/index';
-import test from '../../libs/function/test';
+import { error, priceFormat, timeFormat } from '../../libs/function/index.js';
+import test from '../../libs/function/test.js';
 export default {
     computed: {
         // 经处理后需要显示的值

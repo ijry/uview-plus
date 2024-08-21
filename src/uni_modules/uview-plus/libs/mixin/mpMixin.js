@@ -1,4 +1,4 @@
-import { defineMixin } from '../vue'
+import { defineMixin } from '../vue.js'
 
 export const mpMixin = defineMixin({
     // #ifdef MP-WEIXIN

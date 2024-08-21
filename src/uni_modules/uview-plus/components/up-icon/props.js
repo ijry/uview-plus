@@ -1,5 +1,6 @@
-import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props'
+import { defineMixin } from '../../libs/vue.js'
+import defProps from '../../libs/config/props.js'
+
 export const propsIcon = defineMixin({
     props: {
         // 图标类名

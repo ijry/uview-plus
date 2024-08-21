@@ -41,10 +41,10 @@
 </template>
 
 <script>
-	import { props } from './props';
-	import { mpMixin } from '../../libs/mixin/mpMixin';
-	import { mixin } from '../../libs/mixin/mixin';
-	import { addUnit, addStyle, getPx, sys } from '../../libs/function/index';
+	import { props } from './props.js';
+	import { mpMixin } from '../../libs/mixin/mpMixin.js';
+	import { mixin } from '../../libs/mixin/mixin.js';
+	import { addUnit, addStyle, getPx, sys } from '../../libs/function/index.js';
 	/**
 	 * NavbarMini 迷你导航栏
 	 * @description 此组件一般用于在全屏页面中，典型的如微信小程序左上角。

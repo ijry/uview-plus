@@ -3,9 +3,9 @@
 </template>
 
 <script>
-	import { propsGap } from './props';
-	import { mpMixin } from '../../libs/mixin/mpMixin';
-	import { mixin } from '../../libs/mixin/mixin';
+	import { propsGap } from './props.js';
+	import { mpMixin } from '../../libs/mixin/mpMixin.js';
+	import { mixin } from '../../libs/mixin/mixin.js';
 	import { addStyle, addUnit, deepMerge } from '../../libs/function/index.js';
 	/**
 	 * gap 间隔槽

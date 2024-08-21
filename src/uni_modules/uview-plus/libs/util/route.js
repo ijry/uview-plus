@@ -2,7 +2,7 @@
  * 路由跳转方法，该方法相对于直接使用uni.xxx的好处是使用更加简单快捷
  * 并且带有路由拦截功能
  */
-import { queryParams, deepMerge, page } from '../function/index';
+import { queryParams, deepMerge, page } from '../function/index.js';
 class Router {
     constructor() {
         // 原始属性定义

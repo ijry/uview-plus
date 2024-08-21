@@ -1,4 +1,4 @@
-import { defineMixin } from '../../libs/vue'
+import { defineMixin } from '../../libs/vue.js'
 
 export const props = defineMixin({
 	props: {

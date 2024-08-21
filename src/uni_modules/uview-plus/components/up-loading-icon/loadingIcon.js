@@ -7,7 +7,7 @@
  * @lastTime     : 2024-08-20 14:20:58
  * @FilePath     : /uview-plus/libs/config/props/loadingIcon.js
  */
-import config from '../../libs/config/config'
+import config from '../../libs/config/config.js'
 
 const {
     color

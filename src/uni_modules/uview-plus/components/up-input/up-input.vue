@@ -77,10 +77,10 @@
 
 <script>
 import { props } from "./props.js";
-import { mpMixin } from '../../libs/mixin/mpMixin';
-import { mixin } from '../../libs/mixin/mixin';
+import { mpMixin } from '../../libs/mixin/mpMixin.js';
+import { mixin } from '../../libs/mixin/mixin.js';
 import { debounce } from '../../libs/function/debounce';
-import { addStyle, addUnit, deepMerge, formValidate, $parent, sleep, os } from '../../libs/function/index';
+import { addStyle, addUnit, deepMerge, formValidate, $parent, sleep, os } from '../../libs/function/index.js';
 /**
  * Input 输入框
  * @description  此组件为一个输入框，默认没有边框和样式，是专门为配合表单组件up-form而设计的，利用它可以快速实现表单验证，输入内容，下拉选择等功能。
