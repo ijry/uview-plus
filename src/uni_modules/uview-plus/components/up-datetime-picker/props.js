@@ -30,6 +30,11 @@ export const props = defineMixin({
             type: Boolean,
             default: () => defProps.datetimePicker.showToolbar
         },
+		// 工具栏右侧内容
+		toolbarRightSlot:{
+			type:Boolean,
+			default: () => defProps.datetimePicker.toolbarRightSlot
+		},
         // #ifdef VUE2
         // 绑定值
         value: {
