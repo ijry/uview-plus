@@ -1,3 +1,8 @@
+## 3.3.27（2024-08-22）
+fix: 修复up-datetime-picker组件toolbarRightSlot定义缺失
+
+fix: 修复FormItem的rules更新错误的问题
+
 ## 3.3.26（2024-08-22）
 fix: 批量注册全局组件优化
 ## 3.3.25（2024-08-21）
