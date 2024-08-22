@@ -152,7 +152,10 @@
 			// 手动设置校验的规则，如果规则中有函数的话，微信小程序中会过滤掉，所以只能手动调用设置规则
 			setRules(rules) {
 				// 判断是否有规则
-				if (rules.length === 0) return;
+				if (rules.length === 0) {
+					this.itemRules = [];
+					return
+				};
 				this.itemRules = rules;
 			},
 			// 获取父组件的参数
