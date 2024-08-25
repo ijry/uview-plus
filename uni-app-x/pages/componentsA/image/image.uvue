@@ -1,0 +1,105 @@
+<template>
+	<!-- #ifdef APP -->
+	<scroll-view style="flex:1">
+	<!-- #endif -->
+	<view class="u-page">
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">基本案例</text>
+			<view class="u-demo-block__content">
+				<view class="u-page__image-item">
+					 <up-image
+					     :showLoading="true"
+					     :src="src"
+					     width="80px"
+					     height="80px"
+						 @click="click"
+					 ></up-image>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">自定义形状</text>
+			<view class="u-demo-block__content">
+				<view class="u-page__image-item">
+					<up-image
+					    shape="circle"
+					    :src="src"
+					    width="80px"
+					    height="80px"
+					></up-image>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">自定义圆角</text>
+			<view class="u-demo-block__content">
+				<view class="u-page__image-item">
+					<up-image
+					    radius="4"
+					    :src="src"
+					    width="80px"
+					    height="80px"
+					></up-image>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">图片模式(widthFix)</text>
+			<view class="u-demo-block__content">
+				<view class="u-page__image-item">
+					<up-image
+					    :src="src"
+					    width="80px"
+					    height="80px"
+						mode="widthFix"
+					></up-image>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">自定义图片加载插槽</text>
+			<view class="u-demo-block__content">
+				<view class="u-page__image-item">
+					<up-image
+					    :src="src1"
+					    width="80px"
+					    height="80px"
+						mode="widthFix"
+					>
+						<template v-slot:loading>
+							<u-loading-icon color="red"></u-loading-icon>
+						</template>
+					</up-image>
+				</view>
+			</view>
+		</view>
+	</view>
+	<!-- #ifdef APP -->
+	</scroll-view>
+	<!-- #endif -->
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				src: 'https://cdn.uviewui.com/uview/album/1.jpg',
+				src1:''
+			}
+		},
+		onLoad() {
+			setTimeout(()=>{
+				this.src1 = this.src
+			},3000)
+		},
+		methods: {
+			click(e: any) {
+				console.log('click');
+			}
+		}
+	}
+</script>
+
+<style lang="scss">
+	 
+</style>

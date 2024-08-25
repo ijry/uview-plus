@@ -156,7 +156,6 @@
 
 <style lang="scss" scoped>
 	@import "../../libs/css/components.scss";
-	@import "/static/iconfont/iconfont.css";
 
 	// 变量定义
 	$up-icon-primary: $up-primary !default;

@@ -1,0 +1,10 @@
+import { UIPasteboard } from "UIKit"
+export function getClipboardData() : string {
+	let pasteboard = UIPasteboard.general
+	return (pasteboard.string == null) ? "" : pasteboard.string!
+}
+
+export function setClipboardData(data:string) : void {
+	let pasteboard = UIPasteboard.general
+	pasteboard.string = data
+}

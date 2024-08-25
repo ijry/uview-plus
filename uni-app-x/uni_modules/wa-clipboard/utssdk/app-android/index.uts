@@ -1,0 +1,33 @@
+import ClipData from "android.content.ClipData";
+// import ClipDescription from "android.content.ClipDescription";
+import ClipboardManager from "android.content.ClipboardManager";
+import Context from "android.content.Context";
+import { UTSAndroid } from "io.dcloud.uts";
+
+// export const setClipboardData : void = function () {
+// export function setClipboardData() : void {
+export function setClipboardData(data:string) : void {
+	const context = UTSAndroid.getAppContext();
+	if (context != null) {
+		const cm = context.getSystemService(
+			Context.CLIPBOARD_SERVICE
+		) as ClipboardManager;
+		cm.setText(data);
+		// return
+		// let cd = ClipData.newPlainText("label") as ClipData
+		// cm.setPrimaryClip(cd);  
+	}
+}
+
+export function getClipboardData() : string {
+	const context = UTSAndroid.getAppContext();
+	if (context != null) {
+		const cm = context.getSystemService(
+			Context.CLIPBOARD_SERVICE
+		) as ClipboardManager;
+		return cm.getText().toString()
+	}
+	else{
+		return ""
+	}
+}

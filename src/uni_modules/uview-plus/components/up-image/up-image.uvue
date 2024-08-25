@@ -93,7 +93,6 @@
 	 * @event {Function} load 图片加载成功时触发
 	 * @example <up-image width="100%" height="300px" :src="src"></up-image>
 	 */
-	import defProps from '../../libs/config/props'
 	export default {
 		name: 'up-image',
 		mixins: [mpMixin, mixin, propsImage],

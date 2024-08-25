@@ -1,0 +1,10 @@
+/unpackage/dist/*
+/unpackage/cache/*
+/unpackage/release/*
+/node_modules/*
+/.idea/*
+/dist/
+deploy.sh
+/.hbuilderx/
+/*-lock.*
+/stats.html

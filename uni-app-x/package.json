@@ -1,0 +1,8 @@
+{
+  "name": "uview-plus-x",
+  "version": "4.0.0",
+  "scripts": {},
+  "dependencies": {
+    "uview-plus": "link:/Users/jry/Documents/www/xyito/open/uview-plus/src/uni_modules/uview-plus"
+  }
+}

@@ -314,7 +314,7 @@ $up-button-square-border-top-right-radius: 3px !default;
 $up-button-square-border-top-left-radius: 3px !default;
 $up-button-square-border-bottom-left-radius: 3px !default;
 $up-button-square-border-bottom-right-radius: 3px !default;
-$up-button-icon-min-width: 1em !default;
+$up-button-icon-min-width: 4px !default;
 $up-button-plain-background-color: #fff !default;
 $up-button-hairline-border-width: 0.5px !default;
 $up-button-active-opacity:0.75 !default;
@@ -432,8 +432,8 @@ $up-button-active-opacity:0.75 !default;
 
     &__icon {
         min-width: $up-button-icon-min-width;
-        line-height: inherit !important;
-        vertical-align: top;
+        // line-height: inherit !important;
+        // vertical-align: top;
     }
 
     &--plain {

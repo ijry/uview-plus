@@ -1,4 +1,4 @@
-import { defineMixin } from '../vue.uts'
+import { defineMixin } from 'vue'
 
 export const buttonMixin = defineMixin({
     props: {

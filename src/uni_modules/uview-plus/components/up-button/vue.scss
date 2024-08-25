@@ -29,11 +29,13 @@ $up-button-plain-up-button-warning-color:$up-error;
 		left:$up-button-before-left;
 		width:$up-button-before-width;
 		height:$up-button-before-height;
+		/* #ifndef UNI-APP-X */
 		border: inherit;
 		border-radius: inherit;
+		/* #endif */
 		transform:$up-button-before-transform;
 		opacity:$up-button-before-opacity;
-		content: " ";
+		// content: " ";
 		background-color:$up-button-before-background-color;
 		border-color:$up-button-before-border-color;
 	}
@@ -44,7 +46,9 @@ $up-button-plain-up-button-warning-color:$up-error;
 		}
 	}
 	
+	/* #ifndef UNI-APP-X */
 	&__icon+&__text:not(:empty),
+	/* #endif */
 	&__loading-text {
 		margin-left:$up-button-icon-margin-left;
 	}

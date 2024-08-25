@@ -247,9 +247,6 @@
 
 		&--disabled {
 			color: $up-cell-disabled-color;
-			/* #ifndef APP-NVUE */
-			cursor: not-allowed;
-			/* #endif */
 		}
 
 		&--center {
