@@ -3,122 +3,122 @@
         <view class="u-demo-block">
             <text class="u-demo-block__title">基础使用</text>
             <view class="u-demo-block__content">
-                <u-row customStyle="margin-bottom: 10px">
-                    <u-col span="6">
+                <up-row customStyle="margin-bottom: 10px">
+                    <up-col span="6">
                         <view class="demo-layout bg-purple-light"></view>
-                    </u-col>
-                    <u-col span="6">
+                    </up-col>
+                    <up-col span="6">
                         <view class="demo-layout bg-purple"></view>
-                    </u-col>
-                </u-row>
-                <u-row customStyle="margin-bottom: 10px">
-                    <u-col span="4">
+                    </up-col>
+                </up-row>
+                <up-row customStyle="margin-bottom: 10px">
+                    <up-col span="4">
                         <view class="demo-layout bg-purple"></view>
-                    </u-col>
-                    <u-col span="4">
+                    </up-col>
+                    <up-col span="4">
                         <view class="demo-layout bg-purple-light"></view>
-                    </u-col>
-                    <u-col span="4">
+                    </up-col>
+                    <up-col span="4">
                         <view class="demo-layout bg-purple-dark"></view>
-                    </u-col>
-                </u-row>
-                <u-row justify="space-between">
-                    <u-col span="3">
+                    </up-col>
+                </up-row>
+                <up-row justify="space-between">
+                    <up-col span="3">
                         <view class="demo-layout bg-purple"></view>
-                    </u-col>
-                    <u-col span="3">
+                    </up-col>
+                    <up-col span="3">
                         <view class="demo-layout bg-purple-light"></view>
-                    </u-col>
-                    <u-col span="3">
+                    </up-col>
+                    <up-col span="3">
                         <view class="demo-layout bg-purple"></view>
-                    </u-col>
-                    <u-col span="3">
+                    </up-col>
+                    <up-col span="3">
                         <view class="demo-layout bg-purple-light"></view>
-                    </u-col>
-                </u-row>
+                    </up-col>
+                </up-row>
             </view>
         </view>
         <view class="u-demo-block">
             <text class="u-demo-block__title">分栏间隔</text>
             <view class="u-demo-block__content">
-                <u-row justify="space-between" gutter="10">
-                    <u-col span="3">
+                <up-row justify="space-between" gutter="10">
+                    <up-col span="3">
                         <view class="demo-layout bg-purple"></view>
-                    </u-col>
-                    <u-col span="3">
+                    </up-col>
+                    <up-col span="3">
                         <view class="demo-layout bg-purple-light"></view>
-                    </u-col>
-                    <u-col span="3">
+                    </up-col>
+                    <up-col span="3">
                         <view class="demo-layout bg-purple"></view>
-                    </u-col>
-                    <u-col span="3">
+                    </up-col>
+                    <up-col span="3">
                         <view class="demo-layout bg-purple-light"></view>
-                    </u-col>
-                </u-row>
+                    </up-col>
+                </up-row>
             </view>
         </view>
         <view class="u-demo-block">
             <text class="u-demo-block__title">混合布局</text>
             <view class="u-demo-block__content">
-                <u-row justify="space-between" gutter="10">
-                    <u-col span="2">
+                <up-row justify="space-between" gutter="10">
+                    <up-col span="2">
                         <view class="demo-layout bg-purple-light"></view>
-                    </u-col>
-                    <u-col span="4">
+                    </up-col>
+                    <up-col span="4">
                         <view class="demo-layout bg-purple"></view>
-                    </u-col>
-                    <u-col span="6">
+                    </up-col>
+                    <up-col span="6">
                         <view class="demo-layout bg-purple-dark"></view>
-                    </u-col>
-                </u-row>
+                    </up-col>
+                </up-row>
             </view>
         </view>
         <view class="u-demo-block">
             <text class="u-demo-block__title">分栏偏移</text>
             <view class="u-demo-block__content">
-                <u-row
+                <up-row
                     justify="space-between"
                     customStyle="margin-bottom: 10px"
                 >
-                    <u-col span="3" offset="3">
+                    <up-col span="3" offset="3">
                         <view class="demo-layout bg-purple-light"></view>
-                    </u-col>
-                    <u-col span="3" offset="3">
+                    </up-col>
+                    <up-col span="3" offset="3">
                         <view class="demo-layout bg-purple"></view>
-                    </u-col>
-                </u-row>
-                <u-row>
-                    <u-col span="3">
+                    </up-col>
+                </up-row>
+                <up-row>
+                    <up-col span="3">
                         <view class="demo-layout bg-purple-light"></view>
-                    </u-col>
-                    <u-col span="3" offset="3">
+                    </up-col>
+                    <up-col span="3" offset="3">
                         <view class="demo-layout bg-purple"></view>
-                    </u-col>
-                </u-row>
+                    </up-col>
+                </up-row>
             </view>
         </view>
         <view class="u-demo-block">
             <text class="u-demo-block__title">对齐方式</text>
             <view class="u-demo-block__content">
-                <u-row
+                <up-row
                     justify="space-between"
                     customStyle="margin-bottom: 10px"
                 >
-                    <u-col span="3">
+                    <up-col span="3">
                         <view class="demo-layout bg-purple-light"></view>
-                    </u-col>
-                    <u-col span="3">
+                    </up-col>
+                    <up-col span="3">
                         <view class="demo-layout bg-purple"></view>
-                    </u-col>
-                </u-row>
-                <u-row>
-                    <u-col span="3">
+                    </up-col>
+                </up-row>
+                <up-row>
+                    <up-col span="3">
                         <view class="demo-layout bg-purple-light"></view>
-                    </u-col>
-                    <u-col span="3">
+                    </up-col>
+                    <up-col span="3">
                         <view class="demo-layout bg-purple"></view>
-                    </u-col>
-                </u-row>
+                    </up-col>
+                </up-row>
             </view>
         </view>
     </view>

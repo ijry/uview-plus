@@ -1,92 +1,93 @@
 import { defineMixin } from '../../libs/vue'
 import defProps from '../../libs/config/props'
+let crtProp = defProps['icon'] as UTSJSONObject
 
 export const propsIcon = defineMixin({
     props: {
         // 图标类名
         name: {
             type: String,
-            default: defProps.getString('icon.name')
+            default: crtProp['name']
         },
         // 图标颜色，可接受主题色
         color: {
             type: String,
-            default: defProps.getString('icon.color')
+            default: crtProp['color']
         },
         // 字体大小，单位px
         size: {
             type: [String],
-            default: defProps.getString('icon.size')
+            default: crtProp['size']
         },
         // 是否显示粗体
         bold: {
             type: Boolean,
-            default: defProps.getBoolean('icon.bold')
+            default: crtProp['bold']
         },
         // 点击图标的时候传递事件出去的index（用于区分点击了哪一个）
         index: {
             type: [String],
-            default: defProps.getString('icon.index')
+            default: crtProp['index']
         },
         // 触摸图标时的类名
         hoverClass: {
             type: String,
-            default: defProps.getString('icon.hoverClass')
+            default: crtProp['hoverClass']
         },
         // 自定义扩展前缀，方便用户扩展自己的图标库
         customPrefix: {
             type: String,
-            default: defProps.getString('icon.customPrefix')
+            default: crtProp['customPrefix']
         },
         // 图标右边或者下面的文字
         label: {
             type: [String],
-            default: defProps.getString('icon.label')
+            default: crtProp['label']
         },
         // label的位置，只能右边或者下边
         labelPos: {
             type: String,
-            default: defProps.getString('icon.labelPos')
+            default: crtProp['labelPos']
         },
         // label的大小
         labelSize: {
             type: [String],
-            default: defProps.getString('icon.labelSize')
+            default: crtProp['labelSize']
         },
         // label的颜色
         labelColor: {
             type: String,
-            default: defProps.getString('icon.labelColor')
+            default: crtProp['labelColor']
         },
         // label与图标的距离
         space: {
             type: [String],
-            default: defProps.getString('icon.space')
+            default: crtProp['space']
         },
         // 图片的mode
         imgMode: {
             type: String,
-            default: defProps.getString('icon.imgMode')
+            default: crtProp['imgMode']
         },
         // 用于显示图片小图标时，图片的宽度
         width: {
             type: [String],
-            default: defProps.getString('icon.width')
+            default: crtProp['width']
         },
         // 用于显示图片小图标时，图片的高度
         height: {
             type: [String],
-            default: defProps.getString('icon.height')
+            default: crtProp['height']
         },
         // 用于解决某些情况下，让图标垂直居中的用途
         top: {
             type: [String],
-            default: defProps.getString('icon.top')
+            default: crtProp['top']
         },
         // 是否阻止事件传播
         stop: {
             type: Boolean,
-            default: defProps.getBoolean('icon.stop')
+            default: crtProp['stop']
         }
     }
 })

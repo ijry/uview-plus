@@ -1,137 +1,137 @@
 <template>
 	<view class="">
-		<u-cell-group :border="true">
-			<u-cell
+		<up-cell-group :border="true">
+			<up-cell
 			    :border="true"
 			    title="基础用法"
 			>
 				<template v-slot:right-icon>
-					<u-number-box
+					<up-number-box
 					    v-model="value1"
 					    step="1"
 					    @change="change"
 					>
-					</u-number-box>
+					</up-number-box>
 				</template>
-			</u-cell>
-			<u-cell
+			</up-cell>
+			<up-cell
 			    :border="true"
 			    title="步长设置"
 			>
 				<template v-slot:right-icon>
-					<u-number-box
+					<up-number-box
 						v-model="value2"
 						:step="step1"
 						@change="change"
 					>
-					</u-number-box>
+					</up-number-box>
 				</template>
-			</u-cell>
-			<u-cell
+			</up-cell>
+			<up-cell
 			    :border="true"
 			    title="限制输入范围"
 			>
 				<template v-slot:right-icon>
-					<u-number-box
+					<up-number-box
 						v-model="value3"
 						step="1"
 						:min="min1"
 						:max="max1"
 						@change="change"
 					>
-					</u-number-box>
+					</up-number-box>
 				</template>
-			</u-cell>
-			<u-cell
+			</up-cell>
+			<up-cell
 			    :border="true"
 			    title="限制输入整数"
 			>
 				<template v-slot:right-icon>
-					<u-number-box
+					<up-number-box
 						v-model="value4"
 						step="1"
 						integer
 						@change="change"
 					>
-					</u-number-box>
+					</up-number-box>
 				</template>
-			</u-cell>
-			<u-cell
+			</up-cell>
+			<up-cell
 			    :border="true"
 			    title="禁用状态"
 			>
 				<template v-slot:right-icon>
-					<u-number-box
+					<up-number-box
 						v-model="value5"
 						step="1"
 						:disabled="true"
 						@change="change"
 					>
-					</u-number-box>
+					</up-number-box>
 				</template>
-			</u-cell>
-			<u-cell
+			</up-cell>
+			<up-cell
 			    :border="true"
 			    title="禁用输入框"
 			>
 				<template v-slot:right-icon>
-					<u-number-box
+					<up-number-box
 						v-model="value6"
 						step="1"
 						:disabledInput="true"
 						@change="change"
 					>
-					</u-number-box>
+					</up-number-box>
 				</template>
-			</u-cell>
-			<u-cell
+			</up-cell>
+			<up-cell
 			    :border="true"
 			    title="禁用长按"
 			>
 				<template v-slot:right-icon>
-					<u-number-box
+					<up-number-box
 						v-model="value7"
 						step="1"
 						:longPress="false"
 						@change="change"
 					>
-					</u-number-box>
+					</up-number-box>
 				</template>
-			</u-cell>
-			<u-cell
+			</up-cell>
+			<up-cell
 			    :border="true"
 			    title="固定小数位数"
 			>
 				<template v-slot:right-icon>
-					<u-number-box
+					<up-number-box
 						v-model="value8"
 						step="0.2"
 						decimalLength="1"
 						@change="change"
 					>
-					</u-number-box>
+					</up-number-box>
 				</template>
-			</u-cell>
-			<u-cell
+			</up-cell>
+			<up-cell
 			    :border="true"
 			    title="异步变更"
 			>
 				<template v-slot:right-icon>
-					<u-number-box
+					<up-number-box
 						v-model="value9"
 						step="1"
 						:asyncChange="asyncChange"
 						@change="myAsyncChange"
 					>
-					</u-number-box>
+					</up-number-box>
 				</template>
-			</u-cell>
-			<u-cell
+			</up-cell>
+			<up-cell
 			    :border="true"
 			    title="自定义大小颜色样式"
 			>
 				<template v-slot:right-icon>
-					<u-number-box
+					<up-number-box
 						v-model="value10"
 						step="1"
 						:color="color"
@@ -140,15 +140,15 @@
 						@change="change"
 						iconStyle="color: #fff"
 					>
-					</u-number-box>
+					</up-number-box>
 				</template>
-			</u-cell>
-			<u-cell
+			</up-cell>
+			<up-cell
 			    :border="true"
 			    title="自定义(为0时减少按钮会消失)"
 			>
 				<template v-slot:right-icon>
-					<u-number-box
+					<up-number-box
 						v-model="value11"
 						step="1"
 						:min="0"
@@ -158,10 +158,10 @@
 							<view
 								class="minus"
 							>
-								<u-icon
+								<up-icon
 									name="minus"
 									size="12"
-								></u-icon>
+								></up-icon>
 							</view>
 						</template>
 						<template v-slot:input>
@@ -174,17 +174,17 @@
 							<view
 								class="plus"
 							>
-								<u-icon
+								<up-icon
 									name="plus"
 									color="#FFFFFF"
 									size="12"
-								></u-icon>
+								></up-icon>
 							</view>
 						</template>
-					</u-number-box>
+					</up-number-box>
 				</template>
-			</u-cell>
-		</u-cell-group>
+			</up-cell>
+		</up-cell-group>
 	</view>
 </template>
 

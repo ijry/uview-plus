@@ -8,13 +8,14 @@
  * @FilePath     : /u-view2.0/uview-ui/libs/config/props/loadingIcon.js
  */
 import config from '../../libs/config/config.uts'
+// let color = config['color'] as UTSJSONObject
 
 export default {
     // loading-icon加载中图标组件
     loadingIcon: {
         show: true,
-        color: config.getString('color.u-tips-color'),
-        textColor: config.getString('color.u-tips-color'),
+        color: config.getString('color.up-tips-color'),
+        textColor: config.getString('color.up-tips-color'),
         vertical: false,
         mode: 'spinner',
         size: '24',

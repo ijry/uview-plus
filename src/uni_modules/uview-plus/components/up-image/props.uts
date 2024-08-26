@@ -1,87 +1,88 @@
 import { defineMixin } from '../../libs/vue'
 import defProps from '../../libs/config/props'
+let crtProp = defProps['image'] as UTSJSONObject
 
 export const propsImage = defineMixin({
     props: {
         // 图片地址
         src: {
             type: String,
-            default: defProps.getString('image.src')
+            default: crtProp['src']
         },
         // 裁剪模式
         mode: {
             type: String,
-            default: defProps.getString('image.mode')
+            default: crtProp['mode']
         },
         // 宽度，单位任意
         width: {
             type: [String],
-            default: defProps.getString('image.width')
+            default: crtProp['width']
         },
         // 高度，单位任意
         height: {
             type: [String],
-            default: defProps.getString('image.height')
+            default: crtProp['height']
         },
         // 图片形状，circle-圆形，square-方形
         shape: {
             type: String,
-            default: defProps.getString('image.shape')
+            default: crtProp['shape']
         },
         // 圆角，单位任意
         radius: {
             type: [String],
-            default: defProps.getString('image.radius')
+            default: crtProp['radius']
         },
         // 是否懒加载，微信小程序、App、百度小程序、字节跳动小程序
         lazyLoad: {
             type: Boolean,
-            default: defProps.getBoolean('image.lazyLoad')
+            default: crtProp['lazyLoad']
         },
         // 开启长按图片显示识别微信小程序码菜单
         showMenuByLongpress: {
             type: Boolean,
-            default: defProps.getBoolean('image.showMenuByLongpress')
+            default: crtProp['showMenuByLongpress']
         },
         // 加载中的图标，或者小图片
         loadingIcon: {
             type: String,
-            default: defProps.getString('image.loadingIcon')
+            default: crtProp['loadingIcon']
         },
         // 加载失败的图标，或者小图片
         errorIcon: {
             type: String,
-            default: defProps.getString('image.errorIcon')
+            default: crtProp['errorIcon']
         },
         // 是否显示加载中的图标或者自定义的slot
         showLoading: {
             type: Boolean,
-            default: defProps.getBoolean('image.showLoading')
+            default: crtProp['showLoading']
         },
         // 是否显示加载错误的图标或者自定义的slot
         showError: {
             type: Boolean,
-            default: defProps.getBoolean('image.showError')
+            default: crtProp['showError']
         },
         // 是否需要淡入效果
         fade: {
             type: Boolean,
-            default: defProps.getBoolean('image.fade')
+            default: crtProp['fade']
         },
         // 只支持网络资源，只对微信小程序有效
         webp: {
             type: Boolean,
-            default: defProps.getBoolean('image.webp')
+            default: crtProp['webp']
         },
         // 过渡时间，单位ms
         duration: {
             type: [Number],
-            default: defProps.getNumber('image.duration')
+            default: crtProp['duration']
         },
         // 背景颜色，用于深色页面加载图片时，为了和背景色融合
         bgColor: {
             type: String,
-            default: defProps.getString('image.bgColor')
+            default: crtProp['bgColor']
         }
     }
 })

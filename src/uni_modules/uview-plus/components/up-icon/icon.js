@@ -30,7 +30,7 @@ export default {
         imgMode: '',
         width: '',
         height: '',
-        top: 0,
+        top: '0',
         stop: false
     }
 }

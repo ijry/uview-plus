@@ -3,50 +3,50 @@
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">基本案例</text>
 				<view class="u-page__line-item">
-					<u-line></u-line>
+					<up-line></up-line>
 				</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">自定义颜色</text>
 				<view class="u-page__line-item">
-					<u-line color="#2979ff"></u-line>
+					<up-line color="#2979ff"></up-line>
 				</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">自定义长度</text>
 				<view class="u-page__line-item">
-					<u-line length="200"></u-line>
+					<up-line length="200"></up-line>
 				</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">自定义方向</text>
 				<view class="u-page__line-item">
-					<u-line
+					<up-line
 					    length="30"
 					    color="#2979ff"
 					    direction="col"
-					></u-line>
+					></up-line>
 				</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">是否显示1px粗线条</text>
 				<view class="u-page__line-item">
-					<u-line :hairline="false"></u-line>
+					<up-line :hairline="false"></up-line>
 				</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">线条与上下左右元素的间距</text>
 				<view class="u-page__line-item">
-						<u-line margin="20"></u-line>
+						<up-line margin="20"></up-line>
 				</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">是否虚线</text>
 				<view class="u-page__line-item">
-					<u-line
+					<up-line
 					    color="#2979ff"
 					    :dashed="true"
-					></u-line>
+					></up-line>
 				</view>
 		</view>
 	</view>

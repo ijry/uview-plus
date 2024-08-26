@@ -3,48 +3,48 @@
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">基础使用</text>
 			<view class="u-demo-block__content">
-				<u-tooltip
+				<up-tooltip
 				    :text="text1"
 					overlay
-				></u-tooltip>
+				></up-tooltip>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">下方显示</text>
 			<view class="u-demo-block__content" style="padding-bottom: 30px;">
-				<u-tooltip
+				<up-tooltip
 				    :text="text2"
 					direction="bottom"
-				></u-tooltip>
+				></up-tooltip>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">扩展按钮</text>
 			<view class="u-demo-block__content">
-				<u-tooltip
+				<up-tooltip
 				    :text="text3"
 					:buttons="buttons1"
 					@click="click"
-				></u-tooltip>
+				></up-tooltip>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">自动调整位置</text>
 			<view class="u-demo-block__content">
-				<u-tooltip
+				<up-tooltip
 				    :text="text4"
 					:buttons="buttons2"
-				></u-tooltip>
+				></up-tooltip>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">高亮选中文本背景色</text>
 			<view class="u-demo-block__content">
-				<u-tooltip
+				<up-tooltip
 				    :text="text5"
 					:buttons="buttons3"
 					bgColor="#e3e4e6"
-				></u-tooltip>
+				></up-tooltip>
 			</view>
 		</view>
 	</view>

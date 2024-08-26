@@ -2,16 +2,16 @@
 	<view class="navigation">
 		<view class="left">
 			<view class="item">
-				<u-icon name="server-fill" :size="20" :color="$u.color['contentColor']"></u-icon>
+				<up-icon name="server-fill" :size="20" :color="$u.color['contentColor']"></up-icon>
 				<view class="text u-line-1">客服</view>
 			</view>
 			<view class="item">
-				<u-icon name="home" :size="20" :color="$u.color['contentColor']"></u-icon>
+				<up-icon name="home" :size="20" :color="$u.color['contentColor']"></up-icon>
 				<view class="text u-line-1">店铺</view>
 			</view>
 			<view class="item car">
-				<u-badge class="car-num" :count="9" type="error" :offset="[-3, -6]"></u-badge>
-				<u-icon name="shopping-cart" :size="20" :color="$u.color['contentColor']"></u-icon>
+				<up-badge class="car-num" :count="9" type="error" :offset="[-3, -6]"></up-badge>
+				<up-icon name="shopping-cart" :size="20" :color="$u.color['contentColor']"></up-icon>
 				<view class="text u-line-1">购物车</view>
 			</view>
 		</view>

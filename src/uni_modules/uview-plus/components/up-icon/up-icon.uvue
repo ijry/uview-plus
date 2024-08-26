@@ -66,7 +66,7 @@
 	 * @property {Object}			customStyle		icon的样式，对象形式
 	 * @event {Function} click 点击图标时触发
 	 * @event {Function} touchstart 事件触摸时触发
-	 * @example <up-icon name="photo" color="#2979ff" size="28"></up-icon>
+	 * @example <up-icon name="photo" color="#2979ff" size="28px"></up-icon>
 	 */
 	export default {
 		name: 'up-icon',
@@ -106,7 +106,7 @@
 				}
 				// 非主题色值时，才当作颜色值
 				let types = config.getArray('type')
-				console.log('###', types)
+				// console.log('###', types)
 				// if (this.color != '' && types.includes(this.color)) {
 				// 	style['color'] = this.color
 				// }

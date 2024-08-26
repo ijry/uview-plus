@@ -12,20 +12,20 @@
 						></image>
 					</view>
 					<view class="album__content">
-						<u--text
+						<up--text
 						    text="uView UI"
 						    type="primary"
 						    bold
 						    size="17"
-						></u--text>
-						<u--text
+						></up--text>
+						<up--text
 						    margin="0 0 8px 0"
 						    text="全面的组件和便捷的工具会让您信手拈来，如鱼得水"
-						></u--text>
-						<u-album
+						></up--text>
+						<up-album
 						    :urls="urls1"
 						    keyName="src2"
-						></u-album>
+						></up-album>
 					</view>
 				</view>
 			</view>
@@ -42,17 +42,17 @@
 						></image>
 					</view>
 					<view class="album__content">
-						<u--text
+						<up--text
 						    text="uView UI"
 						    type="primary"
 						    bold
 						    size="17"
-						></u--text>
-						<u--text
+						></up--text>
+						<up--text
 						    margin="0 0 8px 0"
 						    text="全面的组件和便捷的工具会让您信手拈来，如鱼得水"
-						></u--text>
-						<u-album :urls="urls2"></u-album>
+						></up--text>
+						<up-album :urls="urls2"></up-album>
 					</view>
 				</view>
 			</view>
@@ -69,28 +69,28 @@
 						></image>
 					</view>
 					<view class="album__content">
-						<u--text
+						<up--text
 						    text="uView UI"
 						    type="primary"
 						    bold
 						    size="17"
-						></u--text>
+						></up--text>
 						<view :style="{
 							marginBottom: '8px',
 							width: albumWidth + 'px'
 						}">
-							<u--text
+							<up--text
 							    text="全面的组件和便捷的工具会让您信手拈来，如鱼得水"
 							    :customStyle="{
 									width: albumWidth + 'px'
 								}"
-							></u--text>
+							></up--text>
 						</view>
-						<u-album
+						<up-album
 						    :urls="urls2"
 						    @albumWidth="width => albumWidth = width"
 						    multipleSize="68"
-						></u-album>
+						></up-album>
 					</view>
 				</view>
 			</view>
@@ -107,22 +107,22 @@
 						></image>
 					</view>
 					<view class="album__content">
-						<u--text
+						<up--text
 						    text="uView UI"
 						    type="primary"
 						    bold
 						    size="17"
-						></u--text>
-						<u--text
+						></up--text>
+						<up--text
 						    margin="0 0 8px 0"
 						    text="全面的组件和便捷的工具会让您信手拈来，如鱼得水"
-						></u--text>
-						<u-album
+						></up--text>
+						<up-album
 						    :urls="urls3"
 						    rowCount="2"
 						    maxCount="4"
 						    multipleMode="scaleToFill"
-						></u-album>
+						></up-album>
 					</view>
 				</view>
 			</view>
@@ -139,22 +139,22 @@
 						></image>
 					</view>
 					<view class="album__content">
-						<u--text
+						<up--text
 						    text="uView UI"
 						    type="primary"
 						    bold
 						    size="17"
-						></u--text>
-						<u--text
+						></up--text>
+						<up--text
 						    margin="0 0 8px 0"
 						    text="全面的组件和便捷的工具会让您信手拈来，如鱼得水"
-						></u--text>
-						<u-album
+						></up--text>
+						<up-album
 						    :urls="urls4"
 						    rowCount="2"
 						    maxCount="4"
 						    multipleSize="50"
-						></u-album>
+						></up-album>
 					</view>
 				</view>
 			</view>

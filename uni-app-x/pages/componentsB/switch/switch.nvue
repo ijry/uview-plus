@@ -4,14 +4,14 @@
 			<text class="u-demo-block__title">基础功能</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
-					<u-switch
+					<up-switch
 						v-model="value1"
 						@change="change"
-					></u-switch>
+					></up-switch>
 					{{value1}}
 				</view>
 				<view class="u-page__tag-item">
-					<u-switch v-model="value2"></u-switch>
+					<up-switch v-model="value2"></up-switch>
 					{{value2}}
 				</view>
 			</view>
@@ -20,16 +20,16 @@
 			<text class="u-demo-block__title">加载中</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
-					<u-switch
+					<up-switch
 						v-model="value3"
 						loading
-					></u-switch>
+					></up-switch>
 				</view>
 				<view class="u-page__tag-item">
-					<u-switch
+					<up-switch
 						v-model="value4"
 						loading
-					></u-switch>
+					></up-switch>
 				</view>
 			</view>
 		</view>
@@ -37,16 +37,16 @@
 			<text class="u-demo-block__title">禁用状态</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
-					<u-switch
+					<up-switch
 						v-model="value5"
 						disabled
-					></u-switch>
+					></up-switch>
 				</view>
 				<view class="u-page__tag-item">
-					<u-switch
+					<up-switch
 						v-model="value6"
 						disabled
-					></u-switch>
+					></up-switch>
 				</view>
 			</view>
 		</view>
@@ -54,16 +54,16 @@
 			<text class="u-demo-block__title">自定义尺寸</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
-					<u-switch
+					<up-switch
 						v-model="value7"
 						size="28"
-					></u-switch>
+					></up-switch>
 				</view>
 				<view class="u-page__tag-item">
-					<u-switch
+					<up-switch
 						v-model="value8"
 						size="20"
-					></u-switch>
+					></up-switch>
 				</view>
 			</view>
 		</view>
@@ -71,18 +71,18 @@
 			<text class="u-demo-block__title">自定义颜色</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
-					<u-switch
+					<up-switch
 						v-model="value9"
 						activeColor="#f56c6c"
 						loading
-					></u-switch>
+					></up-switch>
 				</view>
 				<view class="u-page__tag-item">
-					<u-switch
+					<up-switch
 						v-model="value10"
 						activeColor="#5ac725"
 						loading
-					></u-switch>
+					></up-switch>
 				</view>
 			</view>
 		</view>
@@ -90,20 +90,20 @@
 			<text class="u-demo-block__title">自定义样式</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
-					<u-switch
+					<up-switch
 						:space="2"
 						v-model="value11"
 						activeColor="#f56c6c"
 						inactiveColor="rgb(230, 230, 230)"
-					></u-switch>
+					></up-switch>
 				</view>
 				<view class="u-page__tag-item">
-					<u-switch
+					<up-switch
 						space="2"
 						v-model="value12"
 						activeColor="#f9ae3d"
 						inactiveColor="rgb(230, 230, 230)"
-					></u-switch>
+					></up-switch>
 				</view>
 			</view>
 		</view>
@@ -111,11 +111,11 @@
 			<text class="u-demo-block__title">异步控制</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
-					<u-switch
+					<up-switch
 						v-model="value13"
 						asyncChange
 						@change="asyncChange"
-					></u-switch>
+					></up-switch>
 				</view>
 			</view>
 		</view>

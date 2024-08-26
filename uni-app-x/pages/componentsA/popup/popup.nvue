@@ -1,18 +1,18 @@
 <template>
 	<view>
-		<u-navbar
+		<up-navbar
 			title="弹窗"
 			@leftClick="navigateBack"
 			safeAreaInsetTop
 			fixed
 			placeholder
-		></u-navbar>
-		<u-gap
+		></up-navbar>
+		<up-gap
 			height="20"
 			bgColor="#fff"
-		></u-gap>
-		<u-cell-group>
-			<u-cell
+		></up-gap>
+		<up-cell-group>
+			<up-cell
 				:titleStyle="{fontWeight: 500}"
 				@click="openPopup(item.popupData)"
 				:title="item.title"
@@ -26,9 +26,9 @@
 					:src="item.iconUrl"
 					mode="widthFix"
 				></image>
-			</u-cell>
-		</u-cell-group>
-		<u-popup
+			</up-cell>
+		</up-cell-group>
+		<up-popup
 			:safeAreaInsetBottom="true"
 			:safeAreaInsetTop="true"
 			:mode="popupData.mode"
@@ -48,14 +48,14 @@
 					marginTop: ['left', 'right'].includes(popupData.mode) ? '480rpx' : '0',
 				}"
 			>
-				<u-button
+				<up-button
 					type="success"
 					text="点我关闭"
 					customStyle="width: 200rpx"
 					@click="show = !show"
-				></u-button>
+				></up-button>
 			</view>
-		</u-popup>
+		</up-popup>
 	</view>
 </template>
 

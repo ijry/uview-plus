@@ -2,7 +2,7 @@
 	<view class="u-wrap">
 		<view class="u-search-box">
 			<view class="u-search-inner">
-				<u-icon name="search" color="#909399" :size="28"></u-icon>
+				<up-icon name="search" color="#909399" :size="28"></up-icon>
 				<text class="u-search-text">搜索uView</text>
 			</view>
 		</view>

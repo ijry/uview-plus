@@ -11,7 +11,7 @@ export default defineConfig({
   resolve: {
     alias: [
         // {
-        //     find: "uview-plus",
+        //     find: "@/uni_modules/uview-plus",
         //     replacement: path.resolve(__dirname, "../src/uni_modules/uview-plus"),
         // }
     ],

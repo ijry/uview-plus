@@ -49,7 +49,6 @@
 	$up-cell-group-title-color: $up-main-color !default;
 
     .up-cell-group {
-		flex: 1;
 		
         &__title {
             padding: $up-cell-group-title-padding;

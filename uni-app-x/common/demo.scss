@@ -6,13 +6,12 @@
 	&__title {
 		margin-top:10px;
 		font-size: 15px;
-		color: $u-content-color;
-		margin-bottom:10px;
+		color: $up-content-color;
+		margin-bottom: 10px;
+		display: flex;
 	}
 	&__flex{
-		/* #ifndef APP-NVUE */
 		display: flex;
-		/* #endif */
 	}
 }
 
@@ -36,11 +35,11 @@
 }
 
 .u-demo-block {
-	flex: 1;
 	margin-bottom: 23px;
-	
+
 	&__content {
-		@include flex(column);
+		display: flex;
+		flex-direction: column;
 	}
 	
 	&__title {

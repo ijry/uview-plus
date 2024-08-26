@@ -27,7 +27,7 @@
         <template v-if="loading">
             <up-loading-icon
                 :mode="loadingMode"
-                :size="loadingSize * 1.15"
+                :size="addUnit(loadingSize * 1.15)"
                 :color="loadingColor"
             ></up-loading-icon>
             <text
@@ -41,15 +41,16 @@
                 v-if="icon"
                 :name="icon"
                 :color="iconColorCom"
-                :size="parseInt(textSize) * 1.35"
+                :size="addUnit(parseInt(textSize) * 1.35)"
                 :customStyle="{ marginRight: '2px' }"
             ></up-icon>
             <slot>
                 <text
                     class="up-button__text"
                     :style="[{ fontSize: textSize + 'px'}, nvueTextStyle]"
-                    >{{ text }}</text
-                >
+                    >
+                    {{ text }}
+                </text>
             </slot>
         </template>
     </button>
@@ -62,7 +63,7 @@ import { mpMixin } from '../../libs/mixin/mpMixin';
 import { mixin } from '../../libs/mixin/mixin';
 import { propsButton } from "./props";
 import config from '../../libs/config/config';
-import { addStyle } from '../../libs/function/index';
+import { addStyle, addUnit } from '../../libs/function/index';
 import { throttle } from '../../libs/function/throttle';
 /**
  * button 按钮
@@ -130,7 +131,7 @@ export default {
 						["hairline", this.hairline],
 					]
                 );
-				console.log(ret)
+				// console.log(ret)
             } else {
                 // 由于nvue的原因，在有color参数时，不需要传入type，否则会生成type相关的类型，影响最终的样式
                 ret = this.bem(
@@ -157,14 +158,14 @@ export default {
             }
             return "rgb(200, 200, 200)";
         },
-        iconColorCom(): any {
+        iconColorCom(): String {
             // 如果是镂空状态，设置了color就用color值，否则使用主题颜色，
             // up-icon的color能接受一个主题颜色的值
 			if (this.iconColor != '') return this.iconColor;
 			if (this.plain) {
                 return this.color != '' ? this.color : this.type;
             } else {
-                return this.type === "info" ? "#000000" : "#ffffff";
+                return "";
             }
         },
         baseColor(): any {
@@ -176,7 +177,7 @@ export default {
                 style.color = this.plain ? this.color : "white";
                 if (!this.plain) {
                     // 非镂空，背景色使用自定义的颜色
-                    style["background-color"] = this.color;
+                    style["backgroundColor"] = this.color;
                 }
                 if (this.color.indexOf("gradient") !== -1) {
                     // 如果自定义的颜色为渐变色，不显示边框，以及通过backgroundImage设置渐变色
@@ -205,7 +206,7 @@ export default {
             if (this.type === "info") {
                 style['color'] = "#323233";
             }
-			console.debug(this.color)
+			// console.debug(this.color)
             if (this.color != '') {
                 style['color'] = this.plain ? this.color : "white";
             }
@@ -214,17 +215,20 @@ export default {
         },
         // 字体大小
         textSize(): String {
-            let fontSize = '14';
-            if (this.size === "large") fontSize = '16';
-            if (this.size === "normal") fontSize = '14';
-            if (this.size === "small") fontSize = '12';
-            if (this.size === "mini") fontSize = '10';
+            let fontSize = '14px';
+            if (this.size === "large") fontSize = '16px';
+            if (this.size === "normal") fontSize = '14px';
+            if (this.size === "small") fontSize = '12px';
+            if (this.size === "mini") fontSize = '10px';
             return fontSize;
         },
     },
 	emits: ['click', 'getphonenumber', 'getuserinfo',
 		'error', 'opensetting', 'launchapp'],
     methods: {
+        addUnit(val: any): any {
+			return addUnit(val)
+		},
 		addStyle(val: any): any {
 			return addStyle(val)
 		},
@@ -259,8 +263,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../libs/css/components.scss";
-
-@import "./vue.scss";
 
 $up-button-up-button-height: 40px !default;
 $up-button-text-font-size: 15px !default;
@@ -318,15 +320,34 @@ $up-button-icon-min-width: 4px !default;
 $up-button-plain-background-color: #fff !default;
 $up-button-hairline-border-width: 0.5px !default;
 $up-button-active-opacity:0.75 !default;
+$up-button-before-top:50% !default;
+$up-button-before-left:50% !default;
+$up-button-before-width:100% !default;
+$up-button-before-height:100% !default;
+$up-button-before-transform:translate(-50%, -50%) !default;
+$up-button-before-opacity:0 !default;
+$up-button-before-background-color:#000 !default;
+$up-button-before-border-color:#000 !default;
+$up-button-active-before-opacity:.15 !default;
+$up-button-icon-margin-left:4px !default;
+$up-button-plain-up-button-info-color:#000000 !default;;
+$up-button-plain-up-button-success-color:$up-success !default;;
+$up-button-plain-up-button-error-color:$up-error !default;;
+$up-button-plain-up-button-warning-color:$up-error !default;;
 
 .up-button {
     height: $up-button-up-button-height;
     position: relative;
 	box-sizing: border-box;
-	// @include flex;
- //    align-items: center;
- //    justify-content: center;
- //    flex-direction: row;
+
+    &__content {
+        width: 100%;
+        height: 100%;
+        @include flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+    }
 
     &__text {
         font-size: $up-button-text-font-size;
@@ -372,7 +393,9 @@ $up-button-active-opacity:0.75 !default;
 	}
 
     &--info {
-        color: $up-button-info-color;
+        .up-button__text {
+            color: $up-button-info-color;
+        }
         background-color: $up-button-info-background-color;
         border-color: $up-button-info-border-color;
         border-width: $up-button-info-border-width;
@@ -380,7 +403,9 @@ $up-button-active-opacity:0.75 !default;
     }
 
     &--success {
-        color: $up-button-success-color;
+        .up-button__text {
+            color: $up-button-success-color;
+        }
         background-color: $up-button-success-background-color;
         border-color: $up-button-success-border-color;
         border-width: $up-button-success-border-width;
@@ -388,7 +413,9 @@ $up-button-active-opacity:0.75 !default;
     }
 
     &--primary {
-        color: $up-button-primary-color;
+        .up-button__text {
+            color: $up-button-primary-color;
+        }
         background-color: $up-button-primary-background-color;
         border-color: $up-button-primary-border-color;
         border-width: $up-button-primary-border-width;
@@ -396,7 +423,9 @@ $up-button-active-opacity:0.75 !default;
     }
 
     &--error {
-        color: $up-button-error-color;
+        .up-button__text {
+            color: $up-button-error-color;
+        }
         background-color: $up-button-error-background-color;
         border-color: $up-button-error-border-color;
         border-width: $up-button-error-border-width;
@@ -404,7 +433,9 @@ $up-button-active-opacity:0.75 !default;
     }
 
     &--warning {
-        color: $up-button-warning-color;
+        .up-button__text {
+            color: $up-button-warning-color;
+        }
         background-color: $up-button-warning-background-color;
         border-color: $up-button-warning-border-color;
         border-width: $up-button-warning-border-width;
@@ -438,10 +469,66 @@ $up-button-active-opacity:0.75 !default;
 
     &--plain {
         background-color: $up-button-plain-background-color;
+        &.up-button--primary {
+            .up-button__text {
+                color: $up-primary;
+            }
+		}
+        &.up-button--info {
+            .up-button__text {
+			    color:$up-button-plain-up-button-info-color;
+            }
+		}
+        &.up-button--success {
+            .up-button__text {
+			    color:$up-button-plain-up-button-success-color;
+            }
+		}
+        &.up-button--error {
+            .up-button__text {
+			    color:$up-button-plain-up-button-error-color;
+            }
+		}
+        &.up-button--warning {
+            .up-button__text {
+			    color:$up-button-plain-up-button-warning-color;
+            }
+		}
     }
 
     &--hairline {
         border-width: $up-button-hairline-border-width !important;
     }
+
+    &:before {
+		position: absolute;
+		top:$up-button-before-top;
+		left:$up-button-before-left;
+		width:$up-button-before-width;
+		height:$up-button-before-height;
+		/* #ifndef UNI-APP-X */
+		border: inherit;
+		border-radius: inherit;
+		/* #endif */
+		transform:$up-button-before-transform;
+		opacity:$up-button-before-opacity;
+		// content: " ";
+		background-color:$up-button-before-background-color;
+		border-color:$up-button-before-border-color;
+	}
+	
+	&--active {
+		&:before {
+			opacity: .15
+		}
+	}
+	
+	/* #ifndef UNI-APP-X */
+	&__icon+&__text:not(:empty),
+	/* #endif */
+	&__loading-text {
+		margin-left:$up-button-icon-margin-left;
+	}
 }
+
 </style>

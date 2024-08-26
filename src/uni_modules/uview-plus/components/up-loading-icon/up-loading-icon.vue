@@ -22,7 +22,7 @@
 				'animation-timing-function': mode === 'semicircle' || mode === 'circle' ? timingFunction : ''
 			}"
 		>
-			<block v-if="mode === 'spinner'">
+			<template v-if="mode === 'spinner'">
 				<!-- #ifndef APP-NVUE -->
 				<view
 					v-for="(item, index) in array12"
@@ -44,7 +44,7 @@
 					}"
 				/>
 				<!-- #endif -->
-			</block>
+			</template>
 		</view>
 		<text
 			v-if="text"

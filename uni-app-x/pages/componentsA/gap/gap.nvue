@@ -3,29 +3,29 @@
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">基本案列</text>
 			<view class="u-page__gap-item">
-				<u-gap bgColor="#f3f4f6"></u-gap>
+				<up-gap bgColor="#f3f4f6"></up-gap>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">自定义颜色</text>
 			<view class="u-page__gap-item">
-				<u-gap bgColor="#2979ff"></u-gap>
+				<up-gap bgColor="#2979ff"></up-gap>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">自定义高度</text>
 			<view class="u-page__gap-item">
-				<u-gap bgColor="#f3f4f6" height="40"></u-gap>
+				<up-gap bgColor="#f3f4f6" height="40"></up-gap>
 			</view>
 		</view>	
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">自定义上下边距</text>
 			<view class="u-page__gap-item">
-			<u-gap
+			<up-gap
 				bgColor="#f3f4f6"
 			    marginTop="20"
 			    marginBottom="20"
-			></u-gap>
+			></up-gap>
 			</view>
 		</view>
 	</view>

@@ -1,17 +1,17 @@
 <template>
 	<view class="u-page">
-		<u-no-network
+		<up-no-network
 			@disconnected="disconnected"
 			@connected="connected"
 			@retry="retry"
-		></u-no-network>
+		></up-no-network>
 		<view class="u-content">
 			<view class="u-content__circle">
-				<u-icon
+				<up-icon
 					name="checkbox-mark"
 					color="#fff"
 					size="30"
-				></u-icon>
+				></up-icon>
 			</view>
 			<text class="u-content__normal">网络正常</text>
 			<text class="u-content__tips">请您断开设备的WiFi和数据连接(或开启飞行模式)，即可看到效果</text>

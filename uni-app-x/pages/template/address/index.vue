@@ -10,12 +10,12 @@
 			</view>
 			<view class="bottom">
 				广东省深圳市宝安区 自由路66号
-				<u-icon name="edit-pen" :size="40" color="#999999"></u-icon>
+				<up-icon name="edit-pen" :size="40" color="#999999"></up-icon>
 			</view>
 		</view>
 		<view class="addSite" @tap="toAddSite">
 			<view class="add">
-				<u-icon name="plus" color="#ffffff" class="icon" :size="30"></u-icon>新建收货地址
+				<up-icon name="plus" color="#ffffff" class="icon" :size="30"></up-icon>新建收货地址
 			</view>
 		</view>
 	</view>

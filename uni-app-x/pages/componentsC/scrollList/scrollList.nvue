@@ -2,7 +2,7 @@
 	<view class="u-page">
 		<view class="u-demo-block">
 			<text class="u-demo-block__title" style="margin-bottom: 15px;">基础使用</text>
-			<u-scroll-list
+			<up-scroll-list
 				indicatorColor="#fff0f0"
 				indicatorActiveColor="#f56c6c"
 				@right="right"
@@ -30,18 +30,18 @@
 						@tap="showMore"
 					>
 						<text class="scroll-list__show-more__text">查看更多</text>
-						<u-icon
+						<up-icon
 							name="arrow-leftward"
 							color="#f56c6c"
 							size="12"
-						></u-icon>
+						></up-icon>
 					</view>
 				</view>
-			</u-scroll-list>
+			</up-scroll-list>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">多菜单扩展</text>
-			<u-scroll-list>
+			<up-scroll-list>
 				<view class="scroll-list">
 					<view
 						class="scroll-list__line"
@@ -63,7 +63,7 @@
 						</view>
 					</view>
 				</view>
-			</u-scroll-list>
+			</up-scroll-list>
 		</view>
 	</view>
 </template>

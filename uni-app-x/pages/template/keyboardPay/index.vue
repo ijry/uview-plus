@@ -1,12 +1,12 @@
 <template>
 	<view>
 		<view class="u-padding-40">
-			<u-button type="success" @click="showPop(true)">
-				<u-icon name="red-packet"></u-icon>
+			<up-button type="success" @click="showPop(true)">
+				<up-icon name="red-packet"></up-icon>
 				<text class="u-padding-left-10">发送1.00元红包</text>
-			</u-button>
+			</up-button>
 		</view>		
-		<u-keyboard 
+		<up-keyboard 
 			default=""
 			ref="uKeyboard" 
 			mode="number" 
@@ -23,22 +23,22 @@
 					<text>1.00</text>
 					<text class="u-font-20 u-padding-left-10">元</text>
 					<view class="u-padding-10 close" data-flag="false" @tap="showPop(false)">
-						<u-icon name="close" color="#333333" size="28"></u-icon>
+						<up-icon name="close" color="#333333" size="28"></up-icon>
 					</view>
 				</view>
 				<view class="u-flex u-row-center">
-					<u-message-input 
+					<up-message-input 
 						mode="box" 
 						:maxlength="6"
 						:dot-fill="true"
 						v-model="password"
 						:disabled-keyboard="true"
 						@finish="finish"
-					></u-message-input>
+					></up-message-input>
 				</view>
 				<view class="u-text-center u-padding-top-10 u-padding-bottom-20 tips">支付键盘</view>
 			</view>
-		</u-keyboard>
+		</up-keyboard>
 	</view>
 </template>
 

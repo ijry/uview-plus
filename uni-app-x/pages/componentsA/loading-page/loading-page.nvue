@@ -1,18 +1,18 @@
 <template>
 	<view class="u-page">
-		<u-navbar
+		<up-navbar
 			title="加载页"
 			@leftClick="navigateBack"
 			safeAreaInsetTop
 			fixed
 			placeholder
-		></u-navbar>
-		<u-gap
+		></up-navbar>
+		<up-gap
 		    bgColor="#fff"
 		    height="20"
-		></u-gap>
-		<u-cell-group>
-			<u-cell
+		></up-gap>
+		<up-cell-group>
+			<up-cell
 			    :titleStyle="{fontWeight: 500}"
 			    @click="openLoadingPage(index)"
 			    :title="item.title"
@@ -26,9 +26,9 @@
 				    :src="item.iconUrl"
 				    mode="widthFix"
 				></image>
-			</u-cell>
-		</u-cell-group>
-		<u-loading-page
+			</up-cell>
+		</up-cell-group>
+		<up-loading-page
 		    :loadingText="loadingPageData.loadingText"
 		    :image="loadingPageData.image"
 			:iconSize="loadingPageData.iconSize"
@@ -38,7 +38,7 @@
 		    :color="loadingPageData.color"
 		    :loadingColor="loadingPageData.loadingColor"
 		>
-		</u-loading-page>
+		</up-loading-page>
 	</view>
 </template>
 

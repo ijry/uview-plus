@@ -67,7 +67,7 @@
 						mode="widthFix"
 					>
 						<template v-slot:loading>
-							<u-loading-icon color="red"></u-loading-icon>
+							<up-loading-icon color="red"></up-loading-icon>
 						</template>
 					</up-image>
 				</view>

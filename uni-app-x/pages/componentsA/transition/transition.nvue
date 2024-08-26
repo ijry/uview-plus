@@ -1,8 +1,8 @@
 <template>
     <view class="u-page">
-        <u-gap height="20" bgColor="#fff"></u-gap>
-        <u-cell-group border>
-            <u-cell
+        <up-gap height="20" bgColor="#fff"></up-gap>
+        <up-cell-group border>
+            <up-cell
                 :titleStyle="{ fontWeight: 500 }"
                 @click="openTransition(item.mode)"
                 :title="item.title"
@@ -17,8 +17,8 @@
 					    mode="widthFix"
 					></image>
 				</template>
-            </u-cell>
-            <u-transition
+            </up-cell>
+            <up-transition
                 :mode="mode"
                 :show="show"
                 :custom-style="style"
@@ -31,8 +31,8 @@
                 @afterLeave="afterLeave"
             >
                 <view class="transition"></view>
-            </u-transition>
-        </u-cell-group>
+            </up-transition>
+        </up-cell-group>
     </view>
 </template>
 

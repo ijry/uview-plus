@@ -1,107 +1,108 @@
 import { defineMixin } from '../../libs/vue.uts'
 import defProps from '../../libs/config/props.uts'
+let crtProp = defProps['cell'] as UTSJSONObject
 
 export const propsCell = defineMixin({
     props: {
         // 标题
         title: {
             type: String,
-            default: defProps.getString('cell.title')
+            default: crtProp['title']
         },
         // 标题下方的描述信息
         label: {
             type: String,
-            default: defProps.getString('cell.label')
+            default: crtProp['label']
         },
         // 右侧的内容
         value: {
             type: String,
-            default: defProps.getString('cell.value')
+            default: crtProp['value']
         },
         // 左侧图标名称，或者图片链接(本地文件建议使用绝对地址)
         icon: {
             type: String,
-            default: defProps.getString('cell.icon')
+            default: crtProp['icon']
         },
         // 是否禁用cell
         disabled: {
             type: Boolean,
-            default: defProps.getBoolean('cell.disabled')
+            default: crtProp['disabled']
         },
         // 是否显示下边框
         border: {
             type: Boolean,
-            default: defProps.getBoolean('cell.border')
+            default: crtProp['border']
         },
         // 内容是否垂直居中(主要是针对右侧的value部分)
         center: {
             type: Boolean,
-            default: defProps.getBoolean('cell.center')
+            default: crtProp['center']
         },
         // 点击后跳转的URL地址
         url: {
             type: String,
-            default: defProps.getString('cell.url')
+            default: crtProp['url']
         },
         // 链接跳转的方式，内部使用的是uView封装的route方法，可能会进行拦截操作
         linkType: {
             type: String,
-            default: defProps.getString('cell.linkType')
+            default: crtProp['linkType']
         },
         // 是否开启点击反馈(表现为点击时加上灰色背景)
         clickable: {
             type: Boolean,
-            default: defProps.getBoolean('cell.clickable')
+            default: crtProp['clickable']
         },
         // 是否展示右侧箭头并开启点击反馈
         isLink: {
             type: Boolean,
-            default: defProps.getBoolean('cell.isLink')
+            default: crtProp['isLink']
         },
         // 是否显示表单状态下的必填星号(此组件可能会内嵌入input组件)
         required: {
             type: Boolean,
-            default: defProps.getBoolean('cell.required')
+            default: crtProp['required']
         },
         // 右侧的图标箭头
         rightIcon: {
             type: String,
-            default: defProps.getString('cell.rightIcon')
+            default: crtProp['rightIcon']
         },
         // 右侧箭头的方向，可选值为：left，up，down
         arrowDirection: {
             type: String,
-            default: defProps.getString('cell.arrowDirection')
+            default: crtProp['arrowDirection']
         },
         // 左侧图标样式
         iconStyle: {
             type: Object,
-            default: defProps.getAny('cell.iconStyle')
+            default: crtProp['iconStyle']
         },
         // 右侧箭头图标的样式
         rightIconStyle: {
             type: Object,
-            default: defProps.getAny('cell.rightIconStyle')
+            default: crtProp['rightIconStyle']
         },
         // 标题的样式
         titleStyle: {
             type: Object,
-    		default: defProps.getAny('cell.titleStyle')
+    		default: crtProp['titleStyle']
         },
         // 单位元的大小，可选值为large
         size: {
             type: String,
-            default: defProps.getString('cell.size')
+            default: crtProp['size']
         },
         // 点击cell是否阻止事件传播
         stop: {
             type: Boolean,
-            default: defProps.getBoolean('cell.stop')
+            default: crtProp['stop']
         },
         // 标识符，cell被点击时返回
         name: {
             type: String,
-            default: defProps.getString('cell.name')
+            default: crtProp['name']
         }
     }
 })

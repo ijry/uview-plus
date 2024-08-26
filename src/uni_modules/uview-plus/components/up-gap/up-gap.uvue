@@ -26,9 +26,9 @@
 			gapStyle(): any {
 				let style = {
 					backgroundColor: this.bgColor,
-					// height: addUnit(this.height),
-					// marginTop: addUnit(this.marginTop),
-					// marginBottom: addUnit(this.marginBottom)
+					height: addUnit(this.height),
+					marginTop: addUnit(this.marginTop),
+					marginBottom: addUnit(this.marginBottom)
 				} as UTSJSONObject
 				return deepMerge(
 					style,

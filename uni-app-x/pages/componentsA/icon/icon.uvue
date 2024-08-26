@@ -13,7 +13,7 @@
 				<view class="u-page__grid__item__icon">
 					<up-icon
 					    :name="item.name"
-					    size="30"
+					    size="30px"
 					    color="#909399"
 						@click="test"
 					></up-icon>
@@ -28,7 +28,9 @@
 </template>
 
 <script>
+	// #ifdef APP
 	import { setClipboardData, getClipboardData } from "@/uni_modules/wa-clipboard"
+	// #endif
 
 	type iconItem = {
 	  name: string
@@ -623,7 +625,9 @@
 				console.log('test')
 			},
 			selectIcon(name: string) {
+				// #ifdef APP
 				setClipboardData(name);
+				// #endif
 				uni.hideToast()
 			// 	uni.$u.toast('图标名称已复制');
 			}

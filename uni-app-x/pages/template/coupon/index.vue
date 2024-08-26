@@ -23,7 +23,7 @@
 				<view class="explain u-line-1">满8.1元可用、限最新版本客户端使用</view>
 				<view class="rule" @tap="xxx122">
 					<text>使用规则</text>
-					<u-icon name="arrow-right" color="" :size="20" @click=""></u-icon>
+					<up-icon name="arrow-right" color="" :size="20" @click=""></up-icon>
 				</view>
 			</view>
 		</view>
@@ -48,7 +48,7 @@
 				</view>
 				<view class="tips">
 					<view class="explain">
-						<u-icon name="zhuanfa" class="transpond" :size="24"></u-icon>
+						<up-icon name="zhuanfa" class="transpond" :size="24"></up-icon>
 						<text>可赠送</text>
 					</view>
 				</view>

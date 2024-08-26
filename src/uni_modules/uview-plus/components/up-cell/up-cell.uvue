@@ -11,16 +11,16 @@
 					</slot>
 					<up-icon v-else :name="icon"
 						:custom-style="iconStyle"
-						:size="size === 'large' ? 22 : 18"></up-icon>
+						:size="size === 'large' ? '22px' : '18px'"></up-icon>
 				</view>
 				<view class="up-cell__title">
-					<slot name="title" v-if="$slots['title'] !== null || title == ''">
+					<slot name="title" v-if="$slots['title'] !== null && title == ''">
 					</slot>
-						<text v-else class="up-cell__title-text"
-							:style="[titleTextStyle]"
-							aclass="[disabled && 'up-cell--disabled', size === 'large' && 'up-cell__title-text--large']">
-							{{ title }}
-							</text>
+					<text v-else class="up-cell__title-text"
+						:style="[titleTextStyle]"
+						aclass="[disabled && 'up-cell--disabled', size === 'large' && 'up-cell__title-text--large']">
+						{{ title }}
+					</text>
 					<slot name="label">
 						<text class="up-cell__label" v-if="label"
 							aclass="[disabled && 'up-cell--disabled', size === 'large' && 'up-cell__label--large']">
@@ -40,7 +40,7 @@
 				<slot name="right-icon">
 					<up-icon v-if="rightIcon" :name="rightIcon"
 						:custom-style="rightIconStyle" :color="disabled ? '#c8c9cc' : 'info'"
-						:size="size === 'large' ? 18 : 16"></up-icon>
+						:size="size === 'large' ? '18px' : '16px'"></up-icon>
 				</slot>
 			</view>
 			<view class="up-cell__right-icon-wrap" v-if="$slots['righticon'] !== null"

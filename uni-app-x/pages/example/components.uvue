@@ -22,7 +22,7 @@
 			</up-cell-group>
 			<up-button type="primary" text="uview-plus"></up-button>
 		</view>
-		<up-gap height="30" bgColor="#fff"></up-gap>
+		<up-gap height="30px" bgColor="#fff"></up-gap>
 	</view>
 	<!-- #ifdef APP -->
 	</scroll-view>

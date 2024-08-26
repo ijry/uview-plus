@@ -21,14 +21,14 @@
 				'animation-timing-function': mode === 'semicircle' || mode === 'circle' ? timingFunction : ''
 			}"
 		>
-			<block v-if="mode === 'spinner'">
+			<template v-if="mode === 'spinner'">
 				<view
 					v-for="(item, index) in array12"
 					:key="index"
 					class="up-loading-icon__dot"
 				>
 				</view>
-			</block>
+			</template>
 		</view>
 		<text
 			v-if="text"
