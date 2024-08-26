@@ -8,3 +8,4 @@ deploy.sh
 /.hbuilderx/
 /*-lock.*
 /stats.html
+.DS_Store
