@@ -1,4 +1,4 @@
-import { defineMixin } from 'vue'
+import { defineMixin } from '../vue.uts'
 import {
 	array as testArray
 } from '../function/test.uts'

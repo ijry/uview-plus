@@ -1,4 +1,4 @@
-import { defineMixin } from '../vue'
+import { defineMixin } from '../vue.uts'
 import { queryParams } from '../function/index'
 export const mpShare = defineMixin({
     data() {
