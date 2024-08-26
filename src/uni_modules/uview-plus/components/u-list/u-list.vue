@@ -129,7 +129,7 @@
 				scrollTop = e.detail.scrollTop
 				// #endif
 				this.innerScrollTop = scrollTop
-				this.$emit('scroll', Math.abs(scrollTop))
+				this.$emit('scroll', scrollTop)
 			},
 			scrollIntoViewById(id) {
 				// #ifdef APP-NVUE
