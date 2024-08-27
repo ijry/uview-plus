@@ -111,7 +111,7 @@ import { throttle } from '../../libs/function/throttle';
 export default {
     name: "up-button",
     // #ifdef MP
-    mixins: [mpMixin, mixin, button, openType, propsButton],
+    mixins: [mpMixin, mixin, buttonMixin, openType, propsButton],
     // #endif
     // #ifndef MP
     mixins: [mpMixin, mixin, propsButton],
@@ -153,7 +153,7 @@ export default {
                     ? this.color
                     : config.getString(`color.up-${this.type}`) as String;
             }
-            if (this.type === "info") {
+            if (this.type == "info") {
                 return "#c9c9c9";
             }
             return "rgb(200, 200, 200)";
@@ -168,13 +168,13 @@ export default {
                 return "";
             }
         },
-        baseColor(): any {
+        baseColor(): UTSJSONObject {
             let style = {
 				color: ''
-			};
+			} as UTSJSONObject;
             if (this.color != '') {
                 // 针对自定义了color颜色的情况，镂空状态下，就是用自定义的颜色
-                style.color = this.plain ? this.color : "white";
+                style['color'] = this.plain ? this.color : "white";
                 if (!this.plain) {
                     // 非镂空，背景色使用自定义的颜色
                     style["backgroundColor"] = this.color;
@@ -200,8 +200,8 @@ export default {
             return style;
         },
         // nvue版本按钮的字体不会继承父组件的颜色，需要对每一个text组件进行单独的设置
-        nvueTextStyle(): any {
-            let style = {};
+        nvueTextStyle(): UTSJSONObject {
+            let style = {} as UTSJSONObject;
             // 针对自定义了color颜色的情况，镂空状态下，就是用自定义的颜色
             if (this.type === "info") {
                 style['color'] = "#323233";

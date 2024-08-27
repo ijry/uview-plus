@@ -34,18 +34,18 @@ export function getPx(valueOri: any, unit = false): string {
     return unit ? `${value}px` : (value)
 }
 
-// /**
-//  * @description 进行延时，以达到可以简写代码的目的 比如: await sleep(20)将会阻塞20ms
-//  * @param {number} value 堵塞时间 单位ms 毫秒
-//  * @returns {Promise} 返回promise
-//  */
-// export function sleep(value = 30): any {
-//     return new Promise((resolve) => {
-//         setTimeout(() => {
-//             resolve({})
-//         }, value)
-//     })
-// }
+/**
+ * @description 进行延时，以达到可以简写代码的目的 比如: await sleep(20)将会阻塞20ms
+ * @param {number} value 堵塞时间 单位ms 毫秒
+ * @returns {Promise} 返回promise
+ */
+export function sleep(value = 30): any {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve({})
+        }, value)
+    })
+}
 // /**
 //  * @description 运行期判断平台
 //  * @returns {string} 返回所在平台(小写) 
@@ -109,25 +109,25 @@ export function getPx(valueOri: any, unit = false): string {
 //     return uuid.join('')
 // }
 
-// /**
-// * @description 获取父组件的参数，因为支付宝小程序不支持provide/inject的写法
-//    this.$parent在非H5中，可以准确获取到父组件，但是在H5中，需要多次this.$parent.$parent.xxx
-//    这里默认值等于undefined有它的含义，因为最顶层元素(组件)的$parent就是undefined，意味着不传name
-//    值(默认为undefined)，就是查找最顶层的$parent
-// *  @param {string|undefined} name 父组件的参数名
-// */
+/**
+* @description 获取父组件的参数，因为支付宝小程序不支持provide/inject的写法
+   this.$parent在非H5中，可以准确获取到父组件，但是在H5中，需要多次this.$parent.$parent.xxx
+   这里默认值等于undefined有它的含义，因为最顶层元素(组件)的$parent就是undefined，意味着不传name
+   值(默认为undefined)，就是查找最顶层的$parent
+*  @param {string|undefined} name 父组件的参数名
+*/
 // export function $parent(name = ''): any {
-//     // let parent = this.$parent
-//     // // 通过while历遍，这里主要是为了H5需要多层解析的问题
-//     // while (parent) {
-//     //     // 父组件
-//     //     if (parent.$options && parent.$options.name !== name) {
-//     //         // 如果组件的name不相等，继续上一级寻找
-//     //         parent = parent.$parent
-//     //     } else {
-//     //         return parent
-//     //     }
-//     // }
+//     let parent = this.$parent
+//     // 通过while历遍，这里主要是为了H5需要多层解析的问题
+//     while (parent) {
+//         // 父组件
+//         if (parent.$options && parent.$options.name !== name) {
+//             // 如果组件的name不相等，继续上一级寻找
+//             parent = parent.$parent
+//         } else {
+//             return parent
+//         }
+//     }
 //     return false
 // }
 
@@ -735,6 +735,45 @@ export function formValidate(instance, event): void {
 //     // uni.$u.color = deepMerge(uni.$u.color, color)
 //     // uni.$u.zIndex = deepMerge(uni.$u.zIndex, zIndex)
 // }
+
+export function getParent(that: any, name = ''): any {
+    console.log('that', that)
+    let parent = that.$parent
+    // 通过while历遍，这里主要是为了H5需要多层解析的问题
+    while (parent) {
+        // 父组件
+        if (parent.$options && parent.$options.name !== name) {
+            // 如果组件的name不相等，继续上一级寻找
+            parent = parent.$parent
+        } else {
+            return parent
+        }
+    }
+    return false
+}
+export function getParentData(that: any, parentName: string): any {
+	console.log('that', JSON.stringify(that))
+    // 避免在created中去定义parent变量
+    //if (that.parent == null) that.parent = {}
+    // 这里的本质原理是，通过获取父组件实例(也即类似up-radio的父组件up-radio-group的this)
+    // 将父组件this中对应的参数，赋值给本组件(up-radio的this)的parentData对象中对应的属性
+    // 之所以需要这么做，是因为所有端中，头条小程序不支持通过this.parent.xxx去监听父组件参数的变化
+    // 此处并不会自动更新子组件的数据，而是依赖父组件up-radio-group去监听data的变化，手动调用更新子组件的方法去重新获取
+    // that.$data['parent'] = getParent(that, parentName)
+    // console.log('that.parent', that.parent)
+    // todo
+    // if (that.parent.children) {
+    //     // 如果父组件的children不存在本组件的实例，才将本实例添加到父组件的children中
+    //     that.parent.children.indexOf(that) === -1 && that.parent.children.push(that)
+    // }
+    // if (that.parent != null && that.parentData != null) {
+    //     // 历遍parentData中的属性，将parent中的同名属性赋值给parentData
+    //     UTSJSONObject.keys(that.parentData).map((key: string) => {
+    //         that.parentData[key] = that.parent[key]
+    //     })
+    // }
+    return {}
+}
 
 export default {
 //     // range,

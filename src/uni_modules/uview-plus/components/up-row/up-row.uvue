@@ -10,13 +10,10 @@
 </template>
 
 <script>
-	// #ifdef APP-NVUE
-	const dom = uni.requireNativePlugin('dom')
-	// #endif
-	import { propsRow } from './props.js';
-	import { mpMixin } from '../../libs/mixin/mpMixin.js';
-	import { mixin } from '../../libs/mixin/mixin.js';
-	import { addUnit, addStyle, deepMerge, sleep } from '../../libs/function/index.js';
+	import { propsRow } from './props';
+	import { mpMixin } from '../../libs/mixin/mpMixin';
+	import { mixin } from '../../libs/mixin/mixin';
+	import { addUnit, addStyle, deepMerge, sleep } from '../../libs/function/index';
 	/**
 	 * Row 栅格系统中的行
 	 * @description 通过基础的 12 分栏，迅速简便地创建布局 
@@ -38,50 +35,44 @@
 			}
 		},
 		computed: {
-			uJustify() {
+			uJustify(): string {
 				if (this.justify == 'end' || this.justify == 'start') return 'flex-' + this.justify
 				else if (this.justify == 'around' || this.justify == 'between') return 'space-' + this.justify
 				else return this.justify
 			},
-			uAlignItem() {
+			uAlignItem(): string {
 				if (this.align == 'top') return 'flex-start'
 				if (this.align == 'bottom') return 'flex-end'
 				else return this.align
 			},
-			rowStyle() {
+			rowStyle(): any {
 				const style = {
 					alignItems: this.uAlignItem,
 					justifyContent: this.uJustify
 				}
 				// 通过给up-row左右两边的负外边距，消除up-col在有gutter时，第一个和最后一个元素的左内边距和右内边距造成的影响
-				if(this.gutter) {
-					style.marginLeft = addUnit(-Number(this.gutter)/2)
-					style.marginRight = addUnit(-Number(this.gutter)/2)
+				if(this.gutter != '') {
+					style['marginLeft'] = addUnit((0-parseInt(this.gutter.toString()))/2)
+					style['marginRight'] = addUnit((0-parseInt(this.gutter.toString()))/2)
 				}
 				return deepMerge(style, addStyle(this.customStyle))
 			}
 		},
 		emits: ["click"],
 		methods: {
-			clickHandler(e) {
+			clickHandler(e: any): void {
 				this.$emit('click')
 			},
-			async getComponentWidth() {
-				// 延时一定时间，以确保节点渲染完成
-				await sleep()
+			getComponentWidth(): Promise<number|null> {
 				return new Promise(resolve => {
-					// uView封装的获取节点的方法，详见文档
-					// #ifndef APP-NVUE
-					this.$uGetRect('.up-row').then(res => {
-						resolve(res.width)
-					})
-					// #endif
-					// #ifdef APP-NVUE
-					// nvue的dom模块用于获取节点
-					dom.getComponentRect(this.$refs['up-row'], (res) => {
-						resolve(res.size.width)
-					})
-					// #endif
+					// 延时一定时间，以确保节点渲染完成
+					//sleep().then(() => {
+						// uview-plus封装的获取节点的方法，详见文档
+						this.upGetRect('.up-row').then((res: UTSJSONObject) => {
+							// console.log(res)
+							resolve(res.getNumber('width'))
+						})
+					//})
 				})
 			},
 		}

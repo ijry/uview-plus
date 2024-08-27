@@ -3,7 +3,7 @@
         <view class="u-demo-block">
             <text class="u-demo-block__title">基础使用</text>
             <view class="u-demo-block__content">
-                <up-row customStyle="margin-bottom: 10px">
+                <up-row :customStyle="{marginBottom: '10px'}">
                     <up-col span="6">
                         <view class="demo-layout bg-purple-light"></view>
                     </up-col>
@@ -11,7 +11,7 @@
                         <view class="demo-layout bg-purple"></view>
                     </up-col>
                 </up-row>
-                <up-row customStyle="margin-bottom: 10px">
+                <up-row :customStyle="{marginBottom: '10px'}">
                     <up-col span="4">
                         <view class="demo-layout bg-purple"></view>
                     </up-col>
@@ -78,7 +78,7 @@
             <view class="u-demo-block__content">
                 <up-row
                     justify="space-between"
-                    customStyle="margin-bottom: 10px"
+                    :customStyle="{marginBottom: '10px'}"
                 >
                     <up-col span="3" offset="3">
                         <view class="demo-layout bg-purple-light"></view>
@@ -102,7 +102,7 @@
             <view class="u-demo-block__content">
                 <up-row
                     justify="space-between"
-                    customStyle="margin-bottom: 10px"
+                    :customStyle="{marginBottom: '10px'}"
                 >
                     <up-col span="3">
                         <view class="demo-layout bg-purple-light"></view>

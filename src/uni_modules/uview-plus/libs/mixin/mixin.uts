@@ -26,19 +26,17 @@ export const mixin = defineMixin({
             default: 'navigateTo'
         }
     },
-    // data() {
-    //     return {}
-    // },
+    data() {
+        return {
+            parent: null as ComponentPublicInstance|null,
+            parentData: {} as UTSJSONObject
+        }
+    },
     onLoad() {
-        // getRect挂载到$u上，因为这方法需要使用in(this)，所以无法把它独立成一个单独的文件导出
-    //     this.$u.getRect = this.$uGetRect
     },
     created() {
-        // 组件当中，只有created声明周期，为了能在组件使用，故也在created中将方法挂载到$u
-    //     this.$u.getRect = this.$uGetRect
     },
     computed: {
-        
     },
     methods: {
 		/**
@@ -94,62 +92,64 @@ export const mixin = defineMixin({
         // 查询节点信息
         // 目前此方法在支付宝小程序中无法获取组件跟接点的尺寸，为支付宝的bug(2020-07-21)
         // 解决办法为在组件根部再套一个没有任何作用的view元素
-        $uGetRect(selector: string, all: any) {
-            // #ifndef APP-NVUE
-            /**uni.createSelectorQuery()
-                .in(this)[all ? 'selectAll' : 'select'](selector)
-                .boundingClientRect((rect) => {
-                    if (all && Array.isArray(rect) && rect.length) {
-                        resolve(rect)
-                    }
-                    if (!all && rect) {
-                        resolve(rect)
-                    }
-                })
-                .exec()*/
-            // #endif
-            
-            // #ifdef APP-NVUE
-            /*
-            sleep(30).then(() => {
-                let selectorNvue = selector.substring(1) // 去掉开头的#或者.
-                let selectorRef = this.$refs[selectorNvue]
-                if (!selectorRef) {
-                    // console.log('不存在元素，请检查是否设置了ref属性' + selectorNvue + '。')
-                    resolve({
-                        with: 0,
-                        height: 0,
-                        left: 0,
-                        right: 0,
-                        top: 0,
-                        bottom: 0
-                    }) 
-                }
-                dom.getComponentRect(selectorRef, res => {
-                    // console.log(res)
-                    resolve(res.size)
-                })
-            })*/
-            // #endif
+        upGetRect: function(selector: string): Promise<UTSJSONObject> {
+            return new Promise((resolve) => {
+                let tmp = {
+                    width: 12
+                } as UTSJSONObject
+                resolve(tmp)
+                // uni.createSelectorQuery()
+                //     .in(this)[all == true ? 'selectAll' : 'select'](selector)
+                //     .boundingClientRect((rect) => {
+                //         if (all && Array.isArray(rect) && rect.length) {
+                //             resolve(rect)
+                //         }
+                //         if (!all && rect) {
+                //             resolve(rect)
+                //         }
+                //     })
+                //     .exec()
+            })
         },
+        getParent(name: string): ComponentPublicInstance|null {
+            let parent = this.$parent
+            // 通过while历遍，这里主要是为了H5需要多层解析的问题
+            // while (parent) {
+            //     // 父组件
+            //     if (parent.$options && parent.$options.name !== name) {
+            //         // 如果组件的name不相等，继续上一级寻找
+            //         parent = parent.$parent
+            //     } else {
+            //         return parent
+            //     }
+            // }
+            return parent
+        },
+        /**
+         * 获取父组件数据
+         * @author jry ijry@qq.com
+         * @param parentName 父组件名称如up-row
+         * @returns 
+         */
         getParentData: function(parentName: string): any {
             // 避免在created中去定义parent变量
-            // if (!this.parent) this.parent = {}
             // 这里的本质原理是，通过获取父组件实例(也即类似up-radio的父组件up-radio-group的this)
             // 将父组件this中对应的参数，赋值给本组件(up-radio的this)的parentData对象中对应的属性
             // 之所以需要这么做，是因为所有端中，头条小程序不支持通过this.parent.xxx去监听父组件参数的变化
             // 此处并不会自动更新子组件的数据，而是依赖父组件up-radio-group去监听data的变化，手动调用更新子组件的方法去重新获取
-            // this.parent = uni.$u.$parent.call(this, parentName)
+            this.parent = this.getParent(parentName)
+            // console.log('this.parent', this.parent)
+            // todo
             // if (this.parent.children) {
             //     // 如果父组件的children不存在本组件的实例，才将本实例添加到父组件的children中
             //     this.parent.children.indexOf(this) === -1 && this.parent.children.push(this)
             // }
-            // if (this.parent && this.parentData) {
-            //     // 历遍parentData中的属性，将parent中的同名属性赋值给parentData
-            //     Object.keys(this.parentData).map((key) => {
-            //         this.parentData[key] = this.parent[key]
-            //     })
-            // }
+            if (this.parent != null) {
+                // 历遍parentData中的属性，将parent中的同名属性赋值给parentData
+                UTSJSONObject.keys(this.parentData).map((key: string) => {
+                    this.parentData[key] = this.parent?.$props?.[key]
+                })
+            }
 			return {}
         },
         // 阻止事件冒泡
