@@ -24,16 +24,21 @@ export default {
         block: false,
         lines: '',
         color: '#303133',
-        size: 15,
+        size: '15px',
         iconStyle: {
             fontSize: '15px'
         },
         decoration: 'none',
-        margin: 0,
+        margin: '0',
         lineHeight: '',
         align: 'left',
         wordWrap: 'normal',
-        lang: 'en'
+        lang: 'en',
+        sessionFrom: '',
+        sendMessageTitle: '',
+        sendMessagePath: '',
+        sendMessageImg: '',
+        showMessageCard: false,
+        appParameter: '',
     }
-
-}
+} as UTSJSONObject

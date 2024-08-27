@@ -7,7 +7,8 @@
  * @lastTime     : 2024-08-20 14:20:58
  * @FilePath     : /uview-plus/libs/config/props/navbar.js
  */
-import color from '../../libs/config/color'
+import color from '../../libs/config/color.js'
+
 export default {
     // navbar 组件
     navbar: {

@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import { props } from './props'
+import { propsText } from './props.js'
 import value from './value.js'
 import { mpMixin } from '../../libs/mixin/mpMixin.js';
 import { mixin } from '../../libs/mixin/mixin.js';
@@ -108,10 +108,10 @@ import { addStyle, addUnit, deepMerge } from '../../libs/function/index.js';
 export default {
     name: 'up-text',
     // #ifdef MP
-    mixins: [mpMixin, mixin, value, buttonMixin, openType, props],
+    mixins: [mpMixin, mixin, value, buttonMixin, openType, propsText],
     // #endif
     // #ifndef MP
-    mixins: [mpMixin, mixin, value, props],
+    mixins: [mpMixin, mixin, value, propsText],
     // #endif
 	emits: ['click'],
     computed: {

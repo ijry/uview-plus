@@ -5,8 +5,8 @@ let _boundaryCheckingState = true; // 是否进行越界检查的全局开关
  * @private
  * @example strip(0.09999999999999998)=0.1
  */
-function strip(num, precision = 15): any {
-  return +parseFloat(Number(num).toPrecision(precision));
+function strip(num: any, precision = 15): any {
+  return +parseFloat((num as Number).toPrecision(precision));
 }
 
 /**
@@ -14,10 +14,20 @@ function strip(num, precision = 15): any {
  * @private
  * @param {*number} num Input number
  */
-function digitLength(num): any {
+function digitLength(num: number): number {
   // Get digit length of e
-  const eSplit = num.toString().split(/[eE]/);
-  const len = (eSplit[0].split('.')[1] || '').length - +(eSplit[1] || 0);
+  const eSplit: string[] = num.toString().split(/[eE]/);
+  let tmp = eSplit[0].split('.')[1];
+  if (tmp != '') {
+	  tmp = ''
+  }
+  let tmp2 = eSplit[1];
+  let tmp2Number = 0;
+  if (tmp2 != '') {
+  	  tmp2Number = parseInt(tmp2);
+  }
+  
+  const len = tmp.length - +(tmp2Number);
   return len > 0 ? len : 0;
 }
 
@@ -26,12 +36,12 @@ function digitLength(num): any {
  * @private
  * @param {*number} num 输入数
  */
-function float2Fixed(num): any {
+function float2Fixed(num: number): any {
   if (num.toString().indexOf('e') === -1) {
-    return Number(num.toString().replace('.', ''));
+    return parseInt(num.toString().replace('.', ''));
   }
-  const dLen = digitLength(num);
-  return dLen > 0 ? strip(Number(num) * Math.pow(10, dLen)) : Number(num);
+  const dLen: number = digitLength(num);
+  return dLen > 0 ? strip((num) * Math.pow(10, dLen)) : (num);
 }
 
 /**
@@ -39,11 +49,12 @@ function float2Fixed(num): any {
  * @private
  * @param {*number} num 输入数
  */
-function checkBoundary(num): any {
+function checkBoundary(num: number): void {
   if (_boundaryCheckingState) {
-    if (num > Number.MAX_SAFE_INTEGER || num < Number.MIN_SAFE_INTEGER) {
-      console.warn(`${num} 超出了精度限制，结果可能不正确`);
-    }
+	// todo
+    // if (num > Number.MAX_SAFE_INTEGER || num < Number.MIN_SAFE_INTEGER) {
+    //   console.warn(`${num} 超出了精度限制，结果可能不正确`);
+    // }
   }
 }
 
@@ -53,7 +64,7 @@ function checkBoundary(num): any {
  * @param {function} operation 迭代操作
  * @private
  */
-function iteratorOperation(arr, operation): any {
+function iteratorOperation(arr: number[], operation: any): any {
   const [num1, num2, ...others] = arr;
   let res = operation(num1, num2);
 
@@ -68,20 +79,22 @@ function iteratorOperation(arr, operation): any {
  * 高精度乘法
  * @export
  */
-export function times(...nums): any {
-  if (nums.length > 2) {
-    return iteratorOperation(nums, times);
-  }
+export function times(...nums: number[]): any {
+  // todo
+  // if (nums.length > 2) {
+  //   return iteratorOperation(nums, times);
+  // }
 
-  const [num1, num2] = nums;
-  const num1Changed = float2Fixed(num1);
-  const num2Changed = float2Fixed(num2);
-  const baseNum = digitLength(num1) + digitLength(num2);
-  const leftValue = num1Changed * num2Changed;
+  // const [num1, num2] = nums;
+  // const num1Changed = float2Fixed(num1);
+  // const num2Changed = float2Fixed(num2);
+  // const baseNum = digitLength(num1) + digitLength(num2);
+  // const leftValue = num1Changed * num2Changed;
 
-  checkBoundary(leftValue);
+  // checkBoundary(leftValue);
 
-  return leftValue / Math.pow(10, baseNum);
+  // return leftValue / Math.pow(10, baseNum);
+  return ''
 }
 
 /**
@@ -118,32 +131,36 @@ export function minus(...nums): any {
  * 高精度除法
  * @export
  */
-export function divide(...nums): any {
-  if (nums.length > 2) {
-    return iteratorOperation(nums, divide);
-  }
+export function divide(...nums: number[]): any {
+ // todo
+ //  if (nums.length > 2) {
+ //    return iteratorOperation(nums, divide);
+ //  }
 
-  const [num1, num2] = nums;
-  const num1Changed = float2Fixed(num1);
-  const num2Changed = float2Fixed(num2);
-  checkBoundary(num1Changed);
-  checkBoundary(num2Changed);
-  // 重要，这里必须用strip进行修正
-  return times(num1Changed / num2Changed, strip(Math.pow(10, digitLength(num2) - digitLength(num1))));
+ //  const [num1, num2] = nums;
+ //  const num1Changed = float2Fixed(num1);
+ //  const num2Changed = float2Fixed(num2);
+ //  checkBoundary(num1Changed);
+ //  checkBoundary(num2Changed);
+ //  // 重要，这里必须用strip进行修正
+ //  return times(num1Changed / num2Changed,
+	// strip(Math.pow(10, digitLength(num2) - digitLength(num1))));
 }
 
 /**
  * 四舍五入
  * @export
  */
-export function round(num, ratio): any {
-  const base = Math.pow(10, ratio);
-  let result = divide(Math.round(Math.abs(times(num, base))), base);
-  if (num < 0 && result !== 0) {
-    result = times(result, -1);
-  }
-  // 位数不足则补0
-  return result;
+export function round(num: number, ratio: number): any {
+  // todo
+  // const base = Math.pow(10, ratio);
+  // let result = divide(Math.round(Math.abs(times(num, base))), base);
+  // if (num < 0 && result !== 0) {
+  //   result = times(result, -1);
+  // }
+  // // 位数不足则补0
+  // return result;
+  return ''
 }
 
 /**

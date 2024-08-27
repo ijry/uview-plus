@@ -16,22 +16,23 @@ import config from '../config/config'
 //     return Math.max(min, Math.min(max, Number(value)))
 // }
 
-// /**
-//  * @description 用于获取用户传递值的px值  如果用户传递了"xxpx"或者"xxrpx"，取出其数值部分，如果是"xxxrpx"还需要用过uni.upx2px进行转换
-//  * @param {number|string} value 用户传递值的px值
-//  * @param {boolean} unit 
-//  * @returns {number|string}
-//  */
-// export function getPx(value, unit = false): any {
-//     if (testNumber(value)) {
-//         return unit ? `${value}px` : Number(value)
-//     }
-//     // 如果带有rpx，先取出其数值部分，再转为px值
-//     if (/(rpx|upx)$/.test(value)) {
-//         return unit ? `${uni.rpx2px(parseInt(value))}px` : Number(uni.rpx2px(parseInt(value)))
-//     }
-//     return unit ? `${parseInt(value)}px` : parseInt(value)
-// }
+/**
+ * @description 用于获取用户传递值的px值  如果用户传递了"xxpx"或者"xxrpx"，取出其数值部分，如果是"xxxrpx"还需要用过uni.upx2px进行转换
+ * @param {number|string} value 用户传递值的px值
+ * @param {boolean} unit 
+ * @returns {number|string}
+ */
+export function getPx(valueOri: any, unit = false): string {
+	let value: string = valueOri.toString()
+    if (testNumber(value)) {
+        return unit ? `${value}px` : (value)
+    }
+    // 如果带有rpx，先取出其数值部分，再转为px值
+    if (/(rpx|upx)$/.test(value)) {
+        // return unit ? `${uni.upx2px(parseInt(value)).toString()}px` : uni.upx2px(parseInt(value))
+    }
+    return unit ? `${value}px` : (value)
+}
 
 // /**
 //  * @description 进行延时，以达到可以简写代码的目的 比如: await sleep(20)将会阻塞20ms
@@ -260,7 +261,7 @@ export function deepMerge(
  * @description error提示
  * @param {*} err 错误内容
  */
-export function error(err) {
+export function error(err: string): void {
     // 开发环境才提示，生产环境不会提示
     if (process.env.NODE_ENV === 'development') {
         console.error(`uview-plus提示：${err}`)
@@ -303,59 +304,79 @@ export function error(err) {
 //     }
 // }
 
-// /**
-//  * @description 格式化时间
-//  * @param {String|Number} dateTime 需要格式化的时间戳
-//  * @param {String} fmt 格式化规则 yyyy:mm:dd|yyyy:mm|yyyy年mm月dd日|yyyy年mm月dd日 hh时MM分等,可自定义组合 默认yyyy-mm-dd
-//  * @returns {string} 返回格式化后的字符串
-//  */
-//  export function timeFormat(dateTime: any = 0, formatStr: any = 'yyyy-mm-dd'): any {
-//   let date: any
-//     // 若传入时间为假值，则取当前时间
-//   if (dateTime === 0) {
-//     date = new Date()
-//   }
-//   // 若为unix秒时间戳，则转为毫秒时间戳（逻辑有点奇怪，但不敢改，以保证历史兼容）
-//   else if (/^\d{10}$/.test(dateTime.toString().trim())) {
-//     date = new Date(dateTime * 1000)
-//   }
-//   // 若用户传入字符串格式时间戳，new Date无法解析，需做兼容
-//   else if (typeof dateTime === 'string' && /^\d+$/.test(dateTime.trim())) {
-//     date = new Date(Number(dateTime))
-//   }
-//   // 其他都认为符合 RFC 2822 规范
-//   else {
-//     // 处理平台性差异，在Safari/Webkit中，new Date仅支持/作为分割符的字符串时间
-//     date = new Date(
-//       typeof dateTime === 'string'
-//         ? dateTime.replace(/-/g, '/')
-//         : dateTime
-//     )
-//   }
+/**
+ * @description 格式化时间
+ * @param {String|Number} dateTime 需要格式化的时间戳
+ * @param {String} fmt 格式化规则 yyyy:mm:dd|yyyy:mm|yyyy年mm月dd日|yyyy年mm月dd日 hh时MM分等,可自定义组合 默认yyyy-mm-dd
+ * @returns {string} 返回格式化后的字符串
+ */
+ export function timeFormat(dateTime: any = 0, formatStr: string = 'yyyy-mm-dd'): string {
+  let date: any
+    // 若传入时间为假值，则取当前时间
+  if (dateTime === 0) {
+    date = new Date()
+  }
+  // 若为unix秒时间戳，则转为毫秒时间戳（逻辑有点奇怪，但不敢改，以保证历史兼容）
+  else if (/^\d{10}$/.test(dateTime.toString().trim())) {
+    date = new Date(parseInt(dateTime.toString()) * 1000)
+  }
+  // 若用户传入字符串格式时间戳，new Date无法解析，需做兼容
+  else if (typeof dateTime === 'string' && /^\d+$/.test(dateTime.toString().trim())) {
+    date = new Date(parseInt(dateTime.toString()))
+  }
+  // 其他都认为符合 RFC 2822 规范
+  else {
+    // 处理平台性差异，在Safari/Webkit中，new Date仅支持/作为分割符的字符串时间
+    date = new Date(
+      typeof dateTime === 'string'
+        ? dateTime.toString().replace(/-/g, '/')
+        : dateTime.toString()
+    )
+  }
 
-//     const timeSource = {
-//         'y': date.getFullYear().toString(), // 年
-//         'm': (date.getMonth() + 1).toString().padStart(2, '0'), // 月
-//         'd': date.getDate().toString().padStart(2, '0'), // 日
-//         'h': date.getHours().toString().padStart(2, '0'), // 时
-//         'M': date.getMinutes().toString().padStart(2, '0'), // 分
-//         's': date.getSeconds().toString().padStart(2, '0') // 秒
-//         // 有其他格式化字符需求可以继续添加，必须转化成字符串
-//     }
+    const timeSource = {
+        // 'y': date.getFullYear().toString(), // 年
+        // 'm': (date.getMonth() as number + 1).toString().padStart(2, '0'), // 月
+        // 'd': date.getDate().toString().padStart(2, '0'), // 日
+        // 'h': date.getHours().toString().padStart(2, '0'), // 时
+        // 's': date.getSeconds().toString().padStart(2, '0') // 秒
+        // 有其他格式化字符需求可以继续添加，必须转化成字符串
+    } as UTSJSONObject
+	timeSource['y'] = date.getFullYear().toString()
+	timeSource['m'] = (date.getMonth() as number + 1).toString().padStart(2, '0').toString()
+	timeSource['d'] = date.getDate().toString().padStart(2, '0').toString()
+	timeSource['M'] = date.getMinutes().toString().padStart(2, '0').toString()
+	timeSource['h'] = date.getHours().toString().padStart(2, '0').toString()
+	timeSource['s'] = date.getSeconds().toString().padStart(2, '0').toString()
 
-//   for (const key in timeSource) {
-//     const ret = new RegExp(`${key}+`).exec(formatStr) || ['']
-//     if (ret[0]) {
-//       // 年可能只需展示两位
-//       const beginIndex = key === 'y' && ret.length === 2 ? 2 : 0
-//       if (timeSource && timeSource[key] && key) {
-//         formatStr = formatStr.replace(ret, timeSource[key].slice(beginIndex))
-//       }
-//     }
-//   }
+  let timeSourceReturn = formatStr
+  // console.log(timeSource)
+  for (const key in timeSource) {
+    const ret = new RegExp(`${key}+`).exec(formatStr)
+    if (ret != null && ret[0] != null) {
+	  // console.log('ret', ret)
+	  // 年可能只需展示两位
+	  const beginIndex = key === 'y' && ret.length === 2 ? 2 : 0
+	  if (timeSource != null
+		&& timeSource != null
+		&& timeSource[key] != null
+		&& key != '') {
+		let replaceVal: string = ''
+		let timeSourceKey = timeSource.getString(key)
+		// console.log('timeSourceKey', typeof timeSourceKey)
+		if (timeSourceKey != null) {
+			replaceVal = timeSourceKey!!.slice(beginIndex)
+		}
+		timeSourceReturn = timeSourceReturn.replace(
+			ret[0].toString(),
+			replaceVal
+		)
+	  }
+    }
+  }
 
-//   return formatStr
-// }
+  return timeSourceReturn
+}
 
 // /**
 //  * @description 时间戳转为多久之前
@@ -482,18 +503,18 @@ export function error(err) {
 //     return _result.length ? prefix + _result.join('&') : ''
 // }
 
-// /**
-//  * 显示消息提示框
-//  * @param {String} title 提示的内容，长度与 icon 取值有关。
-//  * @param {Number} duration 提示的延迟时间，单位毫秒，默认：2000
-//  */
-// export function toast(title, duration = 2000) {
-//     uni.showToast({
-//         title: String(title),
-//         icon: 'none',
-//         duration
-//     })
-// }
+/**
+ * 显示消息提示框
+ * @param {String} title 提示的内容，长度与 icon 取值有关。
+ * @param {Number} duration 提示的延迟时间，单位毫秒，默认：2000
+ */
+export function toast(title: string, duration = 2000) {
+    uni.showToast({
+        title: title,
+        icon: 'none',
+        duration
+    })
+}
 
 // /**
 //  * @description 根据主题type值,获取对应的图标
@@ -529,34 +550,42 @@ export function error(err) {
 //     return iconName
 // }
 
-// /**
-//  * @description 数字格式化
-//  * @param {number|string} number 要格式化的数字
-//  * @param {number} decimals 保留几位小数
-//  * @param {string} decimalPoint 小数点符号
-//  * @param {string} thousandsSeparator 千分位符号
-//  * @returns {string} 格式化后的数字
-//  */
-// export function priceFormat(number, decimals = 0, decimalPoint = '.', thousandsSeparator = ','): any {
-//     number = (`${number}`).replace(/[^0-9+-Ee.]/g, '')
-//     const n = !isFinite(+number) ? 0 : +number
-//     const prec = !isFinite(+decimals) ? 0 : Math.abs(decimals)
-//     const sep = (typeof thousandsSeparator === 'undefined') ? ',' : thousandsSeparator
-//     const dec = (typeof decimalPoint === 'undefined') ? '.' : decimalPoint
-//     let s: any = []
-
-//     s = (prec ? round(n, prec) + '' : `${Math.round(n)}`).split('.')
-//     const re = /(-?\d+)(\d{3})/
-//     while (re.test(s[0])) {
-//         s[0] = s[0].replace(re, `$1${sep}$2`)
-//     }
+/**
+ * @description 数字格式化
+ * @param {number|string} number 要格式化的数字
+ * @param {number} decimals 保留几位小数
+ * @param {string} decimalPoint 小数点符号
+ * @param {string} thousandsSeparator 千分位符号
+ * @returns {string} 格式化后的数字
+ */
+export function priceFormat(numberOri: any, decimals = 0, decimalPoint = '.', thousandsSeparator = ','): string {
+	let numberStr: string = numberOri.toString()
+    let numberNo: number = parseFloat((`${numberStr}`).replace(/[^0-9+-Ee.]/g, ''))
+    const n = !isFinite(numberNo) ? 0 : numberNo
+    const prec: number = !isFinite(decimals) ? 0 : Math.abs(decimals)
+    const sep = (typeof thousandsSeparator === 'undefined') ? ',' : thousandsSeparator
+    const dec = (typeof decimalPoint === 'undefined') ? '.' : decimalPoint
+    let s: string[] = []
+	
+	if (prec > 0) {
+		s = n.toString().split('.')
+		s[1] = s[1].slice(0, prec)
+	} else {
+		s = (`${Math.round(n)}`).split('.')
+	}
+    const re = /(-?\d+)(\d{3})/
+    while (re.test(s[0])) {
+        s[0] = s[0].replace(re, `$1${sep}$2`)
+    }
+	if (s.length > 1) {
+		if ((s[1]).length < prec) {
+			s[1] = s[1]
+			s[1] += new Array(prec - s[1].length + 1).join('0')
+		}
+	}
     
-//     if ((s[1] || '').length < prec) {
-//         s[1] = s[1] || ''
-//         s[1] += new Array(prec - s[1].length + 1).join('0')
-//     }
-//     return s.join(dec)
-// }
+    return s.join(dec)
+}
 
 // /**
 //  * @description 获取duration值
@@ -585,21 +614,21 @@ export function error(err) {
 //     return `00${value}`.slice(-2)
 // }
 
-// /**
-//  * @description 在u-form的子组件内容发生变化，或者失去焦点时，尝试通知u-form执行校验方法
-//  * @param {*} instance
-//  * @param {*} event
-//  */
-// export function formValidate(instance, event): any {
-//     // todox
-//     // const formItem = uni.$u.$parent.call(instance, 'u-form-item')
-//     // const form = uni.$u.$parent.call(instance, 'u-form')
-//     // // 如果发生变化的input或者textarea等，其父组件中有u-form-item或者u-form等，就执行form的validate方法
-//     // // 同时将form-item的pros传递给form，让其进行精确对象验证
-//     // if (formItem && form) {
-//     // 	form.validateField(formItem.prop, () => {}, event)
-//     // }
-// }
+/**
+ * @description 在up-form的子组件内容发生变化，或者失去焦点时，尝试通知up-form执行校验方法
+ * @param {*} instance
+ * @param {*} event
+ */
+export function formValidate(instance, event): void {
+    // todox
+    // const formItem = uni.$u.$parent.call(instance, 'up-form-item')
+    // const form = uni.$u.$parent.call(instance, 'up-form')
+    // // 如果发生变化的input或者textarea等，其父组件中有up-form-item或者up-form等，就执行form的validate方法
+    // // 同时将form-item的pros传递给form，让其进行精确对象验证
+    // if (formItem && form) {
+    // 	form.validateField(formItem.prop, () => {}, event)
+    // }
+}
 
 // /**
 //  * @description 获取某个对象下的属性，用于通过类似'a.b.c'的形式去获取一个对象的的属性的形式

@@ -26,8 +26,11 @@ export function url(value: string): boolean {
 export function date(value: string): boolean {
     if (value == '') return false
     // 判断是否数值或者字符串数值(意味着为时间戳)，转为数值，否则new Date无法识别字符串时间戳
-    // if (number(value)) value = +value
-    return !/Invalid|NaN/.test(new Date(value).toString())
+    let valueNo = 0
+	if (number(value)) {
+		valueNo = parseInt(value)
+	}
+    return !/Invalid|NaN/.test(new Date(valueNo).toString())
 }
 
 /**
@@ -222,9 +225,8 @@ export function code(value: string, len = 6): boolean {
  * 是否函数方法
  * @param {Object} value
  */
-export function func(value: string): boolean {
-	return true
-//     return typeof value === 'export function'
+export function func(value: any): boolean {
+    return typeof value === 'function'
 }
 
 /**
@@ -232,8 +234,7 @@ export function func(value: string): boolean {
  * @param {Object} value
  */
 export function promise(value: any): boolean {
-	return true
-	// return value instanceof Promise<T>
+	return value instanceof Promise<T>
 	// return object(value) && func(value.then) && func(value.catch)
 }
 
@@ -266,12 +267,12 @@ export function regExp(o: object): boolean {
 }
 
 // export default {
-//     email,
-//     mobile,
-//     url,
-//     date,
-//     dateISO,
-//     number,
+//     email: email,
+//     mobile: mobile,
+//     url: url,
+//     date: date,
+//     dateISO: dateISO,
+//     number: number,
 //     digits,
 //     idCard,
 //     carNo,

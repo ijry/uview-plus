@@ -1,6 +1,7 @@
 import { defineMixin } from '../../libs/vue.js'
 import defProps from '../../libs/config/props.js'
-export const props = defineMixin({
+
+export const propsText = defineMixin({
     props: {
         // 主题颜色
         type: {
@@ -107,6 +108,11 @@ export const props = defineMixin({
         wordWrap: {
             type: String,
             default: () => defProps.text.wordWrap
+        },
+        // 指定返回用户信息的语言，zh_CN 简体中文，zh_TW 繁体中文，en 英文。只微信小程序有效
+        lang: {
+            type: String,
+            default: () => defProps.text.lang
         }
     }
 })
