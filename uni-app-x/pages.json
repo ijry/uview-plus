@@ -36,12 +36,12 @@
 					"navigationBarTitleText": "图标"
 				}
 			},
-			// {
-			// 	"path": "cell/cell",
-			// 	"style": {
-			// 		"navigationBarTitleText": "单元格"
-			// 	}
-			// },
+			{
+				"path": "cell/cell",
+				"style": {
+					"navigationBarTitleText": "单元格"
+				}
+			},
 			{
 				"path": "line/line",
 				"style": {
@@ -236,12 +236,14 @@
 		// 	"style": {
 		// 		"navigationBarTitleText": "徽标数"
 		// 	}
-		// }, {
-		// 	"path": "tag/tag",
-		// 	"style": {
-		// 		"navigationBarTitleText": "标签"
-		// 	}
-		// }, {
+		// } 
+		,{
+			"path": "tag/tag",
+			"style": {
+				"navigationBarTitleText": "标签"
+			}
+		}
+		// , {
 		// 	"path": "alert/alert",
 		// 	"style": {
 		// 		"navigationBarTitleText": "警告"

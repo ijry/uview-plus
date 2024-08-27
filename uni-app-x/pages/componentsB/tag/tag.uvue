@@ -1,4 +1,7 @@
 <template>
+	<!-- #ifdef APP -->
+	<scroll-view style="flex:1">
+	<!-- #endif -->
 	<view class="u-page">
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">基础功能</text>
@@ -248,8 +251,8 @@
 				    :key="index"
 				>
 					<up-tag
-					    :text="`选项${index + 1}`"
-					    :plain="!item.checked"
+					    :text="`选项${(index + 1).toString()}`"
+					    :plain="item['checked'] == false"
 					    type="warning"
 					    :name="index"
 					    @click="radioClick"
@@ -267,8 +270,8 @@
 				    :key="index"
 				>
 					<up-tag
-					    :text="`选项${index + 1}`"
-					    :plain="!item.checked"
+					    :text="`选项${(index + 1).toString()}`"
+					    :plain="item['checked'] == false"
 					    type="warning"
 					    :name="index"
 					    @click="checkboxClick"
@@ -278,6 +281,9 @@
 			</view>
 		</view>
 	</view>
+	<!-- #ifdef APP -->
+	</scroll-view>
+	<!-- #endif -->
 </template>
 
 <script>
@@ -310,13 +316,17 @@
 			}
 		},
 		methods: {
-			radioClick(name) {
+			radioClick(name: string): void {
 				this.radios.map((item, index) => {
-					item.checked = index === name ? true : false
+					item['checked'] = index === parseInt(name) ? true : false
 				})
 			},
-			checkboxClick(name) {
-				this.checkboxs[name].checked = !this.checkboxs[name].checked
+			checkboxClick(name: string): void {
+				if (this.checkboxs[parseInt(name)]?.['checked'] as Boolean) {
+					this.checkboxs[parseInt(name)]['checked'] = false
+				} else {
+					this.checkboxs[parseInt(name)]['checked'] = true
+				}
 			}
 		}
 	}
