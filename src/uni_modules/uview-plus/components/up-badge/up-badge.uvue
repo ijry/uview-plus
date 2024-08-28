@@ -1,19 +1,19 @@
 <template>
 	<text class="up-badge"
-		v-if="show && ((Number(value) === 0 ? showZero : true) || isDot)"
+		v-if="show && ((parseInt(value.toString()) === 0 ? showZero : true) || isDot)"
 		:class="[isDot ? 'up-badge--dot' : 'up-badge--not-dot',
-			inverted && 'up-badge--inverted',
-			shape === 'horn' && 'up-badge--horn',
+			inverted ? 'up-badge--inverted' : '',
+			shape === 'horn' ? 'up-badge--horn' : '',
 			inverted ? `up-badge--${type}--inverted` : `up-badge--${type}`]"
 		:style="[addStyle(customStyle), badgeStyle]"
-	>{{ isDot ? '' :showValue }}</text>
+	>{{ isDot ? '' : showValue }}</text>
 </template>
 
 <script>
-	import { props } from './props.js';
-	import { mpMixin } from '../../libs/mixin/mpMixin.js';
-	import { mixin } from '../../libs/mixin/mixin.js';
-	import { addStyle, addUnit } from '../../libs/function/index.js';
+	import { propsBadge } from './props';
+	import { mpMixin } from '../../libs/mixin/mpMixin';
+	import { mixin } from '../../libs/mixin/mixin';
+	import { addStyle, addUnit } from '../../libs/function/index';
 	/**
 	 * badge 徽标数
 	 * @description 该组件一般用于图标右上角显示未读的消息数量，提示用户点击，有圆点和圆包含文字两种形式。
@@ -37,55 +37,66 @@
 	 */
 	export default {
 		name: 'up-badge',
-		mixins: [mpMixin, props, mixin],
+		mixins: [mpMixin, mixin, propsBadge],
 		computed: {
 			// 是否将badge中心与父组件右上角重合
-			boxStyle() {
+			boxStyle(): any {
 				let style = {};
 				return style;
 			},
 			// 整个组件的样式
-			badgeStyle() {
+			badgeStyle(): any {
 				const style = {}
-				if(this.color) {
-					style.color = this.color
+				if(this.color != '') {
+					style['color'] = this.color
 				}
-				if (this.bgColor && !this.inverted) {
-					style.backgroundColor = this.bgColor
+				if (this.bgColor != '' && !this.inverted) {
+					style['backgroundColor'] = this.bgColor
 				}
 				if (this.absolute) {
-					style.position = 'absolute'
+					style['position'] = 'absolute'
+					let offsetArray:number[] = this.offset as number[]
 					// 如果有设置offset参数
-					if(this.offset.length) {
+					if(offsetArray.length > 0) {
 						// top和right分为为offset的第一个和第二个值，如果没有第二个值，则right等于top
-						const top = this.offset[0]
-						const right = this.offset[1] || top
-						style.top = addUnit(top)
-						style.right = addUnit(right)
+						const top = offsetArray[0]
+						style['top'] = addUnit(top)
+						if (offsetArray.length == 2) {
+							style['right'] = addUnit(offsetArray[1])
+						} else {
+							style['right'] = addUnit(top)
+						}
 					}
 				}
 				return style
 			},
-			showValue() {
-				switch (this.numberType) {
+			showValue(): string {
+				let valueReturn = ''
+				switch (this.numberType.toString()) {
 					case "overflow":
-						return Number(this.value) > Number(this.max) ? this.max + "+" : this.value
+						valueReturn = parseInt(this.value.toString()) > parseInt(this.max.toString()) ? this.max.toString() + "+" : this.value.toString()
 						break;
 					case "ellipsis":
-						return Number(this.value) > Number(this.max) ? "..." : this.value
+						valueReturn = parseInt(this.value.toString()) > parseInt(this.max.toString()) ? "..." : this.value.toString()
 						break;
 					case "limit":
-						return Number(this.value) > 999 ? Number(this.value) >= 9999 ?
-							Math.floor(this.value / 1e4 * 100) / 100 + "w" : Math.floor(this.value /
-								1e3 * 100) / 100 + "k" : this.value
+						valueReturn = parseInt(this.value.toString()) > 999
+								?
+									parseInt(this.value.toString()) >= 9999 ?
+									(Math.floor(parseInt(this.value.toString()) / 1e4 * 100) / 100).toString() + "w"
+									: (Math.floor(parseInt(this.value.toString()) / 1e3 * 100) / 100).toString() + "k"
+								: this.value.toString()
 						break;
 					default:
-						return Number(this.value)
+						valueReturn = this.value.toString()
 				}
+				return valueReturn
 			},
 		},
 		methods: {
-			addStyle
+			addStyle(str: any): any {
+				return addStyle(str)
+			}
 		}
 	}
 </script>
@@ -117,7 +128,7 @@
 		line-height: $up-badge-text-font-size;
 		text-align: $up-badge-text-align;
 		font-size: $up-badge-text-font-size;
-		// color: $up-badge-text-color;
+		color: $up-badge-text-color;
 
 		&--dot {
 			height: $up-badge-dot-size;

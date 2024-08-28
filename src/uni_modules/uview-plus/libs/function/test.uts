@@ -234,7 +234,7 @@ export function func(value: any): boolean {
  * @param {Object} value
  */
 export function promise(value: any): boolean {
-	return value instanceof Promise<T>
+	return value instanceof Promise
 	// return object(value) && func(value.then) && func(value.catch)
 }
 

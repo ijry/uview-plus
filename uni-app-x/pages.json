@@ -231,12 +231,13 @@
 		// 	"style": {
 		// 		"navigationBarTitleText": "搜索"
 		// 	}
-		// }, {
-		// 	"path": "badge/badge",
-		// 	"style": {
-		// 		"navigationBarTitleText": "徽标数"
-		// 	}
-		// } 
+		// }
+		, {
+			"path": "badge/badge",
+			"style": {
+				"navigationBarTitleText": "徽标数"
+			}
+		} 
 		,{
 			"path": "tag/tag",
 			"style": {
