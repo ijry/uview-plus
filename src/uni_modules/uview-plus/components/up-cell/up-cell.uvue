@@ -61,6 +61,7 @@
 	import { empty as testEmpty } from '../../libs/function/test.uts';
 	/**
 	 * cell  单元格
+	 * @author jry ijry@qq.com 2024
 	 * @description cell单元格一般用于一组列表的情况，比如个人中心页，设置页等。
 	 * @tutorial https://uview-plus.jiangruyi.com/components/cell.html
 	 * @property {String | Number}	title			标题

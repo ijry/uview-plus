@@ -124,7 +124,7 @@
 		border-top-left-radius: $up-badge-dot-radius;
 		border-bottom-left-radius: $up-badge-dot-radius;
 		border-bottom-right-radius: $up-badge-dot-radius;
-		@include flex;
+		// @include flex;
 		line-height: $up-badge-text-font-size;
 		text-align: $up-badge-text-align;
 		font-size: $up-badge-text-font-size;

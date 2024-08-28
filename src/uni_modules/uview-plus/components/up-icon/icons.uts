@@ -1,4 +1,12 @@
-export default {
+/*
+ * @Author       : jry
+ * @Description  : uview-plus component's props mixin file
+ * @version      : 4.0
+ * @Date         : 2024-04-22 16:44:21
+ * @LastAuthor   : jry
+ * @lastTime     : 2024-08-28 12:27:20
+ */
+ export default {
     'upicon-level': '\ue693',
     'upicon-column-line': '\ue68e',
     'upicon-checkbox-mark': '\ue807',

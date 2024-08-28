@@ -67,6 +67,7 @@ import { addStyle, addUnit } from '../../libs/function/index';
 import { throttle } from '../../libs/function/throttle';
 /**
  * button 按钮
+ * @author jry ijry@qq.com 2024
  * @description Button 按钮
  * @tutorial https://ijry.github.io/uview-plus/components/button.html
  *

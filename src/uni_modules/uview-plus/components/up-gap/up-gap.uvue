@@ -9,6 +9,7 @@
 	import { addStyle, addUnit, deepMerge } from '../../libs/function/index';
 	/**
 	 * gap 间隔槽
+	 * @author jry ijry@qq.com 2024
 	 * @description 该组件一般用于内容块之间的用一个灰色块隔开的场景，方便用户风格统一，减少工作量
 	 * @tutorial https://ijry.github.io/uview-plus/components/gap.html
 	 * @property {String}			bgColor			背景颜色 （默认 'transparent' ）

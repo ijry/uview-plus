@@ -1,3 +1,11 @@
+/*
+ * @Author       : jry
+ * @Description  : uview-plus component's props mixin file
+ * @version      : 4.0
+ * @Date         : 2024-04-22 16:44:21
+ * @LastAuthor   : jry
+ * @lastTime     : 2024-08-28 12:27:20
+ */
 import { defineMixin } from '../../libs/vue'
 import defProps from './col'
 let crtProp = defProps['col'] as UTSJSONObject
