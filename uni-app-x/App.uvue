@@ -36,7 +36,10 @@
 	}
 </script>
 
-<style>	/*@import "@/uni_modules/uview-plus/index.scss";*/	@import "common/demo.scss";
+<style lang="scss">
+	@import "@/uni_modules/uview-plus/index.scss";
+	@import "@/common/demo.scss";
+
 	/*每个页面公共css */
 	.uni-row {
 		flex-direction: row;
