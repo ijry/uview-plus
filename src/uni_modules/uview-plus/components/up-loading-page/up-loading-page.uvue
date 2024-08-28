@@ -10,7 +10,7 @@
             backgroundColor: bgColor,
             display: 'flex',
             zIndex: zIndex,
-            ...customStyle
+            ...customStyleParse
         }"
     >
         <view class="up-loading-page">
@@ -77,8 +77,13 @@ export default {
     data() {
         return {};
     },
+	computed: {
+		customStyleParse(): UTSJSONObject {
+			return this.customStyle as UTSJSONObject
+		}
+	},
     methods: {
-        addUnit(str: any) {
+        addUnit(str: any): string {
             return addUnit(str)
         }
     }

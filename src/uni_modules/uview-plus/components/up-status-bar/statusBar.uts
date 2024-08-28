@@ -1,0 +1,15 @@
+/*
+ * @Author       : jry
+ * @Description  :
+ * @version      : 4.0
+ * @Date         : 2021-08-20 16:44:21
+ * @LastAuthor   : jry
+ * @lastTime     : 2024-08-28 21:58:38
+ * @FilePath     : /uview-plus/libs/config/props/statusBar
+ */
+export default {
+    // statusBar
+    statusBar: {
+        bgColor: 'transparent'
+    }
+} as UTSJSONObject

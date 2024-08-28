@@ -84,7 +84,8 @@
 					{left: 0, top: 0},{left: 0, top: 0},{left: 0, top: 0},{left: 0, top: 0},
 					{left: 0, top: 0},{left: 0, top: 0},{left: 0, top: 0},{left: 0, top: 0},
 					{left: 0, top: 0},{left: 0, top: 0},{left: 0, top: 0},{left: 0, top: 0}
-				] as UTSJSONObject[]
+				] as UTSJSONObject[],
+				animationFrame: 0
 			}
 		},
 		computed: {
@@ -109,7 +110,7 @@
 			this.init()
 		},
 		beforeMount() {
-			cancelAnimationFrame(this.rotateLoader)
+			cancelAnimationFrame(this.animationFrame)
 		},
 		methods: {
 			addStyle(val: any): any {
@@ -118,16 +119,16 @@
 			addUnit(val: any): string {
 				return addUnit(val)
 			},
-			rotateLoader() {  
+			rotateLoader(): void {  
 				this.degree = (this.degree + 3) % 360; // 每次增加3度，循环回到0度  
 				this.transform = `rotate(${this.degree.toString()}deg)`;  
-				requestAnimationFrame(this.rotateLoader); // 递归调用以保持动画  
+				this.animationFrame = requestAnimationFrame(this.rotateLoader); // 递归调用以保持动画  
 			},
-			init() {
+			init(): void {
 				this.calcSpinnerTopAndLeft()
 				this.rotateLoader()
 			},
-			calculateSquareRadius(sideLength: number) {  
+			calculateSquareRadius(sideLength: number): number {  
 				// 计算正方形的对角线长度  
 				const diagonalLength = Math.sqrt(sideLength * sideLength + sideLength * sideLength);  
 				// 对角线长度的一半即为等效圆的半径  
@@ -192,7 +193,7 @@
 	$up-loading-icon-dot-before-height:25% !default;
 	$up-loading-icon-dot-before-margin:0 auto !default;
 	$up-loading-icon-dot-before-background-color:currentColor !default;
-	$up-loading-icon-dot-before-border-radius:40% !default;
+	$up-loading-icon-dot-before-border-radius:8px !default;
 
 	.up-loading-icon {
 		display: flex;
@@ -246,10 +247,10 @@
 		}
 	}
 
-	:host {
-		font-size: $up-loading-icon-host-font-size;
-		line-height: $up-loading-icon-host-line-height;
-	}
+	// :host {
+	// 	font-size: $up-loading-icon-host-font-size;
+	// 	line-height: $up-loading-icon-host-line-height;
+	// }
 
 	.up-loading-icon {
 		&__spinner--spinner {
@@ -284,19 +285,19 @@
 
 	$radius: v-bind(size)px;
 	@for $i from 1 through 12 {
-		.up-loading-icon__dot:nth-of-type(#{$i}) {
-			transform: rotate(($i + 2) * 30deg);
-			opacity: 1 - 0.0625 * ($i - 1);
-		}
+		// .up-loading-icon__dot:nth-of-type(#{$i}) {
+		// 	transform: rotate(($i + 2) * 30deg);
+		// 	opacity: 1 - 0.0625 * ($i - 1);
+		// }
 	}
 
-	@keyframes up-rotate {
-		0% {
-			transform: rotate(0deg)
-		}
+	// @keyframes up-rotate {
+	// 	0% {
+	// 		transform: rotate(0deg)
+	// 	}
 
-		to {
-			transform: rotate(1turn)
-		}
-	}
+	// 	to {
+	// 		transform: rotate(1turn)
+	// 	}
+	// }
 </style>
