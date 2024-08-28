@@ -10,7 +10,7 @@
 			:class="[`up-loading-icon__spinner--${mode}`]"
 			ref="ani"
 			:style="{
-				color: color,
+				transform: transform,
 				width: addUnit(size),
 				height: addUnit(size),
 				borderTopColor: color,
@@ -18,7 +18,7 @@
 				borderLeftColor: otherBorderColor,
 				borderRightColor: otherBorderColor,
 				'animation-duration': `${duration}ms`,
-				'animation-timing-function': mode === 'semicircle' || mode === 'circle' ? timingFunction : ''
+				'animation-timing-function': (mode === 'semicircle' || mode === 'circle') ? timingFunction : ''
 			}"
 		>
 			<template v-if="mode === 'spinner'">
@@ -26,6 +26,7 @@
 					v-for="(item, index) in array12"
 					:key="index"
 					class="up-loading-icon__dot"
+					:style="spinnerStyle[index]"
 				>
 				</view>
 			</template>
@@ -45,10 +46,11 @@
 	import { propsLoadicon } from './props';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
-	import { addUnit, addStyle } from '../../libs/function/index';
+	import { addUnit, addStyle, getPx } from '../../libs/function/index';
 	import { colorGradient } from '../../libs/function/colorGradient';
 	/**
 	 * loading 加载动画
+	 * @author jry ijry@qq.com 2024
 	 * @description 警此组件为一个小动画，目前用在uView的loadmore加载更多和switch开关等组件的正在加载状态场景。
 	 * @tutorial https://ijry.github.io/uview-plus/components/loading.html
 	 * @property {Boolean}			show			是否显示组件  (默认 true)
@@ -76,6 +78,13 @@
 				aniAngel: 360, // 动画旋转角度
 				webviewHide: false, // 监听webview的状态，如果隐藏了页面，则停止动画，以免性能消耗
 				loading: false, // 是否运行中，针对nvue使用
+				degree: 0, // js方案旋转角度因为uni-app-x不支持keyframes
+				transform: '', // js方案旋转
+				spinnerStyle: [
+					{left: 0, top: 0},{left: 0, top: 0},{left: 0, top: 0},{left: 0, top: 0},
+					{left: 0, top: 0},{left: 0, top: 0},{left: 0, top: 0},{left: 0, top: 0},
+					{left: 0, top: 0},{left: 0, top: 0},{left: 0, top: 0},{left: 0, top: 0}
+				]
 			}
 		},
 		computed: {
@@ -99,6 +108,9 @@
 		mounted() {
 			this.init()
 		},
+		beforeMount() {
+			cancelAnimationFrame(this.rotateLoader)
+		},
 		methods: {
 			addStyle(val: any): any {
 				return addStyle(val)
@@ -106,29 +118,36 @@
 			addUnit(val: any): string {
 				return addUnit(val)
 			},
-			init() {
-				// setTimeout(() => {
-				// 	if (this.show) {
-				// 		this.addEventListenerToWebview()
-				// 	}
-				// }, 20)
+			rotateLoader() {  
+				this.degree = (this.degree + 3) % 360; // 每次增加3度，循环回到0度  
+				this.transform = `rotate(${this.degree.toString()}deg)`;  
+				requestAnimationFrame(this.rotateLoader); // 递归调用以保持动画  
 			},
-			// 监听webview的显示与隐藏
-			addEventListenerToWebview(): void {
-				// webview的堆栈
-				const pages = getCurrentPages()
-				// 当前页面
-				const page = pages[pages.length - 1]
-				// // 当前页面的webview实例
-				// const currentWebview = page.$getAppWebview()
-				// // 监听webview的显示与隐藏，从而停止或者开始动画(为了性能)
-				// currentWebview.addEventListener('hide', () => {
-				// 	this.webviewHide = true
-				// })
-				// currentWebview.addEventListener('show', () => {
-				// 	this.webviewHide = false
-				// })
-			}
+			init() {
+				this.calcSpinnerTopAndLeft()
+				this.rotateLoader()
+			},
+			calculateSquareRadius(sideLength: number) {  
+				// 计算正方形的对角线长度  
+				const diagonalLength = Math.sqrt(sideLength * sideLength + sideLength * sideLength);  
+				// 对角线长度的一半即为等效圆的半径  
+				const radius = diagonalLength / 2;  
+				return radius;  
+			},
+			// 因为uni-app-x不支持:before所以实现Spinner得用JS计算坐标
+			calcSpinnerTopAndLeft(){
+				this.array12.forEach((ele, index) => {
+					const angle = index * (360 / 12); // 计算角度  
+					const angleRad = angle * (Math.PI / 180); // 转换为弧度  
+					const banjing = this.calculateSquareRadius(parseInt(getPx(parseInt(this.size.toString()) * 2)));  // 半径
+					const xOffset = banjing * Math.cos(angleRad);
+					const yOffset = banjing * Math.sin(angleRad);  
+					// 假设.loading-container的position是relative，并且宽度和高度都是100% 
+					this.spinnerStyle[index]['left'] = `${Math.round(45 + xOffset).toString()}%`; 
+					this.spinnerStyle[index]['top'] = `${Math.round(34 + yOffset).toString()}%`;  
+					// 注意：这里可能需要调整50%的偏移量
+				})
+			},
 		}
 	}
 </script>
@@ -224,6 +243,60 @@
 
 		&--vertical {
 			flex-direction: column
+		}
+	}
+
+	:host {
+		font-size: $up-loading-icon-host-font-size;
+		line-height: $up-loading-icon-host-line-height;
+	}
+
+	.up-loading-icon {
+		&__spinner--spinner {
+			animation-timing-function: steps(12)
+		}
+
+		&__text:empty {
+			display: none
+		}
+
+		&--vertical &__text {
+			margin: $up-loading-icon-vertical-margin;
+			color: $up-content-color;
+		}
+
+		&__dot {
+			position: absolute;
+			// top: $up-loading-icon-dot-top;
+			// left: $up-loading-icon-dot-left;
+			width: $up-loading-icon-dot-width;
+			height: $up-loading-icon-dot-height;
+
+			//&:before {
+				width: $up-loading-icon-dot-before-width;
+				height: $up-loading-icon-dot-before-height;
+				// margin: $up-loading-icon-dot-before-margin;
+				background-color: $up-loading-icon-dot-before-background-color;
+				border-radius: $up-loading-icon-dot-before-border-radius;
+			//}
+		}
+	}
+
+	$radius: v-bind(size)px;
+	@for $i from 1 through 12 {
+		.up-loading-icon__dot:nth-of-type(#{$i}) {
+			transform: rotate(($i + 2) * 30deg);
+			opacity: 1 - 0.0625 * ($i - 1);
+		}
+	}
+
+	@keyframes up-rotate {
+		0% {
+			transform: rotate(0deg)
+		}
+
+		to {
+			transform: rotate(1turn)
 		}
 	}
 </style>

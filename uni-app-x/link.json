@@ -1,4 +1,5 @@
 {
+    // npx @dcloudio/toolkit link uview-plus
     // 当前项目目录与源目录的软链映射关系表
     // key 为当前项目的目录结构，value 为源目录
     "uni_modules": ["/Users/jry/Documents/www/xyito/open/uview-plus/src/uni_modules"]
