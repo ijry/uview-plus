@@ -88,21 +88,73 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">右侧自定义插槽</text>
+			<text class="u-demo-block__title">自定义内容插槽</text>
 			<view class="u-demo-block__content">
 				<up-tabs :list="list1">
-					<view
-						slot="right"
-						style="padding-left: 4px;"
-						@tap="$u.toast('插槽被点击')"
-					>
-						<up-icon
-							name="list"
-							size="21"
-							bold
-						></up-icon>
-					</view>
+					<template #default="scope">
+						<text class="u-tabs__wrapper__nav__item__text"
+							style="color: red">
+							{{scope.item?.[scope.keyName] || '-'}}
+						</text>
+					</template>
 				</up-tabs>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">右侧自定义插槽</text>
+			<view class="u-demo-block__content">
+				<up-tabs :list="list1" v-model:current="list1Current">
+					<template #right>
+						<view
+							style="padding-left: 4px;"
+							@tap="$u.toast('插槽被点击')"
+						>
+							<up-icon
+								name="list"
+								size="21"
+								bold
+							></up-icon>
+						</view>
+					</template>
+				</up-tabs>
+				<up-button type="primary" size="small" style="width: 120px;"
+					@click="nextTab" :text="'切换下一个' + list1Current">
+				</up-button>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">在swiper中使用</text>
+			<view class="u-demo-block__content">
+				<swiper class="swiper" >
+				  <swiper-item item-id="A">
+					<up-tabs :list="list1">
+						<template #default="scope">
+							<text class="u-tabs__wrapper__nav__item__text"
+								style="color: red">
+								{{scope.item?.[scope.keyName] || '-'}}
+							</text>
+						</template>
+					</up-tabs>
+				  </swiper-item>
+				  <swiper-item item-id="A">
+				  <up-tabs
+				  	:list="list4"
+				  	lineWidth="30"
+				  	lineColor="#f56c6c"
+				  	:activeStyle="{
+				  		color: '#303133',
+				  		fontWeight: 'bold',
+				  		transform: 'scale(1.05)'
+				  	}"
+				  	:inactiveStyle="{
+				  		color: '#606266',
+				  		transform: 'scale(1)'
+				  	}"
+				  	itemStyle="padding-left: 15px; padding-right: 15px; height: 34px;"
+				  >
+				  </up-tabs>
+				  </swiper-item>
+				</swiper>
 			</view>
 		</view>
 	</view>
@@ -211,7 +263,8 @@
 					}, {
 						name: '科技'
 					}
-				]
+				],
+				list1Current: 1
 			}
 		},
 		onLoad() {
@@ -220,6 +273,13 @@
 		methods: {
 			click(item) {
 				console.log('item', item);
+			},
+			nextTab() {
+				if (this.list1.length <= (this.list1Current + 1)) {
+					this.list1Current = 0;
+				} else {
+					this.list1Current = this.list1Current + 1;
+				}
 			}
 		}
 	}

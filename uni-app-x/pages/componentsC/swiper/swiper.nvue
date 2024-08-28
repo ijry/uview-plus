@@ -49,18 +49,19 @@
 				@change="e => current = e.current"
 				:autoplay="false"
 			>
-				<view
-					slot="indicator"
-					class="indicator"
-				>
+				<template #indicator>
 					<view
-						class="indicator__dot"
-						v-for="(item, index) in list5"
-						:key="index"
-						:class="[index === current && 'indicator__dot--active']"
+						class="indicator"
 					>
+						<view
+							class="indicator__dot"
+							v-for="(item, index) in list5"
+							:key="index"
+							:class="[index === current && 'indicator__dot--active']"
+						>
+						</view>
 					</view>
-				</view>
+				</template>
 			</up-swiper>
 			<up-gap
 				bgColor="transparent"
@@ -72,12 +73,13 @@
 				:autoplay="false"
 				indicatorStyle="right: 20px"
 			>
-				<view
-					slot="indicator"
-					class="indicator-num"
-				>
-					<text class="indicator-num__text">{{ currentNum + 1 }}/{{ list6.length }}</text>
-				</view>
+				<template #indicator>
+					<view
+						class="indicator-num"
+					>
+						<text class="indicator-num__text">{{ currentNum + 1 }}/{{ list6.length }}</text>
+					</view>
+				</template>
 			</up-swiper>
 		</view>
 		<!-- #ifndef APP-NVUE || MP-TOUTIAO -->

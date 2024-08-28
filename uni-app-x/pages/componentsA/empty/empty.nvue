@@ -25,12 +25,13 @@
 				:key="index"
 				isLink
 			>
-				<image
-					slot="icon"
-					class="u-cell-icon"
-					:src="item.iconUrl"
-					mode="widthFix"
-				></image>
+				<template #icon>
+					<image
+						class="u-cell-icon"
+						:src="item.iconUrl"
+						mode="widthFix"
+					></image>
+				</template>
 			</up-cell>
 		</div>
 	</view>

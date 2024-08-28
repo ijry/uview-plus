@@ -333,12 +333,14 @@
 		// 	"style": {
 		// 		"navigationBarTitleText": "骨架屏"
 		// 	}
-		// }, {
-		// 	"path": "input/input",
-		// 	"style": {
-		// 		"navigationBarTitleText": "输入框"
-		// 	}
-		// }, {
+		// }
+		,{
+			"path": "input/input",
+			"style": {
+				"navigationBarTitleText": "输入框"
+			}
+		}
+		// , {
 		// 	"path": "album/album",
 		// 	"style": {
 		// 		"navigationBarTitleText": "相册"

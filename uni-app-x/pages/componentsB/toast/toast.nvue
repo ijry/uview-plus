@@ -15,12 +15,13 @@
 				:icon="item.iconUrl"
 				@click="showToast(item)"
 			>
-				<!-- <image
-				    slot="icon"
-				    class="u-cell-icon"
-				    :src="getIcon(item.icon)"
-				    mode="widthFix"
-				></image> -->
+				<!-- <template #icon>
+					<image
+						class="u-cell-icon"
+						:src="getIcon(item.icon)"
+						mode="widthFix"
+					></image>
+				</template> -->
 			</up-cell>
 		</up-cell-group>
 	</view>
