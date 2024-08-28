@@ -79,14 +79,14 @@
 			// 		"navigationStyle": "custom"
 			// 	}
 			// },
-			// {
-			// 	"path": "loading-page/loading-page",
-			// 	"style": {
-			// 		"navigationBarTitleText": "加载页",
-			// 		"navigationStyle": "custom"
-			// 	}
-			// },
-			// {
+			,{
+				"path": "loading-page/loading-page",
+				"style": {
+					"navigationBarTitleText": "加载页",
+					"navigationStyle": "custom"
+				}
+			}
+			// ,{
 			// 	"path": "popup/popup",
 			// 	"style": {
 			// 		"navigationBarTitleText": "弹窗",

@@ -78,10 +78,10 @@
 			}
 		},
 		methods: {
-			navigateBack() {
+			navigateBack(): void {
 				uni.navigateBack()
 			},
-			openLoadingPage(indexNum) {
+			openLoadingPage(indexNum: number): void{
 				this.loadingPageData = {
 					loadingText: '',
 					image: '',
@@ -112,7 +112,7 @@
 					// 自定义背景色
 					this.loadingPageData.loadingMode = 'spinner'
 					this.loadingPageData.bgColor = 'rgba(0, 0, 0, 0.3)'
-					this.loadingPageData.loadingText = "uView UI"
+					this.loadingPageData.loadingText = "uview-plus"
 					this.loadingPageData.color = '#eee'
 					this.loadingPageData.loadingColor = '#ddd'
 				}
