@@ -14,8 +14,8 @@
 							:customStyle="{marginBottom: '8px'}"
 							v-for="(item, index) in radiolist1"
 							:key="index"
-							:label="item.name"
-							:name="item.name"
+							:label="item['name']"
+							:name="item['name']"
 							@change="radioChange"
 						>
 						</up-radio>
@@ -38,8 +38,8 @@
 							:customStyle="{marginBottom: '8px'}"
 							v-for="(item, index) in radiolist2"
 							:key="index"
-							:label="item.name"
-							:name="item.name"
+							:label="item['name']"
+							:name="item['name']"
 						>
 						</up-radio>
 					</up-radio-group>
@@ -60,9 +60,9 @@
 							:customStyle="{marginBottom: '8px'}"
 							v-for="(item, index) in radiolist3"
 							:key="index"
-							:label="item.name"
-							:name="item.name"
-							:disabled="!index"
+							:label="item['name']"
+							:name="item['name']"
+							:disabled="index == 0"
 						>
 						</up-radio>
 					</up-radio-group>
@@ -83,8 +83,8 @@
 							:customStyle="{marginBottom:'8px'}"
 							v-for="(item, index) in radiolist4"
 							:key="index"
-							:label="item.name"
-							:name="item.name"
+							:label="item['name']"
+							:name="item['name']"
 						>
 						</up-radio>
 					</up-radio-group>
@@ -105,8 +105,8 @@
 							:customStyle="{marginBottom: '8px'}"
 							v-for="(item, index) in radiolist5"
 							:key="index"
-							:label="item.name"
-							:name="item.name"
+							:label="item['name']"
+							:name="item['name']"
 						>
 						</up-radio>
 					</up-radio-group>
@@ -126,8 +126,8 @@
 							:customStyle="{marginRight: '16px'}"
 							v-for="(item, index) in radiolist6"
 							:key="index"
-							:label="item.name"
-							:name="item.name"
+							:label="item['name']"
+							:name="item['name']"
 						>
 						</up-radio>
 					</up-radio-group>
@@ -149,8 +149,8 @@
 							:customStyle="{marginBottom: '16px'}"
 							v-for="(item, index) in radiolist7"
 							:key="index"
-							:label="item.name"
-							:name="item.name"
+							:label="item['name']"
+							:name="item['name']"
 						>
 						</up-radio>
 					</up-radio-group>
@@ -299,15 +299,15 @@
 			}
 		},
 		watch: {
-			radiovalue1(newValue, oldValue) {
+			radiovalue1(newValue: any, oldValue: any) {
 				console.log('v-model', newValue);
 			}
 		},
 		methods: {
-			groupChange(n) {
+			groupChange(n: any) {
 				console.log('groupChange', n);
 			},
-			radioChange(n) {
+			radioChange(n: any) {
 				console.log('radioChange', n);
 			}
 		}

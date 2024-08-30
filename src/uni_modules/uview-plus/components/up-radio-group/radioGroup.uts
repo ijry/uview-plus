@@ -1,11 +1,11 @@
 /*
- * @Author       : LQ,jry
+ * @Author       : jry
  * @Description  :
- * @version      : 3.0
- * @Date         : 2021-08-20 16:44:21
+ * @version      : 4.0
+ * @Date         : 2024-08-30 23:26:58
  * @LastAuthor   : jry
- * @lastTime     : 2024-08-20 14:20:58
- * @FilePath     : /uview-plus/libs/config/props/radioGroup.js
+ * @lastTime     : 2024-08-30 23:26:58
+ * @FilePath     : /uview-plus/libs/config/props/radioGroup
  */
 export default {
     // radio-group组件

@@ -92,7 +92,7 @@
 		name: 'up-cell',
 		data() {
 			return {
-
+				parentData: {} as UTSJSONObject
 			}
 		},
 		mixins: [mpMixin, mixin, propsCell],

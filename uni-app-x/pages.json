@@ -104,14 +104,14 @@
 			// 	"style": {
 			// 		"navigationBarTitleText": "吸顶"
 			// 	}
-			// },
-			// {
-			// 	"path": "radio/radio",
-			// 	"style": {
-			// 		"navigationBarTitleText": "单选框"
-			// 	}
-			// },
-			// {
+			// }
+			,{
+				"path": "radio/radio",
+				"style": {
+					"navigationBarTitleText": "单选框"
+				}
+			}
+			// ,{
 			// 	"path": "checkbox/checkbox",
 			// 	"style": {
 			// 		"navigationBarTitleText": "复选框"

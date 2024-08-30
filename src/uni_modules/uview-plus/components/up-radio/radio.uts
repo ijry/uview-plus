@@ -1,0 +1,27 @@
+/*
+ * @Author       : jry
+ * @Description  :
+ * @version      : 4.0
+ * @Date         : 2021-08-30 23:14:21
+ * @LastAuthor   : jry
+ * @lastTime     : 2024-08-30 23:20:58
+ * @FilePath     : /uview-plus/libs/config/props/radio
+ */
+export default {
+    // radio组件
+    radio: {
+        name: '',
+        shape: '',
+        disabled: '',
+        labelDisabled: '',
+        activeColor: '',
+        inactiveColor: '',
+        iconSize: '',
+        labelSize: '',
+        label: '',
+        labelColor: '',
+        size: '',
+        iconColor: '',
+        placement: ''
+    }
+} as UTSJSONObject

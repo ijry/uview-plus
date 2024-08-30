@@ -138,16 +138,22 @@ export const mixin = defineMixin({
             // 之所以需要这么做，是因为所有端中，头条小程序不支持通过this.parent.xxx去监听父组件参数的变化
             // 此处并不会自动更新子组件的数据，而是依赖父组件up-radio-group去监听data的变化，手动调用更新子组件的方法去重新获取
             this.parent = this.getParent(parentName)
-            // console.log('this.parent', this.parent)
-            // todo
-            // if (this.parent.children) {
+            console.log('this.parent', this.parent)
+            // if (this.parent.$data?.['children'] != null) {
             //     // 如果父组件的children不存在本组件的实例，才将本实例添加到父组件的children中
-            //     this.parent.children.indexOf(this) === -1 && this.parent.children.push(this)
+            //     // if (this.parent.$data['children'].indexOf(this) === -1) {
+            //     //     this.parent.$data['children'].push(this)
+            //     // }
             // }
             if (this.parent != null) {
                 // 历遍parentData中的属性，将parent中的同名属性赋值给parentData
                 UTSJSONObject.keys(this.parentData).map((key: string) => {
-                    this.parentData[key] = this.parent?.$props?.[key]
+                    if (this.parent?.$props?.[key] != null) {
+                        this.parentData[key] = this.parent?.$props?.[key]
+                    }
+                    if (this.parent?.$data?.[key] != null) {
+                        this.parentData[key] = this.parent?.$data?.[key]
+                    }
                 })
             }
 			return {}
