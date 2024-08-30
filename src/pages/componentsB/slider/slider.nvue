@@ -66,6 +66,7 @@
 				<up-slider
 					isRange
 					showValue
+					step="2"
 				    v-model:rangeValue="value6"
 					height="2px"
 				></up-slider>
