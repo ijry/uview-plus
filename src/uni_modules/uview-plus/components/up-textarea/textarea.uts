@@ -1,0 +1,36 @@
+/*
+ * @Author       : jry
+ * @Description  :
+ * @version      : 4.0
+ * @Date         : 2021-08-30 14:00:21
+ * @LastAuthor   : jry
+ * @lastTime     : 2024-08-30 14:00:58
+ * @FilePath     : /uview-plus/libs/config/props/textarea
+ */
+export default {
+	// textarea 组件
+	textarea: {
+		value: '',
+		placeholder: '',
+		placeholderClass: 'textarea-placeholder',
+		placeholderStyle: 'color: #c0c4cc',
+		height: 70,
+		confirmType: 'done',
+		disabled: false,
+		count: false,
+		focus: false,
+		autoHeight: false,
+		fixed: false,
+		cursorSpacing: 0,
+		cursor: '',
+		showConfirmBar: true,
+		selectionStart: -1,
+		selectionEnd: -1,
+		adjustPosition: true,
+		disableDefaultPadding: false,
+		holdKeyboard: false,
+		maxlength: 140,
+		border: 'surround',
+		formatter: function() {}
+	}
+} as UTSJSONObject

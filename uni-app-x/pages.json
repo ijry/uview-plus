@@ -295,12 +295,14 @@
 		// 		"navigationBarTitleText": "表单",
 		// 		"navigationStyle": "custom"
 		// 	}
-		// }, {
-		// 	"path": "textarea/textarea",
-		// 	"style": {
-		// 		"navigationBarTitleText": "文本域"
-		// 	}
-		// }, {
+		// }
+		{
+			"path": "textarea/textarea",
+			"style": {
+				"navigationBarTitleText": "文本域"
+			}
+		},
+		// , {
 		// 	"path": "noNetwork/noNetwork",
 		// 	"style": {
 		// 		"navigationBarTitleText": "无网络提示"
