@@ -376,15 +376,15 @@
 					switch (index) {
 						case 0:
 							return Math.round(
-								Math.max(this.min, Math.min(value, this.rangeValue[1] - this.step,this.max))
-								/ this.step
-							) * this.step;
+								Math.max(this.min, Math.min(value, this.rangeValue[1] - parseInt(this.step),this.max))
+								/ parseInt(this.step)
+							) * parseInt(this.step);
 							break;
 						case 1:
 							return Math.round(
-								Math.max(this.min, this.rangeValue[0] + this.step, Math.min(value, this.max))
-								/ this.step
-							) * this.step;
+								Math.max(this.min, this.rangeValue[0] + parseInt(this.step), Math.min(value, this.max))
+								/ parseInt(this.step)
+							) * parseInt(this.step);
 							break;
 						default:
 							break;
@@ -392,8 +392,8 @@
 				} else {
 					return Math.round(
 						Math.max(this.min, Math.min(value, this.max))
-						/ this.step
-					) * this.step;
+						/ parseInt(this.step)
+					) * parseInt(this.step);
 				}
 			}
 		}
