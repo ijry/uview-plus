@@ -619,7 +619,7 @@ export function priceFormat(numberOri: any, decimals = 0, decimalPoint = '.', th
  * @param {*} instance
  * @param {*} event
  */
-export function formValidate(instance, event): void {
+export function formValidate(instance: any, event: any): void {
     // todox
     // const formItem = uni.$u.$parent.call(instance, 'up-form-item')
     // const form = uni.$u.$parent.call(instance, 'up-form')

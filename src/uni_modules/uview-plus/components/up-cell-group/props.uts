@@ -10,7 +10,7 @@ import { defineMixin } from '../../libs/vue.uts'
 import defProps from '../../libs/config/props.uts'
 let cellGroup = defProps['cellGroup'] as UTSJSONObject
 
-export const props = defineMixin({
+export const propsCellGroup = defineMixin({
     props: {
         // 分组标题
         title: {

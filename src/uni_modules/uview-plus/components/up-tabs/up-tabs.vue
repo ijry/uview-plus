@@ -128,7 +128,11 @@
 				handler (newValue, oldValue) {
 					// 内外部值不相等时，才尝试移动滑块
 					if (newValue !== this.innerCurrent) {
-						this.innerCurrent = newValue
+						if (typeof newValue == 'string') {
+							this.innerCurrent = parseInt(newValue)
+						} else {
+							this.innerCurrent = newValue
+						}
 						this.$nextTick(() => {
 							this.resize()
 						})
@@ -147,7 +151,9 @@
 				return index => {
 					const style = {}
 					// 取当期是否激活的样式
-					const customeStyle = index === this.innerCurrent ? addStyle(this.activeStyle) : addStyle(this.inactiveStyle)
+					const customeStyle = (index == this.innerCurrent)
+						 ? addStyle(this.activeStyle) 
+						 : addStyle(this.inactiveStyle)
 					// 如果当前菜单被禁用，则加上对应颜色，需要在此做处理，是因为nvue下，无法在style样式中通过!import覆盖标签的内联样式
 					if (this.list[index].disabled) {
 						style.color = '#c8c9cc'
