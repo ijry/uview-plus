@@ -1,8 +1,15 @@
 <template>
 	<view class="u-qrcode" @longpress="longpress">
 		<view class="u-qrcode__content" @click="preview">
+			<!-- #ifndef APP-NVUE -->
 			<canvas class="u-qrcode__canvas"
 				:id="cid" :canvas-id="cid" :style="{ width: size + unit, height: size + unit }" />
+			<!-- #endif -->
+			<!-- #ifdef APP-NVUE -->
+			<gcanvas class="u-qrcode__canvas" ref="gcanvess"
+				:style="{ width: size + unit, height: size + unit }">
+			</gcanvas>
+			<!-- #endif -->
 			<view v-if="showLoading && loading" class="u-qrcode__loading"
 				:style="{ width: size + unit, height: size + unit }">
 				<up-loading-icon vertical :text="loadingText" textSize="14px"></up-loading-icon>
@@ -17,6 +24,13 @@
 
 <script>
 import QRCode from "./qrcode.js"
+// #ifdef APP-NVUE
+// https://github.com/dcloudio/NvueCanvasDemo/blob/master/README.md
+import {
+	enable,
+	WeexBridge
+} from '../../libs/util/gcanvas/index.js';
+// #endif
 let qrcode
 export default {
 	name: "u-qrcode",
@@ -96,17 +110,43 @@ export default {
 				{
 					name: '保存二维码',
 				}
-			]
+			],
+			ganvas: null,
+			context: '',
+			canvasObj: {}
+		}
+	},
+	mounted: function () {
+		// #ifdef APP-NVUE
+		/*获取元素引用*/
+		this.ganvas = this.$refs["gcanvess"]
+		/*通过元素引用获取canvas对象*/
+		this.canvasObj = enable(this.ganvas, {
+			bridge: WeexBridge
+		})
+		/*获取绘图所需的上下文，目前不支持3d*/
+		this.context = this.canvasObj.getContext('2d')
+		// #endif
+
+		if (this.loadMake) {
+			if (!this._empty(this.val)) {
+				setTimeout(() => {
+					this._makeCode()
+				}, 0);
+			}
 		}
 	},
 	methods: {
 		_makeCode() {
 			let that = this
 			if (!this._empty(this.val)) {
+				// #ifndef APP-NVUE
 				this.loading = true
+				// #endif
 				qrcode = new QRCode({
 					context: that, // 上下文环境
 					canvasId: that.cid, // canvas-id
+					nvueContext: that.context,
 					usingComponents: that.usingComponents, // 是否是自定义组件
 					showLoading: false, // 是否显示loading
 					loadingText: that.loadingText, // loading文字
@@ -225,16 +265,7 @@ export default {
 		}
 	},
 	computed: {
-	},
-	mounted: function () {
-		if (this.loadMake) {
-			if (!this._empty(this.val)) {
-				setTimeout(() => {
-					this._makeCode()
-				}, 0);
-			}
-		}
-	},
+	}
 }
 </script>
 <style lang="scss" scoped>
