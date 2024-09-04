@@ -27,4 +27,4 @@ export default {
         borderBottom: false,
         iconPlacement: 'left'
     }
-} as UTSJSONObject
+}
