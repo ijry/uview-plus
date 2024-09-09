@@ -111,7 +111,7 @@ function toCamelCase(str) {
 const install = (Vue) => {
     // #ifdef H5
     components.forEach(function(component) {
-        Vue.component(component.name, component);
+        Vue.component(component.name, component); 
     });
     // #endif
 

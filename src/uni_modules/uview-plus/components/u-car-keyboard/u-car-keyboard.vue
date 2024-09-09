@@ -74,7 +74,7 @@
 	import { randomArray, sleep } from '../../libs/function/index';
 	/**
 	 * keyboard 键盘组件
-	 * @description 此为uView自定义的键盘面板，内含了数字键盘，车牌号键，身份证号键盘3种模式，都有可以打乱按键顺序的选项。
+	 * @description 此为uview-plus自定义的键盘面板，内含了数字键盘，车牌号键，身份证号键盘3种模式，都有可以打乱按键顺序的选项。
 	 * @tutorial https://uview-plus.jiangruyi.com/components/keyboard.html
 	 * @property {Boolean} random 是否打乱键盘的顺序
 	 * @event {Function} change 点击键盘触发
@@ -82,7 +82,7 @@
 	 * @example <u-keyboard ref="uKeyboard" mode="car" v-model="show"></u-keyboard>
 	 */
 	export default {
-		name: "u-keyboard",
+		name: "u-car-keyboard",
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
