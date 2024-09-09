@@ -82,7 +82,7 @@
 	 * @example <up-keyboard ref="uKeyboard" mode="car" v-model="show"></up-keyboard>
 	 */
 	export default {
-		name: "up-keyboard",
+		name: "up-car-keyboard",
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {

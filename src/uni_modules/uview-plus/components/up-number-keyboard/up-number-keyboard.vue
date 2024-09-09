@@ -55,6 +55,7 @@
 	 * @example
 	 */
 	export default {
+		name: 'up-number-keyboard',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
