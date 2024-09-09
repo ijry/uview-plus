@@ -1,3 +1,6 @@
+## 3.3.32（2024-09-09）
+fix: u-keyboard名称冲突warning
+
 ## 3.3.31（2024-08-31）
 feat: qrcode初步支持nvue
 
