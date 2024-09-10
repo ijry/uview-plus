@@ -161,11 +161,16 @@ export function addStyle(customStyle, target = 'object') {
 	}
 	// 这里为对象转字符串形式
 	let string = ''
-	if (typeof customStyle === 'object') {
-		customStyle.forEach((val, i) => {
-			// 驼峰转为中划线的形式，否则css内联样式，无法识别驼峰样式属性名
-			const key = i.replace(/([A-Z])/g, '-$1').toLowerCase()
-			string += `${key}:${val};`
+	if (Object.prototype.toString.call(customStyle) === '[object Object]') {
+		// customStyle.forEach((val, i) => {
+		// 	// 驼峰转为中划线的形式，否则css内联样式，无法识别驼峰样式属性名
+		// 	const key = i.replace(/([A-Z])/g, '-$1').toLowerCase()
+		// 	string += `${key}:${val};`
+		// })
+		Object.entries(customStyle).forEach(([key, val]) => {
+			// 驼峰命名转换为中划线
+			key = key.replace(/([A-Z])/g, '-$1').toLowerCase()
+			string += `${key}: ${val};`
 		})
 	}
 	// 去除两端空格
