@@ -61,23 +61,6 @@
 	 * @event {Function} change 某个radio状态发生变化时触发(选中状态)
 	 * @example <up-radio :labelDisabled="false">门掩黄昏，无计留春住</up-radio>
 	 */
-	type parentDataType = {
-	  iconSize: string,
-	  labelColor: string,
-	  labelSize: string,
-	  labelDisabled: boolean,
-	  disabled: boolean,
-	  shape: string,
-	  activeColor: string,
-	  inactiveColor: string,
-	  size: string,
-	  value: any,
-	  modelValue: any,
-	  iconColor: string,
-	  placement: string,
-	  borderBottom: boolean,
-	  iconPlacement: string
-	}
 	export default {
 		name: "up-radio",
 		mixins: [mpMixin, mixin, propsRadio],
@@ -208,6 +191,7 @@
 				const style = {}
 				style['backgroundColor'] = this.checked && !this.elDisabled ? this.elActiveColor : '#ffffff'
 				style['borderColor'] = this.checked && !this.elDisabled ? this.elActiveColor : this.elInactiveColor
+				// style['color'] = '#ffffff'
 				style['width'] = addUnit(this.elSize)
 				style['height'] = addUnit(this.elSize)
 				// 如果是图标在右边的话，移除它的右边距
@@ -239,7 +223,7 @@
 			init(): void {
 				// 支付宝小程序不支持provide/inject，所以使用这个方法获取整个父组件，在created定义，避免循环引用
 				this.updateParentData()
-				if (this.parent == null) {
+				if (this.$parent == null) {
 					error('up-radio必须搭配up-radio-group组件使用')
 				}
 				// 设置初始化时，是否默认选中的状态
@@ -287,8 +271,8 @@
 				this.emitEvent()
 				// 将本组件标记为选中状态
 				this.checked = true
-				if (this.parent != null) {
-					// this.parent.unCheckedOther(this)
+				if (this.$parent != null) {
+					this.$parent!.$callMethod('unCheckedOther', this)
 				}
 			}
 		}
@@ -339,14 +323,14 @@
 			transition-property: border-color, background-color, color;
 			transition-duration: 0.2s;
 			/* #endif */
-			color: $up-content-color;
+			// color: $up-content-color;
 			@include flex;
 			align-items: center;
 			justify-content: center;
-			color: transparent;
-			text-align: center;
+			// color: transparent;
+			// text-align: center;
 			margin-right: $up-radio-wrap-margin-right;
-			font-size: $up-radio-wrap-font-size;
+			// font-size: $up-radio-wrap-font-size;
 			border-width: $up-radio-wrap-border-width;
 			border-color: $up-radio-wrap-border-color;
 			border-style: solid;

@@ -57,19 +57,19 @@
 		watch: {
 			// 当父组件需要子组件需要共享的参数发生了变化，手动通知子组件
 			parentChangeData() {
-				// if (this.children.length) {
-				// 	this.children.map(child => {
-				// 		// 判断子组件(up-radio)如果有init方法的话，就就执行(执行的结果是子组件重新从父组件拉取了最新的值)
-				// 		if (typeof(child.init) === 'function') {
-				// 			child.init()
-				// 		}
-				// 	})
-				// }
+				//if (this?.children?.length != null && this?.children?.length > 0) {
+					this.children.map(child => {
+						// 判断子组件(up-radio)如果有init方法的话，就就执行(执行的结果是子组件重新从父组件拉取了最新的值)
+						// if (typeof(child.init) === 'function') {
+						// 	child.init()
+						// }
+					})
+				//}
 			},
 		},
 		data() {
 			return {
-				children: [] as any[],
+				children: [] as Array<ComponentPublicInstance>
 			}
 		},
 		created() {
@@ -78,21 +78,30 @@
 		emits: ['update:modelValue', 'change'],
     	// #endif
 		methods: {
+			addChild(ins: ComponentPublicInstance): void {
+				let exist = false
+				this.children.map(child => {
+					if (ins == child) {
+						exist = true
+					}
+				})
+				if (exist == false) {
+					this.children.push(ins)
+				}
+			},
 			// 将其他的radio设置为未选中的状态
-			unCheckedOther(childInstance: any) {
+			unCheckedOther(childInstance: ComponentPublicInstance) {
 				this.children.map(child => {
 					// 所有子radio中，被操作组件实例的checked的值无需修改
 					if (childInstance !== child) {
-						// child['checked'] = false
+						child.$data['checked'] = false
 					}
 				})
-				// const {
-				// 	name
-				// } = childInstance
-				// // 通过emit事件，设置父组件通过v-model双向绑定的值
-    //             this.$emit("update:modelValue", name);
-				// // 发出事件
-				// this.$emit('change', name)
+				const name = childInstance.$props['name']
+				// 通过emit事件，设置父组件通过v-model双向绑定的值
+                this.$emit("update:modelValue", name);
+				// 发出事件
+				this.$emit('change', name)
 			},
 		}
 	}

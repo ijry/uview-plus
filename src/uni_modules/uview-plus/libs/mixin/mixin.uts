@@ -29,7 +29,8 @@ export const mixin = defineMixin({
     data() {
         return {
             parent: null as ComponentPublicInstance|null,
-            parentData: {} as UTSJSONObject
+            parentData: {} as UTSJSONObject,
+			//children: null as ComponentPublicInstance[] | null
         }
     },
     onLoad() {
@@ -137,22 +138,23 @@ export const mixin = defineMixin({
             // 将父组件this中对应的参数，赋值给本组件(up-radio的this)的parentData对象中对应的属性
             // 之所以需要这么做，是因为所有端中，头条小程序不支持通过this.parent.xxx去监听父组件参数的变化
             // 此处并不会自动更新子组件的数据，而是依赖父组件up-radio-group去监听data的变化，手动调用更新子组件的方法去重新获取
-            this.parent = this.getParent(parentName)
-            console.log('this.parent', this.parent)
-            // if (this.parent.$data?.['children'] != null) {
-            //     // 如果父组件的children不存在本组件的实例，才将本实例添加到父组件的children中
-            //     // if (this.parent.$data['children'].indexOf(this) === -1) {
-            //     //     this.parent.$data['children'].push(this)
-            //     // }
-            // }
-            if (this.parent != null) {
+            // this.parent = this.getParent(parentName)
+            // console.log('this.parent', this.parent)
+            if (this.$parent?.$data?.['children'] != null) {
+                // 如果父组件的children不存在本组件的实例，才将本实例添加到父组件的children中
+                //if (this.parent?.$data?.['children'].indexOf(this) === -1) {
+					console.log(this.$parent?.$data?.['children'])
+					this.$parent!.$callMethod('addChild', this)
+                //}
+            }
+            if (this.$parent != null) {
                 // 历遍parentData中的属性，将parent中的同名属性赋值给parentData
                 UTSJSONObject.keys(this.parentData).map((key: string) => {
-                    if (this.parent?.$props?.[key] != null) {
-                        this.parentData[key] = this.parent?.$props?.[key]
+                    if (this.$parent?.$props?.[key] != null) {
+                        this.parentData[key] = this.$parent?.$props?.[key]
                     }
-                    if (this.parent?.$data?.[key] != null) {
-                        this.parentData[key] = this.parent?.$data?.[key]
+                    if (this.$parent?.$data?.[key] != null) {
+                        this.parentData[key] = this.$parent?.$data?.[key]
                     }
                 })
             }

@@ -41,7 +41,7 @@
 		computed: {
 			// 是否将badge中心与父组件右上角重合
 			boxStyle(): any {
-				let style = {};
+				let style: UTSJSONObject = {};
 				return style;
 			},
 			// 整个组件的样式
