@@ -11,10 +11,10 @@
 </template>
 
 <script>
-	import { props } from './props.js';
-	import { mpMixin } from '../../libs/mixin/mpMixin.js';
-	import { mixin } from '../../libs/mixin/mixin.js';
-	import { addStyle, deepMerge } from '../../libs/function/index.js';
+	import { propsOverlay } from './props';
+	import { mpMixin } from '../../libs/mixin/mpMixin';
+	import { mixin } from '../../libs/mixin/mixin';
+	import { addStyle, deepMerge } from '../../libs/function/index';
 	/**
 	 * overlay 遮罩
 	 * @description 创建一个遮罩层，用于强调特定的页面元素，并阻止用户对遮罩下层的内容进行操作，一般用于弹窗场景
@@ -29,9 +29,9 @@
 	 */
 	export default {
 		name: "up-overlay",
-		mixins: [mpMixin, mixin, props],
+		mixins: [mpMixin, mixin, propsOverlay],
 		computed: {
-			overlayStyle() {
+			overlayStyle(): any {
 				const style = {
 					position: 'fixed',
 					top: 0,
@@ -46,7 +46,7 @@
 		},
 		emits: ["click"],
 		methods: {
-			clickHandler() {
+			clickHandler(): void {
 				this.$emit('click')
 			}
 		}

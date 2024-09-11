@@ -72,13 +72,13 @@
 					"navigationBarTitleText": "加载中图标"
 				}
 			}
-			// ,{
-			// 	"path": "overlay/overlay",
-			// 	"style": {
-			// 		"navigationBarTitleText": "遮罩层",
-			// 		"navigationStyle": "custom"
-			// 	}
-			// },
+			,{
+				"path": "overlay/overlay",
+				"style": {
+					"navigationBarTitleText": "遮罩层",
+					"navigationStyle": "custom"
+				}
+			}
 			,{
 				"path": "loading-page/loading-page",
 				"style": {
@@ -86,14 +86,14 @@
 					"navigationStyle": "custom"
 				}
 			}
+			,{
+				"path": "popup/popup",
+				"style": {
+					"navigationBarTitleText": "弹窗",
+					"navigationStyle": "custom"
+				}
+			}
 			// ,{
-			// 	"path": "popup/popup",
-			// 	"style": {
-			// 		"navigationBarTitleText": "弹窗",
-			// 		"navigationStyle": "custom"
-			// 	}
-			// },
-			// {
 			// 	"path": "swipeAction/swipeAction",
 			// 	"style": {
 			// 		"navigationBarTitleText": "滑动单元格"

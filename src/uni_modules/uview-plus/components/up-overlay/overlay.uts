@@ -1,0 +1,18 @@
+/*
+ * @Author       : jry
+ * @Description  :
+ * @version      : 4.0
+ * @Date         : 2024-09-12 01:06:21
+ * @LastAuthor   : jry
+ * @lastTime     : 2024-09-12 01:06:21
+ * @FilePath     : /uview-plus/libs/config/props/overlay
+ */
+export default {
+    // overlay组件
+    overlay: {
+        show: false,
+        zIndex: 10070,
+        duration: 300,
+        opacity: 0.5
+    }
+} as UTSJSONObject

@@ -6,7 +6,7 @@
  * @LastAuthor   : jry
  * @lastTime     : 2024-08-30 23:17:20
  */
- import { defineMixin } from '../../libs/vue'
+import { defineMixin } from '../../libs/vue'
 import defProps from './radio'
 let crtProp = defProps['radio'] as UTSJSONObject
 

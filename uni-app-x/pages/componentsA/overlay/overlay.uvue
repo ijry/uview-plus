@@ -1,4 +1,7 @@
 <template>
+	<!-- #ifdef APP -->
+	<scroll-view style="flex:1">
+	<!-- #endif -->
 	<view class="u-page">
 		<up-navbar
 			title="遮罩层"
@@ -10,7 +13,7 @@
 		<up-cell
 			:titleStyle="{fontWeight: 500}"
 			@click="openMask(index)"
-			:title="item.title"
+			:title="item['title']"
 			v-for="(item, index) in list"
 			:key="index"
 			isLink
@@ -18,7 +21,7 @@
 			<template #icon>
 				<image
 					class="u-cell-icon"
-					:src="item.iconUrl"
+					:src="item['iconUrl']"
 					mode="widthFix"
 				></image>
 			</template>
@@ -43,6 +46,9 @@
 		>
 		</up-overlay>
 	</view>
+	<!-- #ifdef APP -->
+	</scroll-view>
+	<!-- #endif -->
 </template>
 
 <script>
@@ -68,7 +74,7 @@
 			}
 		},
 		methods: {
-			openMask(indexNum) {
+			openMask(indexNum: number): void {
 				if (indexNum == 0) {
 					this.show = !this.show;
 				} else if (indexNum == 1) {
@@ -77,7 +83,7 @@
 					this.showOpcatiy = !this.showOpcatiy
 				}
 			},
-			navigateBack() {
+			navigateBack(): void {
 				uni.navigateBack()
 			}
 		}

@@ -1,0 +1,28 @@
+/*
+ * @Author       : jry
+ * @Description  : uview-plus component's props mixin file
+ * @version      : 4.0
+ * @Date         : 2024-00-12 00:47:21
+ * @LastAuthor   : jry
+ * @lastTime     : 2024-09-12 00:47:21
+ */
+export default {
+    // popup组件
+    popup: {
+        show: false,
+        overlay: true,
+        mode: 'bottom',
+        duration: 300,
+        closeable: false,
+        overlayStyle: {},
+        closeOnClickOverlay: true,
+        zIndex: 10075,
+        safeAreaInsetBottom: true,
+        safeAreaInsetTop: false,
+        closeIconPos: 'top-right',
+        round: 0,
+        zoom: true,
+        bgColor: '',
+        overlayOpacity: 0.5
+    }
+} as UTSJSONObject
