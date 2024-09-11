@@ -29,6 +29,7 @@ export function getPx(valueOri: any, unit = false): string {
     }
     // 如果带有rpx，先取出其数值部分，再转为px值
     if (/(rpx|upx)$/.test(value)) {
+		// todo
         // return unit ? `${uni.upx2px(parseInt(value)).toString()}px` : uni.upx2px(parseInt(value))
     }
     return unit ? `${value}px` : (value)
@@ -587,24 +588,34 @@ export function priceFormat(numberOri: any, decimals = 0, decimalPoint = '.', th
     return s.join(dec)
 }
 
-// /**
-//  * @description 获取duration值
-//  * 如果带有ms或者s直接返回，如果大于一定值，认为是ms单位，小于一定值，认为是s单位
-//  * 比如以30位阈值，那么300大于30，可以理解为用户想要的是300ms，而不是想花300s去执行一个动画
-//  * @param {String|number} value 比如: "1s"|"100ms"|1|100
-//  * @param {boolean} unit  提示: 如果是false 默认返回number
-//  * @return {string|number} 
-//  */
-// export function getDuration(value, unit = true): any {
-//     const valueNum = parseInt(value)
-//     if (unit) {
-//         if (/s$/.test(value)) return value
-//         return value > 30 ? `${value}ms` : `${value}s`
-//     }
-//     if (/ms$/.test(value)) return valueNum
-//     if (/s$/.test(value)) return valueNum > 30 ? valueNum : valueNum * 1000
-//     return valueNum
-// }
+/**
+ * @description 获取duration值
+ * 如果带有ms或者s直接返回，如果大于一定值，认为是ms单位，小于一定值，认为是s单位
+ * 比如以30位阈值，那么300大于30，可以理解为用户想要的是300ms，而不是想花300s去执行一个动画
+ * @param {String|number} value 比如: "1s"|"100ms"|1|100
+ * @param {boolean} unit  提示: 如果是false 默认返回number
+ * @return {string|number} 
+ */
+export function getDuration(value: any, unit = true): string {
+	let valueString = value.toString()
+    if (unit) {
+        if (/s$/.test(valueString)) {
+			return value
+		}
+        return parseInt(valueString) > 30 ? `${valueString}ms` : `${valueString}s`
+    }
+	let valueNum = 0
+	if (/(ms)$/.test(valueString)) {
+		valueNum = parseInt(valueString.slice(-2))
+		return valueNum.toString()
+	} else if (/(s)$/.test(valueString)) {
+		valueNum = parseInt(valueString.slice(-1))
+		return valueNum > 30 ? valueNum.toString() : (valueNum * 1000).toString()
+	} else {
+		valueNum = parseInt(valueString)
+		return valueNum.toString()
+	}
+}
 
 // /**
 //  * @description 日期的月或日补零操作
