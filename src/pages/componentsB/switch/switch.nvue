@@ -1,7 +1,7 @@
 <template>
 	<view class="u-page">
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">基础功能</text>
+			<view class="u-demo-block__title">基础功能</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
 					<up-switch
@@ -17,7 +17,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">加载中</text>
+			<view class="u-demo-block__title">加载中</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
 					<up-switch
@@ -34,7 +34,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">禁用状态</text>
+			<view class="u-demo-block__title">禁用状态</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
 					<up-switch
@@ -51,7 +51,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义尺寸</text>
+			<view class="u-demo-block__title">自定义尺寸</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
 					<up-switch
@@ -68,7 +68,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义颜色</text>
+			<view class="u-demo-block__title">自定义颜色</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
 					<up-switch
@@ -87,7 +87,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义样式</text>
+			<view class="u-demo-block__title">自定义样式</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
 					<up-switch
@@ -108,7 +108,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">异步控制</text>
+			<view class="u-demo-block__title">异步控制</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
 					<up-switch

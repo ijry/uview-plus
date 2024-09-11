@@ -1,7 +1,7 @@
 <template>
 	<view class="u-page">
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">基础用法</text>
+			<view class="u-demo-block__title">基础用法</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__upload-item">
 				<up-upload
@@ -18,7 +18,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">上传视频</text>
+			<view class="u-demo-block__title">上传视频</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__upload-item">
 				<up-upload
@@ -34,7 +34,7 @@
 			</view>
 		</view>
 			<view class="u-demo-block">
-			<text class="u-demo-block__title">文件预览</text>
+			<view class="u-demo-block__title">文件预览</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__upload-item">
 				<up-upload
@@ -50,7 +50,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">隐藏上传按钮</text>
+			<view class="u-demo-block__title">隐藏上传按钮</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__upload-item">
 				<up-upload
@@ -65,7 +65,7 @@
 			</view>
 		</view>
 			<view class="u-demo-block">
-			<text class="u-demo-block__title">限制上传数量</text>
+			<view class="u-demo-block__title">限制上传数量</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__upload-item">
 				<up-upload
@@ -80,7 +80,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义上传样式</text>
+			<view class="u-demo-block__title">自定义上传样式</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__upload-item">
 					<up-upload

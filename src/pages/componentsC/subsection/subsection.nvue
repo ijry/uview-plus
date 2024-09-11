@@ -1,7 +1,7 @@
 <template>
 	<view class="u-page">
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">基础使用</text>
+			<view class="u-demo-block__title">基础使用</view>
 			<view class="u-demo-block__content">
 				<up-subsection
 					:list="list"
@@ -12,7 +12,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">按钮模式</text>
+			<view class="u-demo-block__title">按钮模式</view>
 			<view class="u-demo-block__content">
 				<up-subsection
 					:list="list"
@@ -23,7 +23,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">更换主题</text>
+			<view class="u-demo-block__title">更换主题</view>
 			<view class="u-demo-block__content">
 				<up-subsection
 					:list="list"
@@ -35,7 +35,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">默认位置</text>
+			<view class="u-demo-block__title">默认位置</view>
 			<view class="u-demo-block__content">
 				<up-subsection
 					:list="list"

@@ -1,7 +1,7 @@
 <template>
 	<view class="u-page">
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">基础功能</text>
+			<view class="u-demo-block__title">基础功能</view>
 			<up-swiper
 				:list="list1"
 				@change="change"
@@ -9,7 +9,7 @@
 			></up-swiper>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">带标题</text>
+			<view class="u-demo-block__title">带标题</view>
 			<up-swiper
 				:list="list2"
 				keyName="image"
@@ -19,7 +19,7 @@
 			></up-swiper>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">带指示器</text>
+			<view class="u-demo-block__title">带指示器</view>
 			<up-swiper
 				:list="list3"
 				indicator
@@ -28,14 +28,14 @@
 			></up-swiper>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">加载中</text>
+			<view class="u-demo-block__title">加载中</view>
 			<up-swiper
 				:list="list3"
 				loading
 			></up-swiper>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">嵌入视频</text>
+			<view class="u-demo-block__title">嵌入视频</view>
 			<up-swiper
 				:list="list4"
 				keyName="url"
@@ -43,7 +43,7 @@
 			></up-swiper>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义内容</text>
+			<view class="u-demo-block__title">自定义内容</view>
 			<up-swiper
 				:list="list2"
 				keyName="image"
@@ -57,7 +57,7 @@
 			</up-swiper>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义指示器</text>
+			<view class="u-demo-block__title">自定义指示器</view>
 			<up-swiper
 				:list="list5"
 				@change="e => current = e.current"
@@ -98,7 +98,7 @@
 		</view>
 		<!-- #ifndef APP-NVUE || MP-TOUTIAO -->
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">卡片式</text>
+			<view class="u-demo-block__title">卡片式</view>
 			<up-swiper
 				:list="list3"
 				previousMargin="30"

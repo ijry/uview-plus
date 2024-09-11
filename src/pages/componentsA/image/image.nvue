@@ -1,7 +1,7 @@
 <template>
 	<view class="u-page">
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">基本案例</text>
+			<view class="u-demo-block__title">基本案例</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__image-item">
 					 <up-image
@@ -15,7 +15,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义形状</text>
+			<view class="u-demo-block__title">自定义形状</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__image-item">
 					<up-image
@@ -28,7 +28,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义圆角</text>
+			<view class="u-demo-block__title">自定义圆角</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__image-item">
 					<up-image
@@ -41,7 +41,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">图片模式(widthFix)</text>
+			<view class="u-demo-block__title">图片模式(widthFix)</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__image-item">
 					<up-image
@@ -54,7 +54,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义图片加载插槽</text>
+			<view class="u-demo-block__title">自定义图片加载插槽</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__image-item">
 					<up-image

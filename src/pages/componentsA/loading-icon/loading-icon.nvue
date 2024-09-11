@@ -1,7 +1,7 @@
 <template>
 	<view class="u-page">
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">基本案列</text>
+			<view class="u-demo-block__title">基本案列</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__loading-item">
 					<up-loading-icon></up-loading-icon>
@@ -9,7 +9,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">半圆loading</text>
+			<view class="u-demo-block__title">半圆loading</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__loading-item">
 					<up-loading-icon mode="semicircle"></up-loading-icon>
@@ -17,7 +17,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">圆形loading</text>
+			<view class="u-demo-block__title">圆形loading</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__loading-item">
 					<up-loading-icon mode="circle"></up-loading-icon>
@@ -25,7 +25,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义动画</text>
+			<view class="u-demo-block__title">自定义动画</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__loading-item">
 					<up-loading-icon mode="circle" timingFunction="linear"></up-loading-icon>
@@ -33,7 +33,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义颜色</text>
+			<view class="u-demo-block__title">自定义颜色</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__loading-item">
 					<up-loading-icon color="#19be6b"></up-loading-icon>
@@ -41,7 +41,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义文字</text>
+			<view class="u-demo-block__title">自定义文字</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__loading-item">
 					<up-loading-icon

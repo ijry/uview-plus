@@ -24,28 +24,28 @@
 		</view>
 		<view class="u-demo">
 			<view class="u-demo-block">
-			    <text class="u-demo-block__title">参数配置</text>
+			    <view class="u-demo-block__title">参数配置</view>
 			</view>
 			<view class="u-demo-block">
-			    <text class="u-demo-block__title">左上角图标</text>
+			    <view class="u-demo-block__title">左上角图标</view>
 			    <view class="u-demo-block__content">
 					<up-subsection :list="['显示', '隐藏']" @change="thumbChange"></up-subsection>
 			    </view>
 			</view>
 			<view class="u-demo-block">
-			    <text class="u-demo-block__title">内边距</text>
+			    <view class="u-demo-block__title">内边距</view>
 			    <view class="u-demo-block__content">
 					<up-subsection current="1" :list="['10', '15', '20']" @change="paddingChange"></up-subsection>
 			    </view>
 			</view>
 			<view class="u-demo-block">
-			    <text class="u-demo-block__title">底部</text>
+			    <view class="u-demo-block__title">底部</view>
 			    <view class="u-demo-block__content">
 					<up-subsection :list="['显示', '隐藏']" @change="bottomChange"></up-subsection>
 			    </view>
 			</view>
 			<view class="u-demo-block">
-			    <text class="u-demo-block__title">外边框</text>
+			    <view class="u-demo-block__title">外边框</view>
 			    <view class="u-demo-block__content">
 					<up-subsection :list="['显示', '隐藏']" @change="borderChange"></up-subsection>
 			    </view>

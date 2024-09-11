@@ -1,7 +1,7 @@
 <template>
 	<view class="u-page">
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">基础演示</text>
+			<view class="u-demo-block__title">基础演示</view>
 			<view class="u-demo-block__content">
 				<up-steps :current="current1">
 					<up-steps-item
@@ -24,7 +24,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">显示点类型</text>
+			<view class="u-demo-block__title">显示点类型</view>
 			<view class="u-demo-block__content">
 				<up-steps
 				    :current="1"
@@ -70,7 +70,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">错误状态</text>
+			<view class="u-demo-block__title">错误状态</view>
 			<view class="u-demo-block__content">
 				<up-steps :current="1">
 					<up-steps-item
@@ -93,7 +93,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义图标</text>
+			<view class="u-demo-block__title">自定义图标</view>
 			<view class="u-demo-block__content">
 				<up-steps
 				    :current="1"
@@ -119,7 +119,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义插槽</text>
+			<view class="u-demo-block__title">自定义插槽</view>
 			<view class="u-demo-block__content">
 				<up-steps :current="1">
 					<up-steps-item
@@ -144,7 +144,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义颜色</text>
+			<view class="u-demo-block__title">自定义颜色</view>
 			<view class="u-demo-block__content">
 				<up-steps :current="1" activeColor="#3c9cff">
 					<up-steps-item
@@ -166,7 +166,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">竖向展示</text>
+			<view class="u-demo-block__title">竖向展示</view>
 			<view class="u-demo-block__content">
 				<up-steps
 				    :current="1"

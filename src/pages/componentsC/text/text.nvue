@@ -1,7 +1,7 @@
 <template>
 	<view class="u-page">
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">基础功能</text>
+			<view class="u-demo-block__title">基础功能</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__text-item">
 					<up-text
@@ -12,7 +12,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">设置主题</text>
+			<view class="u-demo-block__title">设置主题</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__text-item">
 					<up-text
@@ -53,7 +53,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">拨打电话</text>
+			<view class="u-demo-block__title">拨打电话</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__text-item">
 					<up-text
@@ -64,7 +64,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">日期格式化</text>
+			<view class="u-demo-block__title">日期格式化</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__text-item">
 					<up-text
@@ -75,7 +75,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">姓名脱敏</text>
+			<view class="u-demo-block__title">姓名脱敏</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__text-item">
 					<up-text
@@ -87,7 +87,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">超链接</text>
+			<view class="u-demo-block__title">超链接</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__text-item">
 					<up-text
@@ -99,7 +99,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">显示金额</text>
+			<view class="u-demo-block__title">显示金额</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__text-item">
 					<up-text
@@ -110,7 +110,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">前后图标</text>
+			<view class="u-demo-block__title">前后图标</view>
 			<view class="u-demo-block__content">
 				<view
 				    class="u-page__text-item"
@@ -132,7 +132,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">超出隐藏</text>
+			<view class="u-demo-block__title">超出隐藏</view>
 			<view class="u-demo-block__content">
 				<up-text
 				    :lines="2"
@@ -141,7 +141,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">小程序开放能力</text>
+			<view class="u-demo-block__title">小程序开放能力</view>
 			<view class="u-demo-block__content">
 				<up-text
 				    text="分享到微信"

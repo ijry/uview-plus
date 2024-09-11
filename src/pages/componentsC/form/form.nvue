@@ -8,7 +8,7 @@
 			placeholder
 		></up-navbar>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">基础使用</text>
+			<view class="u-demo-block__title">基础使用</view>
 			<view class="u-demo-block__content">
 				<!-- 注意，如果需要兼容微信小程序，最好通过setRules方法设置rules规则 -->
 				<up-form

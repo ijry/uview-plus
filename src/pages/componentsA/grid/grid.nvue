@@ -1,7 +1,7 @@
 <template>
 	<view class="u-page">
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">基本案例</text>
+			<view class="u-demo-block__title">基本案例</view>
 			<view>
 				<up-grid
 					:border="false"
@@ -24,7 +24,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">显示边框</text>
+			<view class="u-demo-block__title">显示边框</view>
 			<view>
 				<up-grid :border="true">
 					<up-grid-item
@@ -43,7 +43,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">绑定点击事件&自定义列数</text>
+			<view class="u-demo-block__title">绑定点击事件&自定义列数</view>
 			<view>
 				<up-grid
 					:border="false"
@@ -65,7 +65,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">可滑动</text>
+			<view class="u-demo-block__title">可滑动</view>
 			<view>
 				<swiper
 					:indicator-dots="true"

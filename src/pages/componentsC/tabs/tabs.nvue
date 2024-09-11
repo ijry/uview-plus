@@ -1,7 +1,7 @@
 <template>
 	<view class="u-page">
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">基础演示</text>
+			<view class="u-demo-block__title">基础演示</view>
 			<view class="u-demo-block__content">
 				<up-tabs :list="list1" @click="click" :current="3">
 				</up-tabs>
@@ -11,7 +11,7 @@
 			class="u-demo-block"
 			style="margin-bottom: 0;"
 		>
-			<text class="u-demo-block__title">粘性布局</text>
+			<view class="u-demo-block__title">粘性布局</view>
 		</view>
 		<up-sticky bgColor="#fff">
 			<up-tabs
@@ -24,28 +24,28 @@
 			bgColor="#fff"
 		></up-gap>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">显示徽标</text>
+			<view class="u-demo-block__title">显示徽标</view>
 			<view class="u-demo-block__content">
 				<up-tabs :list="list2">
 				</up-tabs>
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">禁止滚动</text>
+			<view class="u-demo-block__title">禁止滚动</view>
 			<view class="u-demo-block__content">
 				<up-tabs :list="list6" :scrollable="false">
 				</up-tabs>
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">禁用菜单</text>
+			<view class="u-demo-block__title">禁用菜单</view>
 			<view class="u-demo-block__content">
 				<up-tabs :list="list3">
 				</up-tabs>
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义样式</text>
+			<view class="u-demo-block__title">自定义样式</view>
 			<view class="u-demo-block__content">
 				<up-tabs
 					:list="list4"
@@ -66,7 +66,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">滑块设置背景图</text>
+			<view class="u-demo-block__title">滑块设置背景图</view>
 			<view class="u-demo-block__content">
 				<up-tabs
 					:list="list4"
@@ -88,7 +88,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义内容插槽</text>
+			<view class="u-demo-block__title">自定义内容插槽</view>
 			<view class="u-demo-block__content">
 				<up-tabs :list="list1">
 					<template #default="scope">
@@ -101,7 +101,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">右侧自定义插槽</text>
+			<view class="u-demo-block__title">右侧自定义插槽</view>
 			<view class="u-demo-block__content">
 				<up-tabs :list="list1" v-model:current="list1Current">
 					<template #right>
@@ -123,7 +123,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">在swiper中使用</text>
+			<view class="u-demo-block__title">在swiper中使用</view>
 			<view class="u-demo-block__content">
 				<swiper class="swiper" >
 				  <swiper-item item-id="A">

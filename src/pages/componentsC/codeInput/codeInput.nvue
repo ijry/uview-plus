@@ -1,7 +1,7 @@
 <template>
 	<view class="u-page">
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">基础使用</text>
+			<view class="u-demo-block__title">基础使用</view>
 			<view class="u-demo-block__content">
 				<up-code-input
 					v-model="value1"
@@ -12,7 +12,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">横线模式</text>
+			<view class="u-demo-block__title">横线模式</view>
 			<view class="u-demo-block__content">
 				<up-code-input
 					v-model="value2"
@@ -23,7 +23,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">设置长度</text>
+			<view class="u-demo-block__title">设置长度</view>
 			<view class="u-demo-block__content">
 				<up-code-input
 					v-model="value3"
@@ -32,7 +32,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">设置间距</text>
+			<view class="u-demo-block__title">设置间距</view>
 			<view class="u-demo-block__content">
 				<up-code-input
 					v-model="value4"
@@ -43,7 +43,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">细边框</text>
+			<view class="u-demo-block__title">细边框</view>
 			<view class="u-demo-block__content">
 				<up-code-input
 					v-model="value5"
@@ -67,7 +67,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">调整颜色</text>
+			<view class="u-demo-block__title">调整颜色</view>
 			<view class="u-demo-block__content">
 				<up-code-input
 					v-model="value7"
@@ -93,7 +93,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">点模式</text>
+			<view class="u-demo-block__title">点模式</view>
 			<view class="u-demo-block__content">
 				<up-code-input
 					v-model="value8"
@@ -106,7 +106,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">预置内容</text>
+			<view class="u-demo-block__title">预置内容</view>
 			<view class="u-demo-block__content">
 				<up-code-input
 					v-model="value9"

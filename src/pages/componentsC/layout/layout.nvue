@@ -1,7 +1,7 @@
 <template>
     <view class="u-page">
         <view class="u-demo-block">
-            <text class="u-demo-block__title">基础使用</text>
+            <view class="u-demo-block__title">基础使用</view>
             <view class="u-demo-block__content">
                 <up-row customStyle="margin-bottom: 10px">
                     <up-col span="6">
@@ -39,7 +39,7 @@
             </view>
         </view>
         <view class="u-demo-block">
-            <text class="u-demo-block__title">分栏间隔</text>
+            <view class="u-demo-block__title">分栏间隔</view>
             <view class="u-demo-block__content">
                 <up-row justify="space-between" gutter="10">
                     <up-col span="3">
@@ -58,7 +58,7 @@
             </view>
         </view>
         <view class="u-demo-block">
-            <text class="u-demo-block__title">混合布局</text>
+            <view class="u-demo-block__title">混合布局</view>
             <view class="u-demo-block__content">
                 <up-row justify="space-between" gutter="10">
                     <up-col span="2">
@@ -74,7 +74,7 @@
             </view>
         </view>
         <view class="u-demo-block">
-            <text class="u-demo-block__title">分栏偏移</text>
+            <view class="u-demo-block__title">分栏偏移</view>
             <view class="u-demo-block__content">
                 <up-row
                     justify="space-between"
@@ -98,7 +98,7 @@
             </view>
         </view>
         <view class="u-demo-block">
-            <text class="u-demo-block__title">对齐方式</text>
+            <view class="u-demo-block__title">对齐方式</view>
             <view class="u-demo-block__content">
                 <up-row
                     justify="space-between"

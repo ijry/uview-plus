@@ -1,7 +1,7 @@
 <template>
 	<view class="u-page">
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">演示案例</text>
+			<view class="u-demo-block__title">演示案例</view>
 			<view class="u-page__swipe-action-item">
 				<up-swipe-action>
 					<up-swipe-action-item
@@ -20,7 +20,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">按钮组</text>
+			<view class="u-demo-block__title">按钮组</view>
 			<view class="u-page__swipe-action-item">
 				<up-swipe-action>
 					<up-swipe-action-item :options="options2">
@@ -34,7 +34,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">带图标</text>
+			<view class="u-demo-block__title">带图标</view>
 			<view class="u-page__swipe-action-item">
 				<up-swipe-action>
 					<up-swipe-action-item :options="options3">
@@ -48,7 +48,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">组合使用</text>
+			<view class="u-demo-block__title">组合使用</view>
 			<view class="u-page__swipe-action-item">
 				<up-swipe-action>
 					<up-swipe-action-item
@@ -70,7 +70,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义按钮形状</text>
+			<view class="u-demo-block__title">自定义按钮形状</view>
 			<view class="u-page__swipe-action-item">
 				<up-swipe-action>
 					<up-swipe-action-item :options="options5">

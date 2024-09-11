@@ -1,7 +1,7 @@
 <template>
 	<view class="u-page">
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">直角边形状</text>
+			<view class="u-demo-block__title">直角边形状</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
 					<up-badge
@@ -12,7 +12,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">徽标数显示方式</text>
+			<view class="u-demo-block__title">徽标数显示方式</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
 					<up-badge
@@ -42,7 +42,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">显示圆点</text>
+			<view class="u-demo-block__title">显示圆点</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
 					<up-badge
@@ -55,7 +55,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义主题</text>
+			<view class="u-demo-block__title">自定义主题</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
 					<up-badge
@@ -88,7 +88,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">反转色</text>
+			<view class="u-demo-block__title">反转色</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
 					<up-badge

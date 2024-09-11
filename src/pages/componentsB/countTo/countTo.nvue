@@ -1,7 +1,7 @@
 <template>
 	<view class="u-page">
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">基础功能</text>
+			<view class="u-demo-block__title">基础功能</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
 					<up-count-to
@@ -12,7 +12,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">倒计数</text>
+			<view class="u-demo-block__title">倒计数</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
 					<up-count-to :startVal="startVal1"></up-count-to>
@@ -20,7 +20,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">显示小数位</text>
+			<view class="u-demo-block__title">显示小数位</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
 					<up-count-to
@@ -32,7 +32,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">千分位分隔符</text>
+			<view class="u-demo-block__title">千分位分隔符</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
 					<up-count-to
@@ -45,7 +45,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义控制</text>
+			<view class="u-demo-block__title">自定义控制</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
 					<up-count-to
@@ -91,7 +91,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义</text>
+			<view class="u-demo-block__title">自定义</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
 					<up-count-to

@@ -1,7 +1,7 @@
 <template>
 	<view class="u-page">
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">基础功能</text>
+			<view class="u-demo-block__title">基础功能</view>
 			<view class="u-demo-block__content">
 				<up-code
 				    ref="uCode"
@@ -21,7 +21,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">保持倒计时(开始后，左上角返退出此页面再进入，会发现倒计时还在继续)</text>
+			<view class="u-demo-block__title">保持倒计时(开始后，左上角返退出此页面再进入，会发现倒计时还在继续)</view>
 			<view class="u-demo-block__content">
 				<up-code
 				    ref="uCode1"
@@ -41,7 +41,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">文本样式</text>
+			<view class="u-demo-block__title">文本样式</view>
 			<view class="u-demo-block__content">
 				<up-code
 				    ref="uCode2"

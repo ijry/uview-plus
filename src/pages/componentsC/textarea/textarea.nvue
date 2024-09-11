@@ -1,7 +1,7 @@
 <template>
 	<view class="u-page">
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">基础使用</text>
+			<view class="u-demo-block__title">基础使用</view>
 			<view class="u-demo-block__content">
 				<up-textarea
 					v-model="value1"
@@ -11,7 +11,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">字数统计</text>
+			<view class="u-demo-block__title">字数统计</view>
 			<view class="u-demo-block__content">
 				<up-textarea
 					v-model="value2"
@@ -22,7 +22,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自动增高</text>
+			<view class="u-demo-block__title">自动增高</view>
 			<view class="u-demo-block__content">
 				<up-textarea
 					v-model="value3"
@@ -32,7 +32,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">禁用状态</text>
+			<view class="u-demo-block__title">禁用状态</view>
 			<view class="u-demo-block__content">
 				<up-textarea
 					v-model="value4"
@@ -43,7 +43,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">下划线模式</text>
+			<view class="u-demo-block__title">下划线模式</view>
 			<view class="u-demo-block__content">
 				<up-textarea
 					v-model="value5"

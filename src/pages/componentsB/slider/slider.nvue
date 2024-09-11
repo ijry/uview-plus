@@ -1,7 +1,7 @@
 <template>
 	<view class="u-page">
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">基本案例</text>
+			<view class="u-demo-block__title">基本案例</view>
 				<view class="u-page__slide-item">
 				<up-slider
 					:useNative="useNative"
@@ -11,7 +11,7 @@
 			<up-button text="前进" @click="value1 = value1 + 1"></up-button>
 		</view>
 			<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义范围(10—50)</text>
+			<view class="u-demo-block__title">自定义范围(10—50)</view>
 			<view class="u-page__slide-item">
 				<up-slider
 					:useNative="useNative"
@@ -23,7 +23,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">指定步长(每次步进5)</text>
+			<view class="u-demo-block__title">指定步长(每次步进5)</view>
 			<view class="u-page__slide-item">
 				<up-slider
 					:useNative="useNative"
@@ -33,7 +33,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义样式</text>
+			<view class="u-demo-block__title">自定义样式</view>
 			<view class="u-page__slide-item">
 				<up-slider
 				    v-model="value5"
@@ -44,7 +44,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义样式(图片)</text>
+			<view class="u-demo-block__title">自定义样式(图片)</view>
 			<view class="u-page__slide-item">
 				<up-slider
 				    v-model="value5"
@@ -61,7 +61,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">区间选择(双滑块)</text>
+			<view class="u-demo-block__title">区间选择(双滑块)</view>
 			<view class="u-page__slide-item">
 				<up-slider
 					isRange

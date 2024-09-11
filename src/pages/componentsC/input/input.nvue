@@ -1,7 +1,7 @@
 <template>
 	<view class="u-page">
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">基础使用</text>
+			<view class="u-demo-block__title">基础使用</view>
 			<view class="u-demo-block__content">
 				<up-input
 					placeholder="请输入内容"
@@ -17,7 +17,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">可清空内容</text>
+			<view class="u-demo-block__title">可清空内容</view>
 			<view class="u-demo-block__content">
 				<up-input
 					placeholder="请输入内容"
@@ -27,7 +27,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">数字键盘</text>
+			<view class="u-demo-block__title">数字键盘</view>
 			<view class="u-demo-block__content">
 				<up-input
 					placeholder="请输入内容"
@@ -40,7 +40,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">密码类型</text>
+			<view class="u-demo-block__title">密码类型</view>
 			<view class="u-demo-block__content">
 				<up-input
 					placeholder="请输入内容"
@@ -53,7 +53,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">显示下划线</text>
+			<view class="u-demo-block__title">显示下划线</view>
 			<view class="u-demo-block__content">
 				<up-input
 					placeholder="请输入内容"
@@ -63,7 +63,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">禁用状态</text>
+			<view class="u-demo-block__title">禁用状态</view>
 			<view class="u-demo-block__content">
 				<up-input
 					placeholder="禁用状态"
@@ -73,7 +73,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">圆形</text>
+			<view class="u-demo-block__title">圆形</view>
 			<view class="u-demo-block__content">
 				<up-input
 					placeholder="请输入内容"
@@ -83,7 +83,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">前后图标</text>
+			<view class="u-demo-block__title">前后图标</view>
 			<view class="u-demo-block__content">
 				<up-input
 					placeholder="前置图标"
@@ -103,7 +103,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">前后插槽</text>
+			<view class="u-demo-block__title">前后插槽</view>
 			<view class="u-demo-block__content">
 				<up-input placeholder="前置插槽">
 					<template #prefix>

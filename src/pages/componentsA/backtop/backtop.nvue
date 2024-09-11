@@ -4,7 +4,7 @@
 	    ref="u-back-top"
 	>
 	<view class="u-demo-block">
-		<text class="u-demo-block__title">自定义backTop(滚动页面即可在右下角看到图标)</text>
+		<view class="u-demo-block__title">自定义backTop(滚动页面即可在右下角看到图标)</view>
 		<view class="u-demo-block__content">
 			<view class="u-page__backTop-item">
 				<up-checkbox-group

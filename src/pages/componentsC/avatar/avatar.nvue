@@ -1,13 +1,13 @@
 <template>
 	<view class="u-page">
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">基础演示</text>
+			<view class="u-demo-block__title">基础演示</view>
 			<view class="u-demo-block__content">
 				<up-avatar :src="src1"></up-avatar>
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">头像形状</text>
+			<view class="u-demo-block__title">头像形状</view>
 			<view class="u-demo-block__content">
 				<view class="u-avatar-item">
 					<up-avatar
@@ -25,7 +25,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">头像尺寸</text>
+			<view class="u-demo-block__title">头像尺寸</view>
 			<view class="u-demo-block__content">
 				<view class="u-avatar-item">
 					<up-avatar
@@ -48,7 +48,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">图标头像</text>
+			<view class="u-demo-block__title">图标头像</view>
 			<view class="u-demo-block__content">
 				<view class="u-avatar-item">
 					<up-avatar
@@ -65,7 +65,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">文字头像(自动背景色)</text>
+			<view class="u-demo-block__title">文字头像(自动背景色)</view>
 			<view class="u-demo-block__content">
 				<view class="u-avatar-item">
 					<up-avatar
@@ -99,14 +99,14 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">图片加载失败(显示默认头像)</text>
+			<view class="u-demo-block__title">图片加载失败(显示默认头像)</view>
 			<view class="u-demo-block__content">
 				<up-avatar :src="src7"></up-avatar>
 			</view>
 		</view>
 		<!-- #ifdef MP-WEIXIN || MP-QQ || MP-BAIDU -->
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">小程序开放能力</text>
+			<view class="u-demo-block__title">小程序开放能力</view>
 			<view class="u-demo-block__content">
 				<view class="u-avatar-item">
 					<up-avatar
@@ -118,7 +118,7 @@
 		</view>
 		<!-- #endif -->
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">头像组</text>
+			<view class="u-demo-block__title">头像组</view>
 			<view class="u-demo-block__content">
 				<up-avatar-group
 					:urls="urls"

@@ -1,7 +1,7 @@
 <template>
 	<view class="u-page">
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">基础功能</text>
+			<view class="u-demo-block__title">基础功能</view>
 			<view class="u-demo-block__content">
 				<view class="u-alert-item">
 					<up-alert
@@ -36,7 +36,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">深浅色</text>
+			<view class="u-demo-block__title">深浅色</view>
 			<view class="u-demo-block__content">
 				<view class="u-alert-item">
 					<up-alert
@@ -54,7 +54,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">显示图标</text>
+			<view class="u-demo-block__title">显示图标</view>
 			<view class="u-demo-block__content">
 				<view class="u-alert-item">
 					<up-alert
@@ -74,7 +74,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">可关闭</text>
+			<view class="u-demo-block__title">可关闭</view>
 			<view class="u-demo-block__content">
 				<view class="u-alert-item">
 					<up-alert
@@ -96,7 +96,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">带标题</text>
+			<view class="u-demo-block__title">带标题</view>
 			<view class="u-demo-block__content">
 				<view class="u-alert-item">
 					<up-alert

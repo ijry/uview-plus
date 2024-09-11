@@ -1,7 +1,7 @@
 <template>
 	<view class="u-page">
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">基础使用</text>
+			<view class="u-demo-block__title">基础使用</view>
 			<view class="u-demo-block__content">
 				<view class="album">
 					<view class="album__avatar">
@@ -31,7 +31,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">多图模式</text>
+			<view class="u-demo-block__title">多图模式</view>
 			<view class="u-demo-block__content">
 				<view class="album">
 					<view class="album__avatar">
@@ -58,7 +58,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">图文对齐</text>
+			<view class="u-demo-block__title">图文对齐</view>
 			<view class="u-demo-block__content">
 				<view class="album">
 					<view class="album__avatar">
@@ -96,7 +96,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">更改裁剪模式</text>
+			<view class="u-demo-block__title">更改裁剪模式</view>
 			<view class="u-demo-block__content">
 				<view class="album">
 					<view class="album__avatar">
@@ -128,7 +128,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">更改图片大小</text>
+			<view class="u-demo-block__title">更改图片大小</view>
 			<view class="u-demo-block__content">
 				<view class="album">
 					<view class="album__avatar">
@@ -160,7 +160,7 @@
 			</view>
 		</view>
         <view class="u-demo-block">
-            <text class="u-demo-block__title">自定义圆角</text>
+            <view class="u-demo-block__title">自定义圆角</view>
             <view class="u-demo-block__content">
                 <view class="album">
                     <view class="album__avatar">
@@ -187,7 +187,7 @@
             </view>
         </view>
         <view class="u-demo-block">
-            <text class="u-demo-block__title">自定义形状</text>
+            <view class="u-demo-block__title">自定义形状</view>
             <view class="u-demo-block__content">
                 <view class="album">
                     <view class="album__avatar">
@@ -214,7 +214,7 @@
             </view>
         </view>
 		<view class="u-demo-block">
-		    <text class="u-demo-block__title">自适应自动换行</text>
+		    <view class="u-demo-block__title">自适应自动换行</view>
 		    <view class="u-demo-block__content">
 		        <view class="album">
 		            <view class="album__avatar">

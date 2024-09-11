@@ -1,7 +1,7 @@
 <template>
 	<view class="u-page">
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">基础使用</text>
+			<view class="u-demo-block__title">基础使用</view>
 			<view class="u-demo-block__content">
 				<up-skeleton
 					rows="3"
@@ -11,7 +11,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义段落行数</text>
+			<view class="u-demo-block__title">自定义段落行数</view>
 			<view class="u-demo-block__content">
 				<up-skeleton
 					rows="2"
@@ -21,7 +21,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">设置段落宽度</text>
+			<view class="u-demo-block__title">设置段落宽度</view>
 			<view class="u-demo-block__content">
 				<up-skeleton
 					rows="2"
@@ -32,7 +32,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">设置段落高度</text>
+			<view class="u-demo-block__title">设置段落高度</view>
 			<view class="u-demo-block__content">
 				<up-skeleton
 					rows="3"
@@ -44,7 +44,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">是否开启动画</text>
+			<view class="u-demo-block__title">是否开启动画</view>
 			<up-switch
 				v-model="switch1"
 				space="2"
@@ -64,7 +64,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">展示头像</text>
+			<view class="u-demo-block__title">展示头像</view>
 			<up-gap
 				height="15"
 				bgColor="#fff"
@@ -80,7 +80,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">切换状态</text>
+			<view class="u-demo-block__title">切换状态</view>
 			<up-switch
 				v-model="switch2"
 				space="2"

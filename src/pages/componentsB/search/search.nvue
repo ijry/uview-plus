@@ -1,7 +1,7 @@
 <template>
 	<view class="u-page">
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">基础功能</text>
+			<view class="u-demo-block__title">基础功能</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
 					<up-search
@@ -13,7 +13,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">设置初始值</text>
+			<view class="u-demo-block__title">设置初始值</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
 					<up-search
@@ -25,7 +25,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">搜索框形状</text>
+			<view class="u-demo-block__title">搜索框形状</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
 					<up-search
@@ -46,7 +46,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">右侧控件</text>
+			<view class="u-demo-block__title">右侧控件</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
 					<up-search v-model="value5"></up-search>
@@ -54,7 +54,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">禁用输入框</text>
+			<view class="u-demo-block__title">禁用输入框</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
 					<up-search
@@ -66,7 +66,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">点击左侧图标</text>
+			<view class="u-demo-block__title">点击左侧图标</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
 					<up-search
@@ -78,7 +78,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">搜索框内容水平对齐</text>
+			<view class="u-demo-block__title">搜索框内容水平对齐</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
 					<up-search
@@ -108,7 +108,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义</text>
+			<view class="u-demo-block__title">自定义</view>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
 					<up-search

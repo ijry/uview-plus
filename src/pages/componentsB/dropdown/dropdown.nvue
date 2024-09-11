@@ -20,22 +20,22 @@
 		</view>
 		<view class="u-config-wrap">
             <view class="u-demo-block">
-                <text class="u-demo-block__title">参数配置</text>
+                <view class="u-demo-block__title">参数配置</view>
             </view>
             <view class="u-demo-block">
-                <text class="u-demo-block__title">下边框</text>
+                <view class="u-demo-block__title">下边框</view>
                 <view class="u-demo-block__content">
                     <up-subsection current="1" :list="['有', '无']" @change="borderChange"></up-subsection>
                 </view>
             </view>
 			<view class="u-demo-block">
-                <text class="u-demo-block__title">激活颜色</text>
+                <view class="u-demo-block__title">激活颜色</view>
                 <view class="u-demo-block__content">
                     <up-subsection :list="['#2979ff', '#ff9900', '#19be6b']" @change="activeColorChange"></up-subsection>
                 </view>
             </view>
             <view class="u-demo-block">
-                <text class="u-demo-block__title">遮罩是否可点击</text>
+                <view class="u-demo-block__title">遮罩是否可点击</view>
                 <view class="u-demo-block__content">
                     <up-subsection :list="['是', '否']" @change="maskChange"></up-subsection>
                 </view>

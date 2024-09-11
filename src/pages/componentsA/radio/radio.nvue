@@ -1,7 +1,7 @@
 <template>
 	<view class="u-page">
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">基本案例</text>
+			<view class="u-demo-block__title">基本案例</view>
 			<text class="u-block__title">苹果、香蕉和橙子哪个最甜？</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__radio-item">
@@ -25,7 +25,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义形状</text>
+			<view class="u-demo-block__title">自定义形状</view>
 			<text class="u-block__title">王者荣耀谁最帅？</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__radio-item">
@@ -48,7 +48,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">是否禁用</text>
+			<view class="u-demo-block__title">是否禁用</view>
 			<text class="u-block__title">苹果、香蕉和菠萝哪个最甜？</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__radio-item">
@@ -70,7 +70,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">纵向排列</text>
+			<view class="u-demo-block__title">纵向排列</view>
 			<text class="u-block__title">狙击枪用哪个倍镜最好？</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__radio-item">
@@ -92,7 +92,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义颜色？</text>
+			<view class="u-demo-block__title">自定义颜色？</view>
 			<text class="u-block__title">你比较喜欢下面哪个颜色？</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__radio-item">
@@ -114,7 +114,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">横向排列形式？</text>
+			<view class="u-demo-block__title">横向排列形式？</view>
 			<text class="u-block__title">王者荣耀哪个英雄最美？</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__radio-item">
@@ -135,7 +135,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">横向两端排列形式？</text>
+			<view class="u-demo-block__title">横向两端排列形式？</view>
 			<text class="u-block__title">你觉得阿木木可爱吗？</text>
 			<view>
 				<view class="u-page__radio-item">

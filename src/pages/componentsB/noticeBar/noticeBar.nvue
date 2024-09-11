@@ -1,7 +1,7 @@
 <template>
 	<view class="u-page">
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">基础功能</text>
+			<view class="u-demo-block__title">基础功能</view>
 			<view class="u-demo-block__content">
 				<up-notice-bar
 				    :text="text1"
@@ -9,7 +9,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">可关闭</text>
+			<view class="u-demo-block__title">可关闭</view>
 			<view class="u-demo-block__content">
 				<up-notice-bar
 				    :text="text5"
@@ -18,7 +18,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义横向滚动速度</text>
+			<view class="u-demo-block__title">自定义横向滚动速度</view>
 			<view class="u-demo-block__content">
 				<up-notice-bar
 				    :text="text2"
@@ -28,7 +28,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">可跳转(点击右箭头)</text>
+			<view class="u-demo-block__title">可跳转(点击右箭头)</view>
 			<view class="u-demo-block__content">
 				<up-notice-bar
 				    :text="text3"
@@ -38,7 +38,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">横向步进滚动</text>
+			<view class="u-demo-block__title">横向步进滚动</view>
 			<view class="u-demo-block__content">
 				<up-notice-bar
 				    :text="text4"
@@ -48,7 +48,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">纵向滚动</text>
+			<view class="u-demo-block__title">纵向滚动</view>
 			<view class="u-demo-block__content">
 				<up-notice-bar
 				    :text="text4"
@@ -58,7 +58,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">自定义样式</text>
+			<view class="u-demo-block__title">自定义样式</view>
 			<view class="u-demo-block__content">
 				<up-notice-bar
 				    :text="text1"
