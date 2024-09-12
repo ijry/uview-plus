@@ -217,7 +217,9 @@
 .u-flex-items-baseline,
 .up-flex-items-baseline {
 	/* #ifndef APP-NVUE */
+	/* #ifndef UNI-APP-X */
 	align-items: baseline;
+	/* #endif */
 	/* #endif */
 }
 

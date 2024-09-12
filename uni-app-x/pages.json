@@ -406,13 +406,15 @@
 		// 		"navigationBarTitleText": "模态框",
 		// 		"navigationStyle": "custom"
 		// 	}
-		// }, {
-		// 	"path": "picker/picker",
-		// 	"style": {
-		// 		"navigationBarTitleText": "选择器",
-		// 		"navigationStyle": "custom"
-		// 	}
-		// }, {
+		// }
+		, {
+			"path": "picker/picker",
+			"style": {
+				"navigationBarTitleText": "选择器",
+				"navigationStyle": "custom"
+			}
+		}
+		//, {
 		// 	"path": "calendar/calendar",
 		// 	"style": {
 		// 		"navigationBarTitleText": "日历",

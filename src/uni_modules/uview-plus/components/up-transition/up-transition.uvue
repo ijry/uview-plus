@@ -41,9 +41,9 @@ const waitTick = () => new Promise(resolve => setTimeout(resolve, 1000 / 50))
 // 定义类名，通过给元素动态切换类名，赋予元素一定的css动画样式
 const getClassNames = function (name: string): UTSJSONObject {
 	return {
-		enter: `up-${name}-enter up-${name}-enter-active`,
+		'enter': `up-${name}-enter up-${name}-enter-active`,
 		'enter-to': `up-${name}-enter-to up-${name}-enter-active`,
-		leave: `up-${name}-leave up-${name}-leave-active`,
+		'leave': `up-${name}-leave up-${name}-leave-active`,
 		'leave-to': `up-${name}-leave-to up-${name}-leave-active`
 	}
 }
@@ -103,7 +103,7 @@ export default {
 	        this.$emit('beforeEnter')
 	        this.inited = true
 	        this.display = true
-	        this.classes = classNames['enter'] as String
+	        this.classes = classNames['enter']!!.toString()
 			nextTick(() => {
 				// https://github.com/umicro/uView2.0/issues/545
 				// await sleep(20)
@@ -113,7 +113,7 @@ export default {
 				// 组件动画进入后触发的事件
 				this.$emit('afterEnter')
 				// 赋予组件enter-to类名
-				this.classes = classNames['enter-to'] as String
+				this.classes = classNames['enter-to']!!.toString()
 			})
 	    },
 	    // 动画离场处理
@@ -125,15 +125,15 @@ export default {
 	        this.status = 'leave'
 	        this.$emit('beforeLeave')
 	        // 获得类名
-	        this.classes = classNames['leave'] as String
+	        this.classes = classNames['leave']!!.toString()
 	
 	        nextTick(() => {
 				// 动画正在离场的状态
 				this.transitionEnded = false
 				this.$emit('leave')
 				 // 组件执行动画，到了执行的执行时间后，执行一些额外处理
-				 setTimeout(this.onTransitionEnd, this.duration as Number)
-				 this.classes = classNames['leave-to'] as String
+				 setTimeout(this.onTransitionEnd, parseInt(this.duration!!.toString()))
+				 this.classes = classNames['leave-to']!!.toString()
 			})
 	    },
 	    // 完成过渡后触发

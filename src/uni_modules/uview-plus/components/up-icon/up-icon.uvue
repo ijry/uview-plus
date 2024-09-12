@@ -120,8 +120,8 @@
 			imgStyle(): any {
 				let style = {}
 				// 如果设置width和height属性，则优先使用，否则使用size属性
-				style['width'] = this.width != '' ? addUnit(this.width) : addUnit(this.size.toString())
-				style['height'] = this.height != '' ? addUnit(this.height) : addUnit(this.size.toString())
+				style['width'] = this.width != '' ? addUnit(this.width) : addUnit(this.size!!.toString())
+				style['height'] = this.height != '' ? addUnit(this.height) : addUnit(this.size!!.toString())
 				return style
 			},
 			// 通过图标名，查找对应的图标

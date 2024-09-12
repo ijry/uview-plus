@@ -140,7 +140,7 @@
 				this.array12.forEach((ele, index) => {
 					const angle = index * (360 / 12); // 计算角度  
 					const angleRad = angle * (Math.PI / 180); // 转换为弧度  
-					const banjing = this.calculateSquareRadius(parseInt(getPx(parseInt(this.size.toString()) * 2)));  // 半径
+					const banjing = this.calculateSquareRadius(parseInt(getPx(parseInt(this.size!!.toString()) * 2)));  // 半径
 					const xOffset = banjing * Math.cos(angleRad);
 					const yOffset = banjing * Math.sin(angleRad);  
 					// 假设.loading-container的position是relative，并且宽度和高度都是100% 

@@ -19,6 +19,7 @@ uni-toast .uni-toast {
 /* #endif */
 
 // 隐藏scroll-view的滚动条
+/* #ifdef H5 */
 ::-webkit-scrollbar {
     display: none;  
     width: 0 !important;  
@@ -26,3 +27,4 @@ uni-toast .uni-toast {
     -webkit-appearance: none;  
     background: transparent;  
 }
+/* #endif */

@@ -1,0 +1,20 @@
+/*
+ * @Author       : jry
+ * @Description  :
+ * @version      : 4.0
+ * @Date         : 2024-08912 15:46:58
+ * @LastAuthor   : jry
+ * @lastTime     : 2024-09-12 15:46:58
+ * @FilePath     : /uview-plus/libs/config/props/toolbar
+ */
+export default {
+    // toolbar 组件
+    toolbar: {
+        show: true,
+        cancelText: '取消',
+        confirmText: '确认',
+        cancelColor: '#909193',
+        confirmColor: '#3c9cff',
+        title: ''
+    }
+} as UTSJSONObject

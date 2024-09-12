@@ -15,15 +15,20 @@
 		// vue下，单行和多行显示省略号需要单独处理
 		@if $i == '1' {
 			overflow: hidden;
+			/* #ifndef UNI-APP-X */
 			white-space: nowrap;
 			text-overflow: ellipsis;
+			/* #endif */
 		} @else {
+			/* #ifndef UNI-APP-X */
 			display: -webkit-box!important;
-			overflow: hidden;
 			text-overflow: ellipsis;
 			word-break: break-all;
 			-webkit-line-clamp: $i;
 			-webkit-box-orient: vertical!important;
+			/* #endif */
+			overflow: hidden;
+			
 		}
 		/* #endif */
 	}
@@ -84,9 +89,11 @@
 	padding: 0;
 	background-color: transparent;
 	/* #ifndef APP-PLUS */
+	/* #ifndef UNI-APP-X */
 	font-size: inherit;
 	line-height: inherit;
 	color: inherit;
+	/* #endif */
 	/* #endif */
 	/* #ifdef APP-NVUE */
 	border-width: 0;

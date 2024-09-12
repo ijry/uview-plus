@@ -113,7 +113,7 @@ export const mixin = defineMixin({
             })
         },
         getParent(name: string): ComponentPublicInstance|null {
-            let parent = this.$parent
+            let parent = this?.$parent
             // 通过while历遍，这里主要是为了H5需要多层解析的问题
             // while (parent) {
             //     // 父组件
@@ -140,14 +140,14 @@ export const mixin = defineMixin({
             // 此处并不会自动更新子组件的数据，而是依赖父组件up-radio-group去监听data的变化，手动调用更新子组件的方法去重新获取
             // this.parent = this.getParent(parentName)
             // console.log('this.parent', this.parent)
-            if (this.$parent?.$data?.['children'] != null) {
+            if (this?.$parent?.$data?.['children'] != null) {
                 // 如果父组件的children不存在本组件的实例，才将本实例添加到父组件的children中
                 //if (this.parent?.$data?.['children'].indexOf(this) === -1) {
 					console.log(this.$parent?.$data?.['children'])
 					this.$parent!.$callMethod('addChild', this)
                 //}
             }
-            if (this.$parent != null) {
+            if (this?.$parent != null) {
                 // 历遍parentData中的属性，将parent中的同名属性赋值给parentData
                 UTSJSONObject.keys(this.parentData).map((key: string) => {
                     if (this.$parent?.$props?.[key] != null) {

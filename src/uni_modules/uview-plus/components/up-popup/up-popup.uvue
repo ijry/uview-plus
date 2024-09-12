@@ -83,7 +83,7 @@
 			}
 		},
 		created() {
-			this.overlayDuration = parseInt(this.duration.toString()) + 50
+			this.overlayDuration = parseInt(this.duration!!.toString()) + 50
 		},
 		watch: {
 			show(newValue, oldValue) {
@@ -98,7 +98,7 @@
 		computed: {
 			transitionStyle():any {
 				const style = {
-					zIndex: parseInt(this.zIndex.toString()),
+					zIndex: parseInt(this.zIndex!!.toString()),
 					position: 'fixed',
 					display: 'flex',
 				}

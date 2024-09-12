@@ -5,7 +5,7 @@
 			@click="showByClickInput = !showByClickInput">
             <slot>
                 <view>
-					{{ inputLabel && inputLabel.length ? inputLabel.join('/') : placeholder }}
+					{{ inputLabel != null && inputLabel.length > 0 ? inputLabel.join('/') : placeholder }}
 				</view>
             </slot>
         </view>
@@ -37,7 +37,7 @@
 					:value="innerIndex"
 					:immediateChange="immediateChange"
 					:style="{
-						height: `${addUnit(visibleItemCount * itemHeight)}`
+						height: pickerViewHeight
 					}"
 					@change="changeHandler"
 				>
@@ -49,15 +49,20 @@
 						<view
 							v-if="testArray(item)"
 							class="up-picker__view__column__item up-line-1"
-							v-for="(item1, index1) in item"
+							v-for="(item1 , index1) in item"
 							:key="index1"
 							:style="{
-								height: addUnit(itemHeight),
-								lineHeight: addUnit(itemHeight),
-								fontWeight: index1 === innerIndex[index] ? 'bold' : 'normal',
-								display: 'block'
+								height: addUnit(itemHeight)
 							}"
-						>{{ getItemText(item1) }}</view>
+						>
+							<text class="up-picker__view__column__item__text"
+								:style="{
+									lineHeight: addUnit(itemHeight),
+									fontWeight: (innerIndex.length -1  >= index && index1 === innerIndex[index]) ? 'bold' : 'normal',
+								}">
+								{{ getItemText(item1) }}
+							</text>
+						</view>
 					</picker-view-column>
 				</picker-view>
 				<view
@@ -95,22 +100,22 @@
  * @event {Function} change		当选择值变化时触发
  * @event {Function} confirm	点击确定按钮，返回当前选择的值
  */
-import { props } from './props.js';
-import { mpMixin } from '../../libs/mixin/mpMixin.js';
-import { mixin } from '../../libs/mixin/mixin.js';
-import { addUnit, deepClone, sleep } from '../../libs/function/index.js';
-import test from '../../libs/function/test.js';
+import { propsPicker } from './props';
+import { mpMixin } from '../../libs/mixin/mpMixin';
+import { mixin } from '../../libs/mixin/mixin';
+import { addUnit, deepClone, sleep } from '../../libs/function/index';
+import { array as testArray, object as testObject } from '../../libs/function/test';
 export default {
 	name: 'up-picker',
-	mixins: [mpMixin, mixin, props],
+	mixins: [mpMixin, mixin, propsPicker],
 	data() {
 		return {
 			// 上一次选择的列索引
-			lastIndex: [],
+			lastIndex: [] as number[],
 			// 索引值 ，对应picker-view的value
-			innerIndex: [],
+			innerIndex: [] as number[],
 			// 各列的值
-			innerColumns: [],
+			innerColumns: [] as Array<Array<any>>,
 			// 上一次的变化列索引
 			columnIndex: 0,
             showByClickInput: false,
@@ -121,7 +126,7 @@ export default {
 		defaultIndex: {
 			immediate: true,
 			deep:true,
-			handler(n) {
+			handler(n: number[]) {
 				this.setIndexs(n, true)
 			}
 		},
@@ -129,43 +134,74 @@ export default {
 		columns: {
 			immediate: true,
 			deep:true,
-			handler(n) {
+			handler(n: Array<Array<any>>) {
 				this.setColumns(n)
 			}
 		},
 	},
 	emits: ['close', 'cancel', 'confirm', 'change', 'update:modelValue'],
     computed: {
-        inputLabel() {
-            let items = this.innerColumns.map((item, index) => item[this.innerIndex[index]])
-            let res = []
+		pickerViewHeight(): string {
+			let tmp = parseInt(this.visibleItemCount.toString())
+				* parseInt(this.itemHeight.toString())
+			return addUnit(tmp)
+		},
+        inputLabel(): string[] {
+			let items: Array<any> = []
+			this.innerColumns.map((item, index) => {
+				items.push(item[this.innerIndex[index]])
+			})
+            let res: string[] = []
             items.forEach(element => {
-                res.push(element[this.keyName])
+				if (typeof element == 'object') {
+					if (element != null) {
+						res.push((element as UTSJSONObject)[this.keyName].toString())
+					}
+				}
             });
             return res
         },
-        inputValue() {
-            let items = this.innerColumns.map((item, index) => item[this.innerIndex[index]])
-            let res = []
+        inputValue(): Array<any> {
+			// items里面可能是字符串也可能是对象
+            let items: Array<any> = []
+			this.innerColumns.map((item, index) => {
+				items.push(item[this.innerIndex[index]])
+			})
+            let res: any[] = []
             items.forEach(element => {
-                res.push(element['id'])
+				if (typeof element == 'string') {
+					res.push(element.toString())
+				} else {
+					let ele1 = (element as UTSJSONObject)['id']
+					if (ele1 != null) {
+						res.push(ele1)
+					}
+				}
             });
             return res
         }
     },
 	methods: {
-		addUnit,
-		testArray: test.array,
+		addUnit(str: any): string {
+			return addUnit(str);
+		},
+		testArray(obj: any): boolean {
+			return testArray(obj);
+		},
 		// 获取item需要显示的文字，判别为对象还是文本
-		getItemText(item) {
-			if (test.object(item)) {
-				return item[this.keyName]
+		getItemText(item: any): any|null {
+			if (typeof item == 'object') {
+				let ele1 = (item as UTSJSONObject)[this.keyName]
+				if (ele1 != null) {
+					return ele1.toString()
+				}
+				return ""
 			} else {
 				return item
 			}
 		},
 		// 关闭选择器
-		closeHandler() {
+		closeHandler(): void {
 			if (this.closeOnClickOverlay) {
                 if (this.hasInput) {
                     this.showByClickInput = false
@@ -174,26 +210,28 @@ export default {
 			}
 		},
 		// 点击工具栏的取消按钮
-		cancel() {
+		cancel(): void {
             if (this.hasInput) {
                 this.showByClickInput = false
             }
 			this.$emit('cancel')
 		},
 		// 点击工具栏的确定按钮
-		confirm() {
+		confirm(): void {
             this.$emit('update:modelValue', this.inputValue)
             if (this.hasInput) {
                 this.showByClickInput = false
             }
 			this.$emit('confirm', {
 				indexs: this.innerIndex,
-				value: this.innerColumns.map((item, index) => item[this.innerIndex[index]]),
+				value: this.innerColumns.map((item, index) => {
+					// return item[this.innerIndex[index]]
+				}),
 				values: this.innerColumns
 			})
 		},
 		// 选择器某一列的数据发生变化时触发
-		changeHandler(e) {
+		changeHandler(e: UniPickerViewChangeEvent): void {
 			const {
 				value
 			} = e.detail
@@ -202,7 +240,7 @@ export default {
 			// 通过对比前后两次的列索引，得出当前变化的是哪一列
 			for (let i = 0; i < value.length; i++) {
 				let item = value[i]
-				if (item !== (this.lastIndex[i] || 0)) { // 把undefined转为合法假值0
+				if (item !== (this.lastIndex?.[i] != null ? this.lastIndex?.[i] : 0)) { // 把undefined转为合法假值0
 					// 设置columnIndex为当前变化列的索引
 					columnIndex = i
 					// index则为变化列中的变化项的索引
@@ -214,16 +252,17 @@ export default {
 			const values = this.innerColumns
 			// 将当前的各项变化索引，设置为"上一次"的索引变化值
 			this.setLastIndex(value)
-			this.setIndexs(value)
+			this.setIndexs(value, false)
 
             this.$emit('update:modelValue', this.inputValue)
 
+			// 获取原始值
+			let valueOrigin: Array<any> = [];
+			this.innerColumns.map((item, index) => {
+				valueOrigin.push(item[value[index]])
+			})
 			this.$emit('change', {
-				// #ifndef MP-WEIXIN || MP-LARK
-				// 微信小程序不能传递this，会因为循环引用而报错
-				// picker: this,
-				// #endif
-				value: this.innerColumns.map((item, index) => item[value[index]]),
+				value: valueOrigin,
 				index,
 				indexs: value,
 				// values为当前变化列的数组内容
@@ -232,64 +271,68 @@ export default {
 			})
 		},
 		// 设置index索引，此方法可被外部调用设置
-		setIndexs(index, setLastIndex) {
-			this.innerIndex = deepClone(index)
+		setIndexs(index: number[] | null, setLastIndex: boolean): void {
+			this.innerIndex = index != null ? [...index]: []
 			if (setLastIndex) {
-				this.setLastIndex(index)
+				this.setLastIndex(this.innerIndex)
 			}
 		},
 		// 记录上一次的各列索引位置
-		setLastIndex(index) {
+		setLastIndex(index: number[]): void {
 			// 当能进入此方法，意味着当前设置的各列默认索引，即为“上一次”的选中值，需要记录，是因为changeHandler中
 			// 需要拿前后的变化值进行对比，得出当前发生改变的是哪一列
-			this.lastIndex = deepClone(index)
+			this.lastIndex = [...index]
 		},
 		// 设置对应列选项的所有值
-		setColumnValues(columnIndex, values) {
+		setColumnValues(columnIndex: number, values: Array<any>): void {
 			// 替换innerColumns数组中columnIndex索引的值为values，使用的是数组的splice方法
 			this.innerColumns.splice(columnIndex, 1, values)
             // 替换完成之后将修改列之后的已选值置空
 			this.setLastIndex(this.innerIndex.slice(0, columnIndex))
 			// 拷贝一份原有的innerIndex做临时变量，将大于当前变化列的所有的列的默认索引设置为0
-			let tmpIndex = deepClone(this.innerIndex)
+			let tmpIndex = [...this.innerIndex]
 			for (let i = 0; i < this.innerColumns.length; i++) {
 				if (i > this.columnIndex) {
 					tmpIndex[i] = 0
 				}
 			}
 			// 一次性赋值，不能单个修改，否则无效
-			this.setIndexs(tmpIndex)
+			this.setIndexs(tmpIndex, false)
 		},
 		// 获取对应列的所有选项
-		getColumnValues(columnIndex) {
+		getColumnValues(columnIndex: number): Array<any> {
 			// 进行同步阻塞，因为外部得到change事件之后，可能需要执行setColumnValues更新列的值
 			// 索引如果在外部change的回调中调用getColumnValues的话，可能无法得到变更后的列值，这里进行一定延时，保证值的准确性
-			(async () => {
-				await sleep()
-			})()
+			// (async () => {
+			// 	await sleep()
+			// })()
 			return this.innerColumns[columnIndex]
 		},
 		// 设置整体各列的columns的值
-		setColumns(columns) {
+		setColumns(columns: Array<Array<any>>): void {
 			// console.log(columns)
-			this.innerColumns = deepClone(columns)
+			// this.innerColumns = deepClone(columns)
+			this.innerColumns = (columns)
 			// 如果在设置各列数据时，没有被设置默认的各列索引defaultIndex，那么用0去填充它，数组长度为列的数量
 			if (this.innerIndex.length === 0) {
 				this.innerIndex = new Array(columns.length).fill(0)
 			}
 		},
 		// 获取各列选中值对应的索引
-		getIndexs() {
+		getIndexs(): number[] {
 			return this.innerIndex
 		},
 		// 获取各列选中的值
-		getValues() {
+		getValues(): Array<any> {
 			// 进行同步阻塞，因为外部得到change事件之后，可能需要执行setColumnValues更新列的值
 			// 索引如果在外部change的回调中调用getValues的话，可能无法得到变更后的列值，这里进行一定延时，保证值的准确性
-			(async () => {
-				await sleep()
-			})()
-			return this.innerColumns.map((item, index) => item[this.innerIndex[index]])
+			// (async () => {
+			// 	await sleep()
+			// })()
+			let res: Array<any> = []
+			return this.innerColumns.map((item: Array<any>, index) => {
+				res.push(item[this.innerIndex[index]])
+			})
 		}
 	},
 }
@@ -312,15 +355,14 @@ export default {
 					@include flex;
 					justify-content: center;
 					align-items: center;
-					font-size: 16px;
-					text-align: center;
-					/* #ifndef APP-NVUE */
-					display: block;
-					/* #endif */
-					color: $up-main-color;
+					&__text {
+						font-size: 16px;
+						text-align: center;
+						color: $up-main-color;
+					}
 
 					&--disabled {
-						/* #ifndef APP-NVUE */
+						/* #ifdef H5 */
 						cursor: not-allowed;
 						/* #endif */
 						opacity: 0.35;
