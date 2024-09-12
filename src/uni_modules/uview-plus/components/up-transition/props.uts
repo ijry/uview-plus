@@ -24,7 +24,7 @@ export const propsTransition = defineMixin({
         },
         // 动画的执行时间，单位ms
         duration: {
-            type: [Number],
+            type: [Number, String],
             default: crtProp['duration']
         },
         // 使用的动画过渡函数

@@ -21,7 +21,7 @@
         :hover-class="!disabled && !loading ? 'up-button--active' : ''"
         class="up-button up-reset-button"
         :style="[baseColor, nvueTextStyle, addStyle(customStyle)]"
-        @tap="clickHandler"
+        @click="clickHandler"
         :class="bemClass"
     >
         <template v-if="loading">
@@ -236,11 +236,14 @@ export default {
         clickHandler(): void {
             // 非禁止并且非加载中，才能点击
             if (!this.disabled && !this.loading) {
+				console.log('点击');
 				// 进行节流控制，每throttle毫秒内，只在开始处执行
 				throttle(() => {
 					this.$emit("click");
 				}, this.throttleTime);
-            }
+            } else {
+				console.log('禁止点击');
+			}
         },
         // 下面为对接uniapp官方按钮开放能力事件回调的对接
         getphonenumber(res: UTSJSONObject): void {

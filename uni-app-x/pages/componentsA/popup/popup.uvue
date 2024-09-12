@@ -53,12 +53,12 @@
 					marginTop: ['left', 'right'].includes(getMode(popupData)) ? '480rpx' : '0',
 				}"
 			>
-				<up-button
+				<up-tag
 					type="success"
 					text="点我关闭"
 					customStyle="width: 200rpx"
-					@click="show = !show"
-				></up-button>
+					@click="close"
+				></up-tag>
 			</view>
 		</up-popup>
 	</view>
@@ -162,7 +162,7 @@
 			openPopup(popupData?: UTSJSONObject): void {
 				this.popupData = popupData as UTSJSONObject
 				// sleep().then(() => {
-				// 	this.show = !this.show
+				 	this.show = !this.show
 				// })
 			},
 			navigateBack(): void {
@@ -180,7 +180,7 @@
 			},
 			close(): void {
 				this.show = false
-				// console.log('close');
+				console.log('close');
 			}
 		}
 	}

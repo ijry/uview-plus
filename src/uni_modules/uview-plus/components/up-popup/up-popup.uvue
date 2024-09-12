@@ -79,8 +79,11 @@
 		mixins: [mpMixin, mixin, propsPopup],
 		data() {
 			return {
-				overlayDuration: parseInt(this.duration.toString()) + 50
+				overlayDuration: 0
 			}
+		},
+		created() {
+			this.overlayDuration = parseInt(this.duration.toString()) + 50
 		},
 		watch: {
 			show(newValue, oldValue) {
@@ -95,7 +98,7 @@
 		computed: {
 			transitionStyle():any {
 				const style = {
-					zIndex: parseInt(this.zIndex),
+					zIndex: parseInt(this.zIndex.toString()),
 					position: 'fixed',
 					display: 'flex',
 				}

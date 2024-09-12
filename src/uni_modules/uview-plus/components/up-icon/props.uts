@@ -24,7 +24,7 @@ export const propsIcon = defineMixin({
         },
         // 字体大小，单位px
         size: {
-            type: [String],
+            type: [String, Number],
             default: crtProp['size']
         },
         // 是否显示粗体
