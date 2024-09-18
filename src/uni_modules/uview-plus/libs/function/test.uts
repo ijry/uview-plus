@@ -23,14 +23,39 @@ export function url(value: string): boolean {
 /**
  * 验证日期格式
  */
-export function date(value: string): boolean {
-    if (value == '') return false
-    // 判断是否数值或者字符串数值(意味着为时间戳)，转为数值，否则new Date无法识别字符串时间戳
-    let valueNo = 0
-	if (number(value)) {
-		valueNo = parseInt(value)
-	}
-    return !/Invalid|NaN/.test(new Date(valueNo).toString())
+export function date(value: string | number): boolean {
+  if (value === '') return false;
+  // number类型，判断是否是时间戳
+  if (typeof value === 'number') {
+      // len === 10 秒级时间戳 len === 13 毫秒级时间戳
+      if (value.toString().length !== 10 && value.toString().length !== 13) {
+          return false;
+      }
+      return !isNaN(new Date(value).getTime());
+  }
+if (typeof value === "string") {
+    // 是否为string类型时间戳
+    const numV = Number(value);
+    if (!isNaN(numV)) {
+        if (numV.toString().length === 10 || numV.toString().length === 13) {
+            return !isNaN(new Date(numV).getTime());
+        }
+    }
+    // 非时间戳，且长度在yyyy-mm-dd 至 yyyy-mm-dd hh:mm:ss 之间
+    if (value.length < 10 || value.length > 19) {
+        return false;
+    }
+    const dateRegex =
+        /^\d{4}[-\/]\d{2}[-\/]\d{2}( \d{1,2}:\d{2}(:\d{2})?)?$/;
+    if (!dateRegex.test(value)) {
+        return false;
+    }
+    // 检查是否为有效日期
+    const dateValue = new Date(value);
+    return !isNaN(dateValue.getTime());
+}
+  // 非number和string类型，不做校验
+  return false;
 }
 
 /**
