@@ -41,7 +41,10 @@ export function date(value) {
         // 是否为string类型时间戳
         const numV = Number(value);
         if (!isNaN(numV)) {
-            if (numV.toString().length === 10 || numV.toString().length === 13) {
+            if (
+                numV.toString().length === 10 ||
+                numV.toString().length === 13
+            ) {
                 return !isNaN(new Date(numV).getTime());
             }
         }
