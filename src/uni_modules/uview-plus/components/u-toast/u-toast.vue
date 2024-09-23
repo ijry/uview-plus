@@ -165,12 +165,15 @@
 				// 清除定时器
 				this.clearTimer()
 				this.isShow = true
-				this.timer = setTimeout(() => {
-					// 倒计时结束，清除定时器，隐藏toast组件
-					this.clearTimer()
-					// 判断是否存在callback方法，如果存在就执行
-					typeof(this.tmpConfig.complete) === 'function' && this.tmpConfig.complete()
-				}, this.tmpConfig.duration)
+				// -1时不自动关闭
+				if (this.duration !== -1) {
+					this.timer = setTimeout(() => {
+						// 倒计时结束，清除定时器，隐藏toast组件
+						this.clearTimer()
+						// 判断是否存在callback方法，如果存在就执行
+						typeof(this.tmpConfig.complete) === 'function' && this.tmpConfig.complete()
+					}, this.tmpConfig.duration)
+				}
 			},
 			// 隐藏toast组件，由父组件通过this.$refs.xxx.hide()形式调用
 			hide() {
