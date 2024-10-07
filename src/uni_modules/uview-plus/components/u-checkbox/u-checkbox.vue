@@ -20,16 +20,17 @@
 				/>
 			</slot>
 		</view>
-		<slot name="label" :label="label" :elDisabled="elDisabled">
-			<text
-				@tap.stop="labelClickHandler"
-				:style="{
-					color: elDisabled ? elInactiveColor : elLabelColor,
-					fontSize: elLabelSize,
-					lineHeight: elLabelSize
-				}"
-			>{{label}}</text>
-		</slot>
+		<view class="u-checkbox__label-wrap cursor-pointer" @tap.stop="labelClickHandler">
+			<slot name="label" :label="label" :elDisabled="elDisabled">
+				<text
+					:style="{
+						color: elDisabled ? elInactiveColor : elLabelColor,
+						fontSize: elLabelSize,
+						lineHeight: elLabelSize
+					}"
+				>{{label}}</text>
+			</slot>
+		</view>
 	</view>
 </template>
 

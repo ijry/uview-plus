@@ -50,6 +50,7 @@
 						size="30rpx" color="#fff">
 					</up-text>
 				</view>
+				<up-text text="颜色" color="#4557FF" size="32rpx" />
 			</view>
 		</view>
 		<view class="u-demo-block">
