@@ -90,8 +90,7 @@
 	 */
 	export default {
 		name: 'u-swipe-action-item',
-		emits: ['click'],
-		
+		emits: ['click', 'update:show'],
 		mixins: [
 			mpMixin,
 			mixin,
@@ -118,7 +117,7 @@
 					autoClose: true,
 				},
 				// 当前状态，open-打开，close-关闭
-				status: 'close',
+				status: '',
 				sliderStyle: {}
 			}
 		},
@@ -131,7 +130,17 @@
 			// #endif
 			status(newValue) {
 				if (newValue === 'open') {
+					this.$emit('update:show', true)
 					this.parent && this.parent.setOpendItem(this)
+				} else {
+					this.$emit('update:show', false)
+				}
+			},
+			show(newValue) {
+				if (newValue) {
+					this.status = 'open'
+				} else {
+					this.status = 'close'
 				}
 			}
 		},
@@ -178,10 +187,14 @@
 			// #endif
 			// 按钮被点击
 			buttonClickHandler(item, index) {
-				this.$emit('click', {
+				let ret = this.$emit('click', {
 					index,
 					name: this.name
+				}, () => {
 				})
+				if (this.closeOnClick) {
+					this.closeHandler()
+				}
 			}
 		},
 	}

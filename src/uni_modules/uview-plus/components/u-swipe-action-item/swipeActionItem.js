@@ -11,6 +11,7 @@ export default {
     // swipeActionItem 组件
     swipeActionItem: {
         show: false,
+        closeOnClick: true,
         name: '',
         disabled: false,
         threshold: 20,

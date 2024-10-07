@@ -7,6 +7,10 @@ export const props = defineMixin({
             type: Boolean,
             default: () => defProps.swipeActionItem.show
         },
+        closeOnClick: {
+            type: Boolean,
+            default: () => defProps.swipeActionItem.closeOnClick
+        },
         // 标识符，如果是v-for，可用index索引值
         name: {
             type: [String, Number],

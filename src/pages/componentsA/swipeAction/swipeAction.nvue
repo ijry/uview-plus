@@ -6,7 +6,8 @@
 				<up-swipe-action>
 					<up-swipe-action-item
 						v-if="show1"
-						:show="true"
+						:closeOnClick="false"
+						v-model:show="swshow1"
 						:options="options1"
 						@click="click"
 					>
@@ -23,7 +24,7 @@
 			<text class="u-demo-block__title">按钮组</text>
 			<view class="u-page__swipe-action-item">
 				<up-swipe-action>
-					<up-swipe-action-item :options="options2">
+					<up-swipe-action-item closeOnClick :options="options2">
 						<view class="swipe-action u-border-top u-border-bottom">
 							<view class="swipe-action__content">
 								<text class="swipe-action__content__text">两个按钮并列</text>
@@ -90,6 +91,7 @@
 	export default {
 		data() {
 			return {
+				swshow1: true,
 				show1: true,
 				moveX: 0,
 				showText: '当前状态：关',
@@ -190,13 +192,14 @@
 			}
 		},
 		methods: {
-			click(index) {
+			click(index, cb) {
 				console.log('click', index);
 				uni.showModal({
 					title: '温馨提示',
 					content: '确定要删除吗？',
 					success: res => {
 						if (res.confirm) {
+							this.swshow1 = false
 							this.show1 = false
 						}
 					}
