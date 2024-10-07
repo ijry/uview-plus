@@ -132,7 +132,7 @@ export default {
 			}
 		},
 	},
-	emits: ['close', 'cancel', 'confirm', 'change', 'update:modelValue'],
+	emits: ['close', 'cancel', 'confirm', 'change', 'update:modelValue', 'update:show'],
     computed: {
         inputLabel() {
             let items = this.innerColumns.map((item, index) => item[this.innerIndex[index]])
@@ -168,6 +168,7 @@ export default {
                 if (this.hasInput) {
                     this.showByClickInput = false
                 }
+				this.$emit('update:show', false)
 				this.$emit('close')
 			}
 		},
@@ -176,6 +177,7 @@ export default {
             if (this.hasInput) {
                 this.showByClickInput = false
             }
+			this.$emit('update:show', false)
 			this.$emit('cancel')
 		},
 		// 点击工具栏的确定按钮
@@ -184,6 +186,7 @@ export default {
             if (this.hasInput) {
                 this.showByClickInput = false
             }
+			this.$emit('update:show', false)
 			this.$emit('confirm', {
 				indexs: this.innerIndex,
 				value: this.innerColumns.map((item, index) => item[this.innerIndex[index]]),
