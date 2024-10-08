@@ -166,7 +166,7 @@
 				this.clearTimer()
 				this.isShow = true
 				// -1时不自动关闭
-				if (this.duration !== -1) {
+				if (this.tmpConfig.duration !== -1) {
 					this.timer = setTimeout(() => {
 						// 倒计时结束，清除定时器，隐藏toast组件
 						this.clearTimer()
