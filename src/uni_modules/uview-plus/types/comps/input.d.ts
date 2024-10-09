@@ -9,7 +9,7 @@ declare interface InputProps {
    * 输入框类型，详见[文档](https://www.uviewui.com/components/input.html#%E8%BE%93%E5%85%A5%E6%A1%86%E7%9A%84%E7%B1%BB%E5%9E%8B)
    * @default "text"
    */
-  type?: 'text' | 'number' | 'idcard' | 'digit' | 'password'
+  type?: 'text' | 'number' | 'idcard' | 'digit' | 'password' | 'nickname'
   /**
    * 是否禁用输入框
    * @default false

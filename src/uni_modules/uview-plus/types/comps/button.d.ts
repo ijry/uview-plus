@@ -10,7 +10,7 @@ declare interface ButtonProps {
    * 按钮的样式类型
    * @default "info"
    */
-  type?: 'info' | 'primary' | 'error' | 'warning' | 'success'
+  type?: 'info' | 'primary' | 'error' | 'warning' | 'success' | 'text'
   /**
    * 按钮的大小
    * @default "normal"

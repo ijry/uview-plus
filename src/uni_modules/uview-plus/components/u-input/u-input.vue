@@ -45,6 +45,7 @@
             	    @focus="onFocus"
             	    @confirm="onConfirm"
             	    @keyboardheightchange="onkeyboardheightchange"
+                    @nicknamereview="onnicknamereview"
             	/>
             </view>
             <view
@@ -224,7 +225,7 @@ export default {
         },
     },
     // #ifdef VUE3
-    emits: ['update:modelValue', 'focus', 'blur', 'change', 'confirm', 'clear', 'keyboardheightchange'],
+    emits: ['update:modelValue', 'focus', 'blur', 'change', 'confirm', 'clear', 'keyboardheightchange', 'nicknamereview'],
     // #endif
     methods: {
 		// 在微信小程序中，不支持将函数当做props参数，故只能通过ref形式调用
@@ -273,6 +274,9 @@ export default {
         // 兼容性：微信小程序2.7.0+、App 3.1.0+
 		onkeyboardheightchange(event) {
             this.$emit("keyboardheightchange", event);
+        },
+        onnicknamereview(event) {
+            this.$emit("nicknamereview", event);
         },
         // 内容发生变化，进行处理
         valueChange(value, isOut = false) {
