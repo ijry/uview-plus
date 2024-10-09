@@ -1,10 +1,14 @@
+## 3.3.36（2024-10-09）
+fix: toast 自动关闭
+
+feat: 增加微信小程序用户昵称审核完毕回调及修改 ts 定义文件
+
 ## 3.3.35（2024-10-08）
 feat: modal和picker支持v-model:show双向绑定
 
 feat: 支持checkbox使用slot自定义label后自带点击事件 #522
 
 feat: swipe-action支持自动关闭特性及初始化打开状态
-
 
 ## 3.3.34（2024-09-23）
 feat: 支持toast设置duration值为-1时不自动关闭

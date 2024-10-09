@@ -35,13 +35,15 @@
 						@click="showSex = true; hideKeyboard()"
 						ref="item1"
 					>
-						<up-input
-							v-model="model1.userInfo.sex"
-							disabled
-							disabledColor="#ffffff"
-							placeholder="请选择性别"
-							border="none"
-						></up-input>
+						<view @click.self="showSex = true; hideKeyboard()">
+							<up-input
+								v-model="model1.userInfo.sex"
+								disabled
+								disabledColor="#ffffff"
+								placeholder="请选择性别"
+								border="none"
+							></up-input>
+						</view>
 						<template #right>
 							<up-icon
 								name="arrow-right"
