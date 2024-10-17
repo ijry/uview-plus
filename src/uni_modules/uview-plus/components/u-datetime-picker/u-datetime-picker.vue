@@ -335,11 +335,12 @@
 			        if (this.filter) {
 			            values = this.filter(type, values)
 						if (!values || (values && values.length == 0)) {
-							uni.showToast({
-								title: '日期filter结果不能为空',
-								icon: 'error',
-								mask: true
-							})
+							// uni.showToast({
+							// 	title: '日期filter结果不能为空',
+							// 	icon: 'error',
+							// 	mask: true
+							// })
+							console.log('日期filter结果不能为空')
 						}
 			        }
 			        return { type, values }
