@@ -354,7 +354,8 @@
 			// 得出合法的时间
 			correctValue(value) {
 				const isDateMode = this.mode !== 'time'
-				if (isDateMode && !test.date(value)) {
+				// if (isDateMode && !test.date(value)) {
+				if (isDateMode && !dayjs.unix(value).isValid()) {
 					// 如果是日期类型，但是又没有设置合法的当前时间的话，使用最小时间为当前时间
 					value = this.minDate
 				} else if (!isDateMode && !value) {
