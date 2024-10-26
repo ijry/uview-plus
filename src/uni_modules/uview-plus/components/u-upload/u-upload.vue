@@ -21,7 +21,7 @@
 					<view
 					    v-else
 					    class="u-upload__wrap__preview__other"
-						@tap="onClickPreview($event, item)"
+						@tap="onClickPreview($event, item, index)"
 					>
 						<u-icon
 						    color="#80CBF9"
@@ -350,13 +350,11 @@
 				const {
 					index
 				} = event.currentTarget.dataset;
-				const {
-					lists
-				} = this.data;
+				const lists = this.lists;
 				// #ifdef MP-WEIXIN
 				wx.previewMedia({
 					sources: lists
-						.filter((item) => isVideoFile(item))
+						.filter((item) => item.isVideo)
 						.map((item) =>
 							Object.assign(Object.assign({}, item), {
 								type: 'video'
@@ -369,11 +367,8 @@
 				});
 				// #endif
 			},
-			onClickPreview(event) {
-				const {
-					index
-				} = event.currentTarget.dataset;
-				const item = this.data.lists[index];
+			onClickPreview(event, item, index) {
+				event.currentTarget.dataset.index = index;
 				if (!this.previewFullImage) return;
 				switch (item.type) {
 					case 'video':
