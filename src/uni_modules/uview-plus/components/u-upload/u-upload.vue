@@ -12,7 +12,7 @@
 					    :src="item.thumb || item.url"
 					    :mode="imageMode"
 					    class="u-upload__wrap__preview__image"
-					    @tap="onPreviewImage(item)"
+					    @tap="onPreviewImage(item, index)"
 						:style="[{
 							width: addUnit(width),
 							height: addUnit(height)
@@ -21,7 +21,7 @@
 					<view
 					    v-else
 					    class="u-upload__wrap__preview__other"
-						@tap="onClickPreview($event, item, index)"
+						@tap="onClickPreview(item, index)"
 					>
 						<u-icon
 						    color="#80CBF9"
@@ -334,45 +334,67 @@
 				);
 			},
 			// 预览图片
-			onPreviewImage(item) {
-				if (!item.isImage || !this.previewFullImage) return
+			onPreviewImage(previewItem, index) {
+				if (!previewItem.isImage || !this.previewFullImage) return
+                let current = 0;
+                const urls = [];
+                let imageIndex = 0;
+                for (var i = 0; i < this.lists.length; i++) {
+                    const item = this.lists[i];
+                    if (item.isImage || (item.type && item.type === 'image')) {
+                        urls.push(item.url || item.thumb);
+                        if (i === index) {
+                            current = imageIndex;
+                        }
+                        imageIndex += 1;
+                    }
+                }
+                if (urls.length < 1) {
+                    return;
+                }
 				uni.previewImage({
-					// 先filter找出为图片的item，再返回filter结果中的图片url
-					urls: this.lists.filter((item) => this.accept === 'image' || test.image(item.url || item.thumb)).map((item) => item.url || item.thumb),
-					current: item.url || item.thumb,
+                    urls: urls,
+                    current: current,
 					fail() {
 						toast('预览图片失败')
 					},
 				});
 			},
-			onPreviewVideo(event) {
+			onPreviewVideo(index) {
 				if (!this.previewFullImage) return;
-				const {
-					index
-				} = event.currentTarget.dataset;
-				const lists = this.lists;
+                let current = 0;
+                const sources = [];
+                let videoIndex = 0;
+                for (var i = 0; i < this.lists.length; i++) {
+                    const item = this.lists[i];
+                    if (item.isVideo || (item.type && item.type === 'video')) {
+                        sources.push(Object.assign(Object.assign({}, item), {
+                            type: 'video'
+                        }));
+                        if (i === index) {
+                            current = videoIndex;
+                        }
+                        videoIndex += 1;
+                    }
+                }
+                if (sources.length < 1) {
+                    return;
+                }
 				// #ifdef MP-WEIXIN
 				wx.previewMedia({
-					sources: lists
-						.filter((item) => item.isVideo)
-						.map((item) =>
-							Object.assign(Object.assign({}, item), {
-								type: 'video'
-							})
-						),
-					current: index,
+					sources: sources,
+					current: current,
 					fail() {
 						toast('预览视频失败')
 					},
 				});
 				// #endif
 			},
-			onClickPreview(event, item, index) {
-				event.currentTarget.dataset.index = index;
+			onClickPreview(item, index) {
 				if (!this.previewFullImage) return;
 				switch (item.type) {
 					case 'video':
-						this.onPreviewVideo(event);
+						this.onPreviewVideo(index);
 						break;
 					default:
 						break;
