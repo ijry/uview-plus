@@ -157,7 +157,8 @@
         },
         "domain" : "",
         "devServer" : {
-            "https" : false
+            "https" : false,
+            "port" : 5273
         }
     },
     "vueVersion" : "3",

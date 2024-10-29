@@ -72,8 +72,25 @@
 				></up-slider>
 			</view>
 		</view>
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">在弹窗中使用</text>
+			<view class="u-page__slide-item">
+				<up-text @click="modelShow = true" text="打开弹窗"></up-text>
+				<up-modal v-model:show="modelShow">
+				    <view class="slot-content" style="width: 100%">
+				      <up-slider v-model="sliderValue" min="1" max="4" showValue></up-slider>
+				    </view>
+				</up-modal>
+			</view>
+		</view>
 	</view>
 </template>
+
+<script setup> 
+import { ref } from "vue";
+const modelShow = ref(false);
+const sliderValue = ref(4);
+</script>
 
 <script>
 	export default {
