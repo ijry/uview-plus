@@ -1,0 +1,79 @@
+<template>
+	<view class="wrap">
+		<page-nav :desc="desc"></page-nav>
+		<view class="list-wrap">
+			<up-cell-group title-bg-color="rgb(243, 244, 246)" :title="item.groupName" v-for="(item, index) in list" :key="index">
+				<up-cell :titleStyle="{fontWeight: 500}" :title="item1.title"
+				 v-for="(item1, index1) in item.list" :key="index1" isLink @click="openPage" :name="item1.path">
+					<template v-slot:icon>
+						<image
+							class="u-cell-icon"
+							:src="getIcon(item1.icon)"
+							mode="widthFix">
+						</image>
+					</template>
+				</up-cell>
+			</up-cell-group>
+		</view>
+        <up-gap height="30" bgColor="#fff"></up-gap>
+        <up-alert description ='uview-plus 2022-2024'></up-alert>
+		<up-gap height="30" bgColor="#fff"></up-gap>
+	</view>
+</template>
+
+<script lang="ts">
+	import list from "./components.config.js";	import { os, toast } from '@/uni_modules/uview-plus';
+	export default {
+		data() {
+			return {
+				list: list,
+				desc: 'uview-plus 是uview2.0的vue3版本，是全面兼容nvue的uni-app生态框架，全面的组件和便捷的工具会让您信手拈来，如鱼得水。',
+			}
+		},
+		computed: {
+		},
+        onLoad() {
+        },
+		methods: {
+			getIcon(path: string) {
+				return 'https://uview-plus.jiangruyi.com/h5/static/uview/demo/' + path + '.png';
+			},
+			openPage(detail: { name: string }) {
+				const path = detail.name
+				// #ifdef APP-NVUE
+				// 目前安卓nvue下，由于overflow只能为hidden，所以布局上的原因，暂不支持steps和tooltip等组件				// 2024实测steps与tooltip均支持在安卓nvue下显示
+				if(os() === 'android') {
+					const noSupportForAndroid = []
+					for(let i = 0; i < noSupportForAndroid.length; i ++) {
+						if(path.indexOf(noSupportForAndroid[i]) > -1) {
+							return toast('安卓nvue下暂不支持此组件')
+						}
+					}
+				}
+				// #endif
+				uni.navigateTo({
+					url: path
+				})
+			},
+		}
+	}
+</script>
+
+<style>
+	/* page {
+		background-color: rgb(240, 242, 244);
+	} */
+</style>
+
+<style lang="scss" >
+	
+	.u-cell-icon {
+		width: 36rpx;
+		height: 36rpx;
+		margin-right: 8rpx;
+	}
+	
+	.u-cell-group__title__text {
+		font-weight: bold;
+	}
+</style>
