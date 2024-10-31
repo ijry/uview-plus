@@ -76,6 +76,11 @@ export const props = defineMixin({
         unit: {
             type: [String],
             default: () => defProps.album.unit
+        },
+        // 阻止点击冒泡
+        stop: {
+            type: Boolean,
+            default: () => defProps.album.stop
         }
     }
 })

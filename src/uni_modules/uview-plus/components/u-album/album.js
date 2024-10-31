@@ -22,6 +22,7 @@ export default {
         rowCount: 3,
         showMore: true,
         autoWrap: false,
-        unit: 'px'
+        unit: 'px',
+        stop: true,
     }
 }

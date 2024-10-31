@@ -197,6 +197,8 @@ export default {
                 current: url,
                 urls
             })
+            // 是否阻止事件传播
+			this.stop && this.preventEvent(e)
         },
         // 获取图片的路径
         getSrc(item) {
