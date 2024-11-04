@@ -13,7 +13,7 @@
                 v-for="(item, index1) in arr"
                 :key="index1"
                 :style="[imageStyle(index + 1, index1 + 1)]"
-                @tap="previewFullImage ? onPreviewTap(getSrc(item)) : ''"
+                @tap="previewFullImage ? onPreviewTap($event, getSrc(item)) : ''"
             >
                 <image
                     :src="getSrc(item)"
@@ -189,7 +189,7 @@ export default {
     methods: {
         addUnit,
         // 预览图片
-        onPreviewTap(url) {
+        onPreviewTap(e, url) {
             const urls = this.urls.map((item) => {
                 return this.getSrc(item)
             })
