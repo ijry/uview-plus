@@ -90,6 +90,11 @@ export const props = defineMixin({
         iconPlacement: {
             type: String,
             default: () => defProps.radio.iconPlacement
-        }
+        },
+        // item 之间的间距
+		gap: {
+			type: [String, Number],
+			default: () => defProps.radioGroup.gap
+		}
     }
 })
