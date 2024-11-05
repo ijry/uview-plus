@@ -3,8 +3,8 @@
  * @Description  :
  * @version      : 1.0
  * @Date         : 2021-08-20 16:44:21
- * @LastAuthor   : LQ
- * @lastTime     : 2021-08-20 17:03:12
+ * @LastAuthor   : CPS
+ * @lastTime     : 2024-11-05 16:01:12
  * @FilePath     : /u-view2.0/uview-ui/libs/config/props/radioGroup.js
  */
 export default {
@@ -25,6 +25,7 @@ export default {
         iconColor: '#ffffff',
         iconSize: 12,
         borderBottom: false,
-        iconPlacement: 'left'
+        iconPlacement: 'left',
+        gap: "10px"
     }
 }
