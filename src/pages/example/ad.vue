@@ -54,7 +54,7 @@
 							wx.showToast({title: '未完整观看视频不能获取奖励哦', icon: 'none'})
 						}
 					})
-					this.videoAdLoad()
+					// this.videoAdLoad()
 				 } else {
 					wx.showToast({
 						title: '请升级微信',
