@@ -13,7 +13,8 @@
  */
 
 /* uni.scss */
-// @import 'uview-plus/theme.scss';@import '@/uni_modules/uview-plus/theme.scss';
+// @use 'uview-plus/theme.scss' as *;
+@use '@/uni_modules/uview-plus/theme.scss' as *;
 
 /* 颜色变量 */
 

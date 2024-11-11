@@ -15,6 +15,6 @@
 
 <style lang="scss">
 	/*每个页面公共css */
-	// @import "uview-plus/index.scss";	@import "@/uni_modules/uview-plus/index.scss";
-	@import "common/demo.scss";
+	// @import "uview-plus/index.scss";	@use "@/uni_modules/uview-plus/index.scss" as *;
+	@use "common/demo.scss" as *;
 </style>

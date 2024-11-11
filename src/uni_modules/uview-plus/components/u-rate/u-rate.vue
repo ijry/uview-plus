@@ -287,7 +287,7 @@
 </script>
 
 <style lang="scss" scoped>
-@import "../../libs/css/components.scss";
+@use "../../libs/css/components.scss";
 $u-rate-margin: 0 !default;
 $u-rate-padding: 0 !default;
 $u-rate-item-icon-wrap-half-top: 0 !default;

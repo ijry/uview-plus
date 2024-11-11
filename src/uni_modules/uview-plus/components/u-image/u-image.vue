@@ -200,7 +200,7 @@
 </script>
 
 <style lang="scss" scoped>
-	@import '../../libs/css/components.scss';
+	@use '../../libs/css/components.scss' as *;
 
 	$u-image-error-top:0px !default;
 	$u-image-error-left:0px !default;

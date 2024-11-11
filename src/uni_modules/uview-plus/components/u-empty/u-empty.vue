@@ -107,7 +107,7 @@
 </script>
 
 <style lang="scss" scoped>
-	@import '../../libs/css/components.scss';
+	@use '../../libs/css/components.scss' as *;
 	$u-empty-text-margin-top:20rpx !default;
 	$u-empty-slot-margin-top:20rpx !default;
 

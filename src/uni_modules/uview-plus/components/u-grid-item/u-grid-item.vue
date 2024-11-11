@@ -172,7 +172,7 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
+	@use "../../libs/css/components.scss";
       $u-grid-item-hover-class-opcatiy:.5 !default;
       $u-grid-item-margin-top:1rpx !default;
       $u-grid-item-border-right-width:0.5px !default;

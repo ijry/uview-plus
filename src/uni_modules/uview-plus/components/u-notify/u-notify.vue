@@ -173,7 +173,7 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
+	@use "../../libs/css/components.scss";
 
 	$u-notify-padding: 8px 10px !default;
 	$u-notify-text-font-size: 15px !default;

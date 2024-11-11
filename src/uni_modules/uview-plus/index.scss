@@ -1,24 +1,24 @@
 // 引入公共基础类
-@import "./libs/css/common.scss";
-@import "./libs/css/flex.scss";
-@import "./libs/css/color.scss";
+@use "./libs/css/common.scss" as *;
+@use "./libs/css/flex.scss" as *;
+@use "./libs/css/color.scss" as *;
 
 // 非nvue的样式
 /* #ifndef APP-NVUE */
-@import "./libs/css/vue.scss";
+@use "./libs/css/vue.scss" as *;
 /* #endif */
 
 // nvue的特有样式
 /* #ifdef APP-NVUE */
-@import "./libs/css/nvue.scss";
+@use "./libs/css/nvue.scss" as *;
 /* #endif */
 
 // 小程序特有的样式
 /* #ifdef MP */
-@import "./libs/css/mp.scss";
+@use "./libs/css/mp.scss" as *;
 /* #endif */
 
 // H5特有的样式
 /* #ifdef H5 */
-@import "./libs/css/h5.scss";
+@use "./libs/css/h5.scss" as *;
 /* #endif */

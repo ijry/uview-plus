@@ -127,7 +127,7 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
+	@use "../../libs/css/components.scss";
 
 	.u-notice {
 		@include flex;

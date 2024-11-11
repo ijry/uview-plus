@@ -1,4 +1,4 @@
-@import "./mixin.scss";
+@use "./mixin.scss" as *;
 
 /* #ifndef APP-NVUE */
 // 由于uview-plus是基于nvue环境进行开发的，此环境中普通元素默认为flex-direction: column;

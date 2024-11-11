@@ -73,7 +73,7 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
+	@use "../../libs/css/components.scss";
 	$u-link-line-height:1 !default;
 
 	.u-link {

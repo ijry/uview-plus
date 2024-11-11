@@ -120,7 +120,7 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
+	@use "../../libs/css/components.scss";
 	.u-tabbar-item {
 		@include flex(column);
 		align-items: center;

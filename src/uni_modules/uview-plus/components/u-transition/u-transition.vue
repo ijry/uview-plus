@@ -85,11 +85,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../libs/css/components.scss';
+@use '../../libs/css/components.scss' as *;
 
 /* #ifndef APP-NVUE */
 // vue版本动画相关的样式抽离在外部文件
-@import './vue.ani-style.scss';
+@use './vue.ani-style.scss' as *;
 /* #endif */
 
 .u-transition {}

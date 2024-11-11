@@ -459,7 +459,7 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
+	@use "../../libs/css/components.scss";
 
 	.u-calendar-month-wrapper {
 		margin-top: 4px;
