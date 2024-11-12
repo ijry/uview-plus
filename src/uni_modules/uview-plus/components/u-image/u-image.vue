@@ -2,6 +2,7 @@
 	<u-transition
 		mode="fade"
 		:show="show"
+		:style="transStyle"
 		:duration="fade ? 1000 : 0"
 	>
 		<view
@@ -129,6 +130,13 @@
 			}
 		},
 		computed: {
+			transStyle() {
+				let style = {};
+				// 通过调用addUnit()方法，如果有单位，如百分比，px单位等，直接返回，如果是纯粹的数值，则加上rpx单位
+				style.width = addUnit(this.width);
+				style.height = addUnit(this.height);
+				return style;
+			},
 			wrapStyle() {
 				let style = {};
 				// 通过调用addUnit()方法，如果有单位，如百分比，px单位等，直接返回，如果是纯粹的数值，则加上rpx单位
@@ -156,8 +164,8 @@
 		methods: {
 			addUnit,
 			// 点击图片
-			onClick() {
-				this.$emit('click')
+			onClick(e) {
+				this.$emit('click', e)
 			},
 			// 图片加载失败
 			onErrorHandler(err) {
@@ -192,7 +200,7 @@
 			removeBgColor() {
 				// 淡入动画过渡完成后，将背景设置为透明色，否则png图片会看到灰色的背景
 				this.backgroundStyle = {
-					backgroundColor: 'transparent'
+					backgroundColor: this.bgColor || '#ffffff'
 				};
 			}
 		}
