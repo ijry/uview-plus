@@ -1,3 +1,8 @@
+## 3.3.41（2024-11-13）
+fix: u-radio-group invalid import
+
+improvement: 优化图片组件宽高及修复事件event传递
+
 ## 3.3.40（2024-11-11）
 add: 组件radioGroup增加gap属性用于设置item间隔 
 
