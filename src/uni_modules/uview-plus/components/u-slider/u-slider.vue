@@ -274,7 +274,7 @@
 				// 触摸后第一次移动已经将status设置为moving状态，故触摸第二次移动不会触发本事件
 				if (this.status == 'start') this.$emit('start');
 				let touches = event.touches[0];
-				console.log('touchs', touches)
+				// console.log('touchs', touches)
 				// 滑块的左边不一定跟屏幕左边接壤，所以需要减去最外层父元素的左边值
 				let clientX = 0;
 				// #ifndef APP-NVUE

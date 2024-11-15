@@ -1,3 +1,6 @@
+## 3.3.42（2024-11-15）
+add: button组件支持stop参数阻止冒泡
+
 ## 3.3.41（2024-11-13）
 fix: u-radio-group invalid import
 
