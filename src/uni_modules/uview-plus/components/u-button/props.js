@@ -149,6 +149,11 @@ export const props = defineMixin({
         color: {
             type: String,
             default: () => defProps.button.color
-        }
+        },
+        // 停止冒泡
+        stop: {
+            type: Boolean,
+            default: () => defProps.button.stop
+        },
     }
 })
