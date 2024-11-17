@@ -694,6 +694,17 @@ export function pages() {
 	return pages
 }
 
+export function getValueByPath(obj, path) {
+    // 将路径字符串按 '.' 分割成数组
+    const pathArr = path.split('.');
+    // 使用 reduce 方法从 obj 开始，逐级访问嵌套属性
+    return pathArr.reduce((acc, curr) => {
+        // 如果当前累加器（acc）是对象且包含当前键（curr），则返回该键对应的值
+        // 否则返回 undefined（表示路径不存在）
+        return acc && acc[curr] !== undefined ? acc[curr] : undefined;
+    }, obj);
+}
+
 export default {
 	range,
 	getPx,
@@ -724,5 +735,6 @@ export default {
 	setProperty,
 	page,
 	pages,
+	getValueByPath,
 	// setConfig
 }
