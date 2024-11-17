@@ -1,3 +1,10 @@
+## 3.3.43（2024-11-18）
+fix: 支持瀑布流组件v-model置为[]
+
+add: 新增字符串路径访问工具方法getValueByPath
+
+add: 新增float-button悬浮按钮组件
+
 ## 3.3.42（2024-11-15）
 add: button组件支持stop参数阻止冒泡
 
