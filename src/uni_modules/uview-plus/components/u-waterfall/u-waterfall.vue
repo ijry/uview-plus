@@ -67,11 +67,16 @@
         },
         watch: {
             copyFlowList(nVal, oVal) {
-                // 取差值，即这一次数组变化新增的部分
-                let startIndex = Array.isArray(oVal) && oVal.length > 0 ? oVal.length : 0;
-                // 拼接上原有数据
-                this.tempList = this.tempList.concat(this.cloneData(nVal.slice(startIndex)));
-                this.splitData();
+                if (!nVal || nVal.length == 0) {
+                    this.clear();
+                    // console.log('clear');
+                } else {
+                    // 取差值，即这一次数组变化新增的部分
+                    let startIndex = Array.isArray(oVal) && oVal.length > 0 ? oVal.length : 0;
+                    // 拼接上原有数据
+                    this.tempList = this.tempList.concat(this.cloneData(nVal.slice(startIndex)));
+                    this.splitData();
+                }
             }
         },
         mounted() {
@@ -81,11 +86,17 @@
         computed: {
             // 破坏flowList变量的引用，否则watch的结果新旧值是一样的
             copyFlowList() {
+                // #ifdef VUE3
+                if (!this.modelValue || this.modelValue.length == 0) {
+                    this.clear();
+                    // console.log('clear');
+                    return [];
+                } else {
+                    return this.cloneData(this.modelValue);
+                }
+                // #endif
                 // #ifdef VUE2
                 return this.cloneData(this.value);
-                // #endif
-                // #ifdef VUE3
-                return this.cloneData(this.modelValue);
                 // #endif
             }
         },

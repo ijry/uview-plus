@@ -6,7 +6,7 @@
 		:duration="fade ? 1000 : 0"
 	>
 		<view
-			class="u-image"
+			class="u-image box-border"
 			@tap="onClick"
 			:style="[wrapStyle, backgroundStyle]"
 		>
