@@ -236,7 +236,12 @@ export default [{
         path: '/pages/componentsD/copy/copy',
         icon: 'copy',
         title: 'copy 复制',
-        title_en: '复制'
+        title_en: 'Copy'
+    }, {
+        path: '/pages/componentsD/floatButton/floatButton',
+        icon: 'copy',
+        title: 'floatButton 悬浮按钮',
+        title_en: 'Float Button'
     }
         // {
         // 	path: '/pages/componentsA/fullScreen/fullScreen',

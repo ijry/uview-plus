@@ -551,6 +551,12 @@
                     "style" : {
                         "navigationBarTitleText" : "盒子"
                     }
+                },
+                {
+                    "path" : "floatButton/floatButton",
+                    "style" : {
+                        "navigationBarTitleText" : "悬浮按钮"
+                    }
                 }
             ]
         },

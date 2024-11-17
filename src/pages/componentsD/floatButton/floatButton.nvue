@@ -1,0 +1,91 @@
+<template>
+   <view class="u-page">
+      <view class="u-page__item">
+         <text class="u-page__item__title">基础功能</text>
+         <up-float-button :isMenu="false" top="90px">
+         </up-float-button>
+      </view>
+      <up-gap height="50"></up-gap>
+      <view class="u-page__item">
+         <text class="u-page__item__title">带子菜单模式</text>
+         <up-float-button :isMenu="true" top="220px" @item-click="itemClick"
+          :list="[
+            {key: 'plus', name: 'plus', color: '#fff', backgroundColor: 'red'},
+            {key: 'order', name: 'order', color: '#fff', backgroundColor: 'green'}
+          ]">
+         </up-float-button>
+      </view>
+      <up-gap height="50"></up-gap>
+      <view class="u-page__item">
+         <text class="u-page__item__title">自定义插槽</text>
+         <up-float-button top="''" bottom="250px" :isMenu="true">
+            <template #list>
+               <view style="display: flex ;justify-content: center;align-items: center;margin: 5px 0px;background-color: blueviolet;border-radius: 50%; width: 50px;height:50px;">
+					<up-icon
+						name="arrow-left"
+                        color='#fff'
+						size="19"
+					></up-icon>
+				</view>
+				<view style="display: flex ;justify-content: center;align-items: center;margin: 5px 0px;background-color: chocolate;border-radius: 50%; width: 50px;height:50px;">
+					<up-icon
+						name="arrow-left"
+                        color='#fff'
+						size="19"
+					></up-icon>
+				</view>
+            </template>
+         </up-float-button>
+      </view>
+      <up-gap height="50"></up-gap>
+   </view>
+</template>
+
+<script>
+   export default {
+      data() {
+         return {
+
+         }
+      },
+      methods: {
+         navigateBack() {
+            uni.navigateBack({
+               delta: 1
+            })
+         },
+         itemClick(e) {
+            console.log(e);
+         }
+      }
+   }
+</script>
+
+<style lang="scss">
+   /* #ifndef APP-NVUE */
+   page {
+      background-color: $u-bg-color;
+   }
+   /* #endif */
+   
+   .u-page {
+      padding: 0;
+      flex: 1;
+      background-color: $u-bg-color;
+
+      &__item {
+
+         &__title {
+            color: $u-tips-color;
+            background-color: $u-bg-color;
+            padding: 15px;
+            font-size: 15px;
+
+            &__slot-title {
+               color: $u-primary;
+               font-size: 14px;
+            }
+         }
+      }
+   }
+</style>
