@@ -22,7 +22,8 @@
 </template>
 
 <script lang="ts">
-	import list from "./components.config.js";	import { os, toast } from '@/uni_modules/uview-plus';
+	import list from "./components.config.js";
+	import { os, toast } from '@/uni_modules/uview-plus';
 	export default {
 		data() {
 			return {

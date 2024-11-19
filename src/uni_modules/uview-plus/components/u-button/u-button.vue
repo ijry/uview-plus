@@ -276,7 +276,7 @@ export default {
             if (!this.disabled && !this.loading) {
 				// 进行节流控制，每this.throttle毫秒内，只在开始处执行
 				throttle(() => {
-					this.$emit("click");
+					this.$emit("click", e);
 				}, this.throttleTime);
             }
             // 是否阻止事件传播
