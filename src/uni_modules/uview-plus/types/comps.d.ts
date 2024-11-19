@@ -1,4 +1,4 @@
-declare module '@vue/runtime-core' {
+declare module 'vue' {
   export interface GlobalComponents {
     // 基础组件
     ['up-icon']: typeof import('./comps/icon')['Icon']
