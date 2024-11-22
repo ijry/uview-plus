@@ -47,6 +47,7 @@
 						class="u-line-1 u-navbar__content__title"
 						:style="[{
 							width: addUnit(titleWidth),
+							color: titleColor,
 						}, addStyle(titleStyle)]"
 					>{{ title }}</text>
 				</slot>
@@ -85,11 +86,12 @@
 	 * @property {Boolean}			placeholder			固定在顶部时，是否生成一个等高元素，以防止塌陷 （默认 false ）
 	 * @property {Boolean}			fixed				导航栏是否固定在顶部 （默认 false ）
 	 * @property {Boolean}			border				导航栏底部是否显示下边框 （默认 false ）
-	 * @property {String}			leftIcon			左边返回图标的名称，只能为uView自带的图标 （默认 'arrow-left' ）
+	 * @property {String}			leftIcon			左边返回图标的名称，只能为uview-pls自带的图标 （默认 'arrow-left' ）
 	 * @property {String}			leftText			左边的提示文字
 	 * @property {String}			rightText			右边的提示文字
-	 * @property {String}			rightIcon			右边返回图标的名称，只能为uView自带的图标
+	 * @property {String}			rightIcon			右边返回图标的名称，只能为uview-plus自带的图标
 	 * @property {String}			title				导航栏标题，如设置为空字符，将会隐藏标题占位区域
+	 * @property {String}			titleColor			文字颜色 （默认 '' ）
 	 * @property {String}			bgColor				导航栏背景设置 （默认 '#ffffff' ）
 	 * @property {String | Number}	titleWidth			导航栏标题的最大宽度，内容超出会以省略号隐藏 （默认 '400rpx' ）
 	 * @property {String | Number}	height				导航栏高度(不包括状态栏高度在内，内部自动加上)（默认 '44px' ）

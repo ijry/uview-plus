@@ -20,6 +20,7 @@ export default {
         rightText: '',
         rightIcon: '',
         title: '',
+        titleColor: '',
         bgColor: '#ffffff',
         titleWidth: '400rpx',
         height: '44px',

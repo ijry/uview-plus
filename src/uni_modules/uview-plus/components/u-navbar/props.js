@@ -48,6 +48,11 @@ export const props = defineMixin({
 			type: [String, Number],
 			default: () => defProps.navbar.title
 		},
+		// 标题颜色
+		titleColor: {
+			type: String,
+			default: () => defProps.navbar.titleColor
+		},
 		// 背景颜色
 		bgColor: {
 			type: String,
