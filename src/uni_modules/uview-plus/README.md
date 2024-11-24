@@ -1,5 +1,5 @@
 <p align="center">
-    <img alt="logo" src="https://uviewui.com/common/logo.png" width="120" height="120" style="margin-bottom: 10px;">
+    <img alt="logo" src="https://uiadmin.net/uview-plus/common/logo.png" width="120" height="120" style="margin-bottom: 10px;">
 </p>
 <h3 align="center" style="margin: 30px 0 30px;font-weight: bold;font-size:40px;">uview-plus 3.0</h3>
 <h3 align="center">多平台快速开发的UI框架</h3>
@@ -12,9 +12,19 @@
 
 ## 说明
 
-uview-plus，是uni-app全面兼容vue3/nvue的uni-app生态框架，全面的组件和便捷的工具会让您信手拈来，如鱼得水。uview-plus是基于uView2.x移植的支持vue3的版本，感谢uView。
+uview-plus，是uni-app全面兼容vue3/nvue/鸿蒙/uni-app-x的uni-app生态框架，全面的组件和便捷的工具会让您信手拈来，如鱼得水。uview-plus是基于uView2.x移植的支持vue3的版本，感谢uView。
 
-## [官方文档：https://uview-plus.jiangruyi.com](https://uview-plus.jiangruyi.com)
+## 可视化设计
+
+uview-plus现已推出免费可视化设计，可以方便的进行页面可视化设计，导出源码即可使用。极大提高前端页面开发效率；如产品经理设计师直接使用更可作为高保真高可用原型制作工具，让设计稿即代码，无需传统的设计稿开发还原步骤。
+
+<img src="https://s3.bmp.ovh/imgs/2024/11/24/fd58d00071e6e5df.png" width="900" height="auto" >
+<img src="https://s3.bmp.ovh/imgs/2024/11/24/8e85a519fe627fb1.png" width="900" height="auto" >
+
+
+## 文档
+[官方文档：https://uview-plus.jiangruyi.com](https://uview-plus.jiangruyi.com)
+[备用文档：https://uiadmin.net/uview-plus](https://uiadmin.net/uview-plus)
 
 
 ## 预览
