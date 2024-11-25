@@ -150,14 +150,14 @@ export default {
     },
     methods: {
         addStyle,
-        clickHandler() {
+        clickHandler(e) {
             // 如果为手机号模式，拨打电话
             if (this.call && this.mode === 'phone') {
                 uni.makePhoneCall({
                     phoneNumber: this.text
                 })
             }
-            this.$emit('click')
+            this.$emit('click', e)
         }
     }
 }
