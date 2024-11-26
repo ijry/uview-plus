@@ -2,7 +2,7 @@
 	<u-transition
 		mode="fade"
 		:show="show"
-		:style="transStyle"
+		:customStyle="transStyle"
 		:duration="fade ? 1000 : 0"
 	>
 		<view
