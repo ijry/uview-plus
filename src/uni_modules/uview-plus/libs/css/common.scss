@@ -1,6 +1,6 @@
 // 超出行数，自动显示行尾省略号，最多5行
 // 来自uview-plus的温馨提示：当您在控制台看到此报错，说明需要在App.vue的style标签加上【lang="scss"】
-@for $i from 1 through 5 {
+@for $i from 1 through 10 {
 	.u-line-#{$i},
 	.up-line-#{$i} {
 		/* #ifdef APP-NVUE */
