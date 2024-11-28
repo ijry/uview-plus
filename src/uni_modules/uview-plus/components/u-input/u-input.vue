@@ -20,7 +20,6 @@
             	<input
                     ref="input-native"
             	    class="u-input__content__field-wrapper__field"
-                    :inputmode="disabled || readonly ? 'none': ''"
             	    :style="[inputStyle]"
             	    :type="type"
             	    :focus="focus"
