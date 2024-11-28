@@ -3,12 +3,16 @@
         <view v-if="hasInput" class="u-datetime-picker__has-input"
             @click="showByClickInput = !showByClickInput"
         >
-            <up-input
-                :placeholder="placeholder"
-                :readonly="!!showByClickInput"
-                border="surround"
-                v-model="inputValue"
-            ></up-input>
+            <slot name="trigger" :value="inputValue">
+				<up-input
+					:placeholder="placeholder"
+					:readonly="!!showByClickInput"
+					border="surround"
+					v-model="inputValue"
+				></up-input>
+				<div class="input-cover">
+				</div>
+			</slot>
         </view>
         <u-picker
             ref="picker"
@@ -465,10 +469,29 @@
 <style lang="scss" scoped>
 	@import '../../libs/css/components.scss';
 	.u-datetime-picker {
+		flex: 1;
         &__has-input {
+			position: relative;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
             /* #ifndef APP-NVUE */
             width: 100%;
             /* #endif */
+			.input-cover {
+				opacity: 0;
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left:0;
+				right:0;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				border-radius: 4px;
+				border: 1px solid #eee;
+				padding: 0 10px;
+			}
         }
 	}
 </style>

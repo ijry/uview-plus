@@ -20,6 +20,7 @@
             	<input
                     ref="input-native"
             	    class="u-input__content__field-wrapper__field"
+                    :inputmode="disabled || readonly ? 'none': ''"
             	    :style="[inputStyle]"
             	    :type="type"
             	    :focus="focus"
@@ -317,6 +318,9 @@ export default {
          * 无法触发u-form-item的点击事件，这里通过手动调用u-form-item的方法进行触发
          */
         clickHandler() {
+            if (this.disabled || this.readonly) {
+                uni.hideKeyboard();
+            }
             // #ifdef APP-NVUE
             if (os() === "android") {
                 const formItem = $parent.call(this, "u-form-item");
