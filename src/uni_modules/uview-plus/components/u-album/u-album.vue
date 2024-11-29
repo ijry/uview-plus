@@ -119,7 +119,6 @@ export default {
         imageStyle() {
             return (index1, index2) => {
                 const { space, rowCount, multipleSize, urls } = this,
-                    { addUnit, addStyle } = uni.$u,
                     rowLen = this.showUrls.length,
                     allLen = this.urls.length
                 const style = {
