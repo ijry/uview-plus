@@ -32,9 +32,22 @@
 			<view class="u-demo-block__content">
 				<view class="u-page__image-item">
 					<up-image
-					    radius="4"
+					    radius="12"
 					    :src="src"
 					    width="80px"
+					    height="80px"
+					></up-image>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">宽度100%</text>
+			<view class="u-demo-block__content">
+				<view class="u-page__image-item">
+					<up-image
+					    radius="12"
+					    :src="src"
+					    width="100%"
 					    height="80px"
 					></up-image>
 				</view>
@@ -49,6 +62,58 @@
 					    width="80px"
 					    height="80px"
 						mode="widthFix"
+					></up-image>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">图片模式(heightFix)</text>
+			<view class="u-demo-block__content">
+				<view class="u-page__image-item">
+					<up-image
+					    :src="src"
+					    width="80px"
+					    height="80px"
+						mode="heightFix"
+					></up-image>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">图片模式(scaleToFill)</text>
+			<view class="u-demo-block__content">
+				<view class="u-page__image-item">
+					<up-image
+					    :src="src"
+					    width="80px"
+					    height="80px"
+						mode="scaleToFill"
+					></up-image>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">图片模式(aspectFit)</text>
+			<view class="u-demo-block__content">
+				<view class="u-page__image-item">
+					<up-image
+					    :src="src"
+					    width="80px"
+					    height="80px"
+						mode="aspectFit"
+					></up-image>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">图片模式(aspectFill)</text>
+			<view class="u-demo-block__content">
+				<view class="u-page__image-item">
+					<up-image
+					    :src="src"
+					    width="80px"
+					    height="80px"
+						mode="aspectFill"
 					></up-image>
 				</view>
 			</view>
