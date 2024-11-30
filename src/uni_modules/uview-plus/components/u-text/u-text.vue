@@ -3,10 +3,7 @@
         class="u-text"
         :class="[customClass]"
         v-if="show"
-        :style="{
-            margin: margin,
-			justifyContent: align === 'left' ? 'flex-start' : align === 'center' ? 'center' : 'flex-end'
-        }"
+        :style="wrapStyle"
         @tap="clickHandler"
     >
         <text
@@ -116,6 +113,20 @@ export default {
     // #endif
 	emits: ['click'],
     computed: {
+        wrapStyle() {
+            let style = {
+                margin: this.margin,
+			    justifyContent: this.align === 'left' ? 'flex-start' : this.align === 'center' ? 'center' : 'flex-end'
+            }
+            // 占满剩余空间
+            if (this.flex1) {
+                style.flex = 1;
+				// #ifndef APP-NVUE
+				style.width = '100%';
+				// #endif
+            }
+			return style;
+        },
         valueStyle() {
             const style = {
                 textDecoration: this.decoration,
@@ -170,10 +181,6 @@ export default {
     @include flex(row);
     align-items: center;
     flex-wrap: nowrap;
-    flex: 1;
-	/* #ifndef APP-NVUE */
-	width: 100%;
-	/* #endif */
 
     &__price {
         font-size: 14px;

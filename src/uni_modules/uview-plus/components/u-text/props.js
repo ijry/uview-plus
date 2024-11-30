@@ -107,6 +107,11 @@ export const props = defineMixin({
         wordWrap: {
             type: String,
             default: () => defProps.text.wordWrap
-        }
+        },
+		// 占满剩余空间
+		flex1: {
+			type: Boolean,
+			default: () => defProps.text.flex1
+		}
     }
 })

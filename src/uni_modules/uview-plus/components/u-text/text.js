@@ -32,7 +32,8 @@ export default {
         margin: 0,
         lineHeight: '',
         align: 'left',
-        wordWrap: 'normal'
+        wordWrap: 'normal',
+		flex1: true
     }
 
 }
