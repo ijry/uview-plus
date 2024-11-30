@@ -132,10 +132,14 @@
 				style.height = addUnit(this.height);
 				// #endif
 				// #ifndef APP-NVUE
-				if (this.width != '100%') {
+				if (this.width == '100%') {
+					style.width = this.width;
+				} else {
 					style.width = 'fit-content';
 				}
-				if (this.height != '100%') {
+				if (this.height == '100%') {
+					style.height = this.height;
+				} else {
 					style.height = 'fit-content';
 				}
 				// #endif
@@ -144,10 +148,22 @@
 			wrapStyle() {
 				let style = {};
 				// 通过调用addUnit()方法，如果有单位，如百分比，px单位等，直接返回，如果是纯粹的数值，则加上rpx单位
-				// style.width = addUnit(this.width);
-				// style.height = addUnit(this.height);
-				// style.width = '100%';
-				// style.height = '100%';
+				// #ifdef APP-NVUE
+				style.width = addUnit(this.width);
+				style.height = addUnit(this.height);
+				// #endif
+				// #ifndef APP-NVUE
+				if (this.width == '100%') {
+					style.width = this.width;
+				} else {
+					style.width = 'fit-content';
+				}
+				if (this.height == '100%') {
+					style.height = this.height;
+				} else {
+					style.height = 'fit-content';
+				}
+				// #endif
 				// 如果是显示圆形，设置一个很多的半径值即可
 				style.borderRadius = this.shape == 'circle' ? '10000px' : addUnit(this.radius)
 				// 如果设置圆角，必须要有hidden，否则可能圆角无效
