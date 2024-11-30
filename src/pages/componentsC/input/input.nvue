@@ -17,6 +17,17 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
+			<text class="u-demo-block__title">颜色</text>
+			<view class="u-demo-block__content">
+				<up-input
+					placeholder="请输入内容"
+					border="surround"
+					color="blue"
+					v-model="value"
+				></up-input>
+			</view>
+		</view>
+		<view class="u-demo-block">
 			<text class="u-demo-block__title">可清空内容</text>
 			<view class="u-demo-block__content">
 				<up-input
