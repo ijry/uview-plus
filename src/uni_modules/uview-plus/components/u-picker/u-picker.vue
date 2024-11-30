@@ -10,6 +10,7 @@
 		<u-popup
 			:show="show || (hasInput && showByClickInput)"
 			:mode="popupMode"
+			:zIndex="zIndex"
 			@close="closeHandler"
 		>
 			<view class="u-picker">

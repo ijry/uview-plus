@@ -99,5 +99,10 @@ export const props = defineMixin({
 			type: Boolean,
 			default: false
 		},
+		// 层级
+		zIndex: {
+		    type: [String, Number],
+		    default: () => defProps.picker.zIndex
+		},
     }
 })

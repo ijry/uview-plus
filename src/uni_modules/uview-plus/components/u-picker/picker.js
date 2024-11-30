@@ -25,6 +25,7 @@ export default {
         keyName: 'text',
         closeOnClickOverlay: false,
         defaultIndex: [],
-		immediateChange: true
+		immediateChange: true,
+		zIndex: 10076,
     }
 }
