@@ -166,6 +166,10 @@
 				// #ifndef APP-NVUE
 				this.$uGetRect('.u-slider__base').then(rect => {
 					this.sliderRect = rect;
+					// console.log('sliderRect', this.sliderRect)
+					if (this.sliderRect.width == 0) {
+						console.info('如在弹窗等元素中使用，请使用v-if来显示滑块，否则无法计算长度。')
+					}
 					this.init()
 				});
 				// #endif
