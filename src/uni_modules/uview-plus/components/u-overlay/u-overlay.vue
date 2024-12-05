@@ -5,6 +5,7 @@
 	    :duration="duration"
 	    :custom-style="overlayStyle"
 	    @click="clickHandler"
+		@touchmove.stop.prevent="noop"
 	>
 		<slot />
 	</u-transition>

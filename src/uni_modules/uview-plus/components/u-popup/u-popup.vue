@@ -20,7 +20,7 @@
 			<view
 				class="u-popup__content"
 				:style="[contentStyle]"
-				@tap.stop="noop"
+				@touchmove.stop.prevent="noop"
 			>
 				<u-status-bar v-if="safeAreaInsetTop"></u-status-bar>
 				<slot></slot>
