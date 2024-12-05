@@ -143,8 +143,8 @@
 			errorHandler() {
 				this.avatarUrl = this.defaultUrl || base64Avatar
 			},
-			clickHandler() {
-				this.$emit('click', this.name)
+			clickHandler(e) {
+				this.$emit('click', this.name, e)
 			}
 		}
 	}

@@ -145,7 +145,7 @@
 			addStyle,
 			addUnit,
 			clickHandler(e) {
-				this.$emit('click', this.index)
+				this.$emit('click', this.index, e)
 				// 是否阻止事件冒泡
 				this.stop && this.preventEvent(e)
 			}
