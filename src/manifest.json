@@ -162,5 +162,10 @@
         }
     },
     "vueVersion" : "3",
-    "locale" : "auto"
+    "locale" : "auto",
+    "app-harmony" : {
+        "distribute" : {
+            "bundleName" : "com.jiangruyi.uviewplus"
+        }
+    }
 }
