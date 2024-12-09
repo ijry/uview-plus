@@ -1,5 +1,8 @@
+## 3.3.52（2024-12-09）
+add: notice-bar支持justifyContent属性
 ## 3.3.51（2024-12-09）
 add: radio增加label插槽
+
 ## 3.3.50（2024-12-05）
 fix: 优化popup等对禁止背景滚动机制
 

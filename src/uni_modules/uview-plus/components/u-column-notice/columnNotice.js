@@ -19,6 +19,7 @@ export default {
         speed: 80,
         step: false,
         duration: 1500,
-        disableTouch: true
+        disableTouch: true,
+		justifyContent: 'flex-start'
     }
 }

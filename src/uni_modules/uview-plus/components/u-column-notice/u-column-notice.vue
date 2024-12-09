@@ -28,6 +28,7 @@
 				v-for="(item, index) in text"
 				:key="index"
 				class="u-notice__swiper__item"
+				:style="{'justifyContent': justifyContent}"
 			>
 				<text
 					class="u-notice__swiper__item__text u-line-1"

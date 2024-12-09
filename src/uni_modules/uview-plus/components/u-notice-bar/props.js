@@ -67,6 +67,10 @@ export const props = defineMixin({
         linkType: {
             type: String,
             default: () => defProps.noticeBar.linkType
-        }
+        },
+		justifyContent: {
+            type: String,
+            default: () => defProps.noticeBar.justifyContent
+        },
     }
 })

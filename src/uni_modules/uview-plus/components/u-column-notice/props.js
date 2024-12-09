@@ -52,6 +52,10 @@ export const props = defineMixin({
         disableTouch: {
             type: Boolean,
             default: () => defProps.columnNotice.disableTouch
-        }
+        },
+		justifyContent: {
+			type: String,
+			default: () => defProps.columnNotice.justifyContent
+		}
     }
 })

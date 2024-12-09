@@ -22,6 +22,7 @@ export default {
         duration: 2000,
         disableTouch: true,
         url: '',
-        linkType: 'navigateTo'
+        linkType: 'navigateTo',
+		justifyContent: 'flex-start'
     }
 }

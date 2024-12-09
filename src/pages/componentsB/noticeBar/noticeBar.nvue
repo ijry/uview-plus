@@ -56,6 +56,16 @@
 					@click="click"
 				></up-notice-bar>
 			</view>
+		</view><view class="u-demo-block">
+			<text class="u-demo-block__title">纵向滚动(文字居中)</text>
+			<view class="u-demo-block__content">
+				<up-notice-bar
+				    :text="text4"
+					direction="column"
+					justifyContent="center"
+					@click="click"
+				></up-notice-bar>
+			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">自定义样式</text>
