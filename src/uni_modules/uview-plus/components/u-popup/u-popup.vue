@@ -17,9 +17,11 @@
 			@afterEnter="afterEnter"
 			@click="clickHandler"
 		>
+			<!-- @click.stop不能去除，去除会导致居中模式下点击内容区域触发关闭弹窗 -->
 			<view
 				class="u-popup__content"
 				:style="[contentStyle]"
+				@click.stop="noop"
 				@touchmove.stop.prevent="noop"
 			>
 				<u-status-bar v-if="safeAreaInsetTop"></u-status-bar>
