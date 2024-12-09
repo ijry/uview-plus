@@ -11,7 +11,7 @@
 		    :class="iconClasses"
 		    :style="[iconWrapStyle]"
 		>
-			<slot name="icon">
+			<slot name="icon" :elIconSize="elIconSize" :elIconColor="elIconColor">
 				<u-icon
 				    class="u-checkbox__icon-wrap__icon"
 				    name="checkbox-mark"
