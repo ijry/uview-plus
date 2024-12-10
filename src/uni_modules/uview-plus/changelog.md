@@ -1,3 +1,6 @@
+## 3.3.53（2024-12-10）
+fix: 修复popup居中模式点击内容区域触发关闭
+
 ## 3.3.52（2024-12-09）
 add: notice-bar支持justifyContent属性
 
