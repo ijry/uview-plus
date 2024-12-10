@@ -99,6 +99,10 @@ export default {
 			type: String,
 			default: '生成中'
 		},
+		allowPreview: {
+			type: Boolean,
+			default: false
+		},
 	},
 	emits: ['result', 'longpress'],
 	data() {
@@ -189,26 +193,31 @@ export default {
 				});
 			}
 		},
-		preview() {
+		preview(e) {
 			// 预览图片
 			// console.log(this.result)
-			uni.previewImage({
-				urls: [this.result],
-				longPressActions: {
-					itemList: ['保存二维码图片'],
-					success: function(data) {
-						// console.log('选中了第' + (data.tapIndex + 1) + '个按钮,第' + (data.index + 1) + '张图片');
-						switch (data.tapIndex) {
-							case 0:
-								that._saveCode();
-								break;
+			if (this.allowPreview) {
+				uni.previewImage({
+					urls: [this.result],
+					longPressActions: {
+						itemList: ['保存二维码图片'],
+						success: function(data) {
+							// console.log('选中了第' + (data.tapIndex + 1) + '个按钮,第' + (data.index + 1) + '张图片');
+							switch (data.tapIndex) {
+								case 0:
+									that._saveCode();
+									break;
+							}
+						},
+						fail: function(err) {
+							console.log(err.errMsg);
 						}
-					},
-					fail: function(err) {
-						console.log(err.errMsg);
 					}
-				}
-			});
+				});
+			}
+			this.$emit('preview', {
+				url: this.result
+			}, e)
 		},
 		longpress() {
 			this.$emit('longpress', this.result)
