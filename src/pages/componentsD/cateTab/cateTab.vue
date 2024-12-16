@@ -4,18 +4,21 @@
     /* #ifdef H5 */
     height: calc(100vh - 150px - var(--window-top));
     /* #endif */
+	.text-red {
+		color: red;
+	}
 }
 </style>
 <template>
     <view class="u-page">
-        <view style="height: 138px;background: #f1f1f1;"></view>
+        <view style="height: 138px;background: #f1f1f1;margin-bottom: 10px;"></view>
 		<up-cate-tab class="cate-tab" :tabList="tabList" tabKeyName="title" itemKeyName="title">
             <template #pageItem="{pageItem}">
-                <view class="w-full">
+                <view class="w-full" style="width: 100%;">
                     <up-cell-group :border='false'>
                         <up-cell :border='false'>
                             <template #icon>
-                                <up-image :src="pageItem.cover" width="100px" height="100px"></up-image>
+                                <up-image :src="pageItem.cover" width="80px" height="60px"></up-image>
                             </template>
                             <template v-slot:title>
                                 <view>
@@ -23,12 +26,15 @@
                                 </view>
                             </template>
                             <template v-slot:label>
-                                <view class="h-100 pt-1">
+                                <view class="h-100 pt-1 up-flex up-flex-end" style="margin-bottom: 10px;">
                                     <text class="text-md text-red">￥{{ pageItem.price }}</text>
                                 </view>
+								<view class="up-flex up-flex-end">
+									<up-number-box buttonSize="22px"></up-number-box>
+								</view>
                             </template>
                             <template v-slot:value>
-                                <up-number-box></up-number-box>
+                                
                             </template>
                         </up-cell>
                     </up-cell-group>

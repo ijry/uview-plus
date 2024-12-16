@@ -319,6 +319,11 @@ export default [{
 		icon: 'box',
 		title: 'Box 盒子',
 		title_en: 'Box'
+    }, {
+		path: '/pages/componentsD/cateTab/cateTab',
+		icon: 'box',
+		title: 'CateTab 垂直TAB',
+		title_en: 'CateTab'
     }
     ]
 },
