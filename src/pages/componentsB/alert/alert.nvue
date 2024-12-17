@@ -90,6 +90,7 @@
 					    type="success"
 					    effect="dark"
 					    closable
+						@close="close"
 					    showIcon
 					></up-alert>
 				</view>
@@ -128,6 +129,11 @@
 			return {
 				description: '',
 				title: ''
+			}
+		},
+		methods: {
+			close() {
+				// console.log('close');
 			}
 		}
 	}
