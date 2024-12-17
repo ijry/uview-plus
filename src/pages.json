@@ -557,6 +557,12 @@
                     "style" : {
                         "navigationBarTitleText" : "悬浮按钮"
                     }
+                },
+                {
+                    "path" : "cateTab/cateTab",
+                    "style" : {
+                        "navigationBarTitleText" : "垂直TAB"
+                    }
                 }
             ]
         },

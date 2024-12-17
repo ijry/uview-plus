@@ -2,6 +2,7 @@
 	<view
 	    :style="[style]"
 	    class="u-status-bar"
+		:class="[isH5 && 'u-safe-area-inset-top']"
 	>
 		<slot />
 	</view>
@@ -25,6 +26,9 @@
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
+				// #ifdef H5
+				isH5: true
+				// #endif
 			}
 		},
 		computed: {
