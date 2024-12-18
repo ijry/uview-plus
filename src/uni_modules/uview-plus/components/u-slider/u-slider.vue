@@ -269,8 +269,8 @@
 				this.newValue = ((this.distanceX / this.sliderRect.width) * (this.max - this.min)) + parseFloat(this.min);
 				this.status = 'moving';
 				// 发出moving事件
-				this.$emit('changing');
-				this.updateValue(this.newValue, true, index);
+				$crtFmtValue = this.updateValue(this.newValue, true, index);
+				this.$emit('changing', $crtFmtValue);
 			},
 			onTouchMove(event, index = 1) {
 				if (this.disabled) return;
@@ -293,14 +293,14 @@
 				this.newValue = ((this.distanceX / this.sliderRect.width) * (this.max - this.min)) + parseFloat(this.min);
 				this.status = 'moving';
 				// 发出moving事件
-				this.$emit('changing');
-				this.updateValue(this.newValue, true, index);
+				$crtFmtValue = this.updateValue(this.newValue, true, index);
+				this.$emit('changing', $crtFmtValue);
 			},
 			onTouchEnd(event, index = 1) {
 				if (this.disabled) return;
 				if (this.status === 'moving') {
-					this.updateValue(this.newValue, false, index);
-					this.$emit('change');
+					$crtFmtValue = this.updateValue(this.newValue, false, index);
+					this.$emit('change', $crtFmtValue);
 				}
 				this.status = 'end';
 			},
@@ -373,7 +373,11 @@
 					default:
 						break;
 				}
-				
+				if (this.isRange) {
+					return this.rangeValue
+				} else {
+					return valueFormat
+				} 
 			},
 			format(value, index = 1) {
 				// 将小数变成整数，为了减少对视图的更新，造成视图层与逻辑层的阻塞
