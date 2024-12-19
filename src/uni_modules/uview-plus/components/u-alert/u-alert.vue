@@ -79,6 +79,7 @@
 	 * @property {String | Number}	fontSize    字体大小  （默认 14 ）
 	 * @property {Object}			customStyle	定义需要用到的外部样式
 	 * @event    {Function}        click       点击组件时触发
+	 * @event    {Function}        close       点击关闭按钮时触发
 	 * @example  <u-alert :title="title"  type = "warning" :closable="closable" :description = "description"></u-alert>
 	 */
 	export default {
@@ -116,7 +117,7 @@
 				}
 			}
 		},
-		emits: ["click"],
+		emits: ["click","close"],
 		methods: {
 			addUnit,
 			addStyle,
@@ -126,7 +127,8 @@
 			},
 			// 点击关闭按钮
 			closeHandler() {
-				this.show = false
+				this.show = false   
+				this.$emit('close')
 			}
 		}
 	}

@@ -48,6 +48,7 @@
 						<view
 							v-if="testArray(item)"
 							class="u-picker__view__column__item u-line-1"
+							:class="[index1 === innerIndex[index] && 'u-picker__view__column__item--selected']"
 							v-for="(item1, index1) in item"
 							:key="index1"
 							:style="{
