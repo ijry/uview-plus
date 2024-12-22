@@ -162,13 +162,15 @@
 		// 	"style": {
 		// 		"navigationBarTitleText": "下拉菜单"
 		// 	}
-		// }, {
-		// 	"path": "actionSheet/actionSheet",
-		// 	"style": {
-		// 		"navigationBarTitleText": "上拉菜单",
-		// 		"navigationStyle": "custom"
-		// 	}
-		// }, {
+		// }, 
+		{
+			"path": "actionSheet/actionSheet",
+			"style": {
+				"navigationBarTitleText": "上拉菜单",
+				"navigationStyle": "custom"
+			}
+		},
+		// {
 		// 	"path": "parse/parse",
 		// 	"style": {
 		// 		"navigationBarTitleText": "富文本解析器"

@@ -5,22 +5,22 @@ export const openType = defineMixin({
         openType: String
     },
     methods: {
-        onGetUserInfo(event) {
+        onGetUserInfo(event: UniCustomEvent<UTSJSONObject>) {
             this.$emit('getuserinfo', event.detail)
         },
-        onContact(event) {
+        onContact(event: UniCustomEvent<UTSJSONObject>) {
             this.$emit('contact', event.detail)
         },
-        onGetPhoneNumber(event) {
+        onGetPhoneNumber(event: UniCustomEvent<UTSJSONObject>) {
             this.$emit('getphonenumber', event.detail)
         },
-        onError(event) {
+        onError(event: UniCustomEvent<UTSJSONObject>) {
             this.$emit('error', event.detail)
         },
-        onLaunchApp(event) {
+        onLaunchApp(event: UniCustomEvent<UTSJSONObject>) {
             this.$emit('launchapp', event.detail)
         },
-        onOpenSetting(event) {
+        onOpenSetting(event: UniCustomEvent<UTSJSONObject>) {
             this.$emit('opensetting', event.detail)
         }
     }

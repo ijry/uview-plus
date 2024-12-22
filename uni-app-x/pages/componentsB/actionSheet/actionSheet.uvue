@@ -10,7 +10,7 @@
 		<up-cell-group>
 			<up-cell
 				@click="openSheet(index)"
-				:title="item.title"
+				:title="item['title']"
 				v-for="(item, index) in list"
 				:key="index"
 				isLink
@@ -19,7 +19,7 @@
 					<image
 						slot="icon"
 						class="u-cell-icon"
-						:src="item.iconUrl"
+						:src="item['iconUrl']"
 						mode="widthFix"
 					></image>
 				</template>
@@ -71,6 +71,7 @@
 	</view>
 </template>
 <script>
+	import { toast } from '@/uni_modules/uview-plus/libs/function/index'
 	export default {
 		data() {
 			return {
@@ -81,7 +82,7 @@
 				show4: false,
 				show5: false,
 				actions0: [{
-						name: '选项1',
+						name: '选项0',
 					},
 					{
 						name: '选项2',
@@ -125,7 +126,7 @@
 				actions5: [{
 					name: '获取用户信息',
 					openType: 'getUserInfo',
-					color: uni.$u.color['success']
+					color: 'green'
 				}],
 				list: [{
 						title: '普通使用',
@@ -152,7 +153,7 @@
 						title: '微信开放能力',
 						iconUrl: 'https://cdn.uviewui.com/uview/demo/actionSheet/open.png'
 					}
-				]
+				] as Array<UTSJSONObject>
 			}
 		},
 		onLoad() {
@@ -160,23 +161,24 @@
 		},
 		methods: {
 			// 点击cell，判断显示哪个功能
-			openSheet(index) {
+			openSheet(index: number) {
 				// #ifndef MP
-				if (index === 5) return uni.$u.toast('请在微信内预览')
+				if (index === 5) return toast('请在微信内预览')
 				// #endif
-				this[`show${index}`] = true
+				let indexStr = index.toString()
+				this.$data[`show${indexStr}`] = true
 			},
-			getuserinfo(res) {
-				uni.$u.toast(`用户名：${res.userInfo.nickName}`)
+			getuserinfo(res: UniEvent) {
+				// toast(`用户名：${res['userInfo']['nickName']}`)
 			},
 			navigateBack() {
 				uni.navigateBack()
 			},
 			close() {
 				console.log('close');
-				this['show0'] = false
+				this.$data['show0'] = false
 			},
-			select(e) {
+			select(e: any) {
 				console.log('select', e);
 			}
 		}

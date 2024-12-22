@@ -1,0 +1,64 @@
+import { defineMixin } from '../../libs/vue'
+import defProps from './actionSheet.uts'
+let crtProp = defProps['actionSheet'] as UTSJSONObject
+
+import { actionSheetItem } from './actionSheet.uts'
+export const propsActionSheet = defineMixin({
+    props: {
+        // 操作菜单是否展示 （默认false）
+        show: {
+            type: Boolean,
+            default: crtProp['show']
+        },
+        // 标题
+        title: {
+            type: String,
+            default: crtProp['title']
+        },
+        // 选项上方的描述信息
+        description: {
+            type: String,
+            default: crtProp['description']
+        },
+        // 数据
+        actions: {
+            type: Array<UTSJSONObject>,
+            default: crtProp['actions']
+        },
+        // 取消按钮的文字，不为空时显示按钮
+        cancelText: {
+            type: String,
+            default: crtProp['cancelText']
+        },
+        // 点击某个菜单项时是否关闭弹窗
+        closeOnClickAction: {
+            type: Boolean,
+            default: crtProp['closeOnClickAction']
+        },
+        // 处理底部安全区（默认true）
+        safeAreaInsetBottom: {
+            type: Boolean,
+            default: crtProp['safeAreaInsetBottom']
+        },
+        // 小程序的打开方式
+        openType: {
+            type: String,
+            default: crtProp['openType']
+        },
+        // 点击遮罩是否允许关闭 (默认true)
+        closeOnClickOverlay: {
+            type: Boolean,
+            default: crtProp['closeOnClickOverlay']
+        },
+        // 圆角值
+        round: {
+            type: [Boolean, String, Number],
+            default: crtProp['round']
+        },
+        // 选项区域最大高度
+        wrapMaxHeight: {
+            type: [String],
+            default: crtProp['wrapMaxHeight']
+        },
+    }
+})
