@@ -1,46 +1,48 @@
-import { defineMixin } from '../../libs/vue.js'
-import defProps from './alert.js'
-export const props = defineMixin({
+import { defineMixin } from '../../libs/vue'
+import defProps from './alert'
+let crtProp = defProps['alert'] as UTSJSONObject
+
+export const propsAlert = defineMixin({
     props: {
         // 显示文字
         title: {
             type: String,
-            default: () => defProps.alert.title
+            default: crtProp['title']
         },
         // 主题，success/warning/info/error
         type: {
             type: String,
-            default: () => defProps.alert.type
+            default: crtProp['type']
         },
         // 辅助性文字
         description: {
             type: String,
-            default: () => defProps.alert.description
+            default: crtProp['description']
         },
         // 是否可关闭
         closable: {
             type: Boolean,
-            default: () => defProps.alert.closable
+            default: crtProp['closable']
         },
         // 是否显示图标
         showIcon: {
             type: Boolean,
-            default: () => defProps.alert.showIcon
+            default: crtProp['showIcon']
         },
         // 浅或深色调，light-浅色，dark-深色
         effect: {
             type: String,
-            default: () => defProps.alert.effect
+            default: crtProp['effect']
         },
         // 文字是否居中
         center: {
             type: Boolean,
-            default: () => defProps.alert.center
+            default: crtProp['center']
         },
         // 字体大小
         fontSize: {
             type: [String, Number],
-            default: () => defProps.alert.fontSize
+            default: crtProp['fontSize']
         }
     }
 })

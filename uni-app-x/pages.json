@@ -246,12 +246,13 @@
 				"navigationBarTitleText": "标签"
 			}
 		}
+		, {
+			"path": "alert/alert",
+			"style": {
+				"navigationBarTitleText": "警告"
+			}
+		}
 		// , {
-		// 	"path": "alert/alert",
-		// 	"style": {
-		// 		"navigationBarTitleText": "警告"
-		// 	}
-		// }, {
 		// 	"path": "switch/switch",
 		// 	"style": {
 		// 		"navigationBarTitleText": "开关"
