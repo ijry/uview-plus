@@ -5,26 +5,26 @@
 		    v-for="(item, index) in showUrl"
 		    :key="index"
 		    :style="{
-				marginLeft: index === 0 ? 0 : addUnit(-size * gap)
+				marginLeft: index === 0 ? 0 : addUnit(-parseFloat(size.toString()) * parseFloat(gap.toString()))
 			}"
 		>
 			<up-avatar
 			    :size="size"
 			    :shape="shape"
 			    :mode="mode"
-			    :src="testObject(item) ? keyName && item[keyName] || item.url : item"
+			    :src="src(item)"
 			></up-avatar>
 			<view
 			    class="up-avatar-group__item__show-more"
-			    v-if="showMore && index === showUrl.length - 1 && (urls.length > maxCount || extraValue > 0)"
+			    v-if="showMore && index === showUrl.length - 1 && (urls.length > parseInt(maxCount.toString()) || parseInt(extraValue.toString()) > 0)"
 				@tap="clickHandler"
 			>
 				<up-text
 				    color="#ffffff"
-				    :size="size * 0.4"
-				    :text="`+${extraValue || urls.length - showUrl.length}`"
+				    :size="parseInt(size.toString()) * 0.4"
+				    :text="textStr"
 					align="center"
-					customStyle="justify-content: center"
+					:style="{justifyContent: 'center'}"
 				></up-text>
 			</view>
 		</view>
@@ -32,11 +32,10 @@
 </template>
 
 <script>
-	import { props } from './props.js';
-	import { mpMixin } from '../../libs/mixin/mpMixin.js';
-	import { mixin } from '../../libs/mixin/mixin.js';
-	import { addUnit } from '../../libs/function/index.js';
-	import test from '../../libs/function/test.js';
+	import { propsAvatarGroup } from './props';
+	import { mpMixin } from '../../libs/mixin/mpMixin';
+	import { mixin } from '../../libs/mixin/mixin';
+	import { addUnit, addStyle } from '../../libs/function/index';
 	/**
 	 * AvatarGroup  头像组
 	 * @description 本组件一般用于展示头像的地方，如个人中心，或者评论列表页的用户头像展示等场所。
@@ -56,21 +55,38 @@
 	 */
 	export default {
 		name: 'up-avatar-group',
-		mixins: [mpMixin, mixin, props],
+		mixins: [mpMixin, mixin, propsAvatarGroup],
 		data() {
 			return {
 
 			}
 		},
 		computed: {
-			showUrl() {
-				return this.urls.slice(0, this.maxCount)
+			textStr(): string {
+				let str = this.extraValue.toString() != ''
+					? this.extraValue.toString()
+					: (this.urls.length - this.showUrl.length).toString()
+				return '+' + str
+			},
+			showUrl(): Array<any> {
+				return this.urls.slice(0, parseInt(this.maxCount.toString()))
 			}
 		},
 		emits: ["showMore"],
 		methods: {
-			addUnit,
-			testObject: test.object,
+			addUnit(val: any): string {
+				return addUnit(val)
+			},
+			src(item: any): string {
+				if (typeof item == 'object') {
+					let item1 = item as UTSJSONObject
+					return (this.keyName != '' && item1.getString(this.keyName) != null)
+						? item1.getString(this.keyName)!
+						: item1.getString('url')!
+				} else {
+					return item.toString()
+				}
+			},
 			clickHandler() {
 				this.$emit('showMore')
 			}

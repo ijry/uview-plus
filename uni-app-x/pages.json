@@ -351,12 +351,13 @@
 				"navigationBarTitleText": "相册"
 			}
 		}
+		, {
+			"path": "avatar/avatar",
+			"style": {
+				"navigationBarTitleText": "头像"
+			}
+		}
 		// , {
-		// 	"path": "avatar/avatar",
-		// 	"style": {
-		// 		"navigationBarTitleText": "头像"
-		// 	}
-		// }, {
 		// 	"path": "readMore/readMore",
 		// 	"style": {
 		// 		"navigationBarTitleText": "阅读更多"

@@ -63,18 +63,18 @@ export function sys(): any {
     return uni.getSystemInfoSync()
 }
 
-// /**
-//  * @description 取一个区间数
-//  * @param {Number} min 最小值
-//  * @param {Number} max 最大值
-//  */
-// export function random(min, max): number {
-//     if (min >= 0 && max > 0 && max >= min) {
-//         const gab = max - min + 1
-//         return Math.floor(Math.random() * gab + min)
-//     }
-//     return 0
-// }
+/**
+ * @description 取一个区间数
+ * @param {Number} min 最小值
+ * @param {Number} max 最大值
+ */
+export function random(min: number, max: number): number {
+    if (min >= 0 && max > 0 && max >= min) {
+        const gab = max - min + 1
+        return Math.floor(Math.random() * gab + min)
+    }
+    return 0
+}
 
 // /**
 //  * @param {Number} len uuid的长度
@@ -782,7 +782,7 @@ export default {
 //     // sleep,
 //     // os,
 //     // sys,
-//     // random,
+    random,
 //     // guid,
 //     // $parent,
     addStyle,

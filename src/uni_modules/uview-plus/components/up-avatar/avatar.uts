@@ -1,0 +1,28 @@
+/*
+ * @Author       : jry
+ * @Description  :
+ * @version      : 4.0
+ * @Date         : 2024-12-23 16:44:21
+ * @LastAuthor   : jry
+ * @lastTime     : 2024-12-23 16:44:21
+ * @FilePath     : /uview-plus/libs/config/props/avatarGroup
+ */
+export default {
+    // avatar 组件
+    avatar: {
+        src: '',
+        shape: 'circle',
+        size: 40,
+        mode: 'scaleToFill',
+        text: '',
+        bgColor: '#c0c4cc',
+        color: '#ffffff',
+        fontSize: 18,
+        icon: '',
+        mpAvatar: false,
+        randomBgColor: false,
+        defaultUrl: '',
+        colorIndex: '',
+        name: ''
+    }
+} as UTSJSONObject

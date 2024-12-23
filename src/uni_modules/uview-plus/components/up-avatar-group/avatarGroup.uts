@@ -1,0 +1,23 @@
+/*
+ * @Author       : jry
+ * @Description  :
+ * @version      : 4.0
+ * @Date         : 2024-12-23 16:44:21
+ * @LastAuthor   : jry
+ * @lastTime     : 2024-12-23 16:44:21
+ * @FilePath     : /uview-plus/libs/config/props/avatarGroup
+ */
+export default {
+    // avatarGroup 组件
+    avatarGroup: {
+        urls: [] as Array<any>,
+        maxCount: 5,
+        shape: 'circle',
+        mode: 'scaleToFill',
+        showMore: true,
+        size: 40,
+        keyName: '',
+        gap: 0.5,
+		extraValue: 0
+    }
+} as UTSJSONObject
