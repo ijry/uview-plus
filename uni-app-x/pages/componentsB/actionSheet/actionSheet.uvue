@@ -1,4 +1,7 @@
 <template>
+	<!-- #ifdef APP -->
+	<scroll-view style="flex:1">
+	<!-- #endif -->
 	<view class="u-page">
 		<up-navbar
 			title="上拉菜单"
@@ -69,6 +72,9 @@
 			@getuserinfo="getuserinfo"
 		></up-action-sheet>
 	</view>
+	<!-- #ifdef APP -->
+	</scroll-view>
+	<!-- #endif -->
 </template>
 <script>
 	import { toast } from '@/uni_modules/uview-plus/libs/function/index'

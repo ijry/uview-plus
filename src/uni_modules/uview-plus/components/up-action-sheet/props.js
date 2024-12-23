@@ -1,5 +1,5 @@
 import { defineMixin } from '../../libs/vue.js'
-import defProps from '../../libs/config/props.js'
+import defProps from './actionSheet.js'
 
 export const props = defineMixin({
     props: {

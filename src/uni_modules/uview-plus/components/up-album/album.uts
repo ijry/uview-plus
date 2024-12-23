@@ -1,0 +1,27 @@
+/*
+ * @Author       : jry
+ * @Description  :
+ * @version      : 4.0
+ * @Date         : 2024-12-23 05:55:12
+ * @LastAuthor   : jry
+ * @lastTime     : 2024-12-23 05:55:12
+ * @FilePath     : /uview-plus/libs/config/props/album
+ */
+export default {
+    // album 组件
+    album: {
+        urls: [] as Array<any>,
+        keyName: '',
+        singleSize: 180,
+        multipleSize: 70,
+        space: 6,
+        singleMode: 'scaleToFill',
+        multipleMode: 'aspectFill',
+        maxCount: 9,
+        previewFullImage: true,
+        rowCount: 3,
+        showMore: true,
+        autoWrap: false,
+        unit: 'px'
+    }
+} as UTSJSONObject

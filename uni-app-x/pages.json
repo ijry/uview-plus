@@ -344,12 +344,13 @@
 				"navigationBarTitleText": "输入框"
 			}
 		}
+		,{
+			"path": "album/album",
+			"style": {
+				"navigationBarTitleText": "相册"
+			}
+		}
 		// , {
-		// 	"path": "album/album",
-		// 	"style": {
-		// 		"navigationBarTitleText": "相册"
-		// 	}
-		// }, {
 		// 	"path": "avatar/avatar",
 		// 	"style": {
 		// 		"navigationBarTitleText": "头像"

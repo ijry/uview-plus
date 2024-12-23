@@ -1,7 +1,10 @@
 <template>
+	<!-- #ifdef APP -->
+	<scroll-view style="flex:1">
+	<!-- #endif -->
 	<view class="u-page">
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">基础使用</text>
+			<view class="u-demo-block__title">基础使用</view>
 			<view class="u-demo-block__content">
 				<view class="album">
 					<view class="album__avatar">
@@ -13,7 +16,7 @@
 					</view>
 					<view class="album__content">
 						<up-text
-						    text="uView UI"
+						    text="uview-plus"
 						    type="primary"
 						    bold
 						    size="17"
@@ -31,7 +34,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">多图模式</text>
+			<view class="u-demo-block__title">多图模式</view>
 			<view class="u-demo-block__content">
 				<view class="album">
 					<view class="album__avatar">
@@ -43,7 +46,7 @@
 					</view>
 					<view class="album__content">
 						<up-text
-						    text="uView UI"
+						    text="uview-plus"
 						    type="primary"
 						    bold
 						    size="17"
@@ -58,7 +61,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">图文对齐</text>
+			<view class="u-demo-block__title">图文对齐</view>
 			<view class="u-demo-block__content">
 				<view class="album">
 					<view class="album__avatar">
@@ -70,7 +73,7 @@
 					</view>
 					<view class="album__content">
 						<up-text
-						    text="uView UI"
+						    text="uview-plus"
 						    type="primary"
 						    bold
 						    size="17"
@@ -88,7 +91,7 @@
 						</view>
 						<up-album
 						    :urls="urls2"
-						    @albumWidth="width => albumWidth = width"
+						    @albumWidth="getAlbumWidth"
 						    multipleSize="68"
 						></up-album>
 					</view>
@@ -96,7 +99,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">更改裁剪模式</text>
+			<view class="u-demo-block__title">更改裁剪模式</view>
 			<view class="u-demo-block__content">
 				<view class="album">
 					<view class="album__avatar">
@@ -108,7 +111,7 @@
 					</view>
 					<view class="album__content">
 						<up-text
-						    text="uView UI"
+						    text="uview-plus"
 						    type="primary"
 						    bold
 						    size="17"
@@ -128,7 +131,7 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<text class="u-demo-block__title">更改图片大小</text>
+			<view class="u-demo-block__title">更改图片大小</view>
 			<view class="u-demo-block__content">
 				<view class="album">
 					<view class="album__avatar">
@@ -140,7 +143,7 @@
 					</view>
 					<view class="album__content">
 						<up-text
-						    text="uView UI"
+						    text="uview-plus"
 						    type="primary"
 						    bold
 						    size="17"
@@ -160,6 +163,9 @@
 			</view>
 		</view>
 	</view>
+	<!-- #ifdef APP -->
+	</scroll-view>
+	<!-- #endif -->
 </template>
 
 <script>
@@ -194,6 +200,11 @@
 					'https://cdn.uviewui.com/uview/album/9.jpg',
 					'https://cdn.uviewui.com/uview/album/10.jpg',
 				]
+			}
+		},
+		methods: {
+			getAlbumWidth(width: number) {
+				this.albumWidth = width
 			}
 		}
 	}
