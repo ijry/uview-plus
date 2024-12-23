@@ -1,7 +1,7 @@
 <template>
     <view class="u-datetime-picker">
         <view v-if="hasInput" class="u-datetime-picker__has-input"
-            @click="showByClickInput = !showByClickInput"
+            @click="onShowByClickInput" 
         >
             <slot name="trigger" :value="inputValue">
 				<up-input
@@ -9,6 +9,7 @@
 					:readonly="!!showByClickInput"
 					border="surround"
 					v-model="inputValue"
+					:disabled="disabled"
 				></up-input>
 				<div class="input-cover">
 				</div>
@@ -461,6 +462,12 @@
 			        [`${type}Hour`]: hour,
 			        [`${type}Minute`]: minute
 			    }
+			},
+			onShowByClickInput(){
+				if(!this.disabled){
+					this.showByClickInput = !this.showByClickInput
+				}
+				
 			}
 		}
 	}
