@@ -1,3 +1,8 @@
+## 3.3.57（2024-12-23）
+fix: slider组件change事件传参
+
+feat: 更新u-picker组件增加当前选中class类名
+
 ## 3.3.56（2024-12-18）
 feat: 在u-alert组件中添加关闭事件
 
