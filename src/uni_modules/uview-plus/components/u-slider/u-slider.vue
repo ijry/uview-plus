@@ -269,7 +269,7 @@
 				this.newValue = ((this.distanceX / this.sliderRect.width) * (this.max - this.min)) + parseFloat(this.min);
 				this.status = 'moving';
 				// 发出moving事件
-				$crtFmtValue = this.updateValue(this.newValue, true, index);
+				let $crtFmtValue = this.updateValue(this.newValue, true, index);
 				this.$emit('changing', $crtFmtValue);
 			},
 			onTouchMove(event, index = 1) {
@@ -293,13 +293,13 @@
 				this.newValue = ((this.distanceX / this.sliderRect.width) * (this.max - this.min)) + parseFloat(this.min);
 				this.status = 'moving';
 				// 发出moving事件
-				$crtFmtValue = this.updateValue(this.newValue, true, index);
+				let $crtFmtValue = this.updateValue(this.newValue, true, index);
 				this.$emit('changing', $crtFmtValue);
 			},
 			onTouchEnd(event, index = 1) {
 				if (this.disabled) return;
 				if (this.status === 'moving') {
-					$crtFmtValue = this.updateValue(this.newValue, false, index);
+					let $crtFmtValue = this.updateValue(this.newValue, false, index);
 					this.$emit('change', $crtFmtValue);
 				}
 				this.status = 'end';
