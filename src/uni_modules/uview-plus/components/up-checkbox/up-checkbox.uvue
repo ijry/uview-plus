@@ -1,0 +1,430 @@
+<template>
+	<view
+	    class="up-checkbox cursor-pointer"
+	    :style="[checkboxStyle]"
+	    @tap.stop="wrapperClickHandler"
+	    :class="[`up-checkbox-label--${parentData['iconPlacement'].toString()}`,
+			(parentData['borderBottom'].toString() != ''
+				&& parentData['placement'].toString() === 'column')
+				? 'up-border-bottom' : '']"
+	>
+		<view
+		    class="up-checkbox__icon-wrap cursor-pointer"
+		    @tap.stop="iconClickHandler"
+		    :class="iconClasses"
+		    :style="[iconWrapStyle]"
+		>
+			<slot name="icon">
+				<up-icon
+				    class="up-checkbox__icon-wrap__icon"
+				    name="checkbox-mark"
+				    :size="elIconSize"
+				    :color="elIconColor"
+				/>
+			</slot>
+		</view>
+		<slot name="label" :label="label" :elDisabled="elDisabled">
+			<text
+				@tap.stop="labelClickHandler"
+				:style="{
+					color: elDisabled ? elInactiveColor : elLabelColor,
+					fontSize: elLabelSize,
+					lineHeight: elLabelSize
+				}"
+			>{{label}}</text>
+		</slot>
+	</view>
+</template>
+
+<script>
+	import { propsCheckbox } from './props';
+	import { mpMixin } from '../../libs/mixin/mpMixin';
+	import { mixin } from '../../libs/mixin/mixin';
+	import { addStyle, addUnit, deepMerge, formValidate, error } from '../../libs/function/index';
+	import test from '../../libs/function/test';
+	/**
+	 * checkbox  复选框
+	 * @description 复选框组件一般用于需要多个选择的场景，该组件功能完整，使用方便
+	 * @tutorial https://uview-plus.jiangruyi.com/components/checkbox.html
+	 * @property {String | Number | Boolean}	name			checkbox组件的标示符
+	 * @property {String}						shape			形状，square为方形，circle为圆型
+	 * @property {String | Number}				size			整体的大小
+	 * @property {Boolean}						checked			是否默认选中
+	 * @property {String | Boolean}				disabled		是否禁用
+	 * @property {String}						activeColor		选中状态下的颜色，如设置此值，将会覆盖parent的activeColor值
+	 * @property {String}						inactiveColor	未选中的颜色
+	 * @property {String | Number}				iconSize		图标的大小，单位px
+	 * @property {String}						iconColor		图标颜色
+	 * @property {String | Number}				label			label提示文字，因为nvue下，直接slot进来的文字，由于特殊的结构，无法修改样式
+	 * @property {String}						labelColor 		label的颜色
+	 * @property {String | Number}				labelSize		label的字体大小，px单位
+	 * @property {String | Boolean}				labelDisabled	是否禁止点击提示语选中复选框
+	 * @property {Object}						customStyle		定义需要用到的外部样式
+	 * 
+	 * @event {Function}	change	任一个checkbox状态发生变化时触发，回调为一个对象
+	 * @example <up-checkbox v-model="checked" :disabled="false">天涯</up-checkbox>
+	 */
+	export default {
+		name: "up-checkbox",
+		mixins: [mpMixin, mixin, propsCheckbox],
+		data() {
+			return {
+				isChecked: false,
+				// 父组件的默认值，因为头条小程序不支持在computed中使用this.parent.shape的形式
+				// 故只能使用如此方法
+				parentData: {
+					iconSize: 12,
+					labelDisabled: null,
+					disabled: null,
+					shape: 'square',
+					activeColor: null,
+					inactiveColor: null,
+					size: 18,
+					modelValue: null,
+					iconColor: null,
+					placement: 'row',
+					borderBottom: false,
+					iconPlacement: 'left'
+				} as UTSJSONObject
+			}
+		},
+		computed: {
+			// 是否禁用，如果父组件up-checkbox-group禁用的话，将会忽略子组件的配置
+			elDisabled(): boolean {
+				let disabledStr = this.disabled.toString()
+				if (disabledStr !== '') {
+					if (disabledStr == 'true') {
+						return true
+					} else {
+						return false
+					}
+				} else {
+					return this.parentData['disabled'] != null
+						? this.parentData['disabled'] as boolean
+						: false
+				}
+			},
+			// 是否禁用label点击
+			elLabelDisabled(): boolean {
+				let labelDisabledStr = this.labelDisabled.toString()
+				if (labelDisabledStr !== '') {
+					if (labelDisabledStr == 'true') {
+						return true
+					} else {
+						return false
+					}
+				} else {
+					return this.parentData['labelDisabled'] != null
+						? this.parentData['labelDisabled'] as boolean
+						: false
+				}
+			},
+			// 组件尺寸，对应size的值，默认值为21px
+			elSize(): string {
+				return this.size.toString() != ''
+					? this.size.toString()
+					: (this.parentData['size'].toString() != ''
+						? this.parentData['size'].toString()
+						: '21px');
+			},
+			// 组件的勾选图标的尺寸，默认12px
+			elIconSize(): string {
+				return this.iconSize.toString() != ''
+					? this.iconSize.toString()
+					: (this.parentData['iconSize'].toString() != ''
+						? this.parentData['iconSize'].toString()
+						: '2px');
+			},
+			// 组件选中激活时的颜色
+			elActiveColor(): string {
+				return this.activeColor.toString() != ''
+					? this.activeColor
+					: (this.parentData['activeColor'].toString() != ''
+						? this.parentData['activeColor'].toString() : '#2979ff');
+			},
+			// 组件选未中激活时的颜色
+			elInactiveColor(): string {
+				return this.inactiveColor.toString() != ''
+					? this.inactiveColor.toString()
+					: (this.parentData['inactiveColor'].toString() != ''
+						? this.parentData['inactiveColor'].toString() : '#c8c9cc');
+			},
+			// label的颜色
+			elLabelColor(): string {
+				return this.labelColor.toString() != ''
+					? this.labelColor.toString()
+					: (this.parentData['labelColor'].toString() != ''
+						? this.parentData['labelColor'].toString() : '#606266')
+			},
+			// 组件的形状
+			elShape(): string {
+				return this.shape.toString() != ''
+					? this.shape.toString()
+					: (this.parentData['shape'].toString() != ''
+						? this.parentData['shape'].toString() : 'circle');
+			},
+			// label大小
+			elLabelSize(): string {
+				return addUnit(this.labelSize.toString() != ''
+					? this.labelSize.toString()
+					: (this.parentData['labelSize'].toString() != '' 
+						? this.parentData['labelSize'].toString() : '15'))
+			},
+			elIconColor(): string {
+				const iconColor = this.iconColor.toString() != '' 
+					? this.iconColor.toString()
+					: (this.parentData['iconColor'].toString() != ''
+						? this.parentData['iconColor'].toString() : '#ffffff');
+				// 图标的颜色
+				if (this.elDisabled) {
+					// disabled状态下，已勾选的checkbox图标改为elInactiveColor
+					return this.isChecked ? this.elInactiveColor : 'transparent'
+				} else {
+					return this.isChecked ? iconColor : 'transparent'
+				}
+			},
+			iconClasses(): string {
+				let classes = [] as Array<string>
+				// 组件的形状
+				classes.push('up-checkbox__icon-wrap--' + this.elShape.toString())
+				if (this.elDisabled) {
+					classes.push('up-checkbox__icon-wrap--disabled')
+				}
+				if (this.isChecked && this.elDisabled) {
+					classes.push('up-checkbox__icon-wrap--disabled--checked')
+				}
+				let classStr = ""
+				// 支付宝，头条小程序无法动态绑定一个数组类名，否则解析出来的结果会带有","，而导致失效
+				// #ifdef MP-ALIPAY || MP-TOUTIAO
+				classStr = classes.join(' ')
+				// #endif
+				classStr = classes.join(' ')
+				return classStr
+			},
+			iconWrapStyle(): any {
+				// checkbox的整体样式
+				const style = {}
+				style['backgroundColor'] = this.isChecked && !this.elDisabled ? this.elActiveColor : '#ffffff'
+				style['borderColor'] = this.isChecked && !this.elDisabled ? this.elActiveColor : this.elInactiveColor
+				style['width'] = addUnit(this.elSize)
+				style['height'] = addUnit(this.elSize)
+				// 如果是图标在右边的话，移除它的右边距
+				if (!this.usedAlone) {
+					if (this.parentData['iconPlacement'].toString() === 'right') {
+						style['marginRight'] = 0
+					}
+				}
+				return style
+			},
+			checkboxStyle(): any {
+				const style = {}
+				if (!this.usedAlone) {
+					if (this.parentData['borderBottom'].toString() != ''
+						&& this.parentData['placement'].toString() === 'row') {
+						error('检测到您将borderBottom设置为true，需要同时将up-checkbox-group的placement设置为column才有效')
+					}
+					// 当父组件设置了显示下边框并且排列形式为纵向时，给内容和边框之间加上一定间隔
+					if (this.parentData['borderBottom'].toString() != ''
+						&& this.parentData['placement'].toString() === 'column') {
+						style['paddingBottom'] = '8px'
+					}
+				}
+				return deepMerge(style, addStyle(this.customStyle))
+			}
+		},
+		mounted() {
+			this.init()
+		},
+		emits: ["change", "update:checked"],
+		methods: {
+			init() {
+				if (!this.usedAlone) {
+					// 支付宝小程序不支持provide/inject，所以使用这个方法获取整个父组件，在created定义，避免循环引用
+					this.updateParentData()
+					if (this.$parent == null) {
+						error('up-checkbox必须搭配up-checkbox-group组件使用')
+					}
+					const value = this.parentData['modelValue'] as string[]
+					// 设置初始化时，是否默认选中的状态，父组件up-checkbox-group的value可能是array，所以额外判断
+					if (this.checked) {
+						this.isChecked = true
+					} else if (!this.usedAlone && typeof value == 'object') {
+						// 查找数组是是否存在this.name元素值
+						const even = (item : string) : boolean => item === this.name.toString()
+						this.isChecked = value.some(even)
+					}
+				} else {
+					if (this.checked) {
+						this.isChecked = true
+					}
+				}
+			},
+			updateParentData() {
+				this.getParentData('up-checkbox-group')
+			},
+			// 横向两端排列时，点击组件即可触发选中事件
+			wrapperClickHandler(e: UniEvent) {
+				if (!this.usedAlone) {
+					if (this.parentData['iconPlacement'].toString() === 'right') {
+						this.iconClickHandler(e)
+					}
+				} else {
+					this.iconClickHandler(e)
+				}
+			},
+			// 点击图标
+			iconClickHandler(e: UniEvent) {
+				this.preventEvent(e)
+				// 如果整体被禁用，不允许被点击
+				if (!this.elDisabled) {
+					this.setRadioCheckedStatus()
+				}
+			},
+			// 点击label
+			labelClickHandler(e: UniEvent) {
+				this.preventEvent(e)
+				// 如果按钮整体被禁用或者label被禁用，则不允许点击文字修改状态
+				if (!this.elLabelDisabled && !this.elDisabled) {
+					this.setRadioCheckedStatus()
+				}
+			},
+			emitEvent() {
+				this.$emit('change', this.isChecked)
+				// 双向绑定
+				if (this.usedAlone) {
+					this.$emit('update:checked', this.isChecked)
+				}
+				// 尝试调用up-form的验证方法，进行一定延迟，否则微信小程序更新可能会不及时
+				this.$nextTick(() => {
+					formValidate(this, 'change')
+				})
+			},
+			// 改变组件选中状态
+			// 这里的改变的依据是，更改本组件的checked值为true，同时通过父组件遍历所有up-checkbox实例
+			// 将本组件外的其他up-checkbox的checked都设置为false(都被取消选中状态)，因而只剩下一个为选中状态
+			setRadioCheckedStatus() {
+				// 将本组件标记为与原来相反的状态
+				this.isChecked = !this.isChecked
+				this.emitEvent()
+				if (!this.usedAlone) {
+					if (this?.$parent != null) {
+						this?.$parent.$callMethod('unCheckedOther', this)
+					}
+				}
+			}
+		},
+		watch:{
+			checked(newValue, oldValue){
+				if (newValue !== this.isChecked) {
+					this.isChecked = newValue
+				}
+			}
+		}
+	}
+</script>
+
+<style lang="scss" scoped>
+	@import "../../libs/css/components.scss";
+	$up-checkbox-icon-wrap-margin-right:6px !default;
+	$up-checkbox-icon-wrap-font-size:6px !default;
+	$up-checkbox-icon-wrap-border-width:1px !default;
+	$up-checkbox-icon-wrap-border-color:#c8c9cc !default;
+	$up-checkbox-icon-wrap-icon-line-height:0 !default;
+	$up-checkbox-icon-wrap-circle-border-radius:100% !default;
+	$up-checkbox-icon-wrap-square-border-radius:3px !default;
+	$up-checkbox-icon-wrap-checked-color:#fff !default;
+	$up-checkbox-icon-wrap-checked-background-color:red !default;
+	$up-checkbox-icon-wrap-checked-border-color:#2979ff !default;
+	$up-checkbox-icon-wrap-disabled-background-color:#ebedf0 !default;
+	$up-checkbox-icon-wrap-disabled-checked-color:#c8c9cc !default;
+	$up-checkbox-label-margin-left:5px !default;
+	$up-checkbox-label-margin-right:12px !default;
+	$up-checkbox-label-color:$up-content-color !default;
+	$up-checkbox-label-font-size:15px !default;
+	$up-checkbox-label-disabled-color:#c8c9cc !default;
+
+	.up-checkbox {
+		/* #ifndef APP-NVUE */
+		@include flex(row);
+		/* #endif */
+		overflow: hidden;
+		flex-direction: row;
+		align-items: center;
+		margin-bottom: 5px;
+		margin-top: 5px;
+
+		&-label--left {
+			flex-direction: row
+		}
+
+		&-label--right {
+			flex-direction: row-reverse;
+			justify-content: space-between
+		}
+
+		&__icon-wrap {
+			/* #ifndef APP-NVUE */
+			box-sizing: border-box;
+			// nvue下，border-color过渡有问题
+			transition-property: border-color, background-color, color;
+			transition-duration: 0.2s;
+			/* #endif */
+			color: $up-content-color;
+			@include flex;
+			align-items: center;
+			justify-content: center;
+			color: transparent;
+			text-align: center;
+			margin-right: $up-checkbox-icon-wrap-margin-right;
+
+			font-size: $up-checkbox-icon-wrap-font-size;
+			border-width: $up-checkbox-icon-wrap-border-width;
+			border-color: $up-checkbox-icon-wrap-border-color;
+			border-style: solid;
+
+			/* #ifdef MP-TOUTIAO */
+			// 头条小程序兼容性问题，需要设置行高为0，否则图标偏下
+			&__icon {
+				line-height: $up-checkbox-icon-wrap-icon-line-height;
+			}
+
+			/* #endif */
+
+			&--circle {
+				border-radius: $up-checkbox-icon-wrap-circle-border-radius;
+			}
+
+			&--square {
+				border-radius: $up-checkbox-icon-wrap-square-border-radius;
+			}
+
+			&--checked {
+				color: $up-checkbox-icon-wrap-checked-color;
+				background-color: $up-checkbox-icon-wrap-checked-background-color;
+				border-color: $up-checkbox-icon-wrap-checked-border-color;
+			}
+
+			&--disabled {
+				background-color: $up-checkbox-icon-wrap-disabled-background-color !important;
+			}
+
+			&--disabled--checked {
+				color: $up-checkbox-icon-wrap-disabled-checked-color !important;
+			}
+		}
+
+		&__label {
+			/* #ifndef APP-NVUE */
+			word-wrap: break-word;
+			/* #endif */
+			margin-left: $up-checkbox-label-margin-left;
+			margin-right: $up-checkbox-label-margin-right;
+			color: $up-checkbox-label-color;
+			font-size: $up-checkbox-label-font-size;
+
+			&--disabled {
+				color: $up-checkbox-label-disabled-color;
+			}
+		}
+	}
+</style>

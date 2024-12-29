@@ -1,0 +1,27 @@
+/*
+ * @Author       : jry
+ * @Description  :
+ * @version      : 4.0
+ * @Date         : 2024-12-23 16:44:21
+ * @LastAuthor   : jry
+ * @lastTime     : 2024-12-23 16:44:21
+ * @FilePath     : /uview-plus/libs/config/props/backtop
+ */
+export default {
+    // backtop组件
+    backtop: {
+        mode: 'circle',
+        icon: 'arrow-upward',
+        text: '',
+        duration: 100,
+        scrollTop: 0,
+        top: 400,
+        bottom: 100,
+        right: 20,
+        zIndex: 9,
+        iconStyle: {
+            color: '#909399',
+            fontSize: '19px'
+        } as UTSJSONObject
+    }
+} as UTSJSONObject

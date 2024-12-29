@@ -7,7 +7,7 @@
 		<view
 		    class="up-back-top"
 			:style="[contentStyle]"
-		    v-if="!$slots.default && !$slots.$default"
+		    v-if="$slots['default'] == null && $slots['$default'] == null"
 			@click="backToTop"
 		>
 			<up-icon
@@ -24,13 +24,10 @@
 </template>
 
 <script>
-	import { props } from './props.js';
-	import { mpMixin } from '../../libs/mixin/mpMixin.js';
-	import { mixin } from '../../libs/mixin/mixin.js';
-	import { addUnit, addStyle, getPx, deepMerge, error } from '../../libs/function/index.js';
-	// #ifdef APP-NVUE
-	const dom = weex.requireModule('dom')
-	// #endif
+	import { propsBacktop } from './props';
+	import { mpMixin } from '../../libs/mixin/mpMixin';
+	import { mixin } from '../../libs/mixin/mixin';
+	import { addUnit, addStyle, getPx, deepMerge, error } from '../../libs/function/index';
 	/**
 	 * backTop 返回顶部
 	 * @description 本组件一个用于长页面，滑动一定距离后，出现返回顶部按钮，方便快速返回顶部的场景。
@@ -52,7 +49,7 @@
 	 */
 	export default {
 		name: 'up-back-top',
-		mixins: [mpMixin, mixin, props],
+		mixins: [mpMixin, mixin, propsBacktop],
 		computed: {
 			backTopStyle() {
 				// 动画组件样式
@@ -67,44 +64,29 @@
 				return style
 			},
 			show() {
-				return getPx(this.scrollTop) > getPx(this.top)
+				return parseInt(getPx(this.scrollTop)) > parseInt(getPx(this.top.toString()))
 			},
 			contentStyle() {
 				const style = {}
-				let radius = 0
+				let radius = '0px'
 				// 是否圆形
 				if(this.mode === 'circle') {
 					radius = '100px'
 				} else {
 					radius = '4px'
 				}
-				// 为了兼容安卓nvue，只能这么分开写
-				style.borderRadius = radius
-				style.borderTopRightRadius = radius
-				style.borderBottomLeftRadius = radius
-				style.borderBottomRightRadius = radius
+				style['borderRadius'] = radius
 				return deepMerge(style, addStyle(this.customStyle))
 			}
 		},
 		emits: ["click"],
 		methods: {
-			backToTop() {
-				// #ifdef APP-NVUE
-				if (!this.$parent.$refs['up-back-top']) {
-					error(`nvue页面需要给页面最外层元素设置"ref='up-back-top'`)
-				}
-				dom.scrollToElement(this.$parent.$refs['up-back-top'], {
-					offset: 0
-				})
-				// #endif
-				
-				// #ifndef APP-NVUE
+			backToTop(e: any) {
 				uni.pageScrollTo({
 					scrollTop: 0,
-					duration: this.duration
+					duration: parseInt(this.duration.toString())
 				});
-				// #endif
-				this.$emit('click')
+				this.$emit('click', e)
 			}
 		}
 	}

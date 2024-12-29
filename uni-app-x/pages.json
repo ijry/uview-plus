@@ -111,25 +111,25 @@
 					"navigationBarTitleText": "单选框"
 				}
 			}
-			// ,{
-			// 	"path": "checkbox/checkbox",
-			// 	"style": {
-			// 		"navigationBarTitleText": "复选框"
-			// 	}
-			// },
-			// {
+			,{
+				"path": "checkbox/checkbox",
+				"style": {
+					"navigationBarTitleText": "复选框"
+				}
+			}
+			//, {
 			// 	"path": "empty/empty",
 			// 	"style": {
 			// 		"navigationBarTitleText": "内容为空"
 			// 	}
 			// },
-			// {
-			// 	"path": "backtop/backtop",
-			// 	"style": {
-			// 		"navigationBarTitleText": "返回顶部"
-			// 	}
-			// },
-			// {
+			,{
+				"path": "backtop/backtop",
+				"style": {
+					"navigationBarTitleText": "返回顶部"
+				}
+			}
+			//, {
 			// 	"path": "divider/divider",
 			// 	"style": {
 			// 		"navigationBarTitleText": "分割线"

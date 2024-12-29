@@ -30,7 +30,7 @@ export const mixin = defineMixin({
         return {
             parent: null as ComponentPublicInstance|null,
             parentData: {} as UTSJSONObject,
-			//children: null as ComponentPublicInstance[] | null
+			children: null as ComponentPublicInstance[] | null
         }
     },
     onLoad() {
@@ -50,6 +50,7 @@ export const mixin = defineMixin({
 		   * @returns {Array|string}
 		   */
 		bem: function (name: String, fixed: Array<String>, change: Array<Array<any>>): String  {
+			console.log(this.$props)
 			  // 类名前缀
 			  const prefix = `up-${name}--`
 			  const classes = {}
@@ -72,7 +73,7 @@ export const mixin = defineMixin({
 			  // #ifdef APP
 			  return UTSJSONObject.keys(classes).join(' ')
 			  // #endif
-			  // #ifdef WEB
+			  // #ifdef WEB || MP
 			  return Object.keys(classes).join(' ')
 			  // #endif
 			  // 支付宝，头条小程序无法动态绑定一个数组类名，否则解析出来的结果会带有","，而导致失效
@@ -141,8 +142,9 @@ export const mixin = defineMixin({
             // this.parent = this.getParent(parentName)
             // console.log('this.parent', this.parent)
             if (this?.$parent?.$data?.['children'] != null) {
-                // 如果父组件的children不存在本组件的实例，才将本实例添加到父组件的children中
+                // todo如果父组件的children不存在本组件的实例，才将本实例添加到父组件的children中
                 //if (this.parent?.$data?.['children'].indexOf(this) === -1) {
+					console.log('####################')
 					console.log(this.$parent?.$data?.['children'])
 					this.$parent!.$callMethod('addChild', this)
                 //}

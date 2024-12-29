@@ -1,4 +1,7 @@
 <template>
+	<!-- #ifdef APP -->
+	<scroll-view style="flex:1">
+	<!-- #endif -->
 	<view
 	    class="u-page"
 	    ref="u-back-top"
@@ -17,8 +20,8 @@
 					    :customStyle="{marginBottom: '8px'}"
 					    v-for="(item, index) in checkboxList"
 					    :key="index"
-					    :label="item.name"
-					    :name="item.name"
+					    :label="item['name']"
+					    :name="item['name']"
 					>
 					</up-checkbox>
 				</up-checkbox-group>
@@ -26,17 +29,20 @@
 		</view>
 	</view>
 		<up-back-top
-		    :right="backTopData.right"
-		    :customStyle="backTopData.customStyle"
-		    :bottom="backTopData.bottom"
-		    :icon="backTopData.icon"
-		    :mode="backTopData.mode"
-		    :iconStyle="backTopData.iconStyle"
-			:duration="backTopData.duration"
+		    :right="backTopData['right']"
+		    :customStyle="backTopData['customStyle']"
+		    :bottom="backTopData['bottom']"
+		    :icon="backTopData['icon']"
+		    :mode="backTopData['mode']"
+		    :iconStyle="backTopData['iconStyle']"
+			:duration="backTopData['duration']"
 		    :scrollTop="scrollTop"
 			@click="click"
 		></up-back-top>
 	</view>
+	<!-- #ifdef APP -->
+	</scroll-view>
+	<!-- #endif -->
 </template>
 
 <script>
@@ -48,11 +54,11 @@
 					mode: 'circle',
 					icon: 'arrow-upward',
 					bottom: 100,
-					customStyle: {},
-					iconStyle: {},
+					customStyle: {} as UTSJSONObject,
+					iconStyle: {} as UTSJSONObject,
 					right:20,
 					duration: 300
-				},
+				} as UTSJSONObject,
 				scrollTop: 0,
 				// 被自定义的样式
 				checkboxList: [{
@@ -75,44 +81,45 @@
 		},
 		onLoad() {
 			// 演示中默认勾选了自定义图标
-			this.backTopData.icon = "arrow-up"
+			this.backTopData['icon'] = "arrow-up"
 		},
 		onPageScroll(e) {
 			this.scrollTop = e.scrollTop;
 		},
 		methods: {
-			checkboxChange(n) {
+			checkboxChange(n: string[]) {
+				console.log(n)
 				if (n.includes('显示方形')) {
-					this.backTopData.mode = 'square'
+					this.backTopData['mode'] = 'square'
 				} else {
-					this.backTopData.mode = "circle"
+					this.backTopData['mode'] = "circle"
 				}
 				if (n.includes('自定义图标')) {
-					this.backTopData.icon = "arrow-up"
+					this.backTopData['icon'] = "arrow-up"
 				} else {
-					this.backTopData.icon = "arrow-upward"
+					this.backTopData['icon'] = "arrow-upward"
 				}
 				if (n.includes('自定义距离')) {
-					this.backTopData.bottom = 300
-					this.backTopData.right=20
+					this.backTopData['bottom'] = 300
+					this.backTopData['right'] = 20
 				} else {
-					this.backTopData.bottom = 100
+					this.backTopData['bottom'] = 100
 				}
 				if (n.includes('自定义样式')) {
-					this.backTopData.customStyle = {
+					this.backTopData['customStyle'] = {
 						backgroundColor: '#2979ff',
 					}
-					this.backTopData.iconStyle = {
+					this.backTopData['iconStyle'] = {
 						color: '#ffffff'
 					}
 				} else {
-					this.backTopData.customStyle = {}
-					this.backTopData.iconStyle = {}
+					this.backTopData['customStyle'] = {}
+					this.backTopData['iconStyle'] = {}
 				}
 				if (n.includes('自定义返回顶部滚动时间')) {
-					this.backTopData.duration =1500 
+					this.backTopData['duration'] =1500 
 				} else {
-					this.backTopData.duration =300
+					this.backTopData['duration'] =300
 				}
 			},
 			click() {

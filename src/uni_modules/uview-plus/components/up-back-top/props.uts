@@ -1,56 +1,57 @@
-import { defineMixin } from '../../libs/vue.js'
-import defProps from './backtop.js'
-export const props = defineMixin({
+import { defineMixin } from '../../libs/vue'
+import defProps from './backtop'
+let crtProp = defProps['backtop'] as UTSJSONObject
+export const propsBacktop = defineMixin({
     props: {
         // 返回顶部的形状，circle-圆形，square-方形
         mode: {
             type: String,
-            default: () => defProps.backtop.mode
+            default: crtProp['mode']
         },
         // 自定义图标
         icon: {
             type: String,
-            default: () => defProps.backtop.icon
+            default: crtProp['icon']
         },
         // 提示文字
         text: {
             type: String,
-            default: () => defProps.backtop.text
+            default: crtProp['text']
         },
         // 返回顶部滚动时间
         duration: {
             type: [String, Number],
-            default: () => defProps.backtop.duration
+            default: crtProp['duration']
         },
         // 滚动距离
         scrollTop: {
             type: [String, Number],
-            default: () => defProps.backtop.scrollTop
+            default: crtProp['scrollTop']
         },
         // 距离顶部多少距离显示，单位px
         top: {
             type: [String, Number],
-            default: () => defProps.backtop.top
+            default: crtProp['top']
         },
         // 返回顶部按钮到底部的距离，单位px
         bottom: {
             type: [String, Number],
-            default: () => defProps.backtop.bottom
+            default: crtProp['bottom']
         },
         // 返回顶部按钮到右边的距离，单位px
         right: {
             type: [String, Number],
-            default: () => defProps.backtop.right
+            default: crtProp['right']
         },
         // 层级
         zIndex: {
             type: [String, Number],
-            default: () => defProps.backtop.zIndex
+            default: crtProp['zIndex']
         },
         // 图标的样式，对象形式
         iconStyle: {
             type: Object,
-            default: () => defProps.backtop.iconStyle
+            default: crtProp['iconStyle']
         }
     }
 })
