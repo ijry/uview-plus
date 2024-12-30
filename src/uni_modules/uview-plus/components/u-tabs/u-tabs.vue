@@ -23,7 +23,9 @@
 							@longpress="longPressHandler(item,index)"
 							:ref="`u-tabs__wrapper__nav__item-${index}`"
 							:style="[addStyle(itemStyle), {flex: scrollable ? '' : 1}]"
-							:class="[`u-tabs__wrapper__nav__item-${index}`, item.disabled && 'u-tabs__wrapper__nav__item--disabled']"
+							:class="[`u-tabs__wrapper__nav__item-${index}`,
+								item.disabled && 'u-tabs__wrapper__nav__item--disabled',
+								innerCurrent == index ? 'u-tabs__wrapper__nav__item-active' : '']"
 						>
 							<slot v-if="$slots.content" name="content" :item="item" :keyName="keyName" :index="index" />
 							<slot v-else-if="!$slots.content && ($slots.default || $slots.$default)"
