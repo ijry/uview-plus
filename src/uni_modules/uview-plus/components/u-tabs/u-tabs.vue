@@ -95,7 +95,7 @@
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
 	import defProps from '../../libs/config/props.js'
-	import { addUnit, addStyle, deepMerge, getPx, sleep, sys } from '../../libs/function/index';
+	import { addUnit, addStyle, deepMerge, getPx, sleep, getWindowInfo } from '../../libs/function/index';
 	/**
 	 * Tabs 标签
 	 * @description tabs标签组件，在标签多的时候，可以配置为左右滑动，标签少的时候，可以禁止滑动。 该组件的一个特点是配置为滚动模式时，激活的tab会自动移动到组件的中间位置。
@@ -253,7 +253,7 @@
 						return total + curr.rect.width
 					}, 0)
 				// 此处为屏幕宽度
-				const windowWidth = sys().windowWidth
+				const windowWidth = getWindowInfo().windowWidth
 				// 将活动的tabs-item移动到屏幕正中间，实际上是对scroll-view的移动
 				let scrollLeft = offsetLeft - (this.tabsRect.width - tabRect.rect.width) / 2 - (windowWidth - this.tabsRect
 					.right) / 2 + this.tabsRect.left / 2

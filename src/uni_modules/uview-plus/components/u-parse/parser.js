@@ -75,12 +75,16 @@ const config = {
   }
 }
 const tagSelector={}
+// #ifdef APP || H5 || MP-WEIXIN
+const { windowWidth } = uni.getWindowInfo()
+const { system } = uni.getDeviceInfo()
+// #endif
+// #ifndef APP || H5 || MP-WEIXIN
 const {
   windowWidth,
-  // #ifdef MP-WEIXIN
   system
-  // #endif
 } = uni.getSystemInfoSync()
+// #endif
 const blankChar = makeMap(' ,\r,\n,\t,\f')
 let idIndex = 0
 

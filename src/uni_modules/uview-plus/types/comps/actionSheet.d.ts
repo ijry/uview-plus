@@ -78,7 +78,7 @@ declare interface ActionSheetProps {
   /**
    * 点击ActionSheet列表项时触发
    */
-  onSelect?: () => any
+  onSelect?: (e: any) => any
   /**
    * 点击取消按钮时触发
    */

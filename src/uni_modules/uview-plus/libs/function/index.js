@@ -50,7 +50,12 @@ export function sleep(value = 30) {
  * @link 运行期判断平台 https://uniapp.dcloud.io/frame?id=判断平台
  */
 export function os() {
+	// #ifdef APP || H5 || MP-WEIXIN
+	return uni.getDeviceInfo().platform.toLowerCase()
+	// #endif
+	// #ifndef APP || H5 || MP-WEIXIN
 	return uni.getSystemInfoSync().platform.toLowerCase()
+	// #endif
 }
 /**
  * @description 获取系统信息同步接口
@@ -58,6 +63,26 @@ export function os() {
  */
 export function sys() {
 	return uni.getSystemInfoSync()
+}
+export function getWindowInfo() {
+	let ret = {}
+	// #ifdef APP || H5 || MP-WEIXIN
+	ret = uni.getWindowInfo()
+	// #endif
+	// #ifndef APP || H5 || MP-WEIXIN
+	ret = sys()
+	// #endif
+	return ret
+}
+export function getDeviceInfo() {
+	let ret = {}
+	// #ifdef APP || H5 || MP-WEIXIN
+	ret = uni.getDeviceInfo()
+	// #endif
+	// #ifndef APP || H5 || MP-WEIXIN
+	ret = sys()
+	// #endif
+	return ret
 }
 
 /**
@@ -711,6 +736,7 @@ export default {
 	sleep,
 	os,
 	sys,
+	getWindowInfo,
 	random,
 	guid,
 	$parent,

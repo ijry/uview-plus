@@ -37,7 +37,7 @@
     import { props } from './props';
     import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
-	import { addUnit, sys} from '../../libs/function/index';
+	import { addUnit, getWindowInfo} from '../../libs/function/index';
 	/**
 	 * dropdown 下拉菜单
 	 * @description 该组件一般用于向下展开菜单，同时可切换多个选项卡的场景
@@ -166,8 +166,8 @@
 			getContentHeight() {
 				// 这里的原理为，因为dropdown组件是相对定位的，它的下拉出来的内容，必须给定一个高度
 				// 才能让遮罩占满菜单一下，直到屏幕底部的高度
-				// sys()为uview-plus封装的获取设备信息的方法
-				let windowHeight = sys().windowHeight;
+				// getWindowInfo()为uview-plus封装的获取设备信息的方法
+				let windowHeight = getWindowInfo().windowHeight;
 				this.$uGetRect('.u-dropdown__menu').then(res => {
 					// 这里获取的是dropdown的尺寸，在H5上，uniapp获取尺寸是有bug的(以前提出修复过，后来又出现了此bug，目前hx2.8.11版本)
 					// H5端bug表现为元素尺寸的top值为导航栏底部到到元素的上边沿的距离，但是元素的bottom值确是导航栏顶部到元素底部的距离

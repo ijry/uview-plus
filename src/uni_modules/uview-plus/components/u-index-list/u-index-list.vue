@@ -105,7 +105,7 @@
 	import { props } from './props';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
-	import { addUnit, sys, sleep, getPx } from '../../libs/function/index';
+	import { addUnit, getWindowInfo, sleep, getPx } from '../../libs/function/index';
 
 	// #ifdef APP-NVUE
 	// 由于weex为阿里的KPI业绩考核的产物，所以不支持百分比单位，这里需要通过dom查询组件的宽度
@@ -152,7 +152,7 @@
 				// scroll-view的高度
 				scrollViewHeight: 0,
 				// 系统信息
-				sys: sys(),
+				sys: {},
 				scrolling: false,
 				scrollIntoView: '',
 				pageY: 0,
@@ -188,6 +188,7 @@
 		created() {
 			this.children = []
 			this.anchors = []
+			this.sys = getWindowInfo()
 		},
 		mounted() {
 			this.init()
@@ -320,7 +321,7 @@
 					const {
 						height
 					} = size
-					const sysData = sys()
+					const sysData = getWindowInfo()
 					const windowHeight = sysData.windowHeight
 					let customNavHeight = 0
 					// 消除各端导航栏非原生和原生导致的差异，让索引列表字母对屏幕垂直居中
@@ -358,7 +359,7 @@
 				let index = this.currentIndex;
 				// 对H5的pageY进行修正，这是由于uni-app自作多情在H5中将触摸点的坐标跟H5的导航栏结合导致的问题
 				// #ifdef H5
-				// pageY += sys().windowTop
+				// pageY += getWindowInfo().windowTop
 				// #endif
 				// 对第一和最后一个字母做边界处理，因为用户可能在字母列表上触摸到两端的尽头后依然继续滑动
 				// console.log('top1', top)
@@ -476,8 +477,8 @@
 				let children = this.children
 				// #ifdef APP-NVUE
 				// nvue下获取的滚动条偏移为负数，需要转为正数
-				let sys = uni.getSystemInfoSync()
-				scrollTop = Math.abs(e.contentOffset.y) / 10	
+				let sys = getWindowInfo()
+				scrollTop = Math.abs(e.contentOffset.y) / 10
 				// console.log('native', e)
 				// #endif
 
@@ -515,7 +516,7 @@
 					if (scrollTop <= children[0].top || scrollTop >= children[len - 1].top + children[len - 1].height) {
 						this.activeIndex = -1
 						break
-					} else if (!nextItem) { 
+					} else if (!nextItem) {
 						// 当不存在下一个item时，意味着历遍到了最后一个
 						this.activeIndex = len - 1
 						break

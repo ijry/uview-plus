@@ -51,7 +51,7 @@
 	import { props } from './props';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
-	import { addUnit, addStyle, deepMerge, sleep, sys } from '../../libs/function/index';
+	import { addUnit, addStyle, deepMerge, sleep, getWindowInfo } from '../../libs/function/index';
 	/**
 	 * popup 弹窗
 	 * @description 弹出层容器，用于展示弹窗、信息提示等内容，支持上、下、左、右和中部弹出。组件只提供容器，内部内容由用户自定义
@@ -139,7 +139,7 @@
 				// 不使用css方案，是因为nvue不支持css的iPhoneX安全区查询属性
 				const {
 					safeAreaInsets
-				} = sys()
+				} = getWindowInfo()
 				if (this.mode !== 'center') {
 					style.flex = 1
 				}

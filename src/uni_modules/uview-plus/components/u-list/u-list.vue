@@ -50,7 +50,7 @@
 	import { props } from './props';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
-	import { addUnit, addStyle, deepMerge, sleep, sys } from '../../libs/function/index';
+	import { addUnit, addStyle, deepMerge, sleep, getWindowInfo } from '../../libs/function/index';
 	// #ifdef APP-NVUE
 	const dom = uni.requireNativePlugin('dom')
 	// #endif
@@ -90,7 +90,7 @@
 				innerScrollTop: 0,
 				// vue下，scroll-view在上拉加载时的偏移值
 				offset: 0,
-				sys: sys()
+				sys: getWindowInfo()
 			}
 		},
 		computed: {

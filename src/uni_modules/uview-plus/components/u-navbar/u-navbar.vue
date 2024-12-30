@@ -4,7 +4,7 @@
 			class="u-navbar__placeholder"
 			v-if="fixed && placeholder"
 			:style="{
-				height: addUnit(getPx(height) + sys().statusBarHeight,'px'),
+				height: addUnit(getPx(height) + getWindowInfo().statusBarHeight,'px'),
 			}"
 		></view>
 		<view :class="[fixed && 'u-navbar--fixed']">
@@ -77,7 +77,7 @@
 	import { props } from './props';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
-	import { addUnit, addStyle, getPx, sys } from '../../libs/function/index';
+	import { addUnit, addStyle, getPx, getWindowInfo } from '../../libs/function/index';
 	/**
 	 * Navbar 自定义导航栏
 	 * @description 此组件一般用于在特殊情况下，需要自定义导航栏的时候用到，一般建议使用uni-app带的导航栏。
@@ -114,7 +114,7 @@
 		methods: {
 			addStyle,
 			addUnit,
-			sys,
+			getWindowInfo,
 			getPx,
 			// 点击左侧区域
 			leftClick() {

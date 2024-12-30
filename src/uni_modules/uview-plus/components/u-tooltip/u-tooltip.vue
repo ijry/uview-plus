@@ -93,7 +93,7 @@
 	import { props } from './props';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
-	import { addStyle, addUnit, getPx, guid, toast, sleep, sys } from '../../libs/function/index';
+	import { addStyle, addUnit, getPx, guid, toast, sleep, getWindowInfo } from '../../libs/function/index';
 	// #ifdef APP-NVUE 
 	const dom = uni.requireNativePlugin('dom')
 	// #endif
@@ -162,7 +162,7 @@
 				const style = {
 						transform: `translateY(${this.direction === 'top' ? '-100%' : '100%'})`,
 					},
-					sysInfo = sys()
+					sysInfo = getWindowInfo()
 				if (this.tooltipInfo.width / 2 > this.textInfo.left + this.textInfo.width / 2 - this.screenGap) {
 					this.indicatorStyle = {}
 					style.left = `-${addUnit(this.textInfo.left - this.screenGap)}`
