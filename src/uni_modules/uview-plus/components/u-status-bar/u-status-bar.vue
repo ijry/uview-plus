@@ -33,7 +33,7 @@
 			// #ifdef H5
 			this.isH5 = true
 			// #endif
-		}
+		},
 		computed: {
 			style() {
 				const style = {}
