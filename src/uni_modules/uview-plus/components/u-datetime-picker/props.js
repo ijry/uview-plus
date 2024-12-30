@@ -7,6 +7,10 @@ export const props = defineMixin({
             type: Boolean,
             default: () => false
         },
+		disabled: {
+            type: Boolean,
+            default: () => false
+        },
         placeholder: {
             type: String,
             default: () => '请选择'
