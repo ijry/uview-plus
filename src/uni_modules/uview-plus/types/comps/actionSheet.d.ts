@@ -26,7 +26,7 @@ declare interface ActionSheetProps {
   /**
    * 点击某个菜单项时是否关闭弹窗
    */
-  closeOnClickAction?: string
+  closeOnClickAction?: boolean
   /**
    * 是否开启底部安全区适配
    * @default false
