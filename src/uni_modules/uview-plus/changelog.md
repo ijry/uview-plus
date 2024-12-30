@@ -1,3 +1,10 @@
+## 3.3.60（2024-12-30）
+feat: 日期组件支持禁用
+
+fix: ts定义修复 #600
+
+feat: Tabs组件选中时增加一个active的class #595
+
 ## 3.3.59（2024-12-30）
 fix: Property "isH5" was accessed during render
 
