@@ -26,11 +26,14 @@
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
-				// #ifdef H5
 				isH5: true
-				// #endif
 			}
 		},
+		created() {
+			// #ifdef H5
+			this.isH5 = true
+			// #endif
+		}
 		computed: {
 			style() {
 				const style = {}
