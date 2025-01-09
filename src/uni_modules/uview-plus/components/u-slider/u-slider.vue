@@ -155,8 +155,17 @@
 			value(n) {
 				// 只有在非滑动状态时，才可以通过value更新滑块值，这里监听，是为了让用户触发
 				if(this.status == 'end') this.updateValue(this.value, false);
-			}
+			},
 			// #endif
+			rangeValue:{
+            	handler(n){
+					if(this.status == 'end'){
+						this.updateValue(this.rangeValue[0], false, 0);
+						this.updateValue(this.rangeValue[1], false, 1);
+					}
+            	},
+            	deep:true
+        	}
 		},
 		created() {
 		},
