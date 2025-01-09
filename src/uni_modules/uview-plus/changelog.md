@@ -1,3 +1,8 @@
+## 3.3.61（2024-12-31）
+fix: 修复微信getSystemInfoSync接口废弃警告
+
+fix: 'u-status-bar' symbol missing
+
 ## 3.3.60（2024-12-30）
 feat: 日期组件支持禁用
 
