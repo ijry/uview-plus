@@ -81,6 +81,16 @@
 	 */
 	export default {
 		name: 'u-icon',
+		beforeCreate() {
+			// #ifdef APP-NVUE
+			if (this.customFontFamily) {
+				domModule.addRule('fontFace', {
+					'fontFamily': `${this.customPrefix}-${this.customFontFamily}`,
+					'src': `url('${this.customFontUrl}')`
+				})
+			}
+        	// #endif
+    	},
 		data() {
 			return {
 
@@ -136,7 +146,9 @@
 			// 通过图标名，查找对应的图标
 			icon() {
 				// 使用自定义图标的时候页面上会把name属性也展示出来，所以在这里处理一下
-				if (this.customPrefix !== "uicon") return "";
+				if (this.customPrefix !== "uicon") {
+					return this.customIcons[this.customPrefix + '-' + this.name] || this.name;
+				}
 				// 如果内置的图标中找不到对应的图标，就直接返回name值，因为用户可能传入的是unicode代码
 				return icons['uicon-' + this.name] || this.name
 			}
