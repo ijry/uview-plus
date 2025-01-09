@@ -45,6 +45,7 @@
 			    class="u-search__content__input"
 			    type="text"
 			    :style="[{
+					pointerEvents: disabled ? 'none' : 'auto',
 					textAlign: inputAlign,
 					color: color,
 					backgroundColor: bgColor,
@@ -215,7 +216,10 @@
 			},
 			// 点击搜索框，只有disabled=true时才发出事件，因为禁止了输入，意味着是想跳转真正的搜索页
 			clickHandler() {
+				// H5环境事件会冒泡出去，如果再emit就会触发两次点击事件了
+				// #ifndef H5
 				if (this.disabled) this.$emit('click');
+				// #endif
 			},
 			// 点击左边图标
 			clickIcon(e) {
