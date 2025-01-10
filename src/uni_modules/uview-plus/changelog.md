@@ -1,3 +1,8 @@
+## 3.3.62（2025-01-10）
+feat: sleder滑动选择器双滑块增加外层触发值的变动功能
+
+fix: picker支持hasInput优化
+
 ## 3.3.61（2024-12-31）
 fix: 修复微信getSystemInfoSync接口废弃警告
 
