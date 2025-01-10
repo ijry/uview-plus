@@ -5,7 +5,7 @@
             :value="innerValue"
             :style="{ height: addUnit(height) }"
             :placeholder="placeholder"
-            :placeholder-style="addStyle(placeholderStyle, 'string')"
+            :placeholder-style="addStyle(placeholderStyle, typeof placeholderStyle === 'string' ? 'string' : 'object')"
             :placeholder-class="placeholderClass"
             :disabled="disabled"
             :focus="focus"
