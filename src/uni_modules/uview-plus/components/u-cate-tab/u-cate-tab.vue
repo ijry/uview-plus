@@ -38,6 +38,7 @@
 </template>
 <script>
 	export default {
+		name: 'up-cate-tab',
         props: {
             tabList: {
                 type: Array,
@@ -262,6 +263,7 @@
 	}
 
 	.u-cate-tab__right-box {
+		flex: 1;
 		background-color: rgb(250, 250, 250);
 	}
 
