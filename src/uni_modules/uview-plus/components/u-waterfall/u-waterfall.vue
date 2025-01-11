@@ -68,7 +68,7 @@
         watch: {
             copyFlowList(nVal, oVal) {
                 if (!nVal || nVal.length == 0) {
-                    this.clear();
+                    this.clear(false);
                     // console.log('clear');
                 } else {
                     // 取差值，即这一次数组变化新增的部分
@@ -88,7 +88,7 @@
             copyFlowList() {
                 // #ifdef VUE3
                 if (!this.modelValue || this.modelValue.length == 0) {
-                    this.clear();
+                    this.clear(false);
                     // console.log('clear');
                     return [];
                 } else {
@@ -138,16 +138,18 @@
                 return JSON.parse(JSON.stringify(data));
             },
             // 清空数据列表
-            clear() {
+            clear(bak = true) {
                 this.leftList = [];
                 this.rightList = [];
                 // 同时清除父组件列表中的数据
-                // #ifdef VUE2
-                this.$emit('input', []);
-                // #endif
-                // #ifdef VUE3
-                this.$emit('update:modelValue', []);
-                // #endif
+                if (bak) {
+                    // #ifdef VUE2
+                    this.$emit('input', []);
+                    // #endif
+                    // #ifdef VUE3
+                    this.$emit('update:modelValue', []);
+                    // #endif
+                }
                 this.tempList = [];
             },
             // 清除某一条指定的数据，根据id实现

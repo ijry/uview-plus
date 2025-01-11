@@ -143,7 +143,7 @@
 			// 获取右边菜单每个item到顶部的距离
 			getMenuItemTop() {
 				new Promise(resolve => {
-					let selectorQuery = uni.createSelectorQuery();
+					let selectorQuery = uni.createSelectorQuery().in(this);
 					selectorQuery.selectAll('.u-cate-tab__page-item').boundingClientRect((rects) => {
 						// 如果节点尚未生成，rects值为[](因为用selectAll，所以返回的是数组)，循环调用执行
 						if(!rects.length) {
