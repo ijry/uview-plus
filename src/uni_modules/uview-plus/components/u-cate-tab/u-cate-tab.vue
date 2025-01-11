@@ -7,16 +7,18 @@
 				<view v-for="(item, index) in tabList" :key="index" class="u-cate-tab__item"
                     :class="[current == index ? 'u-cate-tab__item-active' : '']"
 				 @tap.stop="swichMenu(index)">
-                    <slot name="tabItem" :item="item">
-                        <text class="u-line-1">{{item[tabKeyName]}}</text>
+					<slot name="tabItem" :item="item">
                     </slot>
+                    <text v-if="!$slots['tabItem']" class="u-line-1">{{item[tabKeyName]}}</text>
 				</view>
 			</scroll-view>
 			<scroll-view :scroll-top="scrollRightTop" scroll-y scroll-with-animation class="u-cate-tab__right-box" @scroll="rightScroll">
 				<view class="u-cate-tab__page-view">
 					<view class="u-cate-tab__page-item" :id="'item' + index" v-for="(item , index) in tabList" :key="index">
                         <slot name="itemList" :item="item">
-                            <view class="item-title">
+                        </slot>
+						<template v-if="!$slots['itemList']">
+							<view class="item-title">
                                 <text>{{item[tabKeyName]}}</text>
                             </view>
                             <view class="item-container">
@@ -29,7 +31,7 @@
                                     </slot>
                                 </template>
                             </view>
-                        </slot>
+						</template>
 					</view>
 				</view>
 			</scroll-view>
