@@ -132,12 +132,12 @@
 				style.height = addUnit(this.height);
 				// #endif
 				// #ifndef APP-NVUE
-				if (this.width == '100%') {
+				if (this.loading || this.isError || this.width == '100%' || this.mode != 'heightFix') {
 					style.width = this.width;
 				} else {
 					style.width = 'fit-content';
 				}
-				if (this.height == '100%') {
+				if (this.loading || this.isError || this.height == '100%' || this.mode != 'widthFix') {
 					style.height = this.height;
 				} else {
 					style.height = 'fit-content';
@@ -153,12 +153,12 @@
 				style.height = addUnit(this.height);
 				// #endif
 				// #ifndef APP-NVUE
-				if (this.width == '100%') {
+				if (this.loading || this.isError || this.width == '100%' || this.mode != 'heightFix') {
 					style.width = this.width;
 				} else {
 					style.width = 'fit-content';
 				}
-				if (this.height == '100%') {
+				if (this.loading || this.isError || this.height == '100%' || this.mode != 'widthFix') {
 					style.height = this.height;
 				} else {
 					style.height = 'fit-content';
