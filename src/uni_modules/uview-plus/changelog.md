@@ -1,3 +1,12 @@
+## 3.3.63（2025-01-13）
+fix: cate-tab支持支付宝小程序
+
+fix: textarea 修复 placeholder-style
+
+fix: 修复在图片加载及加载失败时容器宽度
+
+fix: waterfall组件报错Maximum recursive updates
+
 ## 3.3.62（2025-01-10）
 feat: sleder滑动选择器双滑块增加外层触发值的变动功能
 
