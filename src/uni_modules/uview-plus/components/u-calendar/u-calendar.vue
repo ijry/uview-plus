@@ -13,6 +13,7 @@
 				:subtitle="subtitle"
 				:showSubtitle="showSubtitle"
 				:showTitle="showTitle"
+				:weekText="weekText"
 			></uHeader>
 			<scroll-view
 				:style="{
@@ -106,6 +107,7 @@ import test from '../../libs/function/test';
  * @property {Boolean}				allowSameDay	    是否允许日期范围的起止时间为同一天，mode = range时有效 (默认 false )
  * @property {Number|String}	    round				圆角值，默认无圆角  (默认 0 )
  * @property {Number|String}	    monthNum			最多展示的月份数量  (默认 3 )
+ * @property {Array}	            weekText			星期文案  (默认 ['一', '二', '三', '四', '五', '六', '日'] )
  *
  * @event {Function()} confirm 		点击确定按钮时触发		选择日期相关的返回参数
  * @event {Function()} close 		日历关闭时触发			可定义页面关闭时的回调事件
