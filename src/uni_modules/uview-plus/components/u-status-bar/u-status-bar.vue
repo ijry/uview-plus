@@ -26,7 +26,7 @@
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
-				isH5: true
+				isH5: false
 			}
 		},
 		created() {
@@ -38,7 +38,12 @@
 			style() {
 				const style = {}
 				// 状态栏高度，由于某些安卓和微信开发工具无法识别css的顶部状态栏变量，所以使用js获取的方式
-				style.height = addUnit(getWindowInfo().statusBarHeight, 'px')
+				let sheight = getWindowInfo().statusBarHeight
+				if (sheight == 0) {
+					this.isH5 = true
+				} else {
+					style.height = addUnit(sheight, 'px')
+				}
 				style.backgroundColor = this.bgColor
 				return deepMerge(style, addStyle(this.customStyle))
 			}
