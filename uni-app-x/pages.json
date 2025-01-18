@@ -442,6 +442,12 @@
 	{
 		"root": "pages/componentsD",
 		"pages": [
+			{
+			    "path" : "box/box",
+			    "style" : {
+			        "navigationBarTitleText" : "盒子"
+			    }
+			}
 			// {
 			// 	"path": "qrcode/qrcode",
 			// 	"style": {
