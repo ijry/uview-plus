@@ -1,0 +1,42 @@
+/*
+ * @Author       : jry
+ * @Description  :
+ * @version      : 4.0
+ * @Date         : 2025-01-18 13:11:20
+ * @LastAuthor   : jry
+ * @lastTime     : 2025-01-18 13:11:20
+ * @FilePath     : /uview-plus/libs/config/props/calendar
+ */
+export default {
+    // calendar 组件
+    calendar: {
+        title: '日期选择',
+        showTitle: true,
+        showSubtitle: true,
+        mode: 'single',
+        startText: '开始',
+        endText: '结束',
+        customList: [] as Array<any>,
+        color: '#3c9cff',
+        minDate: 0,
+        maxDate: 0,
+        defaultDate: null,
+        maxCount: Number.MAX_VALUE, // Infinity
+        rowHeight: 56,
+        formatter: null,
+        showLunar: false,
+        showMark: true,
+        confirmText: '确定',
+        confirmDisabledText: '确定',
+        show: false,
+        closeOnClickOverlay: false,
+        readonly: false,
+        showConfirm: true,
+        maxRange: Number.MIN_VALUE, // Infinity
+        rangePrompt: '',
+        showRangePrompt: true,
+        allowSameDay: false,
+		round: 0,
+		monthNum: 3
+    }
+} as UTSJSONObject

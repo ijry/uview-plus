@@ -419,13 +419,14 @@
 				"navigationStyle": "custom"
 			}
 		}
-		//, {
-		// 	"path": "calendar/calendar",
-		// 	"style": {
-		// 		"navigationBarTitleText": "日历",
-		// 		"navigationStyle": "custom"
-		// 	}
-		// }, {
+		, {
+			"path": "calendar/calendar",
+			"style": {
+				"navigationBarTitleText": "日历",
+				"navigationStyle": "custom"
+			}
+		}
+		// , {
 		// 	"path": "datetimePicker/datetimePicker",
 		// 	"style": {
 		// 		"navigationBarTitleText": "时间选择",
