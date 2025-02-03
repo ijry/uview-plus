@@ -12,9 +12,11 @@
                     <text v-if="!$slots['tabItem']" class="u-line-1">{{item[tabKeyName]}}</text>
 				</view>
 			</scroll-view>
-			<scroll-view :scroll-top="scrollRightTop" scroll-y scroll-with-animation class="u-cate-tab__right-box" @scroll="rightScroll">
+			<scroll-view :scroll-top="scrollRightTop" scroll-with-animation
+				scroll-y class="u-cate-tab__right-box" @scroll="rightScroll">
 				<view class="u-cate-tab__page-view">
-					<view class="u-cate-tab__page-item" :id="'item' + index" v-for="(item , index) in tabList" :key="index">
+					<view class="u-cate-tab__page-item" :id="'item' + index" 
+						v-for="(item , index) in tabList" :key="index">
                         <slot name="itemList" :item="item">
                         </slot>
 						<template v-if="!$slots['itemList']">

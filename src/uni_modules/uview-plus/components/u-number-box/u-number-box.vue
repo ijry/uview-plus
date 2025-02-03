@@ -5,12 +5,12 @@
 		    @tap.stop="clickHandler('minus')"
 		    @touchstart="onTouchStart('minus')"
 		    @touchend.stop="clearTimeout"
-		    v-if="showMinus && $slots.minus"
+		    v-if="showMinus && !hideMinus && $slots.minus"
 		>
 			<slot name="minus" />
 		</view>
 		<view
-		    v-else-if="showMinus"
+		    v-else-if="showMinus && !hideMinus"
 		    class="u-number-box__minus cursor-pointer"
 		    @tap.stop="clickHandler('minus')"
 		    @touchstart="onTouchStart('minus')"
@@ -29,36 +29,38 @@
 			></u-icon>
 		</view>
 
-		<slot name="input">
-			<!-- #ifdef MP-WEIXIN -->
-			<input
-			    :disabled="disabledInput || disabled"
-			    :cursor-spacing="getCursorSpacing"
-			    :class="{ 'u-number-box__input--disabled': disabled || disabledInput }"
-			    :value="currentValue"
-			    class="u-number-box__input"
-			    @blur="onBlur"
-			    @focus="onFocus"
-			    @input="onInput"
-			    type="number"
-			    :style="[inputStyle]"
-			/>
-			<!-- #endif -->
-			<!-- #ifndef MP-WEIXIN -->
-			<input
-			    :disabled="disabledInput || disabled"
-			    :cursor-spacing="getCursorSpacing"
-			    :class="{ 'u-number-box__input--disabled': disabled || disabledInput }"
-			    v-model="currentValue"
-			    class="u-number-box__input"
-			    @blur="onBlur"
-			    @focus="onFocus"
-			    @input="onInput"
-			    type="number"
-			    :style="[inputStyle]"
-			/>
-			<!-- #endif -->
-		</slot>
+		<template v-if="!hideMinus">
+			<slot name="input">
+				<!-- #ifdef MP-WEIXIN -->
+				<input
+					:disabled="disabledInput || disabled"
+					:cursor-spacing="getCursorSpacing"
+					:class="{ 'u-number-box__input--disabled': disabled || disabledInput }"
+					:value="currentValue"
+					class="u-number-box__input"
+					@blur="onBlur"
+					@focus="onFocus"
+					@input="onInput"
+					type="number"
+					:style="[inputStyle]"
+				/>
+				<!-- #endif -->
+				<!-- #ifndef MP-WEIXIN -->
+				<input
+					:disabled="disabledInput || disabled"
+					:cursor-spacing="getCursorSpacing"
+					:class="{ 'u-number-box__input--disabled': disabled || disabledInput }"
+					v-model="currentValue"
+					class="u-number-box__input"
+					@blur="onBlur"
+					@focus="onFocus"
+					@input="onInput"
+					type="number"
+					:style="[inputStyle]"
+				/>
+				<!-- #endif -->
+			</slot>
+		</template>
 		<view
 		    class="u-number-box__slot cursor-pointer"
 		    @tap.stop="clickHandler('plus')"
@@ -164,6 +166,9 @@
 			// #endif
 		},
 		computed: {
+			hideMinus() {
+				return this.currentValue == 0 && this.miniMode == true
+			},
 			getCursorSpacing() {
 				// 判断传入的单位，如果为px单位，需要转成px
 				return getPx(this.cursorSpacing)
@@ -173,8 +178,10 @@
 				return (type) => {
 					const style = {
 						backgroundColor: this.bgColor,
+						width: addUnit(this.buttonWidth),
 						height: addUnit(this.buttonSize),
-						color: this.color
+						color: this.color,
+						borderRadius: this.buttonRadius
 					}
 					if (this.isDisabled(type)) {
 						style.backgroundColor = '#f7f8fa'
@@ -187,7 +194,7 @@
 				const disabled = this.disabled || this.disabledInput
 				const style = {
 					color: this.color,
-					backgroundColor: this.bgColor,
+					backgroundColor: this.inputBgColor || this.bgColor,
 					height: addUnit(this.buttonSize),
 					width: addUnit(this.inputWidth)
 				}

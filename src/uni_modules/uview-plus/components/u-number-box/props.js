@@ -86,15 +86,30 @@ export const props = defineMixin({
             type: String,
             default: () => defProps.numberBox.color
         },
+        // 按钮宽度
+        buttonWidth: {
+            type: [String, Number],
+            default: () => defProps.numberBox.buttonWidth
+        },
         // 按钮大小，宽高等于此值，单位px，输入框高度和此值保持一致
         buttonSize: {
             type: [String, Number],
             default: () => defProps.numberBox.buttonSize
         },
+        // 按钮圆角
+        buttonRadius: {
+            type: [String],
+            default: () => defProps.numberBox.buttonRadius
+        },
         // 输入框和按钮的背景颜色
         bgColor: {
             type: String,
             default: () => defProps.numberBox.bgColor
+        },
+        // 输入框背景颜色
+        inputBgColor: {
+            type: String,
+            default: () => defProps.numberBox.inputBgColor
         },
         // 指定光标于键盘的距离，避免键盘遮挡输入框，单位px
         cursorSpacing: {
@@ -115,6 +130,11 @@ export const props = defineMixin({
         iconStyle: {
             type: [Object, String],
             default: () => defProps.numberBox.iconStyle
-        }
+        },
+        // 迷你模式
+        miniMode: {
+            type: Boolean,
+            default: () => defProps.numberBox.miniMode
+        },
     }
 })
