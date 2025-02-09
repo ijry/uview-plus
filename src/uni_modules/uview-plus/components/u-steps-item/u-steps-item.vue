@@ -32,11 +32,15 @@
 		</view>
 		<view class="u-steps-item__content" :class="[`u-steps-item__content--${parentData.direction}`]"
 			:style="[contentStyle]">
-			<up-text :text="title" :type="parentData.current == index ? 'main' : 'content'" lineHeight="20px"
-				:size="parentData.current == index ? 14 : 13"></up-text>
-			<slot name="desc">
-				<up-text :text="desc" type="tips" size="12"></up-text>
+			<slot name="content">
 			</slot>
+			<template v-if="!$slots['content']">
+				<up-text :text="title" :type="parentData.current == index ? 'main' : 'content'" lineHeight="20px"
+					:size="parentData.current == index ? 14 : 13"></up-text>
+				<slot name="desc">
+					<up-text :text="desc" type="tips" size="12"></up-text>
+				</slot>
+			</template>
 		</view>
 		<!-- <view
 		    class="u-steps-item__line"
