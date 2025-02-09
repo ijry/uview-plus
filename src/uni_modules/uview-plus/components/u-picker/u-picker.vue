@@ -1,8 +1,8 @@
 <template>
     <view class="u-picker-warrper">
-		<view v-if="hasInput" class="u-picker-input cursor-pointer" @click="showByClickInput = !showByClickInput">
+		<view v-if="hasInput" class="u-picker-input cursor-pointer" @click="onShowByClickInput">
 			<slot>
-				<up-input :placeholder="placeholder" :readonly="true" border="surround" v-model="inputLabel"></up-input>
+				<up-input :disabled="disabled" :placeholder="placeholder" :readonly="true" border="surround" v-model="inputLabel"></up-input>
 				<div class="input-cover"></div>
 			</slot>
 		</view>
@@ -177,6 +177,11 @@ export default {
 	methods: {
 		addUnit,
 		testArray: test.array,
+		onShowByClickInput(){
+			if(!this.disabled){
+				this.showByClickInput=!this.showByClickInput;
+			}
+		},
 		// 获取item需要显示的文字，判别为对象还是文本
 		getItemText(item) {
 			if (test.object(item)) {

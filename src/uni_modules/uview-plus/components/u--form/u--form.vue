@@ -43,7 +43,12 @@
 			setRules(rules) {
 				this.$refs.uForm.setRules(rules)
 			},
-			validate() {
+			/**
+			 * 校验全部数据
+			 * @param {Object} options
+			 * @param {Boolean} options.showErrorMsg -是否显示校验信息，
+			 */
+			validate(options) {
 				/**
 				 * 在微信小程序中，通过this.$parent拿到的父组件是u--form，而不是其内嵌的u-form
 				 * 导致在u-form组件中，拿不到对应的children数组，从而校验无效，所以这里每次调用u-form组件中的
@@ -52,7 +57,7 @@
 				// #ifdef MP-WEIXIN
 				this.setMpData()
 				// #endif
-				return this.$refs.uForm.validate()
+				return this.$refs.uForm.validate(options)
 			},
 			validateField(value, callback) {
 				// #ifdef MP-WEIXIN

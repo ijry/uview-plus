@@ -6,6 +6,11 @@ export const props = defineMixin({
             type: Array,
             default: () => []
         },
+		//是否禁用
+		disabled: {
+            type: Boolean,
+            default: false
+        },
         hasInput: {
             type: Boolean,
             default: false
