@@ -1,3 +1,10 @@
+## 3.3.67（2025-02-11）
+feat: navbar支持返回全局拦截器配置
+
+feat: 表单-校验-支持无提示-得到校验结果
+
+feat: picker传递hasInput属性时候，可以禁用输入框点击
+
 ## 3.3.66（2025-02-09）
 feat: steps-item增加content插槽
 
