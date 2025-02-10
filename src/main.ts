@@ -34,7 +34,12 @@ setConfig({
 	// 修改$u.config对象的属性
 	config: {
 		// 修改默认单位为rpx，相当于执行 uni.$u.config.unit = 'rpx'
-		unit: 'rpx'
+		unit: 'rpx',
+		interceptor: {
+			navbarLeftClick:() => {
+				console.log('全局拦截')
+			}
+		}
 	},
 	// 修改$u.props对象的属性
 	props: {

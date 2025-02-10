@@ -77,6 +77,7 @@
 	import { props } from './props';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
+	import config  from '../../libs/config/config';
 	import { addUnit, addStyle, getPx, getWindowInfo } from '../../libs/function/index';
 	/**
 	 * Navbar 自定义导航栏
@@ -120,8 +121,12 @@
 			leftClick() {
 				// 如果配置了autoBack，自动返回上一页
 				this.$emit('leftClick')
-				if(this.autoBack) {
-					uni.navigateBack()
+				if (config.interceptor.navbarLeftClick != null) {
+					config.interceptor.navbarLeftClick()
+				} else {
+					if(this.autoBack) {
+						uni.navigateBack()
+					}
 				}
 			},
 			// 点击右侧区域
