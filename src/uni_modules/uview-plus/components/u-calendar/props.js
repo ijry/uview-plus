@@ -147,6 +147,14 @@ export const props = defineMixin({
         weekText: {
 			type: Array,
 			default: defProps.calendar.weekText
-		}
+		},
+        forbidDays: {
+			type: Array,
+			default: defProps.calendar.forbidDays
+		},
+        forbidDaysToast:{
+			type: String,
+			default: defProps.calendar.forbidDaysToast
+		},
     }
 })

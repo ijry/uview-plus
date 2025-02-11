@@ -42,6 +42,8 @@
 					:rangePrompt="rangePrompt"
 					:showRangePrompt="showRangePrompt"
 					:allowSameDay="allowSameDay"
+					:forbidDays="forbidDays"
+					:forbidDaysToast="forbidDaysToast"
 					ref="month"
 					@monthSelected="monthSelected"
 					@updateMonthTop="updateMonthTop"
