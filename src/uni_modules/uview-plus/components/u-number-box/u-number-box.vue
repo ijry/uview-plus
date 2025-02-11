@@ -313,6 +313,8 @@
 				// 为空返回
 				if (value === '') return
 				let formatted = this.filter(value)
+				// https://github.com/ijry/uview-plus/issues/613
+				this.emitChange(value);
 				// 最大允许的小数长度
 				if (this.decimalLength !== null && formatted.indexOf('.') !== -1) {
 					const pair = formatted.split('.');
