@@ -2,7 +2,7 @@
     <view class="u-picker-warrper">
 		<view v-if="hasInput" class="u-picker-input cursor-pointer" @click="onShowByClickInput">
 			<slot>
-				<up-input :disabled="disabled" :placeholder="placeholder" :readonly="true" border="surround" v-model="inputLabel"></up-input>
+				<up-input :disabled="disabled" :disabledColor="disabledColor" :placeholder="placeholder" :readonly="true" border="surround" v-model="inputLabel"></up-input>
 				<div class="input-cover"></div>
 			</slot>
 		</view>
