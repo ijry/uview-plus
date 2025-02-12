@@ -10,7 +10,7 @@
 		<up-cell-group>
 			<up-cell
 				@click="showCalendar(index)"
-				:title="item.title"
+				:title="item['title']"
 				v-for="(item, index) in list"
 				:key="index"
 				:label="values[index]"
@@ -19,7 +19,7 @@
 				<template #icon>
 					<image
 						class="u-cell-icon"
-						:src="item.iconUrl"
+						:src="item['iconUrl']"
 						mode="widthFix"
 					></image>
 				</template>
@@ -90,7 +90,7 @@
 			const d = new Date()
 			const year = d.getFullYear()
 			let month = d.getMonth() + 1
-			month = month < 10 ? `0${month}` : month
+			let monthStr = month < 10 ? `0${month.toString()}` : month.toString()
 			const date = d.getDate()
 			return {
 				index: 0,
@@ -103,10 +103,10 @@
 				show7: false,
 				show8: false,
 				values: ['','','','','','','',''],
-				customThemeDefaultDate: [`${year}-${month}-${date}`, `${year}-${month}-${date + 5}`], 
-				customTextDefaultDate: [`${year}-${month}-${date}`],
-				maxDate: `${year}-${month}-${date + 10}`,
-				defaultDateMultiple: [`${year}-${month}-${date}`, `${year}-${month}-${date + 1}`, `${year}-${month}-${date + 2}`],
+				customThemeDefaultDate: [`${year}-${monthStr}-${date}`, `${year}-${monthStr}-${(date + 5).toString()}`], 
+				customTextDefaultDate: [`${year}-${monthStr}-${date}`],
+				maxDate: `${year}-${monthStr}-${date + 10}`,
+				defaultDateMultiple: [`${year}-${monthStr}-${date}`, `${year}-${monthStr}-${date + 1}`, `${year}-${monthStr}-${date + 2}`],
 				list: [{
 						title: '单个日期',
 						iconUrl: 'https://cdn.uviewui.com/uview/demo/calendar/7.png'
@@ -139,22 +139,24 @@
 			}
 		},
 		methods: {
-			showCalendar(index) {
+			showCalendar(index: number) {
 				this.index = index + 1
-				this[`show${index + 1}`] = true
+				let indexStr = this.index.toString()
+				this.$data[`show${indexStr}`] = true
 			},
 			navigateBack() {
 				uni.navigateBack();
 			},
-			confirm(e) {
-				this[`show${this.index}`] = false
+			confirm(e: Array<String>) {
+				let indexStr = this.index.toString()
+				this.$data[`show${indexStr}`] = false
 				console.log(e);
 				switch(this.index - 1) {
 					case 0:
 						this.values[this.index - 1] = e[0];
 						break;
 					case 1:
-						e.forEach((value, index) => {
+						e.forEach((value, index: number) => {
 							index === 0 ? this.values[this.index - 1] = value : this.values[this.index - 1] += ';' + value
 						})
 						break;
@@ -174,22 +176,22 @@
 						this.values[this.index - 1] = e[0];
 						break;
 					case 7:
-						e.forEach((value, index) => {
+						e.forEach((value, index: number) => {
 							index === 0 ? this.values[this.index - 1] = value : this.values[this.index - 1] += ';' + value
 						})
 						break;
 				}
 			},
 			close() {
-				this[`show${this.index}`] = false
+				this.$data[`show${this.index}`] = false
 			},
-			formatter(day) {
+			formatter(day: UTSJSONObject) {
 				const d = new Date()
 				let month = d.getMonth() + 1
 				const date = d.getDate()
-				if(day.month == month && day.day == date + 3) {
-					day.bottomInfo = '有优惠'
-					day.dot = true
+				if(day['month'] == month && day['day'] == date + 3) {
+					day['bottomInfo'] = '有优惠'
+					day['dot'] = true
 				}
 				return day
 			}

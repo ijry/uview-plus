@@ -1,0 +1,1100 @@
+// @ts-nocheck
+import { DayutsConfig, type DayutsLocale, DayutsUnit, DayutsObject } from '../utssdk/interface'
+import { REGEX_FORMAT, REGEX_PARSE, INVALID_DATE_STRING, M, Y, W, D, DATE, H, MIN, S, MS, Q, MILLISECONDS_A_MINUTE, MILLISECONDS_A_HOUR, MILLISECONDS_A_SECOND, MILLISECONDS_A_WEEK, MILLISECONDS_A_DAY, FORMAT_DEFAULT } from './constant'
+import { isNumber, prettyUnit, padStart, padZoneStr, monthDiff, absFloor } from './utils'
+import { dayutsIntl, localeState } from './use'
+
+type Threshold = {
+	l : string;
+	r ?: number;
+	d ?: DayutsUnit;
+}
+
+function parseLocale(preset : string | null) : string | null;
+function parseLocale(preset : DayutsLocale | null) : string | null;
+function parseLocale(preset : string, object : DayutsLocale | null, isLocal : boolean) : string | null;
+function parseLocale(preset : DayutsLocale, object : DayutsLocale, isLocal : boolean) : string | null;
+function parseLocale(preset : any | null, object : DayutsLocale | null = null, isLocal : boolean = false) : string | null {
+	let l : string | null = null
+	if (preset == null) return dayutsIntl.locale
+	if (typeof preset == 'string') {
+		const presetLower = (preset as string).toLowerCase()
+		if (dayutsIntl.has(presetLower)) {
+			l = presetLower
+		}
+		if (object != null) {
+			dayutsIntl.set(presetLower, object)
+			l = presetLower
+		}
+		const presetSplit = preset.split('-')
+		if (l == null && presetSplit.length > 1) {
+			return parseLocale(presetSplit[0])
+		}
+	} else if (preset instanceof DayutsLocale) {
+		// const { name } = preset as DayutsLocale
+		dayutsIntl.set(preset.name, preset)
+		l = preset.name
+	}
+	if (!isLocal && l != null) {
+		// L = l
+		dayutsIntl.locale = l
+	}
+	// return l ?? L //(!isLocal && L != null)
+	return l ?? dayutsIntl.locale //(!isLocal && L != null)
+}
+
+function tryParseNumberAtIndex(digits : (any|null)[], index : number) : number | null {
+	// 检查索引是否在数组范围内
+	if (index >= 0 && index < digits.length) {
+		if(digits[index] == null) return null
+		// 尝试解析索引位置的字符串为数字
+		const parsedNumber = isNumber(digits[index]) ? digits[index] as number : parseInt(`${digits[index]}`, 10);
+
+		// 检查解析结果是否为有效数字
+		if (!isNaN(parsedNumber)) {
+			return parsedNumber;
+		}
+	}
+	return null
+}
+// function createDateFromArray(d: number[]):Date
+// function createDateFromArray(d: string[]):Date
+function createDateFromArray(d : (any|null)[], offset : number = 0) : Date {
+	const year = tryParseNumberAtIndex(d, 1 - offset) ?? new Date().getFullYear()
+	const month = (tryParseNumberAtIndex(d, 2 - offset) ?? 1) - 1
+	const day = tryParseNumberAtIndex(d, 3 - offset) ?? 1
+	const hour = tryParseNumberAtIndex(d, 4 - offset) ?? 0
+	const minute = tryParseNumberAtIndex(d, 5 - offset) ?? 0
+	const second = tryParseNumberAtIndex(d, 6 - offset) ?? 0
+	const millisecond = (tryParseNumberAtIndex(d, 7 - offset) ?? 0).toString().substring(0, 3) //d.length > 7 ? parseInt((d[7] ?? '0').substring(0, 3)) : 0
+
+	return new Date(
+		year,
+		month,
+		day,
+		hour,
+		minute,
+		second,
+		parseInt(millisecond))
+}
+function parseDate(cfg : DayutsConfig) : Date|null {
+	const { date } = cfg
+	if (date == null) return new Date()
+	if (date instanceof Date) return date as Date
+	
+	try {
+		if (typeof date == 'string' && !/Z$/i.test(date as string)) {
+			const d = date.match(REGEX_PARSE)
+			// #ifndef APP-ANDROID || APP-IOS
+			const isNull = d == null
+			// #endif
+			// #ifdef APP-ANDROID || APP-IOS
+			const isNull = d == null|| Array.isArray(d) && d.length == 0
+			// #endif
+			if (!isNull) {
+				return createDateFromArray(d as (any|null)[])
+			}
+		}
+		if (typeof date == 'string') return new Date(date as string)
+		if (Array.isArray(date)) {
+			return createDateFromArray(date as (any|null)[], 1)
+		}
+		if (isNumber(date)) return new Date(date as number)
+		return null//new Date()
+	} catch(err) {
+		return null//new Date()
+	}
+}
+
+function wrapper(date : any, instance : Dayuts) : Dayuts {
+	return dayuts(date, instance.$L)
+}
+
+export class Dayuts {
+	$L : string
+	private valid: boolean = true; 
+	private $d : Date = new Date()
+	private $y : number = 0
+	private $M : number = 0
+	private $D : number = 0
+	private $W : number = 0
+	private $H : number = 0
+	private $m : number = 0
+	private $s : number = 0
+	private $ms : number = 0
+	private $u : boolean = false
+	constructor(cfg : DayutsConfig) {
+		this.$L = parseLocale(cfg.locale) ?? dayutsIntl.locale //'en'
+		this.parse(cfg)
+	}
+	parse(cfg : DayutsConfig) {
+		const _d = parseDate(cfg)
+		if(_d != null) {
+			this.$d = parseDate(cfg)!
+			this.init()
+		} else {
+			this.valid = false
+		}
+	}
+	init() {
+		const { $d } = this
+		this.$y = $d.getFullYear()
+		this.$M = $d.getMonth()
+		this.$D = $d.getDate()
+		this.$W = $d.getDay()
+		this.$H = $d.getHours()
+		this.$m = $d.getMinutes()
+		this.$s = $d.getSeconds()
+		this.$ms = $d.getMilliseconds()
+	}
+	/**
+	 * 检查日期对象是否有效。
+	 *
+	 * @returns {boolean} 如果日期对象有效，则返回true；否则返回false。
+	 */
+	isValid() : boolean {
+		return this.valid
+		// return !(this.$d.toString() == INVALID_DATE_STRING)
+	}
+	/**
+	 * 检查当前日期是否与给定的日期在指定的时间单位内相同。
+	 *
+	 * @param {string|number|Date} input - 要比较的日期。
+	 * @param {string} units - 时间单位，例如'year'、'month'、'day'等。
+	 * @returns {boolean} 如果当前日期与给定的日期在指定的时间单位内相同，则返回true；否则返回false。
+	 */
+	isSame(input : string) : boolean
+	isSame(input : number) : boolean
+	isSame(input : Date) : boolean
+	isSame(input : Dayuts) : boolean
+	isSame(input : UTSJSONObject) : boolean
+
+	isSame(input : string, units : DayutsUnit) : boolean
+	isSame(input : number, units : DayutsUnit) : boolean
+	isSame(input : Date, units : DayutsUnit) : boolean
+	isSame(input : Dayuts, units : DayutsUnit) : boolean
+	isSame(input : UTSJSONObject, units : DayutsUnit) : boolean
+	isSame(input : any, units : DayutsUnit = 'millisecond') : boolean {
+		const other = input instanceof Dayuts ? input : dayuts(input)
+		const date1 = this.startOf(units).valueOf()
+		const date2 = other.valueOf()
+		const date3 = this.endOf(units).valueOf()
+		return date1 <= date2 && date2 <= date3
+	}
+	/**
+	 * 检查给定的日期或时间是否在当前 dayuts 对象的指定时间单位之后。
+	 *
+	 * @param {string | number | Date | Dayuts} input - 要与当前 dayuts 对象进行比较的日期或时间。
+	 * @param {string} units - 要比较的时间单位（如 "year"、"month"、"day" 等）。
+	 * @returns {boolean} 如果给定的日期或时间在当前 dayuts 对象的指定时间单位之后，则返回 `true`，否则返回 `false`。
+	 */
+	isAfter(input : string) : boolean
+	isAfter(input : number) : boolean
+	isAfter(input : Date) : boolean
+	isAfter(input : Dayuts) : boolean
+	isAfter(input : UTSJSONObject) : boolean
+
+	isAfter(input : string, units : DayutsUnit) : boolean
+	isAfter(input : number, units : DayutsUnit) : boolean
+	isAfter(input : Date, units : DayutsUnit) : boolean
+	isAfter(input : Dayuts, units : DayutsUnit) : boolean
+	isAfter(input : UTSJSONObject, units : DayutsUnit) : boolean
+	isAfter(input : any, units : DayutsUnit = 'millisecond') : boolean {
+		const other = input instanceof Dayuts ? input : dayuts(input)
+		const date1 = other.valueOf()
+		const date2 = this.startOf(units).valueOf()
+		return date1 < date2;
+	}
+	/**
+	 * 检查给定的日期或时间是否在当前 dayuts 对象的指定时间单位之前。
+	 *
+	 * @param {string | number | Date | Dayuts} input - 要与当前 dayuts 对象进行比较的日期或时间。
+	 * @param {string} units - 要比较的时间单位（如 "year"、"month"、"day" 等）。
+	 * @returns {boolean} 如果给定的日期或时间在当前 dayuts 对象的指定时间单位之前，则返回 `true`，否则返回 `false`。
+	 */
+	isBefore(input : string) : boolean
+	isBefore(input : number) : boolean
+	isBefore(input : Date) : boolean
+	isBefore(input : Dayuts) : boolean
+	isBefore(input : UTSJSONObject) : boolean
+
+	isBefore(input : string, units : DayutsUnit) : boolean
+	isBefore(input : number, units : DayutsUnit) : boolean
+	isBefore(input : Date, units : DayutsUnit) : boolean
+	isBefore(input : Dayuts, units : DayutsUnit) : boolean
+	isBefore(input : UTSJSONObject, units : DayutsUnit) : boolean
+	isBefore(input : any, units : DayutsUnit = 'millisecond') : boolean {
+		const other = input instanceof Dayuts ? input : dayuts(input);
+		const date1 = other.valueOf()
+		const date2 = this.endOf(units).valueOf()
+		return date2 < date1;
+	}
+	/**
+	 * 判断当前Dayuts对象是否与给定的输入在同一时间或之前，根据指定的时间单位
+	 * @param {(string | number | Date | Dayuts | UTSJSONObject)} input - 输入的时间
+	 * @param {DayutsUnit} units - 指定的时间单位
+	 * @returns {boolean} - 如果当前Dayuts对象与给定的输入在同一时间或之前，则返回true，否则返回false
+	 */
+	isSameOrBefore(input : string) : boolean
+	isSameOrBefore(input : number) : boolean
+	isSameOrBefore(input : Date) : boolean
+	isSameOrBefore(input : Dayuts) : boolean
+	isSameOrBefore(input : UTSJSONObject) : boolean
+
+	isSameOrBefore(input : string, units : DayutsUnit) : boolean
+	isSameOrBefore(input : number, units : DayutsUnit) : boolean
+	isSameOrBefore(input : Date, units : DayutsUnit) : boolean
+	isSameOrBefore(input : Dayuts, units : DayutsUnit) : boolean
+	isSameOrBefore(input : UTSJSONObject, units : DayutsUnit) : boolean
+	isSameOrBefore(input : any, units : DayutsUnit = 'millisecond') : boolean {
+		return this.isSame(input, units) || this.isBefore(input, units)
+	}
+	/**
+	 * 判断当前Dayuts对象是否与给定的输入在同一时间或之后，根据指定的时间单位
+	 * @param {(string | number | Date | Dayuts | UTSJSONObject)} input - 输入的时间
+	 * @param {DayutsUnit} units - 指定的时间单位
+	 * @returns {boolean} - 如果当前Dayuts对象与给定的输入在同一时间或之后，则返回true，否则返回false
+	 */
+	isSameOrAfter(input : string) : boolean
+	isSameOrAfter(input : number) : boolean
+	isSameOrAfter(input : Date) : boolean
+	isSameOrAfter(input : Dayuts) : boolean
+	isSameOrAfter(input : UTSJSONObject) : boolean
+
+	isSameOrAfter(input : string, units : DayutsUnit) : boolean
+	isSameOrAfter(input : number, units : DayutsUnit) : boolean
+	isSameOrAfter(input : Date, units : DayutsUnit) : boolean
+	isSameOrAfter(input : Dayuts, units : DayutsUnit) : boolean
+	isSameOrAfter(input : UTSJSONObject, units : DayutsUnit) : boolean
+	isSameOrAfter(input : any, units : DayutsUnit = 'millisecond') : boolean {
+		return this.isSame(input, units) || this.isAfter(input, units)
+	}
+	/**
+	 * 判断当前Dayuts对象是否在给定的两个时间之间
+	 * @param {any} input - 第一个时间输入
+	 * @param {any} input2 - 第二个时间输入
+	 * @param {DayutsUnit} units - 指定的时间单位
+	 * @param {string} interval - 区间符号，表示区间的开闭性，默认为'()'，表示开区间
+	 * @returns {boolean} - 如果当前Dayuts对象在给定的两个时间之间，则返回true，否则返回false
+	 */
+	isBetween(input : any, input2 : any, units : DayutsUnit = 'millisecond', interval : string = '()') : boolean {
+		const dA = dayuts(input)
+		const dB = dayuts(input2)
+		const dAi = interval.startsWith('(')
+		const dBi = interval.endsWith(')')
+
+		return ((dAi ? this.isAfter(dA, units) : !this.isBefore(dA, units)) &&
+			(dBi ? this.isBefore(dB, units) : !this.isAfter(dB, units)))
+			|| ((dAi ? this.isBefore(dA, units) : !this.isAfter(dA, units)) &&
+				(dBi ? this.isAfter(dB, units) : !this.isBefore(dB, units)))
+	}
+	/**
+	 * 判断当前Dayuts对象所在的年份是否为闰年
+	 * @returns {boolean} - 如果当前Dayuts对象所在的年份是闰年，则返回true，否则返回false
+	 */
+	isLeapYear():boolean{
+		 return ((this.$y % 4 == 0) && (this.$y % 100 != 0)) || (this.$y % 400 == 0)
+	}
+	isToday():boolean{
+		const comparisonTemplate = 'YYYY-MM-DD'
+		const now = dayuts()
+		
+		return this.format(comparisonTemplate) == now.format(comparisonTemplate)
+	}
+	/**
+	 * 获取当前 `dayuts` 对象的 Unix 时间戳（以秒为单位）。
+	 *
+	 * @returns {number} 返回当前 `dayuts` 对象的 Unix 时间戳（以秒为单位）。
+	 */
+	unix() : number {
+		return Math.floor(this.valueOf() / 1000);
+	}
+	/**
+	 * 将当前日期设置为指定时间单位的开始或结束。
+	 *
+	 * @param {string} units - 时间单位，例如'year'、'month'、'day'等。
+	 * @param {boolean} startOf - 如果为true，则设置为开始；如果为false，则设置为结束。
+	 * @returns {Dayuts} 返回一个新的Dayuts对象，表示调整后的日期。
+	 */
+	startOf(units : DayutsUnit, startOf : boolean = true) : Dayuts {
+		const isStartOf = startOf;
+		const unit = prettyUnit(units)
+		// instanceFactory 函数用于创建一个新的 Dayuts 对象，表示给定日期的开始或结束。
+		// 参数 d 和 m 分别表示日期和月份。
+		const instanceFactory = (d : number, m : number) : Dayuts => {
+			const ins = dayuts(new Date(this.$y, m, d))
+			return isStartOf ? ins : ins.endOf(D)
+		}
+
+		// instanceFactorySet 函数用于创建一个新的 Dayuts 对象，表示调整后的时间。
+		// 参数 method 表示要调用的 Date 对象的方法（如 'setHours'），slice 表示要调整的时间部分的索引。
+		const instanceFactorySet = (method : string, slice : number) : Dayuts => {
+			// 定义表示开始和结束时间的参数数组。
+			const argumentStart = [0, 0, 0, 0]
+			const argumentEnd = [23, 59, 59, 999]
+			// 根据 isStartOf 的值，选择开始或结束时间的参数数组，并调用 Date 对象的方法。
+			const args = (isStartOf ? argumentStart : argumentEnd).slice(slice)
+			const date = this.toDate()
+			if (method == 'setHours') {
+				date.setHours(args[0]);
+				date.setMinutes(args[1])
+				date.setSeconds(args[2])
+				date.setMilliseconds(args[3])
+			} else if (method == 'setMinutes') {
+				date.setMinutes(args[0]);
+				date.setSeconds(args[1])
+				date.setMilliseconds(args[2])
+			} else if (method == 'setSeconds') {
+				date.setSeconds(args[0])
+				date.setMilliseconds(args[1])
+			} else if (method == 'setMilliseconds') {
+				date.setMilliseconds(args[0])
+			}
+			return dayuts(date)
+		}
+		const { $W, $M, $D } = this
+		const utcPad = `set${this.$u ? 'UTC' : ''}`
+		if (unit == Y) {
+			return isStartOf ? instanceFactory(1, 0) : instanceFactory(31, 11);
+		} else if (unit == M) {
+			return isStartOf ? instanceFactory(1, $M) : instanceFactory(0, $M + 1);
+		} else if (unit == W) {
+			const weekStart = this.$locale().weekStart ?? 0;
+			const gap = ($W < weekStart ? $W + 7 : $W) - weekStart;
+			return instanceFactory(isStartOf ? $D - gap : $D + (6 - gap), $M);
+		} else if (unit == D || unit == DATE) {
+			return instanceFactorySet(`${utcPad}Hours`, 0);
+		} else if (unit == H) {
+			return instanceFactorySet(`${utcPad}Minutes`, 1);
+		} else if (unit == MIN) {
+			return instanceFactorySet(`${utcPad}Seconds`, 2);
+		} else if (unit == S) {
+			return instanceFactorySet(`${utcPad}Milliseconds`, 3);
+		} else {
+			return this.clone();
+		}
+	}
+	/**
+	 * 将当前日期设置为指定时间单位的结束。
+	 *
+	 * @param {string} arg - 时间单位，例如'year'、'month'、'day'等。
+	 * @returns {Dayuts} 返回一个新的Dayuts对象，表示调整后的日期。
+	 */
+	endOf(units : DayutsUnit) : Dayuts {
+		return this.startOf(units, false)
+	}
+	/**
+	 * 设置指定的时间单位的值。
+	 *
+	 * @param {string} units - 要设置的时间单位（如 "year"、"month"、"day" 等）。
+	 * @param {number} int - 要设置的值。
+	 * @returns {Dayuts} 返回当前对象。
+	 */
+	private $set(units : DayutsUnit, int : number) : Dayuts { // private set
+		const unit = prettyUnit(units)
+		// const utcPad = `set${this.$u ? 'UTC' : ''}`
+		const arg = unit == D ? this.$D + (int - this.$W) : int
+		const setDateUnit = (date : Dayuts, unit : DayutsUnit, arg : number) => {
+			if (unit == D || unit == DATE) {
+				date.$d.setDate(arg);
+			} else if (unit == M) {
+				date.$d.setMonth(arg);
+			} else if (unit == Y) {
+				date.$d.setFullYear(arg);
+			} else if (unit == H) {
+				date.$d.setHours(arg);
+			} else if (unit == MIN) {
+				date.$d.setMinutes(arg);
+			} else if (unit == S) {
+				date.$d.setSeconds(arg);
+			} else if (unit == MS) {
+				date.$d.setMilliseconds(arg);
+			}
+		}
+		if (unit == M || unit == Y) {
+			// clone is for badMutable plugin
+			const date = this.clone().set(DATE, 1)
+			// date.$d[name](arg)
+			setDateUnit(date, unit, arg)
+			date.init()
+			this.$d = date.set(DATE, Math.min(this.$D, date.daysInMonth())).$d
+		} else {
+			setDateUnit(this, unit, arg)
+			// this.$d[name](arg)
+		}
+
+		this.init()
+		return this
+	}
+	/**
+	 * 创建一个当前对象的副本，并设置指定的时间单位的值。
+	 *
+	 * @param {string} string - 要设置的时间单位（如 "year"、"month"、"day" 等）。
+	 * @param {number} int - 要设置的值。
+	 * @returns {Dayuts} 返回一个新的 `dayuts` 对象，其值为当前对象的副本，并设置了指定的时间单位的值。
+	 */
+	set(string : DayutsUnit, int : number) : Dayuts {
+		return this.clone().$set(string, int);
+	}
+	/**
+	 * 获取当前 `dayuts` 对象的指定时间单位的值。
+	 *
+	 * @param {string} units - 要获取的时间单位（如 "year"、"month"、"day" 等）。
+	 * @returns {number} 返回当前 `dayuts` 对象的指定时间单位的值。
+	 */
+	get(units : DayutsUnit) : number {
+		const unit = prettyUnit(units)
+		if (unit == D) {
+			return this.day()
+		} else if (unit == DATE) {
+			return this.date()
+		} else if (unit == M) {
+			return this.month()
+		} else if (unit == Y) {
+			return this.year()
+		} else if (unit == H) {
+			return this.hour()
+		} else if (unit == MIN) {
+			return this.minute()
+		} else if (unit == S) {
+			return this.second()
+		} else if (unit == MS) {
+			return this.millisecond()
+		}
+		return 0
+	}
+	/**
+	 * 获取或设置年份。
+	 * @param {number | null} [input] - 要设置的年份。
+	 * @returns {number | Dayuts} 年份或 Dayuts 实例。
+	 */
+	year() : number
+	year(input : number) : Dayuts
+	year(input : number | null = null) : any {
+		if (input == null) return this.$y
+		return this.set(Y, input)
+	}
+	/**
+	 * 获取或设置月份。
+	 * @param {number | null} [input] - 要设置的月份（0-11）。
+	 * @returns {number | Dayuts} 月份或 Dayuts 实例。
+	 */
+	month() : number
+	month(input : number) : Dayuts
+	month(input : number | null = null) : any {
+		if (input == null) return this.$M
+		return this.set(M, input)
+	}
+	/**
+	 * 获取或设置星期几。
+	 * @param {number | null} [input] - 要设置的星期几（0-6）。
+	 * @returns {number | Dayuts} 星期几或 Dayuts 实例。
+	 */
+	day() : number
+	day(input : number) : Dayuts
+	day(input : number | null = null) : any {
+		if (input == null) return this.$W
+		return this.set(D, input)
+	}
+	/**
+	 * 获取或设置月份中的某一天。
+	 * @param {number | null} [input] - 要设置的月份中的某一天（1-31）。
+	 * @returns {number | Dayuts} 月份中的某一天或 Dayuts 实例。
+	 */
+	date() : number
+	date(input : number) : Dayuts
+	date(input : number | null = null) : any {
+		if (input == null) return this.$D
+		return this.set(DATE, input)
+	}
+	/**
+	 * 获取或设置小时。
+	 * @param {number | null} [input] - 要设置的小时（0-23）。
+	 * @returns {number | Dayuts} 小时或 Dayuts 实例。
+	 */
+	hour() : number
+	hour(input : number) : Dayuts
+	hour(input : number | null = null) : any {
+		if (input == null) return this.$H
+		return this.set(H, input)
+	}
+	/**
+	 * 获取或设置分钟。
+	 * @param {number | null} [input] - 要设置的分钟（0-59）。
+	 * @returns {number | Dayuts} 分钟或 Dayuts 实例。
+	 */
+	minute() : number
+	minute(input : number) : Dayuts
+	minute(input : number | null = null) : any {
+		if (input == null) return this.$m
+		return this.set(MIN, input)
+	}
+	/**
+	 * 获取或设置秒。
+	 * @param {number | null} [input] - 要设置的秒（0-59）。
+	 * @returns {number | Dayuts} 秒或 Dayuts 实例。
+	 */
+	second() : number
+	second(input : number) : Dayuts
+	second(input : number | null = null) : any {
+		if (input == null) return this.$s
+		return this.set(S, input)
+	}
+	/**
+	 * 获取或设置毫秒。
+	 * @param {number | null} [input] - 要设置的毫秒（0-999）。
+	 * @returns {number | Dayuts} 毫秒或 Dayuts 实例。
+	 */
+	millisecond() : number
+	millisecond(input : number) : Dayuts
+	millisecond(input : number | null = null) : any {
+		if (input == null) return this.$ms
+		return this.set(MS, input)
+	}
+
+	/**
+	 * 在当前 Dayuts 实例上添加指定的时间长度。
+	 * @param {number} number - 要添加的时间长度。
+	 * @param {string} units - 要添加的时间单位（例如，“years”，“months”，“days”等）。
+	 * @returns {Dayuts} 更新的 Dayuts 实例。
+	 */
+	add(number : number, units : DayutsUnit) : Dayuts {
+		const unit = prettyUnit(units)
+		// 创建一个新的 Dayuts 实例，并根据给定的 n 值设置日期。
+		// n 值乘以 number 参数，然后加到当前日期上，以设置新的日期。
+		const instanceFactorySet = (n : number) : Dayuts => {
+			// 创建一个新的 Dayuts 实例，它是当前实例的副本
+			const d = dayuts(this)
+			// 设置新的日期并返回更新后的 Dayuts 实例
+			return d.date(d.date() + Math.round(n * number)) //Utils.w(d.date(d.date() + Math.round(n * number)), this)
+		}
+		if (unit == M) {
+			return this.set(M, this.$M + number)
+		}
+		if (unit == Y) {
+			return this.set(Y, this.$y + number)
+		}
+		if (unit == D) {
+			return instanceFactorySet(1)
+		}
+		if (unit == W) {
+			return instanceFactorySet(7)
+		}
+
+		const steps = new Map<string, number>([
+			[MIN, MILLISECONDS_A_MINUTE],
+			[H, MILLISECONDS_A_HOUR],
+			[S, MILLISECONDS_A_SECOND],
+		])
+		const step = steps.get(unit) ?? 1;
+		const nextTimeStamp = this.$d.getTime() + (number * step)
+		return wrapper(nextTimeStamp, this)
+	}
+	/**
+	 * 从当前 Dayuts 实例中减去指定的时间。
+	 * @param {number} number - 要减去的时间。
+	 * @param {string} units - 要减去的时间单位（例如，“years”，“months”，“days”等）。
+	 * @returns {Dayuts} 更新的 Dayuts 实例。
+	 */
+	subtract(number : number, units : DayutsUnit) : Dayuts {
+		// 通过将 number 乘以 -1，然后调用 add 方法来实现减法操作
+		return this.add(number * -1, units);
+	}
+	/**
+	 * 日期格式化
+	 * @param {string} formatStr - 格式化字符串，包含各种格式化占位符（例如，“YYYY-MM-DD”，“HH:mm:ss”等）。
+	 * @returns {string} 格式化后的日期字符串。
+	 */
+	format(formatStr : string | null = null) : string {
+		const locale = this.$locale();
+		if (!this.isValid()) return INVALID_DATE_STRING // locale.invalidDate || INVALID_DATE_STRING;
+
+		const str = formatStr ?? FORMAT_DEFAULT;
+		// @ts-ignore
+		const zoneStr = padZoneStr(this);
+		const { $H, $m, $M } = this;
+		const { weekdays, months, meridiem } = locale;
+		/**
+		 * 从给定的数组中获取缩写或完整的字符串。
+		 * @param {Array} arr - 包含缩写字符串的数组。
+		 * @param {number} index - 数组中要获取的元素的索引。
+		 * @param {Array} full - 包含完整字符串的数组。
+		 * @param {number} length - 要返回的字符串的长度。
+		 * @returns {string} 缩写或完整的字符串。
+		 */
+		function getShort(arr : string[] | null, index : number, full : string[] = [], length : number = 0) : string {
+			if (arr != null && arr.length >= index) {
+				return arr[index]
+			} else if (full.length >= index) {
+				return full[index].slice(0, length)
+			}
+			return ''
+		};
+		/**
+		 * 获取12小时制的小时数。
+		 * @param {number} num - 小时数的位数。
+		 * @returns {string} 12小时制的小时数字符串。
+		 */
+		const get$H = (num : number) : string => padStart(($H % 12 == 0 ? 12 : $H % 12).toString(), num, '0')
+		/**
+		 * 获取上午或下午的字符串表示。
+		 * @param {number} hour - 小时数。
+		 * @param {number} minute - 分钟数。
+		 * @param {boolean} isLowercase - 是否返回小写字符串。
+		 * @returns {string} 上午或下午的字符串表示。
+		 */
+		const meridiemFunc = meridiem ?? ((hour : number, _ : number, isLowercase : boolean) : string => {
+			const m = (hour < 12 ? 'AM' : 'PM');
+			return isLowercase ? m.toLowerCase() : m;
+		});
+		// #ifdef APP-ANDROID
+		return str.replace('YYYY', padStart(this.$y.toString(), 4, '0'))
+			.replace('YY', (this.$y).toString().slice(-2))
+			.replace('MMMM', getShort(months, $M))
+			.replace('MM', padStart(($M + 1).toString(), 2, '0'))
+			.replace('M', ($M + 1).toString())
+			.replace('DD', padStart(this.$D.toString(), 2, '0'))
+			.replace('D', this.$D.toString())
+			.replace('dddd', weekdays[this.$W])
+			.replace('ddd', getShort(locale.weekdaysShort, this.$W, weekdays, 3))
+			.replace('dd', getShort(locale.weekdaysMin, this.$W, weekdays, 2))
+			.replace('d', this.$W.toString())
+			.replace('HH', padStart($H.toString(), 2, '0'))
+			.replace('H', $H.toString())
+			.replace('hh', get$H(2))
+			.replace('h', get$H(1))
+			.replace('mm', padStart($m.toString(), 2, '0'))
+			.replace('m', $m.toString())
+			.replace('ss', padStart(this.$s.toString(), 2, '0'))
+			.replace('s', this.$s.toString())
+			.replace('SSS', padStart(this.$ms.toString(), 3, '0'))
+			.replace('A', meridiemFunc($H, $m, false))
+			.replace('a', meridiemFunc($H, $m, true))
+			.replace('Z', zoneStr)
+		// #endif
+		// #ifndef APP-ANDROID
+		const matches = (match : string) : string | null => {
+			if (match == 'YY') {
+				return (this.$y).toString().slice(-2);
+			} else if (match == 'YYYY') {
+				return padStart(this.$y.toString(), 4, '0');
+			} else if (match == 'M') {
+				return ($M + 1).toString();
+			} else if (match == 'MM') {
+				return padStart(($M + 1).toString(), 2, '0');
+			} else if (match == 'MMM') {
+				return getShort(locale.monthsShort, $M, months, 3);
+			} else if (match == 'MMMM') {
+				return getShort(months, $M);
+			} else if (match == 'D') {
+				return this.$D.toString();
+			} else if (match == 'DD') {
+				return padStart(this.$D.toString(), 2, '0');
+			} else if (match == 'd') {
+				return this.$W.toString();
+			} else if (match == 'dd') {
+				return getShort(locale.weekdaysMin, this.$W, weekdays, 2);
+			} else if (match == 'ddd') {
+				return getShort(locale.weekdaysShort, this.$W, weekdays, 3);
+			} else if (match == 'dddd') {
+				return weekdays[this.$W];
+			} else if (match == 'H') {
+				return $H.toString();
+			} else if (match == 'HH') {
+				return padStart($H.toString(), 2, '0');
+			} else if (match == 'h') {
+				return get$H(1);
+			} else if (match == 'hh') {
+				return get$H(2);
+			} else if (match == 'a') {
+				return meridiemFunc($H, $m, true);
+			} else if (match == 'A') {
+				return meridiemFunc($H, $m, false);
+			} else if (match == 'm') {
+				return $m.toString();
+			} else if (match == 'mm') {
+				return padStart($m.toString(), 2, '0');
+			} else if (match == 's') {
+				return this.$s.toString();
+			} else if (match == 'ss') {
+				return padStart(this.$s.toString(), 2, '0');
+			} else if (match == 'SSS') {
+				return padStart(this.$ms.toString(), 3, '0');
+			} else if (match == 'Z') {
+				return zoneStr; // 'ZZ' logic below
+			}
+			return null;
+		};
+		return str.replace(REGEX_FORMAT, (match : string, $1 : string, offset : number, string : string) : string => {
+			return $1 ?? matches(match) ?? zoneStr.replace(':', '')
+		})
+		// #endif
+	}
+	/**
+	 * 获取 Dayuts 实例的 UTC 偏移量（以分钟为单位）。
+	 * @returns {number} UTC 偏移量（以分钟为单位）。
+	 */
+	utcOffset() : number {
+		// Because a bug at FF24, we're rounding the timezone offset around 15 minutes
+		// https://github.com/moment/moment/pull/1871
+		// #ifndef APP-ANDROID || APP-IOS
+		return -Math.round(this.$d.getTimezoneOffset() / 15) * 15
+		// #endif
+		// #ifdef APP-ANDROID || APP-IOS
+		return 0
+		// #endif
+	}
+	/**
+	 * 计算两个日期之间的差值
+	 * @param {string|number|Date|Dayuts} input - 要比较的日期
+	 * @param {string} units - 要计算的时间单位，如 'years', 'months', 'weeks', 'days', 'hours', 'minutes', 'seconds'
+	 * @param {boolean} float - 是否返回浮点数结果
+	 * @returns {number} 返回两个日期之间的差值
+	 */
+	diff(input : string) : number
+	diff(input : number) : number
+	diff(input : Date) : number
+	diff(input : Dayuts) : number
+	diff(input : UTSJSONObject) : number
+
+	diff(input : string, units : DayutsUnit) : number
+	diff(input : number, units : DayutsUnit) : number
+	diff(input : Date, units : DayutsUnit) : number
+	diff(input : Dayuts, units : DayutsUnit) : number
+	diff(input : UTSJSONObject, units : DayutsUnit) : number
+
+	diff(input : string, units : DayutsUnit, float : boolean) : number
+	diff(input : number, units : DayutsUnit, float : boolean) : number
+	diff(input : Date, units : DayutsUnit, float : boolean) : number
+	diff(input : Dayuts, units : DayutsUnit, float : boolean) : number
+	diff(input : UTSJSONObject, units : DayutsUnit, float : boolean) : number
+	diff(input : any, units : DayutsUnit = 'millisecond', float : boolean = false) : number {
+		const unit = prettyUnit(units)
+		const that = dayuts(input)
+		const zoneDelta = (that.utcOffset() - this.utcOffset()) * MILLISECONDS_A_MINUTE
+		const diff = this.valueOf() - that.valueOf()
+		// @ts-ignore
+		const getMonth = () : number => monthDiff(this, that)
+		let result : number;
+		switch (unit) {
+			case Y:
+				result = getMonth() / 12
+				break
+			case M:
+				result = getMonth()
+				break
+			case Q:
+				result = getMonth() / 3
+				break
+			case W:
+				result = (diff - zoneDelta) / MILLISECONDS_A_WEEK
+				break
+			case D:
+				result = (diff - zoneDelta) / MILLISECONDS_A_DAY
+				break
+			case H:
+				result = diff / MILLISECONDS_A_HOUR
+				break
+			case MIN:
+				result = diff / MILLISECONDS_A_MINUTE
+				break
+			case S:
+				result = diff / MILLISECONDS_A_SECOND
+				break
+			default:
+				result = diff // milliseconds
+				break
+		}
+
+		return float ? result : absFloor(result)
+	}
+	/**
+	 * 将当前 Dayuts 对象转换为原生 Date 对象。
+	 *
+	 * @returns {Date} 返回一个表示当前日期的原生 Date 对象。
+	 */
+	toDate() : Date {
+		return new Date(this.valueOf())
+	}
+	/**
+	 * 将 Moment 对象转换为 JSON 字符串
+	 * @returns {string | null} 如果 Moment 对象有效，则返回 ISO 8601 格式的字符串，否则返回 null
+	 */
+	toJSON() : string | null {
+		return this.isValid() ? this.toISOString() : null;
+	}
+	/**
+	 * 将 Moment 对象转换为 ISO 8601 格式的字符串
+	 * @returns {string} 返回 ISO 8601 格式的字符串
+	 */
+	toISOString() : string {
+		// #ifndef APP-ANDROID || APP-IOS
+		return this.$d.toISOString();
+		// #endif
+		// #ifdef APP-ANDROID || APP-IOS
+		return this.$d.toString();
+		// #endif
+	}
+	toObject() : DayutsObject {
+		return {
+			years: this.$y,
+			months: this.$M,
+			date: this.$D,
+			hours: this.$H,
+			minutes: this.$m,
+			seconds: this.$s,
+			milliseconds: this.$ms
+		} as DayutsObject
+	}
+	toArray() : number[] {
+		return [
+			this.$y,
+			this.$M,
+			this.$D,
+			this.$H,
+			this.$m,
+			this.$s,
+			this.$ms
+		]
+	}
+	/**
+	 * 获取当前日期的毫秒数。
+	 *
+	 * @returns {number} 返回一个表示当前日期的毫秒数。
+	 */
+	valueOf() : number {
+		// 使用 Date 对象的 getTime 方法获取当前日期的毫秒数。
+		return this.$d.getTime()
+	}
+	/**
+	 * 获取当前 `dayuts` 对象所在月份的天数。
+	 *
+	 * @returns {number} 返回当前 `dayuts` 对象所在月份的天数。
+	 */
+	daysInMonth() : number {
+		return this.endOf(M).$D;
+	}
+
+	/**
+	 * 获取当前日期的区域设置对象。
+	 *
+	 * @returns {Object} 区域设置对象。
+	 */
+	private $locale() : DayutsLocale { // get locale object
+		// return Ls.get(this.$L)!
+		return localeState.locales.get(this.$L)!
+	}
+	/**
+	 * 设置或获取 Dayuts 实例的本地化配置
+	 * @param {string|Object} preset - 本地化预设名称或自定义本地化配置对象
+	 * @param {Object} [DayutsLocale] - 可选的自定义本地化配置对象
+	 * @returns {Dayuts|string} 如果设置了本地化配置，则返回一个新的 Dayuts 实例；否则返回当前实例的本地化配置名称
+	 */
+	locale(preset : string, object : DayutsLocale) : Dayuts
+	locale(preset : DayutsLocale, object : DayutsLocale) : Dayuts
+	locale(preset : any, object : DayutsLocale | null = null) : Dayuts {
+		// if (!preset) return this.$L
+		const that = this.clone()
+		const nextLocaleName = parseLocale(preset, object, true)
+		if (nextLocaleName != null) that.$L = nextLocaleName
+		return that
+	}
+	clone() : Dayuts {
+		return wrapper(this.$d.getTime(), this)
+	}
+	/**
+	 * 返回当前 dayuts 对象的 UTC 字符串表示。
+	 *
+	 * @returns {string} 当前 dayuts 对象的 UTC 字符串表示。
+	 */
+	// #ifdef APP-ANDROID
+	override toString() : string {
+		// return this.$d.toUTCString();
+		// const locale = localeState.locales.get('en')!
+		// const weekday = locale.weekdays[this.$d.getDay()].substring(0,3);
+		// const month = locale.months[this.$d.getMonth()].substring(0,3)
+		// const day = `${this.$D}`.padStart(2, '0');
+		// const hours = `${this.$H}`.padStart(2, '0');
+		// const minutes = `${this.$m}`.padStart(2, '0');
+		// const seconds = `${this.$s}`.padStart(2, '0');
+		// return `${weekday}, ${day} ${month} ${this.$y} ${hours}:${minutes}:${seconds} GMT`;
+		return this.$d.toString();
+	}
+	// #endif
+	// #ifndef APP-ANDROID
+	toString() : string {
+		// return this.$d.toUTCString();
+		return this.$d.toString();
+	}
+	// #endif
+	/**
+	 * 计算给定日期在当年的第几天，或者设置给定日期为当年的第几天。
+	 * @param {number} [input] - 如果提供了输入值，则将日期设置为当年的第几天。如果没有提供输入值，则返回当前日期在当年的第几天。
+	 * @returns {number} 如果提供了输入值，则返回调整后的日期。如果没有提供输入值，则返回当前日期在当年的第几天。
+	 */
+	dayOfYear() : number
+	dayOfYear(input : number) : Dayuts
+	dayOfYear(input : number | null = null) : any {
+		const dayOfYear = Math.round((this.startOf('day').valueOf() - this.startOf('year').valueOf()) / 864e5) + 1
+		return input == null ? dayOfYear : this.add(input - dayOfYear, 'day')
+	}
+	/**
+	 * 根据输入的时间计算与当前时间的相对时间差，并以指定的格式返回。
+	 * @param {Date|number|string} input - 输入的时间，可以是Date对象、时间戳或符合Date.parse()方法的字符串
+	 * @param {boolean} withoutSuffix - 是否省略“未来”或“过去”的后缀
+	 * @param {Object} instance - 当前时间的实例
+	 * @param {boolean} isFrom - 是否从输入时间计算到当前时间
+	 * @param {Function} postFormat - 格式化绝对值后的结果的函数
+	 * @returns {string} 相对时间差的格式化字符串
+	 */
+	// postFormat
+	fromToBase(input : string, withoutSuffix : boolean, instance : Dayuts, isFrom : boolean) : string
+	fromToBase(input : number, withoutSuffix : boolean, instance : Dayuts, isFrom : boolean) : string
+	fromToBase(input : Date, withoutSuffix : boolean, instance : Dayuts, isFrom : boolean) : string
+	fromToBase(input : Dayuts, withoutSuffix : boolean, instance : Dayuts, isFrom : boolean) : string
+	fromToBase(input : UTSJSONObject, withoutSuffix : boolean, instance : Dayuts, isFrom : boolean) : string
+	fromToBase(input : any, withoutSuffix : boolean, instance : Dayuts, isFrom : boolean) : string {
+		const relObj = localeState.locales.get('en')?.relativeTime
+		const loc = instance.$locale().relativeTime ?? relObj
+		if (loc == null) return '';
+		const T : Threshold[] = [
+			{ l: 's', r: 44, d: S },
+			{ l: 'm', r: 89 },
+			{ l: 'mm', r: 44, d: MIN },
+			{ l: 'h', r: 89 },
+			{ l: 'hh', r: 21, d: H },
+			{ l: 'd', r: 35 },
+			{ l: 'dd', r: 25, d: D },
+			{ l: 'M', r: 45 },
+			{ l: 'MM', r: 10, d: M },
+			{ l: 'y', r: 17 },
+			{ l: 'yy', d: Y }
+		]
+		const Tl = T.length
+		let result : number = 0;
+		let out : string = '';
+		let isFuture : boolean = false
+		for (let i = 0; i < Tl; i += 1) {
+			let t = T[i]
+			if (t.d != null) {
+				result = isFrom
+					? dayuts(input).diff(instance, t.d!, true)
+					: instance.diff(input, t.d!, true)
+			}
+			let abs = Math.round(Math.abs(result))
+			isFuture = result > 0
+			if (t.r == null || t.r != null && abs <= t.r!) {
+				if (abs <= 1 && i > 0) t = T[i - 1] // 1 minutes -> a minute, 0 seconds -> 0 second
+				const format = loc[t.l]
+				// if (postFormat) {
+				// 	abs = postFormat(`${abs}`)
+				// }
+				if (typeof format == 'string') {
+					out = (format as string).replace('%d', abs.toString())
+				}
+				// else {
+				// 	out = format(abs, withoutSuffix, t.l!, isFuture)
+				// }
+				break
+			}
+		}
+		if (withoutSuffix) return out
+		const pastOrFuture = isFuture ? loc.future : loc.past
+		// if (typeof pastOrFuture == 'function') {
+		// 	return pastOrFuture(out)
+		// }
+		return pastOrFuture.replace('%s', out)
+	}
+	/**
+	 * 相对指定时间(后)。
+	 * @param {string|number|Date|Dayuts|UTSJSONObject} input - 输入的时间，可以是字符串、数字（时间戳）、Date对象、Dayuts对象或UTSJSONObject。
+	 * @param {boolean} withoutSuffix - 是否省略“未来”或“过去”的后缀。
+	 * @returns {string} 相对时间差的格式化字符串。
+	 */
+	to(input : string) : string
+	to(input : number) : string
+	to(input : Date) : string
+	to(input : Dayuts) : string
+	to(input : UTSJSONObject) : string
+
+	to(input : string, withoutSuffix : boolean) : string
+	to(input : number, withoutSuffix : boolean) : string
+	to(input : Date, withoutSuffix : boolean) : string
+	to(input : Dayuts, withoutSuffix : boolean) : string
+	to(input : UTSJSONObject, withoutSuffix : boolean) : string
+	to(input : any, withoutSuffix : boolean = false) : string {
+		return this.fromToBase(input, withoutSuffix, this, true)
+	}
+	/**
+	 * 将当前时间转换为与输入时间的相对时间差，并以指定的格式返回。
+	 * @param {string|number|Date|Dayuts|UTSJSONObject} input - 输入的时间，可以是字符串、数字（时间戳）、Date对象、Dayuts对象或UTSJSONObject。
+	 * @param {boolean} withoutSuffix - 是否省略“未来”或“过去”的后缀。
+	 * @returns {string} 相对时间差的格式化字符串。
+	 */
+	from(input : string) : string
+	from(input : number) : string
+	from(input : Date) : string
+	from(input : Dayuts) : string
+	from(input : UTSJSONObject) : string
+
+	from(input : string, withoutSuffix : boolean) : string
+	from(input : number, withoutSuffix : boolean) : string
+	from(input : Date, withoutSuffix : boolean) : string
+	from(input : Dayuts, withoutSuffix : boolean) : string
+	from(input : UTSJSONObject, withoutSuffix : boolean) : string
+	from(input : any, withoutSuffix : boolean = false) : string {
+		return this.fromToBase(input, withoutSuffix, this, false)
+	}
+	/**
+	 * 获取当前时间与实例时间的相对时间差，并以指定的格式返回。
+	 * @param {boolean} withoutSuffix - 是否省略“未来”或“过去”的后缀。
+	 * @returns {string} 相对时间差的格式化字符串。
+	 */
+	toNow() : string
+	toNow(withoutSuffix : boolean = false) : string {
+		return this.to(dayuts(), withoutSuffix)
+	}
+	/**
+	 * 获取实例时间与当前时间的相对时间差，并以指定的格式返回。
+	 * @param {boolean} withoutSuffix - 是否省略“未来”或“过去”的后缀。
+	 * @returns {string} 相对时间差的格式化字符串。
+	 */
+	fromNow() : string
+	fromNow(withoutSuffix : boolean = false) : string {
+		return this.from(dayuts(), withoutSuffix)
+	}
+}
+
+function dayuts() : Dayuts;
+function dayuts(date : string) : Dayuts;
+function dayuts(date : any[]) : Dayuts;
+function dayuts(date : number) : Dayuts;
+function dayuts(date : UTSJSONObject) : Dayuts;
+function dayuts(date : Date) : Dayuts;
+function dayuts(date : Dayuts) : Dayuts;
+// #ifndef APP-ANDROID || APP-IOS
+function dayuts(date : any | null, format : string) : Dayuts;
+function dayuts(date : any | null, format : string | null, locale : string | null) : Dayuts;
+// #endif
+function dayuts(date : any | null = null, format : string | null = null, locale : string | null = null) : Dayuts {
+	if (date != null && date instanceof Dayuts) return date.clone()
+	return new Dayuts({
+		date,
+		format,
+		locale
+	} as DayutsConfig)
+}
+
+/**
+ * 判断给定的对象是否为Dayuts实例
+ * @param {(any | null)} date - 输入的对象
+ * @returns {boolean} - 如果给定的对象是Dayuts实例，则返回true，否则返回false
+ */
+function isDayuts(date : any | null = null) : boolean {
+	return date instanceof Dayuts
+}
+
+export {
+	dayuts,
+	isDayuts
+}

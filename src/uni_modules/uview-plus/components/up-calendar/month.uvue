@@ -1,22 +1,22 @@
 <template>
 	<view class="up-calendar-month-wrapper" ref="up-calendar-month-wrapper">
-		<view v-for="(item, index) in months" :key="index" :class="[`up-calendar-month-${index}`]"
-			:ref="`up-calendar-month-${index}`" :id="`month-${index}`">
-			<text v-if="index !== 0" class="up-calendar-month__title">{{ item.year }}年{{ item.month }}月</text>
+		<view v-for="(item, index) in months" :key="index" :class="[`up-calendar-month-` + index.toString()]"
+			:ref="`up-calendar-month-` + index.toString()" :id="`month-` + index.toString()">
+			<text v-if="index !== 0" class="up-calendar-month__title">{{ item['year'] }}年{{ item['month'] }}月</text>
 			<view class="up-calendar-month__days">
 				<view v-if="showMark" class="up-calendar-month__days__month-mark-wrapper">
-					<text class="up-calendar-month__days__month-mark-wrapper__text">{{ item.month }}</text>
+					<text class="up-calendar-month__days__month-mark-wrapper__text">{{ item['month'] }}</text>
 				</view>
-				<view class="up-calendar-month__days__day" v-for="(item1, index1) in item.date" :key="index1"
+				<view class="up-calendar-month__days__day" v-for="(item1, index1) in item['date']" :key="index1"
 					:style="[dayStyle(index, index1, item1)]" @tap="clickHandler(index, index1, item1)"
-					:class="[item1.selected && 'up-calendar-month__days__day__select--selected']">
+					:class="[item1['selected'] && 'up-calendar-month__days__day__select--selected']">
 					<view class="up-calendar-month__days__day__select" :style="[daySelectStyle(index, index1, item1)]">
 						<text class="up-calendar-month__days__day__select__info"
-							:class="[item1.disabled && 'up-calendar-month__days__day__select__info--disabled']"
-							:style="[textStyle(item1)]">{{ item1.day }}</text>
+							:class="[item1['disabled'] && 'up-calendar-month__days__day__select__info--disabled']"
+							:style="[textStyle(item1)]">{{ item1['day'] }}</text>
 						<text v-if="getBottomInfo(index, index1, item1)"
 							class="up-calendar-month__days__day__select__buttom-info"
-							:class="[item1.disabled && 'up-calendar-month__days__day__select__buttom-info--disabled']"
+							:class="[item1['disabled'] && 'up-calendar-month__days__day__select__buttom-info--disabled']"
 							:style="[textStyle(item1)]">{{ getBottomInfo(index, index1, item1) }}</text>
 						<text v-if="item1.dot" class="up-calendar-month__days__day__select__dot"></text>
 					</view>
@@ -34,7 +34,7 @@
 	import test from '../../libs/function/test';
 	import defProps from './calendar.uts';
 	let calendarProp = defProps['calendar'] as UTSJSONObject;
-	import dayjs from 'dayjs/esm/index'
+	import {dayuts} from '@/uni_modules/lime-dayuts';
 	export default {
 		name: 'up-calendar-month',
 		mixins: [mpMixin, mixin],
@@ -51,7 +51,7 @@
 			},
 			// 月份数据
 			months: {
-				type: Array,
+				type: Array<any>,
 				default: () => []
 			},
 			// 日期选择类型
@@ -81,7 +81,7 @@
 			},
 			// 默认选中的日期，mode为multiple或range是必须为数组格式
 			defaultDate: {
-				type: [Array, String, Date],
+				type: [Array<String>, String, Date],
 				default: null
 			},
 			// 最小的可选日期
@@ -175,7 +175,7 @@
 			},
 			daySelectStyle() {
 				return (index1, index2, item) => {
-					let date = dayjs(item.date).format("YYYY-MM-DD"),
+					let date = dayuts(item.date).format("YYYY-MM-DD"),
 						style = {}
 					// 判断date是否在selected数组中，因为月份可能会需要补0，所以使用dateSame判断，而不用数组的includes判断
 					if (this.selected.some(item => this.dateSame(item, date))) {
@@ -203,7 +203,7 @@
 								style.borderBottomRightRadius = '3px'
 							}
 							// 处于第一和最后一个之间的日期，背景色设置为浅色，通过将对应颜色进行等分，再取其尾部的颜色值
-							if (dayjs(date).isAfter(dayjs(this.selected[0])) && dayjs(date).isBefore(dayjs(this
+							if (dayuts(date).isAfter(dayuts(this.selected[0])) && dayuts(date).isBefore(dayuts(this
 									.selected[len]))) {
 								style.backgroundColor = colorGradient(this.color, '#ffffff', 100)[90]
 								// 增加一个透明度，让范围区间的背景色也能看到底部的mark水印字符
@@ -229,7 +229,7 @@
 			// 某个日期是否被选中
 			textStyle() {
 				return (item) => {
-					const date = dayjs(item.date).format("YYYY-MM-DD"),
+					const date = dayuts(item.date).format("YYYY-MM-DD"),
 						style = {}
 					// 选中的日期，提示文字设置白色
 					if (this.selected.some(item => this.dateSame(item, date))) {
@@ -238,7 +238,7 @@
 					if (this.mode === 'range') {
 						const len = this.selected.length - 1
 						// 如果是范围选择模式，第一个和最后一个之间的日期，文字颜色设置为高亮的主题色
-						if (dayjs(date).isAfter(dayjs(this.selected[0])) && dayjs(date).isBefore(dayjs(this
+						if (dayuts(date).isAfter(dayuts(this.selected[0])) && dayuts(date).isBefore(dayuts(this
 								.selected[len]))) {
 							style.color = this.color
 						}
@@ -249,7 +249,7 @@
 			// 获取底部的提示文字
 			getBottomInfo() {
 				return (index1, index2, item) => {
-					const date = dayjs(item.date).format("YYYY-MM-DD")
+					const date = dayuts(item.date).format("YYYY-MM-DD")
 					const bottomInfo = item.bottomInfo
 					// 当为日期范围模式时，且选择的日期个数大于0时
 					if (this.mode === 'range' && this.selected.length > 0) {
@@ -296,7 +296,7 @@
 			},
 			// 判断两个日期是否相等
 			dateSame(date1, date2) {
-				return dayjs(date1).isSame(dayjs(date2))
+				return dayuts(date1).isSame(dayuts(date2))
 			},
 			// 获取月份数据区域的宽度，因为nvue不支持百分比，所以无法通过css设置每个日期item的宽度
 			getWrapperWidth() {
@@ -347,7 +347,7 @@
 					return;
 				}
 				this.item = item
-				const date = dayjs(item.date).format("YYYY-MM-DD")
+				const date = dayuts(item.date).format("YYYY-MM-DD")
 				if (item.disabled) return
 				// 对上一次选择的日期数组进行深度克隆
 				let selected = deepClone(this.selected)
@@ -372,11 +372,11 @@
 						// 如果已经选择了开始日期
 						const existsDate = selected[0]
 						// 如果当前选择的日期小于上一次选择的日期，则当前的日期定为开始日期
-						if (dayjs(date).isBefore(existsDate)) {
+						if (dayuts(date).isBefore(existsDate)) {
 							selected = [date]
-						} else if (dayjs(date).isAfter(existsDate)) {
+						} else if (dayuts(date).isAfter(existsDate)) {
 							// 当前日期减去最大可选的日期天数，如果大于起始时间，则进行提示
-							if(dayjs(dayjs(date).subtract(this.maxRange, 'day')).isAfter(dayjs(selected[0])) && this.showRangePrompt) {
+							if(dayuts(dayuts(date).subtract(this.maxRange, 'day')).isAfter(dayuts(selected[0])) && this.showRangePrompt) {
 								if(this.rangePrompt) {
 									toast(this.rangePrompt)
 								} else {
@@ -392,10 +392,10 @@
 							let i = 0
 							do {
 								// 将开始和结束日期之间的日期添加到数组中
-								arr.push(dayjs(startDate).add(i, 'day').format("YYYY-MM-DD"))
+								arr.push(dayuts(startDate).add(i, 'day').format("YYYY-MM-DD"))
 								i++
 								// 累加的日期小于结束日期时，继续下一次的循环
-							} while (dayjs(startDate).add(i, 'day').isBefore(dayjs(endDate)))
+							} while (dayuts(startDate).add(i, 'day').isBefore(dayuts(endDate)))
 							// 为了一次性修改数组，避免computed中多次触发，这里才用arr变量一次性赋值的方式，同时将最后一个日期添加近来
 							arr.push(endDate)
 							selected = arr
@@ -412,16 +412,16 @@
 			setDefaultDate() {
 				if (!this.defaultDate) {
 					// 如果没有设置默认日期，则将当天日期设置为默认选中的日期
-					const selected = [dayjs().format("YYYY-MM-DD")]
+					const selected = [dayuts().format("YYYY-MM-DD")]
 					return this.setSelected(selected, false)
 				}
 				let defaultDate = []
-				const minDate = this.minDate || dayjs().format("YYYY-MM-DD")
-				const maxDate = this.maxDate || dayjs(minDate).add(this.maxMonth - 1, 'month').format("YYYY-MM-DD")
+				const minDate = this.mdayutse || dayuts().format("YYYY-MM-DD")
+				const maxDate = this.mdayutse || dayuts(minDate).add(this.maxMonth - 1, 'month').format("YYYY-MM-DD")
 				if (this.mode === 'single') {
 					// 单选模式，可以是字符串或数组，Date对象等
 					if (!test.array(this.defaultDate)) {
-						defaultDate = [dayjs(this.defaultDate).format("YYYY-MM-DD")]
+						defaudayutse = [dayuts(this.defaultDate).format("YYYY-MM-DD")]
 					} else {
 						defaultDate = [this.defaultDate[0]]
 					}
@@ -432,14 +432,14 @@
 				}
 				// 过滤用户传递的默认数组，取出只在可允许最大值与最小值之间的元素
 				defaultDate = defaultDate.filter(item => {
-					return dayjs(item).isAfter(dayjs(minDate).subtract(1, 'day')) && dayjs(item).isBefore(dayjs(
+					return dayuts(item).isAfter(dayuts(minDate).subtract(1, 'day')) && dayuts(item).isBefore(dayuts(
 						maxDate).add(1, 'day'))
 				})
 				this.setSelected(defaultDate, false)
 			},
-			setSelected(selected, event = true) {
+			setSelected(selected: string, event = true) {
 				this.selected = selected
-				event && this.$emit('monthSelected', this.selected,'tap')
+				event && this.$emit('monthSelected', this.selected, 'tap')
 			}
 		}
 	}
