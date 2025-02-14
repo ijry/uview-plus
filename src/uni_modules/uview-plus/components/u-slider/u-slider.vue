@@ -58,7 +58,7 @@
 					<view class="u-slider__button-wrap u-slider__button-wrap-0" @touchstart="onTouchStart($event, 0)"
 						@touchmove="onTouchMove($event, 0)" @touchend="onTouchEnd($event, 0)"
 						@touchcancel="onTouchEnd($event, 0)" :style="{left: (getPx(barStyle0.width) + getPx(blockSize)/2) + 'px'}">
-						<slot v-if="$slots.default  || $slots.$default"/>
+						<slot name="min" v-if="$slots.min || $slots.$min"/>
 						<view v-else class="u-slider__button" :style="[blockStyle, {
 							height: getPx(blockSize, true),
 							width: getPx(blockSize, true),
@@ -69,7 +69,8 @@
 				<view class="u-slider__button-wrap" @touchstart="onTouchStart"
 					@touchmove="onTouchMove" @touchend="onTouchEnd"
 					@touchcancel="onTouchEnd" :style="{left: (getPx(barStyle.width) + getPx(blockSize)/2) + 'px'}">
-					<slot v-if="$slots.default  || $slots.$default"/>
+					<slot name="max" v-if="isRange && ($slots.max || $slots.$max)"/>
+					<slot v-else-if="$slots.default || $slots.$default"/>
 					<view v-else class="u-slider__button" :style="[blockStyle, {
 						height: getPx(blockSize, true),
 						width: getPx(blockSize, true),
@@ -386,7 +387,7 @@
 					return this.rangeValue
 				} else {
 					return valueFormat
-				} 
+				}
 			},
 			format(value, index = 1) {
 				// 将小数变成整数，为了减少对视图的更新，造成视图层与逻辑层的阻塞
