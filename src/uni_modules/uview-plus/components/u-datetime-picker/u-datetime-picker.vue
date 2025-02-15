@@ -10,6 +10,7 @@
 					border="surround"
 					v-model="inputValue"
 					:disabled="disabled"
+					:disabledColor="disabledColor"
 				></up-input>
 				<div class="input-cover">
 				</div>

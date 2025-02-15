@@ -11,6 +11,10 @@ export const props = defineMixin({
             type: Boolean,
             default: false
         },
+		disabledColor:{
+			type: String,
+			default: () => defProps.input.disabledColor
+		},
         hasInput: {
             type: Boolean,
             default: false
