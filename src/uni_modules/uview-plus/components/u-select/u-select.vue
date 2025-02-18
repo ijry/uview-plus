@@ -19,7 +19,7 @@
             :key="index" v-for="(item, index) in options"
             @click="selectItem(item)">
             <slot name="optionItem" :item="item">
-                <text class="u-select__item_text">
+                <text class="u-select__item_text" :style="{color: itemColor}"> 
                     {{item.name}}
                 </text>
             </slot>
@@ -56,6 +56,10 @@
         zIndex: {
             type: Number,
             default: 10
+        },
+        itemColor: {
+            type: String,
+            default: '#333333'
         },
         iconColor: {
             type: String,
