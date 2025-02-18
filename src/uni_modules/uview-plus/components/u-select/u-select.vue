@@ -2,11 +2,13 @@
 	<view class="u-select">
     <view class="u-select__content">
       <view class="u-select__label" @click="openSelect">
-        <text class="u-select__text">
-          {{ label }}
-        </text>
+        <slot name="text">
+          <text class="u-select__text">
+            {{ label }}
+          </text>
+        </slot>
         <slot name="icon">
-          <u-icon name="arrow-down" size="13" color="grey"></u-icon>
+          <u-icon name="arrow-down" :size="iconSize" :color="iconColor"></u-icon>
         </slot>
       </view>
       <view class="u-select__options"
@@ -54,6 +56,14 @@
         zIndex: {
             type: Number,
             default: 10
+        },
+        iconColor: {
+            type: String,
+            default: ''
+        },
+        iconSize: {
+            type: [String],
+            default: '13px'
         }
     }   ,
 	data() {
@@ -80,6 +90,7 @@
   .u-select__content {
     position: relative;
     .u-select__label {
+      display: flex;
       /* #ifdef H5 */
       &:hover {
         cursor: pointer;
