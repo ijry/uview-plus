@@ -563,6 +563,12 @@
                     "style" : {
                         "navigationBarTitleText" : "垂直TAB"
                     }
+                },
+                {
+                    "path" : "select/select",
+                    "style" : {
+                        "navigationBarTitleText" : "经典下拉框"
+                    }
                 }
             ]
         },
