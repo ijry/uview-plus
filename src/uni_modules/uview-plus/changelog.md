@@ -1,3 +1,10 @@
+## 3.3.69（2025-02-19）
+picker允许传递禁用颜色props
+
+slider组件isRange状态下增加min max插槽分开显示内容
+
+feat: 新增经典下拉框组件up-select
+
 ## 3.3.68（2025-02-12）
 fix: 修复weekText类型
 
