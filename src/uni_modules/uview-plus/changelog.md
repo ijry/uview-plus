@@ -1,3 +1,6 @@
+## 3.3.70（2025-02-24）
+fix: 修改u-checkbox-group组件changes事件发生位置
+
 ## 3.3.69（2025-02-19）
 picker允许传递禁用颜色props
 
