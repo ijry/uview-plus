@@ -106,6 +106,7 @@
     }
     .u-select__options {
       min-width: 100px;
+	  box-sizing: border-box;
       border-radius: 4px;
       border: 1px solid #f1f1f1;
       background-color: #fff;
@@ -114,6 +115,7 @@
       left: 0;
       .u-select__options_item {
         padding: 10px 12px;
+		box-sizing: border-box;
         width: 100%;
         height: 100%;
         &:hover {
