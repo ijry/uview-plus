@@ -11,6 +11,8 @@
 			@click="clickHandler"
 			:arrowDirection="expanded ? 'up' : 'down'"
 			:disabled="disabled"
+			:customClass="cellCustomClass"
+			:customStyle="cellCustomStyle"
 		>
 			<!-- 微信小程序不支持，因为微信中不支持 <slot name="title" #title />的写法 -->
 			<template #title>

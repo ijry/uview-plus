@@ -24,6 +24,8 @@ export default {
         showRight: true,
         titleStyle: {},
         iconStyle: {},
-		rightIconStyle: {}
+		rightIconStyle: {},
+        cellCustomStyle: {},
+        cellCustomClass: ''
     }
 }

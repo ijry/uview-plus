@@ -83,5 +83,15 @@ export const props = defineMixin({
 				return defProps.collapseItem.rightIconStyle
 			}
         },
+        cellCustomStyle: {
+            type: [Object, String],
+            default: () => {
+				return defProps.collapseItem.cellCustomStyle
+			}
+        },
+        cellCustomClass: {
+            type: String,
+            default: () => defProps.collapseItem.cellCustomClass
+        }
     }
 })
