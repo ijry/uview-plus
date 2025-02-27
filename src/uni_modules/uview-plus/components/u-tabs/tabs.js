@@ -27,6 +27,7 @@ export default {
         },
         scrollable: true,
 		current: 0,
-		keyName: 'name'
+		keyName: 'name',
+        iconStyle: {}
     }
 }
