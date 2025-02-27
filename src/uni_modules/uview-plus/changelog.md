@@ -1,3 +1,10 @@
+## 3.3.71（2025-02-27）
+feat: 折叠面板collapse增加titileStyle/iconStyle/rightIconStyle属性
+
+feat: 折叠面板组件新增cellCustomStyle/cellCustomClass属性
+
+fix: select组件盒模型
+
 ## 3.3.70（2025-02-24）
 fix: 修改u-checkbox-group组件changes事件发生位置
 
