@@ -1,3 +1,6 @@
+## 3.3.72（2025-02-28）
+feat: tabs组件支持icon图标及插槽
+
 ## 3.3.71（2025-02-27）
 feat: 折叠面板collapse增加titileStyle/iconStyle/rightIconStyle属性
 
