@@ -60,7 +60,7 @@
     "clipboard": "^2.0.11",
     "dayjs": "^1.11.8",
     "vue": "3.5.13",
-	"vue-i18n": "9.1.9",
+	  "vue-i18n": "9.1.9",
     "vuex": "^4.1.0"
   },
   "devDependencies": {

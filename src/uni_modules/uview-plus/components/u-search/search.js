@@ -26,6 +26,7 @@ export default {
         searchIconSize: 22,
         color: '#606266',
         placeholderColor: '#909399',
+        placeholderClass: '',
         searchIcon: 'search',
         margin: '0',
         animation: false,
