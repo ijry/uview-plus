@@ -1,3 +1,6 @@
+## 3.3.73（2025-03-05）
+feat: CateTab新增v-model:current属性
+
 ## 3.3.72（2025-02-28）
 feat: tabs组件支持icon图标及插槽
 
