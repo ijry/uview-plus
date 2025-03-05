@@ -5,7 +5,7 @@
                 scroll-y scroll-with-animation :scroll-top="scrollTop"
 			    :scroll-into-view="itemId">
 				<view v-for="(item, index) in tabList" :key="index" class="u-cate-tab__item"
-                    :class="[current == index ? 'u-cate-tab__item-active' : '']"
+                    :class="[innerCurrent == index ? 'u-cate-tab__item-active' : '']"
 				 @tap.stop="swichMenu(index)">
 					<slot name="tabItem" :item="item">
                     </slot>
@@ -57,18 +57,23 @@
             itemKeyName: {
                 type: String,
                 default: 'name'
-            }
+            },
+			current: : {
+                type: Number,
+                default: 0
+            },
         },
         watch: {
             tabList() {
                 this.getMenuItemTop()
             }
         },
+		emits: ['update:current'],
 		data() {
 			return {
 				scrollTop: 0, //tab标题的滚动条位置
 				oldScrollTop: 0,
-				current: 0, // 预设当前项的值
+				innerCurrent: 0, // 预设当前项的值
 				menuHeight: 0, // 左边菜单的高度
 				menuItemHeight: 0, // 左边菜单item的高度
 				itemId: '', // 栏目右边scroll-view用于滚动的id
@@ -80,7 +85,15 @@
 			}
 		},
 		onMounted() {
+			this.innerCurrent = this.current;
+			this.leftMenuStatus(this.innerCurrent);
 			this.getMenuItemTop()
+		},
+		watch: {
+			current(nval) {
+				this.innerCurrent = nval;
+				this.leftMenuStatus(index);
+			}
 		},
 		methods: {
 			// 点击左边的栏目切换
@@ -88,12 +101,13 @@
 				if(this.arr.length == 0) {
 					await this.getMenuItemTop();
 				}
-				if (index == this.current) return;
+				if (index == this.innerCurrent) return;
 				this.scrollRightTop = this.oldScrollTop;
 				this.$nextTick(function(){
 					this.scrollRightTop = this.arr[index];
-					this.current = index;
+					this.innerCurrent = index;
 					this.leftMenuStatus(index);
+					this.$emit('update:current', index);
 				})
 			},
 			// 获取一个目标元素的高度
@@ -133,7 +147,8 @@
 			},
 			// 设置左边菜单的滚动状态
 			async leftMenuStatus(index) {
-				this.current = index;
+				this.innerCurrent = index;
+				this.$emit('update:current', index);
 				// 如果为0，意味着尚未初始化
 				if (this.menuHeight == 0 || this.menuItemHeight == 0) {
 					await this.getElRect('u-cate-tab__menu-scroll-view', 'menuHeight');
