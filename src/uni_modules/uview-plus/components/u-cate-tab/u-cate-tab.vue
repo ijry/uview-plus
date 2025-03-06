@@ -58,10 +58,10 @@
                 type: String,
                 default: 'name'
             },
-			current: : {
+			current: {
                 type: Number,
                 default: 0
-            },
+            }
         },
         watch: {
             tabList() {
