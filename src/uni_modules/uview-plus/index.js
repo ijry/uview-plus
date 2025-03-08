@@ -5,8 +5,6 @@
 import { mixin } from './libs/mixin/mixin.js'
 // 小程序特有的mixin
 import { mpMixin } from './libs/mixin/mpMixin.js'
-// 全局挂载引入http相关请求拦截插件
-import Request from './libs/luch-request'
 
 // 路由封装
 import route from './libs/util/route.js'
@@ -33,8 +31,10 @@ import color from './libs/config/color.js'
 // 平台
 import platform from './libs/function/platform'
 
+// http
+import http from './libs/function/http.js'
+
 // 导出
-const http = new Request()
 let themeType = ['primary', 'success', 'error', 'warning', 'info'];
 export { route, http, debounce, throttle, platform, themeType, mixin, mpMixin, props, color, test, zIndex }
 export * from './libs/function/index.js'
@@ -107,13 +107,21 @@ function toCamelCase(str) {
     });
 }
 
-const install = (Vue) => {
+const install = (Vue, upuiParams = '') => {
     // #ifdef H5
     components.forEach(function(component) {
         const name = component.name.replace(/u-([a-zA-Z0-9-_]+)/g, 'up-$1');
         Vue.component(name, component); 
     });
     // #endif
+	
+	// 初始化
+	if (upuiParams) {
+		uni.upuiParams = upuiParams
+		let temp = upuiParams()
+		temp.httpIns(http)
+		setConfig(temp.options)
+	}
 
     // 同时挂载到uni和Vue.prototype中
     // $u挂载到uni对象上

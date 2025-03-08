@@ -34,6 +34,7 @@ export default class Request {
    * @param {Function(statusCode):Boolean} arg.validateStatus - 全局默认的自定义验证器。默认statusCode >= 200 && statusCode < 300
    */
     constructor(arg = {}) {
+		console.info('初始化luch-request')
         if (!isPlainObject(arg)) {
             arg = {}
             console.warn('设置全局参数必须接收一个Object')

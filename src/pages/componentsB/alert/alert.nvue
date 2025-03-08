@@ -6,7 +6,6 @@
 				<view class="u-alert-item">
 					<up-alert
 					    description="山不在于高，有了神仙就出名"
-					    type="warning"
 					></up-alert>
 				</view>
 				<view class="u-alert-item">

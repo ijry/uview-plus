@@ -1,6 +1,6 @@
-import { http, toast} from '@/uni_modules/uview-plus'
+import { toast} from '@/uni_modules/uview-plus'
 import store from '@/store'
-const requestInterceptors=(vm)=>{
+const requestInterceptors=(http)=>{
 	/**
 	 * 请求拦截
 	 * @param {Object} http
@@ -14,7 +14,7 @@ const requestInterceptors=(vm)=>{
 	}, (config) => // 可使用async await 做异步操作
 		Promise.reject(config))
 }
-const responseInterceptors=(vm)=>{
+const responseInterceptors=(http)=>{
 	/**
 	 * 响应拦截
 	 * @param {Object} http 
@@ -48,5 +48,3 @@ export {
 	requestInterceptors,
 	responseInterceptors
 }
-
-

@@ -305,6 +305,7 @@
 </template>
 
 <script>
+	import { http } from '@/uni_modules/uview-plus'
 	export default {
 		data() {
 			return {
@@ -323,6 +324,11 @@
 			click() {
 				this.show = true;
 				console.log('click');
+				http.post('/api/v1/core/user/login', {params: {account: 'name', password: '123456'}}).then(res => {
+					console.log(res)
+				}).catch(err => {
+					console.log(err)
+				})
 			}
 		}
 	}

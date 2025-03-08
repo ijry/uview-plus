@@ -4,7 +4,14 @@
  * 无需在每个引入组件的页面中都配置一次
  */
 import config from './config'
-
+// 各个需要fixed的地方的z-index配置文件
+import zIndex from './zIndex.js'
+// 关于颜色的配置，特殊场景使用
+import color from './color.js'
+// http
+import http from '../function/http.js'
+import { shallowMerge } from '../function/index.js'
+// 组件props
 import ActionSheet from '../../components/u-action-sheet/actionSheet'
 import Album from '../../components/u-album/album'
 import Alert from '../../components/u-alert/alert'
@@ -94,11 +101,7 @@ import Tooltip from '../../components/u-tooltip/tooltip'
 import Transition from '../../components/u-transition/transition'
 import Upload from '../../components/u-upload/upload'
 
-const {
-    color
-} = config
-
-export default {
+const props = {
     ...ActionSheet,
     ...Album,
     ...Alert,
@@ -188,3 +191,20 @@ export default {
     ...Transition,
     ...Upload
 }
+
+function setConfig(configs) {
+	shallowMerge(config, configs.config || {})
+	shallowMerge(props, configs.props || {})
+	shallowMerge(color, configs.color || {})
+	shallowMerge(zIndex, configs.zIndex || {})
+}
+
+// 初始化自定义配置
+if (uni && uni.upuiParams) {
+	console.log('setting uview-plus')
+	let temp = uni.upuiParams()
+	temp.httpIns(http)
+	setConfig(temp.options)
+}
+
+export default props
