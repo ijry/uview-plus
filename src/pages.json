@@ -3,11 +3,11 @@
         //模式配置，仅开发期间生效
         "current" : 0, //当前激活的模式(list 的索引项)
         "list" : [
-			{
-				"name": "广告", //模式名称
-				"path": "pages/example/ad", //启动页面，必选
-				"query": "scene='id=555563434u5io3uu4u5'" //启动参数，在页面的onLoad函数里面得到
-			}
+			// {
+			// 	"name": "广告", //模式名称
+			// 	"path": "pages/example/ad", //启动页面，必选
+			// 	"query": "scene='id=555563434u5io3uu4u5'" //启动参数，在页面的onLoad函数里面得到
+			// }
 		]
     },
     "easycom" : {

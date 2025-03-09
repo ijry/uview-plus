@@ -1,5 +1,3 @@
-import props from './props.js'
-import index from '../function/index.js'
 const version = '3'
 
 // 开发环境才提示，生产环境不会提示

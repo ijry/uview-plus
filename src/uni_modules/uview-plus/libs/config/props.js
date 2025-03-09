@@ -203,8 +203,12 @@ function setConfig(configs) {
 if (uni && uni.upuiParams) {
 	console.log('setting uview-plus')
 	let temp = uni.upuiParams()
-	temp.httpIns(http)
-	setConfig(temp.options)
+	if (temp.httpIns) {
+		temp.httpIns(http)
+	}
+	if (temp.options) {
+		setConfig(temp.options)
+	}
 }
 
 export default props

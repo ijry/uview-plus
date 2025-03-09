@@ -119,8 +119,12 @@ const install = (Vue, upuiParams = '') => {
 	if (upuiParams) {
 		uni.upuiParams = upuiParams
 		let temp = upuiParams()
-		temp.httpIns(http)
-		setConfig(temp.options)
+		if (temp.httpIns) {
+			temp.httpIns(http)
+		}
+		if (temp.options) {
+			setConfig(temp.options)
+		}
 	}
 
     // 同时挂载到uni和Vue.prototype中
