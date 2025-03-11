@@ -1,3 +1,6 @@
+## 3.4.2（2025-03-11）
+feat: step组件增加title插槽及增加辅助class便于自定义样式
+
 ## 3.4.1（2025-03-11）
 feat: 新机制确保setConfig与http在nvue等环境下生效
 
