@@ -30,16 +30,23 @@
 				</view>
 			</slot>
 		</view>
-		<view class="u-steps-item__content" :class="[`u-steps-item__content--${parentData.direction}`]"
+		<view class="u-steps-item__content" :class="[`u-steps-item__content--${parentData.direction}`,
+			parentData.current == index ? 'u-steps-item__content--current' : '']"
 			:style="[contentStyle]">
-			<slot name="content">
+			<slot name="content" :index="index">
 			</slot>
 			<template v-if="!$slots['content']">
-				<up-text :text="title" :type="parentData.current == index ? 'main' : 'content'" lineHeight="20px"
-					:size="parentData.current == index ? 14 : 13"></up-text>
-				<slot name="desc">
-					<up-text :text="desc" type="tips" size="12"></up-text>
-				</slot>
+				<view class="u-steps-item__content__title">
+					<slot name="title">
+					</slot>
+					<up-text v-if="!$slots['title']" :text="title" :type="parentData.current == index ? 'main' : 'content'" lineHeight="20px"
+						:size="parentData.current == index ? 14 : 13"></up-text>
+				</view>
+				<view class="u-steps-item__content__desc">
+					<slot name="desc">
+					</slot>
+					<up-text v-if="!$slots['desc']" :text="desc" type="tips" size="12"></up-text>
+				</view>
 			</template>
 		</view>
 		<!-- <view
