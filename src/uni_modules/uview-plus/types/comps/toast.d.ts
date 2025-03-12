@@ -2,6 +2,10 @@ import { AllowedComponentProps, VNodeProps } from './_common'
 
 declare interface ToastProps {
   /**
+   * 层级
+   */
+  zIndex?: string | number
+  /**
    * 是否加载中
    * @default false
    */
@@ -43,7 +47,7 @@ declare interface _ToastRef {
   /**
    * 显示toast，如需一进入页面就显示toast，请在onReady生命周期调用
    */
-  show: () => void
+  show: (options: ToastProps) => void
 }
 
 declare interface _Toast {

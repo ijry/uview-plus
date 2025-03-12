@@ -12,7 +12,7 @@ export default {
     toast: {
         zIndex: 10090,
         loading: false,
-        text: '',
+        message: '',
         icon: '',
         type: '',
         loadingMode: '',
