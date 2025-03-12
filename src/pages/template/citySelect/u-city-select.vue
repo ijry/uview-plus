@@ -64,9 +64,9 @@
 </template>
 
 <script>
-	import provinces from "@/common/province.js";
-	import citys from "@/common/city.js";
-	import areas from "@/common/area.js";
+	import provinces from "../common/province.js";
+	import citys from "../common/city.js";
+	import areas from "../common/area.js";
 	/**
 	 * city-select 省市区级联选择器
 	 * @property {String Number} z-index 弹出时的z-index值（默认1075）

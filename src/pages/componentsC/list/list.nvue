@@ -30,16 +30,16 @@
 			return {
 				indexList: [],
 				urls: [
-					'https://uview-plus.jiangruyi.com/album/1.jpg',
-					'https://uview-plus.jiangruyi.com/album/2.jpg',
-					'https://uview-plus.jiangruyi.com/album/3.jpg',
-					'https://uview-plus.jiangruyi.com/album/4.jpg',
-					'https://uview-plus.jiangruyi.com/album/5.jpg',
-					'https://uview-plus.jiangruyi.com/album/6.jpg',
-					'https://uview-plus.jiangruyi.com/album/7.jpg',
-					'https://uview-plus.jiangruyi.com/album/8.jpg',
-					'https://uview-plus.jiangruyi.com/album/9.jpg',
-					'https://uview-plus.jiangruyi.com/album/10.jpg',
+					'https://uiadmin.net/uview-plus/album/1.jpg',
+					'https://uiadmin.net/uview-plus/album/2.jpg',
+					'https://uiadmin.net/uview-plus/album/3.jpg',
+					'https://uiadmin.net/uview-plus/album/4.jpg',
+					'https://uiadmin.net/uview-plus/album/5.jpg',
+					'https://uiadmin.net/uview-plus/album/6.jpg',
+					'https://uiadmin.net/uview-plus/album/7.jpg',
+					'https://uiadmin.net/uview-plus/album/8.jpg',
+					'https://uiadmin.net/uview-plus/album/9.jpg',
+					'https://uiadmin.net/uview-plus/album/10.jpg',
 				]
 			}
 		},

@@ -90,13 +90,19 @@
 				    url: 'https://uiadmin.net/api/v1/wxapp/ad/end',
 				    data: {
 				        id: this.id,
-						version: '1.1'
+						version: '1.1',
 				    },
 					method: 'put',
 				    header: {
 				    },
 				    success: (res) => {
 				        console.log(res.data);
+						if (res.data.code != 200) {
+							wx.showToast({
+								title: res.data.msg,
+								icon: 'none'
+							})
+						}
 				    }
 				});
 			},

@@ -35,7 +35,7 @@
 </template>
 
 <script>
-	import classifyData from "@/common/classify.data.js";
+	import classifyData from "../common/classify.data.js";
 	export default {
 		data() {
 			return {

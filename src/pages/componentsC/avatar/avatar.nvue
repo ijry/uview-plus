@@ -141,21 +141,21 @@
 	export default {
 		data() {
 			return {
-				src1: './static/uview/album/1.jpg',
-				src2: './static/uview/album/2.jpg',
-				src3: './static/uview/album/3.jpg',
-				src4: './static/uview/album/4.jpg',
-				src5: './static/uview/album/5.jpg',
-				src6: './static/uview/album/6.jpg',
-				src7: './static/uview/album/noExist.jpg',
+				src1: 'https://uiadmin.net/uview-plus/album/1.jpg',
+				src2: 'https://uiadmin.net/uview-plus/album/2.jpg',
+				src3: 'https://uiadmin.net/uview-plus/album/3.jpg',
+				src4: 'https://uiadmin.net/uview-plus/album/4.jpg',
+				src5: 'https://uiadmin.net/uview-plus/album/5.jpg',
+				src6: 'https://uiadmin.net/uview-plus/album/6.jpg',
+				src7: 'https://uiadmin.net/uview-plus/album/noExist.jpg',
 				urls: [
-					'./static/uview/album/1.jpg',
-					'./static/uview/album/2.jpg',
-					'./static/uview/album/3.jpg',
-					'./static/uview/album/4.jpg',
-					'./static/uview/album/7.jpg',
-					'./static/uview/album/6.jpg',
-					'./static/uview/album/5.jpg'
+					'https://uiadmin.net/uview-plus/album/1.jpg',
+					'https://uiadmin.net/uview-plus/album/2.jpg',
+					'https://uiadmin.net/uview-plus/album/3.jpg',
+					'https://uiadmin.net/uview-plus/album/4.jpg',
+					'https://uiadmin.net/uview-plus/album/7.jpg',
+					'https://uiadmin.net/uview-plus/album/6.jpg',
+					'https://uiadmin.net/uview-plus/album/5.jpg'
 				]
 			}
 		},
