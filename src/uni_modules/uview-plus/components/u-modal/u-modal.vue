@@ -137,7 +137,7 @@
 				if (n && this.loading) this.loading = false
 			}
 		},
-		emits: ["confirm", "cancel", "close", "update:show"],
+		emits: ["confirm", "cancel", "close", "update:show", 'cancelOnAsync'],
 		methods: {
 			addUnit,
 			// 点击确定按钮
@@ -152,7 +152,21 @@
 			},
 			// 点击取消按钮
 			cancelHandler() {
-				this.$emit('update:show', false)
+				// 如果点击了确定按钮，确定按钮正在请求接口执行异步操作，那么限制不能取消。
+				if (this.asyncClose && this.loading) {
+					if (this.asyncCloseTip) {
+						uni.showToast({
+							title: this.asyncCloseTip,
+							icon: 'none'
+						});
+					}
+					this.$emit('cancelOnAsync')
+				} else {
+					// 如果配置了取消时异步关闭
+					if (!this.asyncCancelClose) {
+						this.$emit('update:show', false)
+					}
+				}
 				this.$emit('cancel')
 			},
 			// 点击遮罩

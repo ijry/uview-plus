@@ -87,5 +87,16 @@ export const props = defineMixin({
             type: String,
             default: () => defProps.modal.contentTextAlign
         },
+        // 异步确定时如果点击了取消时候的提示文案
+        asyncCloseTip: {
+            type: String,
+            default: () => defProps.modal.asyncCloseTip
+        },
+        // 是否异步关闭，只对取消按钮有效
+        asyncCancelClose: {
+            type: Boolean,
+            default: () => defProps.modal.asyncCancelClose
+        },
+        
     }
 })
