@@ -1,6 +1,7 @@
 <template>
 	<view style="margin: 100px 30px;">
 		<up-button type="primary" @click="videoAdLoad">打开广告</up-button>
+		<view style="margin: 20px 30px;">观看完成请点击关闭按钮</view>
 	</view>
 </template>
 
@@ -39,10 +40,18 @@
 						adUnitId: 'adunit-fe31910e54f0cdc9'
 					})
 					this.videoAd.onError((err) => {
-						wx.showToast({
-							title: this.videoAdErrHandle(err),
-							icon: 'none'
-						})
+						if (1004 != err.errCode) {
+							wx.showToast({
+								title: this.videoAdErrHandle(err),
+								icon: 'none'
+							})
+						} else {
+							wx.showToast({
+								title: '无需观看已跳过',
+								icon: 'none'
+							})
+							this.watchEnd();
+						}
 					})
 					// 监听关闭
 					this.videoAd.onClose((status) => {
@@ -80,7 +89,8 @@
 				uni.request({
 				    url: 'https://uiadmin.net/api/v1/wxapp/ad/end',
 				    data: {
-				        id: this.id
+				        id: this.id,
+						version: '1.1'
 				    },
 					method: 'put',
 				    header: {
