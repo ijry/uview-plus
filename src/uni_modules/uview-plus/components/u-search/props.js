@@ -77,6 +77,11 @@ export const props = defineMixin({
             type: String,
             default: () => defProps.search.placeholderColor
         },
+           // placeholderClass的颜色
+        placeholderClass: {
+            type: String,
+            default: () => defProps.search.placeholderClass
+        },
         // 左边输入框的图标，可以为uView图标名称或图片路径
         searchIcon: {
             type: String,

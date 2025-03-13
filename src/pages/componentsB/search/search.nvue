@@ -8,6 +8,7 @@
 						v-model="value1"
 						:show-action="false"
 						@change="change"
+            placeholder-class="myHolderClass"
 					></up-search>
 				</view>
 			</view>
@@ -166,6 +167,20 @@
 					</up-search>
 				</view>
 			</view>
+
+      <view class="u-demo-block  m-t-10">
+			<text class="u-demo-block__title">placeholder的颜色</text>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-search
+						v-model="value1"
+						:show-action="false"
+						@change="change"
+            placeholder-class="my-holder-class"
+					></up-search>
+				</view>
+			</view>
+		</view>
 		</view>
 	</view>
 </template>
@@ -216,4 +231,7 @@
 	.m-t-10 {
 		margin-top: 10px;
 	}
+  .my-holder-class{
+    color: red;
+  }
 </style>
