@@ -82,9 +82,25 @@ export const props = defineMixin({
             type: String,
             default: () => defProps.tag.icon,
 		},
-		iconColor: {
+        // 自定义尺寸字体大小
+		textSize: {
             type: String,
-            default: () => defProps.tag.iconColor
+            default: () => defProps.tag.textSize
+        },
+        // 自定义尺寸高度
+        height: {
+            type: String,
+            default: () => defProps.tag.height
+        },
+        // 自定义尺寸padding
+        padding: {
+            type: String,
+            default: () => defProps.tag.padding
+        },
+        // 自定义尺寸
+        borderRadius: {
+            type: String,
+            default: () => defProps.tag.borderRadius
         }
     }
 })

@@ -64,6 +64,7 @@
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
 	import test from '../../libs/function/test';
+	import { addUnit } from '../../libs/function/index';
 	/**
 	 * Tag 标签
 	 * @description tag组件一般用于标记和选择，我们提供了更加丰富的表现形式，能够较全面的涵盖您的使用场景
@@ -107,6 +108,16 @@
 				if(this.borderColor) {
 					style.borderColor = this.borderColor
 				}
+				if (this.height) {
+					style.height = addUnit(this.height)
+					style.lineHeight = addUnit(this.height)
+				}
+				if (this.padding) {
+					style.padding = this.padding
+				}
+				if (this.borderRadius) {
+					style.borderRadius = addUnit(this.borderRadius)
+				}
 				return style
 			},
 			// nvue下，文本颜色无法继承父元素
@@ -114,6 +125,9 @@
 				const style = {}
 				if (this.color) {
 					style.color = this.color
+				}
+				if (this.textSize) {
+					style.textSize = addUnit(this.textSize)
 				}
 				return style
 			},
