@@ -101,6 +101,11 @@ export const props = defineMixin({
         borderRadius: {
             type: String,
             default: () => defProps.tag.borderRadius
-        }
+        },
+        // 自动计算背景色
+        autoBgColor: {
+            type: Number,
+            default: () => defProps.tag.autoBgColor
+        },
     }
 })

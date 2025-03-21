@@ -1,3 +1,8 @@
+## 3.4.5（2025-03-24）
+feat: tag组件新增textSize/height/padding/borderRadius属性
+
+feat: 新增genLightColor自动计算浅色方法及tag组件支持autoBgColor自动计算背景色
+
 ## 3.4.4（2025-03-13）
 feat: modal增加异步操作进行中点击取消弹出提示特性防止操作被中断
 

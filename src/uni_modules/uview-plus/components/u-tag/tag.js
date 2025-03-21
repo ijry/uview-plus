@@ -30,5 +30,6 @@ export default {
 		height: '',
 		padding: '',
 		borderRadius: '',
+		autoBgColor: 0
 	}
 }
