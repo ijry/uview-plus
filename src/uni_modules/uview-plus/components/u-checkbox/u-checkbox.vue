@@ -248,7 +248,9 @@
 				}
 			},
 			emitEvent() {
-				this.$emit('change', this.isChecked)
+				this.$emit('change', this.isChecked, {
+					name: this.name
+				})
 				// 双向绑定
 				if (this.usedAlone) {
 					this.$emit('update:checked', this.isChecked)
