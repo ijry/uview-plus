@@ -158,5 +158,10 @@ export const props = defineMixin({
 				return defProps.upload.autoUploadHeader
 			}
 		},
+		// 本地计算视频封面
+		getVideoThumb: {
+		    type: Boolean,
+		    default: () => defProps.upload.getVideoThumb
+		},
     }
 })

@@ -18,6 +18,27 @@
 							height: addUnit(height)
 						}]"
 					/>
+					<template
+						v-else-if="(item.isVideo || (item.type && item.type === 'video')) && getVideoThumb">
+						<image
+						    :src="item.thumb"
+						    :mode="imageMode"
+						    class="u-upload__wrap__preview__image"
+						    @tap="onPreviewVideo(item, index)"
+							:style="[{
+								width: addUnit(width),
+								height: addUnit(height)
+							}]"
+						/>
+						<view v-if="item.status === 'success'"
+							class="u-upload__wrap__play"
+							@tap="onPreviewVideo(item, index)">
+							<slot name="playIcon"></slot>
+							<up-icon v-if="!$slots['playIcon']"
+								class="u-upload__wrap__play__icon"
+								name="play-right" size="22px"></up-icon>
+						</view>
+					</template>
 					<view
 					    v-else
 					    class="u-upload__wrap__preview__other"
@@ -69,33 +90,46 @@
 							    size="10"
 							></u-icon>
 						</view>
-						<up-gap class="u-upload__progress" height="3px"
-							:style="{width: item.progress + '%'}"></up-gap>
 					</view>
-					<view
-					    class="u-upload__success"
-					    v-if="item.status === 'success'"
-					>
-						<!-- #ifdef APP-NVUE -->
-						<image
-						    :src="successIcon"
-						    class="u-upload__success__icon"
-						></image>
-						<!-- #endif -->
-						<!-- #ifndef APP-NVUE -->
-						<view class="u-upload__success__icon">
-							<u-icon
-							    name="checkmark"
-							    color="#ffffff"
-							    size="12"
-							></u-icon>
+					<slot name="success">
+						<view
+							class="u-upload__success"
+							v-if="item.status === 'success'"
+						>
+							<!-- #ifdef APP-NVUE -->
+							<image
+								:src="successIcon"
+								class="u-upload__success__icon"
+							></image>
+							<!-- #endif -->
+							<!-- #ifndef APP-NVUE -->
+							<view class="u-upload__success__icon">
+								<u-icon
+									name="checkmark"
+									color="#ffffff"
+									size="12"
+								></u-icon>
+							</view>
+							<!-- #endif -->
 						</view>
-						<!-- #endif -->
-					</view>
+					</slot>
 				</view>
-				
+				<up-popup
+					mode="center"
+					v-model:show="popupShow">
+					<video id="myVideo"
+						:src="currentItemIndex >= 0 ? lists[currentItemIndex].url : ''"
+						@error="videoErrorCallback" show-center-play-btn
+						object-fit='cover' show-fullscreen-btn='true'
+						enable-play-gesture controls
+						:autoplay="true" auto-pause-if-open-native
+						@loadedmetadata="loadedVideoMetadata"
+						:initial-time='0.1'>
+					</video>
+				</up-popup>
 			</template>
-			
+			<canvas id="myCanvas" type="2d"
+				style="width: 100px; height: 150px;display: none;"></canvas>
 			<template v-if="isInCount">
 				<view
 				    v-if="$slots.trigger"
@@ -189,6 +223,8 @@
 				// #endif
 				lists: [],
 				isInCount: true,
+				popupShow: false,
+				currentItemIndex: -1
 			}
 		},
 		watch: {
@@ -208,6 +244,11 @@
 			},
 			accept(newVal) {
 				this.formatFileList()
+			},
+			popupShow(newVal) {
+				if (!newVal) {
+					this.currentItemIndex = -1;
+				}
 			}
 		},
 		// #ifdef VUE3
@@ -216,6 +257,61 @@
 		methods: {
 			addUnit,
 			addStyle,
+			videoErrorCallback() {},
+			loadedVideoMetadata(e) {
+				if (this.currentItemIndex < 0) {
+					return;
+				}
+				if (this.autoUploadDriver != 'local') {
+					return;
+				}
+				if (!this.getVideoThumb) {
+					return;
+				}
+				// 截取第一帧作为封面，oss等云存储场景直接使用拼接参数。
+				let w = this.lists[this.currentItemIndex].width;
+				let h = this.lists[this.currentItemIndex].height;
+				const dpr = uni.getSystemInfoSync().pixelRatio;
+				uni.createSelectorQuery().select('#myVideo').context(res => {
+					console.log('select video', res)
+					const myVideo = res.context
+					uni.createSelectorQuery()
+					  .select('#myCanvas')
+					  .fields({ node: true, size: true })
+					  .exec(([res]) => {
+						console.log('select canvas', res)
+						const ctx1 = res[0].node.getContext('2d')
+						res[0].node.width = w * dpr
+						res[0].node.height = h * dpr
+						// Draw the first frame and export it as an image
+						// myVideo.onPlay(() => {
+							setTimeout(() => {
+								captureFirstFrame()
+							}, 500)
+						// })
+						const captureFirstFrame = () => {
+							ctx1.drawImage(myVideo, 0, 0, w * dpr, h * dpr)
+							wx.canvasToTempFilePath({
+								canvas: res[0].node,
+								success: (result) => {
+									console.log('First frame image path:', result
+										.tempFilePath)
+									// Now you can use the image path (result.tempFilePath)
+									this.fileList['currentItemIndex'].thumb = result.tempFilePath
+								},
+								fail: (err) => {
+									console.error('Failed to export image:', err)
+								}
+							})
+						}
+ 
+						// Capture the first frame
+						setInterval(() => {
+							ctx1.drawImage(myVideo, 0, 0, w * dpr, h * dpr);
+						}, 1000 / 24)
+					}).exec()
+				}).exec()
+			},
 			formatFileList() {
 				const {
 					fileList = [], maxCount
@@ -325,6 +421,7 @@
 					}, this.getDetail()));
 					return;
 				}
+				let len = this.fileList.length;
 				if (this.autoUpload) {
 					// 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
 					let lists = [].concat(file);
@@ -339,10 +436,8 @@
 					});
 					let that = this;
 					this.$emit('update:fileList', this.fileList);
-					for (let i = 0; i < this.fileList.length; i++) {
-						if (this.fileList['status'] == 'success') {
-							continue;
-						}
+					for (let i = 0; i < lists.length; i++) {
+						let j = i;
 						let result = '';
 						switch(this.autoUploadDriver) {
 							case 'cos': // 腾讯云
@@ -353,13 +448,14 @@
 							case 'upload_oss':
 								// 阿里云前端直传
 								// 获取签名
+								console.log()
 								let formData = {};
 								let ret = await uni.request({
 									url: this.autoUploadAuthUrl,
 									method: 'get',
 									header: this.autoUploadHeader,
 									data: {
-										filename: lists[i].name
+										filename: lists[j].name
 									}
 								});
 								// console.log(ret);
@@ -378,18 +474,22 @@
 								}
 								var uploadTask = uni.uploadFile({
 									url: res0.data.params.host,
-									filePath: lists[i].url,
+									filePath: lists[j].url,
 									name: 'file',
 									// fileType: 'video', // 仅支付宝小程序，且必填。
 									// header: header,
 									formData: formData,
 									success: (uploadFileRes) => {
 										result = res0.data.params.host + '/' + res0.data.params.key;
-										that.succcessUpload(i, result);
+										let thumb = '';
+										if (this.accept === 'video' || test.video(result)) {
+											thumb = result + '?x-oss-process=video/snapshot,t_10000,m_fast';
+										}
+										that.succcessUpload(len + j, result, thumb);
 									}
 								});
 								uploadTask.onProgressUpdate((res) => {
-									that.updateUpload(i, {
+									that.updateUpload(len + j, {
 										progress: res.progress
 									});
 									// console.log('上传进度' + res.progress);
@@ -402,17 +502,17 @@
 								// 服务器本机上传
 								var uploadTask = uni.uploadFile({
 									url: this.autoUploadApi,
-									filePath: lists[i].url,
+									filePath: lists[j].url,
 									name: 'file',
 									// fileType: 'video', // 仅支付宝小程序，且必填。
 									header: this.autoUploadHeader,
-									success: (uploadFileRes) => {
+									success: (r) => {
 										result = res0.data.params.host + '/' + res0.data.params.key;
-										that.succcessUpload(i, result);
+										that.succcessUpload(len + j, result);
 									}
 								});
 								uploadTask.onProgressUpdate((res) => {
-									that.updateUpload(i, {
+									that.updateUpload(len + j, {
 										progress: res.progress
 									});
 									// console.log('上传进度' + res.progress);
@@ -441,14 +541,15 @@
 				});
 				this.$emit('update:fileList', this.fileList);
 			},
-			succcessUpload(index, url) {
+			succcessUpload(index, url, thumb = '') {
 				let item = this.fileList[index];
 				this.fileList.splice(index, 1, {
 					...item,
 					status: 'success',
 					message: '',
 					url: url,
-					progress: 100
+					progress: 100,
+					thumb: thumb
 				});
 				this.$emit('update:fileList', this.fileList);
 			},
@@ -492,7 +593,7 @@
 					},
 				});
 			},
-			onPreviewVideo(index) {
+			onPreviewVideo(previewItem, index) {
 				if (!this.previewFullImage) return;
                 let current = 0;
                 const sources = [];
@@ -512,6 +613,11 @@
                 if (sources.length < 1) {
                     return;
                 }
+				// #ifndef MP-WEIXIN
+				this.popupShow = true;
+				this.currentItemIndex = index;
+				console.log(this.lists[this.currentItemIndex])
+				// #endif
 				// #ifdef MP-WEIXIN
 				wx.previewMedia({
 					sources: sources,
@@ -631,6 +737,21 @@
 					}
 				}
 			}
+		}
+		&__wrap__play {
+			position: absolute;
+			top: 0px;
+			left: 0px;
+			bottom: 0px;
+			right: 0px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			&__icon {
+				background: #fff;
+				border-radius: 100px;
+				opacity: 0.8;
+			};
 		}
 
 		&__deletable {
