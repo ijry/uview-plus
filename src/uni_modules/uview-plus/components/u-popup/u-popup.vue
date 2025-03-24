@@ -1,8 +1,10 @@
 <template>
 	<view class="u-popup" :class="[customClass]">
-		<view class="w-full" @click="open">
+		<view class="u-popup__trigger">
 			<slot name="trigger">
 			</slot>
+			<view @click="open"
+				class="u-popup__trigger__cover"></view>
 		</view>
 		<u-overlay
 			:show="show"
@@ -247,6 +249,17 @@
 
 	.u-popup {
 		flex: $u-popup-flex;
+		
+		&__trigger {
+			position: relative;
+			&__cover {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+			}
+		}
 
 		&__content {
 			background-color: $u-popup-content-background-color;
