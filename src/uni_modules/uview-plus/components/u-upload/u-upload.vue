@@ -54,6 +54,8 @@
 						    v-if="item.message"
 						    class="u-upload__status__message"
 						>{{ item.message }}</text>
+						<up-gap class="u-upload__progress" height="3px"
+							:style="{width: item.progress + '%'}"></up-gap>
 					</view>
 					<view
 					    class="u-upload__deletable"
@@ -67,6 +69,8 @@
 							    size="10"
 							></u-icon>
 						</view>
+						<up-gap class="u-upload__progress" height="3px"
+							:style="{width: item.progress + '%'}"></up-gap>
 					</view>
 					<view
 					    class="u-upload__success"
@@ -207,7 +211,7 @@
 			}
 		},
 		// #ifdef VUE3
-		emits: ['error', 'beforeRead', 'oversize', 'afterRead', 'delete', 'clickPreview'],
+		emits: ['error', 'beforeRead', 'oversize', 'afterRead', 'delete', 'clickPreview', 'update:fileList'],
 		// #endif
 		methods: {
 			addUnit,
@@ -304,7 +308,7 @@
 					index: index == null ? this.fileList.length : index,
 				};
 			},
-			onAfterRead(file) {
+			async onAfterRead(file) {
 				const {
 					maxSize,
 					afterRead
@@ -313,25 +317,153 @@
 					file.some((item) => item.size > maxSize) :
 					file.size > maxSize;
 				if (oversize) {
+					uni.showToast({
+						title: '超过大小限制'
+					})
 					this.$emit('oversize', Object.assign({
 						file
 					}, this.getDetail()));
 					return;
 				}
-				if (typeof afterRead === 'function') {
-					afterRead(file, this.getDetail());
+				if (this.autoUpload) {
+					// 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
+					let lists = [].concat(file);
+					let fileListLen = this.fileList.length;
+					lists.map((item) => {
+						this.fileList.push({
+							...item,
+							status: 'uploading',
+							message: '上传中',
+							progress: 0
+						});
+					});
+					let that = this;
+					this.$emit('update:fileList', this.fileList);
+					for (let i = 0; i < this.fileList.length; i++) {
+						if (this.fileList['status'] == 'success') {
+							continue;
+						}
+						let result = '';
+						switch(this.autoUploadDriver) {
+							case 'cos': // 腾讯云
+								break;
+							case 'kodo': // 七牛云
+								break;
+							case 'oss':
+							case 'upload_oss':
+								// 阿里云前端直传
+								// 获取签名
+								let formData = {};
+								let ret = await uni.request({
+									url: this.autoUploadAuthUrl,
+									method: 'get',
+									header: this.autoUploadHeader,
+									data: {
+										filename: lists[i].name
+									}
+								});
+								// console.log(ret);
+								let res0 = ret.data;
+								if (res0.code == 200) {
+									// 路径 + 文件名 + 扩展名
+									// 不传递filename就要拼接key
+									// res0.data.params.key = res0.data.params.dir + res0.data.params.uniqidName + fileExt;
+									formData = res0.data.params;
+								} else {
+									uni.showToast({
+										title: res0.msg,
+										duration: 1500
+									});
+									return;
+								}
+								var uploadTask = uni.uploadFile({
+									url: res0.data.params.host,
+									filePath: lists[i].url,
+									name: 'file',
+									// fileType: 'video', // 仅支付宝小程序，且必填。
+									// header: header,
+									formData: formData,
+									success: (uploadFileRes) => {
+										result = res0.data.params.host + '/' + res0.data.params.key;
+										that.succcessUpload(i, result);
+									}
+								});
+								uploadTask.onProgressUpdate((res) => {
+									that.updateUpload(i, {
+										progress: res.progress
+									});
+									// console.log('上传进度' + res.progress);
+									// console.log('已经上传的数据长度' + res.totalBytesSent);
+									// console.log('预期需要上传的数据总长度' + res.totalBytesExpectedToSend);
+								});
+								break;
+							case 'local':
+							default:
+								// 服务器本机上传
+								var uploadTask = uni.uploadFile({
+									url: this.autoUploadApi,
+									filePath: lists[i].url,
+									name: 'file',
+									// fileType: 'video', // 仅支付宝小程序，且必填。
+									header: this.autoUploadHeader,
+									success: (uploadFileRes) => {
+										result = res0.data.params.host + '/' + res0.data.params.key;
+										that.succcessUpload(i, result);
+									}
+								});
+								uploadTask.onProgressUpdate((res) => {
+									that.updateUpload(i, {
+										progress: res.progress
+									});
+									// console.log('上传进度' + res.progress);
+									// console.log('已经上传的数据长度' + res.totalBytesSent);
+									// console.log('预期需要上传的数据总长度' + res.totalBytesExpectedToSend);
+								});
+								break;
+						}
+					}
+				} else {
+					if (typeof afterRead === 'function') {
+						afterRead(file, this.getDetail());
+					}
+					this.$emit('afterRead', Object.assign({
+						file
+					}, this.getDetail()));
 				}
-				this.$emit('afterRead', Object.assign({
-					file
-				}, this.getDetail()));
+			},
+			updateUpload(index, param) {
+				let item = this.fileList[index];
+				this.fileList.splice(index, 1, {
+					...item,
+					status: 'uploading',
+					message: '',
+					progress: param.progress
+				});
+				this.$emit('update:fileList', this.fileList);
+			},
+			succcessUpload(index, url) {
+				let item = this.fileList[index];
+				this.fileList.splice(index, 1, {
+					...item,
+					status: 'success',
+					message: '',
+					url: url,
+					progress: 100
+				});
+				this.$emit('update:fileList', this.fileList);
 			},
 			deleteItem(index) {
-				this.$emit(
-					'delete',
-					Object.assign(Object.assign({}, this.getDetail(index)), {
-						file: this.fileList[index],
-					})
-				);
+				if (this.autoDelete) {
+					this.fileList.splice(index, 1);
+					this.$emit('update:fileList', this.fileList);
+				} else {
+					this.$emit(
+						'delete',
+						Object.assign(Object.assign({}, this.getDetail(index)), {
+							file: this.fileList[index],
+						})
+					);
+				}
 			},
 			// 预览图片
 			onPreviewImage(previewItem, index) {
@@ -556,6 +688,12 @@
 				height: $u-upload-icon-height;
 				/* #endif */
 			}
+		}
+		&__progress {
+			background-color: $u-primary !important;
+			position: absolute;
+			bottom: 0;
+			left: 0;
 		}
 
 		&__status {

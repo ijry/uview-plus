@@ -1,5 +1,9 @@
 <template>
-	<view class="u-popup"  :class="[customClass]">
+	<view class="u-popup" :class="[customClass]">
+		<view class="w-full" @click="open">
+			<slot name="trigger">
+			</slot>
+		</view>
 		<u-overlay
 			:show="show"
 			@click="overlayClick"
@@ -187,6 +191,9 @@
 					this.$emit('update:show', false)
 					this.$emit('close')
 				}
+			},
+			open(e) {
+				this.$emit('update:show', true)
 			},
 			close(e) {
 				this.$emit('update:show', false)

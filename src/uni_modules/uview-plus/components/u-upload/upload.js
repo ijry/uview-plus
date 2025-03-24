@@ -32,6 +32,12 @@ export default {
 		uploadText: '',
 		width: 80,
 		height: 80,
-		previewImage: true
+		previewImage: true,
+		autoDelete: false,
+		autoUpload: false,
+		autoUploadApi: '',
+		autoUploadAuthUrl: '',
+		autoUploadDriver: '',
+		autoUploadHeader: {}
 	}
 }
