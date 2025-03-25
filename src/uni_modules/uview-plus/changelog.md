@@ -1,3 +1,14 @@
+## 3.4.6（2025-03-25）
+feat: checkbox触发change时携带name参数
+
+feat: upload组件支持服务器本机和阿里云OSS自动上传功能及上传进度条
+
+feat: upload组件支持视频预览及oss上传时获取视频封面图
+
+feat: 新增up-action-sheet-data快捷组件
+
+feat: 新增up-picker-data快捷组件
+
 ## 3.4.5（2025-03-24）
 feat: tag组件新增textSize/height/padding/borderRadius属性
 
