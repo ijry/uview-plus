@@ -69,6 +69,17 @@ export default {
 			})
 		}
     },
+	watch: {
+		modelValue() {
+			if (this.modelValue) {
+				this.options.forEach((ele) => {
+					if (ele[this.valueKey] == this.modelValue) {
+						this.current = ele[this.labelKey]
+					}
+				})
+			}
+		}
+	},
 	computed: {
 		optionsInner() {
 			return [this.options];

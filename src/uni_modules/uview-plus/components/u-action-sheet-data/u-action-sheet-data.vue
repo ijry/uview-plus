@@ -73,6 +73,15 @@ export default {
 		}
     },
     emits: ['update:modelValue'],
+	watch: {
+		modelValue() {
+			this.options.forEach((ele) => {
+				if (ele[this.valueKey] == this.modelValue) {
+					this.current = ele[this.labelKey]
+				}
+			})
+		}
+	},
     methods: {
         hideKeyboard() {
             uni.hideKeyboard()
