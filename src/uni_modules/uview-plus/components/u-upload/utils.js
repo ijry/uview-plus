@@ -23,7 +23,7 @@ function formatImage(res) {
 		file: item
 		// #endif
 		// #ifndef H5
-		name: item.tempFilePath.split('/').pop() + '.png',
+		name: item.path.split('/').pop() + '.png',
 		// #endif
     }))
 }
