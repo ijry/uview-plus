@@ -1,3 +1,9 @@
+
+## 3.4.9（2025-03-27）
+fix: 修复upload组件split报错
+
+fix: 修复float-button缺少flex样式
+
 ## 3.4.8（2025-03-27）
 fix: 修复upload组件split报错
 
