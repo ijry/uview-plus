@@ -1,3 +1,8 @@
+## 3.4.7（2025-03-26）
+fix: 修复action-sheet-data和picker-data数据回显
+
+fix:  优化upload组件视频封面兼容
+
 ## 3.4.6（2025-03-25）
 feat: checkbox触发change时携带name参数
 
