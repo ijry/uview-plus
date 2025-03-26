@@ -18,9 +18,14 @@
 							height: addUnit(height)
 						}]"
 					/>
-					<template
+					<view class="u-upload__wrap__preview__video"
+						:style="{
+							width: addUnit(width),
+							height: addUnit(height)
+						}"
 						v-else-if="(item.isVideo || (item.type && item.type === 'video')) && getVideoThumb">
 						<image
+							v-if="item.thumb"
 						    :src="item.thumb"
 						    :mode="imageMode"
 						    class="u-upload__wrap__preview__image"
@@ -30,6 +35,12 @@
 								height: addUnit(height)
 							}]"
 						/>
+						<u-icon
+							v-else
+						    color="#80CBF9"
+						    size="26"
+						    :name="item.isVideo || (item.type && item.type === 'video') ? 'movie' : 'folder'"
+						></u-icon>
 						<view v-if="item.status === 'success'"
 							class="u-upload__wrap__play"
 							@tap="onPreviewVideo(item, index)">
@@ -38,7 +49,7 @@
 								class="u-upload__wrap__play__icon"
 								name="play-right" size="22px"></up-icon>
 						</view>
-					</template>
+					</view>
 					<view
 					    v-else
 					    class="u-upload__wrap__preview__other"
@@ -721,6 +732,7 @@
 					height: $u-upload-image-height;
 				}
 
+				&__video,
 				&__other {
 					width: $u-upload-image-width;
 					height: $u-upload-image-height;

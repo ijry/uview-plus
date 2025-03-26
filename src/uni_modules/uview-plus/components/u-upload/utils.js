@@ -29,7 +29,7 @@ function formatImage(res) {
 }
 
 function formatVideo(res) {
-	console.log(res)
+	// console.log(res)
     return [
         {
             ...pickExclude(res, ['tempFilePath', 'thumbTempFilePath', 'errMsg']),
