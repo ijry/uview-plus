@@ -1,3 +1,8 @@
+## 3.4.8（2025-03-27）
+fix: 修复upload组件split报错
+
+fix: 移除mapState
+
 ## 3.4.7（2025-03-26）
 fix: 修复action-sheet-data和picker-data数据回显
 
