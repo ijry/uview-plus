@@ -92,7 +92,7 @@
 		watch: {
 			current(nval) {
 				this.innerCurrent = nval;
-				this.leftMenuStatus(index);
+				this.leftMenuStatus(this.innerCurrent);
 			}
 		},
 		methods: {
