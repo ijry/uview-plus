@@ -9,6 +9,7 @@
         <view class="u-float-button__main" @click="clickHandler" :style="{
             backgroundColor: backgroundColor,
             color: color,
+			display: 'flex',
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
@@ -28,6 +29,7 @@
                         <view class="u-float-button__item" :style="{
                             backgroundColor: item?.backgroundColor ? item?.backgroundColor : backgroundColor,
                             color: item?.color ? item?.color : color,
+							display: 'flex',
                             flexDirection: 'row',
                             justifyContent: 'center',
                             alignItems: 'center',
