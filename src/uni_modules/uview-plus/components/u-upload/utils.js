@@ -23,7 +23,7 @@ function formatImage(res) {
 		file: item
 		// #endif
 		// #ifndef H5
-		name: res.tempFilePath.split('/').pop() + '.png',
+		name: item.tempFilePath.split('/').pop() + '.png',
 		// #endif
     }))
 }
@@ -61,7 +61,7 @@ function formatMedia(res) {
 		file: item
 		// #endif
 		// #ifndef H5
-		name: res.tempFilePath.split('/').pop() + (res.type === 'video' ? '.mp4': '.png'),
+		name: item.tempFilePath.split('/').pop() + (res.type === 'video' ? '.mp4': '.png'),
 		// #endif
     }))
 }
