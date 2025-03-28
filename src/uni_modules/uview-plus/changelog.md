@@ -1,3 +1,8 @@
+## 3.4.10（2025-03-28）
+feat: select组件新增多个props属性及优化
+
+fix: 修复cate-tab报错index is not defined #661
+
 
 ## 3.4.9（2025-03-27）
 fix: 修复upload组件split报错
