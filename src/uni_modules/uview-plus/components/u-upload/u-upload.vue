@@ -125,19 +125,6 @@
 						</view>
 					</slot>
 				</view>
-				<up-popup
-					mode="center"
-					v-model:show="popupShow">
-					<video id="myVideo"
-						:src="currentItemIndex >= 0 ? lists[currentItemIndex].url : ''"
-						@error="videoErrorCallback" show-center-play-btn
-						object-fit='cover' show-fullscreen-btn='true'
-						enable-play-gesture controls
-						:autoplay="true" auto-pause-if-open-native
-						@loadedmetadata="loadedVideoMetadata"
-						:initial-time='0.1'>
-					</video>
-				</up-popup>
 			</template>
 			<canvas id="myCanvas" type="2d"
 				style="width: 100px; height: 150px;display: none;"></canvas>
@@ -178,6 +165,19 @@
 				</view>
 			</template>
 		</view>
+		<up-popup
+			mode="center"
+			v-model:show="popupShow">
+			<video id="myVideo"
+				:src="currentItemIndex >= 0 ? lists[currentItemIndex].url : ''"
+				@error="videoErrorCallback" show-center-play-btn
+				object-fit='cover' show-fullscreen-btn='true'
+				enable-play-gesture controls
+				:autoplay="true" auto-pause-if-open-native
+				@loadedmetadata="loadedVideoMetadata"
+				:initial-time='0.1'>
+			</video>
+		</up-popup>
 	</view>
 </template>
 

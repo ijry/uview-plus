@@ -1,5 +1,7 @@
 <template>
-	<view class="u-popup" :class="[customClass]">
+	<view class="u-popup" :class="[customClass]"
+		:style="{width: show == false ? '0px' : '',
+			height: show == false ? '0px' : ''}">
 		<view class="u-popup__trigger">
 			<slot name="trigger">
 			</slot>
