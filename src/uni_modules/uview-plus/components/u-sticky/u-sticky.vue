@@ -1,10 +1,10 @@
 <template>
 	<view
 		class="u-sticky"
-		:id="elId"
 		:style="[style]"
 	>
 		<view
+		:id="elId"
 			:style="[stickyContent]"
 			class="u-sticky__content"
 		>
@@ -114,7 +114,7 @@
 			observeContent() {
 				// 先断掉之前的观察
 				this.disconnectObserver('contentObserver')
-				const contentObserver = uni.createIntersectionObserver({
+				const contentObserver = uni.createIntersectionObserver(this,{
 					// 检测的区间范围
 					thresholds: [0.95, 0.98, 1]
 				})
