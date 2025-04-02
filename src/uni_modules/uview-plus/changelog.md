@@ -1,3 +1,8 @@
+## 3.4.12（2025-04-02）
+fix: dropdown关闭后遮挡页面内容 #653
+
+fix u-sticky.vue Uncaught TypeError: e.querySelector is not a function at uni-app-view.umd.js
+
 ## 3.4.11（2025-03-31）
 fix: 优化upload组件预览视频的弹窗占位
 
