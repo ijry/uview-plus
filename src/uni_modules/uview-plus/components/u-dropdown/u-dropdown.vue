@@ -21,8 +21,7 @@
 		</view>
 		<view class="u-dropdown__content" :style="[contentStyle, {
 			transition: `opacity ${duration / 1000}s linear`,
-			top: addUnit(height),
-			height: contentHeight + 'px'
+			top: addUnit(height)
 		}]"
 		 @tap="maskClick" @touchmove.stop.prevent>
 			<view @tap.stop.prevent class="u-dropdown__content__popup" :style="[popupStyle]">
@@ -129,6 +128,7 @@
 				// 展开时，设置下拉内容的样式
 				this.contentStyle = {
 					zIndex: 11,
+					height: this.contentHeight + 'px'
 				}
 				// 标记展开状态以及当前展开项的索引
 				this.active = true;
@@ -149,7 +149,8 @@
 				// 下拉内容的样式进行调整，不透明度设置为0
 				this.contentStyle = {
 					zIndex: -1,
-					opacity: 0
+					opacity: 0,
+					height: '0px'
 				}
 			},
 			// 点击遮罩

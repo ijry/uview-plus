@@ -3,17 +3,17 @@
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">基础用法</text>
 			<view class="u-demo-block__content">
-				<view class="u-page__upload-item">
-				<up-upload
-				    :fileList="fileList1"
-					useBeforeRead
-					@beforeRead="beforeRead"
-				    @afterRead="afterRead"
-				    @delete="deletePic"
-				    name="1"
-				    multiple
-				    :maxCount="10"
-				></up-upload>
+				<view class="u-page__upload-item" style="display: flex;">
+					<up-upload
+						:fileList="fileList1"
+						useBeforeRead
+						@beforeRead="beforeRead"
+						@afterRead="afterRead"
+						@delete="deletePic"
+						name="1"
+						multiple
+						:maxCount="10"
+					></up-upload>
 				</view>
 			</view>
 		</view>

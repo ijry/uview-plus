@@ -124,8 +124,8 @@ export function chooseFile({
                 fail: reject
             })
             break
-            // #ifdef MP-WEIXIN || H5
-            // 只有微信小程序才支持chooseMessageFile接口
+        // #ifdef MP-WEIXIN || H5
+        // 只有微信小程序才支持chooseMessageFile接口
         case 'file':
             // #ifdef MP-WEIXIN
             wx.chooseMessageFile({
@@ -149,7 +149,7 @@ export function chooseFile({
             uni.chooseFile(params)
             // #endif
             break
-				// #endif
+		// #endif
 		default: 
 			// 此为保底选项，在accept不为上面任意一项的时候选取全部文件
 			// #ifdef MP-WEIXIN
