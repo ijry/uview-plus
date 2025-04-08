@@ -229,6 +229,8 @@
 				}, index)
 				// 如果disabled状态，返回
 				if (item.disabled) return
+				// 如果点击当前不触发change
+				if (this.innerCurrent == index) return
 				this.innerCurrent = index
 				this.resize()
 				this.$emit('update:current', index)
