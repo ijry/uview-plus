@@ -20,11 +20,12 @@
 			</view>
 		</view>
 		<view class="u-dropdown__content" :style="[contentStyle, {
-			transition: `opacity ${duration / 1000}s linear`,
+			transition: `opacity ${duration / 1000}s, z-index ${duration / 1000}s linear`,
 			top: addUnit(height)
 		}]"
 		 @tap="maskClick" @touchmove.stop.prevent>
-			<view @tap.stop.prevent class="u-dropdown__content__popup" :style="[popupStyle]">
+			<view @tap.stop.prevent class="u-dropdown__content__popup" :style="[popupStyle, {
+			}]">
 				<slot></slot>
 			</view>
 			<view class="u-dropdown__content__mask"></view>
@@ -147,11 +148,11 @@
 				this.active = false;
 				this.current = 99999;
 				// 下拉内容的样式进行调整，不透明度设置为0
-				this.contentStyle = {
-					zIndex: -1,
-					opacity: 0,
-					height: '0px'
-				}
+				this.contentStyle.zIndex = -1;
+				this.contentStyle.opacity = 0;
+				setTimeout(() => {
+					this.contentStyle.height = 0;
+				}, this.duration)
 			},
 			// 点击遮罩
 			maskClick() {
