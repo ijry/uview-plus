@@ -26,9 +26,7 @@
 			>{{ title }}</view>
 			<view
 				class="u-modal__content"
-				:style="{
-					paddingTop: `${title ? 12 : 25}px`
-				}"
+				:style="contentStyleCpu"
 			>
 				<slot>
 					<text class="u-modal__content__text" :style="{textAlign: contentTextAlign}">
@@ -138,6 +136,13 @@
 			}
 		},
 		emits: ["confirm", "cancel", "close", "update:show", 'cancelOnAsync'],
+		computed: {
+			contentStyleCpu() {
+				let style = this.contentStyle;
+				style.paddingTop = `${title ? 12 : 25}px`
+				return style;
+			}
+		},
 		methods: {
 			addUnit,
 			// 点击确定按钮

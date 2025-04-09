@@ -97,6 +97,11 @@ export const props = defineMixin({
             type: Boolean,
             default: () => defProps.modal.asyncCancelClose
         },
+        // 内容样式
+        contentStyle: {
+            type: Object,
+            default: () => defProps.modal.contentStyle
+        },
         
     }
 })

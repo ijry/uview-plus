@@ -28,6 +28,7 @@ export default {
         confirmButtonShape: '',
         contentTextAlign: 'left',
         asyncCloseTip: '操作中...',
-        asyncCancelClose: false
+        asyncCancelClose: false,
+        contentStyle: {}
     }
 }
