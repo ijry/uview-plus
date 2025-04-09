@@ -37,6 +37,8 @@ export default {
         'up-tips-color': '#909399',
         'up-light-color': '#c0c4cc'
     },
+    // nvue下字体图标地址
+    nvueIconUrl: 'https://at.alicdn.com/t/font_2225171_8kdcwk4po24.ttf',
 	// 默认单位，可以通过配置为rpx，那么在用于传入组件大小参数为数值时，就默认为rpx
 	unit: 'px',
 	// 拦截器

@@ -35,24 +35,24 @@
 </template>
 
 <script>
+	import config from '../../libs/config/config';
 	// #ifdef APP-NVUE
 	// nvue通过weex的dom模块引入字体，相关文档地址如下：
 	// https://weex.apache.org/zh/docs/modules/dom.html#addrule
-	const fontUrl = 'https://at.alicdn.com/t/font_2225171_8kdcwk4po24.ttf'
-	const domModule = weex.requireModule('dom')
+	const fontUrl = config.nvueIconUrl;
+	const domModule = weex.requireModule('dom');
 	domModule.addRule('fontFace', {
 		'fontFamily': "uicon-iconfont",
 		'src': `url('${fontUrl}')`
-	})
+	});
 	// #endif
 
 	// 引入图标名称，已经对应的unicode
-	import icons from './icons'
+	import icons from './icons';
 	import { props } from './props';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
 	import { addUnit, addStyle } from '../../libs/function/index';
-	import config from '../../libs/config/config';
 	/**
 	 * icon 图标
 	 * @description 基于字体的图标集，包含了大多数常见场景的图标。
