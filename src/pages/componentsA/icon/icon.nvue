@@ -19,6 +19,12 @@
 				<text class="u-page__grid__item__text">{{item.name}}</text>
 			</view>
 		</view>
+		<up-icon
+			customPrefix="xyicon"
+			name="light-mode"
+			size="30"
+			color="#909399"
+		></up-icon>
 	</view>
 </template>
 

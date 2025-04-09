@@ -38,7 +38,7 @@ export function createApp() {
 		return {
 			httpIns: initRequest,
 			options: {
-				// 修改$u.config对象的属性
+				// 修改config对象的属性
 				config: {
 					// 修改默认单位为rpx，相当于执行 uni.$u.config.unit = 'rpx'
 					unit: 'rpx',
@@ -46,6 +46,14 @@ export function createApp() {
 						navbarLeftClick:() => {
 							console.log('全局拦截')
 						}
+					},
+					// 自定义扩展图标
+					customIcon: {
+						family: 'xyicon',
+						url: 'https://at.alicdn.com/t/c/font_1305928_egvk3tbr3fs.ttf?t=1744189362601'
+					},
+					customIcons: {
+						'light-mode' : '\ue66c'
 					}
 				},
 				// 修改$u.props对象的属性
