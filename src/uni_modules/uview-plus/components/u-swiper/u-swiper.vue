@@ -30,7 +30,7 @@
 			:previousMargin="addUnit(previousMargin)"
 			:nextMargin="addUnit(nextMargin)"
 			:acceleration="acceleration"
-			:displayMultipleItems="displayMultipleItems"
+			:displayMultipleItems="list.length > 0 ? displayMultipleItems : 0"
 			:easingFunction="easingFunction"
 		>
 			<swiper-item

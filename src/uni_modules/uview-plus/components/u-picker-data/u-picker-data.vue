@@ -1,7 +1,7 @@
 <template>
 	<view class="u-picker-data">
 		<view class="u-picker-data__trigger">
-			<slot name="trigger"></slot>
+			<slot name="trigger" :current="current"></slot>
 			<up-input
 				v-if="!$slots['trigger']"
 				:modelValue="current"
