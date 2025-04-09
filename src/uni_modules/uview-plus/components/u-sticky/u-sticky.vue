@@ -90,6 +90,11 @@
 		mounted() {
 			this.init()
 		},
+		watch: {
+			offsetTop(nval) {
+				this.getStickyTop()
+			}
+		},
 		methods: {
 			init() {
 				this.getStickyTop()
