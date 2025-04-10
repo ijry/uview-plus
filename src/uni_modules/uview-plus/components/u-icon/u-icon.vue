@@ -35,44 +35,10 @@
 </template>
 
 <script>
-	import config from '../../libs/config/config';
-	// #ifdef APP-NVUE
-	// nvue通过weex的dom模块引入字体，相关文档地址如下：
-	// https://weex.apache.org/zh/docs/modules/dom.html#addrule
-	const domModule = weex.requireModule('dom');
-	domModule.addRule('fontFace', {
-		'fontFamily': "uicon-iconfont",
-		'src': `url('${config.iconUrl}')`
-	});
-	// #endif
-	// #ifdef APP || H5 || MP-WEIXIN || MP-ALIPAY
-	uni.loadFontFace({
-		family: 'uicon-iconfont',
-		source: 'url("' + config.iconUrl + '")',
-		success() {
-			// console.log('内置字体图标加载成功');
-		},
-		fail() {
-			console.error('内置字体图标加载出错');
-		}
-	});
-	if (config.customIcon.family) {
-		uni.loadFontFace({
-			family: config.customIcon.family,
-			source: 'url("' + config.customIcon.url + '")',
-			success() {
-				// console.log('扩展字体图标加载成功');
-			},
-			fail() {
-				console.error('扩展字体图标加载出错');
-			}
-		});
-	}
-	// #endif
-
 	// 引入图标名称，已经对应的unicode
 	import icons from './icons';
 	import { props } from './props';
+	import config from '../../libs/config/config';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
 	import { addUnit, addStyle } from '../../libs/function/index';
@@ -105,6 +71,46 @@
 	export default {
 		name: 'u-icon',
 		beforeCreate() {
+			
+			// #ifdef APP-NVUE
+			// nvue通过weex的dom模块引入字体，相关文档地址如下：
+			// https://weex.apache.org/zh/docs/modules/dom.html#addrule
+			const domModule = weex.requireModule('dom');
+			domModule.addRule('fontFace', {
+				'fontFamily': "uicon-iconfont",
+				'src': `url('${config.iconUrl}')`
+			});
+			if (config.customIcon.family) {
+				domModule.addRule('fontFace', {
+					'fontFamily': config.customIcon.family,
+					'src': `url('${config.customIcon.url}')`
+				});
+			}
+			// #endif
+			// #ifdef APP || H5 || MP-WEIXIN || MP-ALIPAY
+			uni.loadFontFace({
+				family: 'uicon-iconfont',
+				source: 'url("' + config.iconUrl + '")',
+				success() {
+					// console.log('内置字体图标加载成功');
+				},
+				fail() {
+					console.error('内置字体图标加载出错');
+				}
+			});
+			if (config.customIcon.family) {
+				uni.loadFontFace({
+					family: config.customIcon.family,
+					source: 'url("' + config.customIcon.url + '")',
+					success() {
+						// console.log('扩展字体图标加载成功');
+					},
+					fail() {
+						console.error('扩展字体图标加载出错');
+					}
+				});
+			}
+			// #endif
 			// #ifdef APP-NVUE
 			if (this.customFontFamily) {
 				domModule.addRule('fontFace', {
