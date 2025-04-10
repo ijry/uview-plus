@@ -2,7 +2,7 @@
 	<view class="u-select">
 		<view class="u-select__content">
 			<view class="u-select__label" @click="openSelect">
-				<slot name="text">
+				<slot name="text" :currentLabel="currentLabel">
 					<text class="u-select__text" v-if="showOptionsLabel">
 						{{ currentLabel }}
 					</text>
