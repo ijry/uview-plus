@@ -1,3 +1,13 @@
+## 3.4.15（2025-04-10）
+improvment: 优化移步加载数据时swiper组件displayMultipleItems报错
+
+feat: modal增加contentStyle属性
+
+fix: 修复下拉菜单收起动画缺失
+
+fix: 修复sticky的offset属性值为响应式数据时失效 #237
+
+
 ## 3.4.14（2025-04-09）
 feat: 支持自托管内置图标及扩展自定义图标
 
