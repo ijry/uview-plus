@@ -1,3 +1,6 @@
+## 3.4.16（2025-04-10）
+fix: 修复安卓新加载字体方式导致Cannot read property '$page' of undefined
+
 ## 3.4.15（2025-04-10）
 improvment: 优化移步加载数据时swiper组件displayMultipleItems报错
 
