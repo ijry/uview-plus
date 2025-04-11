@@ -1,3 +1,6 @@
+## 3.4.17（2025-04-11）
+feat: select组件text插槽增加scope传递currentLabel
+
 ## 3.4.16（2025-04-10）
 fix: 修复安卓新加载字体方式导致Cannot read property '$page' of undefined
 
