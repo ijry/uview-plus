@@ -1,3 +1,6 @@
+## 3.4.18（2025-04-13）
+fix: upload组件支持所有文件类型的onClickPreview事件
+
 ## 3.4.17（2025-04-11）
 feat: select组件text插槽增加scope传递currentLabel
 
