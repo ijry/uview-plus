@@ -56,7 +56,7 @@ export const props = defineMixin({
             type: Function,
             default: null
         },
-        // 是否显示组件自带的图片预览功能
+        // 是否显示组件自带的图片&视频预览功能
         previewFullImage: {
             type: Boolean,
             default: () => defProps.upload.previewFullImage

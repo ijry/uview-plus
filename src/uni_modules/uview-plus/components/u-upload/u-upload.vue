@@ -12,7 +12,7 @@
 					    :src="item.thumb || item.url"
 					    :mode="imageMode"
 					    class="u-upload__wrap__preview__image"
-					    @tap="onPreviewImage(item, index)"
+					    @tap="onClickPreview(item, index)"
 						:style="[{
 							width: addUnit(width),
 							height: addUnit(height)
@@ -29,7 +29,7 @@
 						    :src="item.thumb"
 						    :mode="imageMode"
 						    class="u-upload__wrap__preview__image"
-						    @tap="onPreviewVideo(item, index)"
+						    @tap="onClickPreview(item, index)"
 							:style="[{
 								width: addUnit(width),
 								height: addUnit(height)
@@ -43,7 +43,7 @@
 						></u-icon>
 						<view v-if="item.status === 'success'"
 							class="u-upload__wrap__play"
-							@tap="onPreviewVideo(item, index)">
+							@tap="onClickPreview(item, index)">
 							<slot name="playIcon"></slot>
 							<up-icon v-if="!$slots['playIcon']"
 								class="u-upload__wrap__play__icon"
@@ -640,13 +640,17 @@
 				// #endif
 			},
 			onClickPreview(item, index) {
-				if (!this.previewFullImage) return;
-				switch (item.type) {
-					case 'video':
-						this.onPreviewVideo(index);
-						break;
-					default:
-						break;
+				if (this.previewFullImage) {
+					switch (item.type) {
+						case 'image':
+							this.onPreviewImage(item, index);
+							break;
+						case 'video':
+							this.onPreviewVideo(item, index);
+							break;
+						default:
+							break;
+					}
 				}
 				this.$emit(
 					'clickPreview',
