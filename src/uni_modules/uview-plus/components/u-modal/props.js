@@ -101,7 +101,6 @@ export const props = defineMixin({
         contentStyle: {
             type: Object,
             default: () => defProps.modal.contentStyle
-        },
-        
+        }
     }
 })

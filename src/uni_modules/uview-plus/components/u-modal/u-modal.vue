@@ -139,7 +139,7 @@
 		computed: {
 			contentStyleCpu() {
 				let style = this.contentStyle;
-				style.paddingTop = `${title ? 12 : 25}px`
+				style.paddingTop = `${this.title ? 12 : 25}px`
 				return style;
 			}
 		},
