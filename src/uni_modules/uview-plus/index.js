@@ -114,7 +114,9 @@ const install = (Vue, upuiParams = '') => {
     // #ifdef APP || H5
     components.forEach(function(component) {
         const name = component.name.replace(/u-([a-zA-Z0-9-_]+)/g, 'up-$1');
-		Vue.component(component.name, component); 
+		if (name != component.name) {
+			Vue.component(component.name, component); 
+		}
         Vue.component(name, component); 
     });
     // #endif
