@@ -84,7 +84,15 @@ export const mount$u = function() {
     uni.$u = $u
 }
 
-// #ifdef H5
+function toCamelCase(str) {
+    return str.replace(/-([a-z])/g, function(match, group1) {
+      return group1.toUpperCase();
+    }).replace(/^[a-z]/, function(match) {
+      return match.toUpperCase();
+    });
+}
+
+// #ifdef APP || H5
 const importFn = import.meta.glob('./components/u-*/u-*.vue', { eager: true })
 let components = [];
 
@@ -102,18 +110,11 @@ for (const key in importFn) {
 }
 // #endif
 
-function toCamelCase(str) {
-    return str.replace(/-([a-z])/g, function(match, group1) {
-      return group1.toUpperCase();
-    }).replace(/^[a-z]/, function(match) {
-      return match.toUpperCase();
-    });
-}
-
 const install = (Vue, upuiParams = '') => {
-    // #ifdef H5
+    // #ifdef APP || H5
     components.forEach(function(component) {
         const name = component.name.replace(/u-([a-zA-Z0-9-_]+)/g, 'up-$1');
+		Vue.component(component.name, component); 
         Vue.component(name, component); 
     });
     // #endif
