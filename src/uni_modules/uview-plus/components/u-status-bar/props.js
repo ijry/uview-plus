@@ -5,6 +5,11 @@ export const props = defineMixin({
         bgColor: {
             type: String,
             default: () => defProps.statusBar.bgColor
-        }
+        },
+		// 状态栏获取得高度
+		height: {
+			type: Number,
+			default: () => defProps.statusBar.height
+		}
     }
 })

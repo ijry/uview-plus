@@ -34,11 +34,13 @@
 			this.isH5 = true
 			// #endif
 		},
+		emits: ['update:height'],
 		computed: {
 			style() {
 				const style = {}
 				// 状态栏高度，由于某些安卓和微信开发工具无法识别css的顶部状态栏变量，所以使用js获取的方式
 				let sheight = getWindowInfo().statusBarHeight
+				this.$emit('update:height', sheight)
 				if (sheight == 0) {
 					this.isH5 = true
 				} else {
