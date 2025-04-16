@@ -32,15 +32,29 @@
 						></u-icon>
 					</view>
 				</slot>
-				<text
-					class="u-tag__text"
-					:style="[textColor]"
-					:class="[`u-tag__text--${type}`, plain && `u-tag__text--${type}--plain`, `u-tag__text--${size}`]"
-				>
-					<slot>
-						{{ text }}
+				<view class="u-tag__content">
+					<slot name="content">
 					</slot>
-				</text>
+					<template v-if="!$slots.content">
+						<text
+							v-if="!$slots.default && !$slots.$default"
+							class="u-tag__text"
+							:style="[textColor]"
+							:class="[`u-tag__text--${type}`, plain && `u-tag__text--${type}--plain`, `u-tag__text--${size}`]"
+						>
+							{{ text }}
+						</text>
+						<text
+							v-else
+							class="u-tag__text"
+							:style="[textColor]"
+							:class="[`u-tag__text--${type}`, plain && `u-tag__text--${type}--plain`, `u-tag__text--${size}`]"
+						>
+							<slot>
+							</slot>
+						</text>
+					</template>
+				</view>
 			</view>
 			<view
 				class="u-tag__close"
