@@ -517,8 +517,9 @@
 									name: 'file',
 									// fileType: 'video', // 仅支付宝小程序，且必填。
 									header: this.autoUploadHeader,
-									success: (r) => {
-										result = res0.data.params.host + '/' + res0.data.params.key;
+									success: (uploadFileRes) => {
+										let res0 = uploadFileRes.data;
+										result = res0.data.url;
 										that.succcessUpload(len + j, result);
 									}
 								});
