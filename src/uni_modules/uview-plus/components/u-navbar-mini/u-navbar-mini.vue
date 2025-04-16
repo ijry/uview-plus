@@ -6,7 +6,6 @@
 			></u-status-bar>
 			<view
 				class="u-navbar-mini__content"
-				:class="[border && 'u-border-bottom']"
 				:style="{
 					height: addUnit(height),
 					backgroundColor: bgColor,
