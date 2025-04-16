@@ -163,5 +163,10 @@ export const props = defineMixin({
 		    type: Boolean,
 		    default: () => defProps.upload.getVideoThumb
 		},
+        // 自定义自动上传后处理
+        customAfterAutoUpload: {
+		    type: Boolean,
+		    default: () => defProps.upload.customAfterAutoUpload
+		},
     }
 })

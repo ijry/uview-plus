@@ -263,7 +263,7 @@
 			}
 		},
 		// #ifdef VUE3
-		emits: ['error', 'beforeRead', 'oversize', 'afterRead', 'delete', 'clickPreview', 'update:fileList'],
+		emits: ['error', 'beforeRead', 'oversize', 'afterRead', 'delete', 'clickPreview', 'update:fileList', 'afterAutoUpload'],
 		// #endif
 		methods: {
 			addUnit,
@@ -491,12 +491,29 @@
 									// header: header,
 									formData: formData,
 									success: (uploadFileRes) => {
-										result = res0.data.params.host + '/' + res0.data.params.key;
 										let thumb = '';
-										if (this.accept === 'video' || test.video(result)) {
-											thumb = result + '?x-oss-process=video/snapshot,t_10000,m_fast';
+										let afterPromise = '';
+										if (that.customAfterAutoUpload) {
+											afterPromise = new Promise((resolve, reject) => {
+												that.$emit(
+													'afterAutoUpload',
+													Object.assign(res0, {
+														callback: (r) => {
+															r.url ? resolve(r) : reject();
+														},
+													})
+												);
+											});
 										}
-										that.succcessUpload(len + j, result, thumb);
+										if (test.promise(afterPromise)) {
+											afterPromise.then((data) => that.succcessUpload(len + j, data.url, data.thumb));
+										} else {
+											result = res0.data.params.host + '/' + res0.data.params.key;
+											if (that.accept === 'video' || test.video(result)) {
+												thumb = result + '?x-oss-process=video/snapshot,t_10000,m_fast';
+											}
+											that.succcessUpload(len + j, result, thumb);
+										}
 									}
 								});
 								uploadTask.onProgressUpdate((res) => {
@@ -519,8 +536,31 @@
 									header: this.autoUploadHeader,
 									success: (uploadFileRes) => {
 										let res0 = uploadFileRes.data;
-										result = res0.data.url;
-										that.succcessUpload(len + j, result);
+										let afterPromise = '';
+										if (that.customAfterAutoUpload) {
+											afterPromise = new Promise((resolve, reject) => {
+												that.$emit(
+													'afterAutoUpload',
+													Object.assign(res0, {
+														callback: (r) => {
+															r.url ? resolve(r) : reject();
+														}
+													})
+												);
+											});
+										}
+										if (test.promise(afterPromise)) {
+											afterPromise.then((data) => that.succcessUpload(len + j, data.url));
+										} else {
+											if (res0.code != 200) {
+												uni.showToast({
+													title: res0.msg
+												});
+											} else {
+												result = res0.data.url;
+												that.succcessUpload(len + j, result);
+											}
+										}
 									}
 								});
 								uploadTask.onProgressUpdate((res) => {

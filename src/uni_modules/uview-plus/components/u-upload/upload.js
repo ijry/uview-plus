@@ -39,6 +39,7 @@ export default {
 		autoUploadAuthUrl: '',
 		autoUploadDriver: '',
 		autoUploadHeader: {},
-		getVideoThumb: false
+		getVideoThumb: false,
+		customAfterAutoUpload: false
 	}
 }
