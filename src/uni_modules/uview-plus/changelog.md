@@ -1,3 +1,13 @@
+## 3.4.20（2025-04-17）
+fix: 修复navbar-mini提示border不存在
+
+feat: status-bar支持对外暴露状态栏高度值
+
+feat: upload支持自定义自动上传后处理逻辑便于对接不同规范后端
+
+feat: 优化tag组件插槽
+
+
 ## 3.4.19（2025-04-14）
 fix: 修复model组件增加contentStyle带来的语法问题
 
