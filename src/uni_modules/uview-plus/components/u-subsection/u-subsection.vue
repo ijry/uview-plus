@@ -189,7 +189,7 @@ export default {
     beforeUnmount() {
         uni.offWindowResize(this.windowResizeCallback)
     },
-	emits: ["change"],
+	emits: ["change", "update:current"],
     methods: {
         addStyle,
         init() {
@@ -217,7 +217,8 @@ export default {
             // #endif
         },
         clickHandler(index) {
-            this.innerCurrent = index
+            this.innerCurrent = index;
+			this.$emit('update:current', index);
             this.$emit("change", index);
         },
     },
