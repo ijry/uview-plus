@@ -22,9 +22,10 @@
 				:duration="duration + 50"
 				:customStyle="overlayStyle"
 				:opacity="overlayOpacity"
+				@touchmove.stop.prevent="noop"
 			></u-overlay>
 			<view class="u-select__options__wrap"
-				:style="{ zIndex: zIndex + 1, left: optionsWrapLeft, right: optionsWrapRight }">
+				:style="{ overflowY: 'auto', zIndex: zIndex + 1, left: optionsWrapLeft, right: optionsWrapRight, maxHeight: maxHeight}">
 				<view class="u-select__options" v-if="isOpen">
 					<slot name="options">
 						<view class="u-select__options_item"
@@ -50,6 +51,10 @@ export default {
 	name:"up-select",
 	emits: ['update:current', 'select'],
 	props: {
+		maxHeight: {
+			type: String,
+			default: '90vh'
+		},
 		overlay: {
 			type: Boolean,
 			default: true
