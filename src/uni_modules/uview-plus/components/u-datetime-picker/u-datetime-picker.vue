@@ -7,7 +7,7 @@
 				<up-input
 					:placeholder="placeholder"
 					:readonly="!!showByClickInput"
-					border="surround"
+					:border="inputBorder"
 					v-model="inputValue"
 					:disabled="disabled"
 					:disabledColor="disabledColor"

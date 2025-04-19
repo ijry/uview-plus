@@ -5,7 +5,11 @@ export const props = defineMixin({
         // 是否显示input
         hasInput: {
             type: Boolean,
-            default: () => false
+            default: false
+        },
+        inputBorder: {
+            type: String,
+            default: 'surround'
         },
 		disabled: {
             type: Boolean,
