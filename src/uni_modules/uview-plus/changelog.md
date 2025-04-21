@@ -1,3 +1,10 @@
+## 3.4.21（2025-04-21）
+feat: subsection分段器支持双向绑定current
+
+feat: select组件支持maxHeight属性
+
+feat: datetime-picker支持inputBorder属性
+
 ## 3.4.20（2025-04-17）
 fix: 修复navbar-mini提示border不存在
 
