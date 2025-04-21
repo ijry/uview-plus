@@ -89,6 +89,11 @@ export function chooseFile({
     maxCount,
     extension
 }) {
+    try {
+        capture = test.array(capture) ? capture : capture.split(',');
+    } catch(e) {
+        capture = [];
+    }
     return new Promise((resolve, reject) => {
         switch (accept) {
         case 'image':

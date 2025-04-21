@@ -39,7 +39,7 @@
 							v-else
 						    color="#80CBF9"
 						    size="26"
-						    :name="item.isVideo || (item.type && item.type === 'video') ? 'movie' : 'folder'"
+						    :name="item.isVideo || (item.type && item.type === 'video') ? 'movie' : 'file-text'"
 						></u-icon>
 						<view v-if="item.status === 'success'"
 							class="u-upload__wrap__play"
@@ -54,6 +54,10 @@
 					    v-else
 					    class="u-upload__wrap__preview__other"
 						@tap="onClickPreview(item, index)"
+						:style="[{
+							width: addUnit(width),
+							height: addUnit(height)
+						}]"
 					>
 						<u-icon
 						    color="#80CBF9"
@@ -61,7 +65,7 @@
 						    :name="item.isVideo || (item.type && item.type === 'video') ? 'movie' : 'folder'"
 						></u-icon>
 						<text class="u-upload__wrap__preview__other__text">
-							{{item.isVideo || (item.type && item.type === 'video') ? '视频' : '文件'}}
+							{{item.isVideo || (item.type && item.type === 'video') ? item.name || '视频' : item.name || '文件'}}
 						</text>
 					</view>
 					<view
@@ -78,7 +82,6 @@
 							<u-loading-icon
 							    size="22"
 							    mode="circle"
-							    color="#ffffff"
 							    v-else
 							/>
 						</view>
@@ -327,18 +330,19 @@
 				const {
 					fileList = [], maxCount
 				} = this;
-				const lists = fileList.map((item) =>
-					Object.assign(Object.assign({}, item), {
+				const lists = fileList.map((item) => {
+					const name = item.name || item.url || item.thumb
+					return Object.assign(Object.assign({}, item), {
 						// 如果item.url为本地选择的blob文件的话，无法判断其为video还是image，此处优先通过accept做判断处理
-						isImage: this.accept === 'image' || test.image(item.url || item.thumb),
-						isVideo: this.accept === 'video' || test.video(item.url || item.thumb),
-						deletable: typeof(item.deletable) === 'boolean' ? item.deletable : this.deletable,
+						isImage: name ? test.image(name) : (this.accept === 'image' || test.image(name)),
+						isVideo: name ? test.video(name) : (this.accept === 'video' || test.video(name)),
+						deletable: typeof item.deletable === 'boolean' ? item.deletable : this.deletable,
 					})
-				);
+				});
 				this.lists = lists
 				this.isInCount = lists.length < maxCount
 			},
-			chooseFile() {
+			chooseFile(params) {
 				const {
 					maxCount,
 					multiple,
@@ -358,13 +362,14 @@
 							accept: this.accept,
 							extension: this.extension,
 							multiple: this.multiple,
-							capture: capture,
+							capture: this.capture,
 							compressed: this.compressed,
 							maxDuration: this.maxDuration,
 							sizeType: this.sizeType,
 							camera: this.camera,
 						}, {
 							maxCount: maxCount - lists.length,
+							...params
 						})
 					)
 					.then((res) => {
@@ -406,7 +411,7 @@
 				if (test.promise(res)) {
 					res.then((data) => this.onAfterRead(data || file));
 				} else {
-					this.onAfterRead(file);
+					this.onAfterRead(res);
 				}
 			},
 			getDetail(index) {
