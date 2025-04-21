@@ -587,7 +587,8 @@
 				let item = this.fileList[index];
 				this.fileList.splice(index, 1, {
 					...item,
-					status: 'uploading',
+					// 注意这里不判断会出现succcessUpload先执行又被覆盖的问题
+					status: param.progress == 100 ? 'success' : 'uploading',
 					message: '',
 					progress: param.progress
 				});
