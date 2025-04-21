@@ -25,7 +25,7 @@
                 bottom: height
             }">
                 <slot name="list">
-                    <template v-for="item in list">
+                    <template :key="index" v-for="(item, index) in list">
                         <view class="u-float-button__item" :style="{
                             backgroundColor: item?.backgroundColor ? item?.backgroundColor : backgroundColor,
                             color: item?.color ? item?.color : color,
