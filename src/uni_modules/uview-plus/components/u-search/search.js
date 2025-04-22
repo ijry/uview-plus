@@ -27,6 +27,7 @@ export default {
         color: '#606266',
         placeholderColor: '#909399',
         searchIcon: 'search',
+        iconPosition: 'left',
         margin: '0',
         animation: false,
         value: '',

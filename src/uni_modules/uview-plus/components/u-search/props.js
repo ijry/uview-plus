@@ -129,6 +129,10 @@ export const props = defineMixin({
         autoBlur: {
             type: Boolean,
             default: () => false
+        },
+        iconPosition: {
+            type: String,
+            default: () => defProps.search.iconPosition
         }
     }
 })
