@@ -10,19 +10,19 @@ type BaseFileInfo = {
     [key: string]: any
 }
 
-type ImageFileInfo = {
+type ImageFileInfo = BaseFileInfo & {
     type: 'image'
     thumb: string
 }
 
-type VideoFileInfo = {
+type VideoFileInfo = BaseFileInfo & {
     type: 'video'
     thumb: string
     width: number
     height: number
 }
 
-type MediaFileInfo = {
+type MediaFileInfo = BaseFileInfo & {
     thumb: string
 }
 
