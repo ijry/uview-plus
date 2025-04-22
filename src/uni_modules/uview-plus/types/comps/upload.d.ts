@@ -1,6 +1,33 @@
 import { AllowedComponentProps, VNodeProps } from './_common'
 import { ImageMode } from './image';
 
+type BaseFileInfo = {
+    type: string
+    url: string
+    name: string
+    size: number
+    file: File
+    [key: string]: any
+}
+
+type ImageFileInfo = {
+    type: 'image'
+    thumb: string
+}
+
+type VideoFileInfo = {
+    type: 'video'
+    thumb: string
+    width: number
+    height: number
+}
+
+type MediaFileInfo = {
+    thumb: string
+}
+
+type FileInfo = BaseFileInfo | ImageFileInfo | VideoFileInfo | MediaFileInfo
+
 declare interface UploadProps {
   /**
    * 接受的文件类型，file只支持H5（只有微信小程序才支持把accept配置为all、media）
@@ -12,6 +39,10 @@ declare interface UploadProps {
    * @default ["album", "camera"]
    */
   capture?: 'album' | 'camera' | ('album' | 'camera')[]
+  /**
+   * 选择文件的后缀名，暂只支持.zip、.png等，不支持application/msword等值
+   */
+  extension?: string [];
   /**
    * 当accept为video时生效，是否压缩视频，默认为true
    * @default true
@@ -131,6 +162,11 @@ declare interface UploadProps {
   onDelete?: (index, file, name) => any
 }
 
+type ChooseFileParams = Pick<
+  UploadProps,
+  'accept' | 'multiple' | 'capture' | 'compressed' | 'maxDuration' | 'sizeType' | 'camera' | 'maxCount' | 'extension'
+>;
+
 declare interface UploadSlots {
   /**
    * 自定义上传样式
@@ -147,6 +183,11 @@ declare interface _UploadRef {
    * 读取前的处理函数
    */
   beforeRead: (file, lists, name) => any
+  /**
+   * 触发文件选择器
+   */
+  chooseFile(params: ChooseFileParams & { multiple: true }): Promise<FileInfo[]>;
+  chooseFile(params?: ChooseFileParams & { multiple?: false }): Promise<FileInfo>;
 }
 
 declare interface _Upload {
