@@ -26,7 +26,7 @@ type MediaFileInfo = BaseFileInfo & {
     thumb: string
 }
 
-type FileInfo = ImageFileInfo | VideoFileInfo | MediaFileInfo
+type FileInfo = BaseFileInfo | ImageFileInfo | VideoFileInfo | MediaFileInfo
 
 declare interface UploadProps {
   /**
