@@ -1,3 +1,12 @@
+## 3.4.22（2025-04-22）
+fix: 修复自动上传偶发的success被覆盖为uploading
+
+fix: float-button缺少key #677
+
+fix: upload组件完善优化(感谢@semdy)
+
+fix: toolbar组件confirmColor属性默认改为空，以便默认使用主题色、标题字体加粗(感谢@semdy)
+
 ## 3.4.21（2025-04-21）
 feat: subsection分段器支持双向绑定current
 
