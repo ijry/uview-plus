@@ -1,6 +1,7 @@
 <template>
 	<view
 	    class="u-search"
+		:class="[iconPosition === 'right' && 'u-search__reverse']"
 	    @tap="clickHandler"
 	    :style="[{
 			margin: margin,
@@ -100,6 +101,7 @@
 	 * @property {String}			color				输入框字体颜色（默认 '#606266' ）
 	 * @property {String}			placeholderColor	placeholder的颜色（默认 '#909399' ）
 	 * @property {String}			searchIcon			输入框左边的图标，可以为uView图标名称或图片路径  (默认 'search' )
+	 * @property {String}			iconPosition		输入框图标位置，left-左边, right-右边  (默认 'left' )
 	 * @property {String}			margin				组件与其他上下左右元素之间的距离，带单位的字符串形式，如"30px"   (默认 '0' )
 	 * @property {Boolean} 			animation			是否开启动画，见上方说明（默认 false ）
 	 * @property {String}			value				输入框初始值
@@ -327,6 +329,14 @@ $u-search-action-margin-left: 5px !default;
 			width: $u-search-action-active-width;
 			margin-left: $u-search-action-margin-left;
 		}
+	}
+
+	&__reverse &__content__icon {
+		order: 3;
+	}
+
+	&__reverse &__content__close {
+		order: 2;
 	}
 }
 </style>

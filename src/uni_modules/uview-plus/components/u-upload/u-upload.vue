@@ -200,6 +200,7 @@
 	 * @tutorial https://uview-plus.jiangruyi.com/components/upload.html
 	 * @property {String}			accept				接受的文件类型, 可选值为all media image file video （默认 'image' ）
 	 * @property {String | Array}	capture				图片或视频拾取模式，当accept为image类型时设置capture可选额外camera可以直接调起摄像头（默认 ['album', 'camera'] ）
+	 * @property {Array}			extension			选择文件的后缀名，暂只支持.zip、.png等，不支持application/msword等值
 	 * @property {Boolean}			compressed			当accept为video时生效，是否压缩视频，默认为true（默认 true ）
 	 * @property {String}			camera				当accept为video时生效，可选值为back或front（默认 'back' ）
 	 * @property {Number}			maxDuration			当accept为video时生效，拍摄视频最长拍摄时间，单位秒（默认 60 ）
@@ -334,8 +335,8 @@
 					const name = item.name || item.url || item.thumb
 					return Object.assign(Object.assign({}, item), {
 						// 如果item.url为本地选择的blob文件的话，无法判断其为video还是image，此处优先通过accept做判断处理
-						isImage: name ? test.image(name) : (this.accept === 'image' || test.image(name)),
-						isVideo: name ? test.video(name) : (this.accept === 'video' || test.video(name)),
+						isImage: item.name ? test.image(item.name) : (this.accept === 'image' || test.image(name)),
+						isVideo: item.name ? test.video(item.name) : (this.accept === 'video' || test.video(name)),
 						deletable: typeof item.deletable === 'boolean' ? item.deletable : this.deletable,
 					})
 				});
@@ -349,31 +350,25 @@
 					lists,
 					disabled
 				} = this;
-				if (disabled) return;
-				// 如果用户传入的是字符串，需要格式化成数组
-				let capture;
-				try {
-					capture = test.array(this.capture) ? this.capture : this.capture.split(',');
-				}catch(e) {
-					capture = [];
-				}
-				chooseFile(
-						Object.assign({
-							accept: this.accept,
-							extension: this.extension,
-							multiple: this.multiple,
-							capture: this.capture,
-							compressed: this.compressed,
-							maxDuration: this.maxDuration,
-							sizeType: this.sizeType,
-							camera: this.camera,
-						}, {
-							maxCount: maxCount - lists.length,
-							...params
-						})
-					)
+				if (disabled) return Promise.reject();
+				const chooseParams = Object.assign({
+					accept: this.accept,
+					extension: this.extension,
+					multiple: this.multiple,
+					capture: this.capture,
+					compressed: this.compressed,
+					maxDuration: this.maxDuration,
+					sizeType: this.sizeType,
+					camera: this.camera,
+				}, {
+					maxCount: maxCount - lists.length,
+					...params
+				})
+				return chooseFile(chooseParams)
 					.then((res) => {
-						this.onBeforeRead(multiple ? res : res[0]);
+						const result = chooseParams.multiple ? res : res[0]
+						this.onBeforeRead(result);
+						return result
 					})
 					.catch((error) => {
 						this.$emit('error', error);

@@ -90,6 +90,11 @@ declare interface SearchProps {
    */
   searchIcon?: string
   /**
+   * 输入框图标位置，left-左边，right-右边
+   * @default "left"
+   */
+  iconPosition?: 'left' | 'right'
+  /**
    * 组件与其他上下左右元素之间的距离，带单位的字符串形式，如"30rpx"、"30rpx 20rpx"等写法
    * @default "0"
    */
