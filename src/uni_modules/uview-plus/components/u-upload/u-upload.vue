@@ -406,7 +406,7 @@
 				if (test.promise(res)) {
 					res.then((data) => this.onAfterRead(data || file));
 				} else {
-					this.onAfterRead(res);
+					this.onAfterRead(file);
 				}
 			},
 			getDetail(index) {
