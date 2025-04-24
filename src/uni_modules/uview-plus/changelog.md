@@ -1,3 +1,13 @@
+## 3.4.23（2025-04-24）
+chore: 补全chooseFile TS类型(感谢@semdy)
+
+feat: u-search组件的图标支持显示在右边(感谢@semdy)
+
+chore: 修正chooseFile返回的数据TS类型(感谢@semdy)
+
+fix: PR导致缺失name影响uplad自动上传扩展名
+
+
 ## 3.4.22（2025-04-22）
 fix: 修复自动上传偶发的success被覆盖为uploading
 
