@@ -27,6 +27,12 @@
 						hasInput
 						placeholder="请选择日期"
 						mode="datetime"
+						:inputProps="{
+							border: 'surround',
+							shape: 'square',
+							inputAlign: 'center',
+							suffixIcon: 'calendar'
+						}"
 						:modelValue="1714266792000"
 						>
 					</up-datetime-picker>

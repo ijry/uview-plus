@@ -1,10 +1,17 @@
 <template>
     <view class="u-picker-warrper">
 		<view v-if="hasInput" class="u-picker-input cursor-pointer" @click="onShowByClickInput">
-			<slot>
-				<up-input :disabled="disabled" :disabledColor="disabledColor" :placeholder="placeholder" :readonly="true" border="surround" v-model="inputLabel"></up-input>
-				<div class="input-cover"></div>
+			<slot :value="inputLabel">
 			</slot>
+			<slot name="trigger" :value="inputLabel">
+			</slot>
+			<up-input
+				v-if="!$slots['default'] && !$slots['$default'] && !$slots['trigger']"
+				:readonly="true"
+				v-model="inputLabel"
+				v-bind="inputPropsInner">
+			</up-input>
+			<div class="input-cover"></div>
 		</view>
 		<u-popup
 			:show="show || (hasInput && showByClickInput)"
@@ -141,6 +148,16 @@ export default {
 	},
 	emits: ['close', 'cancel', 'confirm', 'change', 'update:modelValue', 'update:show'],
     computed: {
+		// input的props
+		inputPropsInner() {
+			return {
+				border: this.inputBorder,
+				placeholder: this.placeholder,
+				disabled: this.disabled,
+				disabledColor: this.disabledColor,
+				...this.inputProps
+			}
+		},
 		//已选&&已确认的值显示在input上面的文案
 		inputLabel() {
 			let firstItem = this.innerColumns[0] && this.innerColumns[0][0];

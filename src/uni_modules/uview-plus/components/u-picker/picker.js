@@ -27,5 +27,9 @@ export default {
         defaultIndex: [],
 		immediateChange: true,
 		zIndex: 10076,
+        disabled: false,
+        disabledColor: '',
+        placeholder: '请选择',
+        inputProps: {},
     }
 }

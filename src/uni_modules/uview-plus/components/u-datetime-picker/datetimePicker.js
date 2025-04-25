@@ -32,6 +32,11 @@ export default {
         confirmColor: '#3c9cff',
         visibleItemCount: 5,
         closeOnClickOverlay: false,
-        defaultIndex: []
+        defaultIndex: [],
+        inputBorder: 'surround',
+        disabled: false,
+        disabledColor: '',
+        placeholder: '请选择',
+        inputProps: {},
     }
 }

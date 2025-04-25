@@ -6,22 +6,27 @@ export const props = defineMixin({
             type: Array,
             default: () => []
         },
-		//是否禁用
-		disabled: {
-            type: Boolean,
-            default: false
-        },
-		disabledColor:{
-			type: String,
-			default: () => defProps.input.disabledColor
-		},
         hasInput: {
             type: Boolean,
             default: false
         },
+        inputProps: {
+            type: Object,
+            default: () => {
+                return {}
+            }
+        },
+        disabled: {
+            type: Boolean,
+            default: () => defProps.picker.disabled
+        },
+		disabledColor:{
+			type: String,
+			default: () => defProps.picker.disabledColor
+		},
         placeholder: {
             type: String,
-            default: () => '请选择'
+            default: () => defProps.picker.placeholder
         },
         // 是否展示picker弹窗
         show: {
