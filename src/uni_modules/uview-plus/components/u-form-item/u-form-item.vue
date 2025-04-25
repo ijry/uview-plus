@@ -240,10 +240,8 @@
 
 					&__slot {
 						flex: 1;
-						/* #ifndef MP */
 						@include flex;
 						align-items: center;
-						/* #endif */
 					}
 
 					&__icon {
