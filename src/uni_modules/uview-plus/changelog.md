@@ -1,3 +1,6 @@
+## 3.4.24（2025-04-25）
+fix: 修复upload上传逻辑(感谢@semdy)
+
 ## 3.4.23（2025-04-24）
 chore: 补全chooseFile TS类型(感谢@semdy)
 
