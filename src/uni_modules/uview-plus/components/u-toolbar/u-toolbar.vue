@@ -106,6 +106,7 @@
 			color: $u-main-color;
 			padding: 0 60rpx;
 			font-size: 16px;
+			font-weight: bold;
 			flex: 1;
 			text-align: center;
 		}
