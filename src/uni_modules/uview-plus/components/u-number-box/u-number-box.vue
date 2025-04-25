@@ -311,13 +311,17 @@
 					value = ''
 				} = e.detail || {}
 				// 为空返回
-				if (value === '') return
+				if (value === '') {
+					// 为空自动设为最小值
+					this.emitChange(this.min)
+					return
+				}
 				let formatted = this.filter(value)
 				// https://github.com/ijry/uview-plus/issues/613
 				this.emitChange(value);
 				// 最大允许的小数长度
 				if (this.decimalLength !== null && formatted.indexOf('.') !== -1) {
-					const pair = formatted.split('.');
+					const pair = formatted.split('.')
 					formatted = `${pair[0]}.${pair[1].slice(0, this.decimalLength)}`
 				}
 				formatted = this.format(formatted)
