@@ -380,7 +380,7 @@
 					beforeRead,
 					useBeforeRead,
 				} = this;
-				let res = true
+				let res = file
 				// beforeRead是否为一个方法
 				if (test.func(beforeRead)) {
 					// 如果用户定义了此方法，则去执行此方法，并传入读取的文件回调
@@ -400,13 +400,10 @@
 						);
 					});
 				}
-				if (!res) {
-					return;
-				}
 				if (test.promise(res)) {
 					res.then((data) => this.onAfterRead(data || file));
 				} else {
-					this.onAfterRead(file);
+					this.onAfterRead(res || file);
 				}
 			},
 			getDetail(index) {
