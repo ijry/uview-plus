@@ -1,3 +1,10 @@
+## 3.4.25（2025-04-27）
+fix: up-form编译在微信小程序里样式缺失 #640
+
+fix: number-box输入为空时自动设为最小值
+
+feat: picker与datetimepicke组件hasInput模式支持inputProps属性
+
 ## 3.4.24（2025-04-25）
 fix: 修复upload上传逻辑(感谢@semdy)
 
