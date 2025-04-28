@@ -1,3 +1,4 @@
+import test from '../../libs/function/test'
 function pickExclude(obj, keys) {
 	// 某些情况下，type可能会为
     if (!['[object Object]', '[object File]'].includes(Object.prototype.toString.call(obj))) {
