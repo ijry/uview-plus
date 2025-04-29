@@ -132,12 +132,12 @@
 				// #endif
 				// #ifndef APP-NVUE
 				if (this.loading || this.isError || this.width == '100%' || this.mode != 'heightFix') {
-					style.width = this.width;
+					style.width = addUnit(this.width);
 				} else {
 					style.width = 'fit-content';
 				}
 				if (this.loading || this.isError || this.height == '100%' || this.mode != 'widthFix') {
-					style.height = this.height;
+					style.height = addUnit(this.height);
 				} else {
 					style.height = 'fit-content';
 				}
@@ -153,12 +153,12 @@
 				// #endif
 				// #ifndef APP-NVUE
 				if (this.loading || this.isError || this.width == '100%' || this.mode != 'heightFix') {
-					style.width = this.width;
+					style.width = addUnit(this.width);
 				} else {
 					style.width = 'fit-content';
 				}
 				if (this.loading || this.isError || this.height == '100%' || this.mode != 'widthFix') {
-					style.height = this.height;
+					style.height = addUnit(this.height);
 				} else {
 					style.height = 'fit-content';
 				}
