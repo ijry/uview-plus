@@ -182,8 +182,8 @@ export default {
 		subtitle() {
 			// 初始化时，this.months为空数组，所以需要特别判断处理
 			if (this.months.length) {
-				return `${this.months[this.monthIndex].year}年${
-					this.months[this.monthIndex].month
+				return `${this.months[this.monthIndex]['year']}年${
+					this.months[this.monthIndex]['month']
 				}月`
 			} else {
 				return ''

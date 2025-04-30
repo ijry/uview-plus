@@ -94,23 +94,23 @@ export const mixin = defineMixin({
         // 查询节点信息
         // 目前此方法在支付宝小程序中无法获取组件跟接点的尺寸，为支付宝的bug(2020-07-21)
         // 解决办法为在组件根部再套一个没有任何作用的view元素
-        upGetRect: function(selector: string): Promise<UTSJSONObject> {
+        upGetRect: function(selector: string, all: boolean): Promise<UTSJSONObject|Array<UTSJSONObject>> {
             return new Promise((resolve) => {
                 let tmp = {
                     width: 12
                 } as UTSJSONObject
                 resolve(tmp)
-                // uni.createSelectorQuery()
-                //     .in(this)[all == true ? 'selectAll' : 'select'](selector)
-                //     .boundingClientRect((rect) => {
-                //         if (all && Array.isArray(rect) && rect.length) {
-                //             resolve(rect)
-                //         }
-                //         if (!all && rect) {
-                //             resolve(rect)
-                //         }
-                //     })
-                //     .exec()
+                uni.createSelectorQuery()
+                    .in(this)[all == true ? 'selectAll' : 'select'](selector)
+                    .boundingClientRect((rect) => {
+                        if (all && Array.isArray(rect) && rect.length) {
+                            resolve(rect)
+                        }
+                        if (!all && rect) {
+                            resolve(rect)
+                        }
+                    })
+                    .exec()
             })
         },
         getParent(name: string): ComponentPublicInstance|null {

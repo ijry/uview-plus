@@ -7,7 +7,7 @@
 				<view v-if="showMark" class="up-calendar-month__days__month-mark-wrapper">
 					<text class="up-calendar-month__days__month-mark-wrapper__text">{{ item['month'] }}</text>
 				</view>
-				<view class="up-calendar-month__days__day" v-for="(item1, index1) in item['date']" :key="index1"
+				<!-- <view class="up-calendar-month__days__day" v-for="(item1, index1) in item['date']" :key="index1"
 					:style="[dayStyle(index, index1, item1)]" @tap="clickHandler(index, index1, item1)"
 					:class="[item1['selected'] && 'up-calendar-month__days__day__select--selected']">
 					<view class="up-calendar-month__days__day__select" :style="[daySelectStyle(index, index1, item1)]">
@@ -18,9 +18,9 @@
 							class="up-calendar-month__days__day__select__buttom-info"
 							:class="[item1['disabled'] && 'up-calendar-month__days__day__select__buttom-info--disabled']"
 							:style="[textStyle(item1)]">{{ getBottomInfo(index, index1, item1) }}</text>
-						<text v-if="item1.dot" class="up-calendar-month__days__day__select__dot"></text>
+						<text v-if="item1['dot']" class="up-calendar-month__days__day__select__dot"></text>
 					</view>
-				</view>
+				</view> -->
 			</view>
 		</view>
 	</view>
@@ -31,10 +31,24 @@
 	import { mixin } from '../../libs/mixin/mixin';
 	import { addUnit, deepClone, toast, sleep } from '../../libs/function/index';
 	import { colorGradient } from '../../libs/function/colorGradient';
-	import test from '../../libs/function/test';
+	import { array as testArray } from '../../libs/function/test';
 	import defProps from './calendar.uts';
 	let calendarProp = defProps['calendar'] as UTSJSONObject;
 	import {dayuts} from '@/uni_modules/lime-dayuts';
+	type monthsItemDate = {
+	  date: Date
+	  selected: boolean 
+	  disabled: boolean 
+	  dot: boolean 
+	  day: string 
+	  week: number 
+	  bottomInfo: string 
+	}
+	type monthsItem = {
+	  year: string 
+	  month: string 
+	  date: Array<monthsItemDate>
+	}
 	export default {
 		name: 'up-calendar-month',
 		mixins: [mpMixin, mixin],
@@ -51,8 +65,10 @@
 			},
 			// 月份数据
 			months: {
-				type: Array<any>,
-				default: () => []
+				type: Array<monthsItem>,
+				default: () => {
+					return [] as Array<monthsItem>
+				}
 			},
 			// 日期选择类型
 			mode: {
@@ -131,7 +147,7 @@
 				width: 0,
 				// 当前选中的日期item
 				item: {},
-				selected: []
+				selected: [] as Array<string>
 			}
 		},
 		watch: {
@@ -147,80 +163,70 @@
 			selectedChange() {
 				return [this.minDate, this.maxDate, this.defaultDate]
 			},
-			dayStyle(index1, index2, item) {
-				return (index1, index2, item) => {
+			dayStyle(index1: Number, index2: Number, item: monthsItemDate) {
+				return (index1: Number, index2: Number, item: monthsItemDate) => {
 					const style = {}
-					let week = item.week
+					let week = Number.from(item['week'].toString())
 					// 不进行四舍五入的形式保留2位小数
-					const dayWidth = Number(parseFloat(this.width / 7).toFixed(3).slice(0, -1))
+					let tmp = (this.width / 7).toFixed(3).slice(0, -1)
+					const dayWidth = Number.from(tmp)
 					// 得出每个日期的宽度
-					// #ifdef APP-NVUE
-					style.width = addUnit(dayWidth, 'px')
-					// #endif
-					style.height = addUnit(this.rowHeight)
+					style['height'] = addUnit(this.rowHeight)
 					if (index2 === 0) {
 						// 获取当前为星期几，如果为0，则为星期天，减一为每月第一天时，需要向左偏移的item个数
 						week = (week === 0 ? 7 : week) - 1
-						style.marginLeft = addUnit(week * dayWidth, 'px')
+						style['marginLeft'] = addUnit(week * dayWidth, 'px')
 					}
 					if (this.mode === 'range') {
-						// 之所以需要这么写，是因为DCloud公司的iOS客户端的开发者能力有限导致的bug
-						style.paddingLeft = 0
-						style.paddingRight = 0
-						style.paddingBottom = 0
-						style.paddingTop = 0
+						style.padding = 0
 					}
 					return style
 				}
 			},
 			daySelectStyle() {
-				return (index1, index2, item) => {
-					let date = dayuts(item.date).format("YYYY-MM-DD"),
+				return (index1: Number, index2: Number, item: monthsItemDate) => {
+					let date = dayuts(item['date']).format("YYYY-MM-DD"),
 						style = {}
 					// 判断date是否在selected数组中，因为月份可能会需要补0，所以使用dateSame判断，而不用数组的includes判断
-					if (this.selected.some(item => this.dateSame(item, date))) {
-						style.backgroundColor = this.color
+					const sameDate = (element: string): boolean => this.dateSame(element, date)
+					if (this.selected.some(sameDate)) {
+						style['backgroundColor'] = this.color
 					}
 					if (this.mode === 'single') {
 						if (date === this.selected[0]) {
 							// 因为需要对nvue的兼容，只能这么写，无法缩写，也无法通过类名控制等等
-							style.borderTopLeftRadius = '3px'
-							style.borderBottomLeftRadius = '3px'
-							style.borderTopRightRadius = '3px'
-							style.borderBottomRightRadius = '3px'
+							style['borderRadius'] = '3px'
 						}
 					} else if (this.mode === 'range') {
 						if (this.selected.length >= 2) {
 							const len = this.selected.length - 1
 							// 第一个日期设置左上角和左下角的圆角
 							if (this.dateSame(date, this.selected[0])) {
-								style.borderTopLeftRadius = '3px'
-								style.borderBottomLeftRadius = '3px'
+								style['borderTopLeftRadius'] = '3px'
+								style['borderBottomLeftRadius'] = '3px'
 							}
 							// 最后一个日期设置右上角和右下角的圆角
 							if (this.dateSame(date, this.selected[len])) {
-								style.borderTopRightRadius = '3px'
-								style.borderBottomRightRadius = '3px'
+								style['borderTopRightRadius'] = '3px'
+								style['borderBottomRightRadius'] = '3px'
 							}
 							// 处于第一和最后一个之间的日期，背景色设置为浅色，通过将对应颜色进行等分，再取其尾部的颜色值
 							if (dayuts(date).isAfter(dayuts(this.selected[0])) && dayuts(date).isBefore(dayuts(this
 									.selected[len]))) {
-								style.backgroundColor = colorGradient(this.color, '#ffffff', 100)[90]
+								style['backgroundColor'] = colorGradient(this.color, '#ffffff', 100)[90]
 								// 增加一个透明度，让范围区间的背景色也能看到底部的mark水印字符
-								style.opacity = 0.7
+								style['opacity'] = 0.7
 							}
 						} else if (this.selected.length === 1) {
 							// 之所以需要这么写，是因为DCloud公司的iOS客户端的开发者能力有限导致的bug
 							// 进行还原操作，否则在nvue的iOS，uni-app有bug，会导致诡异的表现
-							style.borderTopLeftRadius = '3px'
-							style.borderBottomLeftRadius = '3px'
+							style['borderTopLeftRadius'] = '3px'
+							style['borderBottomLeftRadius'] = '3px'
 						}
 					} else {
-						if (this.selected.some(item => this.dateSame(item, date))) {
-							style.borderTopLeftRadius = '3px'
-							style.borderBottomLeftRadius = '3px'
-							style.borderTopRightRadius = '3px'
-							style.borderBottomRightRadius = '3px'
+						const sameDate = (element: string): boolean => this.dateSame(element, date)
+						if (this.selected.some(sameDate)) {
+							style['borderRadius'] = '3px'
 						}
 					}
 					return style
@@ -228,19 +234,20 @@
 			},
 			// 某个日期是否被选中
 			textStyle() {
-				return (item) => {
-					const date = dayuts(item.date).format("YYYY-MM-DD"),
+				return (item: monthsItemDate) => {
+					const date = dayuts(item['date']).format("YYYY-MM-DD"),
 						style = {}
 					// 选中的日期，提示文字设置白色
-					if (this.selected.some(item => this.dateSame(item, date))) {
-						style.color = '#ffffff'
+					const sameDate = (element: string): boolean => this.dateSame(element, date)
+					if (this.selected.some(sameDate)) {
+						style['color'] = '#ffffff'
 					}
 					if (this.mode === 'range') {
 						const len = this.selected.length - 1
 						// 如果是范围选择模式，第一个和最后一个之间的日期，文字颜色设置为高亮的主题色
 						if (dayuts(date).isAfter(dayuts(this.selected[0])) && dayuts(date).isBefore(dayuts(this
 								.selected[len]))) {
-							style.color = this.color
+							style['color'] = this.color
 						}
 					}
 					return style
@@ -248,9 +255,12 @@
 			},
 			// 获取底部的提示文字
 			getBottomInfo() {
-				return (index1, index2, item) => {
-					const date = dayuts(item.date).format("YYYY-MM-DD")
-					const bottomInfo = item.bottomInfo
+				return (index1: Number, index2: Number, item: monthsItemDate): string  => {
+					const date = dayuts(item['date']).format("YYYY-MM-DD")
+					let bottomInfo = ''
+					if (item['bottomInfo']) {
+						bottomInfo = item['bottomInfo']
+					}
 					// 当为日期范围模式时，且选择的日期个数大于0时
 					if (this.mode === 'range' && this.selected.length > 0) {
 						if (this.selected.length === 1) {
@@ -287,29 +297,19 @@
 				this.$emit('monthSelected', this.selected)
 				this.$nextTick(() => {
 					// 这里需要另一个延时，因为获取宽度后，会进行月份数据渲染，只有渲染完成之后，才有真正的高度
-					// 因为nvue下，$nextTick并不是100%可靠的
-					sleep(10).then(() => {
-						this.getWrapperWidth()
-						this.getMonthRect()
-					})
+					this.getWrapperWidth()
+					this.getMonthRect()
 				})
 			},
 			// 判断两个日期是否相等
-			dateSame(date1, date2) {
+			dateSame(date1: string, date2: string) {
 				return dayuts(date1).isSame(dayuts(date2))
 			},
 			// 获取月份数据区域的宽度，因为nvue不支持百分比，所以无法通过css设置每个日期item的宽度
 			getWrapperWidth() {
-				// #ifdef APP-NVUE
-				dom.getComponentRect(this.$refs['up-calendar-month-wrapper'], res => {
-					this.width = res.size.width
-				})
-				// #endif
-				// #ifndef APP-NVUE
 				this.$uGetRect('.up-calendar-month-wrapper').then(size => {
 					this.width = size.width
 				})
-				// #endif
 			},
 			getMonthRect() {
 				// 获取每个月份数据的尺寸，用于父组件在scroll-view滚动事件中，监听当前滚动到了第几个月份
@@ -331,15 +331,13 @@
 			},
 			// 获取每个月份区域的尺寸
 			getMonthRectByPromise(el) {
-				// #ifndef APP-NVUE
-				// $uGetRect为uView自带的节点查询简化方法，详见文档介绍：https://ijry.github.io/uview-plus/js/getRect.html
+				// $uGetRect为uview-plus自带的节点查询简化方法，详见文档介绍：https://ijry.github.io/uview-plus/js/getRect.html
 				// 组件内部一般用this.$uGetRect，对外的为uni.$u.getRect，二者功能一致，名称不同
 				return new Promise(resolve => {
-					this.$uGetRect(`.${el}`).then(size => {
+					this.upGetRect(`.${el}`).then(size => {
 						resolve(size)
 					})
 				})
-				// #endif
 			},
 			// 点击某一个日期
 			clickHandler(index1, index2, item) {
@@ -347,8 +345,8 @@
 					return;
 				}
 				this.item = item
-				const date = dayuts(item.date).format("YYYY-MM-DD")
-				if (item.disabled) return
+				const date = dayuts(item['date']).format("YYYY-MM-DD")
+				if (item['disabled']) return
 				// 对上一次选择的日期数组进行深度克隆
 				let selected = deepClone(this.selected)
 				if (this.mode === 'single') {
@@ -420,14 +418,14 @@
 				const maxDate = this.mdayutse || dayuts(minDate).add(this.maxMonth - 1, 'month').format("YYYY-MM-DD")
 				if (this.mode === 'single') {
 					// 单选模式，可以是字符串或数组，Date对象等
-					if (!test.array(this.defaultDate)) {
-						defaudayutse = [dayuts(this.defaultDate).format("YYYY-MM-DD")]
+					if (!testArray(this.defaultDate)) {
+						defaultDate = [dayuts(this.defaultDate).format("YYYY-MM-DD")]
 					} else {
 						defaultDate = [this.defaultDate[0]]
 					}
 				} else {
 					// 如果为非数组，则不执行
-					if (!test.array(this.defaultDate)) return
+					if (!testArray(this.defaultDate)) return
 					defaultDate = this.defaultDate
 				}
 				// 过滤用户传递的默认数组，取出只在可允许最大值与最小值之间的元素
