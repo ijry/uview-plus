@@ -171,7 +171,7 @@
 		<up-popup
 			mode="center"
 			v-model:show="popupShow">
-			<video id="myVideo"
+			<video id="myVideo" v-if="popupShow"
 				:src="currentItemIndex >= 0 ? lists[currentItemIndex].url : ''"
 				@error="videoErrorCallback" show-center-play-btn
 				object-fit='cover' show-fullscreen-btn='true'

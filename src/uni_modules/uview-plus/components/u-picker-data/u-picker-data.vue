@@ -17,6 +17,7 @@
 			:show="show"
 			:columns="optionsInner"
 			:keyName="labelKey"
+			:defaultIndex="defaultIndex"
 			@confirm="select"
 			@cancel="cancel">
 		</up-picker>
@@ -57,13 +58,15 @@ export default {
         return {
 			show: false,
 			current: '',
+			defaultIndex: [],
         }
     },
     created() {
 		if (this.modelValue) {
-			this.options.forEach((ele) => {
+			this.options.forEach((ele, index) => {
 				if (ele[this.valueKey] == this.modelValue) {
 					this.current = ele[this.labelKey]
+					this.defaultIndex = [index]
 				}
 			})
 		}
@@ -74,6 +77,7 @@ export default {
 				this.options.forEach((ele) => {
 					if (ele[this.valueKey] == this.modelValue) {
 						this.current = ele[this.labelKey]
+						this.defaultIndex = [index]
 					}
 				})
 			}
@@ -101,8 +105,9 @@ export default {
 			this.show = false;
 			// console.log(value);
             this.$emit('update:modelValue', value[0][this.valueKey]);
+			this.defaultIndex = columnIndex;
 			this.current = value[0][this.labelKey];
-        },
+        }
     }
 }
 </script>
