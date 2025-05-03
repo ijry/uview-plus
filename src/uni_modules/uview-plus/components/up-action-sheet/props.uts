@@ -22,7 +22,7 @@ export const propsActionSheet = defineMixin({
         },
         // 数据
         actions: {
-            type: Array<UTSJSONObject>,
+            type: Array<actionSheetItem>,
             default: crtProp['actions']
         },
         // 取消按钮的文字，不为空时显示按钮

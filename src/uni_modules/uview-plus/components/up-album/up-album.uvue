@@ -116,29 +116,29 @@ export default {
     },
 	emits: ["albumWidth"],
     computed: {
-        // imageStyle() {
-        //     return (index1, index2) => {
-        //         const { space, rowCount, multipleSize, urls } = this,
-        //             rowLen = this.showUrls.length,
-        //             allLen = this.urls.length
-        //         const style = {
-        //             marginRight: addUnit(space),
-        //             marginBottom: addUnit(space)
-        //         }
-        //         // 如果为最后一行，则每个图片都无需下边框
-        //         if (index1 === rowLen && !this.autoWrap) style.marginBottom = 0
-        //         // 每行的最右边一张和总长度的最后一张无需右边框
-        //         if (!this.autoWrap) {
-        //             if (
-        //                 index2 === rowCount ||
-        //                 (index1 === rowLen &&
-        //                     index2 === this.showUrls[index1 - 1].length)
-        //             )
-        //                 style.marginRight = 0
-        //         }
-        //         return style
-        //     }
-        // },
+        imageStyle() {
+            return (index1, index2): any => {
+                const { space, rowCount, multipleSize, urls } = this,
+                    rowLen = this.showUrls.length,
+                    allLen = this.urls.length
+                const style = {
+                    marginRight: addUnit(space),
+                    marginBottom: addUnit(space)
+                }
+                // 如果为最后一行，则每个图片都无需下边框
+                if (index1 === rowLen && !this.autoWrap) style.marginBottom = 0
+                // 每行的最右边一张和总长度的最后一张无需右边框
+                if (!this.autoWrap) {
+                    if (
+                        index2 === rowCount ||
+                        (index1 === rowLen &&
+                            index2 === this.showUrls[index1 - 1].length)
+                    )
+                        style.marginRight = 0
+                }
+                return style
+            }
+        },
         // 将数组划分为二维数组
         showUrls(): Array<Array<any>> {
             if (this.autoWrap) {
@@ -189,27 +189,6 @@ export default {
         addUnit(val: any) {
 			return addUnit(val)
 		},
-		imageStyle(index1: number, index2: number): any {
-			const { space, rowCount, multipleSize, urls } = this,
-				rowLen = this.showUrls.length,
-				allLen = this.urls.length
-			const style = {
-				marginRight: addUnit(space),
-				marginBottom: addUnit(space)
-			}
-			// 如果为最后一行，则每个图片都无需下边框
-			if (index1 === rowLen && !this.autoWrap) style['marginBottom'] = 0
-			// 每行的最右边一张和总长度的最后一张无需右边框
-			if (!this.autoWrap) {
-				if (
-					index2 === rowCount ||
-					(index1 === rowLen &&
-						index2 === this.showUrls[index1 - 1].length)
-				)
-					style['marginRight'] = 0
-			}
-			return style
-		},
         // 预览图片
         onPreviewTap(url: string) {
             const urls = this.urls.map((item) => {
@@ -258,12 +237,12 @@ export default {
         async getComponentWidth() {
             // todo延时一定时间，以获取dom尺寸
             // sleep(30).then(() => {
-				this.upGetRect('.up-album__row').then((size: UTSJSONObject) => {
-					let width = size['width']
-					if (size != null && width != null) {
-						this.singleWidth = width as Number * this.singlePercent as Number
-					}
-				})
+				// this.upGetRect('.up-album__row').then((size: UTSJSONObject) => {
+				// 	let width = size['width']
+				// 	if (size != null && width != null) {
+				// 		this.singleWidth = width as Number * this.singlePercent as Number
+				// 	}
+				// })
 			//})
         }
     }

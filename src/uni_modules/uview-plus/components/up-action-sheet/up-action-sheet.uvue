@@ -155,31 +155,27 @@
 		},
 		computed: {
 			// 操作项目的样式
-			// itemStyle(): any {
-			// 	return (index: number) => {
-			// 		let style = {};
-			// 		if (this.actions[index]['color']) style['color'] = this.actions[index]['color']
-			// 		if (this.actions[index]['fontSize']) style['fontSize'] = addUnit(this.actions[index]['fontSize'])
-			// 		// 选项被禁用的样式
-			// 		if (this.actions[index]['disabled']) style['color'] = '#c0c4cc'
-			// 		return style;
-			// 	}
-			// },
+			itemStyle() {
+				return (index: number): any => {
+					let style = {};
+					if (this.actions[index]['color'] != null && this.actions[index]['color'] != '') {
+						style['color'] = this.actions[index]['color']
+					}
+					if (this.actions[index]['fontSize'] != null && this.actions[index]['fontSize'] != '') {
+						 style['fontSize'] = addUnit(this.actions[index]['fontSize'])
+					}
+					// 选项被禁用的样式
+					if (this.actions[index]['disabled'] != null && this.actions[index]['disabled'] == true) {
+						style['color'] = '#c0c4cc'
+					}
+					return style;
+				}
+			},
 		},
 		emits: ["close", "select", "update:show"],
 		created() {
 		},
 		methods: {
-			// 操作项目的样式
-			itemStyle(index: number): any {
-				let style = {};
-				if (this.actions[index]['color'] != '') style['color'] = this.actions[index]['color']
-				if (this.actions[index]['fontSize'] != '') style['fontSize'] = addUnit(this.actions[index]['fontSize'])
-				// 选项被禁用的样式
-				if (this.actions[index]['disabled'] != null && this.actions[index]['disabled'] as boolean)
-					style['color'] = '#c0c4cc'
-				return style;
-			},
 			closeHandler() {
 				// 允许点击遮罩关闭时，才发出close事件
 				if(this.closeOnClickOverlay) {
@@ -193,14 +189,14 @@
 				this.$emit('close')
 			},
 			selectHandler(index: number) {
-				const item = this.actions[index]
-				if (item != null && item['disabled'] != true && item['loading'] != true) {
-					this.$emit('select', item)
-					if (this.closeOnClickAction) {
-						this.$emit('update:show')
-						this.$emit('close')
-					}
-				}
+				// const item:actionSheetItem = this.actions[index]
+				// if (item != null && item['disabled'] != true && item['loading'] != true) {
+				// 	this.$emit('select', item)
+				// 	if (this.closeOnClickAction) {
+				// 		this.$emit('update:show')
+				// 		this.$emit('close')
+				// 	}
+				// }
 			},
 		}
 	}

@@ -1,26 +1,26 @@
 <template>
 	<view class="up-calendar-month-wrapper" ref="up-calendar-month-wrapper">
-		<view v-for="(item, index) in months" :key="index" :class="[`up-calendar-month-` + index.toString()]"
+		<view v-for="(item, index) in monthsInner" :key="index" :class="[`up-calendar-month-` + index.toString()]"
 			:ref="`up-calendar-month-` + index.toString()" :id="`month-` + index.toString()">
 			<text v-if="index !== 0" class="up-calendar-month__title">{{ item['year'] }}年{{ item['month'] }}月</text>
 			<view class="up-calendar-month__days">
 				<view v-if="showMark" class="up-calendar-month__days__month-mark-wrapper">
 					<text class="up-calendar-month__days__month-mark-wrapper__text">{{ item['month'] }}</text>
 				</view>
-				<!-- <view class="up-calendar-month__days__day" v-for="(item1, index1) in item['date']" :key="index1"
+				<view class="up-calendar-month__days__day" v-for="(item1, index1) in item.date" :key="index1"
 					:style="[dayStyle(index, index1, item1)]" @tap="clickHandler(index, index1, item1)"
-					:class="[item1['selected'] && 'up-calendar-month__days__day__select--selected']">
+					:class="[item1.selected && 'up-calendar-month__days__day__select--selected']">
 					<view class="up-calendar-month__days__day__select" :style="[daySelectStyle(index, index1, item1)]">
 						<text class="up-calendar-month__days__day__select__info"
-							:class="[item1['disabled'] && 'up-calendar-month__days__day__select__info--disabled']"
+							:class="[item1.disabled && 'up-calendar-month__days__day__select__info--disabled']"
 							:style="[textStyle(item1)]">{{ item1['day'] }}</text>
 						<text v-if="getBottomInfo(index, index1, item1)"
 							class="up-calendar-month__days__day__select__buttom-info"
-							:class="[item1['disabled'] && 'up-calendar-month__days__day__select__buttom-info--disabled']"
+							:class="[item1.disabled && 'up-calendar-month__days__day__select__buttom-info--disabled']"
 							:style="[textStyle(item1)]">{{ getBottomInfo(index, index1, item1) }}</text>
 						<text v-if="item1['dot']" class="up-calendar-month__days__day__select__dot"></text>
 					</view>
-				</view> -->
+				</view>
 			</view>
 		</view>
 	</view>
@@ -35,16 +35,18 @@
 	import defProps from './calendar.uts';
 	let calendarProp = defProps['calendar'] as UTSJSONObject;
 	import {dayuts} from '@/uni_modules/lime-dayuts';
-	type monthsItemDate = {
+	export type monthsItemDate = {
 	  date: Date
 	  selected: boolean 
 	  disabled: boolean 
-	  dot: boolean 
-	  day: string 
-	  week: number 
-	  bottomInfo: string 
+	  dot?: boolean 
+	  day?: string 
+	  week: number
+	  month?: number
+	  bottomInfo?: string 
 	}
-	type monthsItem = {
+	export type monthsItem = {
+	  top: number
 	  year: string 
 	  month: string 
 	  date: Array<monthsItemDate>
@@ -66,9 +68,7 @@
 			// 月份数据
 			months: {
 				type: Array<monthsItem>,
-				default: () => {
-					return [] as Array<monthsItem>
-				}
+				default: [] as Array<monthsItem>
 			},
 			// 日期选择类型
 			mode: {
@@ -118,12 +118,12 @@
 			// 是否为只读状态，只读状态下禁止选择日期
 			readonly: {
 				type: Boolean,
-				default: () => calendarProp['readonly']
+				default: () => calendarProp.getBoolean('readonly')
 			},
 			// 日期区间最多可选天数，默认无限制，mode = range时有效
 			maxRange: {
 				type: [Number, String],
-				default: Infinity
+				default: 365
 			},
 			// 范围选择超过最多可选天数时的提示文案，mode = range时有效
 			rangePrompt: {
@@ -146,7 +146,8 @@
 				// 每个日期的宽度
 				width: 0,
 				// 当前选中的日期item
-				item: {},
+				item: null as monthsItemDate | null,
+				monthsInner: [] as Array<monthsItem>,
 				selected: [] as Array<string>
 			}
 		},
@@ -156,20 +157,26 @@
 				handler(n) {
 					this.setDefaultDate()
 				}
+			},
+			months: {
+				immediate: true,
+				handler(n) {
+					// this.monthsInner = this.months as Array<monthsItem>
+				}
 			}
 		},
 		computed: {
 			// 多个条件的变化，会引起选中日期的变化，这里统一管理监听
-			selectedChange() {
+			selectedChange(): any {
 				return [this.minDate, this.maxDate, this.defaultDate]
 			},
-			dayStyle(index1: Number, index2: Number, item: monthsItemDate) {
-				return (index1: Number, index2: Number, item: monthsItemDate) => {
+			dayStyle() {
+				return (index1: number, index2: number, item: monthsItemDate):any => {
 					const style = {}
-					let week = Number.from(item['week'].toString())
+					let week:number = item['week']
 					// 不进行四舍五入的形式保留2位小数
 					let tmp = (this.width / 7).toFixed(3).slice(0, -1)
-					const dayWidth = Number.from(tmp)
+					const dayWidth = parseFloat(tmp)
 					// 得出每个日期的宽度
 					style['height'] = addUnit(this.rowHeight)
 					if (index2 === 0) {
@@ -258,8 +265,8 @@
 				return (index1: Number, index2: Number, item: monthsItemDate): string  => {
 					const date = dayuts(item['date']).format("YYYY-MM-DD")
 					let bottomInfo = ''
-					if (item['bottomInfo']) {
-						bottomInfo = item['bottomInfo']
+					if (item['bottomInfo'] != null) {
+						bottomInfo = item['bottomInfo'].toString()
 					}
 					// 当为日期范围模式时，且选择的日期个数大于0时
 					if (this.mode === 'range' && this.selected.length > 0) {
@@ -291,10 +298,11 @@
 		mounted() {
 			this.init()
 		},
+		emits: ['monthSelected', 'updateMonthTop'],
 		methods: {
 			init() {
 				// 初始化默认选中
-				this.$emit('monthSelected', this.selected)
+				// this.$emit('monthSelected', this.selected, 'init')
 				this.$nextTick(() => {
 					// 这里需要另一个延时，因为获取宽度后，会进行月份数据渲染，只有渲染完成之后，才有真正的高度
 					this.getWrapperWidth()
@@ -302,64 +310,73 @@
 				})
 			},
 			// 判断两个日期是否相等
-			dateSame(date1: string, date2: string) {
+			dateSame(date1: string, date2: string): boolean {
 				return dayuts(date1).isSame(dayuts(date2))
 			},
 			// 获取月份数据区域的宽度，因为nvue不支持百分比，所以无法通过css设置每个日期item的宽度
 			getWrapperWidth() {
-				this.$uGetRect('.up-calendar-month-wrapper').then(size => {
-					this.width = size.width
+				this.upGetRect('.up-calendar-month-wrapper', false).then((res) => {
+					let size = res as NodeInfo;
+					this.width = size.width ?? 0
 				})
 			},
 			getMonthRect() {
 				// 获取每个月份数据的尺寸，用于父组件在scroll-view滚动事件中，监听当前滚动到了第几个月份
-				const promiseAllArr = this.months.map((item, index) => this.getMonthRectByPromise(
-					`up-calendar-month-${index}`))
+				const promiseAllArr: Array<Promise<any>> = this.months.map((item: monthsItem, index):Promise<any> => {
+					return this.getMonthRectByPromise(`up-calendar-month-${index}`)
+				})
 				// 一次性返回
 				Promise.all(promiseAllArr).then(
-					sizes => {
+					(res) => {
+						let sizes = res as NodeInfo[]
 						let height = 1
-						const topArr = []
+						const topArr = [] as Array<number>
 						for (let i = 0; i < this.months.length; i++) {
 							// 添加到months数组中，供scroll-view滚动事件中，判断当前滚动到哪个月份
-							topArr[i] = height
-							height += sizes[i].height
+							topArr.push(height)
+							height += sizes[i].height ?? 0
 						}
 						// 由于微信下，无法通过this.months[i].top的形式(引用类型)去修改父组件的month的top值，所以使用事件形式对外发出
 						this.$emit('updateMonthTop', topArr)
 					})
 			},
 			// 获取每个月份区域的尺寸
-			getMonthRectByPromise(el) {
-				// $uGetRect为uview-plus自带的节点查询简化方法，详见文档介绍：https://ijry.github.io/uview-plus/js/getRect.html
-				// 组件内部一般用this.$uGetRect，对外的为uni.$u.getRect，二者功能一致，名称不同
-				return new Promise(resolve => {
-					this.upGetRect(`.${el}`).then(size => {
-						resolve(size)
-					})
-				})
+			getMonthRectByPromise(el: any): Promise<any> {
+				// upGetRect为uview-plus自带的节点查询简化方法，详见文档介绍：https://ijry.github.io/uview-plus/js/getRect.html
+				// 组件内部一般用this.upGetRect
+				// return new Promise(resolve => {
+					return this.upGetRect(`.${el}`, false)
+					// .then((res) => {
+					// 	resolve(res)
+					// })
+				//})
 			},
 			// 点击某一个日期
-			clickHandler(index1, index2, item) {
+			clickHandler(index1: number, index21: number, item: monthsItemDate) {
 				if (this.readonly) {
 					return;
 				}
 				this.item = item
 				const date = dayuts(item['date']).format("YYYY-MM-DD")
-				if (item['disabled']) return
+				let disabled = item.disabled ?? false
+				if (disabled) return
 				// 对上一次选择的日期数组进行深度克隆
-				let selected = deepClone(this.selected)
+				// let selected = deepClone(this.selected)
+				let selected = (this.selected)
 				if (this.mode === 'single') {
 					// 单选情况下，让数组中的元素为当前点击的日期
 					selected = [date]
 				} else if (this.mode === 'multiple') {
-					if (selected.some(item => this.dateSame(item, date))) {
+					const sameDate = (element: string): boolean => this.dateSame(element, date)
+					if (selected.some(sameDate)) {
 						// 如果点击的日期已在数组中，则进行移除操作，也就是达到反选的效果
-						const itemIndex = selected.findIndex(item => item === date)
+						const itemIndex = selected.findIndex((item: string): boolean => item === date)
 						selected.splice(itemIndex, 1)
 					} else {
 						// 如果点击的日期不在数组中，且已有的长度小于总可选长度时，则添加到数组中去
-						if (selected.length < this.maxCount) selected.push(date)
+						if (selected.length < (this.maxCount as number)) {
+							selected.push(date)
+						}
 					}
 				} else {
 					// 选择区间形式
@@ -374,11 +391,12 @@
 							selected = [date]
 						} else if (dayuts(date).isAfter(existsDate)) {
 							// 当前日期减去最大可选的日期天数，如果大于起始时间，则进行提示
-							if(dayuts(dayuts(date).subtract(this.maxRange, 'day')).isAfter(dayuts(selected[0])) && this.showRangePrompt) {
-								if(this.rangePrompt) {
+							if(dayuts(dayuts(date).subtract((this.maxRange as number), 'day'))
+								.isAfter(dayuts(selected[0])) && this.showRangePrompt) {
+								if(this.rangePrompt != '') {
 									toast(this.rangePrompt)
 								} else {
-									toast(`选择天数不能超过 ${this.maxRange} 天`)
+									toast(`选择天数不能超过 ${this.maxRange.toString()} 天`)
 								}
 								return
 							}
@@ -386,7 +404,7 @@
 							selected.push(date)
 							const startDate = selected[0]
 							const endDate = selected[1]
-							const arr = []
+							const arr = [] as Array<string>
 							let i = 0
 							do {
 								// 将开始和结束日期之间的日期添加到数组中
@@ -408,25 +426,28 @@
 			},
 			// 设置默认日期
 			setDefaultDate() {
-				if (!this.defaultDate) {
+				if (this.defaultDate != null) {
 					// 如果没有设置默认日期，则将当天日期设置为默认选中的日期
 					const selected = [dayuts().format("YYYY-MM-DD")]
 					return this.setSelected(selected, false)
 				}
-				let defaultDate = []
-				const minDate = this.mdayutse || dayuts().format("YYYY-MM-DD")
-				const maxDate = this.mdayutse || dayuts(minDate).add(this.maxMonth - 1, 'month').format("YYYY-MM-DD")
+				let defaultDate = [] as Array<string>
+				let minDateData = this.minDate.toString()
+				let maxDateData = this.maxDate.toString()
+				const minDate = minDateData != '' ? minDateData : dayuts().format("YYYY-MM-DD")
+				const maxDate = maxDateData != '' ? maxDateData : dayuts(minDate).add(this.maxMonth as number - 1, 'month').format("YYYY-MM-DD")
 				if (this.mode === 'single') {
 					// 单选模式，可以是字符串或数组，Date对象等
 					if (!testArray(this.defaultDate)) {
 						defaultDate = [dayuts(this.defaultDate).format("YYYY-MM-DD")]
 					} else {
-						defaultDate = [this.defaultDate[0]]
+						let tmp = dayuts((this.defaultDate as Array<any>)[0]).format("YYYY-MM-DD");
+						defaultDate = [tmp]
 					}
 				} else {
 					// 如果为非数组，则不执行
 					if (!testArray(this.defaultDate)) return
-					defaultDate = this.defaultDate
+					defaultDate = this.defaultDate as Array<string>
 				}
 				// 过滤用户传递的默认数组，取出只在可允许最大值与最小值之间的元素
 				defaultDate = defaultDate.filter(item => {
@@ -435,9 +456,11 @@
 				})
 				this.setSelected(defaultDate, false)
 			},
-			setSelected(selected: string, event = true) {
+			setSelected(selected: Array<string>, event = true) {
 				this.selected = selected
-				event && this.$emit('monthSelected', this.selected, 'tap')
+				if (event) {
+					this.$emit('monthSelected', this.selected, 'tap')
+				}
 			}
 		}
 	}

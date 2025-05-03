@@ -15,9 +15,7 @@
 				:showTitle="showTitle"
 			></uHeader>
 			<scroll-view
-				:style="{
-                    height: addUnit(listHeight)
-                }"
+				:style="{height: addUnit(listHeight)}"
 				scroll-y
 				@scroll="onScroll"
 				:scroll-top="scrollTop"
@@ -42,13 +40,13 @@
 					:showRangePrompt="showRangePrompt"
 					:allowSameDay="allowSameDay"
 					ref="month"
-					@monthSelected="monthSelected"
-					@updateMonthTop="updateMonthTop"
+					@monthSelected="monthSelectedM"
+					@updateMonthTop="updateMonthTopM"
 				></uMonth>
 			</scroll-view>
 			<slot name="footer" v-if="showConfirm">
 				<view class="up-calendar__confirm">
-					<up-button
+					<!-- <up-button
 						shape="circle"
 						:text="
                             buttonDisabled ? confirmDisabledText : confirmText
@@ -56,7 +54,7 @@
 						:color="color"
 						@click="confirm"
 						:disabled="buttonDisabled"
-					></up-button>
+					></up-button> -->
 				</view>
 			</slot>
 		</view>
@@ -65,7 +63,7 @@
 
 <script>
 import uHeader from './header.uvue'
-import uMonth from './month.uvue'
+import uMonth, { monthsItem, monthsItemDate } from './month.uvue'
 import { propsCalendar } from './props'
 import util from './util'
 import {dayuts} from '@/uni_modules/lime-dayuts';
@@ -73,7 +71,7 @@ import {dayuts} from '@/uni_modules/lime-dayuts';
 import { mpMixin } from '../../libs/mixin/mpMixin'
 import { mixin } from '../../libs/mixin/mixin'
 import { addUnit, range, error, padZero } from '../../libs/function/index';
-import test from '../../libs/function/test';
+import { number as testNumber, array as testArray } from '../../libs/function/test';
 /**
  * Calendar 日历
  * @description  此组件用于单个选择日期，范围选择日期等，日历被包裹在底部弹起的容器中.
@@ -112,6 +110,8 @@ import test from '../../libs/function/test';
  * @example <up-calendar  :defaultDate="defaultDateMultiple" :show="show" mode="multiple" @confirm="confirm">
 	</up-calendar>
  * */
+import defProps from './calendar.uts';
+let calendarProp = defProps['calendar'] as UTSJSONObject;
 export default {
 	name: 'up-calendar',
 	mixins: [mpMixin, mixin, propsCalendar],
@@ -121,19 +121,20 @@ export default {
 	},
 	data() {
 		return {
+			start: 0,
 			// 需要显示的月份的数组
-			months: [] as Array<any>,
+			months: [] as monthsItem[],
 			// 在月份滚动区域中，当前视图中月份的index索引
 			monthIndex: 0,
 			// 月份滚动区域的高度
 			listHeight: 0,
 			// month组件中选择的日期数组
-			selected: [],
+			selected: [] as Array<string>,
 			scrollIntoView: '',
 			scrollIntoViewScroll: '',
 			scrollTop:0,
 			// 过滤处理方法
-			innerFormatter: (value) => value
+			innerFormatter: (value: monthsItemDate):monthsItemDate => value
 		}
 	},
 	watch: {
@@ -165,25 +166,26 @@ export default {
 	},
 	computed: {
 		// 由于maxDate和minDate可以为字符串(2021-10-10)，或者数值(时间戳)，但是dayuts如果接受字符串形式的时间戳会有问题，这里进行处理
-		innerMaxDate() {
-			return test.number(this.maxDate)
-				? Number(this.maxDate)
-				: this.maxDate
+		innerMaxDate(): string {
+			return testNumber(this.maxDate)
+				? (this.maxDate as number).toString()
+				: this.maxDate.toString()
 		},
-		innerMinDate() {
-			return test.number(this.minDate)
-				? Number(this.minDate)
-				: this.minDate
+		innerMinDate(): string {
+			return testNumber(this.minDate)
+				? (this.minDate as number).toString()
+				: this.minDate.toString()
 		},
 		// 多个条件的变化，会引起选中日期的变化，这里统一管理监听
-		selectedChange() {
+		selectedChange(): Array<any> {
 			return [this.innerMinDate, this.innerMaxDate, this.defaultDate]
 		},
 		subtitle() {
 			// 初始化时，this.months为空数组，所以需要特别判断处理
-			if (this.months.length) {
-				return `${this.months[this.monthIndex]['year']}年${
-					this.months[this.monthIndex]['month']
+			if (this.months.length > 0) {
+				let monthIndex: number = this.monthIndex as number
+				return `${this.months[monthIndex]['year']}年${
+					this.months[monthIndex]['month']
 				}月`
 			} else {
 				return ''
@@ -208,13 +210,15 @@ export default {
 	},
 	emits: ["confirm", "close"],
 	methods: {
-		addUnit,
+		addUnit(e: any) {
+			return addUnit(e)
+		},
 		// 在微信小程序中，不支持将函数当做props参数，故只能通过ref形式调用
-		setFormatter(e) {
-			this.innerFormatter = e
+		setFormatter(e: object)  {
+			this.innerFormatter = e as ((val: monthsItemDate) => monthsItemDate)
 		},
 		// month组件内部选择日期后，通过事件通知给父组件
-		monthSelected(e: string,scene ='init') {
+		monthSelectedM(e: Array<string>, scene: string) {
 			this.selected = e
 			if (!this.showConfirm) {
 				// 在不需要确认按钮的情况下，如果为单选，或者范围多选且已选长度大于2，则直接进行返还
@@ -235,14 +239,15 @@ export default {
 		init() {
 			// 校验maxDate，不能小于minDate。
 			if (
-				this.innerMaxDate &&
-                this.innerMinDate &&
+				this.innerMaxDate != '0' &&
+                this.innerMinDate != '0' &&
 				new Date(this.innerMaxDate).getTime() < new Date(this.innerMinDate).getTime()
 			) {
+				console.log(this.innerMaxDate)
 				return error('maxDate不能小于minDate时间')
 			}
 			// 滚动区域的高度
-			this.listHeight = this.rowHeight * 5 + 30
+			this.listHeight = this.rowHeight as number * 5 + 30
 			this.setMonth()
 		},
 		close() {
@@ -255,7 +260,7 @@ export default {
 			}
 		},
 		// 获得两个日期之间的月份数
-		getMonths(minDate, maxDate) {
+		getMonths(minDate: any, maxDate: any): number {
 			const minYear = dayuts(minDate).year()
 			const minMonth = dayuts(minDate).month() + 1
 			const maxYear = dayuts(maxDate).year()
@@ -265,76 +270,83 @@ export default {
 		// 设置月份数据
 		setMonth() {
 			// 最小日期的毫秒数
-			const minDate = this.innerMinDate || dayuts().valueOf()
+			const minDate = this.innerMinDate != '' ? this.innerMinDate : dayuts().valueOf()
 			// 如果没有指定最大日期，则往后推3个月
 			const maxDate =
-				this.innerMaxDate ||
+				this.innerMaxDate != '' ? this.innerMaxDate :
 				dayuts(minDate)
-					.add(this.monthNum - 1, 'month')
+					.add((this.monthNum as number) - 1, 'month')
 					.valueOf()
 			// 最大最小月份之间的共有多少个月份，
 			const months = range(
 				1,
-				this.monthNum,
+				this.monthNum as number,
 				this.getMonths(minDate, maxDate)
 			)
 			// 先清空数组
-			this.months = [] as Array<any>
+			// this.months = [] as monthsItem[]
 			for (let i = 0; i < months; i++) {
-				this.months.push({
-					date: new Array(
+				let cm = new Array(
 						dayuts(minDate).add(i, 'month').daysInMonth()
 					)
 						.fill(1)
-						.map((item, index) => {
-							// 日期，取值1-31
-							let day = index + 1
-							// 星期，0-6，0为周日
-							const week = dayuts(minDate)
-								.add(i, 'month')
-								.date(day)
-								.day()
-							const date = dayuts(minDate)
-								.add(i, 'month')
-								.date(day)
-								.format('YYYY-MM-DD')
-							let bottomInfo = ''
-							if (this.showLunar) {
-								// todo将日期转为农历格式
-								// const lunar = Calendar.solar2lunar(
-								// 	dayuts(date).year(),
-								// 	dayuts(date).month() + 1,
-								// 	dayuts(date).date()
-								// )
-								// bottomInfo = lunar.IDayCn
-							}
-							let config = {
-								day,
-								week,
-								// 小于最小允许的日期，或者大于最大的日期，则设置为disabled状态
-								disabled:
-									dayuts(date).isBefore(
-										dayuts(minDate).format('YYYY-MM-DD')
-									) ||
-									dayuts(date).isAfter(
-										dayuts(maxDate).format('YYYY-MM-DD')
-									),
-								// 返回一个日期对象，供外部的formatter获取当前日期的年月日等信息，进行加工处理
-								date: new Date(date),
-								bottomInfo,
-								dot: false,
-								month:
-									dayuts(minDate).add(i, 'month').month() + 1
-							}
-							const formatter =
-								this.formatter != null ? this.formatter : this.innerFormatter
-							return formatter(config)
-						}),
+				let cdate: Array<monthsItemDate> = []
+				cm.forEach((item, index) => {
+						// 日期，取值1-31
+						let day = index + 1
+						// 星期，0-6，0为周日
+						const week = dayuts(minDate)
+							.add(i, 'month')
+							.date(day)
+							.day()
+						const date = dayuts(minDate)
+							.add(i, 'month')
+							.date(day)
+							.format('YYYY-MM-DD')
+						let bottomInfo = ''
+						if (this.showLunar) {
+							// todo将日期转为农历格式
+							// const lunar = Calendar.solar2lunar(
+							// 	dayuts(date).year(),
+							// 	dayuts(date).month() + 1,
+							// 	dayuts(date).date()
+							// )
+							// bottomInfo = lunar.IDayCn
+						}
+						let config = {
+							day: day.toString(),
+							week,
+							// 小于最小允许的日期，或者大于最大的日期，则设置为disabled状态
+							disabled:
+								dayuts(date).isBefore(
+									dayuts(minDate).format('YYYY-MM-DD')
+								) ||
+								dayuts(date).isAfter(
+									dayuts(maxDate).format('YYYY-MM-DD')
+								),
+							// 返回一个日期对象，供外部的formatter获取当前日期的年月日等信息，进行加工处理
+							date: new Date(date),
+							bottomInfo,
+							dot: false,
+							month:
+								dayuts(minDate).add(i, 'month').month() + 1
+						} as monthsItemDate
+						// todo
+						// const formatter: (val: monthsItemDate) => monthsItemDate =
+						// 	this.formatter != null ? this.formatter : this.innerFormatter
+						// cdate.push(formatter(config))
+						cdate.push(config)
+					})
+				let md:monthsItem = {
+					top: 0,
+					date: cdate,
 					// 当前所属的月份
-					month: dayuts(minDate).add(i, 'month').month() + 1,
+					month: (dayuts(minDate).add(i, 'month').month() + 1).toString(),
 					// 当前年份
-					year: dayuts(minDate).add(i, 'month').year()
-				})
+					year: dayuts(minDate).add(i, 'month').year().toString()
+				}
+				// this.months.push(md)
+				console.log(this.months)
 			}
 		},
 		// 滚动到默认设置的月份
@@ -343,7 +355,7 @@ export default {
 			const _index = this.months.findIndex(({
 				  year,
 				  month
-			  }) => {
+			  }): boolean => {
 				month = padZero(month)
 				return `${year}-${month}` === selected
 			})
@@ -360,26 +372,26 @@ export default {
 			}
 		},
 		// scroll-view滚动监听
-		onScroll(event: UniEvent) {
+		onScroll(event: UniScrollEvent) {
 			// 不允许小于0的滚动值，如果scroll-view到顶了，继续下拉，会出现负数值
 			const scrollTop = Math.max(0, event.detail.scrollTop)
 			// 将当前滚动条数值，除以滚动区域的高度，可以得出当前滚动到了哪一个月份的索引
 			for (let i = 0; i < this.months.length; i++) {
-				if (scrollTop >= (this.months[i].top || this.listHeight)) {
+				if (scrollTop >= (this.months[i].top > 0 ? this.months[i].top : this.listHeight)) {
 					this.monthIndex = i
 					this.scrollIntoViewScroll = `month-${i}`
 				}
 			}
 		},
 		// 更新月份的top值
-		updateMonthTop(topArr: Array<Number> = []) {
+		updateMonthTopM(topArr: Array<Number>) {
 			// 设置对应月份的top值，用于onScroll方法更新月份
 			topArr.map((item, index) => {
 				this.months[index]['top'] = item
 			})
 
 			// 获取默认日期的下标
-			if (!this.defaultDate) {
+			if (this.defaultDate == null) {
 				// 如果没有设置默认日期，则将当天日期设置为默认选中的日期
 				const selected = dayuts().format("YYYY-MM")
 				this.scrollIntoDefaultMonth(selected)
@@ -387,10 +399,10 @@ export default {
 			}
 			let selected = dayuts().format("YYYY-MM");
 			// 单选模式，可以是字符串或数组，Date对象等
-			if (!test.array(this.defaultDate)) {
+			if (!testArray(this.defaultDate)) {
 				selected = dayuts(this.defaultDate).format("YYYY-MM")
 			} else {
-				selected = dayuts(this.defaultDate[0]).format("YYYY-MM");
+				selected = dayuts((this.defaultDate as Array<any>)[0]).format("YYYY-MM");
 			}
 			this.scrollIntoDefaultMonth(selected)
 		}

@@ -6,15 +6,15 @@ import {
 import { round } from './digit.uts'
 import config from '../config/config'
 
-// /**
-//  * @description 如果value小于min，取min；如果value大于max，取max
-//  * @param {number} min 
-//  * @param {number} max 
-//  * @param {number} value
-//  */
-// export function range(min = 0, max = 0, value = 0):number {
-//     return Math.max(min, Math.min(max, Number(value)))
-// }
+/**
+ * @description 如果value小于min，取min；如果value大于max，取max
+ * @param {number} min 
+ * @param {number} max 
+ * @param {number} value
+ */
+export function range(min = 0, max = 0, value = 0):number {
+    return Math.max(min, Math.min(max, (value as number)))
+}
 
 /**
  * @description 用于获取用户传递值的px值  如果用户传递了"xxpx"或者"xxrpx"，取出其数值部分，如果是"xxxrpx"还需要用过uni.upx2px进行转换
@@ -607,13 +607,14 @@ export function getDuration(value: any, unit = true): string {
 	}
 }
 
-// /**
-//  * @description 日期的月或日补零操作
-//  * @param {String} value 需要补零的值
-//  */
-// export function padZero(value): any {
-//     return `00${value}`.slice(-2)
-// }
+/**
+ * @description 日期的月或日补零操作
+ * @param {String} value 需要补零的值
+ */
+export function padZero(value: any): string {
+	let str = value as string
+    return `00${str}`.slice(-2)
+}
 
 /**
  * @description 在up-form的子组件内容发生变化，或者失去焦点时，尝试通知up-form执行校验方法
@@ -777,7 +778,7 @@ export function getParentData(that: any, parentName: string): any {
 }
 
 export default {
-//     // range,
+    range,
 //     // getPx,
 //     // sleep,
 //     // os,
@@ -799,7 +800,7 @@ export default {
 //     // type2icon,
 //     // priceFormat,
 //     // getDuration,
-//     // padZero,
+    padZero,
 //     // formValidate,
 //     // getProperty,
 //     // setProperty,

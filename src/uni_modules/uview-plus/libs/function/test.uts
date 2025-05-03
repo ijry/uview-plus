@@ -79,8 +79,9 @@
 /**
  * 验证十进制数字
  */
-export function number(value: string): boolean {
-    return /^[\+-]?(\d+\.?\d*|\.\d+|\d\.\d+e\+\d+)$/.test(value)
+export function number(value: any): boolean {
+	let str = value.toString()
+    return /^[\+-]?(\d+\.?\d*|\.\d+|\d\.\d+e\+\d+)$/.test(str)
 }
 
 // /**
@@ -231,7 +232,10 @@ export function empty(value: any): boolean {
 /**
  * 是否数组
  */
-export function array(value: any): boolean {
+export function array(value: any|null): boolean {
+	if (value == null) {
+		return false;
+	}
 	if ("object" == typeof value) {
 		return value instanceof Array
 	} else {
@@ -242,7 +246,10 @@ export function array(value: any): boolean {
 /**
  * 是否对象
  */
-export function object(value: any): boolean {
+export function object(value: any|null): boolean {
+	if (value == null) {
+		return false;
+	}
     if ("object" == typeof value) {
     	return value instanceof Object
     } else {

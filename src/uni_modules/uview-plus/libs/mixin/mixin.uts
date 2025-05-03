@@ -2,7 +2,6 @@ import { defineMixin } from '../vue.uts'
 import {
 	array as testArray
 } from '../function/test.uts'
-
 export const mixin = defineMixin({
     // 定义每个组件都可能需要用到的外部样式以及类名
     props: {
@@ -94,23 +93,27 @@ export const mixin = defineMixin({
         // 查询节点信息
         // 目前此方法在支付宝小程序中无法获取组件跟接点的尺寸，为支付宝的bug(2020-07-21)
         // 解决办法为在组件根部再套一个没有任何作用的view元素
-        upGetRect: function(selector: string, all: boolean): Promise<UTSJSONObject|Array<UTSJSONObject>> {
+        upGetRect(selector: string, all: boolean = false): Promise<any> {
             return new Promise((resolve) => {
-                let tmp = {
-                    width: 12
-                } as UTSJSONObject
-                resolve(tmp)
-                uni.createSelectorQuery()
-                    .in(this)[all == true ? 'selectAll' : 'select'](selector)
-                    .boundingClientRect((rect) => {
-                        if (all && Array.isArray(rect) && rect.length) {
-                            resolve(rect)
-                        }
-                        if (!all && rect) {
-                            resolve(rect)
-                        }
-                    })
-                    .exec()
+				if (all == true) {
+					uni.createSelectorQuery()
+					    .in(this).select(selector)
+					    .boundingClientRect((res) => {
+					        const nodeInfoArray = res as NodeInfo[]
+					        const nodeInfoArrayItem = nodeInfoArray[0]
+							resolve(nodeInfoArrayItem)
+					    })
+					    .exec()
+				} else {
+					uni.createSelectorQuery()
+					    .in(this).selectAll(selector)
+					    .boundingClientRect((res) => {
+					        const nodeInfoArray = res as NodeInfo[]
+					        const nodeInfoArrayItem = nodeInfoArray[0]
+					        resolve(nodeInfoArrayItem)
+					    })
+					    .exec()
+				}
             })
         },
         getParent(name: string): ComponentPublicInstance|null {

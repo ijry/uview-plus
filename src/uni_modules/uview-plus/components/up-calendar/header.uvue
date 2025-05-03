@@ -25,7 +25,7 @@
 	import { mixin } from '../../libs/mixin/mixin';
 	export default {
 		name: 'up-calendar-header',
-		mixins: [mpMixin, mixin],
+		// mixins: [mpMixin, mixin],
 		props: {
 			// 标题
 			title: {
