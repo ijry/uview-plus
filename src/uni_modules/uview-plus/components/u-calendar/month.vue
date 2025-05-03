@@ -292,6 +292,7 @@
 		mounted() {
 			this.init()
 		},
+		emits: ['monthSelected', 'updateMonthTop'],
 		methods: {
 			init() {
 				// 初始化默认选中
