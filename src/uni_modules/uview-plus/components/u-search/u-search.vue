@@ -38,11 +38,11 @@
 			    @focus="getFocus"
 			    :focus="focus"
 			    :maxlength="maxlength"
-				:adjust-position="adjustPosition"
-				:auto-blur="autoBlur"
-			    placeholder-class="u-search__content__input--placeholder"
+				  :adjust-position="adjustPosition"
+				  :auto-blur="autoBlur"
+			    :placeholder-class="placeholderClass"
 			    :placeholder="placeholder"
-			    :placeholder-style="`color: ${placeholderColor}`"
+			    :placeholder-style="placeholderStyle"
 			    class="u-search__content__input"
 			    type="text"
 			    :style="[{
@@ -100,6 +100,7 @@
 	 * @property {Number | String}	searchIconSize 搜索图标的字体，默认22
 	 * @property {String}			color				输入框字体颜色（默认 '#606266' ）
 	 * @property {String}			placeholderColor	placeholder的颜色（默认 '#909399' ）
+   * @property {String}			placeholderClass	输入框input placeholder默认颜色自定义class
 	 * @property {String}			searchIcon			输入框左边的图标，可以为uView图标名称或图片路径  (默认 'search' )
 	 * @property {String}			iconPosition		输入框图标位置，left-左边, right-右边  (默认 'left' )
 	 * @property {String}			margin				组件与其他上下左右元素之间的距离，带单位的字符串形式，如"30px"   (默认 '0' )
@@ -164,7 +165,16 @@
 		computed: {
 			showActionBtn() {
 				return !this.animation && this.showAction
-			}
+			},
+      placeholderStyle(){
+        // 微信小程序默认的placeholder-style不起作用，使用placeholderClass来覆盖
+        // 不起作用的原因： https://developers.weixin.qq.com/community/develop/doc/0000aaaf39c9a05d5eac5e17651400
+        if(this.placeholderClass) return "";
+
+        if(this.placeholderColor) {
+          return `color: ${this.placeholderColor}`
+        }
+      }
 		},
 		emits: ['clear', 'search', 'custom', 'focus', 'blur', 'click', 'clickIcon', 'update:modelValue', 'change'],
 		methods: {
