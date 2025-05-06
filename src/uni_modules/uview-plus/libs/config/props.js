@@ -22,6 +22,7 @@ import Badge from '../../components/u-badge/badge'
 import Button from '../../components/u-button/button'
 import Calendar from '../../components/u-calendar/calendar'
 import CarKeyboard from '../../components/u-car-keyboard/carKeyboard'
+import Card from '../../components/u-card/card'
 import Cell from '../../components/u-cell/cell'
 import CellGroup from '../../components/u-cell-group/cellGroup'
 import Checkbox from '../../components/u-checkbox/checkbox'
@@ -112,6 +113,7 @@ const props = {
     ...Button,
     ...Calendar,
     ...CarKeyboard,
+    ...Card,
     ...Cell,
     ...CellGroup,
     ...Checkbox,

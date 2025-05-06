@@ -8,8 +8,8 @@
  * @FilePath     : /uview-plus/libs/config/props/card.js
  */
 export default {
-	// cell组件的props
-	cell: {
+	// card组件的props
+	card: {
 		full: false,
 		title: '',
 		titleColor: '#303133',
