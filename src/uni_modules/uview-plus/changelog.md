@@ -1,3 +1,14 @@
+## 3.4.26（2025-05-06）
+fix: 修复test工具引入
+
+feat: card组件支持全局设置props默认值
+
+fix: 修复image在加载错误情况下高度和宽度不正确问题
+
+fix: 修复picker-data快捷组件默认picker选中
+
+fix: 修复日历month子组件缺失emits定义
+
 ## 3.4.25（2025-04-27）
 fix: up-form编译在微信小程序里样式缺失 #640
 
