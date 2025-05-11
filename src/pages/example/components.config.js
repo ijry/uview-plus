@@ -172,6 +172,12 @@ export default [{
     	title: 'Table 表格',
     	title_en: 'Table',
     },
+	{
+		path: '/pages/componentsB/table2/table2',
+		icon: 'table',
+		title: 'Table2 表格2',
+		title_en: 'Table2',
+	},
     {
         path: '/pages/componentsB/countDown/countDown',
         icon: 'countDown',

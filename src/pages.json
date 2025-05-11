@@ -355,6 +355,12 @@
                     "style" : {
                         "navigationBarTitleText" : "表格"
                     }
+                },
+                {
+                    "path" : "table2/table2",
+                    "style" : {
+                        "navigationBarTitleText" : "表格2"
+                    }
                 }
             ]
         },

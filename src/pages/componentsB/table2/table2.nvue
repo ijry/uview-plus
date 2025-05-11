@@ -1,0 +1,136 @@
+<template>
+	<view class="u-page">
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">基础表格（斑马纹 + 边框）</view>
+			<view class="u-demo-block__content">
+				<u-table2
+				    :data="tableData"
+				    :columns="columns"
+				    stripe
+				    border
+				    @row-click="handleRowClick"
+				  />
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">支持单选的表格</view>
+			<view class="u-demo-block__content">
+				<u-table2
+				    :data="tableData"
+				    :columns="columns"
+				    highlight-current-row
+				    :current-row-key="currentRowId"
+				    @row-click="handleRowClick"
+				  />
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">支持复选框的表格</view>
+			<view class="u-demo-block__content">
+				<u-table2
+				    :data="tableData"
+				    :columns="columnsCheck"
+				    row-key="id"
+				    @selection-change="handleSelectionChange"
+				  />
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">支持排序与筛选</view>
+			<view class="u-demo-block__content">
+				<u-table2
+				    :data="tableData"
+				    :columns="columns2"
+				    :sortable="true"
+				    :multiSort="true"
+				    :filters="filters"
+				    @sort-change="onSortChange"
+				    @filter-change="onFilterChange"
+				  />
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">树形结构 + 固定列</view>
+			<view class="u-demo-block__content">
+				<u-table2
+				    :data="tableData3"
+				    :columns="columns3"
+				    :tree-props="{ children: 'children' }"
+				    :expand-row-keys="['1']"
+				    @expand-change="onExpandChange"
+				  />
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				currentRowId: '',
+				tableData: [
+					{ id: 1, name: '张三', age: 25 },
+					{ id: 2, name: '李四', age: 30 }
+				  ],
+				columns: [
+					{ title: '姓名', key: 'name' },
+					{ title: '年龄', key: 'age' }
+				],
+				columnsCheck: [
+					// 复选框列
+					{ type: 'selection', width: '50px'},
+					// 普通列
+					{ title: '姓名', key: 'name' },
+					{ title: '年龄', key: 'age' }
+				],
+				columns2: [
+					{ title: '姓名', key: 'name', sortable: true },
+					{ title: '年龄', key: 'age', sortable: true }
+				],
+				filters: { name: '张' },
+				tableData3: [
+					{
+					  id: 1,
+					  name: '部门A',
+					  age: 25,
+					  children: [
+						{ id: 2, name: '员工1', age: 22 },
+						{ id: 3, name: '员工2', age: 24 }
+					  ]
+					},
+					{ id: 4, name: '部门B', age: 30 }
+				],
+				columns3: [
+					{ title: '', type: 'expand', width: '50px' },
+					{ title: '名称', key: 'name', fixed: 'left' },
+					{ title: '年龄', key: 'age' }
+				]
+			}
+		},
+		methods: {
+			handleRowClick(row) {
+			  this.currentRowId = row.id;
+			  console.log('点击了行:', row);
+			},
+			handleSelectionChange(selection) {
+			  console.log('当前选中的行:', JSON.stringify(selection));
+			},
+			onSortChange(conditions) {
+			  console.log('排序条件:', conditions);
+			},
+			onFilterChange(filters) {
+			  console.log('筛选条件:', filters);
+			},
+			onExpandChange(keys) {
+			  console.log('展开行 keys:', keys);
+			}
+		}
+	}
+</script>
+
+<style lang="scss" scoped>
+	.wrap {
+		padding: 24rpx;
+	}
+</style>
