@@ -349,18 +349,18 @@
                     "style" : {
                         "navigationBarTitleText" : "卡片"
                     }
+                },
+                {
+                    "path" : "table/table",
+                    "style" : {
+                        "navigationBarTitleText" : "表格"
+                    }
                 }
             ]
         },
         {
             "root" : "pages/componentsC",
             "pages" : [
-                {
-                    "path" : "table/table",
-                    "style" : {
-                        "navigationBarTitleText" : "表格"
-                    }
-                },
                 {
                     "path" : "form/form",
                     "style" : {

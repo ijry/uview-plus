@@ -166,12 +166,12 @@ export default [{
         title: 'Progress 进度条',
         title_en: 'Progress'
     },
-    // {
-    // 	path: '/pages/componentsC/table/table',
-    // 	icon: 'table',
-    // 	title: 'Table 表格（暂无）',
-    // 	title_en: 'Table',
-    // },
+    {
+    	path: '/pages/componentsB/table/table',
+    	icon: 'table',
+    	title: 'Table 表格',
+    	title_en: 'Table',
+    },
     {
         path: '/pages/componentsB/countDown/countDown',
         icon: 'countDown',
