@@ -74,8 +74,17 @@
 					{ id: 2, name: '李四', age: 30 }
 				  ],
 				columns: [
-					{ title: '姓名', key: 'name' },
-					{ title: '年龄', key: 'age' }
+					{ title: '姓名', key: 'name', width: '50px' },
+					{ title: '年龄', key: 'age', width: '50px' },
+					{ title: '年龄', key: 'age', width: '50px' },
+					{ title: '年龄', key: 'age', width: '50px' },
+					{ title: '年龄', key: 'age', width: '50px' },
+					{ title: '年龄', key: 'age', width: '50px' },
+					{ title: '年龄', key: 'age', width: '50px' },
+					{ title: '年龄', key: 'age', width: '50px' },
+					{ title: '年龄', key: 'age', width: '50px' },
+					{ title: '年龄', key: 'age', width: '50px' },
+					{ title: '年龄', key: 'age'  }
 				],
 				columnsCheck: [
 					// 复选框列
