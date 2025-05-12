@@ -1,3 +1,8 @@
+## 3.4.28（2025-05-12）
+feat: 新增table表格组件
+
+feat: 新增element-plus风格的table2组件
+
 ## 3.4.27（2025-05-06）
 fix: 修复card组件props
 
