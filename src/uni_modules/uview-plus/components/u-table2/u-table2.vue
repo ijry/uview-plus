@@ -390,12 +390,13 @@ export default {
     white-space: nowrap;
 
     .u-table-header {
+        min-width: 100% !important;
         width: fit-content;
         background-color: #f5f7fa;
     }
 
     .u-table-body {
-        min-width: 100%;
+        min-width: 100% !important;
         width: fit-content;
     }
 
