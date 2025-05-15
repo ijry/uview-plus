@@ -402,7 +402,14 @@ export default [{
             icon: 'empty',
             title: 'Empty 内容为空',
             title_en: 'Empty'
-        }
+        },
+		{
+			path: '/pages/componentsD/pagination/pagination',
+			icon: 'pagination',
+			title: 'Pagination 分页器',
+			title_en: 'Pagination'
+			
+		}
     ]
 }, {
     groupName: '其他组件',

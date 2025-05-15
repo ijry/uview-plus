@@ -575,6 +575,12 @@
                     "style" : {
                         "navigationBarTitleText" : "经典下拉框"
                     }
+                },
+                {
+                    "path" : "pagination/pagination",
+                    "style" : {
+                        "navigationBarTitleText" : "分页器"
+                    }
                 }
             ]
         },
