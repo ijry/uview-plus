@@ -82,6 +82,11 @@ export const props = defineMixin({
             type: String,
             default: () => defProps.tag.icon,
 		},
+        // 图标颜色
+        iconColor: {
+            type: String,
+            default: () => defProps.tag.iconColor,
+		},
         // 自定义尺寸字体大小
 		textSize: {
             type: String,
