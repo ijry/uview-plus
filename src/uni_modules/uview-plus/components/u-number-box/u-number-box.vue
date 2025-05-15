@@ -331,8 +331,8 @@
 				// #endif 
 			
 			},
-			// 发出change事件
-			emitChange(value) {
+			// 发出change事件，type目前只支持点击时有值，手动输入不支持。
+			emitChange(value, type = '') {
 				// 如果开启了异步变更值，则不修改内部的值，需要用户手动在外部通过v-model变更
 				if (!this.asyncChange) {
 					this.$nextTick(() => {
@@ -349,6 +349,7 @@
 				this.$emit('change', {
 					value,
 					name: this.name,
+					type: type // 当前变更类型
 				});
 			},
 			onChange() {
@@ -360,7 +361,7 @@
 				}
 				const diff = type === 'minus' ? -this.step : +this.step
 				const value = this.format(this.add(+this.currentValue, diff))
-				this.emitChange(value)
+				this.emitChange(value, type)
 				this.$emit(type)
 			},
 			// 对值扩大后进行四舍五入，再除以扩大因子，避免出现浮点数操作的精度问题
