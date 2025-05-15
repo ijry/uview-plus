@@ -19,6 +19,8 @@ import debounce from './libs/function/debounce.js'
 import throttle from './libs/function/throttle.js'
 // 浮点计算
 import calc from './libs/function/calc.js'
+// 浮点计算
+import digit from './libs/function/digit.js'
 // 公共文件写入的方法
 import index from './libs/function/index.js'
 
@@ -38,7 +40,7 @@ import http from './libs/function/http.js'
 
 // 导出
 let themeType = ['primary', 'success', 'error', 'warning', 'info'];
-export { route, http, debounce, throttle, calc, platform, themeType, mixin, mpMixin, props, color, test, zIndex }
+export { route, http, debounce, throttle, calc, digit, platform, themeType, mixin, mpMixin, props, color, test, zIndex }
 export * from './libs/function/index.js'
 export * from './libs/function/colorGradient.js'
 
