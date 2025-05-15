@@ -1,3 +1,22 @@
+## 3.4.29（2025-05-15）
+fix: 修复table2横向滚动样式
+
+fix: 修复table2组件宽度兼容
+
+fix: 修复image显示png图片时默认背景色问题
+
+feat: cate-tab新增height参数便于设置组件高度
+
+feat: 在index.js种导出digit.js便于使用
+
+fix: 修复tag组件缺失iconColor属性
+
+fix: 优化index-list的setValueForTouch方法逻辑 #708
+
+feat: number-box支持change事件返回变动是点击了增加还是减少按钮
+
+fix: 修复table2在小程序下部分情形不显示表格
+
 ## 3.4.28（2025-05-12）
 feat: 新增table表格组件
 
