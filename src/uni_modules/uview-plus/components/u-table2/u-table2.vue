@@ -20,7 +20,7 @@
 
         <!-- 表体 -->
         <view class="u-table-body" :style="{ minWidth: scrollWidth, maxHeight: maxHeight ? maxHeight + 'px' : 'none' }">
-            <block v-if="data.length > 0">
+            <template v-if="data && data.length > 0">
                 <template v-for="(row, index) in sortedData" :key="row[rowKey] || index">
                     <view class="u-table-row" :class="[
                         highlightCurrentRow && currentRow === row ? 'u-table-row-highlight' : '',
@@ -44,8 +44,10 @@
                             </view>
 
                             <!-- 默认插槽或文本 -->
-                            <slot :name="col.key" :row="row">
-                                {{ row[col.key] }}
+                            <slot name="cell" :row="row" :col="col">
+                                <view class="u-table-cell_content">
+                                    {{ row[col.key] }}
+                                </view>
                             </slot>
                         </view>
                     </view>
@@ -56,19 +58,21 @@
                             class="u-table-row u-table-row-child">
                             <view v-for="col in columns" :key="col.key" class="u-table-cell"
                                 :style="{ width: col.width ? addUnit(col.width) : 'auto', paddingLeft: '24px', flex: col.width ? 'none' : 1 }">
-                                <slot :name="col.key" :row="child">
-                                    {{ child[col.key] }}
+                                <slot name="cell" :row="child" :col="col">
+                                    <view class="u-table-cell_content">
+                                        {{ child[col.key] }}
+                                    </view>
                                 </slot>
                             </view>
                         </view>
                     </template>
                 </template>
-            </block>
-            <block v-else>
+            </template>
+            <template v-else>
                 <slot name="empty">
                     <view class="u-table-empty">{{ emptyText }}</view>
                 </slot>
-            </block>
+            </template>
         </view>
     </view>
 </template>
@@ -83,12 +87,16 @@ export default {
         data: {
             type: Array,
             required: true,
-            default: () => []
+            default: () => {
+                return []
+            }
         },
         columns: {
             type: Array,
             required: true,
-            default: () => [],
+            default: () => {
+                return []
+            },
             validator: cols =>
                 cols.every(col =>
                     ['default', 'selection', 'expand'].includes(col.type || 'default')
