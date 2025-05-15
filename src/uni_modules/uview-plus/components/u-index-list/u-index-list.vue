@@ -419,7 +419,7 @@
 					return child
 				})
 				// console.log('this.children[currentIndex].top', children[currentIndex].top)
-				if (children[currentIndex]?.top) {
+				if (children[currentIndex]?.top || children[currentIndex].top === 0) {
 					this.scrollTop = children[currentIndex].top - getPx(customNavHeight)
 				}
 				// #endif
