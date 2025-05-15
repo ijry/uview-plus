@@ -1,5 +1,5 @@
 <template>
-	<view class="u-cate-tab">
+	<view class="u-cate-tab" :style="{ height: addUnit(height) }">
 		<view class="u-cate-tab__wrap">
 			<scroll-view class="u-cate-tab__view u-cate-tab__menu-scroll-view"
                 scroll-y scroll-with-animation :scroll-top="scrollTop"
@@ -41,9 +41,14 @@
 	</view>
 </template>
 <script>
+	import { addUnit } from '../../libs/function/index';
 	export default {
 		name: 'up-cate-tab',
         props: {
+			height: {
+                type: String,
+                default: '100%'
+            },
             tabList: {
                 type: Array,
                 default: () => {
@@ -96,6 +101,7 @@
 			}
 		},
 		methods: {
+			addUnit,
 			// 点击左边的栏目切换
 			async swichMenu(index) {
 				if(this.arr.length == 0) {

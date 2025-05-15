@@ -12,7 +12,8 @@
 <template>
     <view class="u-page">
         <view style="height: 138px;background: #f1f1f1;margin-bottom: 10px;"></view>
-		<up-cate-tab class="cate-tab" :tabList="tabList" tabKeyName="title" itemKeyName="title">
+		<up-cate-tab class="cate-tab" height="calc(100vh - 150px)" :tabList="tabList"
+			tabKeyName="title" itemKeyName="title">
             <template #pageItem="{pageItem}">
                 <view class="w-full" style="width: 100%;">
                     <up-cell-group :border='false'>
