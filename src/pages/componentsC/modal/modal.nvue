@@ -34,7 +34,8 @@
 			:show="show1"
 			contentTextAlign="left"
 			@confirm="() => show1 = false"
-		></up-modal>
+		>
+		</up-modal>
 		<up-modal
 			:content="content"
 			:show="show2"
@@ -107,6 +108,19 @@
 			:zoom="false"
 			@confirm="() => show9 = false"
 		></up-modal>
+		<up-modal
+			:content="content"
+			title="标题"
+			:show="show10"
+			:zoom="false"
+			@confirm="() => show10 = false"
+		>
+			<template #popupBottom>
+				<view class="rounded" style="margin-top: 20px;" @click="show10 = false">
+					<up-icon name="close" color="#fff"></up-icon>
+				</view>
+			</template>
+		</up-modal>
 	</view>
 </template>
 
@@ -124,6 +138,7 @@
 				show7: false,
 				show8: false,
 				show9: false,
+				show10: false,
 				list: [{
 						title: '基础使用',
 						iconUrl: 'https://cdn.uviewui.com/uview/demo/modal/4.png'
@@ -159,6 +174,10 @@
 					{
 						title: '淡入淡出动画',
 						iconUrl: 'https://cdn.uviewui.com/uview/demo/modal/9.png'
+					},
+					{
+						title: '带底部关闭按钮',
+						iconUrl: 'https://cdn.uviewui.com/uview/demo/modal/2.png'
 					}
 				]
 			}

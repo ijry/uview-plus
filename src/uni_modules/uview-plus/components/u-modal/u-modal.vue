@@ -87,6 +87,9 @@
 				</view>
 			</template>
 		</view>
+		<template #bottom>
+			<slot name="popupBottom"></slot>
+		</template>
 	</u-popup>
 </template>
 
