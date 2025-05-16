@@ -68,6 +68,11 @@
 					></up-button>
 				</view>
 			</view>
+			<template #bottom>
+				<view v-if="popupData.mode == 'center'" class="rounded" style="margin-top: 20px;">
+					<up-icon name="close" color="#fff"></up-icon>
+				</view>
+			</template>
 		</up-popup>
 	</view>
 </template>

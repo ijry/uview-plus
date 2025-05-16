@@ -51,6 +51,7 @@
 				</view>
 				<u-safe-bottom v-if="safeAreaInsetBottom"></u-safe-bottom>
 			</view>
+			<slot name="bottom"></slot>
 		</u-transition>
 	</view>
 </template>
