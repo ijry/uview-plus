@@ -78,6 +78,7 @@
 </template>
 
 <script>
+	import { sleep } from '@/uni_modules/uview-plus'
 	export default {
 		data() {
 			return {
@@ -171,7 +172,7 @@
 		methods: {
 			openPopup(popupData) {
 				this.popupData = popupData
-				uni.$u.sleep().then(() => {
+				sleep().then(() => {
 					this.show = !this.show
 				})
 			},

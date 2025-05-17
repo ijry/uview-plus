@@ -71,6 +71,7 @@
 	</view>
 </template>
 <script>
+	import { color, toast } from '@/uni_modules/uview-plus'
 	export default {
 		data() {
 			return {
@@ -155,7 +156,7 @@
 				actions5: [{
 					name: '获取用户信息',
 					openType: 'getUserInfo',
-					color: uni.$u.color['success']
+					color: color['success']
 				}],
 				list: [{
 						title: '普通使用',
@@ -192,12 +193,12 @@
 			// 点击cell，判断显示哪个功能
 			openSheet(index) {
 				// #ifndef MP
-				if (index === 5) return uni.$u.toast('请在微信内预览')
+				if (index === 5) return toast('请在微信内预览')
 				// #endif
 				this[`show${index}`] = true
 			},
 			getuserinfo(res) {
-				uni.$u.toast(`用户名：${res.userInfo.nickName}`)
+				toast(`用户名：${res.userInfo.nickName}`)
 			},
 			navigateBack() {
 				uni.navigateBack()

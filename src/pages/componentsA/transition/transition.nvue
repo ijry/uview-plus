@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import { sys, mixin } from '@/uni_modules/uview-plus'
 export default {
     data() {
         return {
@@ -44,8 +45,8 @@ export default {
             show: false,
             style: {
                 position: "fixed",
-                top: `${uni.$u.sys().windowHeight / 2 - 50}px`,
-                left: `${uni.$u.sys().windowWidth / 2 - 50}px`,
+                top: `${sys().windowHeight / 2 - 50}px`,
+                left: `${sys().windowWidth / 2 - 50}px`,
                 width: "120px",
                 height: "120px",
                 backgroundColor: "#1989fa",
@@ -120,7 +121,7 @@ export default {
             ],
         };
     },
-    mixins: [uni.$u.mixin],
+    mixins: [mixin],
     methods: {
         openTransition(mode) {
             this.mode = mode;

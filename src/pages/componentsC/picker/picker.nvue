@@ -81,6 +81,7 @@
 </template>
 
 <script>
+	import { toast } from '@/uni_modules/uview-plus'
 	export default {
 		data() {
 			return {
@@ -182,7 +183,7 @@
 				} = e
 				if (columnIndex === 0) {
 					this.loading = true
-					uni.$u.sleep(1500).then(() => {
+					sleep(1500).then(() => {
 						picker.setColumnValues(1, this.columnData[index])
 						this.loading = false
 					})

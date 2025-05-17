@@ -69,6 +69,7 @@
 </template>
 
 <script>
+import { toast } from '@/uni_modules/uview-plus'
 export default {
 	data() {
 		return {
@@ -173,7 +174,7 @@ export default {
 	},
 	methods: {
 		showMore() {
-			uni.$u.toast('查看更多')
+			toast('查看更多')
 		},
 		left() {
 			console.log('left');

@@ -35,13 +35,14 @@
 </template>
 
 <script>
+	import { mixin } from '@/uni_modules/uview-plus'
 	export default {
 		data() {
 			return {
 
 			}
 		},
-		mixins: [uni.$u.mixin],
+		mixins: [mixin],
 		methods: {
 			navigateBack() {
 				uni.navigateBack()

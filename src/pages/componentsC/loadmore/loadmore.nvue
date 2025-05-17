@@ -75,6 +75,8 @@
 </template>
 
 <script>
+	import { toast } from '@/uni_modules/uview-plus'
+	
 	export default {
 		data() {
 			return {
@@ -84,7 +86,7 @@
 		methods: {
 			loadmore() {
 				console.log('loadmore');
-				uni.$u.toast('加载更多')
+				toast('加载更多')
 			}
 		},
 	}

@@ -88,8 +88,8 @@
 					const arr = []
 					for (let i = 0; i < 10; i++) {
 						arr.push({
-							name: this.names[uni.$u.random(0, this.names.length - 1)],
-							url: this.urls[uni.$u.random(0, this.urls.length - 1)]
+							name: this.names[random(0, this.names.length - 1)],
+							url: this.urls[random(0, this.urls.length - 1)]
 						})
 					}
 					return arr

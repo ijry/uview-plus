@@ -137,11 +137,12 @@
 	</view>
 </template>
 <script>
+	import { padZero, timeFormat, toast } from '@/uni_modules/uview-plus'
 	export default {
 		data() {
 			const d = new Date()
 			const year = d.getFullYear()
-			let month = uni.$u.padZero(d.getMonth() + 1)
+			let month = padZero(d.getMonth() + 1)
 			const date = d.getDate()
 			return {
 				current: 0,
@@ -216,8 +217,6 @@
 				this[`show${index + 1}`] = true
 			},
 			result(time, mode) {
-				const timeFormat = uni.$u.timeFormat,
-					toast = uni.$u.toast
 				switch (mode) {
 					case 'datetime':
 						return toast(timeFormat(time, 'yyyy-mm-dd hh:MM'))

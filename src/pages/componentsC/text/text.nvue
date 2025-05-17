@@ -156,6 +156,7 @@
 </template>
 
 <script>
+	import { toast } from '@/uni_modules/uview-plus'
 	export default {
 		onLoad() {},
 		methods: {
@@ -164,7 +165,7 @@
 			},
 			clickHandler() {
 				// #ifndef MP-WEIXIN
-				uni.$u.toast('请在微信小程序内查看效果')
+				toast('请在微信小程序内查看效果')
 				// #endif
 			}
 		},
