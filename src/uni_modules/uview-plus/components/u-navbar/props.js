@@ -58,6 +58,11 @@ export const props = defineMixin({
 			type: String,
 			default: () => defProps.navbar.bgColor
 		},
+        // 状态栏背景颜色 不写会使用背景颜色bgColor
+        statusBarBgColor: {
+            type: String,
+            default: () => ''
+        },
 		// 标题的宽度
 		titleWidth: {
 			type: [String, Number],

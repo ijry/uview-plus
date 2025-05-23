@@ -48,6 +48,11 @@ declare interface NavbarProps {
    */
   bgColor?: string
   /**
+   * 状态栏背景颜色 不写同导航栏背景设置
+   * @default bgColor
+   */
+  statusBarBgColor?: string
+  /**
    * 导航栏标题的最大宽度，内容超出会以省略号隐藏，单位rpx
    * @default "400rpx"
    */
