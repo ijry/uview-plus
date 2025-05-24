@@ -1128,12 +1128,20 @@ let QRCode = {};
                     ctxi.setLineWidth(lineWidth);
                     ctxi.setFillStyle(options.background);
                     ctxi.setStrokeStyle(options.background);
-                    ctxi.beginPath(); // draw top and top right corner 
+                    ctxi.beginPath(); // draw top and top right corner
                     ctxi.moveTo(x + r, y);
-                    ctxi.arcTo(x + width, y, x + width, y + r, r); // draw right side and bottom right corner 
-                    ctxi.arcTo(x + width, y + height, x + width - r, y + height, r); // draw bottom and bottom left corner 
-                    ctxi.arcTo(x, y + height, x, y + height - r, r); // draw left and top left corner 
-                    ctxi.arcTo(x, y, x + r, y, r);
+                    ctxi.lineTo(x + width, y); // move to top-right corner
+                    ctxi.arc(x + width - r, y + r, r, -Math.PI / 2, 0); // draw right side and bottom right corner
+
+                    ctxi.lineTo(x + width, y + height - r);
+                    ctxi.arc(x + width - r, y + height - r, r, 0, Math.PI / 2); // draw bottom and bottom left corner
+
+                    ctxi.lineTo(x + r, y + height);
+                    ctxi.arc(x + r, y + height - r, r, Math.PI / 2, Math.PI);// draw left and top left corner
+
+                    ctxi.lineTo(x, y + r);
+                    ctxi.arc(x + r, y + r, r, Math.PI, Math.PI * 3 / 2);
+
                     ctxi.closePath();
                     if (fill) {
                         ctxi.fill();

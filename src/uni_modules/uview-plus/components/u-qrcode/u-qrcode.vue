@@ -290,6 +290,16 @@ export default {
 		left: 0;
 		right: 0;
 	}
+
+    /* #ifdef MP-TOUTIAO */
+    /**字节小程序在编译时会出现一个 [hidde]:{ display: none !important; } 这个样式
+     * 会导致canvas 隐藏掉 没有找到具体原因先这样处理
+     */
+    &__canvas {
+        display: block !important;
+    }
+    /* #endif */
+
 	&__content {
 		position: relative;
 
