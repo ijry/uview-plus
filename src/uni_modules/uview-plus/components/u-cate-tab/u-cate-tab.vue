@@ -14,6 +14,8 @@
 			</scroll-view>
 			<scroll-view :scroll-top="scrollRightTop" scroll-with-animation
 				scroll-y class="u-cate-tab__right-box" @scroll="rightScroll">
+				<slot name="rightTop" :tabList="tabList">
+                </slot>
 				<view class="u-cate-tab__page-view">
 					<view class="u-cate-tab__page-item" :id="'item' + index" 
 						v-for="(item , index) in tabList" :key="index">
