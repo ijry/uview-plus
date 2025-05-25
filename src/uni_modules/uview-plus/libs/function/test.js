@@ -238,6 +238,13 @@ export function object(value) {
 }
 
 /**
+ * 是否是Promise对象
+ */
+export function objectPromise(value) {
+    return Object.prototype.toString.call(value) === '[object Promise]';
+}
+
+/**
  * 是否短信验证码
  */
 export function code(value, len = 6) {
@@ -257,7 +264,7 @@ export function func(value) {
  * @param {Object} value
  */
 export function promise(value) {
-    return object(value) && func(value.then) && func(value.catch)
+    return objectPromise(value) && func(value.then) && func(value.catch)
 }
 
 /** 是否图片格式
