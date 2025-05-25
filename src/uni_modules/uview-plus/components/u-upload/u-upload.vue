@@ -319,7 +319,7 @@
 								}
 							})
 						}
- 
+
 						// Capture the first frame
 						setInterval(() => {
 							ctx1.drawImage(myVideo, 0, 0, w * dpr, h * dpr);
