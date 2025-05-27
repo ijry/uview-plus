@@ -4,7 +4,8 @@
         <view v-if="showHeader" class="u-table-header" :class="{ 'u-table-sticky': fixedHeader }" :style="{minWidth: scrollWidth}">
             <view class="u-table-row">
                 <view v-for="(col, colIndex) in columns" :key="col.key" class="u-table-cell"
-                    :style="{ width: col.width ? addUnit(col.width) : 'auto', flex: col.width ? 'none' : 1 }" :class="[
+                    :style="headerColStyle(col)"
+					:class="[
                         col.align ? 'u-text-' + col.align : '',
                         headerCellClassName ? headerCellClassName(col) : '',
                         col.fixed === 'left' ? 'u-table-fixed-left' : '',
@@ -27,24 +28,29 @@
                         rowClassName ? rowClassName(row, index) : '',
                         stripe && index % 2 === 1 ? 'u-table-row-zebra' : ''
                     ]" @click="handleRowClick(row)">
-                        <view v-for="(col, colIndex) in columns" :key="col.key" class="u-table-cell" :class="[
+                        <view v-for="(col, colIndex) in columns" :key="col.key"
+							class="u-table-cell" :class="[
                             col.align ? 'u-text-' + col.align : '',
                             cellClassName ? cellClassName(row, col) : '',
                             col.fixed === 'left' ? 'u-table-fixed-left' : '',
                             col.fixed === 'right' ? 'u-table-fixed-right' : ''
-                        ]" :style="{ width: col.width ? addUnit(col.width) : 'auto', flex: col.width ? 'none' : 1 }">
+                        ]" :style="cellStyleInner({row: row, column: col,
+							rowIndex: index, columnIndex: colIndex, level: 0})">
                             <!-- 复选框列 -->
                             <view v-if="col.type === 'selection'">
-                                <checkbox :checked="isSelected(row)" @click.stop="toggleSelect(row)" />
+                                <checkbox :checked="isSelected(row)"
+									@click.stop="toggleSelect(row)" />
                             </view>
 
                             <!-- 树形结构展开图标 -->
-                            <view v-else-if="col.type === 'expand'" @click.stop="toggleExpand(row)">
+                            <view v-else-if="col.type === 'expand'"
+								@click.stop="toggleExpand(row)">
                                 {{ isExpanded(row) ? '▼' : '▶' }}
                             </view>
 
                             <!-- 默认插槽或文本 -->
-                            <slot name="cell" :row="row" :col="col">
+                            <slot name="cell" :row="row" :column="col"
+								:rowIndex="index" :columnIndex="colIndex">
                                 <view class="u-table-cell_content">
                                     {{ row[col.key] }}
                                 </view>
@@ -54,13 +60,15 @@
 
                     <!-- 子级渲染 -->
                     <template v-if="isExpanded(row) && row[treeProps.children] && row[treeProps.children].length">
-                        <view v-for="child in row[treeProps.children]" :key="child[rowKey]"
+                        <view v-for="childRow in row[treeProps.children]" :key="childRow[rowKey]"
                             class="u-table-row u-table-row-child">
-                            <view v-for="col in columns" :key="col.key" class="u-table-cell"
-                                :style="{ width: col.width ? addUnit(col.width) : 'auto', paddingLeft: '24px', flex: col.width ? 'none' : 1 }">
-                                <slot name="cell" :row="child" :col="col">
+                            <view v-for="(col2, col2Index) in columns" :key="col2.key" class="u-table-cell"
+                                :style="cellStyleInner({row: childRow, column: col2,
+									rowIndex: index, columnIndex: col2Index, level: 1})">
+                                <slot name="cell" :row="childRow" :column="col2" :prow="row"
+									:rowIndex="index" :columnIndex="col2Index" :level="1">
                                     <view class="u-table-cell_content">
-                                        {{ child[col.key] }}
+                                        {{ childRow[col2.key] }}
                                     </view>
                                 </slot>
                             </view>
@@ -142,6 +150,10 @@ export default {
             type: Function,
             default: null
         },
+		cellStyle: {
+		    type: Function,
+		    default: null
+		},
         headerCellClassName: {
             type: Function,
             default: null
@@ -228,8 +240,37 @@ export default {
     mounted() {
         this.getComponentWidth()
     },
+	computed: {
+	},
     methods: {
         addUnit,
+		headerColStyle(col) {
+			let style = {
+				width: col.width ? addUnit(col.width) : 'auto',
+				flex: col.width ? 'none' : 1
+			};
+			if (col?.style) {
+				style = {...style, ...col?.style};
+			}
+			return style;
+		},
+		setCellStyle(e) {
+			this.cellStyle = e
+		},
+		cellStyleInner(scope) {
+			let style = {
+				width: scope.column?.width ? addUnit(scope.column.width) : 'auto',
+				flex: scope.column?.width ? 'none' : 1,
+				paddingLeft: (24 * scope.level) + 'px'
+			};
+			if (this.cellStyle != null) {
+				let styleCalc = this.cellStyle(scope)
+				if (styleCalc != null) {
+					style = {...style, ...styleCalc}
+				}
+			}
+			return style;
+		},
         // 获取组件的宽度
 		async getComponentWidth() {
 			// 延时一定时间，以获取dom尺寸

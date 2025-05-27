@@ -13,6 +13,22 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
+			<view class="u-demo-block__title">表格样式自定义</view>
+			<view class="u-demo-block__content">
+				<u-table2
+				    :data="tableData"
+				    :columns="columnsStyle"
+				    stripe
+				    border
+				    @row-click="handleRowClick"
+					:cellStyle="cellStyleFunc"
+				>
+				<template #cell="scope">
+				</template>
+				</u-table2>
+			</view>
+		</view>
+		<view class="u-demo-block">
 			<view class="u-demo-block__title">支持单选的表格</view>
 			<view class="u-demo-block__content">
 				<u-table2
@@ -86,6 +102,24 @@
 					{ title: '年龄', key: 'age', width: '50px' },
 					{ title: '年龄', key: 'age'  }
 				],
+				columnsStyle: [
+					{ title: '姓名', key: 'name', width: '50px' },
+					{ title: '年龄', key: 'age', width: '50px', style: {
+						background: 'red', color: '#fff', 'justify-content': 'center'},
+					},
+					{ title: '年龄', key: 'age', width: '50px' }
+				],
+				cellStyleFunc: (scope) => {
+					if (scope.column.key == 'age' && scope.row.age == '25') {
+						return {
+							background: 'blue',
+							color: 'yellow'
+						}
+					} else {
+						return {
+						}
+					}
+				},
 				columnsCheck: [
 					// 复选框列
 					{ type: 'selection', width: '50px'},
