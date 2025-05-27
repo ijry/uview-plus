@@ -18,6 +18,17 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
+			<text class="u-demo-block__title">从右往左</text>
+			<view class="u-demo-block__content">
+				<up-line-progress
+				    :showText="false"
+				    :percentage="percentage2"
+					:fromRight="true"
+				>
+				</up-line-progress>
+			</view>
+		</view>
+		<view class="u-demo-block">
 			<text class="u-demo-block__title">自定义高度</text>
 			<view class="u-demo-block__content">
 				<up-line-progress

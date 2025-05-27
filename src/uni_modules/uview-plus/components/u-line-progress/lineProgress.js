@@ -14,6 +14,7 @@ export default {
         inactiveColor: '#ececec',
         percentage: 0,
         showText: true,
-        height: 12
+        height: 12,
+		fromRight: false,
     }
 }

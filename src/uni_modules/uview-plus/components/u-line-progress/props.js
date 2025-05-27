@@ -25,6 +25,11 @@ export const props = defineMixin({
         height: {
             type: [String, Number],
             default: () => defProps.lineProgress.height
+        },
+		// 是否从右往左加载
+		fromRight: {
+            type: Boolean,
+            default: () => defProps.lineProgress.fromRight
         }
     }
 })
