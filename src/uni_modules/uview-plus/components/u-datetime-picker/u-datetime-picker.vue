@@ -339,7 +339,6 @@
 			getOriginColumns() {
 			    // 生成各列的值
 			    const results = this.getRanges().map(({ type, range }) => {
-                    debugger
 			        let values = times(range[1] - range[0] + 1, (index) => {
 			            let value = range[0] + index
 			            value = type === 'year' ? `${value}` : padZero(value)
