@@ -1,7 +1,7 @@
 <template>
     <view class="u-datetime-picker">
         <view v-if="hasInput" class="u-datetime-picker__has-input"
-            @click="onShowByClickInput" 
+            @click="onShowByClickInput"
         >
             <slot name="trigger" :value="inputValue">
 				<up-input
@@ -339,6 +339,7 @@
 			getOriginColumns() {
 			    // 生成各列的值
 			    const results = this.getRanges().map(({ type, range }) => {
+                    debugger
 			        let values = times(range[1] - range[0] + 1, (index) => {
 			            let value = range[0] + index
 			            value = type === 'year' ? `${value}` : padZero(value)
@@ -436,7 +437,10 @@
 			},
 			// 根据minDate、maxDate、minHour、maxHour等边界值，判断各列的开始和结束边界值
 			getBoundary(type, innerValue) {
-			    const value = new Date(innerValue)
+			    let value = new Date(innerValue)
+                if(isNaN(value.getTime())){
+                    value = new Date()
+                }
 			    const boundary = new Date(this[`${type}Date`])
 			    const year = dayjs(boundary).year()
 			    let month = 1
@@ -475,7 +479,7 @@
 				if(!this.disabled){
 					this.showByClickInput = !this.showByClickInput
 				}
-				
+
 			}
 		}
 	}
