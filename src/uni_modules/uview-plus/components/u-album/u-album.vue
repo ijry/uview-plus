@@ -213,14 +213,29 @@ export default {
             uni.getImageInfo({
                 src,
                 success: (res) => {
+                    let singleSize = this.singleSize;
+                    // 单位
+                    let unit = '';
+                    if (Number.isNaN(Number(this.singleSize))) {
+                        // 大小中有字符 则记录字符
+                        unit = this.singleSize.replace(/\d+/g, ''); // 单位
+                        singleSize = Number(this.singleSize.replace(/\D+/g, ''), 10); // 具体值
+                    }
+
                     // 判断图片横向还是竖向展示方式
                     const isHorizotal = res.width >= res.height
                     this.singleWidth = isHorizotal
-                        ? this.singleSize
-                        : (res.width / res.height) * this.singleSize
+                        ? singleSize
+                        : (res.width / res.height) * singleSize
                     this.singleHeight = !isHorizotal
-                        ? this.singleSize
+                        ? singleSize
                         : (res.height / res.width) * this.singleWidth
+
+                    // 如果有单位统一设置单位
+                    if(unit != null && unit !== ''){
+                        this.singleWidth = this.singleWidth + unit
+                        this.singleHeight = this.singleHeight + unit
+                    }
                 },
                 fail: () => {
                     this.getComponentWidth()
