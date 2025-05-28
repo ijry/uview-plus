@@ -85,7 +85,7 @@ export const props = defineMixin({
         // 弹窗动画过度时间
         duration: {
             type: [Number],
-            default: uni.$u.props.modal.duration
+            default: defProps.modal.duration
         },
         // 文案对齐方式
         contentTextAlign: {
