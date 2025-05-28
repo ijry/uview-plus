@@ -223,6 +223,10 @@
                     if (res.intersectionRatio > 0) {
                         // 懒加载状态改变
                         this.isShow = true;
+                        // 图片为空时显示错误
+                        if (!this.image) {
+                            this.loadError();
+                        }
                         // 如果图片已经加载，去掉监听，减少性能的消耗
                         this.disconnectObserver('contentObserver');
                     }
