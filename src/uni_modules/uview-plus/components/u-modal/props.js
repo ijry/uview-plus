@@ -82,6 +82,11 @@ export const props = defineMixin({
             type: String,
             default: () => defProps.modal.confirmButtonShape
         },
+        // 弹窗动画过度时间
+        duration: {
+            type: [Number],
+            default: uni.$u.props.modal.duration
+        },
         // 文案对齐方式
         contentTextAlign: {
             type: String,

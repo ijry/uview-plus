@@ -26,6 +26,7 @@ export default {
         negativeTop: 0,
         width: '650rpx',
         confirmButtonShape: '',
+        duration: 400,
         contentTextAlign: 'left',
         asyncCloseTip: '操作中...',
         asyncCancelClose: false,
