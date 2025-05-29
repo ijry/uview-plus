@@ -93,6 +93,11 @@ export const props = defineMixin({
             type: String,
             default: () => defProps.picker.keyName
         },
+		// 选项对象中，需要获取的属性值键名
+		valueName: {
+		    type: String,
+		    default: () => defProps.picker.valueName
+		},
         // 是否允许点击遮罩关闭选择器
         closeOnClickOverlay: {
             type: Boolean,

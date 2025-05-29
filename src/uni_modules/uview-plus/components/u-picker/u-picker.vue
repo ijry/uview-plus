@@ -1,5 +1,5 @@
 <template>
-    <view class="u-picker-warrper">
+    <view class="u-picker-wraper">
 		<view v-if="hasInput" class="u-picker-input cursor-pointer" @click="onShowByClickInput">
 			<slot :value="inputLabel">
 			</slot>
@@ -124,6 +124,14 @@ export default {
 		}
 	},
 	watch: {
+		// 监听columns参数的变化
+		columns: {
+			immediate: true,
+			deep:true,
+			handler(n) {
+				this.setColumns(n)
+			}
+		},
 		// 监听默认索引的变化，重新设置对应的值
 		defaultIndex: {
 			immediate: true,
@@ -137,14 +145,41 @@ export default {
 				}
 			}
 		},
-		// 监听columns参数的变化
-		columns: {
+		modelValue: {
 			immediate: true,
 			deep:true,
-			handler(n) {
-				this.setColumns(n)
+			handler(n,o) {
+				// 修复uniapp调用子组件直接:defaultIndex="[0]"这样写
+				// v-model的值变化时候导致defaultIndexwatch也会执行的问题
+				//单纯vue不会出现
+				if (!o || n.join("/") != o.join("/")) {
+					let arr = [];
+					if (n != null) {
+						n.forEach((element, index) => {
+							let currentCols = this.getColumnValues(index)
+							if (currentCols && Object.prototype.toString.call(currentCols) === '[object Object]') {
+								currentCols.forEach((item, index2) => {
+									if (item[this.keyName] == element) {
+										arr.push(index2)
+									}
+								})
+							} else {
+								currentCols.forEach((item, index2) => {
+									if (item == element) {
+										arr.push(index2)
+									}
+								})
+							}
+						});
+						// alert(arr)
+						if (arr.length == 0 && this.defaultIndex) {
+						} else {
+							this.setIndexs(arr, true)
+						}
+					}
+				}
 			}
-		},
+		}
 	},
 	emits: ['close', 'cancel', 'confirm', 'change', 'update:modelValue', 'update:show'],
     computed: {
@@ -178,9 +213,9 @@ export default {
 			let res = []
 			//区分是不是对象数组
 			if (items[0] && Object.prototype.toString.call(items[0]) === '[object Object]') {
-				//对象数组返回id集合
+				//对象数组返回属性值集合
 				items.forEach(element => {
-					res.push(element && element['id'])
+					res.push(element && element[this.valueName])
 				});
 			} else {
 				//非对象数组返回元素集合
@@ -213,6 +248,7 @@ export default {
                 if (this.hasInput) {
                     this.showByClickInput = false
                 }
+				this.setDefault()
 				this.$emit('update:show', false)
 				this.$emit('close')
 			}
@@ -222,14 +258,13 @@ export default {
             if (this.hasInput) {
                 this.showByClickInput = false
             }
+			this.setDefault()
 			this.$emit('update:show', false)
 			this.$emit('cancel')
 		},
-		// 点击工具栏的确定按钮
-		confirm() {
-			//如果用户有没有触发过change
-			if (!this.currentActiveValue.length) {
-				let arr = [0]
+		setDefault() {
+			let arr = [0]
+			if (this.lastIndex.length == 0) {
 				//如果有默认值&&默认值的数组长度是正确的，就用默认值
 				if (Array.isArray(this.defaultIndex) && this.defaultIndex.length == this.innerColumns.length) {
 					arr = [...this.defaultIndex];
@@ -237,13 +272,23 @@ export default {
 					//否则默认都选中第一个
 					arr = Array(this.innerColumns.length).fill(0);
 				}
-				this.setLastIndex(arr)
-				this.setIndexs(arr)
+			} else {
+				arr = deepClone(this.lastIndex)
+			}
+			this.setLastIndex(arr)
+			this.setIndexs(arr)
+		},
+		// 点击工具栏的确定按钮
+		confirm() {
+			// 如果用户有没有触发过change
+			if (!this.currentActiveValue.length) {
+				this.setDefault()
 			}
             this.$emit('update:modelValue', this.inputValue)
             if (this.hasInput) {
                 this.showByClickInput = false
             }
+			this.setLastIndex(this.innerIndex)
 			this.$emit('update:show', false)
 			this.$emit('confirm', {
 				indexs: this.innerIndex,
@@ -274,13 +319,14 @@ export default {
 			this.columnIndex = columnIndex
 			const values = this.innerColumns
 			// 将当前的各项变化索引，设置为"上一次"的索引变化值
-			this.setLastIndex(value)
+			// this.setLastIndex(value)
 			this.setIndexs(value)
 			//如果是非自带输入框才会在change时候触发v-model绑值的变化
 			//否则会非常的奇怪，用户未确认，值就变了
-			if (!this.hasInput) {
-				this.$emit('update:modelValue', this.inputValue)
-			}
+			// if (!this.hasInput) {
+			// 	this.$emit('update:modelValue', this.inputValue)
+			// }
+			
 			this.$emit('change', {
 				// #ifndef MP-WEIXIN || MP-LARK
 				// 微信小程序不能传递this，会因为循环引用而报错

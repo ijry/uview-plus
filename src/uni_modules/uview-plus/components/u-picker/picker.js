@@ -23,6 +23,7 @@ export default {
         confirmColor: '',
         visibleItemCount: 5,
         keyName: 'text',
+		valueName: 'value',
         closeOnClickOverlay: false,
         defaultIndex: [],
 		immediateChange: true,
