@@ -22,6 +22,11 @@
 						mode="widthFix"
 					></image>
 				</template>
+				<template #value>
+					<view v-if="index == 4">
+						{{show5value.join('|')}}
+					</view>
+				</template>
 			</up-cell>
 		</up-cell-group>
 		<up-picker
