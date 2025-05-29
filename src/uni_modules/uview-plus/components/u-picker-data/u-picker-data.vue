@@ -74,7 +74,7 @@ export default {
 	watch: {
 		modelValue() {
 			if (this.modelValue) {
-				this.options.forEach((ele) => {
+				this.options.forEach((ele, index) => {
 					if (ele[this.valueKey] == this.modelValue) {
 						this.current = ele[this.labelKey]
 						this.defaultIndex = [index]
