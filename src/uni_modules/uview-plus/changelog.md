@@ -1,3 +1,8 @@
+## 3.4.37（2025-05-29）
+feat: modal支持设置动画时间
+
+fix: DatetimePicker v-model 绑定异步设置无效 (#803)
+
 ## 3.4.36（2025-05-28）
 fix: lazy-load图片为空时显示错误
 
