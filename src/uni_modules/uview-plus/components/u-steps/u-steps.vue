@@ -21,7 +21,7 @@
 	 * @property {String}			activeColor		激活状态颜色 (默认 '#3c9cff' )
 	 * @property {String}			inactiveColor	未激活状态颜色 (默认 '#969799' )
 	 * @property {String}			activeIcon		激活状态的图标
-	 * @property {String}			inactiveIcon	未激活状态图标 
+	 * @property {String}			inactiveIcon	未激活状态图标
 	 * @property {Boolean}			dot				是否显示点类型 (默认 false )
 	 * @example <u-steps current="0"><u-steps-item title="已出库" desc="10:35" ></u-steps-item></u-steps>
 	 */
@@ -85,6 +85,11 @@
 			display: grid;
 			grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 			/* #endif */
+
+            //微信小程序优化的比抖音的好 因此微信小程序使用flex布局
+            /* #ifdef MP-WEIXIN */
+            display: flex !important;
+            /* #endif */
 		}
 	}
 </style>
