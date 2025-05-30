@@ -178,7 +178,14 @@
 		},
 		async mounted() {
 			this.init()
+            this.windowResizeCallback = (res) => {
+                this.init()
+            }
+            uni.onWindowResize(this.windowResizeCallback)
 		},
+        beforeUnmount() {
+            uni.offWindowResize(this.windowResizeCallback)
+        },
 		emits: ['click', 'longPress', 'change', 'update:current'],
 		methods: {
 			addStyle,
