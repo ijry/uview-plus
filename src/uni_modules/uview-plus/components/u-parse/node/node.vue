@@ -365,6 +365,9 @@ export default {
             // #ifdef APP-PLUS
             plus.runtime.openWeb(href)
             // #endif
+            // #ifdef APP-HARMONY
+            plus.runtime.openURL(href)
+            // #endif
           }
         } else {
           // 跳转页面
