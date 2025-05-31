@@ -1,3 +1,10 @@
+## 3.4.39（2025-05-31）
+fix: 修改步骤条微信小程序下的布局 感谢@jiaruiyan
+
+fix: u-tabs在屏幕尺寸发生变化时滑块位置没有发生变化 感谢@aqzhft
+
+fix: 鸿蒙平台不支持plus.runtime.openWeb 感谢@aqzhft
+
 ## 3.4.38（2025-05-30）
 fix: 修复picker-data快捷组件缺少index
 
