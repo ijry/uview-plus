@@ -2,8 +2,12 @@
 	<view class="u-qrcode" @longpress="longpress">
 		<view class="u-qrcode__content" @click="preview">
 			<!-- #ifndef APP-NVUE -->
-			<canvas class="u-qrcode__canvas"
-				:id="cid" :canvas-id="cid" :style="{ width: size + unit, height: size + unit }" />
+			<canvas
+                class="u-qrcode__canvas"
+				:id="cid"
+                :canvas-id="cid"
+                type="2d"
+                :style="{ width: size + unit, height: size + unit }" />
 			<!-- #endif -->
 			<!-- #ifdef APP-NVUE -->
 			<gcanvas class="u-qrcode__canvas" ref="gcanvess"
@@ -14,11 +18,8 @@
 				:style="{ width: size + unit, height: size + unit }">
 				<up-loading-icon vertical :text="loadingText" textSize="14px"></up-loading-icon>
 			</view>
-			<!-- <image v-show="show" :src="result" :style="{ width: size + unit, height: size + unit }" /> -->
 		</view>
-		<!-- <up-action-sheet :actions="list" cancelText="取消"
-			v-model:show="popupShow" @select="selectClick">
-		</up-action-sheet> -->
+
 	</view>
 </template>
 
@@ -120,7 +121,7 @@ export default {
 			canvasObj: {}
 		}
 	},
-	mounted: function () {
+    mounted(){
 		// #ifdef APP-NVUE
 		/*获取元素引用*/
 		this.ganvas = this.$refs["gcanvess"]
@@ -135,7 +136,9 @@ export default {
 		if (this.loadMake) {
 			if (!this._empty(this.val)) {
 				setTimeout(() => {
-					this._makeCode()
+                    setTimeout(()=>{
+                        this._makeCode()
+                    })
 				}, 0);
 			}
 		}
@@ -162,6 +165,7 @@ export default {
 					correctLevel: that.lv, // 容错级别
 					image: that.icon, // 二维码图标
 					imageSize: that.iconSize,// 二维码图标大小
+                    that,
 					cbResult: function (res) { // 生成二维码的回调
 						that._result(res)
 					},
@@ -250,7 +254,7 @@ export default {
 				rt = false
 			}
 			return rt
-		}
+		},
 	},
 	watch: {
 		size: function (n, o) {
