@@ -136,5 +136,10 @@ export const props = defineMixin({
             type: Boolean,
             default: () => defProps.numberBox.miniMode
         },
+        // 输入框是否只读
+        readonly : {
+            type: Boolean,
+            default: () => defProps.numberBox.readonly
+        },
     }
 })

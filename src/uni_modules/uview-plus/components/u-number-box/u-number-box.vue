@@ -33,7 +33,7 @@
 			<slot name="input">
 				<!-- #ifdef MP-WEIXIN -->
 				<input
-					:disabled="disabledInput || disabled"
+					:disabled="disabledInput || disabled || readonly"
 					:cursor-spacing="getCursorSpacing"
 					:class="{ 'u-number-box__input--disabled': disabled || disabledInput }"
 					:value="currentValue"
@@ -42,12 +42,12 @@
 					@focus="onFocus"
 					@input="onInput"
 					type="number"
-					:style="[inputStyle]"
+                    :style="[inputStyle]"
 				/>
 				<!-- #endif -->
 				<!-- #ifndef MP-WEIXIN -->
 				<input
-					:disabled="disabledInput || disabled"
+					:disabled="disabledInput || disabled || readonly"
 					:cursor-spacing="getCursorSpacing"
 					:class="{ 'u-number-box__input--disabled': disabled || disabledInput }"
 					v-model="currentValue"
@@ -122,6 +122,7 @@
 	 * @property {Boolean}			disablePlus		是否禁用增加按钮 （默认 false ）
 	 * @property {Boolean}			disableMinus	是否禁用减少按钮 （默认 false ）
 	 * @property {Object ｜ String}	iconStyle		加减按钮图标的样式
+	 * @property {Boolean}	        readonly		输入框是否只读
 	 *
 	 * @event {Function}	onFocus	输入框活动焦点
 	 * @event {Function}	onBlur	输入框失去焦点
@@ -326,10 +327,10 @@
 				}
 				formatted = this.format(formatted)
 				this.emitChange(formatted);
-				// #ifdef MP-WEIXIN 
+				// #ifdef MP-WEIXIN
 				return formatted
-				// #endif 
-			
+				// #endif
+
 			},
 			// 发出change事件，type目前只支持点击时有值，手动输入不支持。
 			emitChange(value, type = '') {

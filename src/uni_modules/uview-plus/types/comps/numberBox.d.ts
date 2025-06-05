@@ -104,6 +104,10 @@ declare interface NumberBoxProps {
    */
   iconStyle?: string
   /**
+   * 输入框是否只读
+   */
+  readonly?: boolean
+  /**
    * 输入框得到焦点触发(按钮可点击情况下)
    * @param value 输入框当前值
    * @param value 步进器标识符

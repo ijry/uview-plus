@@ -34,6 +34,7 @@ export default {
         disableMinus: false,
         disablePlus: false,
         iconStyle: '',
-        miniMode: false
+        miniMode: false,
+        readonly : false
     }
 }
