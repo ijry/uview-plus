@@ -118,7 +118,9 @@ export default {
 			],
 			ganvas: null,
 			context: '',
-			canvasObj: {}
+			canvasObj: {},
+            ctx: null, // ctx 在new Qrcode 时js文件内部设置
+            canvas: null, // ctx 在new Qrcode 时js文件内部设置
 		}
 	},
     mounted(){
@@ -165,7 +167,6 @@ export default {
 					correctLevel: that.lv, // 容错级别
 					image: that.icon, // 二维码图标
 					imageSize: that.iconSize,// 二维码图标大小
-                    that,
 					cbResult: function (res) { // 生成二维码的回调
 						that._result(res)
 					},
@@ -224,7 +225,37 @@ export default {
 			}, e)
 		},
 		longpress() {
-			this.$emit('longpress', this.result)
+            if (this.context) {
+                this.ctx.toTempFilePath(
+                    0,
+                    0,
+                    this.size,
+                    this.size,
+                    this.size,
+                    this.size,
+                    "",
+                    1,
+                    res => {
+                        this.$emit('longpress', res.tempFilePath)
+                    }
+                );
+            }
+            else {
+                wx.canvasToTempFilePath({
+                    canvasId: this.cid,
+                    success(res) {
+                        debugger
+                        console.log(res.tempFilePath)
+                    },
+                    fail: err =>{
+                        debugger
+                }
+                },this)
+                let tempUrl = this.canvas.toDataURL('image/png',1);
+                debugger
+                this.$emit('longpress', tempUrl)
+            }
+
 		},
 		selectClick(index) {
 			switch (index) {

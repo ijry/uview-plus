@@ -1036,11 +1036,10 @@ let QRCode = {};
             usingComponents: opt.usingComponents,
             showLoading: opt.showLoading,
             loadingText: opt.loadingText,
-            that: opt.that
         };
 
         let canvas = null;
-        
+
         if (typeof opt === 'string') { // 只编码ASCII字符串
             opt = {
                 text: opt
@@ -1087,11 +1086,11 @@ let QRCode = {};
             }
             return options.foreground;
         }
-        
+
         let getCanvas = async (id) => {
             return new Promise((resolve, reject)=>{
                 try {
-                    const query = uni.createSelectorQuery().in(this.options.that);
+                    const query = uni.createSelectorQuery().in(this.options.context);
                     query.select(`#${id}`)
                     .fields({ node: true, size: true })
                     .exec((res) => {
@@ -1101,7 +1100,7 @@ let QRCode = {};
                 catch (e) {
                     console.error("createCanvasContextFail",e)
                 }
-                
+
             })
         }
         // 创建canvas
@@ -1124,9 +1123,12 @@ let QRCode = {};
                 canvas.width = options.size;
                 canvas.height = options.size;
                 // #endif
-
                 ctx = canvas.getContext('2d');
             }
+            // 设置组件中data里面的ctx
+            options.context.ctx = ctx;
+            options.context.canvas = canvas;
+
             var count = qrCodeAlg.getModuleCount();
             var ratioSize = options.size;
             var ratioImgSize = options.imageSize;
