@@ -62,7 +62,7 @@ declare interface QrcodeProps {
      * 长按触发事件
      * @param url 二维码本地生成url
      */
-    longpress?: (url: string) => any
+    longpressCallback?: (url: string) => any
 
 }
 

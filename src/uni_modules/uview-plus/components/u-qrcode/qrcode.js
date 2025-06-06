@@ -1100,7 +1100,6 @@ let QRCode = {};
                 catch (e) {
                     console.error("createCanvasContextFail",e)
                 }
-
             })
         }
         // 创建canvas
