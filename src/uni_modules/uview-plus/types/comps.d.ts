@@ -95,6 +95,7 @@ declare module 'vue' {
     ['up-transition']: typeof import('./comps/transition')['Transition']
     ['up-status-bar']: typeof import('./comps/statusBar')['StatusBar']
     ['up-safe-bottom']: typeof import('./comps/safeBottom')['SafeBottom']
+    ['up-qrcode']: typeof import('./comps/qrcode')['Qrcode']
   }
 }
 
