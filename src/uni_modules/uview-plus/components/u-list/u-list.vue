@@ -174,7 +174,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
 
 	.u-list {
 		@include flex(column);

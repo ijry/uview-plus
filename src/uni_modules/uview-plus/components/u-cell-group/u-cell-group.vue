@@ -39,7 +39,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
 	
 	$u-cell-group-title-padding: 16px 16px 8px !default;
 	$u-cell-group-title-font-size: 15px !default;

@@ -89,7 +89,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
      $u-grid-width:100% !default;
 	.u-grid {
 		/* #ifdef APP-NVUE */

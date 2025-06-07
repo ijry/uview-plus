@@ -149,8 +149,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../libs/css/components.scss';
-
 .u-float-button {
     z-index: 999;
     .show-list {

@@ -83,8 +83,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../libs/css/components.scss";
-
 $text-color: rgb(200, 200, 200) !default;
 $text-size: 19px !default;
 $u-loading-icon-margin-bottom: 10px !default;

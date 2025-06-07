@@ -183,7 +183,6 @@
 </script>
 
 <style scoped lang="scss">
-	@import "../../libs/css/components.scss";
 
 	.u-dropdown {
 		flex: 1;

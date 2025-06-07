@@ -151,7 +151,6 @@
 	lang="scss"
 	scoped
 >
-	@import "../../libs/css/components.scss";
 	$u-count-down-text-color:$u-content-color !default;
 	$u-count-down-text-font-size:15px !default;
 	$u-count-down-text-line-height:22px !default;

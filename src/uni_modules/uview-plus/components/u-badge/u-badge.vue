@@ -89,7 +89,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
 
 	$u-badge-primary: $u-primary !default;
 	$u-badge-error: $u-error !default;

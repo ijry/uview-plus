@@ -214,7 +214,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
 	
 	.u-swiper__wrapper {
 		flex: 1;

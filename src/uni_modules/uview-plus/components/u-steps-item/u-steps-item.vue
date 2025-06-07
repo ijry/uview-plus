@@ -228,7 +228,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
 
 	.u-steps-item {
 		flex: 1;

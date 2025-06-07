@@ -246,7 +246,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
 	$u-radio-wrap-margin-right:6px !default;
 	$u-radio-wrap-font-size:20px !default;
 	$u-radio-wrap-border-width:1px !default;

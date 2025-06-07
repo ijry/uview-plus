@@ -242,8 +242,6 @@
 </script>
 
 <style scoped lang="scss">
-    @import "../../libs/css/components.scss";
-
     .u-wrap {
         background-color: #eee;
         overflow: hidden;

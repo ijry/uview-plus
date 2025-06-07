@@ -114,7 +114,6 @@
 </script>
 
 <style scoped lang="scss">
-	@import "../../libs/css/components.scss";
     .u-dropdown-item__scroll {
         background: #ffffff;
     }

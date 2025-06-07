@@ -485,7 +485,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import '../../libs/css/components.scss';
 	.u-datetime-picker {
 		flex: 1;
         &__has-input {

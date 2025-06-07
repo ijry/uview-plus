@@ -306,8 +306,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../libs/css/components.scss";
-
 /* #ifndef APP-NVUE */
 @import "./vue.scss";
 /* #endif */

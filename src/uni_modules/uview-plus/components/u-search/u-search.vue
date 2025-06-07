@@ -233,7 +233,6 @@
 </script>
 
 <style lang="scss" scoped>
-@import "../../libs/css/components.scss";
 $u-search-content-padding: 0 10px !default;
 $u-search-label-color: $u-main-color !default;
 $u-search-label-font-size: 14px !default;

@@ -55,7 +55,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
      $u-overlay-top:0 !default;
      $u-overlay-left:0 !default;
      $u-overlay-width:100% !default;

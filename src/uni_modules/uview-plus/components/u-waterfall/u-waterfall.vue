@@ -220,8 +220,6 @@
 </script>
 
 <style lang="scss" scoped>
-    @import "../../libs/css/components.scss";
-
     .u-waterfall {
         @include flex;
         flex-direction: row;

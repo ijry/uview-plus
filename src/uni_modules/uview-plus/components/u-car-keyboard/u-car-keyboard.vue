@@ -222,7 +222,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
 	$u-car-keyboard-background-color: rgb(224, 228, 230) !default;
 	$u-car-keyboard-padding:6px 0 6px !default;
 	$u-car-keyboard-button-inner-width:64rpx !default;

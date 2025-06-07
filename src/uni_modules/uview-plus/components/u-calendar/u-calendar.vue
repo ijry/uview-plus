@@ -403,8 +403,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../libs/css/components.scss';
-
 .u-calendar {
 	&__confirm {
 		padding: 7px 18px;

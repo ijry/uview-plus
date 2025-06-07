@@ -123,7 +123,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
 
 	.u-loadmore {
 		@include flex(row);
