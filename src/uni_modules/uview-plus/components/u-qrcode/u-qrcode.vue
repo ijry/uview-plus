@@ -105,7 +105,7 @@ export default {
 			default: false
 		},
 	},
-	emits: ['result', 'longpress'],
+	emits: ['result', 'longpressCallback'],
 	data() {
 		return {
 			loading: false,
@@ -118,7 +118,9 @@ export default {
 			],
 			ganvas: null,
 			context: '',
-			canvasObj: {}
+			canvasObj: {},
+            ctx: null, // ctx 在new Qrcode 时js文件内部设置
+            canvas: null, // ctx 在new Qrcode 时js文件内部设置
 		}
 	},
     mounted(){
@@ -165,7 +167,6 @@ export default {
 					correctLevel: that.lv, // 容错级别
 					image: that.icon, // 二维码图标
 					imageSize: that.iconSize,// 二维码图标大小
-                    that,
 					cbResult: function (res) { // 生成二维码的回调
 						that._result(res)
 					},
@@ -223,9 +224,65 @@ export default {
 				url: this.result
 			}, e)
 		},
-		longpress() {
-			this.$emit('longpress', this.result)
+		async longpress() {
+            if (this.context) {
+                this.ctx.toTempFilePath(
+                    0,
+                    0,
+                    this.size,
+                    this.size,
+                    this.size,
+                    this.size,
+                    "",
+                    1,
+                    res => {
+                        this.$emit('longpressCallback', res.tempFilePath)
+                    }
+                );
+            }
+            else {
+                const canvas = await this.getCanvas();
+                // #ifdef MP-TOUTIAO || H5
+                this.$emit('longpressCallback', this.ctx.canvas.toDataURL("image/png", 1));
+                // #endif
+
+                // #ifndef MP-TOUTIAO || H5
+                uni.canvasToTempFilePath(
+                    {
+                        canvas,
+                        success :res => {
+                            console.log(res.tempFilePath)
+                            this.$emit('longpressCallback', res.tempFilePath)
+                        },
+                        fail: err =>{
+                        }
+                    },
+                    this)
+                // #endif
+
+            }
+
 		},
+        /**
+         * 获取canvas node 节点            之前想通过this.canvas获取节点的 但是qrcode.js 设置后会丢失参数
+         * @returns {Promise<unknown>}
+         */
+        async getCanvas(){
+            return new Promise((resolve, reject)=>{
+                try {
+                    const query = uni.createSelectorQuery().in(this);
+                    query.select(`#${this.cid}`)
+                    .fields({ node: true, size: true })
+                    .exec((res) => {
+                        resolve(res[0].node)
+                    })
+                }
+                catch (e) {
+                    console.error("createCanvasContextFail",e)
+                }
+            })
+        },
+
 		selectClick(index) {
 			switch (index) {
 				case 0:
