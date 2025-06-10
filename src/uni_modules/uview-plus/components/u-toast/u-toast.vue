@@ -2,7 +2,7 @@
 	<view class="u-toast">
 		<u-overlay
 			:show="isShow"
-			:zIndex="tmpConfig.overlay ? 10070 : -1"
+			:zIndex="tmpConfig.overlay ? tmpConfig.zIndex : -1"
 			:custom-style="overlayStyle"
 		>
 			<view
@@ -77,6 +77,7 @@
 				config: {
 					message: '', // 显示文本
 					type: '', // 主题类型，primary，success，error，warning，black
+					zIndex: 10090, // 层级
 					duration: 2000, // 显示的时间，毫秒
 					icon: true, // 显示的图标
 					position: 'center', // toast出现的位置
