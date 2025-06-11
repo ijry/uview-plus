@@ -1,3 +1,10 @@
+## 3.4.41（2025-06-11）
+feat: qrcode支持 新参数useRootHeightAndWidth 是否使用根节点的宽高 感谢@YJR
+
+feat: toast支持设置zIndex层级
+
+
+
 ## 3.4.40（2025-06-06）
 fix: 升级二维码 canvas -> canvas2 感谢@yjr
 
