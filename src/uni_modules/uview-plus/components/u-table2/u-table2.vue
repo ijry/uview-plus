@@ -11,7 +11,9 @@
                         col.fixed === 'left' ? 'u-table-fixed-left' : '',
                         col.fixed === 'right' ? 'u-table-fixed-right' : ''
                     ]" @click="handleHeaderClick(col)">
-                    {{ col.title }}
+					<slot name="header" :column="col" :columnIndex="colIndex" :level="1">
+					    {{ col.title }}
+					</slot>
                     <view v-if="col.sortable">
                         {{ getSortIcon(col.key) }}
                     </view>
