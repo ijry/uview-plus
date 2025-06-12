@@ -1,3 +1,6 @@
+## 3.4.42（2025-06-12）
+fix: 修复qrcode中默认id问题及canvas2时App无法绘制二维码 感谢@jiaruiyan
+
 ## 3.4.41（2025-06-11）
 feat: qrcode支持 新参数useRootHeightAndWidth 是否使用根节点的宽高 感谢@YJR
 
