@@ -1,4 +1,4 @@
-import { defineMixin } from '../../libs/vue'
+import { defineMixin } from '../../libs/vue.uts'
 import defProps from './calendar.uts';
 let calendarProp = defProps['calendar'] as UTSJSONObject;
 
@@ -57,7 +57,7 @@ export const propsCalendar = defineMixin({
         // 默认选中的日期，mode为multiple或range是必须为数组格式
         defaultDate: {
             // type: [Array, String, Date, null],
-			type: Array
+			type: Array,
             default: calendarProp['defaultDate']
         },
         // mode=multiple时，最多可选多少个日期

@@ -7,20 +7,24 @@
 				<view v-if="showMark" class="up-calendar-month__days__month-mark-wrapper">
 					<text class="up-calendar-month__days__month-mark-wrapper__text">{{ item['month'] }}</text>
 				</view>
-				<view class="up-calendar-month__days__day" v-for="(item1, index1) in item.date" :key="index1"
-					:style="[dayStyle(index, index1, item1)]" @tap="clickHandler(index, index1, item1)"
-					:class="[item1.selected && 'up-calendar-month__days__day__select--selected']">
-					<view class="up-calendar-month__days__day__select" :style="[daySelectStyle(index, index1, item1)]">
-						<text class="up-calendar-month__days__day__select__info"
-							:class="[item1.disabled && 'up-calendar-month__days__day__select__info--disabled']"
-							:style="[textStyle(item1)]">{{ item1['day'] }}</text>
-						<text v-if="getBottomInfo(index, index1, item1)"
-							class="up-calendar-month__days__day__select__buttom-info"
-							:class="[item1.disabled && 'up-calendar-month__days__day__select__buttom-info--disabled']"
-							:style="[textStyle(item1)]">{{ getBottomInfo(index, index1, item1) }}</text>
-						<text v-if="item1['dot']" class="up-calendar-month__days__day__select__dot"></text>
+				<template v-for="(item1, index1) in item.date" :key="index1">
+					<view class="up-calendar-month__days__day"
+						:style="[dayStyle(index, index1, item1)]" @tap="clickHandler(index, index1, item1)"
+						:class="{'up-calendar-month__days__day__select--selected': item1.selected}">
+						<view class="up-calendar-month__days__day__select" :style="[daySelectStyle(index, index1, item1)]">
+							<text class="up-calendar-month__days__day__select__info"
+								:class="{'up-calendar-month__days__day__select__info--disabled': item1.disabled}"
+								:style="[textStyle(item1)]">{{ item1['day'] }}</text>
+							<text v-if="getBottomInfo(index, index1, item1)"
+								class="up-calendar-month__days__day__select__buttom-info"
+								:class="{'up-calendar-month__days__day__select__buttom-info--disabled' : item1['disabled']}"
+								:style="[textStyle(item1)]">
+								{{ getBottomInfo(index, index1, item1) }}
+							</text>
+							<text v-if="item1['dot']" class="up-calendar-month__days__day__select__dot"></text>
+						</view>
 					</view>
-				</view>
+				</template>
 			</view>
 		</view>
 	</view>
@@ -37,9 +41,9 @@
 	import {dayuts} from '@/uni_modules/lime-dayuts';
 	export type monthsItemDate = {
 	  date: Date
-	  selected: boolean 
-	  disabled: boolean 
-	  dot?: boolean 
+	  selected: boolean | null
+	  disabled: boolean | null
+	  dot?: boolean  | null
 	  day?: string 
 	  week: number
 	  month?: number
@@ -154,14 +158,14 @@
 		watch: {
 			selectedChange: {
 				immediate: true,
-				handler(n) {
+				handler() {
 					this.setDefaultDate()
 				}
 			},
 			months: {
 				immediate: true,
-				handler(n) {
-					// this.monthsInner = this.months as Array<monthsItem>
+				handler() {
+					this.monthsInner = this.months
 				}
 			}
 		},
@@ -173,16 +177,20 @@
 			dayStyle() {
 				return (index1: number, index2: number, item: monthsItemDate):any => {
 					const style = {}
-					let week:number = item['week']
-					// 不进行四舍五入的形式保留2位小数
-					let tmp = (this.width / 7).toFixed(3).slice(0, -1)
-					const dayWidth = parseFloat(tmp)
-					// 得出每个日期的宽度
-					style['height'] = addUnit(this.rowHeight)
-					if (index2 === 0) {
-						// 获取当前为星期几，如果为0，则为星期天，减一为每月第一天时，需要向左偏移的item个数
-						week = (week === 0 ? 7 : week) - 1
-						style['marginLeft'] = addUnit(week * dayWidth, 'px')
+					console.log('***************************')
+					console.log(JSON.stringify(item))
+					if (item != null) {
+						// let week:number = item['week']
+						// // 不进行四舍五入的形式保留2位小数
+						// let tmp = (this.width / 7).toFixed(3).slice(0, -1)
+						// const dayWidth = parseFloat(tmp)
+						// // 得出每个日期的宽度
+						// style['height'] = addUnit(this.rowHeight)
+						// if (index2 === 0) {
+						// 	// 获取当前为星期几，如果为0，则为星期天，减一为每月第一天时，需要向左偏移的item个数
+						// 	week = (week === 0 ? 7 : week) - 1
+						// 	style['marginLeft'] = addUnit(week * dayWidth, 'px')
+						// }
 					}
 					if (this.mode === 'range') {
 						style.padding = 0
@@ -391,15 +399,15 @@
 							selected = [date]
 						} else if (dayuts(date).isAfter(existsDate)) {
 							// 当前日期减去最大可选的日期天数，如果大于起始时间，则进行提示
-							if(dayuts(dayuts(date).subtract((this.maxRange as number), 'day'))
-								.isAfter(dayuts(selected[0])) && this.showRangePrompt) {
-								if(this.rangePrompt != '') {
-									toast(this.rangePrompt)
-								} else {
-									toast(`选择天数不能超过 ${this.maxRange.toString()} 天`)
-								}
-								return
-							}
+							// if(dayuts(dayuts(date).subtract((this.maxRange as number), 'day'))
+							// 	.isAfter(dayuts(selected[0])) && this.showRangePrompt) {
+							// 	if(this.rangePrompt != '') {
+							// 		toast(this.rangePrompt)
+							// 	} else {
+							// 		toast(`选择天数不能超过 ${this.maxRange.toString()} 天`)
+							// 	}
+							// 	return
+							// }
 							// 如果当前日期大于已有日期，将当前的添加到数组尾部
 							selected.push(date)
 							const startDate = selected[0]
