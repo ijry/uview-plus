@@ -290,7 +290,6 @@ export default {
                             this.$emit('longpressCallback', res.tempFilePath)
                         },
                         fail: err =>{
-                            debugger
                         }
                     },
                     this)
