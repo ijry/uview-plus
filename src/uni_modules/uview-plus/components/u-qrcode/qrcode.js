@@ -1104,6 +1104,11 @@ let QRCode = {};
         }
         // 创建canvas
         let createCanvas = async function (options) {
+            let isApp = false;
+            // #ifdef APP
+            isApp = true;
+            // #endif
+
             if(options.showLoading){
                 uni.showLoading({
                     title: options.loadingText,
@@ -1122,7 +1127,13 @@ let QRCode = {};
                 canvas.width = options.size;
                 canvas.height = options.size;
                 // #endif
+                // #ifdef APP
+                ctx = uni.createCanvasContext(options.canvasId, options.context);
+                // #endif
+                // #ifndef APP
                 ctx = canvas.getContext('2d');
+                // #endif
+
             }
             // 设置组件中data里面的ctx
             options.context.ctx = ctx;
@@ -1161,12 +1172,14 @@ let QRCode = {};
                     ctx.drawImage(options.image, x, y, ratioImgSize, ratioImgSize);
                 }
                 else {
-                    // #ifdef H5
+                    // #ifdef H5 || APP
                     const img = new Image();
                     // #endif
-                    // #ifndef H5
+
+                    // #ifndef H5 || APP
                     const img = canvas.createImage();
                     // #endif
+
                     img.onload = () => {
                         ctx.drawImage(img, x, y, ratioImgSize, ratioImgSize);
                     };
@@ -1174,7 +1187,7 @@ let QRCode = {};
                 }
                 // 画圆角矩形
                 function drawRoundedRect(ctxi, x, y, width, height, r, lineWidth, fill, stroke) {
-                    if (options.nvueContext) {
+                    if (options.nvueContext || isApp) {
                         ctxi.setLineWidth(lineWidth);
                         ctxi.setFillStyle(options.background);
                         ctxi.setStrokeStyle(options.background);
@@ -1209,7 +1222,7 @@ let QRCode = {};
             }
             setTimeout(() => {
                 // canvas2 绘制是自动的不需要手动绘制
-                if(options.nvueContext){
+                if(options.nvueContext || isApp){
                     ctx.draw(true, () => {
                         // 保存到临时区域
                         setTimeout(() => {
