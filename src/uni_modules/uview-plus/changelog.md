@@ -1,3 +1,6 @@
+## 3.4.43（2025-06-16）
+feat: table2支持header插槽
+
 ## 3.4.42（2025-06-12）
 fix: 修复qrcode中默认id问题及canvas2时App无法绘制二维码 感谢@jiaruiyan
 
