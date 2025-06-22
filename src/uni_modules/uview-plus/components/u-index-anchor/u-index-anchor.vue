@@ -4,6 +4,7 @@
 	<!-- #endif -->
 	<view
 	    class="u-index-anchor u-border-bottom"
+		:class="{ 'u-index-anchor--sticky': parentSticky }"
 		:ref="`u-index-anchor-${text}`"
 	    :style="{
 			height: addUnit(height),
@@ -73,6 +74,12 @@
 				// #endif
 			}
 		},
+		computed: {
+        parentSticky() {
+            const indexList = $parent.call(this, "u-index-list");
+            return indexList ? indexList.sticky : true;
+        	},
+		},
 	}
 </script>
 
@@ -85,6 +92,11 @@
 		align-items: center;
 		padding-left: 15px;
 		z-index: 1;
+
+		&--sticky {
+        position: sticky;
+        top: 0;
+    	}
 
 		&__text {
 			@include flex;
