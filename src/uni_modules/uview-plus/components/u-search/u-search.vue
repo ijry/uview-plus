@@ -65,6 +65,7 @@
 					customStyle="line-height: 12px"
 				></u-icon>
 			</view>
+            <slot name="inputRight"></slot>
 		</view>
 		<text
 		    :style="[actionStyle]"
@@ -108,8 +109,8 @@
 	 * @property {String | Number}	maxlength			输入框最大能输入的长度，-1为不限制长度  (默认 '-1' )
 	 * @property {String | Number}	height				输入框高度，单位px（默认 64 ）
 	 * @property {String | Number}	label				搜索框左边显示内容
-	 * @property {Boolean}	        adjustPosition	    键盘弹起时，是否自动上推页面	
-	 * @property {Boolean}	        autoBlur	        键盘收起时，是否自动失去焦点		
+	 * @property {Boolean}	        adjustPosition	    键盘弹起时，是否自动上推页面
+	 * @property {Boolean}	        autoBlur	        键盘收起时，是否自动失去焦点
 	 * @property {Object}			customStyle			定义需要用到的外部样式
 	 *
 	 * @event {Function} change 输入框内容发生变化时触发
