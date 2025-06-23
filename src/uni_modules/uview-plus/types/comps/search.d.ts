@@ -161,11 +161,19 @@ declare interface SearchProps {
   onClickIcon?: () => any
 }
 
+declare interface SearchSlots {
+    /**
+     * 修改输入框区域内部右侧内容 类似于左侧图标区域
+     */
+    ['inputRight']?: () => any
+}
+
 declare interface _Search {
   new (): {
     $props: AllowedComponentProps &
       VNodeProps &
       SearchProps
+    $slots: SearchSlots
   }
 }
 
