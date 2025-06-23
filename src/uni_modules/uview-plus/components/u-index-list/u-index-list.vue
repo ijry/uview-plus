@@ -389,6 +389,7 @@
 				// 如果偏移量太小，前后得出的会是同一个索引字母，为了防抖，进行返回
 				if (currentIndex === this.activeIndex) return
 				this.activeIndex = currentIndex
+				this.$emit('select', this.uIndexList[currentIndex])
 				// #ifndef APP-NVUE || MP-WEIXIN
 				// 在非nvue中，由于anchor和item都在u-index-item中，所以需要对index-item进行偏移
 				this.scrollIntoView = `u-index-item-${this.uIndexList[currentIndex].charCodeAt(0)}`
