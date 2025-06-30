@@ -1,3 +1,12 @@
+## 3.4.44（2025-06-30）
+fix: 修复indexList中stikcy属性写死的问题(always true)
+
+feat: 搜索框添加新的右侧插槽
+
+fix: 修复indexList中丢失的select event
+
+fix: 解决因为层级问题导致点击picker选择器无法正常弹出
+
 ## 3.4.43（2025-06-16）
 feat: table2支持header插槽
 
