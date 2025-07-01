@@ -26,6 +26,7 @@
 
 <script>
 export default {
+	name: 'u-picker-data',
     props: {
 		modelValue: {
 			type: [String, Number],
