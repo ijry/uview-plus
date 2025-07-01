@@ -38,11 +38,11 @@
 				<slot name="toolbar-bottom"></slot>
 				<picker-view
 					class="u-picker__view"
-					:indicatorStyle="`height: ${addUnit(itemHeight)}`"
+					:indicatorStyle="`height: ${addUnit(itemHeight, 'px')}`"
 					:value="innerIndex"
 					:immediateChange="immediateChange"
 					:style="{
-						height: `${addUnit(visibleItemCount * itemHeight)}`
+						height: `${addUnit(visibleItemCount * itemHeight, 'px')}`
 					}"
 					@change="changeHandler"
 				>
@@ -58,8 +58,8 @@
 							v-for="(item1, index1) in item"
 							:key="index1"
 							:style="{
-								height: addUnit(itemHeight),
-								lineHeight: addUnit(itemHeight),
+								height: addUnit(itemHeight, 'px'),
+								lineHeight: addUnit(itemHeight, 'px'),
 								fontWeight: index1 === innerIndex[index] ? 'bold' : 'normal',
 								display: 'block'
 							}"
