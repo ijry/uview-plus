@@ -1,3 +1,8 @@
+## 3.4.45（2025-07-01）
+fix: 修复picker-data组件缺少name
+
+fix: 优化picker高度单位
+
 ## 3.4.44（2025-06-30）
 fix: 修复indexList中stikcy属性写死的问题(always true)
 
