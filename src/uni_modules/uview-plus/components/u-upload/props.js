@@ -168,5 +168,9 @@ export const props = defineMixin({
 		    type: Boolean,
 		    default: () => defProps.upload.customAfterAutoUpload
 		},
+        videoPreviewObjectFit: {
+		    type: String,
+		    default: () => defProps.upload.videoPreviewObjectFit
+		},
     }
 })

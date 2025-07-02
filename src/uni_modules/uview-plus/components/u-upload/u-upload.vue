@@ -174,7 +174,7 @@
 			<video id="myVideo" v-if="popupShow"
 				:src="currentItemIndex >= 0 ? lists[currentItemIndex].url : ''"
 				@error="videoErrorCallback" show-center-play-btn
-				object-fit='cover' show-fullscreen-btn='true'
+				:object-fit='videoPreviewObjectFit' show-fullscreen-btn='true'
 				enable-play-gesture controls
 				:autoplay="true" auto-pause-if-open-native
 				@loadedmetadata="loadedVideoMetadata"

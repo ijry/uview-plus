@@ -40,6 +40,7 @@ export default {
 		autoUploadDriver: '',
 		autoUploadHeader: {},
 		getVideoThumb: false,
-		customAfterAutoUpload: false
+		customAfterAutoUpload: false,
+		videoPreviewObjectFit: 'cover'
 	}
 }
