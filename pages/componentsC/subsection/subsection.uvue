@@ -1,4 +1,7 @@
 <template>
+	<!-- #ifdef APP -->
+	<scroll-view style="flex:1">
+	<!-- #endif -->
 	<view class="u-page">
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">基础使用</text>
@@ -47,6 +50,9 @@
 			</view>
 		</view>
 	</view>
+	<!-- #ifdef APP -->
+	</scroll-view>
+	<!-- #endif -->
 </template>
 
 <script>
@@ -64,16 +70,16 @@
 			}
 		},
 		methods: {
-			change1(index) {
+			change1(index: number) {
 				this.current1 = index
 			},
-			change2(index) {
+			change2(index: number) {
 				this.current2 = index
 			},
-			change3(index) {
+			change3(index: number) {
 				this.current3 = index
 			},
-			change4(index) {
+			change4(index: number) {
 				this.current4 = index
 			}
 		},

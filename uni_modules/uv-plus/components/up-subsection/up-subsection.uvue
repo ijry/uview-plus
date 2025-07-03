@@ -19,13 +19,13 @@
         <view
             class="up-subsection__item cursor-pointer"
             :class="[
-                `up-subsection__item--${index}`,
+                `up-subsection__item--${index.toString()}`,
                 index < list.length - 1 ? 
                     'up-subsection__item--no-border-right' : '',
                 index === 0 ? 'up-subsection__item--first' : '',
                 index === list.length - 1 ? 'up-subsection__item--last' : ''
             ]"
-            :ref="`up-subsection__item--${index}`"
+            :ref="`up-subsection__item--${index.toString()}`"
             :style="[itemStyle(index)]"
             @tap="clickHandler(index)"
             v-for="(item, index) in list"
@@ -54,7 +54,7 @@ import { addStyle, addUnit, sleep } from '../../libs/function/index';
  * @property {String}			activeColor		激活时的颜色（默认 '#3c9cff' ）
  * @property {String}			inactiveColor	未激活时的颜色（默认 '#303133' ）
  * @property {String}			mode			模式选择，mode=button为按钮形式，mode=subsection时为分段模式（默认 'button' ）
- * @property {String ｜ Number}	fontSize		字体大小，单位px（默认 12 ）
+ * @property {String ｜ Number}	fontSize		字体大小，单位px（默认 12px ）
  * @property {Boolean}			bold			激活选项的字体是否加粗（默认 true ）
  * @property {String}			bgColor			组件背景颜色，mode为button时有效（默认 '#eeeeef' ）
  * @property {Object}			customStyle		定义需要用到的外部样式
@@ -126,7 +126,7 @@ export default {
             itemRect: {
                 width: 0,
                 height: 0,
-            },
+            } as NodeInfo,
             innerCurrent: 0,
             windowResizeCallback: {}
         };
@@ -158,46 +158,20 @@ export default {
             const style = {};
             style['width'] = `${this.itemRect['width']}px`;
             style['height'] = `${this.itemRect['height']}px`;
+			// 通过translateX移动滑块，其移动的距离为索引*item的宽度
+			// #ifndef APP-NVUE
+			if (this.itemRect.width != null) {
+				style.transform = `translateX(${
+				    this.innerCurrent * (this.itemRect['width'] as Number)
+				}px)`;
+			}
+			// #endif
             if (this.mode === "subsection") {
                 // 在subsection模式下，需要动态设置滑块的圆角，因为移动滑块使用的是translateX，无法通过父元素设置overflow: hidden隐藏滑块的直角
                 style['backgroundColor'] = this.activeColor;
             }
             return style;
-        },
-        // 分段器item的样式
-        itemStyle(index: number) {
-            return (index) => {
-                const style = {};
-                if (this.mode === "subsection") {
-                    // 设置border的样式
-                    style['borderColor'] = this.activeColor;
-                    style['borderWidth'] = "1px";
-                    style['borderStyle'] = "solid";
-                }
-                return style;
-            };
-        },
-        // 分段器文字颜色
-        textStyle(index: number) {
-            return (index) => {
-                const style = {};
-                style['fontWeight'] =
-                    this.bold && this.innerCurrent === index ? "bold" : "normal";
-                style['fontSize'] = addUnit(this.fontSize);
-                // subsection模式下，激活时默认为白色的文字
-                if (this.mode === "subsection") {
-                    style['color'] =
-                        this.innerCurrent === index ? "#fff" : this.inactiveColor;
-                } else {
-                    // button模式下，激活时文字颜色默认为activeColor
-                    style['color'] =
-                        this.innerCurrent === index
-                            ? this.activeColor
-                            : this.inactiveColor;
-                }
-                return style;
-            };
-        },
+        }
     },
     mounted() {
         this.init();
@@ -222,9 +196,46 @@ export default {
 			await sleep(30);
 			this.getRect();
         },
+		itemStyle(index: number) {
+			const style = {};
+			if (this.mode === "subsection") {
+				// 设置border的样式
+				style['borderColor'] = this.activeColor;
+				style['borderWidth'] = "1px";
+				style['borderStyle'] = "solid";
+			}
+			return style;
+		},
+		textStyle(index: number) {
+			const style = {};
+			style['fontWeight'] =
+				this.bold && this.innerCurrent === index ? "bold" : "normal";
+			style['fontSize'] = addUnit(this.fontSize);
+			// subsection模式下，激活时默认为白色的文字
+			if (this.mode === "subsection") {
+				style['color'] =
+					this.innerCurrent === index ? "#fff" : this.inactiveColor;
+			} else {
+				// button模式下，激活时文字颜色默认为activeColor
+				style['color'] =
+					this.innerCurrent === index
+						? this.activeColor
+						: this.inactiveColor;
+			}
+			return style;
+		},
 		// 判断展示文本
-		getText(item?: any): string {
-			return typeof item === 'object' ? item[this.keyName] : item
+		getText(item: any|null): string|null {
+			console.log(typeof item)
+			if (typeof item === 'string') {
+				return item;
+			} else if (typeof item === 'object') {
+				let temp = JSON.parse(JSON.stringify(item)) as UTSJSONObject;
+				return temp.getString(this.keyName);
+				return null;
+			} else {
+				return "error";
+			}
 		},
         // 获取组件的尺寸
         getRect() {
@@ -238,7 +249,7 @@ export default {
         clickHandler(index: number) {
             this.innerCurrent = index
             this.$emit("change", index);
-        },
+        }
     },
 };
 </script>

@@ -50,7 +50,7 @@ export const propsCard = defineMixin({
 		index: {
 			// type: [Number, String, Object],
 			type: [Number],
-			default: ''
+			default: 0
 		},
 		// 用于隔开上下左右的边距，带单位的写法，如："30px 30px"，"20px 20px 30px 30px"
 		margin: {
@@ -66,21 +66,21 @@ export const propsCard = defineMixin({
 		// 头部自定义样式，对象形式
 		headStyle: {
 			type: Object,
-			default() {
+			default: () => {
 				return {};
 			}
 		},
 		// 主体自定义样式，对象形式
 		bodyStyle: {
 			type: Object,
-			default() {
+			default: () => {
 				return {};
 			}
 		},
 		// 底部自定义样式，对象形式
 		footStyle: {
 			type: Object,
-			default() {
+			default: () => {
 				return {};
 			}
 		},

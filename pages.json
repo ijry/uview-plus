@@ -13,12 +13,7 @@
 		]
 	}, {
 		"root": "pages/componentsB",
-		"pages": [{
-			"path": "card/card",
-			"style": {
-				"navigationBarTitleText": "卡片"
-			}
-		}
+		"pages": [
 		]
 	}, {
 		"root": "pages/componentsC",
@@ -28,6 +23,12 @@
 			"style": {
 				"navigationBarTitleText": "日历",
 				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "subsection/subsection",
+			"style": {
+				"navigationBarTitleText": "分段器"
 			}
 		}
 		]

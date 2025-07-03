@@ -425,19 +425,20 @@
 				"navigationBarTitleText": "日历",
 				"navigationStyle": "custom"
 			}
-		}
-		// , {
+		},
+		// {
 		// 	"path": "datetimePicker/datetimePicker",
 		// 	"style": {
 		// 		"navigationBarTitleText": "时间选择",
 		// 		"navigationStyle": "custom"
 		// 	}
-		// }, {
-		// 	"path": "subsection/subsection",
-		// 	"style": {
-		// 		"navigationBarTitleText": "分段器"
-		// 	}
-		// }
+		// },
+		{
+			"path": "subsection/subsection",
+			"style": {
+				"navigationBarTitleText": "分段器"
+			}
+		}
 		, {
 			"path": "card/card",
 			"style": {

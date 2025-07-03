@@ -61,21 +61,21 @@ export const propsCard = defineMixin({
 		// 头部自定义样式，对象形式
 		headStyle: {
 			type: Object,
-			default() {
+			default: () => {
 				return {};
 			}
 		},
 		// 主体自定义样式，对象形式
 		bodyStyle: {
 			type: Object,
-			default() {
+			default: () => {
 				return {};
 			}
 		},
 		// 底部自定义样式，对象形式
 		footStyle: {
 			type: Object,
-			default() {
+			default: () => {
 				return {};
 			}
 		},
