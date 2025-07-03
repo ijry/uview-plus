@@ -437,7 +437,13 @@
 		// 	"style": {
 		// 		"navigationBarTitleText": "分段器"
 		// 	}
-		// },
+		// }
+		, {
+			"path": "card/card",
+			"style": {
+				"navigationBarTitleText": "卡片"
+			}
+		}
 		]
 	},
 	{

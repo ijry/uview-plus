@@ -13,7 +13,12 @@
 		]
 	}, {
 		"root": "pages/componentsB",
-		"pages": [
+		"pages": [{
+			"path": "card/card",
+			"style": {
+				"navigationBarTitleText": "卡片"
+			}
+		}
 		]
 	}, {
 		"root": "pages/componentsC",

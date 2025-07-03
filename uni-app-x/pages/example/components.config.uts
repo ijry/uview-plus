@@ -258,6 +258,12 @@ export default [{
         title: 'Overlay 遮罩层',
         title_en: 'Overlay'
     },
+	{
+			path: '/pages/componentsB/card/card',
+		icon: 'empty',
+		title: 'Card 卡片',
+		title_en: 'Card'
+	},
     // #ifndef MP-TOUTIAO
     {
         path: '/pages/componentsC/noNetwork/noNetwork',
