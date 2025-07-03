@@ -400,12 +400,14 @@
 		// 	"style": {
 		// 		"navigationBarTitleText": "横向滚动列表"
 		// 	}
-		// }, {
-		// 	"path": "codeInput/codeInput",
-		// 	"style": {
-		// 		"navigationBarTitleText": "验证码输入"
-		// 	}
-		// }, {
+		// }
+		,{
+			"path": "codeInput/codeInput",
+			"style": {
+				"navigationBarTitleText": "验证码输入"
+			}
+		}
+		// , {
 		// 	"path": "modal/modal",
 		// 	"style": {
 		// 		"navigationBarTitleText": "模态框",

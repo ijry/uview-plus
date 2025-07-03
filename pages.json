@@ -19,6 +19,12 @@
 		"root": "pages/componentsC",
 		"pages": [
 		{
+			"path": "codeInput/codeInput",
+			"style": {
+				"navigationBarTitleText": "验证码输入"
+			}
+		},
+		{
 			"path": "calendar/calendar",
 			"style": {
 				"navigationBarTitleText": "日历",
