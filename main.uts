@@ -1,0 +1,13 @@
+import App from './App.uvue'
+
+import { createSSRApp } from 'vue'
+
+import uvPlus from '@/uni_modules/uv-plus/index.uts'
+
+export function createApp() {
+	const app = createSSRApp(App)
+	// app.use(uvPlus)
+	return {
+		app
+	}
+}

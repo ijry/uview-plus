@@ -1,0 +1,92 @@
+{
+	"id": "uv-plus",
+	"name": "uv-plus",
+	"displayName": "零云®uv-plus重磅发布，全面的Vue3移动组件库。",
+	"version": "4.0.0",
+	"description": "零云®uv-plus已兼容vue3与uni-app-x，全面的组件和便捷的工具会让您信手拈来，如鱼得水",
+	"keywords": [
+        "uv-plus",
+        "ui",
+        "ui",
+        "uni-app",
+        "uni-app",
+        "ui"
+    ],
+    "main": "index.js",
+	"repository": "https://github.com/ijry/uv-plus",
+	"engines": {
+		"HBuilderX": "^3.1.0"
+	},
+    "dcloudext": {
+        "sale": {
+			"regular": {
+				"price": "0.00"
+			},
+			"sourcecode": {
+				"price": "0.00"
+			}
+		},
+		"contact": {
+			"qq": "598821125"
+		},
+		"declaration": {
+			"ads": "无",
+			"data": "无",
+			"permissions": "无"
+		},
+        "npmurl": "https://www.npmjs.com/package/uview-plus",
+        "type": "component-vue"
+	},
+	"uni_modules": {
+		"dependencies": [],
+		"encrypt": [],
+		"platforms": {
+			"cloud": {
+				"tcb": "y",
+                "aliyun": "y",
+                "alipay": "n"
+			},
+			"client": {
+				"Vue": {
+					"vue2": "n",
+					"vue3": "y"
+				},
+				"App": {
+					"app-vue": "y",
+					"app-nvue": "y"
+				},
+				"H5-mobile": {
+					"Safari": "y",
+					"Android Browser": "y",
+					"微信浏览器(Android)": "y",
+					"QQ浏览器(Android)": "y"
+				},
+				"H5-pc": {
+					"Chrome": "y",
+					"IE": "y",
+					"Edge": "y",
+					"Firefox": "y",
+					"Safari": "y"
+				},
+				"小程序": {
+					"微信": "y",
+					"阿里": "y",
+					"百度": "y",
+					"字节跳动": "y",
+					"QQ": "y"
+				},
+				"快应用": {
+					"华为": "y",
+					"联盟": "y"
+				}
+			}
+		}
+	},
+	"dependencies": {
+		"clipboard": "^2.0.11",
+		"dayjs": "^1.11.3"
+	},
+	"publishConfig": {
+	    "registry": "https://registry.npmjs.org/"
+	}
+}
