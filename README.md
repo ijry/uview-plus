@@ -2,7 +2,7 @@
     <img alt="logo" src="https://uiadmin.net/uview-plus/common/logo.png" width="120" height="120" style="margin-bottom: 10px;">
 </p>
 
-<h3 align="center" style="margin: 30px 0 30px;font-weight: bold;font-size:40px;">uview-plus 3.0 (Beta)</h3>
+<h3 align="center" style="margin: 30px 0 30px;font-weight: bold;font-size:40px;">uview-plus</h3>
 <h3 align="center">多平台快速开发的UI框架(fork自uView2.0)</h3>
 
 [![Cloud Studio Template](https://cs-res.codehub.cn/common/assets/icon-badge.svg)](https://club.cloudstudio.net/261753/11943789224931328)
@@ -16,7 +16,7 @@
 
 ## 说明
 
-因为是2.0移植的3.0，时间有限，有很多细节问题需要完善与修复，个人时间精力有限，可能一个月定期维护几次，希望有能力的一起完善，提交PR。
+因为是2.0移植的plus版，时间有限，有很多细节问题需要完善与修复，个人时间精力有限，可能一个月定期维护几次，希望有能力的一起完善，提交PR。
 
 ## 介绍
 
@@ -24,7 +24,7 @@ uview-plus，是[uni-app](https://uniapp.dcloud.io/)全面兼容nvue的uni-app�
 
 ## [官方文档：https://uview-plus.jiangruyi.com/](https://uview-plus.jiangruyi.com/)
 
-## [官方文档（备用）：https://uview-plus.lingyun.net/](https://uview-plus.lingyun.net/)
+## [官方文档（备用）：https://uiadmin.net/uview-plus/](https://uiadmin.net/uview-plus/)
 
 ### [点击加群交流反馈](https://uview-plus.jiangruyi.com/components/addQQGroup.html)
 
