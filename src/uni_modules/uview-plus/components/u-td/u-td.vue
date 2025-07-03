@@ -25,6 +25,22 @@
 			width: {
 				type: [String],
 				default: 'auto'
+			},
+			textAlign: {
+				type: String,
+				default: ''
+			},
+			fontSize: {
+				type: String,
+				default: ''
+			},
+			borderColor: {
+				type: String,
+				default: ''
+			},
+			color: {
+				type: String,
+				default: ''
 			}
 		},
 		data() {
@@ -49,6 +65,18 @@
 				style.borderBottom = `solid 1px ${this.parent.borderColor}`;
 				style.borderRight = `solid 1px ${this.parent.borderColor}`;
 				style.color = this.parent.color;
+				if (this.textAlign != '') {
+					style.textAlign = this.textAlign;
+				}
+				if (this.fontSize != '') {
+					style.fontSize = this.fontSize;
+				}
+				if (this.borderColor != '') {
+					style.borderColor = this.borderColor;
+				}
+				if (this.color != '') {
+					style.color = this.color;
+				}
 				this.tdStyle = style;
 			}
 		}
