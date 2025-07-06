@@ -3,7 +3,8 @@
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">基础功能</text>
 			<view class="u-demo-block__content">
-				<up-notice-bar
+				<up-notice-bar 
+					fontSize="30px"
 				    :text="text1"
 				></up-notice-bar>
 			</view>

@@ -316,7 +316,7 @@
 				animation: u-loop-animation 10s linear infinite both;
 				/* #endif */
 				@include flex(row);
-				line-height: 100%;
+				// line-height: 100%;
 			}
 		}
 
