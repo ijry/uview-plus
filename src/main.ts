@@ -1,7 +1,7 @@
 import App from './App'
 
-// vuex
-import store from './store'
+// pinia
+import pinia from '@/store'
 
 // 引入全局uview-plus
 import uviewPlus, { setConfig } from '@/uni_modules/uview-plus'
@@ -32,7 +32,7 @@ import { initRequest } from './util/request/index'
 export function createApp() {
   const app = createSSRApp(App)
 
-  app.use(store)
+  app.use(pinia)
 	.use(i18n)
 	.use(uviewPlus, () => {
 		return {
