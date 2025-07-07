@@ -40,7 +40,7 @@
         >
             <text
                 class="u-subsection__item__text"
-                :style="[textStyle(index)]"
+                :style="[textStyle(index,item)]"
                 >{{ getText(item) }}</text
             >
         </view>
@@ -158,22 +158,46 @@ export default {
             };
         },
         // 分段器文字颜色
-        textStyle(index) {
-            return (index) => {
+        textStyle(index,item) {
+            return (index,item) => {
                 const style = {};
                 style.fontWeight =
                     this.bold && this.innerCurrent === index ? "bold" : "normal";
                 style.fontSize = addUnit(this.fontSize);
+
+                let activeColorTemp = null;
+                let inactiveColorTemp = null;
+                // 如果是对象并且设置了对应的背景色字段 则优先使用设置的字段
+                if(typeof item === 'object' && item[this.activeColorKeyName]){
+                    activeColorTemp = item[this.activeColorKeyName];
+                }
+                if(typeof item === 'object' && item[this.inactiveColorKeyName]){
+                    inactiveColorTemp = item[this.inactiveColorKeyName];
+                }
+
                 // subsection模式下，激活时默认为白色的文字
                 if (this.mode === "subsection") {
-                    style.color =
-                        this.innerCurrent === index ? "#fff" : this.inactiveColor;
-                } else {
+                    // 判断当前是否激活
+                    if(this.innerCurrent === index){
+                        // 判断当前是否有自定义的颜色
+                        style.color = activeColorTemp ? activeColorTemp : '#FFF'
+                        // style.color = activeColorTemp ? activeColorTemp : this.activeColor
+                    }
+                    else{
+                        // 判断当前是否有自定义的颜色
+                        style.color = inactiveColorTemp ? inactiveColorTemp : this.inactiveColor;
+                    }
+                }
+                else {
                     // button模式下，激活时文字颜色默认为activeColor
-                    style.color =
-                        this.innerCurrent === index
-                            ? this.activeColor
-                            : this.inactiveColor;
+                    if(this.innerCurrent === index){
+                        // 判断当前是否有自定义的颜色
+                        style.color = activeColorTemp ? activeColorTemp : this.activeColor
+                    }
+                    else{
+                        // 判断当前是否有自定义的颜色
+                        style.color = inactiveColorTemp ? inactiveColorTemp : this.inactiveColor;
+                    }
                 }
                 return style;
             };

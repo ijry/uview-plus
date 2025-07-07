@@ -46,6 +46,17 @@ declare interface SubsectionProps {
    * @default "name"
    */
   keyName?: string
+
+  /**
+   * 从`list`元素对象中读取激活时的颜色  如果存在字段 优先级大于 activeColor
+   * @default activeColorKey
+   */
+  activeColorKeyName?: string
+  /**
+   * 从`list`元素对象中读取未激活时的颜色 如果存在字段 优先级大于 inactiveColor
+   * @default inactiveColorKey
+   */
+  inactiveColorKeyName?: string
   /**
    * 分段器选项发生改变时触发
    * @param index 选项的index索引值，从0开始

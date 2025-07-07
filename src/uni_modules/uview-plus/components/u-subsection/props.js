@@ -1,5 +1,6 @@
-import { defineMixin } from '../../libs/vue'
+import {defineMixin} from '../../libs/vue'
 import defProps from '../../libs/config/props.js'
+
 export const props = defineMixin({
     props: {
         // tab的数据
@@ -42,10 +43,20 @@ export const props = defineMixin({
             type: String,
             default: () => defProps.subsection.bgColor
         },
-		// 从list元素对象中读取的键名
-		keyName: {
-			type: String,
-			default: () => defProps.subsection.keyName
-		}
+        // 从list元素对象中读取的键名
+        keyName: {
+            type: String,
+            default: () => defProps.subsection.keyName
+        },
+        // 从`list`元素对象中读取激活时的颜色  如果存在字段 优先级大于 activeColor
+        activeColorKeyName: {
+            type: String,
+            default: () => defProps.subsection.activeColorKeyName
+        },
+        // 从`list`元素对象中读取未激活时的颜色 如果存在字段 优先级大于 inactiveColor
+        inactiveColorKeyName: {
+            type: String,
+            default: () => defProps.subsection.inactiveColorKeyName
+        }
     }
 })

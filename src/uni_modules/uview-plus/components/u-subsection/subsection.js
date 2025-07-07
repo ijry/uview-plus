@@ -18,6 +18,8 @@ export default {
         fontSize: 12,
         bold: true,
         bgColor: '#eeeeef',
-		keyName: 'name'
+        keyName: 'name',
+        activeColorKeyName: 'activeColorKey',
+        inactiveColorKeyName: 'inactiveColorKey',
     }
 }
