@@ -409,6 +409,13 @@ export default [{
 			title: 'Pagination 分页器',
 			title_en: 'Pagination'
 			
+		},
+		{
+			path: '/pages/componentsD/tree/tree',
+			icon: 'tree',
+			title: 'Tree 树形',
+			title_en: 'Tree'
+			
 		}
     ]
 }, {

@@ -581,6 +581,12 @@
                     "style" : {
                         "navigationBarTitleText" : "分页器"
                     }
+                },
+                {
+                    "path" : "tree/tree",
+                    "style" : {
+                        "navigationBarTitleText" : "树形"
+                    }
                 }
             ]
         },
