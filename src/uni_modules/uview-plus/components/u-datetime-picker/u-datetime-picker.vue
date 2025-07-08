@@ -109,6 +109,12 @@
 		watch: {
 			show(newValue, oldValue) {
 				if (newValue) {
+					// #ifdef VUE3
+					this.innerValue = this.correctValue(this.modelValue)
+					// #endif
+					// #ifdef VUE2
+					this.innerValue = this.correctValue(this.value)
+					// #endif
 					this.updateColumnValue(this.innerValue)
 				}
 			},
