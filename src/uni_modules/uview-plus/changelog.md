@@ -1,3 +1,12 @@
+## 3.4.46（2025-07-08）
+feat: 上传组件预览视频支持videoPreviewObjectFit参数
+
+feat: td增加多个样式props
+
+fix: 修复noticeBar字号增大时文字遮挡
+
+feat: 项目工程增加pinia
+
 ## 3.4.45（2025-07-01）
 fix: 修复picker-data组件缺少name
 
