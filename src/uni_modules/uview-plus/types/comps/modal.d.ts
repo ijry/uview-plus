@@ -100,7 +100,7 @@ declare interface ModalSlots {
   /**
    * 传入自定义按钮，用于在微信小程序弹窗通过按钮授权的场景
    */
-  ['confirm-button']?: () => any
+  ['confirmButton']?: () => any
 }
 
 declare interface _Modal {
