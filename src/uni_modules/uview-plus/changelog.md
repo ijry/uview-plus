@@ -1,3 +1,14 @@
+## 3.4.47（2025-07-09）
+fix: 修复datetime-picker打开时，数值可能出现对不上的问题
+
+feat: Subsection 分段器添加支持从 list中读取激活文字颜色和未激活文字颜色
+
+fix: 修复modal定义confirmButton
+
+fix: safe-bottom底部安全距离在小程序优先用JS计算
+
+feat: 新增tree树形组件
+
 ## 3.4.46（2025-07-08）
 feat: 上传组件预览视频支持videoPreviewObjectFit参数
 
