@@ -5,7 +5,7 @@
 				:sub-title="subTitle" :thumb="thumb" :padding="padding" :border="border">
 				<template #body>
 					<view>
-						<view class="u-body-item u-flex u-border-bottom u-col-between u-p-t-0">
+						<view class="u-body-item u-flex u-flex-items-start u-border-bottom u-col-between u-p-t-0">
 							<view class="u-body-item-title u-line-2">瓶身描绘的牡丹一如你初妆，冉冉檀香透过窗心事我了然，宣纸上走笔至此搁一半</view>
 							<image src="https://img12.360buyimg.com/n7/jfs/t1/102191/19/9072/330688/5e0af7cfE17698872/c91c00d713bf729a.jpg" mode="aspectFill"></image>
 						</view>
