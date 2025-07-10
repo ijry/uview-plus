@@ -95,7 +95,7 @@
 					// console.log('内置字体图标加载成功');
 				},
 				fail() {
-					console.error('内置字体图标加载出错');
+					// console.error('内置字体图标加载出错');
 				}
 			});
 			if (config.customIcon.family) {
@@ -106,7 +106,7 @@
 						// console.log('扩展字体图标加载成功');
 					},
 					fail() {
-						console.error('扩展字体图标加载出错');
+						// console.error('扩展字体图标加载出错');
 					}
 				});
 			}
