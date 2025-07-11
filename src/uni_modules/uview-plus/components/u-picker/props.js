@@ -123,5 +123,25 @@ export const props = defineMixin({
 		    type: [String, Number],
 		    default: () => defProps.picker.zIndex
 		},
+        // 弹窗背景色，设置为transparent可去除白色背景
+        bgColor: {
+            type: String,
+            default: () => defProps.picker.bgColor
+        },
+        // 是否显示圆角
+        round: {
+            type: [Boolean, String, Number],
+            default: () => defProps.picker.round
+        },
+        // 动画时长，单位ms
+        duration: {
+            type: [String, Number],
+            default: () => defProps.picker.duration
+        },
+        // 遮罩的透明度，0-1之间
+        overlayOpacity: {
+            type: [Number, String],
+            default: () => defProps.picker.overlayOpacity
+        }
     }
 })

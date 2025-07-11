@@ -32,5 +32,9 @@ export default {
         disabledColor: '',
         placeholder: '请选择',
         inputProps: {},
+        bgColor: '',
+        round: 0,
+        duration: 300,
+        overlayOpacity: 0.5
     }
 }

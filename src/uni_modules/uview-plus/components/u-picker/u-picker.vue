@@ -17,6 +17,10 @@
 			:show="show || (hasInput && showByClickInput)"
 			:mode="popupMode"
 			:zIndex="zIndex"
+			:bgColor="bgColor"
+			:round="round"
+			:duration="duration"
+			:overlayOpacity="overlayOpacity"
 			@close="closeHandler"
 		>
 			<view class="u-picker">
@@ -96,6 +100,10 @@
  * @property {Boolean}			closeOnClickOverlay	是否允许点击遮罩关闭选择器（默认 false ）
  * @property {Array}			defaultIndex		各列的默认索引
  * @property {Boolean}			immediateChange		是否在手指松开时立即触发change事件（默认 true ）
+ * @property {String | Number}	round				圆角值（默认 0）
+ * @property {String }	        bgColor				背景色值（默认 '' ）
+ * @property {String | Number}	duration			动画时长，单位ms （默认 300 ）
+ * @property {String | Number}	overlayDuration		遮罩层动画时长，单位ms （默认 350 ）
  * @event {Function} close		关闭选择器时触发
  * @event {Function} cancel		点击取消按钮触发
  * @event {Function} change		当选择值变化时触发
