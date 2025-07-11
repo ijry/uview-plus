@@ -1,3 +1,6 @@
+## 3.4.49（2025-07-11）
+feat: picker支持bgColor、round、duration和overlayOpacity属性
+
 ## 3.4.48（2025-07-10）
 fix: 官方文档Card示例组件多行显示省略号样式异常
 
