@@ -31,6 +31,7 @@
                     'u-subsection__item--no-border-right',
                 index === 0 && 'u-subsection__item--first',
                 index === list.length - 1 && 'u-subsection__item--last',
+                getTextViewDisableClass(index),
             ]"
             :ref="`u-subsection__item--${index}`"
             :style="[itemStyle(index)]"
@@ -40,6 +41,7 @@
         >
             <text
                 class="u-subsection__item__text"
+                :class="[disabled ? 'u-subsection--disabled' : '']"
                 :style="[textStyle(index,item)]"
                 >{{ getText(item) }}</text
             >
@@ -60,16 +62,19 @@ import { addStyle, addUnit, sleep } from '../../libs/function/index';
  * Subsection 分段器
  * @description 该分段器一般用于用户从几个选项中选择某一个的场景
  * @tutorial https://ijry.github.io/uview-plus/components/subsection.html
- * @property {Array}			list			tab的数据
- * @property {String ｜ Number}	current			当前活动的tab的index（默认 0 ）
- * @property {String}			activeColor		激活时的颜色（默认 '#3c9cff' ）
- * @property {String}			inactiveColor	未激活时的颜色（默认 '#303133' ）
- * @property {String}			mode			模式选择，mode=button为按钮形式，mode=subsection时为分段模式（默认 'button' ）
- * @property {String ｜ Number}	fontSize		字体大小，单位px（默认 12 ）
- * @property {Boolean}			bold			激活选项的字体是否加粗（默认 true ）
- * @property {String}			bgColor			组件背景颜色，mode为button时有效（默认 '#eeeeef' ）
- * @property {Object}			customStyle		定义需要用到的外部样式
- * @property {String}	        keyName	        从`list`元素对象中读取的键名（默认 'name' ）
+ * @property {Array}			list			        tab的数据
+ * @property {String ｜ Number}	current			        当前活动的tab的index（默认 0 ）
+ * @property {String}			activeColor		        激活时的颜色（默认 '#3c9cff' ）
+ * @property {String}			inactiveColor	        未激活时的颜色（默认 '#303133' ）
+ * @property {String}			mode			        模式选择，mode=button为按钮形式，mode=subsection时为分段模式（默认 'button' ）
+ * @property {String ｜ Number}	fontSize		        字体大小，单位px（默认 12 ）
+ * @property {Boolean}			bold			        激活选项的字体是否加粗（默认 true ）
+ * @property {String}			bgColor			        组件背景颜色，mode为button时有效（默认 '#eeeeef' ）
+ * @property {Object}			customStyle		        定义需要用到的外部样式
+ * @property {String}	        keyName	                从`list`元素对象中读取的键名（默认 'name' ）
+ * @property {String}	        activeColorKeyName      从`list`元素对象中读取激活时的颜色（默认 'activeColorKey' ）  如果存在字段 优先级大于 activeColor
+ * @property {String}	        inactiveColorKeyName    从`list`元素对象中读取未激活时的颜色 （默认 'inactiveColorKey' ）如果存在字段 优先级大于 inactiveColor
+ * @property {Boolean}	        disabled                是否禁用分段器 （默认 false ）
  *
  * @event {Function} change		分段器选项发生改变时触发  回调 index：选项的index索引值，从0开始
  * @example <u-subsection :list="list" :current="curNow" @change="sectionChange"></u-subsection>
@@ -241,10 +246,31 @@ export default {
             // #endif
         },
         clickHandler(index) {
+            // 防止某些平台 css 无法阻止点击事件 在此处拦截
+            if(this.disabled){
+                return
+            }
             this.innerCurrent = index;
 			this.$emit('update:current', index);
             this.$emit("change", index);
         },
+        /**
+         * 获取当前文字区域的 class禁用样式
+         * @param index
+         */
+        getTextViewDisableClass(index){
+            // 禁用状态下
+            if(this.disabled){
+                // 判断模式
+                if(this.mode === 'button'){
+                    return 'item-button--disabled'
+                }
+                else{
+                    return 'item-subsection--disabled'
+                }
+            }
+            return '';
+        }
     },
 };
 </script>
@@ -336,6 +362,40 @@ export default {
             transition-property: color;
             transition-duration: 0.3s;
         }
+    }
+
+    // 禁用标志
+    //
+    //&--subsectio--disabled{
+    //    cursor: no-drop;
+    //    background: #FFFFFF !important;
+    //    color: #BDBDBD !important;
+    //    border-color: #BDBDBD !important;
+    //}
+    //
+    //&--button--disabled{
+    //    cursor: no-drop;
+    //    color: #BDBDBD !important;
+    //    border-color: #BDBDBD !important;
+    //}
+
+}
+
+.item-button--disabled{
+    cursor: no-drop;
+    color: #BDBDBD !important;
+    border-color: #BDBDBD !important;
+    text{
+        color: #BDBDBD !important;
+    }
+}
+.item-subsection--disabled{
+    cursor: no-drop;
+    background: #FFFFFF !important;
+    color: #BDBDBD !important;
+    border-color: #BDBDBD !important;
+    text{
+        color: #BDBDBD !important;
     }
 }
 </style>

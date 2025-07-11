@@ -21,5 +21,6 @@ export default {
         keyName: 'name',
         activeColorKeyName: 'activeColorKey',
         inactiveColorKeyName: 'inactiveColorKey',
+        disabled: false,
     }
 }

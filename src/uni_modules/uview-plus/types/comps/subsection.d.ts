@@ -58,6 +58,11 @@ declare interface SubsectionProps {
    */
   inactiveColorKeyName?: string
   /**
+   * 是否禁用
+   * @default false
+   */
+  disabled?: boolean
+  /**
    * 分段器选项发生改变时触发
    * @param index 选项的index索引值，从0开始
    */

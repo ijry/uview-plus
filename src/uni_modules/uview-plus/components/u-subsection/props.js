@@ -57,6 +57,11 @@ export const props = defineMixin({
         inactiveColorKeyName: {
             type: String,
             default: () => defProps.subsection.inactiveColorKeyName
+        },
+        // 是否禁用
+        disabled: {
+            type: String,
+            default: () => defProps.subsection.disabled
         }
     }
 })
