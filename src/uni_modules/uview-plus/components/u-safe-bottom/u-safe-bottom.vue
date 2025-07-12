@@ -34,7 +34,7 @@
 		computed: {
 			style() {
 				const style = {};
-				// #ifdef APP-NVUE || MP
+				// #ifdef APP-NVUE
 				// nvue下，高度使用js计算填充
 				style.height = addUnit(getWindowInfo().safeAreaInsets.bottom, 'px');
 				// #endif
