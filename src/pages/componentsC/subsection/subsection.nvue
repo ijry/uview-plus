@@ -59,6 +59,31 @@
                 ></up-subsection>
             </view>
         </view>
+
+        <view class="u-demo-block">
+            <text class="u-demo-block__title">禁用</text>
+            <view class="u-demo-block__content">
+                <up-subsection
+                    :list="list3"
+                    mode="button"
+                    :disabled="true"
+                    activeColorKeyName="textColor"
+                    :current="current5"
+                    @change="change5"
+                ></up-subsection>
+            </view>
+            <view class="u-demo-block__content" style="margin-top: 20rpx;">
+                <up-subsection
+                    :list="list"
+                    :disabled="true"
+                    mode="subsection"
+                    :current="current1"
+                    @change="change1"
+                ></up-subsection>
+            </view>
+
+
+        </view>
 	</view>
 </template>
 
