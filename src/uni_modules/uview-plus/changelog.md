@@ -1,3 +1,6 @@
+## 3.4.50（2025-07-13）
+feat: subsection分段器添加禁用参数
+
 ## 3.4.49（2025-07-11）
 feat: picker支持bgColor、round、duration和overlayOpacity属性
 
