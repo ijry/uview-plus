@@ -1,3 +1,6 @@
+## 3.4.51（2025-07-14）
+fix: 修复u-slider在click后没有触发change事件
+
 ## 3.4.50（2025-07-13）
 feat: subsection分段器添加禁用参数
 
