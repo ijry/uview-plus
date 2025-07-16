@@ -34,7 +34,7 @@
 		computed: {
 			style() {
 				const style = {};
-				// #ifdef APP-NVUE || MP
+				// #ifdef APP-NVUE || MP-TOUTIAO || MP-WEIXIN
 				// nvue下，高度使用js计算填充
 				style.height = addUnit(getWindowInfo().safeAreaInsets.bottom, 'px');
 				// #endif
@@ -42,7 +42,7 @@
 			},
 		},
 		mounted() {
-			// #ifdef APP-NVUE
+			// #ifdef APP-NVUE || MP-TOUTIAO || MP-WEIXIN
 			// 标识为是否nvue
 			this.isNvue = true;
 			// #endif
