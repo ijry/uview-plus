@@ -434,6 +434,12 @@ export default [{
         title: 'CodeInput 验证码输入',
         title_en: 'CodeInput'
     },
+	{
+	    path: '/pages/componentsD/dragsort/dragsort',
+	    icon: 'Dragsort',
+	    title: 'Dragsort 拖动排序',
+	    title_en: 'Dragsort'
+	},
     // {
     // 	path: '/pages/componentsC/avatarCropper/avatarCropper',
     // 	icon: 'avatarCropper',

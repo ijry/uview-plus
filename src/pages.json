@@ -587,6 +587,12 @@
                     "style" : {
                         "navigationBarTitleText" : "树形"
                     }
+                },
+                {
+                    "path" : "dragsort/dragsort",
+                    "style" : {
+                        "navigationBarTitleText" : "拖动排序"
+                    }
                 }
             ]
         },
