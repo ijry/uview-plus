@@ -8,13 +8,13 @@
 			<view class="u-dropdown__menu__item" v-for="(item, index) in menuList" :key="index" @tap.stop="menuClick(index)">
 				<view class="u-flex u-flex-row">
 					<text class="u-dropdown__menu__item__text" :style="{
-						color: item.disabled ? '#c0c4cc' : (index === current || highlightIndex == index) ? activeColor : inactiveColor,
+						color: item.disabled ? '#c0c4cc' : (index === current || highlightIndexList.includes(index)) ? activeColor : inactiveColor,
 						fontSize: addUnit(titleSize)
 					}">{{item.title}}</text>
 					<view class="u-dropdown__menu__item__arrow" :class="{
 						'u-dropdown__menu__item__arrow--rotate': index === current
 					}">
-						<u-icon :custom-style="{display: 'flex'}" :name="menuIcon" :size="addUnit(menuIconSize)" :color="index === current || highlightIndex == index ? activeColor : '#c0c4cc'"></u-icon>
+						<u-icon :custom-style="{display: 'flex'}" :name="menuIcon" :size="addUnit(menuIconSize)" :color="index === current || highlightIndexList.includes(index) ? activeColor : '#c0c4cc'"></u-icon>
 					</view>
 				</view>
 			</view>
@@ -71,8 +71,8 @@
 					zIndex: -1,
 					opacity: 0
 				},
-				// 让某个菜单保持高亮的状态
-				highlightIndex: 99999,
+				// 让某些菜单保持高亮的状态
+				highlightIndexList: [],
 				contentHeight: 0
 			}
 		},
@@ -160,9 +160,13 @@
 				if (!this.closeOnClickMask) return;
 				this.close();
 			},
-			// 外部手动设置某个菜单高亮
-			highlight(index = undefined) {
-				this.highlightIndex = index !== undefined ? index : 99999;
+			// 外部手动设置某些菜单高亮
+			highlight(indexParams = undefined) {
+                if (Array.isArray(indexParams)) {
+                    this.highlightIndexList = [...indexParams];
+                    return;
+                }
+				this.highlightIndexList = indexParams !== undefined ? [indexParams] : [];
 			},
 			// 获取下拉菜单内容的高度
 			getContentHeight() {
