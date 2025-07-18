@@ -38,9 +38,12 @@ import platform from './libs/function/platform'
 // http
 import http from './libs/function/http.js'
 
+// fontUtil
+import fontUtil from './components/u-icon/util.js';
+
 // 导出
 let themeType = ['primary', 'success', 'error', 'warning', 'info'];
-export { route, http, debounce, throttle, calc, digit, platform, themeType, mixin, mpMixin, props, color, test, zIndex }
+export { route, http, debounce, throttle, calc, digit, platform, themeType, mixin, mpMixin, props, color, test, zIndex, fontUtil }
 export * from './libs/function/index.js'
 export * from './libs/function/colorGradient.js'
 
