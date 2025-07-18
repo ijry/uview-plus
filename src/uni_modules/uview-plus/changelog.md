@@ -1,3 +1,8 @@
+## 3.4.54（2025-07-18）
+feat: dropdown组件的highlight方法支持同时高亮多个菜单项
+
+feat: 支持一次性全局加载icon字体
+
 ## 3.4.53（2025-07-18）
 feat: dropdown组件的highlight方法支持同时高亮多个菜单项 感谢@keeplearning66
 
