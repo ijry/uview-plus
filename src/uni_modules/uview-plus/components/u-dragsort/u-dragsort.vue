@@ -63,8 +63,11 @@ export default {
       itemHeight: 80,
       isDragging: false,
       closestIndex: -1, // 用于临时存储最接近的 index
-      cumulativeOffsetY: 0, // 新增：累计拖动距离
-      prevY: 0, // 新增：记录上一次的Y坐标
+      lastSwapTime: 0, // 新增：记录上次交换时间
+      initialTouchY: 0, // 新增：记录初始触摸位置
+      minDragDistance: 15, // 新增：最小拖动距离阈值
+      dragStartY: 0, // 新增：记录拖动开始位置
+      confirmedDirection: null, // 新增：确认的拖动方向
     };
   },
   emits: ['drag-end'],
@@ -112,11 +115,15 @@ export default {
       this.dragIndex = index;
       this.startX = touch.clientX;
       this.startY = touch.clientY;
-      this.prevY = touch.clientY; // 初始化prevY
+      // 记录初始触摸位置
+      this.initialTouchY = touch.clientY;
       this.dragX = 0;
       this.dragY = 0;
-      this.cumulativeOffsetY = 0; // 初始化累计偏移
       this.isDragging = true;
+
+      // 记录拖动开始位置
+      this.dragStartY = touch.clientY;
+      this.confirmedDirection = null;
 
       this.updateItemRects(); // 更新缓存
     },
@@ -138,12 +145,23 @@ export default {
         const currentY = touch.clientY;
 
         const deltaX = currentX - this.startX;
-        const frameDeltaY = currentY - this.prevY; // 计算帧间偏移
-        this.prevY = currentY; // 更新prevY
         
-        // 更新累计偏移（用于视觉位置）
-        this.cumulativeOffsetY += frameDeltaY;
-        this.dragY = this.cumulativeOffsetY;
+        // 1. 计算总拖动距离
+        const totalDragDistance = Math.abs(currentY - this.dragStartY);
+        
+        // 2. 如果拖动距离小于阈值，不进行位置检测
+        if (totalDragDistance < this.minDragDistance) {
+            // 只更新位置，不检测交换
+            this.dragY = currentY - this.initialTouchY;
+            return;
+        }
+        
+        // 3. 确认拖动方向（只做一次）
+        if (!this.confirmedDirection) {
+            this.confirmedDirection = currentY > this.dragStartY ? 'down' : 'up';
+        }
+        
+        this.dragY = currentY - this.initialTouchY;
 
         if (this.direction === 'horizontal') {
             this.dragX = deltaX;
@@ -175,69 +193,108 @@ export default {
                 this.closestIndex = closestIndex;
             }
         } else {
-            // 精准计算目标位置
+            // 4. 添加更严格的防抖
+            const now = Date.now();
+            if (now - this.lastSwapTime < 200) return; // 延长防抖时间
+            
+            // 5. 使用方向感知的目标位置计算
             const targetIndex = this.calculateTargetPosition(currentY);
             
-            // 如果找到合适位置且需要交换
             if (targetIndex !== -1 && targetIndex !== this.dragIndex) {
-                this.swapItems(targetIndex);
+                this.lastSwapTime = now;
+                this.swapItems(targetIndex, event);
             }
         }
     },
-    // 新增：计算目标位置
+    // 优化：更精准的方向感知位置计算
     calculateTargetPosition(currentY) {
+        // 获取拖动项的中心Y坐标
+        const dragCenterY = currentY;
         let closestIndex = -1;
         let minDistance = Infinity;
         
-        // 计算拖动项的中心Y坐标
-        const dragCenterY = currentY;
+        // 获取拖动项的高度
+        const dragHeight = this.itemRects[this.dragIndex]?.height || this.itemHeight;
         
-        this.itemRects.forEach((rect, index) => {
-            if (index === this.dragIndex) return;
+        for (let i = 0; i < this.itemRects.length; i++) {
+            if (i === this.dragIndex) continue;
+            
+            const rect = this.itemRects[i];
+            if (!rect) continue;
             
             const rectCenterY = rect.top + rect.height / 2;
             const distance = Math.abs(dragCenterY - rectCenterY);
             
-            if (distance < minDistance) {
+            // 6. 方向过滤：只考虑当前拖动方向上的元素
+            const isDirectionMatch = 
+                (this.confirmedDirection === 'down' && i > this.dragIndex) ||
+                (this.confirmedDirection === 'up' && i < this.dragIndex);
+                
+            if (!isDirectionMatch) continue;
+            
+            // 7. 使用更大的阈值（元素高度的1.2倍）
+            const threshold = dragHeight * 1.2;
+            
+            if (distance < minDistance && distance < threshold) {
                 minDistance = distance;
-                closestIndex = index;
+                closestIndex = i;
             }
-        });
+        }
         
-        // 动态阈值：使用元素高度的0.8倍作为触发距离
-        return minDistance < this.itemHeight * 0.8 ? closestIndex : -1;
+        return closestIndex;
     },
     
-    // 修改：修复向上拖动的补偿逻辑
-    swapItems(targetIndex) {
-        const temp = this.list[this.dragIndex];
-        this.list.splice(this.dragIndex, 1);
-        
-        // 保存原始索引
+    // 优化：添加平滑交换
+    swapItems(targetIndex, event) {
         const originalIndex = this.dragIndex;
         
-        // 确定插入位置
-        const insertIndex = targetIndex;
-        this.list.splice(insertIndex, 0, temp);
+        // 6. 执行交换前保存当前样式
+        const originalTransform = this.$refs[`u-dragsort-item-${originalIndex}`]?.style.transform;
         
-        this.dragIndex = insertIndex;
-        this.closestIndex = insertIndex;
+        // 执行交换
+        const temp = this.list[originalIndex];
+        this.list.splice(originalIndex, 1);
+        this.list.splice(targetIndex, 0, temp);
         
-        // 关键：根据移动方向补偿位置偏移 - 修复向上拖动问题
-        if (insertIndex > originalIndex) {
-            // 向下移动：补偿下方元素的高度
-            this.cumulativeOffsetY -= this.itemRects[originalIndex].height;
-        } else {
-            // 向上移动：补偿上方元素的高度（使用原始元素高度）
-            this.cumulativeOffsetY += this.itemRects[originalIndex].height;
+        // 更新索引
+        this.dragIndex = targetIndex;
+        this.closestIndex = targetIndex;
+        
+        // 7. 使用当前触摸位置更新初始位置
+        if (event && event.touches && event.touches[0]) {
+            this.initialTouchY = event.touches[0].clientY;
+            this.dragY = 0;
         }
+        
+        // 8. 添加位置平滑过渡
+        this.$nextTick(() => {
+            const dragItem = this.$refs[`u-dragsort-item-${targetIndex}`];
+            if (dragItem) {
+                // 保存当前位置
+                const currentTransform = dragItem.style.transform;
+                
+                // 临时添加过渡效果
+                dragItem.style.transition = 'transform 0.15s ease';
+                dragItem.style.transform = currentTransform;
+                
+                // 过渡结束后移除效果
+                setTimeout(() => {
+                    dragItem.style.transition = '';
+                }, 150);
+            }
+        });
         
         // 更新位置缓存
         this.updateItemRects();
     },
     
     onTouchMove(event) {
-        // 使用requestAnimationFrame替代节流，确保流畅性
+        // 记录当前Y坐标用于方向判断
+        if (event.touches && event.touches[0]) {
+            this.prevY = event.touches[0].clientY;
+        }
+        
+        // 使用requestAnimationFrame确保流畅性
         if (!this.rafId) {
             this.rafId = requestAnimationFrame(() => {
                 this.handleDragMove(event);
@@ -275,7 +332,8 @@ export default {
   width: 100%;
 
   .u-dragsort-item {
-    transition: transform 0.15s ease, margin-top 0.15s ease;
+    // transition: transform 0.15s ease, margin-top 0.15s ease;
+    transition: transform 0.25s cubic-bezier(0.33, 1, 0.68, 1);
     &.dragging {
         // 拖动时禁用过渡
         // transition: none;
