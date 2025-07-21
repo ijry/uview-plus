@@ -13,7 +13,7 @@ export default {
         text: '',
         color: '#606266',
         size: 14,
-        bgColor: '#dedede',
+        bgColor: '#f1f1f1',
         height: 32
     }
 }

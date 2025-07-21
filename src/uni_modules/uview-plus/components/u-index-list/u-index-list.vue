@@ -66,7 +66,7 @@
 				<text
 					class="u-index-list__letter__item__index"
 					:style="{color: activeIndex === index ? '#fff' : inactiveColor}"
-				>{{ item }}</text>
+				>{{ item.key || item }}</text>
 			</view>
 		</view>
 		<u-transition
@@ -87,7 +87,7 @@
 					width: addUnit(indicatorHeight)
 				}"
 			>
-				<text class="u-index-list__indicator__text">{{ uIndexList[activeIndex] }}</text>
+				<text class="u-index-list__indicator__text">{{ uIndexList[activeIndex].key || uIndexList[activeIndex] }}</text>
 			</view>
 		</u-transition>
 	</view>
@@ -392,7 +392,11 @@
 				this.$emit('select', this.uIndexList[currentIndex])
 				// #ifndef APP-NVUE || MP-WEIXIN
 				// 在非nvue中，由于anchor和item都在u-index-item中，所以需要对index-item进行偏移
-				this.scrollIntoView = `u-index-item-${this.uIndexList[currentIndex].charCodeAt(0)}`
+				if (typeof this.uIndexList[currentIndex] == 'string') {
+					this.scrollIntoView = `u-index-item-${this.uIndexList[currentIndex].charCodeAt(0)}`
+				} else {
+					this.scrollIntoView = `u-index-item-${this.uIndexList[currentIndex].name.charCodeAt(0)}`
+				}
 				// #endif
 
 				// #ifdef MP-WEIXIN

@@ -593,6 +593,12 @@
                     "style" : {
                         "navigationBarTitleText" : "拖动排序"
                     }
+                },
+                {
+                    "path" : "cityLocate/cityLocate",
+                    "style" : {
+                        "navigationBarTitleText" : "城市定位"
+                    }
                 }
             ]
         },

@@ -488,6 +488,12 @@ export default [{
         icon: 'qrcode',
         title: 'qrcode 二维码',
         title_en: '二维码'
+    },
+    {
+        path: '/pages/componentsD/cityLocate/cityLocate',
+        icon: 'cityLocate',
+        title: 'CityLocate 城市定位',
+        title_en: 'CityLocate'
     }]
 }
 ]
