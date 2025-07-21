@@ -1,3 +1,8 @@
+## 3.4.55（2025-07-21）
+feat: 新增city-locate城市定位选择组件
+
+feat: 优化index-list组件索引
+
 ## 3.4.54（2025-07-18）
 feat: dropdown组件的highlight方法支持同时高亮多个菜单项
 
