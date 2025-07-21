@@ -45,26 +45,7 @@
 		props:{
 			indexList: {
 				type: Array,
-				default: ['城市']
-			},
-			hotCity:{
-				type: Array,
-				default: () => {
-					return [
-						{
-							name: '北京',
-							value: 'beijing'
-						},
-						{
-							name: '上海',
-							value: 'shanghai'
-						},
-						{
-							name: '广州',
-							value: 'guangzhou'
-						},
-					]
-				}
+				default: ['🔥']
 			},
 			cityList:{
 				type: Array,
