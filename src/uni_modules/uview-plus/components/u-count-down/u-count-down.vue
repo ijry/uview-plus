@@ -1,6 +1,7 @@
 <template>
 	<view class="u-count-down">
-		<slot>
+		<slot :days="timeData.days" :hours="timeData.hours"
+			:minutes="timeData.minutes" :seconds="timeData.seconds">
 			<text class="u-count-down__text">{{ formattedTime }}</text>
 		</slot>
 	</view>
@@ -112,6 +113,7 @@
 				this.remainTime = remain
 				// 根据剩余的毫秒时间，得出该有天，小时，分钟等的值，返回一个对象
 				const timeData = parseTimeData(remain)
+				this.timeData = timeData;
 				this.$emit('change', timeData)
 				// 得出格式化后的时间
 				this.formattedTime = parseFormat(this.format, timeData)
