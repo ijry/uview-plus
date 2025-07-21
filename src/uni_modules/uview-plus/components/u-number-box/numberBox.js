@@ -29,6 +29,7 @@ export default {
         buttonSize: 30,
         buttonRadius: '0px',
         bgColor: '#EBECEE',
+        disabledBgColor: '#f7f8fa',
         inputBgColor: '#EBECEE',
         cursorSpacing: 100,
         disableMinus: false,

@@ -184,7 +184,7 @@
 						borderRadius: this.buttonRadius
 					}
 					if (this.isDisabled(type)) {
-						style.backgroundColor = '#f7f8fa'
+						style.backgroundColor = this.disabledBgColor
 					}
 					return style
 				}

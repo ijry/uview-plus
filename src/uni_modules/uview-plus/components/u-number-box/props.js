@@ -106,6 +106,11 @@ export const props = defineMixin({
             type: String,
             default: () => defProps.numberBox.bgColor
         },
+        // 按钮禁用背景色
+        disabledBgColor: {
+            type: String,
+            default: () => defProps.numberBox.disabledBgColor
+        },
         // 输入框背景颜色
         inputBgColor: {
             type: String,
