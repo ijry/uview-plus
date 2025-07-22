@@ -35,6 +35,8 @@
 .up-flex-row,
 .up-flex-x {
 	@include flex;
+	display: flex !important;
+	flex-direction: row !important;
 }
 
 .u-flex-y,
@@ -42,25 +44,27 @@
 .up-flex-y,
 .up-flex-column {
 	@include flex(column);
+	display: flex !important;
+	flex-direction: column !important;
 }
 
 .u-flex-x-center,
 .up-flex-x-center {
 	@include flex;
-	justify-content: center;
+	justify-content: center !important;
 }
 
 .u-flex-xy-center,
 .up-flex-xy-center {
 	@include flex;
-	justify-content: center;
-	align-items: center;
+	justify-content: center !important;
+	align-items: center !important;
 }
 
 .u-flex-y-center,
 .up-flex-y-center {
 	@include flex;
-	align-items: center;
+	align-items: center !important;
 }
 
 .u-flex-x-left,
@@ -72,14 +76,14 @@
 .u-flex-row-reverse,
 .up-flex-x-reverse,
 .up-flex-row-reverse  {
-	flex-direction: row-reverse;
+	flex-direction: row-reverse !important;
 }
 
 .u-flex-y-reverse,
 .u-flex-column-reverse,
 .up-flex-y-reverse,
 .up-flex-column-reverse {
-	flex-direction: column-reverse;
+	flex-direction: column-reverse !important;
 }
 
 /* #ifndef APP-NVUE */
@@ -91,20 +95,20 @@
 .up-flex.up-flex-reverse,
 .up-flex-row.up-flex-reverse,
 .up-flex-x.up-flex-reverse {
-	flex-direction: row-reverse;
+	flex-direction: row-reverse !important;
 }
 
 .u-flex-column.u-flex-reverse,
 .u-flex-y.u-flex-reverse,
 .up-flex-column.up-flex-reverse,
 .up-flex-y.up-flex-reverse {
-	flex-direction: column-reverse;
+	flex-direction: column-reverse !important;
 }
 
 // 自动伸缩
 .u-flex-fill,
 .up-flex-fill {
-	flex: 1 1 auto;
+	flex: 1 1 auto !important;
 }
 
 // 边界自动伸缩
@@ -156,75 +160,75 @@
 // 换行
 .u-flex-wrap,
 .up-flex-wrap {
-	flex-wrap: wrap;
+	flex-wrap: wrap !important;
 }
 
 // 反向换行
 .u-flex-wrap-reverse,
 .up-flex-wrap-reverse {
-	flex-wrap: wrap-reverse;
+	flex-wrap: wrap-reverse !important;
 }
 
 // 主轴起点对齐
 .u-flex-start,
 .up-flex-start {
-	justify-content: flex-start;
+	justify-content: flex-start !important;
 }
 
 // 主轴中间对齐
 .u-flex-center,
 .up-flex-center {
-	justify-content: center;
+	justify-content: center !important;
 }
 
 // 主轴终点对齐
 .u-flex-end,
 .up-flex-end {
-	justify-content: flex-end;
+	justify-content: flex-end !important;
 }
 
 // 主轴等比间距
 .u-flex-between,
 .up-flex-between {
-	justify-content: space-between;
+	justify-content: space-between !important;
 }
 
 // 主轴均分间距
 .u-flex-around,
 .up-flex-around {
-	justify-content: space-around;
+	justify-content: space-around !important;
 }
 
 // 交叉轴起点对齐
 .u-flex-items-start,
 .up-flex-items-start {
-	align-items: flex-start;
+	align-items: flex-start !important;
 }
 
 // 交叉轴中间对齐
 .u-flex-items-center,
 .up-flex-items-center {
-	align-items: center;
+	align-items: center !important;
 }
 
 // 交叉轴终点对齐
 .u-flex-items-end,
 .up-flex-items-end {
-	align-items: flex-end;
+	align-items: flex-end !important;
 }
 
 // 交叉轴第一行文字基线对齐
 .u-flex-items-baseline,
 .up-flex-items-baseline {
 	/* #ifndef APP-NVUE */
-	align-items: baseline;
+	align-items: baseline !important;
 	/* #endif */
 }
 
 // 交叉轴方向拉伸对齐
 .u-flex-items-stretch,
 .up-flex-items-stretch {
-	align-items: stretch;
+	align-items: stretch !important;
 }
 
 
@@ -234,31 +238,31 @@
 /* #ifndef APP-NVUE */
 .u-flex-self-start,
 .up-flex-self-start {
-	align-self: flex-start;
+	align-self: flex-start !important;
 }
 
 // 子元素交叉轴居中对齐
 .u-flex-self-center,
 .up-flex-self-center {
-	align-self: center;
+	align-self: center !important;
 }
 
 // 子元素交叉轴终点对齐
 .u-flex-self-end,
 .up-flex-self-end {
-	align-self: flex-end;
+	align-self: flex-en !important;
 }
 
 // 子元素交叉轴第一行文字基线对齐
 .u-flex-self-baseline,
 .up-flex-self-baseline {
-	align-self: baseline;
+	align-self: baseline !important;
 }
 
 // 子元素交叉轴方向拉伸对齐
 .u-flex-self-stretch,
 .up-flex-self-stretch {
-	align-self: stretch;
+	align-self: stretch !important;
 }
 /* #endif */
 // 多轴交叉时的对齐方式
@@ -267,52 +271,52 @@
 /* #ifndef APP-NVUE */
 .u-flex-content-start,
 .up-flex-content-start {
-	align-content: flex-start;
+	align-content: flex-start !important;
 }
 
 // 居中对齐
 .u-flex-content-center,
 .up-flex-content-center {
-	align-content: center;
+	align-content: center !important;
 }
 
 // 终点对齐
 .u-flex-content-end,
 .up-flex-content-end {
-	align-content: flex-end;
+	align-content: flex-end !important;
 }
 
 // 两端对齐
 .u-flex-content-between,
 .up-flex-content-between {
-	align-content: space-between;
+	align-content: space-between !important;
 }
 
 // 均分间距
 .u-flex-content-around,
 .up-flex-content-around {
-	align-content: space-around;
+	align-content: space-around !important;
 }
 
 // 全部居中对齐
 .u-flex-middle,
 .up-flex-middle {
-	justify-content: center;
-	align-items: center;
-	align-self: center;
-	align-content: center;
+	justify-content: center !important;
+	align-items: center !important;
+	align-self: center !important;
+	align-content: center !important;
 }
 
 // 是否可以放大
 .u-flex-grow,
 .up-flex-grow {
-	flex-grow: 1;
+	flex-grow: 1 !important;
 }
 
 // 是否可以缩小
 .u-flex-shrink,
 .up-flex-shrink {
-	flex-shrink: 1;
+	flex-shrink: 1 !important;
 }
 
 /* #endif */

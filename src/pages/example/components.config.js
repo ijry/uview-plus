@@ -335,6 +335,11 @@ export default [{
 		icon: 'box',
 		title: 'CateTab 垂直TAB',
 		title_en: 'CateTab'
+    }, {
+		path: '/pages/componentsD/title/title',
+		icon: 'title',
+		title: 'Title 标题',
+		title_en: 'Title'
     }
     ]
 },

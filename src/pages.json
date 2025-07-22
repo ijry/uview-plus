@@ -599,6 +599,12 @@
                     "style" : {
                         "navigationBarTitleText" : "城市定位"
                     }
+                },
+                {
+                    "path" : "title/title",
+                    "style" : {
+                        "navigationBarTitleText" : "标题"
+                    }
                 }
             ]
         },

@@ -38,7 +38,7 @@ $u-info-light: #f4f4f5;
 // scss混入，为了少写几行#ifndef
 @mixin flex($direction: row) {
 	/* #ifndef APP-NVUE */
-	display: flex;
+	display: flex !important;
 	/* #endif */
-	flex-direction: $direction;
+	flex-direction: $direction !important;
 }
