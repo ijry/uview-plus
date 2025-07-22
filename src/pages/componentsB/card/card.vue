@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="u-card-wrap">
-			<up-title>基础卡片</up-title>
+			<up-title class="u-p-t-20 u-p-l-30">基础卡片</up-title>
 			<up-card :showHead="false">
 				<template #body>
 					<view class="ts-14 tw5 lh-1-8" >
@@ -9,7 +9,7 @@
 					</view>
 				</template>
 			</up-card>
-			<up-title>高级卡片</up-title>
+			<up-title class="u-p-t-20 u-p-l-30">高级卡片</up-title>
 			<up-card @click="click" @head-click="headClick" :title="title"
 				:sub-title="subTitle" :thumb="thumb" :padding="padding" :border="border">
 				<template #body>
