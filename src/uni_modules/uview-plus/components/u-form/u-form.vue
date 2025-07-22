@@ -25,7 +25,7 @@
 	 * @property {String | Number}				labelWidth		提示文字的宽度，单位px  ( 默认 45 ）
 	 * @property {String}						labelAlign		lable字体的对齐方式   ( 默认 ‘left' ）
 	 * @property {Object}						labelStyle		lable的样式，对象形式
-	 * @example <up-formlabelPosition="left" :model="model1" :rules="rules" ref="form1"></up-form>
+	 * @example <up-form labelPosition="left" :model="model1" :rules="rules" ref="form1"></up-form>
 	 */
 	export default {
 		name: "u-form",
