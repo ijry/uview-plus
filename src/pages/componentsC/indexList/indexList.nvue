@@ -24,7 +24,6 @@
 				<up-line></up-line>
 			</view>
 		</template>
-		{{ itemArr }}
 		<template :key="index" v-for="(item, index) in itemArr">
 			<!-- #ifdef APP-NVUE -->
 			<up-index-anchor :text="indexList[index]"></up-index-anchor>
