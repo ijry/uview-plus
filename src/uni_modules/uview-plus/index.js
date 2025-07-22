@@ -125,6 +125,9 @@ const install = (Vue, upuiParams = '') => {
         Vue.component(name, component); 
     });
     // #endif
+
+    // 加载字体
+    fontUtil.loadFont();
 	
 	// 初始化
 	if (upuiParams) {
