@@ -114,7 +114,6 @@ export default {
             }
         }
     },
-	emits: ["albumWidth"],
     computed: {
         imageStyle() {
             return (index1, index2) => {

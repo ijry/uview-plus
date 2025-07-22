@@ -73,7 +73,11 @@
         watch: {
             tabList() {
                 this.getMenuItemTop()
-            }
+            },
+			current(nval) {
+				this.innerCurrent = nval;
+				this.leftMenuStatus(this.innerCurrent);
+			}
         },
 		emits: ['update:current'],
 		data() {
@@ -95,12 +99,6 @@
 			this.innerCurrent = this.current;
 			this.leftMenuStatus(this.innerCurrent);
 			this.getMenuItemTop()
-		},
-		watch: {
-			current(nval) {
-				this.innerCurrent = nval;
-				this.leftMenuStatus(this.innerCurrent);
-			}
 		},
 		methods: {
 			addUnit,
