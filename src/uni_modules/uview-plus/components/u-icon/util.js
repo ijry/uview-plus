@@ -58,12 +58,12 @@ const loadFont = once(() => {
     }
     // #endif
     // #ifdef APP-NVUE
-    if (this.customFontFamily) {
-        domModule.addRule('fontFace', {
-            'fontFamily': `${this.customPrefix}-${this.customFontFamily}`,
-            'src': `url('${this.customFontUrl}')`
-        })
-    }
+    // if (this.customFontFamily) {
+    //     domModule.addRule('fontFace', {
+    //         'fontFamily': `${this.customPrefix}-${this.customFontFamily}`,
+    //         'src': `url('${this.customFontUrl}')`
+    //     })
+    // }
     // #endif
     return true;
 });

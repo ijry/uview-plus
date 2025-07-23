@@ -221,7 +221,7 @@
 								style.opacity = 0.7
 							}
 						} else if (this.selected.length === 1) {
-							// 之所以需要这么写，是因为DCloud公司的iOS客户端的开发者能力有限导致的bug
+							// 之所以需要这么写，是因为uni-app的iOS客户端的bug
 							// 进行还原操作，否则在nvue的iOS，uni-app有bug，会导致诡异的表现
 							style.borderTopLeftRadius = '3px'
 							style.borderBottomLeftRadius = '3px'

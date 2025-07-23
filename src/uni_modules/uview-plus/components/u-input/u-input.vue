@@ -206,7 +206,7 @@ export default {
             if (this.border === "none") {
                 style.padding = "0";
             } else {
-                // 由于uni-app的iOS开发者能力有限，导致需要分开写才有效
+                // 由于uni-app的iOS端限制，导致需要分开写才有效
                 style.paddingTop = "6px";
                 style.paddingBottom = "6px";
                 style.paddingLeft = "9px";
