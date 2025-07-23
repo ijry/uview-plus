@@ -1,3 +1,6 @@
+## 3.4.60（2025-07-23）
+fix: 修复use阶段全局加载图标引起App端不明$page报错
+
 ## 3.4.59（2025-07-23）
 fix: 修复album组件和CateTab组件watch和emits重复
 
