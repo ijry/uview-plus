@@ -1,3 +1,8 @@
+## 3.4.59（2025-07-23）
+fix: 修复album组件和CateTab组件watch和emits重复
+
+fix: 修复样式优先级导致form表单labelPosition属性top失效
+
 ## 3.4.58（2025-07-22）
 fix: 修复样式优先级影响grid宫格组件布局
 
