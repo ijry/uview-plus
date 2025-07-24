@@ -16,7 +16,7 @@
 		>●</text>
 		<slot>
 			<text
-				v-else-if="text"
+				v-if="!dot && text"
 				class="u-divider__text"
 				:style="[textStyle]"
 			>{{text}}</text>
