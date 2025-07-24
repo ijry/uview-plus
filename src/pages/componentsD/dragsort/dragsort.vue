@@ -17,11 +17,18 @@
 	      <text class="u-page__item__title" style="margin-top: 0;">横向拖动</text>
 	      <view class="u-page__item__content">
 	        <u-dragsort
-	            :initial-list="list"
+	            :initial-list="list2"
 	            :draggable="true"
 	            direction="horizontal"
-	            @drag-end="handleDragEnd"
-	          />
+	            @drag-end="handleDragEnd">
+			  <template #default="{ item, index }">
+				<view class="u-p-r-10">
+					<view class="custom-item-h">
+					<text>{{ item.label }}</text>
+					</view>
+				</view>
+			  </template>
+			</u-dragsort>
 	      </view>
 	  </view>
   </view>
@@ -40,13 +47,22 @@ export default {
 		  { id: 6, label: '项目 F' },
 		  { id: 7, label: '项目 G' },
 		  { id: 8, label: '项目 H' },
+      ],
+	  list2: [
+		  { id: 1, label: '横向 A' },
+		  { id: 2, label: '横向 B' },
+		  { id: 3, label: '横向 C' },
+		  { id: 4, label: '横向 D' },
+		  { id: 5, label: '横向 E' },
+		  { id: 6, label: '横向 F' },
+		  { id: 7, label: '横向 G' },
+		  { id: 8, label: '横向 H' },
       ]
     };
   },
   methods: {
     handleDragEnd(sortedList) {
 	  console.log('拖拽结束，新的顺序:', sortedList);
-	  this.list = sortedList;
 	}
   }
 };
@@ -61,7 +77,12 @@ export default {
   }
   .custom-item {
 	  background-color: #f5f5f5;
-	  margin-bottom: 2px;
 	  padding: 10px;
+	  box-sizing: border-box;
+  }
+  .custom-item-h {
+	  background-color: #f5f5f5;
+	  padding: 10px;
+	  box-sizing: border-box;
   }
 </style>
