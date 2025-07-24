@@ -14,11 +14,13 @@
 		    v-if="dot"
 		    class="u-divider__dot"
 		>●</text>
-		<text
-		    v-else-if="text"
-		    class="u-divider__text"
-		    :style="[textStyle]"
-		>{{text}}</text>
+		<slot>
+			<text
+				v-else-if="text"
+				class="u-divider__text"
+				:style="[textStyle]"
+			>{{text}}</text>
+		</slot>
 		<u-line
 		    :color="lineColor"
 		    :customStyle="rightLineStyle"
