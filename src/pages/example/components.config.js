@@ -441,7 +441,7 @@ export default [{
     },
 	{
 	    path: '/pages/componentsD/dragsort/dragsort',
-	    icon: 'Dragsort',
+	    icon: 'dragsort',
 	    title: 'Dragsort 拖动排序',
 	    title_en: 'Dragsort'
 	},

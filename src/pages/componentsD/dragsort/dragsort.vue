@@ -1,7 +1,7 @@
 <template>
     <view class="u-page">
       <view class="u-page__item">
-          <text class="u-page__item__title" style="margin-top: 0;">基础使用</text>
+          <text class="u-page__item__title" style="margin-top: 0;">单列多行模式</text>
           <view class="u-page__item__content">
             <u-dragsort :initial-list="list" @drag-end="handleDragEnd">
 			  <template #default="{ item, index }">
@@ -14,7 +14,26 @@
           </view>
       </view>
 	  <view class="u-page__item">
-	      <text class="u-page__item__title" style="margin-top: 0;">横向拖动</text>
+	      <text class="u-page__item__title" style="margin-top: 0;">多行多列模式</text>
+	      <view class="u-page__item__content">
+	        <u-dragsort
+	            :initial-list="list"
+	            :draggable="true"
+				:columns="3"
+	            direction="all"
+	            @drag-end="handleDragEnd">
+			  <template #default="{ item, index }">
+				<view class="u-p-r-10">
+					<view class="custom-item-h">
+					<text>{{ item.label }}</text>
+					</view>
+				</view>
+			  </template>
+			</u-dragsort>
+	      </view>
+	  </view>
+	  <view class="u-page__item">
+	      <text class="u-page__item__title" style="margin-top: 0;">单行横向拖动</text>
 	      <view class="u-page__item__content">
 	        <u-dragsort
 	            :initial-list="list2"
