@@ -1,5 +1,6 @@
 <template>
     <view class="u-page">
+	  <up-alert class="u-m-b-20" description="PC端查看时需要触摸仿真模式才会正确计算位置"></up-alert>
       <view class="u-page__item">
           <text class="u-page__item__title" style="margin-top: 0;">单列多行模式</text>
           <view class="u-page__item__content">
