@@ -253,6 +253,11 @@ export default [{
         icon: 'copy',
         title: 'floatButton 悬浮按钮',
         title_en: 'Float Button'
+    }, {
+        path: '/pages/componentsD/pullRefresh/pullRefresh',
+        icon: 'pullRefresh',
+        title: 'pullRefresh 下拉刷新',
+        title_en: 'Pull Refresh'
     }
         // {
         // 	path: '/pages/componentsA/fullScreen/fullScreen',
