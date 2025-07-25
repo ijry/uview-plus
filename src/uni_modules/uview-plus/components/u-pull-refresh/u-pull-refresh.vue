@@ -22,7 +22,7 @@
         <!-- 默认下拉状态 -->
         <view class="refresh-content">
           <view class="refresh-indicator">
-            <view class="arrow"></view>
+            <up-icon name="arrow-downward" size="26px"></up-icon>
           </view>
           <text class="refresh-text">下拉刷新</text>
         </view>
@@ -37,7 +37,7 @@
         <!-- 默认释放状态 -->
         <view class="refresh-content">
           <view class="refresh-indicator">
-            <view class="arrow rotate"></view>
+            <up-icon name="arrow-upward" size="26px"></up-icon>
           </view>
           <text class="refresh-text">释放刷新</text>
         </view>
@@ -106,7 +106,7 @@ export default {
     // 下拉刷新阈值
     threshold: {
       type: Number,
-      default: 50
+      default: 80
     },
     // 阻尼系数
     damping: {
@@ -116,7 +116,7 @@ export default {
     // 最大下拉距离
     maxDistance: {
       type: Number,
-      default: 100
+      default: 120
     },
     // 是否显示加载更多
     showLoadmore: {
@@ -309,28 +309,6 @@ export default {
   justify-content: center;
   width: 100%;
   padding-bottom: 10px;
-}
-
-.refresh-indicator {
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 8px;
-}
-
-.arrow {
-  width: 12px;
-  height: 12px;
-  border-left: 2px solid #666;
-  border-bottom: 2px solid #666;
-  transform: rotate(-45deg);
-  transition: transform 0.2s;
-}
-
-.arrow.rotate {
-  transform: rotate(135deg);
 }
 
 .spinner {
