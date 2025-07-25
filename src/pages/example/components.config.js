@@ -500,5 +500,14 @@ export default [{
         title: 'CityLocate 城市定位',
         title_en: 'CityLocate'
     }]
+}, {
+    groupName: '图表组件',
+    groupName_en: 'Charts components',
+    list: [{
+        path: '/pages/componentsD/chartsLine/chartsLine',
+        icon: 'chartsLine',
+        title: 'ChartsLine 折线图',
+        title_en: 'ChartsLine'
+    }]
 }
 ]

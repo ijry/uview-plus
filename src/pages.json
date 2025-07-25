@@ -605,6 +605,12 @@
                     "style" : {
                         "navigationBarTitleText" : "标题"
                     }
+                },
+                {
+                    "path" : "chartsLine/chartsLine",
+                    "style" : {
+                        "navigationBarTitleText" : "折线图"
+                    }
                 }
             ]
         },

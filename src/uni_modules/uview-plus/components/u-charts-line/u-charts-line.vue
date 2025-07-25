@@ -1,0 +1,374 @@
+<!-- components/u-charts-line/u-charts-line.vue -->
+<template>
+  <view class="u-charts-line" :style="{ width: containerWidth, height: containerHeight }">
+    <canvas 
+      class="chart-canvas" 
+      :id="canvasId" 
+      :canvas-id="canvasId"
+      @touchstart="handleTouchStart"
+      @touchmove="handleTouchMove"
+      @touchend="handleTouchEnd"
+    ></canvas>
+  </view>
+</template>
+
+<script>
+import chartHelper from './chartHelper.js';
+
+export default {
+  name: 'u-charts-line',
+  props: {
+    // ECharts 风格的配置项
+    option: {
+      type: Object,
+      default: () => ({})
+    },
+    // 容器高度
+    height: {
+      type: [String, Number],
+      default: 400
+    },
+    // 容器宽度
+    width: {
+      type: [String, Number],
+      default: '100%'
+    }
+  },
+  data() {
+    return {
+      canvasId: 'line-chart-' + Date.now(),
+      ctx: null,
+      canvasWidth: 0,
+      canvasHeight: 0,
+      grid: { top: 60, right: 20, bottom: 60, left: 50 },
+      // 存储系列数据用于事件处理
+      seriesData: [],
+      // 触摸相关信息
+      touchInfo: {
+        startX: 0,
+        startY: 0
+      }
+    };
+  },
+  computed: {
+    containerHeight() {
+      return typeof this.height === 'number' ? this.height + 'px' : this.height;
+    },
+    containerWidth() {
+      return typeof this.width === 'number' ? this.width + 'px' : this.width;
+    }
+  },
+  watch: {
+    option: {
+      handler(newOption) {
+        this.drawChart(newOption);
+      },
+      deep: true
+    }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.initCanvas();
+    });
+  },
+  methods: {
+    initCanvas() {
+      try {
+        const query = uni.createSelectorQuery().in(this);
+        query.select('#' + this.canvasId).boundingClientRect((res) => {
+          if (res) {
+            this.canvasWidth = res.width;
+            this.canvasHeight = res.height;
+            
+            // 创建canvas上下文
+            this.ctx = uni.createCanvasContext(this.canvasId, this);
+            if (!this.ctx) {
+              console.error('无法获取canvas绘图上下文');
+              return;
+            }
+            
+            this.drawChart(this.option);
+          } else {
+            console.error('无法获取canvas信息');
+          }
+        }).exec();
+      } catch (error) {
+        console.error('初始化canvas失败:', error);
+      }
+    },
+    
+    drawChart(option) {
+      if (!this.ctx || !option) return;
+      
+      try {
+        // 清空画布
+        this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+        
+        // 设置背景色
+        if (option.backgroundColor) {
+          this.ctx.setFillStyle(option.backgroundColor);
+          this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
+        }
+        
+        // 绘制标题
+        const titleHeight = chartHelper.drawTitle(this.ctx, option.title, this.canvasWidth);
+        if (titleHeight > 0) {
+          this.grid.top = 60; // 如果有标题，调整网格顶部边距
+        }
+        
+        // 提取系列数据
+        const series = option.series || [];
+        const xAxis = option.xAxis || {};
+        const yAxis = option.yAxis || {};
+        
+        // 处理x轴数据
+        const xAxisData = chartHelper.processXAxisData(xAxis, series);
+        
+        // 计算数据范围
+        const { minY, maxY } = chartHelper.calculateDataRange(series);
+        
+        // 绘制网格
+        if (option.grid !== false) {
+          chartHelper.drawGrid(this.ctx, this.grid, this.canvasWidth, this.canvasHeight, xAxisData.length, minY, maxY);
+        }
+        
+        // 绘制坐标轴
+        chartHelper.drawAxis(this.ctx, this.grid, this.canvasWidth, this.canvasHeight, xAxisData, minY, maxY, xAxis, yAxis);
+        
+        // 绘制折线
+        this.drawSeries(series, xAxisData, minY, maxY);
+        
+        // 绘制图例
+        if (option.legend && option.legend.data) {
+          chartHelper.drawLegend(this.ctx, option.legend, this.grid, this.canvasWidth, chartHelper.defaultColors);
+        }
+        
+        // 绘制到画布
+        this.ctx.draw();
+      } catch (error) {
+        console.error('绘制图表失败:', error);
+      }
+    },
+    
+    drawSeries(series, xAxisData, minY, maxY) {
+      if (!series || series.length === 0) return;
+      
+      const chartWidth = this.canvasWidth - this.grid.left - this.grid.right;
+      const chartHeight = this.canvasHeight - this.grid.top - this.grid.bottom;
+      
+      this.seriesData = []; // 重置系列数据
+      
+      series.forEach((serie, index) => {
+        if (serie.type !== 'line') return;
+        
+        const color = serie.color || serie.itemStyle?.color || chartHelper.getColor(index);
+        const showSymbol = serie.showSymbol !== false;
+        const smooth = serie.smooth === true;
+        const lineWidth = serie.lineStyle?.width || 2;
+        
+        // 转换数据点为坐标
+        const points = [];
+        if (serie.data && Array.isArray(serie.data)) {
+          serie.data.forEach((value, i) => {
+            const actualValue = typeof value === 'object' && value !== null ? value.value : value;
+            // 确保不会除以零
+            const x = this.grid.left + (xAxisData.length > 1 ? (i / (xAxisData.length - 1)) * chartWidth : 0);
+            const y = this.grid.top + chartHeight - ((actualValue - minY) / (maxY - minY || 1)) * chartHeight;
+            points.push({ 
+              x, 
+              y, 
+              value: actualValue, 
+              name: xAxisData[i] || i,
+              seriesName: serie.name || `Series ${index}`
+            });
+          });
+        }
+        
+        // 保存系列数据用于事件处理
+        this.seriesData.push({
+          name: serie.name || `Series ${index}`,
+          points,
+          color
+        });
+        
+        // 绘制线条
+        if (points.length > 0) {
+          this.ctx.setLineWidth(lineWidth);
+          this.ctx.setStrokeStyle(color);
+          this.ctx.setLineJoin('round');
+          this.ctx.setLineCap('round');
+          
+          if (smooth && points.length > 1) {
+            // 绘制平滑曲线
+            this.drawSmoothLine(points);
+          } else {
+            // 绘制直线
+            this.drawStraightLine(points);
+          }
+          
+          this.ctx.stroke();
+          
+          // 绘制数据点
+          if (showSymbol) {
+            this.ctx.setFillStyle(color);
+            points.forEach(point => {
+              this.ctx.beginPath();
+              this.ctx.arc(point.x, point.y, 4, 0, 2 * Math.PI);
+              this.ctx.fill();
+              
+              this.ctx.beginPath();
+              this.ctx.setFillStyle('#ffffff');
+              this.ctx.arc(point.x, point.y, 2, 0, 2 * Math.PI);
+              this.ctx.fill();
+              
+              this.ctx.setFillStyle(color);
+            });
+          }
+        }
+      });
+    },
+    
+    drawStraightLine(points) {
+      if (!points || points.length === 0) return;
+      
+      this.ctx.beginPath();
+      points.forEach((point, i) => {
+        if (i === 0) {
+          this.ctx.moveTo(point.x, point.y);
+        } else {
+          this.ctx.lineTo(point.x, point.y);
+        }
+      });
+    },
+    
+    drawSmoothLine(points) {
+      if (!points || points.length < 2) return;
+      
+      this.ctx.beginPath();
+      this.ctx.moveTo(points[0].x, points[0].y);
+      
+      // 使用二次贝塞尔曲线实现平滑效果
+      for (let i = 0; i < points.length - 1; i++) {
+        const currentPoint = points[i];
+        const nextPoint = points[i + 1];
+        
+        // 控制点为两点之间的中点
+        const controlX = (currentPoint.x + nextPoint.x) / 2;
+        const controlY = (currentPoint.y + nextPoint.y) / 2;
+        
+        this.ctx.quadraticCurveTo(currentPoint.x, currentPoint.y, controlX, controlY);
+      }
+      
+      // 连接到最后一个点
+      this.ctx.lineTo(points[points.length - 1].x, points[points.length - 1].y);
+    },
+    
+    // 触摸事件处理
+    handleTouchStart(e) {
+      if (e.touches && e.touches.length > 0) {
+        const touch = e.touches[0];
+        this.touchInfo.startX = touch.x || 0;
+        this.touchInfo.startY = touch.y || 0;
+      }
+    },
+    
+    handleTouchMove(e) {
+      // 阻止默认行为，避免页面滚动
+      e.preventDefault && e.preventDefault();
+    },
+    
+    handleTouchEnd(e) {
+      if (e.changedTouches && e.changedTouches.length > 0) {
+        const touch = e.changedTouches[0];
+        const endX = touch.x || 0;
+        const endY = touch.y || 0;
+        
+        // 判断是否为点击事件
+        const deltaX = Math.abs(endX - this.touchInfo.startX);
+        const deltaY = Math.abs(endY - this.touchInfo.startY);
+        
+        if (deltaX < 5 && deltaY < 5) {
+          this.handleChartClick(endX, endY);
+        }
+      }
+    },
+    
+    handleChartClick(x, y) {
+      // 查找最近的数据点
+      let minDistance = Infinity;
+      let closestPoint = null;
+      
+      if (this.seriesData && this.seriesData.length > 0) {
+        this.seriesData.forEach(series => {
+          if (series.points && series.points.length > 0) {
+            series.points.forEach(point => {
+              const distance = Math.sqrt(Math.pow(point.x - x, 2) + Math.pow(point.y - y, 2));
+              if (distance < minDistance && distance < 20) { // 20px 的点击范围
+                minDistance = distance;
+                closestPoint = {
+                  seriesName: series.name,
+                  name: point.name,
+                  value: point.value,
+                  color: series.color,
+                  x: point.x,
+                  y: point.y
+                };
+              }
+            });
+          }
+        });
+      }
+      
+      if (closestPoint) {
+        // 触发点击事件
+        this.$emit('click', {
+          componentType: 'series',
+          seriesType: 'line',
+          seriesName: closestPoint.seriesName,
+          name: closestPoint.name,
+          value: closestPoint.value,
+          color: closestPoint.color,
+          event: {
+            offsetX: closestPoint.x,
+            offsetY: closestPoint.y
+          }
+        });
+      }
+    },
+    
+    // 提供类似 ECharts 的 setOption 方法
+    setOption(option, notMerge = false) {
+      if (notMerge) {
+        this.drawChart(option);
+      } else {
+        // 简单合并配置
+        try {
+          const newOption = JSON.parse(JSON.stringify(this.option));
+          Object.assign(newOption, option);
+          this.drawChart(newOption);
+        } catch (error) {
+          console.error('合并配置失败:', error);
+          this.drawChart(option);
+        }
+      }
+    },
+    
+    // 提供类似 ECharts 的 resize 方法
+    resize() {
+      this.initCanvas();
+    }
+  }
+};
+</script>
+
+<style scoped>
+.u-charts-line {
+  position: relative;
+}
+
+.chart-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+</style>

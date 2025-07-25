@@ -1,0 +1,160 @@
+<template>
+    <view class="u-page">
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">直线</text>
+          <view class="u-page__item__content">
+            <u-charts-line 
+                ref="straightChart"
+                :option="straightOption" 
+                width="700rpx"
+                height="260px"
+                @click="onChartClick"
+            />
+          </view>
+      </view>
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">平滑折线图</text>
+          <view class="u-page__item__content">
+            <u-charts-line 
+                ref="smoothOption"
+                :option="smoothOption" 
+                width="700rpx"
+                height="260px"
+                @click="onChartClick"
+            />
+          </view>
+      </view>
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">对比图</text>
+          <view class="u-page__item__content">
+            <u-charts-line 
+                ref="compareOption"
+                :option="compareOption" 
+                width="700rpx"
+                height="260px"
+                @click="onChartClick"
+            />
+          </view>
+      </view>
+  </view>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      // 直线模式
+      straightOption: {
+        title: {
+          text: '直线折线图',
+          textStyle: {
+            fontSize: 16,
+            color: '#333'
+          }
+        },
+        xAxis: {
+          type: 'category',
+          data: ['一月', '二月', '三月', '四月', '五月', '六月']
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {
+            name: '销售额',
+            type: 'line',
+            data: [120, 132, 101, 134, 90, 230],
+            smooth: false, // 直线模式
+            lineStyle: {
+              width: 2
+            }
+          }
+        ]
+      },
+      // 平滑曲线模式
+      smoothOption: {
+        title: {
+          text: '平滑曲线折线图',
+          textStyle: {
+            fontSize: 16,
+            color: '#333'
+          }
+        },
+        xAxis: {
+          type: 'category',
+          data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {
+            name: '访问量',
+            type: 'line',
+            data: [120, 200, 150, 80, 70, 110, 130],
+            smooth: true, // 平滑曲线模式
+            lineStyle: {
+              width: 3
+            }
+          }
+        ]
+      },
+      
+      // 对比模式
+      compareOption: {
+        title: {
+          text: '直线与曲线对比',
+          textStyle: {
+            fontSize: 16
+          }
+        },
+        legend: {
+          data: ['直线数据', '曲线数据']
+        },
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,
+          data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月']
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {
+            name: '直线数据',
+            type: 'line',
+            data: [120, 132, 101, 134, 90, 230, 210, 150],
+            smooth: false, // 直线模式
+            lineStyle: {
+              width: 2
+            }
+          },
+          {
+            name: '曲线数据',
+            type: 'line',
+            data: [220, 182, 191, 234, 290, 330, 310, 250],
+            smooth: true, // 平滑曲线模式
+            lineStyle: {
+              width: 2
+            }
+          }
+        ]
+      }
+    };
+  },
+  methods: {
+    onChartClick() {
+        console.log('点击了图表');
+    },
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+  .u-page__item {
+      margin-bottom: 15px;
+  }
+  .u-page__item__title {
+      margin-bottom: 10px;
+  }
+</style>
