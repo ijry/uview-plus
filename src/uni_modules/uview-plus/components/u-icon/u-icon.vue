@@ -72,7 +72,9 @@
 	export default {
 		name: 'u-icon',
 		beforeCreate() {
-			fontUtil.loadFont();
+			if (!fontUtil.params.loaded) {
+				fontUtil.loadFont();
+			}
     	},
 		data() {
 			return {
