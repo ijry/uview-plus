@@ -207,6 +207,10 @@ export default {
         } else {
           this.refreshStatus = 'pull'
         }
+
+        // 阻止默认滚动行为，防止触发页面级滚动
+        e.preventDefault()
+        e.stopPropagation()
       }
     },
     

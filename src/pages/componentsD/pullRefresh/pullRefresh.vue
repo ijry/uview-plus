@@ -73,33 +73,55 @@
           </view>
       </view>
 	  <view class="u-page__item">
+	      <text class="u-page__item__title" style="margin-top: 0;">结合虚拟列表</text>
+	      <view class="u-page__item__content">
+	        <u-pull-refresh
+			  :refreshing="refreshing3"
+			  @refresh="onRefresh3"
+			>
+			  <u-virtual-list
+				:list-data="listData3"
+				:item-height="32"
+				height="150px"
+				@scroll="onScroll3"
+			  >
+				<template #default="{ item, index }">
+				  <view class="list-item">
+					<text>Item {{ item.id }}: {{ item.name }}</text>
+				  </view>
+				</template>
+			  </u-virtual-list>
+			</u-pull-refresh>
+	      </view>
+	  </view>
+	  <view class="u-page__item">
 	      <text class="u-page__item__title" style="margin-top: 0;">上拉加载</text>
 	      <view class="u-page__item__content">
 	        <u-pull-refresh
-			  :refreshing="refreshing2"
-			  :showLoadmore="true"
-			  :loadmoreProps="loadmoreConfig"
-			  @refresh="onRefresh2"
-			  @loadmore="onLoadmore"
-			>
-				<!-- 使用外部 scroll-view 或其他可滚动组件 -->
-				<scroll-view
-				  class="scroll-area"
-				  style="height: 100px;"
-				  :scroll-y="true"
-				  @scrolltolower="onScrollToLower"
-				>
-				  <view class="list-content">
-					<view 
-					  v-for="item in listData2" 
-					  :key="item.id"
-					  class="list-item"
-					>
-					  <text>{{ item.name }}</text>
-					</view>
-				  </view>
-				</scroll-view>
-			</u-pull-refresh>
+	  			  :refreshing="refreshing2"
+	  			  :showLoadmore="true"
+	  			  :loadmoreProps="loadmoreConfig"
+	  			  @refresh="onRefresh2"
+	  			  @loadmore="onLoadmore"
+	  			>
+	  				<!-- 使用外部 scroll-view 或其他可滚动组件 -->
+	  				<scroll-view
+	  				  class="scroll-area"
+	  				  style="height: 100px;"
+	  				  :scroll-y="true"
+	  				  @scrolltolower="onScrollToLower"
+	  				>
+	  				  <view class="list-content">
+	  					<view 
+	  					  v-for="item in listData2" 
+	  					  :key="item.id"
+	  					  class="list-item"
+	  					>
+	  					  <text>{{ item.name }}</text>
+	  					</view>
+	  				  </view>
+	  				</scroll-view>
+	  			</u-pull-refresh>
 	      </view>
 	  </view>
   </view>
@@ -120,7 +142,9 @@ export default {
 			iconSize: 18
 		},
 		listData: [],
-		listData2: []
+		listData2: [],
+		refreshing3: false,
+		listData3: [],
     };
   },
   created() {
@@ -137,6 +161,7 @@ export default {
 		}
 		this.listData = data
 		this.listData2 = [...data]
+		this.listData3 = [...data]
 	  },
 	  
 	  onRefresh() {
@@ -163,6 +188,15 @@ export default {
 	  		  this.refreshing2 = false
 	  		}, 2000)
 	  },
+	  onRefresh3() {
+	  		this.refreshing3 = true
+	  		// 模拟网络请求
+	  		setTimeout(() => {
+	  		  this.loadData()
+	  		  this.refreshing3 = false
+	  		}, 2000)
+	  },
+	  onScroll3() {},
 	  onScrollToLower() {
 		  this.loadmoreConfig.status = 'loading'
 		  setTimeout(() => {
