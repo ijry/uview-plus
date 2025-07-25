@@ -105,15 +105,15 @@ class ChartHelper {
       ctx.stroke();
     }
     
-    // 绘制垂直网格线
-    const xGridCount = Math.min(Math.max(xAxisCount || 0, 1), 6);
-    for (let i = 0; i < xGridCount; i++) {
-      const index = Math.floor(i * ((xAxisCount || 1) - 1) / (xGridCount - 1));
-      const x = (grid.left || 0) + (index / Math.max((xAxisCount || 1) - 1, 1)) * chartWidth;
-      ctx.beginPath();
-      ctx.moveTo(x, grid.top || 0);
-      ctx.lineTo(x, (grid.top || 0) + chartHeight);
-      ctx.stroke();
+    // 绘制垂直网格线 (每个数据点一条线)
+    if (xAxisCount > 0) {
+      for (let i = 0; i < xAxisCount; i++) {
+        const x = (grid.left || 0) + (i / (xAxisCount - 1)) * chartWidth;
+        ctx.beginPath();
+        ctx.moveTo(x, grid.top || 0);
+        ctx.lineTo(x, (grid.top || 0) + chartHeight);
+        ctx.stroke();
+      }
     }
   }
 
@@ -163,12 +163,15 @@ class ChartHelper {
     ctx.textBaseline = 'top';
     
     if (xAxisData && Array.isArray(xAxisData) && xAxisData.length > 0) {
-      const xLabelCount = Math.min(xAxisData.length, 6);
-      for (let i = 0; i < xLabelCount; i++) {
-        const index = Math.floor(i * (xAxisData.length - 1) / (xLabelCount - 1));
-        const x = (grid.left || 0) + (index / (xAxisData.length - 1)) * chartWidth;
-        const label = xAxisData[index] !== undefined ? xAxisData[index] : index;
-        ctx.fillText(String(label), x, canvasHeight - (grid.bottom || 0) + 10);
+      // 对于少量标签，全部显示
+      if (xAxisData.length <= 5) {
+        xAxisData.forEach((label, i) => {
+          const x = (grid.left || 0) + (i / Math.max(xAxisData.length - 1, 1)) * chartWidth;
+          ctx.fillText(String(label), x, canvasHeight - (grid.bottom || 0) + 10);
+        });
+      } else {
+        // 对于较多标签，采用优化的显示策略
+        this.drawXAxisLabels(ctx, xAxisData, grid, chartWidth, canvasHeight, xAxisFontSize);
       }
     }
     
@@ -184,6 +187,75 @@ class ChartHelper {
       const y = (grid.top || 0) + chartHeight - (i / yLabelCount) * chartHeight;
       ctx.fillText(value.toFixed(1), (grid.left || 0) - 10, y);
     }
+  }
+
+  /**
+   * 绘制X轴标签（优化版本）
+   * @param {CanvasRenderingContext2D} ctx - Canvas上下文
+   * @param {Array} xAxisData - X轴数据
+   * @param {Object} grid - 网格配置
+   * @param {Number} chartWidth - 图表宽度
+   * @param {Number} canvasHeight - 画布高度
+   * @param {Number} fontSize - 字体大小
+   */
+  drawXAxisLabels(ctx, xAxisData, grid, chartWidth, canvasHeight, fontSize) {
+    const labelCount = xAxisData.length;
+    
+    // 根据标签数量和图表宽度动态计算每个标签的估计宽度
+    // 假设每个字符大约占用 fontSize*0.6 的宽度，加上一些边距
+    let totalLabelLength = 0;
+    xAxisData.forEach(label => {
+      totalLabelLength += String(label).length;
+    });
+    
+    // 平均每个标签的字符数
+    const avgLabelLength = totalLabelLength / labelCount;
+    // 估算每个标签的宽度 (字符数 * 每个字符的宽度 + 边距)
+    const estimatedLabelWidth = Math.ceil(avgLabelLength * fontSize * 0.6 + 10);
+    
+    // 计算最多可以显示多少个标签
+    const maxLabels = Math.max(Math.min(labelCount, Math.floor(chartWidth / estimatedLabelWidth)), 2);
+    
+    // 确定需要显示的标签索引
+    const indicesToShow = [];
+    
+    // 总是显示第一个和最后一个标签
+    if (labelCount > 0) {
+      indicesToShow.push(0);
+      if (labelCount > 1) {
+        indicesToShow.push(labelCount - 1);
+      }
+    }
+    
+    // 如果可以显示更多标签
+    if (maxLabels >= 3 && labelCount > 2) {
+      // 计算中间需要显示的标签数量
+      const middleLabels = Math.min(maxLabels - 2, labelCount - 2);
+      
+      if (middleLabels > 0) {
+        // 均匀分布中间标签
+        const step = (labelCount - 1) / (middleLabels + 1);
+        for (let i = 1; i <= middleLabels; i++) {
+          const index = Math.round(i * step);
+          // 确保索引在有效范围内且不重复
+          if (index > 0 && index < labelCount - 1 && !indicesToShow.includes(index)) {
+            indicesToShow.push(index);
+          }
+        }
+      }
+    }
+    
+    // 按索引顺序排序
+    indicesToShow.sort((a, b) => a - b);
+    
+    // 显示选定的标签
+    indicesToShow.forEach(index => {
+      if (index >= 0 && index < labelCount) {
+        const x = (grid.left || 0) + (index / Math.max(labelCount - 1, 1)) * chartWidth;
+        const label = xAxisData[index] !== undefined ? xAxisData[index] : index;
+        ctx.fillText(String(label), x, canvasHeight - (grid.bottom || 0) + 10);
+      }
+    });
   }
 
   /**
