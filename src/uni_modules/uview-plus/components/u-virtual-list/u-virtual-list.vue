@@ -1,13 +1,13 @@
 <template>
-  <view class="u-virtual-list" :style="{ height: addUnit(height) }">
+  <view class="u-virtual-list" :style="{ height: addUnit(height) }" ref="container">
     <scroll-view
       class="virtual-scroll-container"
       :scroll-y="true"
       :scroll-top="scrollTop"
       :style="{ height: '100%' }"
       @scroll="handleScroll"
-      touchmove.stop.prevent="handleTouchMove"
     >
+    <!-- @touchmove.stop.prevent="handleTouchMove" -->
       <view class="scroll-content">
         <!-- 顶部占位 -->
         <view :style="{ height: topPlaceholderHeight + 'px' }"></view>
@@ -81,7 +81,9 @@ export default {
         // 默认值，防止除以0
         return Math.ceil(500 / this.itemHeight) || 10
       }
-      return Math.ceil(this.containerHeight / this.itemHeight)
+      const calculated = Math.ceil(this.containerHeight / this.itemHeight)
+      // 确保至少显示一些项
+      return Math.max(1, calculated)
     },
     // 可视项数量
     visibleCount() {
@@ -111,6 +113,7 @@ export default {
       return (this.listData.length - end) * this.itemHeight
     }
   },
+  emits: ['update:scrollTop', 'scroll'],
   watch: {
     listData: {
       handler() {
@@ -132,25 +135,69 @@ export default {
     
     // 测量容器高度
     measureContainerHeight() {
+      // 使用 uni.createSelectorQuery 获取实际高度
+      this.$nextTick(() => {
+        // #ifdef H5
+        if (this.$refs.container) {
+          const element = this.$refs.container.$el || this.$refs.container
+          this.containerHeight = element.offsetHeight || 500
+        }
+        // #endif
+        
+        // #ifndef H5
+        const query = uni.createSelectorQuery().in(this)
+        query.select('.u-virtual-list').boundingClientRect(rect => {
+          if (rect) {
+            this.containerHeight = rect.height || 500
+          } else {
+            // 如果无法获取实际高度，使用默认计算
+            this.containerHeight = this.calculateDefaultHeight()
+          }
+        }).exec()
+        // #endif
+      })
+    },
+    
+    // 计算默认高度
+    calculateDefaultHeight() {
       const height = this.height
       if (typeof height === 'number') {
-        this.containerHeight = height
-        return
+        return height
       }
       
       if (typeof height === 'string') {
         if (height.includes('px')) {
-          this.containerHeight = parseInt(height)
+          return parseInt(height) || 500
+        } else if (height.includes('vh')) {
+          // 处理视口高度单位
+          const vh = parseInt(height)
+          return isNaN(vh) ? 500 : (vh / 100) * this.getViewportHeight()
         } else if (height.includes('%')) {
-          // 对于百分比高度，使用默认值或根据父容器计算
-          this.containerHeight = 500
+          // 百分比高度，使用默认值
+          return 500
         } else {
           const num = parseInt(height)
-          this.containerHeight = isNaN(num) ? 500 : num
+          return isNaN(num) ? 500 : num
         }
-      } else {
-        this.containerHeight = 500
       }
+      
+      return 500
+    },
+    
+    // 获取视口高度
+    getViewportHeight() {
+      // #ifdef H5
+      return window.innerHeight
+      // #endif
+      
+      // #ifndef H5
+      try {
+        const res = uni.getSystemInfoSync()
+        return res.windowHeight
+      } catch (e) {
+        return 600 // 默认值
+      }
+      // #endif
     },
     
     getItemKey(item) {
@@ -166,6 +213,7 @@ export default {
     // 处理滚动
     handleScroll(e) {
       const scrollTop = e.detail.scrollTop
+      this.$emit('update:scrollTop', scrollTop)
       this.$emit('scroll', scrollTop)
     },
     
@@ -184,3 +232,22 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="scss">
+.u-virtual-list {
+  position: relative;
+  overflow: hidden;
+}
+
+.virtual-scroll-container {
+  height: 100%;
+}
+
+.scroll-content {
+  position: relative;
+}
+
+.list-item {
+  will-change: transform;
+}
+</style>
