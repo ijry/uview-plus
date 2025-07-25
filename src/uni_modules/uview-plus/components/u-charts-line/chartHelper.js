@@ -296,7 +296,7 @@ class ChartHelper {
   drawLegend(ctx, legendOption, grid, canvasWidth, colors) {
     if (!ctx || !legendOption || !legendOption.data || !Array.isArray(legendOption.data) || legendOption.data.length === 0) return;
     
-    const legendTop = (grid.top || 0) - 25; // 在网格上方绘制图例
+    const legendTop = (grid.top || 0) - 18; // 在网格上方绘制图例
     const legendLeft = grid.left || 0;
     const itemHeight = 20;
     const itemWidth = 100;

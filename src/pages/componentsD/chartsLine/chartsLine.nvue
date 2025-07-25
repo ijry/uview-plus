@@ -127,7 +127,8 @@ export default {
             smooth: false, // 直线模式
             lineStyle: {
               width: 2
-            }
+            },
+            areaStyle: {}
           },
           {
             name: '曲线数据',
@@ -136,7 +137,8 @@ export default {
             smooth: true, // 平滑曲线模式
             lineStyle: {
               width: 2
-            }
+            },
+            areaStyle: {}
           }
         ]
       }

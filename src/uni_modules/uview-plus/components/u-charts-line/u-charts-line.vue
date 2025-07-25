@@ -158,6 +158,39 @@ export default {
       
       this.seriesData = []; // 重置系列数据
       
+      // 首先绘制所有系列的填充区域（如果需要）
+      series.forEach((serie, index) => {
+        if (serie.type !== 'line') return;
+        
+        const color = serie.color || serie.itemStyle?.color || chartHelper.getColor(index);
+        const fillArea = serie?.areaStyle || serie.fillArea;
+        const smooth = serie.smooth === true;
+        
+        // 转换数据点为坐标
+        const points = [];
+        if (serie.data && Array.isArray(serie.data)) {
+          serie.data.forEach((value, i) => {
+            const actualValue = typeof value === 'object' && value !== null ? value.value : value;
+            // 确保不会除以零
+            const x = this.grid.left + (xAxisData.length > 1 ? (i / (xAxisData.length - 1)) * chartWidth : 0);
+            const y = this.grid.top + chartHeight - ((actualValue - minY) / (maxY - minY || 1)) * chartHeight;
+            points.push({ 
+              x, 
+              y, 
+              value: actualValue, 
+              name: xAxisData[i] || i,
+              seriesName: serie.name || `Series ${index}`
+            });
+          });
+        }
+        
+        // 绘制填充区域
+        if (fillArea && points.length > 0) {
+          this.drawFillArea(points, color, smooth, this.grid.top + chartHeight);
+        }
+      });
+      
+      // 然后绘制所有系列的线条和点
       series.forEach((serie, index) => {
         if (serie.type !== 'line') return;
         
@@ -226,6 +259,62 @@ export default {
           }
         }
       });
+    },
+    
+    drawFillArea(points, color, smooth, chartBottom) {
+      if (!points || points.length === 0) return;
+      
+      this.ctx.beginPath();
+      
+      // 移动到起始点
+      this.ctx.moveTo(points[0].x, chartBottom);
+      this.ctx.lineTo(points[0].x, points[0].y);
+      
+      if (smooth && points.length > 1) {
+        // 平滑填充区域
+        for (let i = 0; i < points.length - 1; i++) {
+          const p0 = i === 0 ? points[0] : points[i - 1];
+          const p1 = points[i];
+          const p2 = points[i + 1];
+          const p3 = i === points.length - 2 ? points[i + 1] : points[i + 2];
+          
+          // 计算控制点
+          const cp1x = p1.x + (p2.x - p0.x) / 6;
+          const cp1y = p1.y + (p2.y - p0.y) / 6;
+          const cp2x = p2.x - (p3.x - p1.x) / 6;
+          const cp2y = p2.y - (p3.y - p1.y) / 6;
+          
+          this.ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
+        }
+      } else {
+        // 直线填充区域
+        for (let i = 1; i < points.length; i++) {
+          this.ctx.lineTo(points[i].x, points[i].y);
+        }
+      }
+      
+      // 闭合路径到结束点
+      this.ctx.lineTo(points[points.length - 1].x, chartBottom);
+      this.ctx.closePath();
+      
+      // 设置填充样式
+      if (typeof color === 'string' && color.startsWith('#')) {
+        // 如果是十六进制颜色，转换为带透明度的颜色
+        const hex = color.replace('#', '');
+        const r = parseInt(hex.substring(0, 2), 16);
+        const g = parseInt(hex.substring(2, 4), 16);
+        const b = parseInt(hex.substring(4, 6), 16);
+        this.ctx.setFillStyle(`rgba(${r}, ${g}, ${b}, 0.3)`);
+      } else if (typeof color === 'string' && color.startsWith('rgb')) {
+        // 如果是rgb颜色，转换为rgba颜色
+        const rgb = color.replace('rgb(', '').replace(')', '');
+        this.ctx.setFillStyle(`rgba(${rgb}, 0.3)`);
+      } else {
+        // 其他情况使用默认透明度
+        this.ctx.setFillStyle('rgba(84, 112, 198, 0.3)');
+      }
+      
+      this.ctx.fill();
     },
     
     drawStraightLine(points) {
