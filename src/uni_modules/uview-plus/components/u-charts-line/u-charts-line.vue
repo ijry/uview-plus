@@ -247,20 +247,30 @@ export default {
       this.ctx.beginPath();
       this.ctx.moveTo(points[0].x, points[0].y);
       
-      // 使用二次贝塞尔曲线实现平滑效果
-      for (let i = 0; i < points.length - 1; i++) {
-        const currentPoint = points[i];
-        const nextPoint = points[i + 1];
-        
-        // 控制点为两点之间的中点
-        const controlX = (currentPoint.x + nextPoint.x) / 2;
-        const controlY = (currentPoint.y + nextPoint.y) / 2;
-        
-        this.ctx.quadraticCurveTo(currentPoint.x, currentPoint.y, controlX, controlY);
+      // 对于只有两个点的情况，使用简单的二次贝塞尔曲线
+      if (points.length === 2) {
+        const controlX = (points[0].x + points[1].x) / 2;
+        const controlY = (points[0].y + points[1].y) / 2;
+        this.ctx.quadraticCurveTo(controlX, controlY, points[1].x, points[1].y);
+        return;
       }
       
-      // 连接到最后一个点
-      this.ctx.lineTo(points[points.length - 1].x, points[points.length - 1].y);
+      // 对于多个点的情况，使用 Catmull-Rom 样条转贝塞尔曲线的方法
+      // 这样可以确保所有点都在曲线上
+      for (let i = 0; i < points.length - 1; i++) {
+        const p0 = i === 0 ? points[0] : points[i - 1];
+        const p1 = points[i];
+        const p2 = points[i + 1];
+        const p3 = i === points.length - 2 ? points[i + 1] : points[i + 2];
+        
+        // 计算控制点 (使用 Catmull-Rom 转贝塞尔)
+        const cp1x = p1.x + (p2.x - p0.x) / 6;
+        const cp1y = p1.y + (p2.y - p0.y) / 6;
+        const cp2x = p2.x - (p3.x - p1.x) / 6;
+        const cp2y = p2.y - (p3.y - p1.y) / 6;
+        
+        this.ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
+      }
     },
     
     // 触摸事件处理
