@@ -6,6 +6,12 @@
             <up-charts-pie :options="pieOptions" width="350px"></up-charts-pie>
           </view>
       </view>
+      <view class="u-page__item">
+          <text class="u-page__item__title">环形饼图</text>
+          <view class="u-page__item__content">
+            <up-charts-pie :options="pieOptions2" width="350px"></up-charts-pie>
+          </view>
+      </view>
   </view>
 </template>
 
@@ -22,6 +28,38 @@ export default {
         series: [{
           name: 'Nightingale Chart',
           type: 'pie',
+          itemStyle: {
+            borderRadius: 10,
+            borderColor: '#fff',
+            borderWidth: 2
+          },
+          data: [
+            { name: '分类一', value: 30 },
+            { name: '分类二', value: 25 },
+            { name: '分类三', value: 20 },
+            { name: '分类四', value: 15 },
+            { name: '分类五', value: 10 }
+          ]
+        }],
+        legend: {
+          show: true
+        }
+      },
+      pieOptions2: {
+        title: {
+            text: 'Referer of a Website',
+            subtext: 'Fake Data',
+            left: 'center'
+        },
+        series: [{
+          name: 'Nightingale Chart',
+          type: 'pie',
+          radius: ['50%', '70%'],
+          itemStyle: {
+            borderRadius: 10,
+            borderColor: '#fff',
+            borderWidth: 2
+          },
           data: [
             { name: '分类一', value: 30 },
             { name: '分类二', value: 25 },

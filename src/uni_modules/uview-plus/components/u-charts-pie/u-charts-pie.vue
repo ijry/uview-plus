@@ -203,16 +203,35 @@ export default {
       
       // 处理半径，考虑图例占用空间
       let radiusValue = series.radius || '65%'; // 增大默认半径到70%
-      if (typeof radiusValue === 'string' && radiusValue.endsWith('%')) {
-        radiusValue = parseFloat(radiusValue) / 100;
-      } else if (typeof radiusValue === 'number') {
-        radiusValue = radiusValue / Math.min(this.canvasWidth, this.canvasHeight);
+      
+      // 支持内外半径数组格式 ['40%', '70%']
+      let innerRadius, outerRadius;
+      if (Array.isArray(radiusValue)) {
+        innerRadius = radiusValue[0];
+        outerRadius = radiusValue[1];
+      } else {
+        innerRadius = 0;
+        outerRadius = radiusValue;
+      }
+      
+      // 处理百分比格式
+      if (typeof outerRadius === 'string' && outerRadius.endsWith('%')) {
+        outerRadius = parseFloat(outerRadius) / 100;
+      } else if (typeof outerRadius === 'number') {
+        outerRadius = outerRadius / Math.min(this.canvasWidth, this.canvasHeight);
+      }
+      
+      if (typeof innerRadius === 'string' && innerRadius.endsWith('%')) {
+        innerRadius = parseFloat(innerRadius) / 100;
+      } else if (typeof innerRadius === 'number') {
+        innerRadius = innerRadius / Math.min(this.canvasWidth, this.canvasHeight);
       }
       
       // 计算可用于饼图的尺寸
       const availableWidth = this.canvasWidth - leftLegendWidth - rightLegendWidth - 20; // 减去边距
       const availableHeight = this.canvasHeight - topLegendHeight - bottomLegendHeight - 20;
-      const radius = Math.min(availableWidth, availableHeight) * (typeof radiusValue === 'number' ? radiusValue : 0.7) / 2;
+      const outerRadiusPx = Math.min(availableWidth, availableHeight) * (typeof outerRadius === 'number' ? outerRadius : 0.7) / 2;
+      const innerRadiusPx = outerRadiusPx * (innerRadius || 0);
       
       // 默认颜色列表
       const defaultColors = [
@@ -240,22 +259,45 @@ export default {
         
         // 设置扇形样式
         ctx.beginPath();
-        ctx.moveTo(centerX, centerY);
-        ctx.arc(centerX, centerY, radius, startAngle, endAngle);
-        ctx.closePath();
+        
+        // 如果是环形图，绘制内外弧
+        if (innerRadiusPx > 0) {
+          // 绘制外弧
+          ctx.arc(centerX, centerY, outerRadiusPx, startAngle, endAngle);
+          // 绘制内弧（反向绘制）
+          ctx.arc(centerX, centerY, innerRadiusPx, endAngle, startAngle, true);
+        } else {
+          // 绘制实心饼图
+          ctx.moveTo(centerX, centerY);
+          ctx.arc(centerX, centerY, outerRadiusPx, startAngle, endAngle);
+          ctx.closePath();
+        }
+        
         ctx.setFillStyle(item.color || item.itemStyle?.color || defaultColors[i % defaultColors.length]);
         ctx.fill();
         
-        // 绘制边框
-        ctx.setStrokeStyle('#ffffff');
-        ctx.setLineWidth(2);
-        ctx.stroke();
+        // 绘制边框 (支持 itemStyle.borderWidth 和 itemStyle.borderColor)
+        if (series.itemStyle?.borderWidth || item.itemStyle?.borderWidth) {
+          const borderWidth = item.itemStyle?.borderWidth !== undefined ? 
+            item.itemStyle.borderWidth : series.itemStyle.borderWidth;
+          const borderColor = item.itemStyle?.borderColor || 
+            series.itemStyle.borderColor || '#ffffff';
+          
+          ctx.setLineWidth(borderWidth);
+          ctx.setStrokeStyle(borderColor);
+          ctx.stroke();
+        } else {
+          // 默认边框
+          ctx.setStrokeStyle('#ffffff');
+          ctx.setLineWidth(2);
+          ctx.stroke();
+        }
         
         startAngle = endAngle;
       }
       
       // 绘制带引导线的标签
-      this.drawLabelsWithLines(ctx, sectorAngles, centerX, centerY, radius, defaultColors, data);
+      this.drawLabelsWithLines(ctx, sectorAngles, centerX, centerY, outerRadiusPx, defaultColors, data);
       
       // 绘制legend
       if (this.options.legend && this.options.legend.show !== false) {
@@ -270,7 +312,8 @@ export default {
         data: data,
         centerX: centerX,
         centerY: centerY,
-        radius: radius,
+        radius: outerRadiusPx,
+        innerRadius: innerRadiusPx,
         total: total,
         sectorAngles: sectorAngles, // 保存扇形角度信息用于点击判断
         destroy: () => {} // 空销毁函数
