@@ -1,18 +1,20 @@
 <template>
-	<view class="u-demo">
-		<view class="u-demo-wrap">
-			<view class="u-demo-title">演示</view>
-			<view class="u-demo-area">
-				<u-toast ref="uToast"></u-toast>
-				<view class="u-demo-result-line">
-					柱状图组件演示
-				</view>
-				<view style="margin-top: 20px;">
-					<u-charts-bar ref="uChartsBar" :option="barOption" :height="400" @click="handleBarClick"></u-charts-bar>
-				</view>
-			</view>
-		</view>
-	</view>
+    <view class="u-page">
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">基础使用</text>
+          <view class="u-page__item__content">
+            <u-charts-bar ref="uChartsBar" :option="barOption"
+				:height="400" @click="handleBarClick"></u-charts-bar>
+          </view>
+      </view>
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">堆叠示例</text>
+          <view class="u-page__item__content">
+            <u-charts-bar ref="uChartsBarStack" :option="barOptionStack"
+				:height="400" @click="handleBarClick"></u-charts-bar>
+          </view>
+      </view>
+  </view>
 </template>
 
 <script>
@@ -64,6 +66,54 @@
 						}
 					},
 					backgroundColor: '#fff'
+				},
+				barOptionStack: {
+					title: {
+						text: '销售数据统计',
+						textStyle: {
+							fontSize: 16,
+							color: '#333'
+						}
+					},
+					xAxis: {
+						type: 'category',
+						data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+						axisLabel: {
+							color: '#666',
+							fontSize: 12
+						}
+					},
+					yAxis: {
+						type: 'value',
+						axisLabel: {
+							color: '#666',
+							fontSize: 12
+						}
+					},
+					series: [{
+						name: '销售额',
+						type: 'bar',
+						stack: 'order',
+						data: [120, 200, 150, 80, 70, 110, 130],
+						itemStyle: {
+							color: '#5470c6'
+						}
+					}, {
+						name: '订单量',
+						type: 'bar',
+						stack: 'order',
+						data: [60, 80, 90, 50, 40, 70, 85],
+						itemStyle: {
+							color: '#91cc75'
+						}
+					}],
+					legend: {
+						data: ['销售额', '订单量'],
+						textStyle: {
+							color: '#666'
+						}
+					},
+					backgroundColor: '#fff'
 				}
 			}
 		},
@@ -79,28 +129,10 @@
 </script>
 
 <style lang="scss" scoped>
-	.u-demo {
-	}
-	
-	.u-demo-wrap {
-		padding: 15px;
-	}
-	
-	.u-demo-title {
-		font-size: 16px;
-		font-weight: bold;
-		margin-bottom: 10px;
-	}
-	
-	.u-demo-area {
-		background-color: #fff;
-		padding: 15px;
-		border-radius: 8px;
-		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-	}
-	
-	.u-demo-result-line {
-		font-size: 14px;
-		color: #333;
-	}
+  .u-page__item {
+      margin-bottom: 15px;
+  }
+  .u-page__item__title {
+      margin-bottom: 10px;
+  }
 </style>
