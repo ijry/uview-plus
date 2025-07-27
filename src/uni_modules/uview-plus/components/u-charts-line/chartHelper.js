@@ -72,6 +72,57 @@ class ChartHelper {
   }
 
   /**
+   * 计算适合的Y轴刻度值
+   * @param {Number} min - 最小值
+   * @param {Number} max - 最大值
+   * @param {Number} tickCount - 刻度数量
+   * @returns {Object} 包含调整后最小值、最大值和刻度间隔的对象
+   */
+  calculateYAxisTicks(min, max, tickCount = 5) {
+    if (min === max) {
+      return {
+        min: min - 1,
+        max: max + 1,
+        step: 1
+      };
+    }
+    
+    // 计算近似的步长
+    const range = max - min;
+    const approxStep = range / tickCount;
+    
+    // 计算步长的量级
+    const magnitude = Math.pow(10, Math.floor(Math.log10(approxStep)));
+    
+    // 标准步长值
+    const stdSteps = [1, 2, 5, 10];
+    let step = stdSteps[0] * magnitude;
+    
+    // 选择最合适的步长
+    for (const stdStep of stdSteps) {
+      const tempStep = stdStep * magnitude;
+      if (tempStep >= approxStep) {
+        step = tempStep;
+        break;
+      }
+    }
+    
+    // 调整最小值和最大值到步长的倍数
+    const adjustedMin = Math.floor(min / step) * step;
+    const adjustedMax = Math.ceil(max / step) * step;
+    
+    // 重新计算实际的刻度数量
+    const actualTickCount = Math.round((adjustedMax - adjustedMin) / step);
+    
+    return {
+      min: adjustedMin,
+      max: adjustedMax,
+      step: step,
+      tickCount: actualTickCount
+    };
+  }
+
+  /**
    * 绘制网格
    * @param {CanvasRenderingContext2D} ctx - Canvas上下文
    * @param {Object} grid - 网格配置
@@ -94,11 +145,14 @@ class ChartHelper {
     ctx.strokeStyle = '#eee';
     ctx.lineWidth = 1;
 
+    // 计算Y轴刻度
+    const yAxisTicks = this.calculateYAxisTicks(minY, maxY, 5);
    
-    // 绘制水平网格线
-    const yGridCount = 5;
-    for (let i = 0; i <= yGridCount; i++) {
-      const y = (grid.top || 0) + chartHeight - (i / yGridCount) * chartHeight;
+    // 绘制水平网格线 (使用调整后的Y轴范围)
+    for (let i = 0; i <= yAxisTicks.tickCount; i++) {
+      const value = yAxisTicks.min + i * yAxisTicks.step;
+      const ratio = (value - yAxisTicks.min) / (yAxisTicks.max - yAxisTicks.min);
+      const y = (grid.top || 0) + chartHeight - ratio * chartHeight;
       ctx.beginPath();
       ctx.moveTo(grid.left || 0, y);
       ctx.lineTo((grid.left || 0) + chartWidth, y);
@@ -181,11 +235,19 @@ class ChartHelper {
     ctx.textAlign = 'right';
     ctx.textBaseline = 'middle';
     
-    const yLabelCount = 5;
-    for (let i = 0; i <= yLabelCount; i++) {
-      const value = (minY || 0) + ((maxY || 1) - (minY || 0)) * (i / yLabelCount);
-      const y = (grid.top || 0) + chartHeight - (i / yLabelCount) * chartHeight;
-      ctx.fillText(value.toFixed(1), (grid.left || 0) - 10, y);
+    // 计算Y轴刻度值
+    const yAxisTicks = this.calculateYAxisTicks(minY, maxY, 5);
+    
+    // 保存调整后的Y轴范围，供其他地方使用
+    this.adjustedYMin = yAxisTicks.min;
+    this.adjustedYMax = yAxisTicks.max;
+    
+    // 绘制Y轴标签 (使用调整后的Y轴范围)
+    for (let i = 0; i <= yAxisTicks.tickCount; i++) {
+      const value = yAxisTicks.min + i * yAxisTicks.step;
+      const ratio = (value - yAxisTicks.min) / (yAxisTicks.max - yAxisTicks.min);
+      const y = (grid.top || 0) + chartHeight - ratio * chartHeight;
+      ctx.fillText(Math.round(value).toString(), (grid.left || 0) - 10, y);
     }
   }
 

@@ -136,7 +136,7 @@ export default {
         chartHelper.drawAxis(this.ctx, this.grid, this.canvasWidth, this.canvasHeight, xAxisData, minY, maxY, xAxis, yAxis);
         
         // 绘制折线
-        this.drawSeries(series, xAxisData, minY, maxY);
+        this.drawSeries(series, xAxisData, minY, maxY, chartHelper.adjustedYMin, chartHelper.adjustedYMax);
         
         // 绘制图例
         if (option.legend && option.legend.data) {
@@ -150,13 +150,18 @@ export default {
       }
     },
     
-    drawSeries(series, xAxisData, minY, maxY) {
+    drawSeries(series, xAxisData, minY, maxY, adjustedYMin, adjustedYMax) {
       if (!series || series.length === 0) return;
       
       const chartWidth = this.canvasWidth - this.grid.left - this.grid.right;
       const chartHeight = this.canvasHeight - this.grid.top - this.grid.bottom;
       
       this.seriesData = []; // 重置系列数据
+      
+      // 使用调整后的Y轴范围
+      const useAdjustedY = adjustedYMin !== undefined && adjustedYMax !== undefined;
+      const actualMinY = useAdjustedY ? adjustedYMin : minY;
+      const actualMaxY = useAdjustedY ? adjustedYMax : maxY;
       
       // 首先绘制所有系列的填充区域（如果需要）
       series.forEach((serie, index) => {
@@ -173,7 +178,8 @@ export default {
             const actualValue = typeof value === 'object' && value !== null ? value.value : value;
             // 确保不会除以零
             const x = this.grid.left + (xAxisData.length > 1 ? (i / (xAxisData.length - 1)) * chartWidth : 0);
-            const y = this.grid.top + chartHeight - ((actualValue - minY) / (maxY - minY || 1)) * chartHeight;
+            // 使用调整后的Y轴范围计算Y坐标
+            const y = this.grid.top + chartHeight - ((actualValue - actualMinY) / (actualMaxY - actualMinY || 1)) * chartHeight;
             points.push({ 
               x, 
               y, 
@@ -206,7 +212,8 @@ export default {
             const actualValue = typeof value === 'object' && value !== null ? value.value : value;
             // 确保不会除以零
             const x = this.grid.left + (xAxisData.length > 1 ? (i / (xAxisData.length - 1)) * chartWidth : 0);
-            const y = this.grid.top + chartHeight - ((actualValue - minY) / (maxY - minY || 1)) * chartHeight;
+            // 使用调整后的Y轴范围计算Y坐标
+            const y = this.grid.top + chartHeight - ((actualValue - actualMinY) / (actualMaxY - actualMinY || 1)) * chartHeight;
             points.push({ 
               x, 
               y, 
