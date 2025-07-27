@@ -57,11 +57,11 @@ export default {
   data() {
     return {
       cid: 'u-charts-pie-' + Math.random().toString(36).substr(2),
-      // 修改:初始化时根据width类型处理默认值
+      // 修改:初始化时根据width类型处理默认值，支持rpx单位
       canvasWidth: typeof this.width === 'string' && this.width.indexOf('%') !== -1 ? 
         null : 
-        (typeof this.width === 'number' ? this.width : parseInt(this.width)),
-      canvasHeight: typeof this.height === 'string' ? parseInt(this.height) : this.height,
+        (typeof this.width === 'number' ? this.width : this.parseUnit(this.width)),
+      canvasHeight: typeof this.height === 'string' ? this.parseUnit(this.height) : this.height,
       chartInstance: null,
       isMount: false
     };
@@ -112,6 +112,27 @@ export default {
       });
     },
     
+    // 添加:解析单位的辅助函数，支持rpx、px和数字
+    parseUnit(value) {
+      if (typeof value === 'number') {
+        return value;
+      }
+      
+      if (typeof value === 'string') {
+        if (value.endsWith('rpx')) {
+          return uni.upx2px(parseInt(value));
+        } else if (value.endsWith('px')) {
+          return parseInt(value);
+        } else if (value.endsWith('%')) {
+          return value; // 百分比保持原样
+        } else {
+          return parseInt(value) || 0;
+        }
+      }
+      
+      return 0;
+    },
+    
     // 获取画布尺寸
     getCanvasSize() {
       return new Promise((resolve) => {
@@ -129,11 +150,11 @@ export default {
               this.canvasWidth = res.width || this.width;
               this.canvasHeight = res.height || this.height;
             } else {
-              // 修改:改进宽度计算逻辑
+              // 修改:改进宽度计算逻辑，支持rpx单位
               this.canvasWidth = typeof this.width === 'string' && this.width.indexOf('%') !== -1 ? 
                 (uni.upx2px(750) * parseInt(this.width) / 100) : 
-                (typeof this.width === 'string' ? parseInt(this.width) : this.width);
-              this.canvasHeight = typeof this.height === 'string' ? parseInt(this.height) : this.height;
+                this.parseUnit(this.width);
+              this.canvasHeight = this.parseUnit(this.height);
             }
             resolve();
           })
@@ -347,11 +368,27 @@ export default {
         const endX = centerX + labelRadius * Math.cos(middleAngle);
         const endY = centerY + labelRadius * Math.sin(middleAngle);
         
-        // 绘制引导线
+        // 添加折弯效果 - 根据角度调整标签的x坐标
+        let labelX = endX;
+        let breakPointX = breakX;
+        const horizontalOffset = 20; // 水平偏移量保持不变
+        
+        // 根据标签位置调整折弯方向
+        if (Math.abs(middleAngle) < Math.PI / 2) {
+          // 右侧标签 - 折弯向右
+          labelX = endX + horizontalOffset;
+          breakPointX = breakX + horizontalOffset;
+        } else {
+          // 左侧标签 - 折弯向左
+          labelX = endX - horizontalOffset;
+          breakPointX = breakX - horizontalOffset;
+        }
+        
+        // 绘制引导线（带折弯）
         ctx.beginPath();
         ctx.moveTo(startX, startY);
         ctx.lineTo(breakX, breakY);
-        ctx.lineTo(endX, endY);
+        ctx.lineTo(labelX, endY); // 现在末端是完全水平的
         ctx.setStrokeStyle('#666666');
         ctx.setLineWidth(1);
         ctx.stroke();
@@ -362,21 +399,20 @@ export default {
         const textWidth = ctx.measureText(text).width;
         
         // 根据标签位置调整对齐方式
-        let textAlign = 'left';
         if (Math.abs(middleAngle) < Math.PI / 2) {
           // 右侧标签
           ctx.setFillStyle('#ffffff');
-          ctx.fillRect(endX, endY - 10, textWidth + 10, 20);
+          ctx.fillRect(labelX, endY - 10, textWidth + 10, 20);
           ctx.setFillStyle('#333333');
           ctx.setTextAlign('left');
-          ctx.fillText(text, endX + 5, endY);
+          ctx.fillText(text, labelX + 5, endY);
         } else {
           // 左侧标签
           ctx.setFillStyle('#ffffff');
-          ctx.fillRect(endX - textWidth - 10, endY - 10, textWidth + 10, 20);
+          ctx.fillRect(labelX - textWidth - 10, endY - 10, textWidth + 10, 20);
           ctx.setFillStyle('#333333');
           ctx.setTextAlign('right');
-          ctx.fillText(text, endX - 5, endY);
+          ctx.fillText(text, labelX - 5, endY);
         }
       }
     },

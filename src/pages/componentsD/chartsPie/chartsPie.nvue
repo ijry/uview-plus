@@ -3,13 +3,13 @@
       <view class="u-page__item">
           <text class="u-page__item__title">基础饼图</text>
           <view class="u-page__item__content">
-            <up-charts-pie :options="pieOptions" width="350px"></up-charts-pie>
+            <up-charts-pie :options="pieOptions" width="750rpx"></up-charts-pie>
           </view>
       </view>
       <view class="u-page__item">
           <text class="u-page__item__title">环形饼图</text>
           <view class="u-page__item__content">
-            <up-charts-pie :options="pieOptions2" width="350px"></up-charts-pie>
+            <up-charts-pie :options="pieOptions2" width="750rpx"></up-charts-pie>
           </view>
       </view>
   </view>
@@ -54,7 +54,7 @@ export default {
         series: [{
           name: 'Nightingale Chart',
           type: 'pie',
-          radius: ['50%', '70%'],
+          radius: ['50%', '65%'],
           itemStyle: {
             borderRadius: 10,
             borderColor: '#fff',
