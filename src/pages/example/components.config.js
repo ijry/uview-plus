@@ -514,6 +514,12 @@ export default [{
         icon: 'chartsBar',
         title: 'ChartsBar 柱状图',
         title_en: 'ChartsBar'
+    },
+    {
+        path: '/pages/componentsD/chartsPie/chartsPie',
+        icon: 'chartsPie',
+        title: 'ChartsPie 饼图',
+        title_en: 'ChartsPie'
     }]
 }
 ]
