@@ -127,16 +127,19 @@ export default {
         // 计算数据范围
         const { minY, maxY } = chartHelper.calculateDataRange(series);
         
+        // 获取X轴padding配置，默认为0
+        const xAxisPadding = option.xAxisPadding || 0;
+        
         // 绘制网格
         if (option.grid !== false) {
-          chartHelper.drawGrid(this.ctx, this.grid, this.canvasWidth, this.canvasHeight, xAxisData.length, minY, maxY);
+          chartHelper.drawGrid(this.ctx, this.grid, this.canvasWidth, this.canvasHeight, xAxisData.length, minY, maxY, true, xAxisPadding);
         }
         
         // 绘制坐标轴
-        chartHelper.drawAxis(this.ctx, this.grid, this.canvasWidth, this.canvasHeight, xAxisData, minY, maxY, xAxis, yAxis);
+        chartHelper.drawAxis(this.ctx, this.grid, this.canvasWidth, this.canvasHeight, xAxisData, minY, maxY, xAxis, yAxis, 'line', xAxisPadding);
         
         // 绘制折线
-        this.drawSeries(series, xAxisData, minY, maxY, chartHelper.adjustedYMin, chartHelper.adjustedYMax);
+        this.drawSeries(series, xAxisData, minY, maxY, chartHelper.adjustedYMin, chartHelper.adjustedYMax, xAxisPadding);
         
         // 绘制图例
         if (option.legend && option.legend.data) {
@@ -150,10 +153,14 @@ export default {
       }
     },
     
-    drawSeries(series, xAxisData, minY, maxY, adjustedYMin, adjustedYMax) {
+    drawSeries(series, xAxisData, minY, maxY, adjustedYMin, adjustedYMax, xAxisPadding = 0) {
       if (!series || series.length === 0) return;
       
       const chartWidth = this.canvasWidth - this.grid.left - this.grid.right;
+      
+      // 应用X轴padding
+      const paddedChartWidth = chartWidth - 2 * xAxisPadding;
+      
       const chartHeight = this.canvasHeight - this.grid.top - this.grid.bottom;
       
       this.seriesData = []; // 重置系列数据
@@ -176,8 +183,8 @@ export default {
         if (serie.data && Array.isArray(serie.data)) {
           serie.data.forEach((value, i) => {
             const actualValue = typeof value === 'object' && value !== null ? value.value : value;
-            // 确保不会除以零
-            const x = this.grid.left + (xAxisData.length > 1 ? (i / (xAxisData.length - 1)) * chartWidth : 0);
+            // 确保不会除以零，并应用X轴padding
+            const x = this.grid.left + xAxisPadding + (xAxisData.length > 1 ? (i / (xAxisData.length - 1)) * paddedChartWidth : 0);
             // 使用调整后的Y轴范围计算Y坐标
             const y = this.grid.top + chartHeight - ((actualValue - actualMinY) / (actualMaxY - actualMinY || 1)) * chartHeight;
             points.push({ 
@@ -210,8 +217,8 @@ export default {
         if (serie.data && Array.isArray(serie.data)) {
           serie.data.forEach((value, i) => {
             const actualValue = typeof value === 'object' && value !== null ? value.value : value;
-            // 确保不会除以零
-            const x = this.grid.left + (xAxisData.length > 1 ? (i / (xAxisData.length - 1)) * chartWidth : 0);
+            // 确保不会除以零，并应用X轴padding
+            const x = this.grid.left + xAxisPadding + (xAxisData.length > 1 ? (i / (xAxisData.length - 1)) * paddedChartWidth : 0);
             // 使用调整后的Y轴范围计算Y坐标
             const y = this.grid.top + chartHeight - ((actualValue - actualMinY) / (actualMaxY - actualMinY || 1)) * chartHeight;
             points.push({ 

@@ -508,6 +508,12 @@ export default [{
         icon: 'chartsLine',
         title: 'ChartsLine 折线图',
         title_en: 'ChartsLine'
+    },
+    {
+        path: '/pages/componentsD/chartsBar/chartsBar',
+        icon: 'chartsBar',
+        title: 'ChartsBar 柱状图',
+        title_en: 'ChartsBar'
     }]
 }
 ]

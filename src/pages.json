@@ -611,6 +611,12 @@
                     "style" : {
                         "navigationBarTitleText" : "折线图"
                     }
+                },
+                {
+                    "path" : "chartsBar/chartsBar",
+                    "style" : {
+                        "navigationBarTitleText" : "柱状图"
+                    }
                 }
             ]
         },

@@ -15,7 +15,6 @@ class ChartHelper {
   calculateDataRange(series) {
     let minY = Number.MAX_VALUE;
     let maxY = Number.MIN_VALUE;
-    
     if (!series || !Array.isArray(series)) {
       return { minY: 0, maxY: 1 };
     }
@@ -23,7 +22,7 @@ class ChartHelper {
     let hasData = false;
     
     series.forEach(serie => {
-      if (serie && serie.type === 'line' && serie.data && Array.isArray(serie.data)) {
+      if (serie && (serie.type === 'line' || serie.type === 'bar') && serie.data && Array.isArray(serie.data)) {
         serie.data.forEach(value => {
           // 如果数据是对象形式 {value: 123}
           const actualValue = typeof value === 'object' && value !== null ? value.value : value;
@@ -79,12 +78,26 @@ class ChartHelper {
    * @returns {Object} 包含调整后最小值、最大值和刻度间隔的对象
    */
   calculateYAxisTicks(min, max, tickCount = 5) {
+    // 当最小值和最大值相等时的处理
     if (min === max) {
-      return {
-        min: min - 1,
-        max: max + 1,
-        step: 1
-      };
+      if (min === 0) {
+        // 如果值为0，设置合理的显示范围
+        return {
+          min: 0,
+          max: 4,
+          step: 1,
+          tickCount: 4
+        };
+      } else {
+        // 如果值不为0，以该值为中心设置显示范围
+        const padding = Math.abs(min) * 0.1 || 1;
+        return {
+          min: min - padding,
+          max: max + padding,
+          step: padding * 2 / 4,
+          tickCount: 4
+        };
+      }
     }
     
     // 计算近似的步长
@@ -114,6 +127,16 @@ class ChartHelper {
     // 重新计算实际的刻度数量
     const actualTickCount = Math.round((adjustedMax - adjustedMin) / step);
     
+    // 确保至少有2个刻度
+    if (actualTickCount === 0) {
+      return {
+        min: min,
+        max: max + 1,
+        step: 1,
+        tickCount: 1
+      };
+    }
+    
     return {
       min: adjustedMin,
       max: adjustedMax,
@@ -131,8 +154,10 @@ class ChartHelper {
    * @param {Number} xAxisCount - X轴数据点数量
    * @param {Number} minY - Y轴最小值
    * @param {Number} maxY - Y轴最大值
+   * @param {Boolean} drawVerticalLines - 是否绘制垂直线
+   * @param {Number} xAxisPadding - X轴左右padding
    */
-  drawGrid(ctx, grid, canvasWidth, canvasHeight, xAxisCount, minY, maxY) {
+  drawGrid(ctx, grid, canvasWidth, canvasHeight, xAxisCount, minY, maxY, drawVerticalLines = true, xAxisPadding = 0) {
     // 参数检查
     if (!ctx || !grid) return;
     
@@ -160,9 +185,9 @@ class ChartHelper {
     }
     
     // 绘制垂直网格线 (每个数据点一条线)
-    if (xAxisCount > 0) {
+    if (drawVerticalLines && xAxisCount > 0) {
       for (let i = 0; i < xAxisCount; i++) {
-        const x = (grid.left || 0) + (i / (xAxisCount - 1)) * chartWidth;
+        const x = (grid.left || 0) + xAxisPadding + (i / (xAxisCount - 1)) * (chartWidth - 2 * xAxisPadding);
         ctx.beginPath();
         ctx.moveTo(x, grid.top || 0);
         ctx.lineTo(x, (grid.top || 0) + chartHeight);
@@ -182,8 +207,10 @@ class ChartHelper {
    * @param {Number} maxY - Y轴最大值
    * @param {Object} xAxisOpt - X轴配置
    * @param {Object} yAxisOpt - Y轴配置
+   * @param {String} chartType - 图表类型
+   * @param {Number} xAxisPadding - X轴左右padding
    */
-  drawAxis(ctx, grid, canvasWidth, canvasHeight, xAxisData, minY, maxY, xAxisOpt, yAxisOpt) {
+  drawAxis(ctx, grid, canvasWidth, canvasHeight, xAxisData, minY, maxY, xAxisOpt, yAxisOpt, chartType = 'line', xAxisPadding = 0) {
     // 参数检查
     if (!ctx || !grid) return;
     
@@ -217,15 +244,21 @@ class ChartHelper {
     ctx.textBaseline = 'top';
     
     if (xAxisData && Array.isArray(xAxisData) && xAxisData.length > 0) {
-      // 对于少量标签，全部显示
-      if (xAxisData.length <= 5) {
-        xAxisData.forEach((label, i) => {
-          const x = (grid.left || 0) + (i / Math.max(xAxisData.length - 1, 1)) * chartWidth;
-          ctx.fillText(String(label), x, canvasHeight - (grid.bottom || 0) + 10);
-        });
+      // 对于柱状图，需要调整X轴标签位置，避免顶边
+      if (chartType === 'bar') {
+        this.drawBarXAxisLabels(ctx, xAxisData, grid, chartWidth, canvasHeight, xAxisFontSize, xAxisPadding);
       } else {
-        // 对于较多标签，采用优化的显示策略
-        this.drawXAxisLabels(ctx, xAxisData, grid, chartWidth, canvasHeight, xAxisFontSize);
+        // 折线图保持原来的标签绘制方式
+        // 对于少量标签，全部显示
+        if (xAxisData.length <= 5) {
+          xAxisData.forEach((label, i) => {
+            const x = (grid.left || 0) + xAxisPadding + (i / Math.max(xAxisData.length - 1, 1)) * (chartWidth - 2 * xAxisPadding);
+            ctx.fillText(String(label), x, canvasHeight - (grid.bottom || 0) + 10);
+          });
+        } else {
+          // 对于较多标签，采用优化的显示策略
+          this.drawXAxisLabels(ctx, xAxisData, grid, chartWidth, canvasHeight, xAxisFontSize, xAxisPadding);
+        }
       }
     }
     
@@ -252,6 +285,29 @@ class ChartHelper {
   }
 
   /**
+   * 绘制柱状图X轴标签（避免顶边）
+   * @param {CanvasRenderingContext2D} ctx - Canvas上下文
+   * @param {Array} xAxisData - X轴数据
+   * @param {Object} grid - 网格配置
+   * @param {Number} chartWidth - 图表宽度
+   * @param {Number} canvasHeight - 画布高度
+   * @param {Number} fontSize - 字体大小
+   * @param {Number} xAxisPadding - X轴左右padding
+   */
+  drawBarXAxisLabels(ctx, xAxisData, grid, chartWidth, canvasHeight, fontSize, xAxisPadding = 0) {
+    const labelCount = xAxisData.length;
+    
+    if (labelCount <= 0) return;
+    
+    // 对于柱状图，需要在每个柱子的中心位置显示标签
+    xAxisData.forEach((label, i) => {
+      // 计算标签位置，使其居中显示在柱子下方，并确保不超出边界
+      const x = (grid.left || 0) + xAxisPadding + ((i + 0.5) / labelCount) * (chartWidth - 2 * xAxisPadding);
+      ctx.fillText(String(label), x, canvasHeight - (grid.bottom || 0) + 10);
+    });
+  }
+
+  /**
    * 绘制X轴标签（优化版本）
    * @param {CanvasRenderingContext2D} ctx - Canvas上下文
    * @param {Array} xAxisData - X轴数据
@@ -259,8 +315,9 @@ class ChartHelper {
    * @param {Number} chartWidth - 图表宽度
    * @param {Number} canvasHeight - 画布高度
    * @param {Number} fontSize - 字体大小
+   * @param {Number} xAxisPadding - X轴左右padding
    */
-  drawXAxisLabels(ctx, xAxisData, grid, chartWidth, canvasHeight, fontSize) {
+  drawXAxisLabels(ctx, xAxisData, grid, chartWidth, canvasHeight, fontSize, xAxisPadding = 0) {
     const labelCount = xAxisData.length;
     
     // 根据标签数量和图表宽度动态计算每个标签的估计宽度
@@ -276,7 +333,7 @@ class ChartHelper {
     const estimatedLabelWidth = Math.ceil(avgLabelLength * fontSize * 0.6 + 10);
     
     // 计算最多可以显示多少个标签
-    const maxLabels = Math.max(Math.min(labelCount, Math.floor(chartWidth / estimatedLabelWidth)), 2);
+    const maxLabels = Math.max(Math.min(labelCount, Math.floor((chartWidth - 2 * xAxisPadding) / estimatedLabelWidth)), 2);
     
     // 确定需要显示的标签索引
     const indicesToShow = [];
@@ -313,7 +370,7 @@ class ChartHelper {
     // 显示选定的标签
     indicesToShow.forEach(index => {
       if (index >= 0 && index < labelCount) {
-        const x = (grid.left || 0) + (index / Math.max(labelCount - 1, 1)) * chartWidth;
+        const x = (grid.left || 0) + xAxisPadding + (index / Math.max(labelCount - 1, 1)) * (chartWidth - 2 * xAxisPadding);
         const label = xAxisData[index] !== undefined ? xAxisData[index] : index;
         ctx.fillText(String(label), x, canvasHeight - (grid.bottom || 0) + 10);
       }
