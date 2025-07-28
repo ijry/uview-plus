@@ -12,11 +12,16 @@
                         col.fixed === 'right' ? 'u-table-fixed-right' : ''
                     ]" @click="handleHeaderClick(col)">
 					<slot name="header" :column="col" :columnIndex="colIndex" :level="1">
-					    {{ col.title }}
 					</slot>
-                    <view v-if="col.sortable">
-                        {{ getSortIcon(col.key) }}
-                    </view>
+                    <text v-if="!$slots['header']">{{ col.title }}</text>
+                    <template v-if="col.sortable">
+                        <slot name="headerSort" :sortStatus="getSortValue(col.key)" :column="col"
+                            :columnIndex="colIndex" :level="1">
+                        </slot>
+                        <view v-if="!$slots['headerSort']">
+                            {{ getSortIcon(col.key) }}
+                        </view>
+                    </template>
                 </view>
             </view>
         </view>
@@ -80,8 +85,8 @@
             </template>
             <template v-else>
                 <slot name="empty">
-                    <view class="u-table-empty">{{ emptyText }}</view>
                 </slot>
+                <view v-if="!$slots['empty']" class="u-table-empty">{{ emptyText }}</view>
             </template>
         </view>
     </view>
@@ -386,6 +391,12 @@ export default {
             return cond.order === 'ascending' ? '↑' : '↓';
         }
 
+        function getSortValue(field) {
+            const cond = sortConditions.value.find(c => c.field === field);
+            if (!cond) return '';
+            return cond.order === 'ascending';
+        }
+
         function toggleSelect(row) {
             const index = selectedRows.value.findIndex(r => r[props.rowKey] === row[props.rowKey]);
             if (index >= 0) {
@@ -424,6 +435,7 @@ export default {
             sortConditions,
             handleRowClick,
             handleHeaderClick,
+            getSortValue,
             getSortIcon,
             toggleSelect,
             isSelected,
