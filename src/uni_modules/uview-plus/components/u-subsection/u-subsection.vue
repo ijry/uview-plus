@@ -210,13 +210,17 @@ export default {
     },
     mounted() {
         this.init();
+        // #ifndef APP || MP-WEIXIN || MP-LARK|| MP-QQ || H5
         this.windowResizeCallback = (res) => {
             this.init();
         }
         uni.onWindowResize(this.windowResizeCallback)
+        // #endif
     },
     beforeUnmount() {
+        // #ifndef APP || MP-WEIXIN || MP-LARK|| MP-QQ || H5
         uni.offWindowResize(this.windowResizeCallback)
+        // #endif
     },
 	emits: ["change", "update:current"],
     methods: {
