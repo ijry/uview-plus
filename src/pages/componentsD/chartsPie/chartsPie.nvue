@@ -42,7 +42,8 @@ export default {
           ]
         }],
         legend: {
-          show: true
+          show: true,
+          bottom: 20
         }
       },
       pieOptions2: {
@@ -69,7 +70,8 @@ export default {
           ]
         }],
         legend: {
-          show: true
+          show: true,
+          bottom: 20
         }
       }
     };

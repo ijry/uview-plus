@@ -401,7 +401,8 @@ class ChartHelper {
     
     ctx.fillText(titleOption.text, x, y);
     
-    return 40; // 返回标题占用的高度
+    // 计算标题实际占用的高度（包括上下边距）
+    return fontSize + 20;
   }
 
   /**
@@ -412,36 +413,237 @@ class ChartHelper {
    * @param {Number} canvasWidth - 画布宽度
    * @param {Array} colors - 颜色数组
    */
-  drawLegend(ctx, legendOption, grid, canvasWidth, colors) {
-    if (!ctx || !legendOption || !legendOption.data || !Array.isArray(legendOption.data) || legendOption.data.length === 0) return;
+  drawLegend(ctx, legendOption, grid, canvasWidth, colors, canvasHeight, titleHeight = 0) {
+    if (!ctx || !legendOption || !legendOption.data || !Array.isArray(legendOption.data) || legendOption.data.length === 0) return 0; // 返回图例高度
     
-    const legendTop = (grid.top || 0) - 18; // 在网格上方绘制图例
-    const legendLeft = grid.left || 0;
-    const itemHeight = 20;
-    const itemWidth = 100;
+    // 遵循ECharts规范，使用top、bottom、left、right控制图例位置
+    // 支持数字（像素值）、百分比字符串或关键字
+    const topValue = legendOption.top;
+    const bottomValue = legendOption.bottom;
+    const leftValue = legendOption.left;
+    const rightValue = legendOption.right;
+    
+    const hasTop = topValue !== undefined && topValue !== 'auto';
+    const hasBottom = bottomValue !== undefined && bottomValue !== 'auto';
+    const hasLeft = leftValue !== undefined && leftValue !== 'auto';
+    const hasRight = rightValue !== undefined && rightValue !== 'auto';
+    
+    // 默认将图例放在底部
+    const isBottomDefault = !hasTop && !hasBottom;
+    
+    // 图例项基本尺寸
+    const itemHeight = 14;
+    const itemSpacing = 8;
+    const verticalPadding = 4;
+    const symbolWidth = 20; // 图例符号宽度
+    const textSpacing = 5;  // 符号与文本间距
+    
+    // 计算每行能放置的图例项数（默认每行最多4个）
+    let maxRowItems = Math.min(4, legendOption.data.length);
+    const availableWidth = (canvasWidth || 300) - (grid.left || 0) - 20; // 可用宽度
+    
+    // 动态计算每行能放置的图例项数
+    let currentRowWidth = 0;
+    let itemsInRow = 0;
+    
+    for (let i = 0; i < legendOption.data.length; i++) {
+      const name = legendOption.data[i];
+      ctx.font = '12px sans-serif';
+      const textWidth = ctx.measureText(name).width;
+      const itemWidth = symbolWidth + textSpacing + textWidth + itemSpacing;
+      
+      if (currentRowWidth + itemWidth > availableWidth && itemsInRow > 0) {
+        // 当前行已满，换行
+        maxRowItems = itemsInRow;
+        break;
+      }
+      
+      currentRowWidth += itemWidth;
+      itemsInRow++;
+    }
+    
+    // 确保至少每行显示一个图例项
+    maxRowItems = Math.max(1, Math.min(4, maxRowItems)); // 最多每行4个
+    
+    // 计算图例总高度
+    const rows = Math.ceil(legendOption.data.length / maxRowItems);
+    const legendHeight = rows * itemHeight + Math.max(0, rows - 1) * itemSpacing + verticalPadding * 2;
+    
+    let legendTop;
+    let totalLegendHeight = legendHeight; // 包含位置偏移的总高度
+    
+    if (hasTop) {
+      // 计算top值（支持数字和百分比）
+      let topPos = 0;
+      if (typeof topValue === 'number') {
+        topPos = topValue;
+      } else if (typeof topValue === 'string' && topValue.endsWith('%')) {
+        topPos = (parseInt(topValue) / 100) * canvasHeight;
+      }
+      
+      legendTop = topPos + titleHeight; // 加上标题高度
+      totalLegendHeight = legendHeight + topPos + 5; // 总高度包括top偏移
+      
+      // 调整网格顶部边距
+      if (grid.top !== undefined) {
+        grid.top = Math.max(grid.top, legendTop + legendHeight + 15);
+      }
+    } else if (hasBottom || isBottomDefault) {
+      // 计算bottom值（支持数字和百分比）
+      let bottomPos = 0;
+      if (typeof bottomValue === 'number') {
+        bottomPos = bottomValue;
+      } else if (typeof bottomValue === 'string' && bottomValue.endsWith('%')) {
+        bottomPos = (parseInt(bottomValue) / 100) * canvasHeight;
+      } else if (isBottomDefault) {
+        bottomPos = 5; // 默认底部距离
+      }
+      
+      // 在画布底部绘制图例
+      legendTop = canvasHeight - legendHeight - bottomPos;
+      totalLegendHeight = legendHeight + bottomPos + 10; // 总高度包括bottom偏移
+      
+      // 调整网格底部边距
+      if (grid.bottom !== undefined) {
+        grid.bottom += totalLegendHeight;
+      }
+    } else {
+      // 默认在顶部
+      legendTop = (grid.top || 0) - 18 + titleHeight; // 加上标题高度
+      totalLegendHeight = legendHeight + 18 + 5; // 总高度包括默认偏移
+      
+      // 调整网格顶部边距
+      if (grid.top !== undefined) {
+        grid.top = Math.max(grid.top, legendTop + legendHeight + 5);
+      }
+    }
+    
+    // 计算图例左边位置（默认与grid.left对齐）
+    let legendLeft = grid.left || 0;
+    if (hasLeft) {
+      if (typeof leftValue === 'number') {
+        legendLeft = leftValue;
+      } else if (typeof leftValue === 'string' && leftValue.endsWith('%')) {
+        legendLeft = (parseInt(leftValue) / 100) * canvasWidth;
+      } else if (leftValue === 'center') {
+        // 居中对齐
+        let maxWidthInRow = 0;
+        for (let r = 0; r < rows; r++) {
+          let rowWidth = 0;
+          const startIdx = r * maxRowItems;
+          const endIdx = Math.min(startIdx + maxRowItems, legendOption.data.length);
+          
+          for (let i = startIdx; i < endIdx; i++) {
+            const name = legendOption.data[i];
+            ctx.font = '12px sans-serif';
+            const textWidth = ctx.measureText(name).width;
+            rowWidth += symbolWidth + textSpacing + textWidth + itemSpacing;
+          }
+          maxWidthInRow = Math.max(maxWidthInRow, rowWidth);
+        }
+        legendLeft = (canvasWidth - maxWidthInRow) / 2;
+      } else if (leftValue === 'right') {
+        // 右对齐
+        let maxWidthInRow = 0;
+        for (let r = 0; r < rows; r++) {
+          let rowWidth = 0;
+          const startIdx = r * maxRowItems;
+          const endIdx = Math.min(startIdx + maxRowItems, legendOption.data.length);
+          
+          for (let i = startIdx; i < endIdx; i++) {
+            const name = legendOption.data[i];
+            ctx.font = '12px sans-serif';
+            const textWidth = ctx.measureText(name).width;
+            rowWidth += symbolWidth + textSpacing + textWidth + itemSpacing;
+          }
+          maxWidthInRow = Math.max(maxWidthInRow, rowWidth);
+        }
+        legendLeft = canvasWidth - maxWidthInRow - (grid.right || 0);
+      }
+    } else if (hasRight) {
+      // 计算实际图例宽度
+      let maxWidthInRow = 0;
+      for (let r = 0; r < rows; r++) {
+        let rowWidth = 0;
+        const startIdx = r * maxRowItems;
+        const endIdx = Math.min(startIdx + maxRowItems, legendOption.data.length);
+        
+        for (let i = startIdx; i < endIdx; i++) {
+          const name = legendOption.data[i];
+          ctx.font = '12px sans-serif';
+          const textWidth = ctx.measureText(name).width;
+          rowWidth += symbolWidth + textSpacing + textWidth + itemSpacing;
+        }
+        maxWidthInRow = Math.max(maxWidthInRow, rowWidth);
+      }
+      
+      if (typeof rightValue === 'number') {
+        legendLeft = canvasWidth - maxWidthInRow - rightValue;
+      } else if (typeof rightValue === 'string' && rightValue.endsWith('%')) {
+        legendLeft = canvasWidth - maxWidthInRow - (parseInt(rightValue) / 100) * canvasWidth;
+      }
+    }
     
     ctx.font = '12px sans-serif';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
     
-    legendOption.data.forEach((name, index) => {
-      const color = colors[index % colors.length];
-      const x = legendLeft + (index % 3) * itemWidth;
-      const y = legendTop + Math.floor(index / 3) * itemHeight;
+    // 绘制图例项
+    for (let i = 0; i < legendOption.data.length; i++) {
+      const name = legendOption.data[i];
+      const color = colors[i % colors.length];
+      
+      const row = Math.floor(i / maxRowItems);
+      const col = i % maxRowItems;
+      
+      // 计算当前行的宽度，以实现不同的对齐方式
+      let currentRowWidth = 0;
+      const startIdx = row * maxRowItems;
+      const endIdx = Math.min(startIdx + maxRowItems, legendOption.data.length);
+      
+      for (let j = startIdx; j < endIdx; j++) {
+        const itemName = legendOption.data[j];
+        const textWidth = ctx.measureText(itemName).width;
+        currentRowWidth += symbolWidth + textSpacing + textWidth + itemSpacing;
+      }
+      
+      // 根据对齐方式计算当前项在行中的位置
+      let rowLeft = legendLeft;
+      
+      // 如果设置了left为'center'或'right'，则进行相应的对齐
+      if (hasLeft && leftValue === 'center') {
+        rowLeft = legendLeft + ((canvasWidth - legendLeft * 2) - currentRowWidth) / 2;
+      } else if (hasLeft && leftValue === 'right') {
+        rowLeft = legendLeft + (canvasWidth - legendLeft * 2) - currentRowWidth;
+      }
+      
+      // 计算当前项在行中的具体位置
+      let itemX = 0;
+      for (let j = startIdx; j < startIdx + col; j++) {
+        const itemName = legendOption.data[j];
+        const textWidth = ctx.measureText(itemName).width;
+        itemX += symbolWidth + textSpacing + textWidth + itemSpacing;
+      }
+      
+      const x = rowLeft + itemX;
+      const y = legendTop + verticalPadding + row * (itemHeight + itemSpacing) + itemHeight / 2;
       
       // 绘制线条
       ctx.beginPath();
       ctx.strokeStyle = color;
       ctx.lineWidth = 2;
       ctx.moveTo(x, y);
-      ctx.lineTo(x + 20, y);
+      ctx.lineTo(x + symbolWidth, y);
       ctx.stroke();
       
       // 绘制图例名称
       const textColor = (legendOption.textStyle && legendOption.textStyle.color) || '#666';
       ctx.fillStyle = textColor;
-      ctx.fillText(String(name), x + 25, y);
-    });
+      ctx.fillText(String(name), x + symbolWidth + textSpacing, y);
+    }
+    
+    // 返回图例占用的总高度（包含位置偏移）
+    return totalLegendHeight;
   }
 
   /**

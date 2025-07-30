@@ -201,21 +201,53 @@ export default {
         const legendItemWidth = 80; // 假设每个图例项宽度为80px
         const legendItemHeight = 20; // 假设每个图例项高度为20px
         
+        // 遵循ECharts规范，使用top、bottom、left、right控制图例位置
+        // 支持数字（像素值）、百分比字符串或关键字
+        let legend = this.options.legend;
+        const topValue = legend.top;
+        const bottomValue = legend.bottom;
+        const leftValue = legend.left;
+        const rightValue = legend.right;
+        
+        const hasTop = topValue !== undefined && topValue !== 'auto';
+        const hasBottom = bottomValue !== undefined && bottomValue !== 'auto';
+        const hasLeft = leftValue !== undefined && leftValue !== 'auto';
+        const hasRight = rightValue !== undefined && rightValue !== 'auto';
+        
+        // 如果没有设置top或bottom，则默认放在底部
+        const isBottomDefault = !hasTop && !hasBottom;
+        
         if (this.options.legend.orient === 'vertical') {
           const legendHeight = data.length * legendItemHeight;
-          if (this.options.legend.left === 'left') {
+          if (hasLeft) {
             leftLegendWidth = legendItemWidth;
             centerX = (this.canvasWidth + leftLegendWidth) / 2;
-          } else if (this.options.legend.right === 'right') {
+          } else if (hasRight) {
             rightLegendWidth = legendItemWidth;
             centerX = (this.canvasWidth - rightLegendWidth) / 2;
           }
         } else { // horizontal
           const legendWidth = data.length * legendItemWidth;
-          if (this.options.legend.top === 'top') {
+          if (hasTop) {
+            // 计算top值（支持数字和百分比）
+            let topPos = 10;
+            if (typeof topValue === 'number') {
+              topPos = topValue;
+            } else if (typeof topValue === 'string' && topValue.endsWith('%')) {
+              topPos = (parseInt(topValue) / 100) * this.canvasHeight;
+            }
             topLegendHeight = legendItemHeight * 2; // 给图例更多空间
             centerY = (this.canvasHeight + topLegendHeight) / 2;
-          } else if (this.options.legend.bottom === 'bottom') {
+          } else if (hasBottom || isBottomDefault) {
+            // 计算bottom值（支持数字和百分比）
+            let bottomPos = 10;
+            if (typeof bottomValue === 'number') {
+              bottomPos = bottomValue;
+            } else if (typeof bottomValue === 'string' && bottomValue.endsWith('%')) {
+              bottomPos = (parseInt(bottomValue) / 100) * this.canvasHeight;
+            } else if (isBottomDefault) {
+              bottomPos = 10; // 默认底部距离
+            }
             bottomLegendHeight = legendItemHeight * 2;
             centerY = (this.canvasHeight - bottomLegendHeight) / 2;
           }
@@ -426,23 +458,68 @@ export default {
       const itemSpacing = 10;
       let startX, startY;
       
+      // 遵循ECharts规范，使用top、bottom、left、right控制图例位置
+      // 支持数字（像素值）、百分比字符串或关键字
+      const topValue = legend.top;
+      const bottomValue = legend.bottom;
+      const leftValue = legend.left;
+      const rightValue = legend.right;
+      
+      const hasTop = topValue !== undefined && topValue !== 'auto';
+      const hasBottom = bottomValue !== undefined && bottomValue !== 'auto';
+      const hasLeft = leftValue !== undefined && leftValue !== 'auto';
+      const hasRight = rightValue !== undefined && rightValue !== 'auto';
+      
+      // 默认将图例放在底部
+      const isBottomDefault = !hasTop && !hasBottom;
+      
       if (legend.orient === 'vertical') {
         // 垂直排列
         const legendWidth = 80;
         const legendHeight = data.length * (itemHeight + itemSpacing);
         
-        if (legend.left === 'left') {
-          startX = 10;
-        } else if (legend.right === 'right') {
-          startX = this.canvasWidth - legendWidth - 10;
+        if (hasLeft) {
+          // 计算left值（支持数字和百分比）
+          if (typeof leftValue === 'number') {
+            startX = leftValue;
+          } else if (typeof leftValue === 'string' && leftValue.endsWith('%')) {
+            startX = (parseInt(leftValue) / 100) * this.canvasWidth;
+          } else {
+            startX = 10;
+          }
+        } else if (hasRight) {
+          // 计算right值（支持数字和百分比）
+          let rightPos = 10;
+          if (typeof rightValue === 'number') {
+            rightPos = rightValue;
+          } else if (typeof rightValue === 'string' && rightValue.endsWith('%')) {
+            rightPos = (parseInt(rightValue) / 100) * this.canvasWidth;
+          }
+          startX = this.canvasWidth - legendWidth - rightPos;
         } else {
           startX = this.canvasWidth / 2 - legendWidth / 2;
         }
         
-        if (legend.top === 'top') {
-          startY = 10;
-        } else if (legend.bottom === 'bottom') {
-          startY = this.canvasHeight - legendHeight - 10;
+        if (hasTop) {
+          // 计算top值（支持数字和百分比）
+          if (typeof topValue === 'number') {
+            startY = topValue;
+          } else if (typeof topValue === 'string' && topValue.endsWith('%')) {
+            startY = (parseInt(topValue) / 100) * this.canvasHeight;
+          } else {
+            startY = 10;
+          }
+        } else if (hasBottom || isBottomDefault) { // 默认在底部
+          // 计算bottom值（支持数字和百分比）
+          let bottomPos = 10;
+          if (typeof bottomValue === 'number') {
+            bottomPos = bottomValue;
+          } else if (typeof bottomValue === 'string' && bottomValue.endsWith('%')) {
+            bottomPos = (parseInt(bottomValue) / 100) * this.canvasHeight;
+          } else if (isBottomDefault) {
+            bottomPos = 10; // 默认底部距离
+          }
+          startY = this.canvasHeight - legendHeight - bottomPos;
         } else {
           startY = this.canvasHeight / 2 - legendHeight / 2;
         }
@@ -451,18 +528,48 @@ export default {
         const legendWidth = data.length * 70; // 增加图例项宽度
         const legendHeight = itemHeight;
         
-        if (legend.left === 'left') {
-          startX = 10;
-        } else if (legend.right === 'right') {
-          startX = this.canvasWidth - legendWidth - 10;
+        if (hasLeft) {
+          // 计算left值（支持数字和百分比）
+          if (typeof leftValue === 'number') {
+            startX = leftValue;
+          } else if (typeof leftValue === 'string' && leftValue.endsWith('%')) {
+            startX = (parseInt(leftValue) / 100) * this.canvasWidth;
+          } else {
+            startX = 10;
+          }
+        } else if (hasRight) {
+          // 计算right值（支持数字和百分比）
+          let rightPos = 10;
+          if (typeof rightValue === 'number') {
+            rightPos = rightValue;
+          } else if (typeof rightValue === 'string' && rightValue.endsWith('%')) {
+            rightPos = (parseInt(rightValue) / 100) * this.canvasWidth;
+          }
+          startX = this.canvasWidth - legendWidth - rightPos;
         } else {
           startX = this.canvasWidth / 2 - legendWidth / 2;
         }
         
-        if (legend.top === 'top') {
-          startY = 10;
-        } else if (legend.bottom === 'bottom') {
-          startY = this.canvasHeight - legendHeight - 10;
+        if (hasTop) {
+          // 计算top值（支持数字和百分比）
+          if (typeof topValue === 'number') {
+            startY = topValue;
+          } else if (typeof topValue === 'string' && topValue.endsWith('%')) {
+            startY = (parseInt(topValue) / 100) * this.canvasHeight;
+          } else {
+            startY = 10;
+          }
+        } else if (hasBottom || isBottomDefault) { // 默认在底部
+          // 计算bottom值（支持数字和百分比）
+          let bottomPos = 10;
+          if (typeof bottomValue === 'number') {
+            bottomPos = bottomValue;
+          } else if (typeof bottomValue === 'string' && bottomValue.endsWith('%')) {
+            bottomPos = (parseInt(bottomValue) / 100) * this.canvasHeight;
+          } else if (isBottomDefault) {
+            bottomPos = 10; // 默认底部距离
+          }
+          startY = this.canvasHeight - legendHeight - bottomPos;
         } else {
           startY = 10; // 默认在顶部
         }

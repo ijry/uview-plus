@@ -520,6 +520,12 @@ export default [{
         icon: 'chartsPie',
         title: 'ChartsPie 饼图',
         title_en: 'ChartsPie'
+    },
+    {
+        path: '/pages/componentsD/chartsScatter/chartsScatter',
+        icon: 'chartsScatter',
+        title: 'ChartsScatter 散点图',
+        title_en: 'ChartsScatter'
     }]
 }
 ]

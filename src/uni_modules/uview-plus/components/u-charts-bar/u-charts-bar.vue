@@ -40,7 +40,7 @@ export default {
       ctx: null,
       canvasWidth: 0,
       canvasHeight: 0,
-      grid: { top: 60, right: 20, bottom: 60, left: 50 },
+      grid: { top: 10, right: 20, bottom: 25, left: 50 },
       // 存储系列数据用于事件处理
       seriesData: [],
       // 触摸相关信息
@@ -111,9 +111,14 @@ export default {
         }
         
         // 绘制标题
-        const titleHeight = chartHelper.drawTitle(this.ctx, option.title, this.canvasWidth);
+        let titleHeight = 0;
+        if (option.title && option.title.text) {
+          titleHeight = chartHelper.drawTitle(this.ctx, option.title, this.canvasWidth);
+        }
+        
+        // 如果有标题，调整网格顶部边距
         if (titleHeight > 0) {
-          this.grid.top = 60; // 如果有标题，调整网格顶部边距
+          this.grid.top = Math.max(this.grid.top, titleHeight + 10);
         }
         
         // 提取系列数据
@@ -129,6 +134,25 @@ export default {
         
         // 获取X轴padding配置，默认为10px
         const xAxisPadding = option.xAxisPadding !== undefined ? option.xAxisPadding : 10;
+
+        // 绘制图例（在网格调整之前）
+        let legendHeight = 0;
+        console.log(this.grid);
+        if (option.legend && option.legend.data) {
+          const legendOption = { 
+            ...option.legend, 
+          };
+          legendHeight = chartHelper.drawLegend(
+            this.ctx, 
+            legendOption, 
+            this.grid, 
+            this.canvasWidth, 
+            chartHelper.defaultColors,
+            this.canvasHeight,
+            titleHeight
+          );
+          console.log('Legend height: ', legendHeight);
+        }
         
         // 绘制网格
         if (option.grid !== false) {
@@ -140,11 +164,6 @@ export default {
         
         // 绘制柱状图
         this.drawBars(series, xAxisData, minY, maxY, chartHelper.adjustedYMin, chartHelper.adjustedYMax, xAxisPadding);
-        
-        // 绘制图例
-        if (option.legend && option.legend.data) {
-          chartHelper.drawLegend(this.ctx, option.legend, this.grid, this.canvasWidth, chartHelper.defaultColors);
-        }
         
         // 绘制到画布
         this.ctx.draw();

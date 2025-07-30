@@ -623,6 +623,12 @@
                     "style" : {
                         "navigationBarTitleText" : "饼图"
                     }
+                },
+                {
+                    "path" : "chartsScatter/chartsScatter",
+                    "style" : {
+                        "navigationBarTitleText" : "散点图"
+                    }
                 }
             ]
         },

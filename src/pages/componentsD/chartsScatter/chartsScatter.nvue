@@ -1,0 +1,197 @@
+<template>
+    <view class="u-page">
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">基本散点图</text>
+          <view class="u-page__item__content">
+            <u-charts-scatter 
+                ref="basicScatter"
+                :option="basicScatterOption" 
+                width="700rpx"
+                height="260px"
+                @click="onChartClick"
+            />
+          </view>
+      </view>
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">多系列散点图</text>
+          <view class="u-page__item__content">
+            <u-charts-scatter 
+                ref="multiScatter"
+                :option="multiScatterOption" 
+                width="700rpx"
+                height="260px"
+                @click="onChartClick"
+            />
+          </view>
+      </view>
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">不同符号散点图</text>
+          <view class="u-page__item__content">
+            <u-charts-scatter 
+                ref="symbolScatter"
+                :option="symbolScatterOption" 
+                width="700rpx"
+                height="260px"
+                @click="onChartClick"
+            />
+          </view>
+      </view>
+  </view>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      // 基本散点图
+      basicScatterOption: {
+        title: {
+          text: '基本散点图',
+          textStyle: {
+            fontSize: 16,
+            color: '#333'
+          }
+        },
+        xAxis: {
+          type: 'value'
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {
+            name: '销量',
+            type: 'scatter',
+            data: [
+              [10.0, 8.04],
+              [8.0, 6.95],
+              [13.0, 7.58],
+              [9.0, 8.81],
+              [11.0, 8.33],
+              [14.0, 9.96],
+              [6.0, 7.24],
+              [4.0, 4.26],
+              [12.0, 10.84],
+              [7.0, 4.82],
+              [5.0, 5.68]
+            ],
+            symbolSize: 15
+          }
+        ]
+      },
+      
+      // 多系列散点图
+      multiScatterOption: {
+        title: {
+          text: '多系列散点图',
+          textStyle: {
+            fontSize: 16,
+            color: '#333'
+          }
+        },
+        legend: {
+          data: ['系列1', '系列2']
+        },
+        xAxis: {
+          type: 'value'
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {
+            name: '系列1',
+            type: 'scatter',
+            data: [
+              [161, 51], [167, 59], [159, 49], [157, 63], [155, 53],
+              [170, 59], [159, 47], [166, 69], [176, 66], [160, 75]
+            ],
+            symbolSize: 15
+          },
+          {
+            name: '系列2',
+            type: 'scatter',
+            data: [
+              [175, 75], [180, 80], [170, 70], [178, 82], [176, 78],
+              [183, 85], [179, 81], [185, 88], [172, 72], [177, 79]
+            ],
+            symbolSize: 15
+          }
+        ]
+      },
+      
+      // 不同符号散点图
+      symbolScatterOption: {
+        title: {
+          text: '不同符号散点图',
+          textStyle: {
+            fontSize: 16,
+            color: '#333'
+          }
+        },
+        legend: {
+          data: ['圆形', '方形', '三角形', '菱形']
+        },
+        xAxis: {
+          type: 'value'
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {
+            name: '圆形',
+            type: 'scatter',
+            symbol: 'circle',
+            symbolSize: 15,
+            data: [
+              [10.0, 8.04], [8.0, 6.95], [13.0, 7.58], [9.0, 8.81], [11.0, 8.33]
+            ]
+          },
+          {
+            name: '方形',
+            type: 'scatter',
+            symbol: 'rect',
+            symbolSize: 15,
+            data: [
+              [14.0, 9.96], [6.0, 7.24], [4.0, 4.26], [12.0, 10.84], [7.0, 4.82]
+            ]
+          },
+          {
+            name: '三角形',
+            type: 'scatter',
+            symbol: 'triangle',
+            symbolSize: 15,
+            data: [
+              [15.0, 6.5], [12.5, 7.2], [11.5, 6.8], [13.5, 8.1], [10.5, 5.9]
+            ]
+          },
+          {
+            name: '菱形',
+            type: 'scatter',
+            symbol: 'diamond',
+            symbolSize: 15,
+            data: [
+              [9.5, 9.2], [7.5, 6.1], [14.5, 8.7], [8.5, 7.9], [11.5, 9.5]
+            ]
+          }
+        ]
+      }
+    };
+  },
+  methods: {
+    onChartClick(params) {
+        console.log('点击了散点图:', params);
+    },
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+  .u-page__item {
+      margin-bottom: 15px;
+  }
+  .u-page__item__title {
+      margin-bottom: 10px;
+  }
+</style>

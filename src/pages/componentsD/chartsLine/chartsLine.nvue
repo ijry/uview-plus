@@ -31,7 +31,7 @@
                 ref="compareOption"
                 :option="compareOption" 
                 width="700rpx"
-                height="260px"
+                height="300px"
                 @click="onChartClick"
             />
           </view>
@@ -109,7 +109,10 @@ export default {
           }
         },
         legend: {
-          data: ['直线数据', '曲线数据']
+          bottom: 0,
+        //   top: 0,
+        //   left: 'center',
+          data: ['直线数据', '曲线数据', '曲线数据', '曲线数据', '曲线数据']
         },
         xAxis: {
           type: 'category',
