@@ -137,21 +137,25 @@ export default {
 
         // 绘制图例（在网格调整之前）
         let legendHeight = 0;
-        console.log(this.grid);
+        // console.log(this.grid);
         if (option.legend && option.legend.data) {
           const legendOption = { 
             ...option.legend, 
           };
+          // 为图例生成与系列一致的颜色列表
+          const legendColors = series.map((serie, index) => 
+            serie.color || serie.itemStyle?.color || chartHelper.getColor(index)
+          );
           legendHeight = chartHelper.drawLegend(
             this.ctx, 
             legendOption, 
             this.grid, 
             this.canvasWidth, 
-            chartHelper.defaultColors,
+            legendColors, // 使用与系列一致的颜色
             this.canvasHeight,
             titleHeight
           );
-          console.log('Legend height: ', legendHeight);
+        //   console.log('Legend height: ', legendHeight);
         }
         
         // 绘制网格
@@ -169,6 +173,159 @@ export default {
         this.ctx.draw();
       } catch (error) {
         console.error('绘制图表失败:', error);
+      }
+    },
+    
+    // 绘制山峰形状的柱子 (三角形)
+    drawMountainBar(ctx, x, y, width, height, color, borderColor, borderWidth) {
+      ctx.beginPath();
+      ctx.setFillStyle(color);
+      
+      // 三角形山峰图，底部更宽，占满整个柱子宽度
+      // 修改: 使用grid总宽度除以列数作为底部宽度参考
+      const chartWidth = this.canvasWidth - this.grid.left - this.grid.right;
+      const columnCount = this.option.xAxis?.data?.length || 1;
+      const bottomWidth = chartWidth / columnCount; // 占满整个列宽
+      const topWidth = width * 0.3;   // 顶部宽度减少到30%，使顶部更尖
+      
+      const bottomX = x - (bottomWidth - width) / 2; // 底部居中
+      const topX = x + (width - topWidth) / 2;       // 顶部居中
+      
+      ctx.moveTo(topX + topWidth / 2, y);           // 顶部中心点
+      ctx.lineTo(bottomX, y + height);              // 左下角
+      ctx.lineTo(bottomX + bottomWidth, y + height); // 右下角
+      ctx.lineTo(topX + topWidth / 2, y);           // 回到顶部
+      
+      ctx.closePath();
+      ctx.fill();
+      
+      // 绘制边框
+      if (borderWidth > 0 && borderColor) {
+        ctx.setLineWidth(borderWidth);
+        ctx.setStrokeStyle(borderColor);
+        ctx.stroke();
+      }
+    },
+    
+    // 绘制圆角山峰形状的柱子 (重叠样式，后一个遮挡前一个一点点)
+    drawRoundedMountainBar(ctx, x, y, width, height, color, borderColor, borderWidth) {
+      ctx.beginPath();
+      ctx.setFillStyle(color);
+      
+      // 实现更接近圆珠笔头形状的 roundedMountain 样式
+      // 底部更宽，顶部更圆润，形成S形曲线
+      const bottomWidth = width * 4.0; // 底部宽度增加到400% (原来是200%)
+      const topWidth = width * 1.5;    // 顶部宽度增加到150%，使顶部更圆润
+      
+      const bottomX = x - (bottomWidth - width) / 2; // 底部居中
+      const topX = x + (width - topWidth) / 2;       // 顶部居中
+      
+      // 使用更平滑的贝塞尔曲线绘制圆润的山峰形状
+      const bottomY = y + height;
+      const topY = y;
+      
+      // 起始点在左侧底部
+      ctx.moveTo(bottomX, bottomY);
+      
+      // 左侧S形曲线：从底部到顶部
+      // 调整控制点使顶部更圆润，更像圆珠笔头
+      ctx.bezierCurveTo(
+        bottomX + bottomWidth * 0.4, bottomY - height * 0.2,    // 左侧底部控制点
+        topX + topWidth * 0.1, topY + height * 0.3,             // 左侧腰部控制点
+        topX + topWidth * 0.5, topY + height * 0.1              // 顶部中心点，使顶部更宽更圆润
+      );
+      
+      // 右侧S形曲线：从顶部到底部
+      ctx.bezierCurveTo(
+        topX + topWidth * 0.9, topY + height * 0.3,             // 右侧腰部控制点
+        bottomX + bottomWidth * 0.6, bottomY - height * 0.2,    // 右侧底部控制点
+        bottomX + bottomWidth, bottomY                          // 右侧底部终点
+      );
+      
+      // 闭合路径回到起始点
+      ctx.closePath();
+      ctx.fill();
+      
+      // 绘制边框
+      if (borderWidth > 0 && borderColor) {
+        ctx.setLineWidth(borderWidth);
+        ctx.setStrokeStyle(borderColor);
+        ctx.stroke();
+      }
+    },
+    
+    // 绘制尖角山峰形状的柱子 (使用圆角山峰样式)
+    drawSharpMountainBar(ctx, x, y, width, height, color, borderColor, borderWidth) {
+      ctx.beginPath();
+      ctx.setFillStyle(color);
+      
+      // 实现更接近圆珠笔头形状的 sharpMountain 样式
+      // 底部更宽，顶部更圆润，形成S形曲线
+      const bottomWidth = width * 4.0; // 底部宽度增加到400% (原来是200%)
+      const topWidth = width * 1.0;    // 顶部宽度为原始宽度，使顶部更尖
+      
+      const bottomX = x - (bottomWidth - width) / 2; // 底部居中
+      const topX = x + (width - topWidth) / 2;       // 顶部居中
+      
+      // 使用更平滑的贝塞尔曲线绘制圆润的山峰形状
+      const bottomY = y + height;
+      const topY = y;
+      
+      // 起始点在左侧底部
+      ctx.moveTo(bottomX, bottomY);
+      
+      // 左侧S形曲线：从底部到顶部
+      // 调整控制点使顶部更尖锐
+      ctx.bezierCurveTo(
+        bottomX + bottomWidth * 0.4, bottomY - height * 0.2,    // 左侧底部控制点
+        topX + topWidth * 0.3, topY + height * 0.2,             // 左侧腰部控制点
+        topX + topWidth * 0.5, topY                                 // 顶部中心点，使顶部更尖
+      );
+      
+      // 右侧S形曲线：从顶部到底部
+      ctx.bezierCurveTo(
+        topX + topWidth * 0.7, topY + height * 0.2,             // 右侧腰部控制点
+        bottomX + bottomWidth * 0.6, bottomY - height * 0.2,    // 右侧底部控制点
+        bottomX + bottomWidth, bottomY                          // 右侧底部终点
+      );
+      
+      // 闭合路径回到起始点
+      ctx.closePath();
+      ctx.fill();
+      
+      // 绘制边框
+      if (borderWidth > 0 && borderColor) {
+        ctx.setLineWidth(borderWidth);
+        ctx.setStrokeStyle(borderColor);
+        ctx.stroke();
+      }
+    },
+    
+    // 绘制圆角柱状形状的柱子
+    drawRoundedBar(ctx, x, y, width, height, color, borderColor, borderWidth, borderRadius) {
+      const radius = borderRadius ? borderRadius : Math.min(width / 2, height / 2);
+      ctx.beginPath();
+      ctx.setFillStyle(color);
+      
+      // 绘制圆角矩形
+      ctx.moveTo(x + radius, y);
+      ctx.lineTo(x + width - radius, y);
+      ctx.arcTo(x + width, y, x + width, y + radius, radius);
+      ctx.lineTo(x + width, y + height - radius);
+      ctx.arcTo(x + width, y + height, x + width - radius, y + height, radius);
+      ctx.lineTo(x + radius, y + height);
+      ctx.arcTo(x, y + height, x, y + height - radius, radius);
+      ctx.lineTo(x, y + radius);
+      ctx.arcTo(x, y, x + radius, y, radius);
+      
+      ctx.closePath();
+      ctx.fill();
+      
+      // 绘制边框
+      if (borderWidth > 0 && borderColor) {
+        ctx.setLineWidth(borderWidth);
+        ctx.setStrokeStyle(borderColor);
+        ctx.stroke();
       }
     },
     
@@ -250,6 +407,7 @@ export default {
         
         const color = serie.color || serie.itemStyle?.color || chartHelper.getColor(index);
         const barWidth = serie.barWidth || Math.min(20, groupWidth / (groupCount || 1));
+        const symbol = serie.symbol || 'rect'; // 默认为矩形
         
         // 获取该系列的位置信息
         let positionInfo;
@@ -267,7 +425,8 @@ export default {
         // 计算柱状图位置
         const points = [];
         serie.data.forEach((value, i) => {
-          const actualValue = typeof value === 'object' ? value.value : value;
+          // 支持 ECharts 规范的数据点格式 {value: ..., itemStyle: {color: ...}}
+          const actualValue = typeof value === 'object' && value !== null ? (value.value !== undefined ? value.value : value) : value;
           
           // 计算基准X位置
           let x;
@@ -311,15 +470,38 @@ export default {
             barHeight = Math.abs(y - zeroY);
           }
           
+          // 支持为单个数据点设置颜色 (ECharts 规范)
+          const pointColor = typeof value === 'object' && value !== null && value.itemStyle?.color ? 
+                             value.itemStyle.color : 
+                             (typeof value === 'object' && value !== null && value.color ? value.color : color);
+          
+          // 获取边框样式 - 修复borderColor和borderWidth获取逻辑
+          let borderColor = serie.itemStyle?.borderColor || null;
+          let borderWidth = serie.itemStyle?.borderWidth || 0;
+          // 获取圆角配置
+          let borderRadius = serie.itemStyle?.borderRadius || 0;
+          
+          // 如果是对象格式的数据点，获取其边框样式
+          if (typeof value === 'object' && value !== null) {
+            borderColor = value.itemStyle?.borderColor || value.borderColor || borderColor;
+            borderWidth = value.itemStyle?.borderWidth || value.borderWidth || borderWidth;
+            borderRadius = value.itemStyle?.borderRadius || value.borderRadius || borderRadius;
+          }
+          
           points.push({ 
             x, 
-            y: actualValue >= 0 ? y : (positionInfo.isStack ? y + barHeight : zeroY), // 正值从底部向上绘制，负值从0值向下绘制
+            y: actualValue >= 0 ? y : (positionInfo.isStack ? y : zeroY), 
             value: actualValue, 
             name: xAxisData[i],
             seriesName: serie.name,
             barHeight,
             zeroY, // 保存0值的Y坐标用于绘制负值柱子
-            barWidth // 保存柱子宽度
+            barWidth, // 保存柱子宽度
+            symbol, // 保存柱子形状
+            color: pointColor, // 保存柱子颜色
+            borderColor, // 保存边框颜色
+            borderWidth, // 保存边框宽度
+            borderRadius  // 保存圆角配置
           });
         });
         
@@ -331,17 +513,156 @@ export default {
         });
         
         // 绘制柱状图
-        points.forEach(point => {
-          this.ctx.setFillStyle(color);
-          // 根据值的正负确定绘制方向
-          const drawY = point.value >= 0 ? point.y : (positionInfo.isStack ? point.y : point.zeroY);
-          this.ctx.fillRect(
-            point.x, 
-            drawY, 
-            point.barWidth || barWidth, 
-            point.barHeight
-          );
+        points.forEach((point, pointIndex) => {
+          // 根据symbol属性选择绘制方式
+          // 当是山峰图时如果没有指定颜色，则从defaultColors中获取颜色
+          let drawColor = point.color;
+          if (!drawColor || (drawColor === color && (point.symbol === 'mountain' || point.symbol === 'roundedMountain' || point.symbol === 'sharpMountain'))) {
+            drawColor = chartHelper.defaultColors[pointIndex % chartHelper.defaultColors.length];
+          }
+          
+          switch (point.symbol) {
+            case 'mountain':
+              // 山峰图 (三角形)
+              this.drawMountainBar(
+                this.ctx, 
+                point.x, 
+                point.value >= 0 ? point.y : (positionInfo.isStack ? point.y : point.zeroY), 
+                point.barWidth, 
+                point.barHeight, 
+                drawColor || point.color, // 使用数据点颜色或默认颜色
+                point.borderColor, // 使用数据点边框颜色
+                point.borderWidth  // 使用数据点边框宽度
+              );
+              break;
+              
+            case 'roundedMountain':
+              // 圆角山峰图 (重叠样式)
+              this.drawRoundedMountainBar(
+                this.ctx, 
+                point.x, 
+                point.value >= 0 ? point.y : (positionInfo.isStack ? point.y : point.zeroY), 
+                point.barWidth, 
+                point.barHeight, 
+                drawColor || point.color, // 使用数据点颜色或默认颜色
+                point.borderColor, // 使用数据点边框颜色
+                point.borderWidth  // 使用数据点边框宽度
+              );
+              break;
+              
+            case 'sharpMountain':
+              // 尖角山峰图 (明显内凹曲线，底部更宽以实现重叠效果)
+              this.drawSharpMountainBar(
+                this.ctx, 
+                point.x, 
+                point.value >= 0 ? point.y : (positionInfo.isStack ? point.y : point.zeroY), 
+                point.barWidth, 
+                point.barHeight, 
+                drawColor || point.color, // 使用数据点颜色或默认颜色
+                point.borderColor, // 使用数据点边框颜色
+                point.borderWidth  // 使用数据点边框宽度
+              );
+              break;
+              
+            case 'rounded':
+              // 圆角柱状图
+              this.drawRoundedBar(
+                this.ctx, 
+                point.x, 
+                point.value >= 0 ? point.y : (positionInfo.isStack ? point.y : point.zeroY), 
+                point.barWidth, 
+                point.barHeight, 
+                drawColor || point.color, // 使用数据点颜色或默认颜色
+                point.borderColor, // 使用数据点边框颜色
+                point.borderWidth  // 使用数据点边框宽度
+              );
+              break;
+              
+            default:
+              // 默认柱状图 - 支持borderRadius配置
+              if (point.borderRadius && point.borderRadius > 0) {
+                // 如果配置了borderRadius，则使用圆角矩形绘制
+                this.drawRoundedBar(
+                  this.ctx,
+                  point.x,
+                  point.value >= 0 ? point.y : (positionInfo.isStack ? point.y : point.zeroY),
+                  point.barWidth,
+                  point.barHeight,
+                  drawColor || point.color,
+                  point.borderColor,
+                  point.borderWidth,
+                  point.borderRadius
+                );
+              } else {
+                // 否则使用普通矩形绘制
+                this.ctx.setFillStyle(drawColor || point.color); // 使用数据点颜色或默认颜色
+                // 根据值的正负确定绘制方向
+                const drawY = point.value >= 0 ? point.y : (positionInfo.isStack ? point.y : point.zeroY);
+                this.ctx.fillRect(
+                  point.x, 
+                  drawY, 
+                  point.barWidth, 
+                  point.barHeight
+                );
+                
+                // 绘制边框 (仅对非堆叠柱状图绘制边框)
+                if (!positionInfo.isStack && point.borderWidth > 0 && point.borderColor) {
+                  this.ctx.setLineWidth(point.borderWidth);
+                  this.ctx.setStrokeStyle(point.borderColor);
+                  this.ctx.strokeRect(
+                    point.x, 
+                    drawY, 
+                    point.barWidth, 
+                    point.barHeight
+                  );
+                }
+              }
+          }
         });
+      });
+      
+      // 处理堆叠柱状图的整体边框样式
+      stackMap.forEach((stackSeries) => {
+        // 获取堆叠组的边框样式（从第一个系列获取）
+        if (stackSeries.length > 0) {
+          const firstSeries = stackSeries[0].serie;
+          const stackBorderColor = firstSeries.itemStyle?.borderColor || null;
+          const stackBorderWidth = firstSeries.itemStyle?.borderWidth || 0;
+          
+          // 如果设置了堆叠组的边框样式，则绘制整体边框
+          if (stackBorderWidth > 0 && stackBorderColor) {
+            stackSeries.forEach(({ serie, index }) => {
+              const positionInfo = seriesPositions.get(serie.stack);
+              serie.data.forEach((value, i) => {
+                const points = this.seriesData[index].points;
+                if (points && points[i]) {
+                  const point = points[i];
+                  // 只有堆叠组中的最后一个系列才绘制整体边框
+                  const isLastInStack = index === stackSeries[stackSeries.length - 1].index;
+                  
+                  if (isLastInStack) {
+                    // 计算整个堆叠组的总高度
+                    const baseValues = stackBaseValues.get(positionInfo.groupIndex);
+                    const totalValue = baseValues[i];
+                    const totalHeight = Math.abs((totalValue / (actualMaxY - barMinY || 1)) * chartHeight);
+                    
+                    // 确定堆叠组的起始Y坐标
+                    const stackStartY = this.grid.top + chartHeight - ((totalValue - barMinY) / (actualMaxY - barMinY || 1)) * chartHeight;
+                    
+                    this.ctx.setLineWidth(stackBorderWidth);
+                    this.ctx.setStrokeStyle(stackBorderColor);
+                    this.ctx.strokeRect(
+                      point.x, 
+                      stackStartY, 
+                      point.barWidth, 
+                      totalHeight
+                    );
+                  }
+                }
+              });
+            });
+          }
+        }
       });
     },
     

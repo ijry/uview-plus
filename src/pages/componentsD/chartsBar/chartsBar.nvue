@@ -4,14 +4,49 @@
           <text class="u-page__item__title" style="margin-top: 0;">基础使用</text>
           <view class="u-page__item__content">
             <u-charts-bar ref="uChartsBar" :option="barOption"
-				:height="260" @click="handleBarClick"></u-charts-bar>
+				:height="220" @click="handleBarClick"></u-charts-bar>
           </view>
       </view>
       <view class="u-page__item">
           <text class="u-page__item__title" style="margin-top: 0;">堆叠示例</text>
           <view class="u-page__item__content">
             <u-charts-bar ref="uChartsBarStack" :option="barOptionStack"
-				:height="260" @click="handleBarClick"></u-charts-bar>
+				:height="220" @click="handleBarClick"></u-charts-bar>
+          </view>
+      </view>
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">温度计形图示例</text>
+          <view class="u-page__item__content">
+            <u-charts-bar ref="uChartsBarThermometer" :option="barOptionThermometer"
+				:height="220" @click="handleBarClick"></u-charts-bar>
+          </view>
+      </view>
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">圆角柱状图示例</text>
+          <view class="u-page__item__content">
+            <u-charts-bar ref="uChartsBarRounded" :option="barOptionRounded"
+				:height="220" @click="handleBarClick"></u-charts-bar>
+          </view>
+      </view>
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">山峰图示例</text>
+          <view class="u-page__item__content">
+            <u-charts-bar ref="uChartsBarMountain" :option="barOptionMountain"
+				:height="220" @click="handleBarClick"></u-charts-bar>
+          </view>
+      </view>
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">圆角山峰图示例</text>
+          <view class="u-page__item__content">
+            <u-charts-bar ref="uChartsBarRoundedMountain" :option="barOptionRoundedMountain"
+				:height="220" @click="handleBarClick"></u-charts-bar>
+          </view>
+      </view>
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">尖角山峰图示例</text>
+          <view class="u-page__item__content">
+            <u-charts-bar ref="uChartsBarSharpMountain" :option="barOptionSharpMountain"
+				:height="220" @click="handleBarClick"></u-charts-bar>
           </view>
       </view>
   </view>
@@ -66,16 +101,16 @@
 							color: '#666'
 						}
 					},
-					backgroundColor: '#fff'
+					backgroundColor: 'transparent'
 				},
 				barOptionStack: {
-					// title: {
-					// 	text: '销售数据统计',
-					// 	textStyle: {
-					// 		fontSize: 16,
-					// 		color: '#333'
-					// 	}
-					// },
+					title: {
+						text: '销售数据统计',
+						textStyle: {
+							fontSize: 16,
+							color: '#333'
+						}
+					},
 					xAxis: {
 						type: 'category',
 						data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
@@ -115,7 +150,235 @@
 							color: '#666'
 						}
 					},
-					backgroundColor: '#fff'
+					backgroundColor: 'transparent'
+				},
+				barOptionThermometer: {
+					title: {
+						text: '温度计形柱状图',
+						textStyle: {
+							fontSize: 16,
+							color: '#333'
+						}
+					},
+					xAxis: {
+						type: 'category',
+						data: ['产品A', '产品B', '产品C', '产品D', '产品E'],
+						axisLabel: {
+							color: '#666',
+							fontSize: 12
+						}
+					},
+					yAxis: {
+						type: 'value',
+						axisLabel: {
+							color: '#666',
+							fontSize: 12
+						}
+					},
+					series: [{
+						name: '销量',
+						type: 'bar',
+						stack: 'order',
+						data: [120, 180, 150, 90, 110],
+						itemStyle: {
+							color: '#94C973',
+							borderColor: '#3992DE',
+            				borderWidth: 1
+						}
+					}, {
+						name: '订单量',
+						type: 'bar',
+						stack: 'order',
+						data: [60, 80, 90, 50, 40, 70, 85],
+						itemStyle: {
+							color: 'rgba(142, 230, 157, 0.4)'
+						}
+					}],
+					legend: {
+						top: 0,
+						data: ['销量', '订单量'],
+						textStyle: {
+							color: '#666'
+						}
+					},
+					backgroundColor: 'transparent'
+				},
+				barOptionRounded: {
+					title: {
+						text: '圆角柱状图示例',
+						textStyle: {
+							fontSize: 16,
+							color: '#333'
+						}
+					},
+					xAxis: {
+						type: 'category',
+						data: ['产品A', '产品B', '产品C', '产品D', '产品E'],
+						axisLabel: {
+							color: '#666',
+							fontSize: 12
+						}
+					},
+					yAxis: {
+						type: 'value',
+						axisLabel: {
+							color: '#666',
+							fontSize: 12
+						}
+					},
+					series: [{
+						name: '销量',
+						type: 'bar',
+						// https://echarts.apache.org/examples/zh/editor.html?c=bar-data-color
+						data: [120, 180, 150, {
+							value: 80,
+							itemStyle: {
+								color: '#ff6b6b',
+								borderColor: '#b56bff',
+            					borderWidth: 1
+							}
+						}, 110],
+						itemStyle: {
+							color: '#2ed573', // 柱状图颜色
+							borderRadius: 10
+						}
+					}],
+					legend: {
+						top: 0,
+						data: ['销量'],
+						textStyle: {
+							color: '#666'
+						}
+					},
+					backgroundColor: 'transparent'
+				},
+				barOptionMountain: {
+					title: {
+						text: '山峰图示例',
+						textStyle: {
+							fontSize: 16,
+							color: '#333'
+						}
+					},
+					xAxis: {
+						type: 'category',
+						data: ['产品A', '产品B', '产品C', '产品D', '产品E'],
+						axisLabel: {
+							color: '#666',
+							fontSize: 12
+						}
+					},
+					yAxis: {
+						type: 'value',
+						axisLabel: {
+							color: '#666',
+							fontSize: 12
+						}
+					},
+					series: [{
+						name: '销量',
+						type: 'bar',
+						symbol: 'mountain',
+						data: [120, 180, 150, 90, 110],
+						itemStyle: {
+							color: '#5470c6'
+						}
+					}],
+					// legend: {
+					// 	top: 0,
+					// 	data: ['销量'],
+					// 	textStyle: {
+					// 		color: '#666'
+					// 	}
+					// },
+					backgroundColor: 'transparent'
+				},
+				barOptionRoundedMountain: {
+					title: {
+						text: '圆角山峰图示例',
+						textStyle: {
+							fontSize: 16,
+							color: '#333'
+						}
+					},
+					xAxis: {
+						type: 'category',
+						data: ['产品A', '产品B', '产品C', '产品D', '产品E'],
+						axisLabel: {
+							color: '#666',
+							fontSize: 12
+						}
+					},
+					yAxis: {
+						type: 'value',
+						axisLabel: {
+							color: '#666',
+							fontSize: 12
+						}
+					},
+					series: [{
+						name: '销量',
+						type: 'bar',
+						symbol: 'roundedMountain',
+						data: [120, 180, 150, {
+							value: 90,
+							itemStyle: {
+								color: '#1990FF'
+							}
+						}, 110],
+						itemStyle: {
+							color: '#91cc75'
+						}
+					}],
+					// legend: {
+					// 	top: 0,
+					// 	data: ['销量'],
+					// 	textStyle: {
+					// 		color: '#666'
+					// 	}
+					// },
+					backgroundColor: 'transparent'
+				},
+				barOptionSharpMountain: {
+					title: {
+						text: '尖角山峰图示例',
+						textStyle: {
+							fontSize: 16,
+							color: '#333'
+						}
+					},
+					xAxis: {
+						type: 'category',
+						data: ['产品A', '产品B', '产品C', '产品D', '产品E'],
+						axisLabel: {
+							color: '#666',
+							fontSize: 12
+						}
+					},
+					yAxis: {
+						type: 'value',
+						axisLabel: {
+							color: '#666',
+							fontSize: 12
+						}
+					},
+					series: [{
+						name: '销量',
+						type: 'bar',
+						symbol: 'sharpMountain',
+						data: [120, 180, 150, 90, 110],
+						itemStyle: {
+							color: '#fac858'
+						}
+					}],
+					// legend: {
+					// 	top: 0,
+					// 	data: ['销量'],
+					// 	textStyle: {
+					// 		color: '#666'
+					// 	}
+					// },
+					backgroundColor: 'transparent'
 				}
 			}
 		},
