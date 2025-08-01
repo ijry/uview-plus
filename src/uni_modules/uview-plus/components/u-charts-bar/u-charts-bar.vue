@@ -207,15 +207,14 @@ export default {
       }
     },
     
-    // 绘制圆角山峰形状的柱子 (重叠样式，后一个遮挡前一个一点点)
+    // 绘制圆角山峰形状的柱子
     drawRoundedMountainBar(ctx, x, y, width, height, color, borderColor, borderWidth) {
       ctx.beginPath();
       ctx.setFillStyle(color);
       
-      // 实现更接近圆珠笔头形状的 roundedMountain 样式
       // 底部更宽，顶部更圆润，形成S形曲线
       const bottomWidth = width * 4.0; // 底部宽度增加到400% (原来是200%)
-      const topWidth = width * 1.5;    // 顶部宽度增加到150%，使顶部更圆润
+      const topWidth = width * 5.0;    // 顶部宽度为原始宽度，使顶部更尖
       
       const bottomX = x - (bottomWidth - width) / 2; // 底部居中
       const topX = x + (width - topWidth) / 2;       // 顶部居中
@@ -228,16 +227,16 @@ export default {
       ctx.moveTo(bottomX, bottomY);
       
       // 左侧S形曲线：从底部到顶部
-      // 调整控制点使顶部更圆润，更像圆珠笔头
+      // 调整控制点使顶部更尖锐
       ctx.bezierCurveTo(
         bottomX + bottomWidth * 0.4, bottomY - height * 0.2,    // 左侧底部控制点
-        topX + topWidth * 0.1, topY + height * 0.3,             // 左侧腰部控制点
-        topX + topWidth * 0.5, topY + height * 0.1              // 顶部中心点，使顶部更宽更圆润
+        topX + topWidth * 0.3, topY + height * 0.2,             // 左侧腰部控制点
+        topX + topWidth * 0.5, topY + height * 0.2              // 顶部中心点
       );
       
       // 右侧S形曲线：从顶部到底部
       ctx.bezierCurveTo(
-        topX + topWidth * 0.9, topY + height * 0.3,             // 右侧腰部控制点
+        topX + topWidth * 0.7, topY + height * 0.2,             // 右侧腰部控制点
         bottomX + bottomWidth * 0.6, bottomY - height * 0.2,    // 右侧底部控制点
         bottomX + bottomWidth, bottomY                          // 右侧底部终点
       );
@@ -254,15 +253,14 @@ export default {
       }
     },
     
-    // 绘制尖角山峰形状的柱子 (使用圆角山峰样式)
+    // 绘制尖角山峰形状的柱子
     drawSharpMountainBar(ctx, x, y, width, height, color, borderColor, borderWidth) {
       ctx.beginPath();
       ctx.setFillStyle(color);
       
-      // 实现更接近圆珠笔头形状的 sharpMountain 样式
       // 底部更宽，顶部更圆润，形成S形曲线
       const bottomWidth = width * 4.0; // 底部宽度增加到400% (原来是200%)
-      const topWidth = width * 1.0;    // 顶部宽度为原始宽度，使顶部更尖
+      const topWidth = width * 0.1;    // 顶部宽度为原始宽度，使顶部更尖
       
       const bottomX = x - (bottomWidth - width) / 2; // 底部居中
       const topX = x + (width - topWidth) / 2;       // 顶部居中
@@ -286,6 +284,60 @@ export default {
       ctx.bezierCurveTo(
         topX + topWidth * 0.7, topY + height * 0.2,             // 右侧腰部控制点
         bottomX + bottomWidth * 0.6, bottomY - height * 0.2,    // 右侧底部控制点
+        bottomX + bottomWidth, bottomY                          // 右侧底部终点
+      );
+      
+      // 闭合路径回到起始点
+      ctx.closePath();
+      ctx.fill();
+      
+      // 绘制边框
+      if (borderWidth > 0 && borderColor) {
+        ctx.setLineWidth(borderWidth);
+        ctx.setStrokeStyle(borderColor);
+        ctx.stroke();
+      }
+    },
+
+    // 绘制自然山峰形状的柱子 (重叠样式，后一个遮挡前一个一点点)
+    drawRealMountainBar(ctx, x, y, width, height, color, borderColor, borderWidth) {
+      ctx.beginPath();
+      ctx.setFillStyle(color);
+      
+      // 实现更接近圆珠笔头形状的 roundedMountain 样式
+      // 底部更宽，顶部更圆润，形成S形曲线
+      const bottomWidth = width * 4.0; // 底部宽度增加到400% (原来是200%)
+      const topWidth = width * 2.0;    // 顶部宽度增加到200%，使顶部更圆润像帽子
+      
+      const bottomX = x - (bottomWidth - width) / 2; // 底部居中
+      const topX = x + (width - topWidth) / 2;       // 顶部居中
+      
+      // 使用更平滑的贝塞尔曲线绘制圆润的山峰形状
+      const bottomY = y + height;
+      const topY = y;
+      
+      // 起始点在左侧底部
+      ctx.moveTo(bottomX, bottomY);
+      
+      // 左侧S形曲线：从底部到顶部
+      // 调整控制点使顶部更圆润，更像帽子
+      ctx.bezierCurveTo(
+        bottomX + bottomWidth * 0.3, bottomY - height * 0.3,    // 左侧底部控制点
+        topX + topWidth * 0.2, topY + height * 0.3,             // 左侧腰部控制点
+        topX + topWidth * 0.4, topY + height * 0.1              // 左侧接近顶部控制点
+      );
+      
+      // 顶部圆润部分，添加额外控制点使顶部更像帽子
+      ctx.bezierCurveTo(
+        topX + topWidth * 0.5, topY,                            // 顶部中心点
+        topX + topWidth * 0.6, topY + height * 0.1,             // 右侧接近顶部控制点
+        topX + topWidth * 0.8, topY + height * 0.3              // 右侧腰部控制点
+      );
+      
+      // 右侧S形曲线：从顶部到底部
+      ctx.bezierCurveTo(
+        topX + topWidth * 0.9, topY + height * 0.4,             // 右侧腰部控制点
+        bottomX + bottomWidth * 0.7, bottomY - height * 0.3,    // 右侧底部控制点
         bottomX + bottomWidth, bottomY                          // 右侧底部终点
       );
       
@@ -517,7 +569,8 @@ export default {
           // 根据symbol属性选择绘制方式
           // 当是山峰图时如果没有指定颜色，则从defaultColors中获取颜色
           let drawColor = point.color;
-          if (!drawColor || (drawColor === color && (point.symbol === 'mountain' || point.symbol === 'roundedMountain' || point.symbol === 'sharpMountain'))) {
+          if (!drawColor || (drawColor === color
+            && (point.symbol === 'mountain' || point.symbol === 'realMountain' || point.symbol === 'roundedMountain' || point.symbol === 'sharpMountain'))) {
             drawColor = chartHelper.defaultColors[pointIndex % chartHelper.defaultColors.length];
           }
           
@@ -539,6 +592,20 @@ export default {
             case 'roundedMountain':
               // 圆角山峰图 (重叠样式)
               this.drawRoundedMountainBar(
+                this.ctx, 
+                point.x, 
+                point.value >= 0 ? point.y : (positionInfo.isStack ? point.y : point.zeroY), 
+                point.barWidth, 
+                point.barHeight, 
+                drawColor || point.color, // 使用数据点颜色或默认颜色
+                point.borderColor, // 使用数据点边框颜色
+                point.borderWidth  // 使用数据点边框宽度
+              );
+              break;
+
+            case 'realMountain':
+              // 圆角山峰图 (重叠样式)
+              this.drawRealMountainBar(
                 this.ctx, 
                 point.x, 
                 point.value >= 0 ? point.y : (positionInfo.isStack ? point.y : point.zeroY), 

@@ -49,6 +49,13 @@
 				:height="220" @click="handleBarClick"></u-charts-bar>
           </view>
       </view>
+	  <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">自然山峰图示例</text>
+          <view class="u-page__item__content">
+            <u-charts-bar ref="uChartsBarRealMountain" :option="barOptionRealMountain"
+				:height="220" @click="handleBarClick"></u-charts-bar>
+          </view>
+      </view>
   </view>
 </template>
 
@@ -320,6 +327,52 @@
 						name: '销量',
 						type: 'bar',
 						symbol: 'roundedMountain',
+						data: [120, 180, 150, {
+							value: 90,
+							itemStyle: {
+								color: '#1990FF'
+							}
+						}, 110],
+						itemStyle: {
+							color: '#91cc75'
+						}
+					}],
+					// legend: {
+					// 	top: 0,
+					// 	data: ['销量'],
+					// 	textStyle: {
+					// 		color: '#666'
+					// 	}
+					// },
+					backgroundColor: 'transparent'
+				},
+				barOptionRealMountain: {
+					title: {
+						text: '自然山峰图示例',
+						textStyle: {
+							fontSize: 16,
+							color: '#333'
+						}
+					},
+					xAxis: {
+						type: 'category',
+						data: ['产品A', '产品B', '产品C', '产品D', '产品E'],
+						axisLabel: {
+							color: '#666',
+							fontSize: 12
+						}
+					},
+					yAxis: {
+						type: 'value',
+						axisLabel: {
+							color: '#666',
+							fontSize: 12
+						}
+					},
+					series: [{
+						name: '销量',
+						type: 'bar',
+						symbol: 'realMountain',
 						data: [120, 180, 150, {
 							value: 90,
 							itemStyle: {
