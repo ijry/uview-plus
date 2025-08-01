@@ -516,6 +516,12 @@ export default [{
         title_en: 'ChartsBar'
     },
     {
+        path: '/pages/componentsD/chartsBar/chartsBar',
+        icon: 'chartsBar',
+        title: 'ChartsBar 山峰图',
+        title_en: 'ChartsBar'
+    },
+    {
         path: '/pages/componentsD/chartsPie/chartsPie',
         icon: 'chartsPie',
         title: 'ChartsPie 饼图',
@@ -526,6 +532,12 @@ export default [{
         icon: 'chartsScatter',
         title: 'ChartsScatter 散点图',
         title_en: 'ChartsScatter'
+    },
+    {
+        path: '/pages/componentsD/chartsRadar/chartsRadar',
+        icon: 'chartsRadar',
+        title: 'ChartsRadar 雷达图',
+        title_en: 'ChartsRadar'
     }]
 }
 ]

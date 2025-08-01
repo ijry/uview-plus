@@ -629,6 +629,12 @@
                     "style" : {
                         "navigationBarTitleText" : "散点图"
                     }
+                },
+                {
+                    "path" : "chartsRadar/chartsRadar",
+                    "style" : {
+                        "navigationBarTitleText" : "雷达图"
+                    }
                 }
             ]
         },

@@ -1,0 +1,212 @@
+<template>
+  <view class="u-page">
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">基础雷达图</text>
+          <view class="u-page__item__content">
+                <!-- 基础雷达图 -->
+                <u-charts-radar
+                    width="720rpx"
+                    height="210px"
+                    :options="basicChartOptions"
+                    @click="handleChartClick"
+                />
+          </view>
+      </view>
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">填充雷达图</text>
+          <view class="u-page__item__content">
+                <!-- 填充雷达图 -->
+                <u-charts-radar
+                    width="720rpx"
+                    height="250px"
+                    :options="filledChartOptions"
+                    @click="handleChartClick"
+                />
+          </view>
+      </view>
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">自定义网格背景色</text>
+          <view class="u-page__item__content">
+                <!-- 新增自定义网格背景色示例 -->
+                <u-charts-radar
+                    width="720rpx"
+                    height="230px"
+                    :options="customGridOptions"
+                    @click="handleChartClick"
+                />
+          </view>
+      </view>
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">圆形雷达图</text>
+          <view class="u-page__item__content">
+                <!-- 新增圆形雷达图示例 -->
+                <u-charts-radar
+                    width="720rpx"
+                    height="230px"
+                    :options="circleChartOptions"
+                    @click="handleChartClick"
+                />
+          </view>
+      </view>
+  </view>
+</template>
+
+<script>
+
+export default {
+  data() {
+    return {
+      // 基础雷达图配置
+      basicChartOptions: {
+        title: {
+          text: '基础雷达图'
+        },
+        // legend: {
+        //     data: ['部门表现'],
+        //     left: 'center',
+        //     top: 0
+        // },
+        radar: {
+          indicator: [
+            { name: '攻击', max: 100 },
+            { name: '防御', max: 100 },
+            { name: '速度', max: 100 },
+            { name: '力量', max: 100 },
+            { name: '耐力', max: 100 },
+            { name: '敏捷', max: 100 }
+          ],
+          axisLine: { show: true },
+          name: { show: true }
+        },
+        series: [{
+          name: '角色能力',
+          type: 'radar',
+          data: [82, 93, 89, 95, 75, 80]
+        }]
+      },
+      
+      // 填充雷达图配置
+      filledChartOptions: {
+        title: {
+          text: '填充雷达图'
+        },
+        legend: {
+            data: ['部门表现', '预期表现'],
+            left: 'center',
+            // left: 60,
+            // right: 30,
+            // top: 0
+        },
+        radar: {
+          indicator: [
+            { name: '销售', max: 100 },
+            { name: '管理', max: 100 },
+            { name: '技术', max: 100 },
+            { name: '市场', max: 100 },
+            { name: '财务', max: 100 }
+          ],
+        //   radius: 60,
+          axisLine: { show: true },
+          name: { show: true }
+        },
+        series: [{
+          name: '部门表现',
+          type: 'radar',
+          areaStyle: {
+            color: 'rgba(84, 112, 198, 0.5)'
+          },
+          data: [90, 80, 95, 70, 85]
+        }, {
+          name: '预期表现',
+          type: 'radar',
+          areaStyle: {
+            // color: 'rgba(145, 204, 117, 0.5)'
+          },
+          data: [50, 60, 65, 30, 46]
+        }]
+      },
+      
+      // 新增自定义网格背景色配置
+      customGridOptions: {
+        title: {
+          text: '自定义网格背景色'
+        },
+        radar: {
+          indicator: [
+            { name: '销售', max: 100 },
+            { name: '管理', max: 100 },
+            { name: '技术', max: 100 },
+            { name: '市场', max: 100 },
+            { name: '财务', max: 100 }
+          ],
+          // 配置splitArea来自定义网格背景色
+          splitArea: {
+            areaStyle: {
+              // 自定义颜色数组，交替使用不同颜色
+              color: ['rgba(255, 173, 177, 0.3)', 'rgba(179, 229, 252, 0.3)']
+            }
+          },
+          axisLine: { show: true },
+          name: { show: true }
+        },
+        series: [{
+          name: '部门表现',
+          type: 'radar',
+          areaStyle: {
+            color: 'rgba(84, 112, 198, 0.6)'
+          },
+          data: [90, 80, 95, 70, 85]
+        }]
+      },
+      
+      // 新增圆形雷达图配置
+      circleChartOptions: {
+        title: {
+          text: '圆形雷达图'
+        },
+        radar: {
+          indicator: [
+            { name: '销售', max: 100 },
+            { name: '管理', max: 100 },
+            { name: '技术', max: 100 },
+            { name: '市场', max: 100 },
+            { name: '财务', max: 100 }
+          ],
+          // 设置为圆形雷达图
+          shape: 'circle',
+          splitNumber: 4,
+          splitArea: {
+            areaStyle: {
+              color: ['rgba(250, 250, 250, 0.2)', 'rgba(210, 219, 238, 0.2)']
+            }
+          },
+          axisLine: { show: true },
+          name: { show: true }
+        },
+        series: [{
+          name: '部门表现',
+          type: 'radar',
+          areaStyle: {
+            color: 'rgba(84, 112, 198, 0.3)'
+          },
+          data: [90, 80, 95, 70, 85]
+        }]
+      }
+    }
+  },
+  methods: {
+    handleChartClick(e) {
+      console.log('雷达图点击事件', e)
+    }
+  }
+}
+</script>
+
+<style scoped>
+.u-page__item {
+    margin-bottom: 15px;
+}
+.u-page__item__title {
+    margin-bottom: 10px;
+}
+</style>
