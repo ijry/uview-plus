@@ -1,3 +1,6 @@
+## 3.4.67（2025-08-02）
+feat: number-box支持disabledBgColor参数
+
 ## 3.4.66（2025-08-01）
 improvment: 增加组件图标
 
