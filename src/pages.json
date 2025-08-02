@@ -605,6 +605,12 @@
                     "style" : {
                         "navigationBarTitleText" : "标题"
                     }
+                },
+                {
+                    "path" : "pullRefresh/pullRefresh",
+                    "style" : {
+                        "navigationBarTitleText" : "下拉刷新"
+                    }
                 }
             ]
         },
