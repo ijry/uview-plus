@@ -538,6 +538,12 @@ export default [{
         icon: 'chartsRadar',
         title: 'ChartsRadar 雷达图',
         title_en: 'ChartsRadar'
+    },
+    {
+        path: '/pages/componentsD/chartsGauge/chartsGauge',
+        icon: 'chartsGauge',
+        title: 'ChartsGauge 仪表盘',
+        title_en: 'ChartsRGauge'
     }]
 }
 ]

@@ -635,6 +635,12 @@
                     "style" : {
                         "navigationBarTitleText" : "雷达图"
                     }
+                },
+                {
+                    "path" : "chartsGauge/chartsGauge",
+                    "style" : {
+                        "navigationBarTitleText" : "仪表盘"
+                    }
                 }
             ]
         },

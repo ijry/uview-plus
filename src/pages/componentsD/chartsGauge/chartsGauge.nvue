@@ -1,0 +1,233 @@
+<template>
+	<view class="u-demo">
+		<view class="u-demo-wrap">
+			<view class="u-demo-title">演示</view>
+			<view class="u-demo-area">
+				<u-toast ref="uToast"></u-toast>
+				
+				<view class="u-demo-item">
+					<text class="u-demo-title">基础仪表盘</text>
+					<u-charts-gauge 
+						:width="300" 
+						:height="300" 
+						:option="gaugeOption1"
+					></u-charts-gauge>
+				</view>
+				
+				<view class="u-demo-item">
+					<text class="u-demo-title">带进度条的仪表盘</text>
+					<u-charts-gauge 
+						:width="300" 
+						:height="300" 
+						:option="gaugeOption2"
+					></u-charts-gauge>
+				</view>
+				
+				<view class="u-demo-item">
+					<text class="u-demo-title">自定义样式的仪表盘</text>
+					<u-charts-gauge 
+						:width="300" 
+						:height="300" 
+						:option="gaugeOption3"
+					></u-charts-gauge>
+				</view>
+				
+				<view class="u-demo-item">
+					<text class="u-demo-title">带动画效果的仪表盘</text>
+					<u-charts-gauge 
+						:width="300" 
+						:height="300" 
+						:option="gaugeOption4"
+					></u-charts-gauge>
+				</view>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				// 基础仪表盘配置
+				gaugeOption1: {
+					pointer: {
+						length: '75%',
+						width: 16
+					},
+					series: [{
+						type: 'gauge',
+						startAngle: 225,
+						endAngle: -45,
+						data: [{ value: 60 }]
+					}]
+				},
+				
+				// 带进度条的仪表盘配置
+				gaugeOption2: {
+					series: [{
+						type: 'gauge',
+						min: 0,
+						max: 240,
+						progress: {
+							show: true,
+							width: 12
+						},
+						detail: {
+							// valueAnimation: true
+						},
+						axisLine: {
+							lineStyle: {
+								width: 12,
+								color: [[1, '#999']]
+							}
+						},
+						data: [{ value: 60 }]
+					}]
+				},
+				
+				// 自定义样式的仪表盘配置
+				gaugeOption3: {
+					series: [{
+						type: 'gauge',
+						progress: {
+							show: true,
+							width: 12
+						},
+						axisLine: {
+							lineStyle: {
+								width: 12,
+								color: [
+									[0.3, '#67C23A'],
+									[0.7, '#E6A23C'],
+									[1, '#F56C6C']
+								]
+							}
+						},
+						splitLine: {
+							splitNumber: 5,
+							length: 15,
+							lineStyle: {
+								width: 3,
+								color: '#999'
+							}
+						},
+						axisLabel: {
+							distance: 25,
+							color: '#666',
+							fontSize: 14
+						},
+						anchor: {
+							show: true,
+							size: 10,
+							itemStyle: {
+								borderWidth: 1,
+								borderColor: '#5572CA'
+							}
+						},
+						detail: {
+							show: true,
+							fontSize: 24,
+							color: '#333',
+							formatter: '{value}%'
+						},
+						data: [{ value: 20 }]
+					}]
+				},
+				
+				// 带动画效果的仪表盘配置
+				gaugeOption4: {
+					series: [{
+						type: 'gauge',
+						progress: {
+							show: true,
+							width: 10
+						},
+						axisLine: {
+							splitNumber: 3,
+							lineStyle: {
+								width: 12,
+								color: [[1, '#f1f1f1']]
+							}
+						},
+						splitLine: {
+							length: 10,
+							lineStyle: {
+								width: 2,
+								color: '#999'
+							}
+						},
+						axisLabel: {
+							distance: 15,
+							color: '#666',
+							fontSize: 12
+						},
+						anchor: {
+							show: true,
+							size: 8,
+							itemStyle: {
+								borderWidth: 1,
+								borderColor: '#5572CA'
+							}
+						},
+						detail: {
+							valueAnimation: true,
+							show: true,
+							fontSize: 25,
+							color: '#409EFF',
+							formatter: '{value}km/h',
+							offsetCenter: [0, -10]
+						},
+						data: [{ value: 65 }]
+					}]
+				}
+			}
+		},
+		onload() {
+			setTimeout(() => {
+				this.gaugeOption1.series[0].data[0].value = 80;
+			}, 500);
+		},
+		methods: {
+			
+		}
+	}
+</script>
+
+<style lang="scss" scoped>
+	.u-demo {
+		
+	}
+	
+	.u-demo-wrap {
+		padding: 20rpx;
+	}
+	
+	.u-demo-title {
+		font-size: 34rpx;
+		font-weight: bold;
+		color: #333;
+		margin-bottom: 20rpx;
+	}
+	
+	.u-demo-area {
+		padding: 20rpx;
+		background-color: #fff;
+		border-radius: 10rpx;
+	}
+	
+	.u-demo-item {
+		margin-bottom: 40rpx;
+		
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+	
+	.u-demo-title {
+		font-size: 28rpx;
+		color: #666;
+		margin-bottom: 20rpx;
+		display: block;
+	}
+</style>
