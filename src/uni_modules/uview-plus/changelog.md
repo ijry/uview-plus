@@ -1,3 +1,6 @@
+## 3.4.68（2025-08-03）
+feat: 新增pull-refresh下拉刷新组件
+
 ## 3.4.67（2025-08-02）
 feat: number-box支持disabledBgColor参数
 
