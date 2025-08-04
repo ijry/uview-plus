@@ -296,7 +296,7 @@ export default {
                 // #endif
 
                 // #ifndef MP-TOUTIAO || H5 || APP-PLUS
-                const canvas = await this.getNode(this.cId,true);
+                const canvas = await this.getNode(this.cid,true);
                 uni.canvasToTempFilePath(
                     {
                         canvas,
