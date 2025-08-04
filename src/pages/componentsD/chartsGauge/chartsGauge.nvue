@@ -40,6 +40,15 @@
 						:options="gaugeOption4"
 					></u-charts-gauge>
 				</view>
+
+				<view class="u-demo-item">
+					<text class="u-demo-title">多进度圆环仪表盘</text>
+					<u-charts-gauge 
+						:width="260" 
+						:height="260" 
+						:options="gaugeOption5"
+					></u-charts-gauge>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -71,16 +80,17 @@
 						max: 240,
 						progress: {
 							show: true,
-							width: 12
+							color: 'red'
+							// width: 12
 						},
 						detail: {
-							valueAnimation: true
+							valueAnimation: false
 						},
 						animationDuration: 1000,
 						axisLine: {
 							lineStyle: {
 								width: 12,
-								color: [[1, '#999']]
+								color: [[1, '#eee']] // 圆环背景色
 							}
 						},
 						data: [{ value: 60, name: '功率' }]
@@ -142,7 +152,7 @@
 						type: 'gauge',
 						progress: {
 							show: true,
-							width: 10
+							width: 1
 						},
 						axisLine: {
 							splitNumber: 3,
@@ -163,6 +173,9 @@
 							color: '#666',
 							fontSize: 12
 						},
+						itemStyle: {
+							color: 'green'
+						},
 						anchor: {
 							show: true,
 							size: 8,
@@ -181,19 +194,65 @@
 						},
 						data: [{ value: 65, name: '时速' }]
 					}]
+				},
+
+				// 多进度条圆环
+				gaugeOption5: {
+					series: [{
+						type: 'gauge',
+						min: 0,
+						max: 130,
+						progress: {
+							show: true,
+							// width: 12
+						},
+						startAngle: 270,
+						endAngle: -89,
+						pointer: {
+							show: false
+						},
+						detail: {
+							valueAnimation: true
+						},
+						axisTick: {
+							show: false
+						},
+						splitLine: {
+							show: false
+						},
+						animationDuration: 3000,
+						progress: {
+							show: true,
+							width: 38
+						},
+						axisLine: {
+							lineStyle: {
+								width: 40,
+								color: [[1, '#f7f7f7']]
+							}
+						},
+						data: [
+							{ value: 60, name: '功率' },
+							{ value: 120, name: '功率2' },
+							{ value: 90, name: '功率3' },
+							{ value: 80, name: '功率4' },
+							// { value: 80, name: '功率4' },
+							// { value: 80, name: '功率4' },
+						]
+					}]
 				}
 			}
 		},
 		mounted() {
-		  	setTimeout(() => {
-				this.gaugeOption2.series[0].data[0].value = 120;
-			}, 800);
-			setTimeout(() => {
-				this.gaugeOption2.series[0].data[0].value = 240;
-			}, 1000);
-			setTimeout(() => {
-				this.gaugeOption2.series[0].data[0].value = 70;
-			}, 2200);
+		  	// setTimeout(() => {
+			// 	this.gaugeOption2.series[0].data[0].value = 120;
+			// }, 800);
+			// setTimeout(() => {
+			// 	this.gaugeOption2.series[0].data[0].value = 240;
+			// }, 1000);
+			// setTimeout(() => {
+			// 	this.gaugeOption2.series[0].data[0].value = 70;
+			// }, 2200);
 		},
 		methods: {
 			
