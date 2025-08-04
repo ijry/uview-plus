@@ -93,6 +93,8 @@
 				const data = series.data && series.data.length > 0 ? series.data[0] : { value: 0 };
 				// 修改: 只有在初始化后才使用动画值，否则使用真实值
 				const value = (this.isInited && this.progressValue !== undefined) ? this.progressValue : (data.value || 0);
+				// 获取name属性
+				const name = data.name || '';
 				
 				// 获取配置参数，设置默认值
 				const progress = series.progress || { show: false, width: 12 };
@@ -357,11 +359,27 @@
 					const offsetX = detail.offsetCenter && Array.isArray(detail.offsetCenter) && detail.offsetCenter.length > 0 ? detail.offsetCenter[0] : 0;
 					const offsetY = detail.offsetCenter && Array.isArray(detail.offsetCenter) && detail.offsetCenter.length > 1 ? detail.offsetCenter[1] : 0;
 					
+					// 绘制name文本（在value上方）
+					let rate = 0.6;
+					let nameY = centerY + 50 + offsetY;
+					if (name) {
+						ctx.setFontSize((detail.fontSize || 30) * rate);
+						ctx.setFillStyle(detail.color || '#333');
+						ctx.setTextAlign('center');
+						ctx.setTextBaseline('middle');
+						ctx.fillText(name, centerX + offsetX, centerY + 30 + offsetY);
+
+						// 测量name文本高度，用于确定value的绘制位置
+						const nameMetrics = ctx.measureText ? ctx.measureText(name) : { width: name.length * ((detail.fontSize || 30) * rate) * 0.6 };
+						const nameHeight = nameMetrics.width > 0 ? (detail.fontSize || 30) * rate : 0;
+						nameY = centerY + 30 + offsetY + nameHeight * 1.7; // 调整name的Y位置
+					}
+					
 					ctx.setFontSize(detail.fontSize || 30);
 					ctx.setFillStyle(detail.color || '#333');
 					ctx.setTextAlign('center');
 					ctx.setTextBaseline('middle');
-					ctx.fillText(text, centerX + offsetX, centerY + 50 + offsetY);
+					ctx.fillText(text, centerX + offsetX, nameY);
 				}
 				
 				ctx.draw();

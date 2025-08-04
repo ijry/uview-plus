@@ -59,7 +59,7 @@
 						type: 'gauge',
 						startAngle: 225,
 						endAngle: -45,
-						data: [{ value: 60 }]
+						data: [{ value: 60, name: '速度' }]
 					}]
 				},
 				
@@ -83,7 +83,7 @@
 								color: [[1, '#999']]
 							}
 						},
-						data: [{ value: 60 }]
+						data: [{ value: 60, name: '功率' }]
 					}]
 				},
 				
@@ -132,7 +132,7 @@
 							color: '#333',
 							formatter: '{value}%'
 						},
-						data: [{ value: 20 }]
+						data: [{ value: 20, name: '完成度' }]
 					}]
 				},
 				
@@ -177,9 +177,9 @@
 							fontSize: 25,
 							color: '#409EFF',
 							formatter: '{value}km/h',
-							offsetCenter: [0, -10]
+							offsetCenter: [0, 0]
 						},
-						data: [{ value: 65 }]
+						data: [{ value: 65, name: '时速' }]
 					}]
 				}
 			}
