@@ -22,7 +22,7 @@
 		    </view>
 		</view>
 		<view class="u-page__item">
-          <text class="u-page__item__title" style="margin-top: 0;">自定义动画</text>
+          <text class="u-page__item__title" style="margin-top: 0;">自定义下拉动画</text>
           <view class="u-page__item__content">
             <u-pull-refresh
 			  :refreshing="refreshing1"
@@ -72,6 +72,36 @@
 			</u-pull-refresh>
           </view>
       </view>
+	  <view class="u-page__item">
+	      <text class="u-page__item__title" style="margin-top: 0;">上拉加载</text>
+	      <view class="u-page__item__content">
+	        <u-pull-refresh
+			  :refreshing="refreshing2"
+			  :showLoadmore="true"
+			  :loadmoreProps="loadmoreConfig"
+			  @refresh="onRefresh2"
+			  @loadmore="onLoadmore"
+			>
+				<!-- 使用外部 scroll-view 或其他可滚动组件 -->
+				<scroll-view
+				  class="scroll-area"
+				  style="height: 100px;"
+				  :scroll-y="true"
+				  @scrolltolower="onScrollToLower"
+				>
+				  <view class="list-content">
+					<view 
+					  v-for="item in listData2" 
+					  :key="item.id"
+					  class="list-item"
+					>
+					  <text>{{ item.name }}</text>
+					</view>
+				  </view>
+				</scroll-view>
+			</u-pull-refresh>
+	      </view>
+	  </view>
   </view>
 </template>
 
@@ -81,7 +111,16 @@ export default {
     return {
 		refreshing: false,
 		refreshing1: false,
-		listData: []
+		refreshing2: false,
+		loadmoreConfig: {
+			status: 'loadmore', // loadmore, loading, nomore
+			loadmoreText: '上拉加载更多',
+			loadingText: '努力加载中...',
+			nomoreText: '我们是有底线的',
+			iconSize: 18
+		},
+		listData: [],
+		listData2: []
     };
   },
   created() {
@@ -97,6 +136,7 @@ export default {
 		  })
 		}
 		this.listData = data
+		this.listData2 = [...data]
 	  },
 	  
 	  onRefresh() {
@@ -107,7 +147,6 @@ export default {
 		  this.refreshing = false
 		}, 2000)
 	  },
-	  
 	  onRefresh1() {
 	  		this.refreshing1 = true
 	  		// 模拟网络请求
@@ -115,6 +154,25 @@ export default {
 	  		  this.loadData()
 	  		  this.refreshing1 = false
 	  		}, 2000)
+	  },
+	  onRefresh2() {
+	  		this.refreshing2 = true
+	  		// 模拟网络请求
+	  		setTimeout(() => {
+	  		  this.loadData()
+	  		  this.refreshing2 = false
+	  		}, 2000)
+	  },
+	  onScrollToLower() {
+		  this.loadmoreConfig.status = 'loading'
+		  setTimeout(() => {
+		    this.listData2.push({
+			  id: this.listData2.length,
+			  name: 'Item ' + this.listData2.length
+		    })
+		    this.loadmoreConfig.status = 'loadmore'
+		  }, 2000)
+		  
 	  }
   }
 };

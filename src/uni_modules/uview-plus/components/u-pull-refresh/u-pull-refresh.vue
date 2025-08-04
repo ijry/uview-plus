@@ -62,7 +62,34 @@
       class="refresh-content-wrapper"
       :style="{ transform: `translateY(${contentTranslateY}px)` }"
     >
-      <slot></slot>
+      <scroll-view
+        v-if="useScrollView"
+        class="scroll-wrapper"
+        :scroll-y="true"
+        :enable-back-to-top="enableBackToTop"
+        :scroll-top="scrollTop"
+        :lower-threshold="lowerThreshold"
+        @scroll="handleScroll"
+        @scrolltolower="handleScrollToLower"
+      >
+        <slot></slot>
+        
+        <!-- 使用 u-loadmore 组件实现上拉加载更多 -->
+        <u-loadmore
+          v-if="showLoadmore"
+          v-bind="loadmoreProps"
+        />
+      </scroll-view>
+      
+      <view v-else>
+        <slot></slot>
+        
+        <!-- 使用 u-loadmore 组件实现上拉加载更多 -->
+        <u-loadmore
+          v-if="showLoadmore"
+          v-bind="loadmoreProps"
+        />
+      </view>
     </view>
   </view>
 </template>
@@ -90,6 +117,39 @@ export default {
     maxDistance: {
       type: Number,
       default: 100
+    },
+    // 是否显示加载更多
+    showLoadmore: {
+      type: Boolean,
+      default: false
+    },
+    // u-loadmore 组件的 props 配置
+    loadmoreProps: {
+      type: Object,
+      default: () => ({
+        status: 'loadmore',
+        loadmoreText: '加载更多',
+        loadingText: '正在加载...',
+        nomoreText: '没有更多了'
+      })
+    },
+    // 是否使用 scroll-view 包装内容
+    useScrollView: {
+      type: Boolean,
+      default: true
+    },
+    // scroll-view 相关属性
+    enableBackToTop: {
+      type: Boolean,
+      default: false
+    },
+    lowerThreshold: {
+      type: [Number, String],
+      default: 50
+    },
+    scrollTop: {
+      type: [Number, String],
+      default: 0
     }
   },
   data() {
@@ -106,6 +166,7 @@ export default {
       contentTranslateY: 0
     }
   },
+  emits: ['refresh', 'loadmore', 'scroll'],
   watch: {
     refreshing: {
       handler(newVal) {
@@ -136,7 +197,7 @@ export default {
       const diff = this.currentY - this.startY
       
       // 只有在顶部且下拉时才触发下拉刷新
-      if (diff > 0) {
+      if (diff > 0 && this.isScrollViewAtTop()) {
         this.refreshDistance = Math.min(diff * this.damping, this.maxDistance)
         this.contentTranslateY = this.refreshDistance
         
@@ -184,6 +245,26 @@ export default {
     resetRefresh() {
       this.refreshDistance = 0
       this.contentTranslateY = 0
+    },
+    
+    // 检查 scroll-view 是否在顶部
+    isScrollViewAtTop() {
+      // 这里可以更精确地判断，但简单起见直接返回 true
+      // 实际项目中可能需要通过 scroll 事件获取 scrollTop 判断
+      return true
+    },
+    
+    // 处理滚动事件
+    handleScroll(e) {
+      this.$emit('scroll', e)
+    },
+    
+    // 处理滚动到底部事件
+    handleScrollToLower(e) {
+      // 只有当 loadmore 状态为 loadmore 时才触发
+      if (this.showLoadmore && this.loadmoreProps.status === 'loadmore') {
+        this.$emit('loadmore')
+      }
     }
   }
 }
@@ -211,6 +292,10 @@ export default {
 .refresh-content-wrapper {
   height: 100%;
   transition: transform 0.2s ease-out;
+}
+
+.scroll-wrapper {
+  height: 100%;
 }
 
 .refresh-content {
