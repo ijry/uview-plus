@@ -87,7 +87,7 @@
 					width: addUnit(indicatorHeight)
 				}"
 			>
-				<text class="u-index-list__indicator__text">{{ uIndexList[activeIndex].key || uIndexList[activeIndex] }}</text>
+				<text class="u-index-list__indicator__text">{{ uIndexList[activeIndex]?.key || uIndexList[activeIndex] }}</text>
 			</view>
 		</u-transition>
 	</view>
