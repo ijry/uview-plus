@@ -10,7 +10,7 @@
 					<u-charts-gauge 
 						:width="300" 
 						:height="300" 
-						:option="gaugeOption1"
+						:options="gaugeOption1"
 					></u-charts-gauge>
 				</view>
 				
@@ -19,7 +19,7 @@
 					<u-charts-gauge 
 						:width="300" 
 						:height="300" 
-						:option="gaugeOption2"
+						:options="gaugeOption2"
 					></u-charts-gauge>
 				</view>
 				
@@ -28,7 +28,7 @@
 					<u-charts-gauge 
 						:width="300" 
 						:height="300" 
-						:option="gaugeOption3"
+						:options="gaugeOption3"
 					></u-charts-gauge>
 				</view>
 				
@@ -37,7 +37,7 @@
 					<u-charts-gauge 
 						:width="300" 
 						:height="300" 
-						:option="gaugeOption4"
+						:options="gaugeOption4"
 					></u-charts-gauge>
 				</view>
 			</view>
@@ -74,7 +74,7 @@
 							width: 12
 						},
 						detail: {
-							// valueAnimation: true
+							valueAnimation: true
 						},
 						axisLine: {
 							lineStyle: {
@@ -183,10 +183,16 @@
 				}
 			}
 		},
-		onload() {
+		mounted() {
+		  	setTimeout(() => {
+				this.gaugeOption2.series[0].data[0].value = 80;
+			}, 800);
 			setTimeout(() => {
-				this.gaugeOption1.series[0].data[0].value = 80;
-			}, 500);
+				this.gaugeOption2.series[0].data[0].value = 190;
+			}, 1000);
+			setTimeout(() => {
+				this.gaugeOption2.series[0].data[0].value = 70;
+			}, 1200);
 		},
 		methods: {
 			

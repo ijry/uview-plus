@@ -24,7 +24,7 @@
 				default: 300
 			},
 			// 图表配置选项
-			option: {
+			options: {
 				type: Object,
 				default: () => ({})
 			}
@@ -44,8 +44,9 @@
 			}
 		},
 		watch: {
-			option: {
+			options: {
 				handler(newVal) {
+					console.log(newVal)
 					// 使用uview-plus自己的实现方式更新图表
 					this.updateChart(newVal);
 				},
@@ -53,14 +54,7 @@
 			}
 		},
 		mounted() {
-			// #ifdef H5
-			this.$nextTick(() => {
-				this.init();
-			});
-			// #endif
-			// #ifndef H5
 			this.init();
-			// #endif
 		},
 		methods: {
 			init() {
@@ -70,13 +64,12 @@
 				
 				// 延迟确保DOM渲染完成
 				setTimeout(() => {
-					this.drawChart();
+					this.updateChart(this.options);
 				}, 100);
 			},
 			
 			drawChart() {
 				const ctx = uni.createCanvasContext(this.canvasId, this);
-				
 				// 使用uview-plus自己的实现方式绘制仪表盘
 				this.drawGauge(ctx);
 			},
@@ -96,7 +89,7 @@
 				const { width, height } = this;
 				const centerX = width / 2;
 				const centerY = height / 2;
-				const series = this.option.series && this.option.series.length > 0 ? this.option.series[0] : {};
+				const series = this.options.series && this.options.series.length > 0 ? this.options.series[0] : {};
 				const data = series.data && series.data.length > 0 ? series.data[0] : { value: 0 };
 				// 修改: 只有在初始化后才使用动画值，否则使用真实值
 				const value = (this.isInited && this.progressValue !== undefined) ? this.progressValue : (data.value || 0);
@@ -404,9 +397,6 @@
 			},
 			
 			updateChart(option) {
-				// 使用uview-plus自己的实现方式更新图表
-				this.option = option;
-				
 				const series = option.series && option.series.length > 0 ? option.series[0] : {};
 				const data = series.data && series.data.length > 0 ? series.data[0] : { value: 0 };
 				const value = data.value || 0;
@@ -417,7 +407,29 @@
 				
 				// 检查是否启用动画
 				if (detail.valueAnimation) {
-					this.startAnimation(value);
+					// 实现动画逻辑
+					const startTime = Date.now();
+					const duration = 1000; // 动画持续时间1秒
+					const startValue = Number(this.progressValue) || 0;
+					const endValue = value;
+					const animate = () => {
+						const elapsed = Date.now() - startTime;
+						const progress = Math.min(elapsed / duration, 1);
+						
+						// 使用缓动函数使动画更自然
+						const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+						let progressValue = startValue + (endValue - startValue) * easeOutQuart;
+						// console.log('progressValue', progressValue);
+						this.progressValue = progressValue.toFixed(0);
+						
+						// 更新图表
+						this.drawChart();
+						
+						if (progress < 1) {
+							requestAnimationFrame(animate);
+						}
+					};
+					requestAnimationFrame(animate);
 				} else {
 					this.progressValue = value;
 					// 直接调用drawChart触发更新而不是直接调用drawGauge
