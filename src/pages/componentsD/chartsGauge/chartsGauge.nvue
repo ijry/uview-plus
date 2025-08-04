@@ -76,6 +76,7 @@
 						detail: {
 							valueAnimation: true
 						},
+						animationDuration: 1000,
 						axisLine: {
 							lineStyle: {
 								width: 12,
@@ -185,14 +186,14 @@
 		},
 		mounted() {
 		  	setTimeout(() => {
-				this.gaugeOption2.series[0].data[0].value = 80;
+				this.gaugeOption2.series[0].data[0].value = 120;
 			}, 800);
 			setTimeout(() => {
-				this.gaugeOption2.series[0].data[0].value = 190;
+				this.gaugeOption2.series[0].data[0].value = 240;
 			}, 1000);
 			setTimeout(() => {
 				this.gaugeOption2.series[0].data[0].value = 70;
-			}, 1200);
+			}, 2200);
 		},
 		methods: {
 			

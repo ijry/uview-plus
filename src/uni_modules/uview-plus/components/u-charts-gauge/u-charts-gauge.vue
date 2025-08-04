@@ -409,7 +409,11 @@
 				if (detail.valueAnimation) {
 					// 实现动画逻辑
 					const startTime = Date.now();
-					const duration = 1000; // 动画持续时间1秒
+					// 支持全局和系列级别的 animationDuration 配置
+					const globalDuration = option.animationDuration !== undefined ? option.animationDuration : 1000;
+					const seriesDuration = series.animationDuration !== undefined ? series.animationDuration : globalDuration;
+					const duration = seriesDuration;
+					
 					const startValue = Number(this.progressValue) || 0;
 					const endValue = value;
 					const animate = () => {
