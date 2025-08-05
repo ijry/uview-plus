@@ -1,3 +1,8 @@
+## 3.4.70（2025-08-05）
+fix: 修复qrcode组件长按事件传入错误cid导致的报错
+
+fix: 修复index-list组件key为undefined导致的索引报错消失
+
 ## 3.4.69（2025-08-04）
 feat: pull-refresh下拉刷新新增上拉加载特性
 
