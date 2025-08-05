@@ -612,6 +612,12 @@
                     "style" : {
                         "navigationBarTitleText" : "下拉刷新"
                     }
+                },
+                {
+                    "path" : "agreement/agreement",
+                    "style" : {
+                        "navigationBarTitleText" : "弹窗协议"
+                    }
                 }
             ]
         },
