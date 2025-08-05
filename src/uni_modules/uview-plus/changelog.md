@@ -1,3 +1,8 @@
+## 3.4.72（2025-08-05）
+improvment: 优化virtual-list虚拟列表样式
+
+feat: 新增virtual-list虚拟列表演示
+
 ## 3.4.71（2025-08-05）
 feat: 新增virtual-list虚拟列表组件
 
