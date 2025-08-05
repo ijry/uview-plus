@@ -160,6 +160,11 @@ export default [{
         icon: 'list',
         title: 'List 列表',
         title_en: 'List'
+    },{
+        path: '/pages/componentsD/virtualList/virtualList',
+        icon: 'virtualList',
+        title: 'VirtualList 虚拟列表',
+        title_en: 'virtualList'
     }, {
         path: '/pages/componentsB/progress/progress',
         icon: 'progress',

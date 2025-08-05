@@ -3,7 +3,7 @@
 		<view class="u-page__item">
 		    <text class="u-page__item__title" style="margin-top: 0;">基本使用</text>
 		    <view class="u-page__item__content">
-		      <u-pull-refresh
+		      <up-pull-refresh
 		          :refreshing="refreshing"
 		          :threshold="50"
 		          @refresh="onRefresh"
@@ -18,13 +18,13 @@
 						  <text>{{ item.name }}</text>
 						</view>
 					</view>
-		        </u-pull-refresh>
+		        </up-pull-refresh>
 		    </view>
 		</view>
 		<view class="u-page__item">
           <text class="u-page__item__title" style="margin-top: 0;">自定义下拉动画</text>
           <view class="u-page__item__content">
-            <u-pull-refresh
+            <up-pull-refresh
 			  :refreshing="refreshing1"
 			  :threshold="60"
 			  @refresh="onRefresh1"
@@ -69,17 +69,17 @@
 				  <text>{{ item.name }}</text>
 				</view>
 			  </view>
-			</u-pull-refresh>
+			</up-pull-refresh>
           </view>
       </view>
 	  <view class="u-page__item">
 	      <text class="u-page__item__title" style="margin-top: 0;">结合虚拟列表</text>
 	      <view class="u-page__item__content">
-	        <u-pull-refresh
+	        <up-pull-refresh
 			  :refreshing="refreshing3"
 			  @refresh="onRefresh3"
 			>
-			  <u-virtual-list
+			  <up-virtual-list
 				:list-data="listData3"
 				:item-height="32"
 				height="150px"
@@ -90,14 +90,14 @@
 					<text>Item {{ item.id }}: {{ item.name }}</text>
 				  </view>
 				</template>
-			  </u-virtual-list>
-			</u-pull-refresh>
+			  </up-virtual-list>
+			</up-pull-refresh>
 	      </view>
 	  </view>
 	  <view class="u-page__item">
 	      <text class="u-page__item__title" style="margin-top: 0;">上拉加载</text>
 	      <view class="u-page__item__content">
-	        <u-pull-refresh
+	        <up-pull-refresh
 	  			  :refreshing="refreshing2"
 	  			  :showLoadmore="true"
 	  			  :loadmoreProps="loadmoreConfig"
@@ -121,7 +121,7 @@
 	  					</view>
 	  				  </view>
 	  				</scroll-view>
-	  			</u-pull-refresh>
+	  			</up-pull-refresh>
 	      </view>
 	  </view>
   </view>

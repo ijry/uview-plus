@@ -612,6 +612,13 @@
                     "style" : {
                         "navigationBarTitleText" : "下拉刷新"
                     }
+                },
+                {
+                    "path" : "virtualList/virtualList",
+                    "bounce": "none",
+                    "style" : {
+                        "navigationBarTitleText" : "虚拟列表"
+                    }
                 }
             ]
         },
