@@ -263,6 +263,11 @@ export default [{
         icon: 'pullRefresh',
         title: 'pullRefresh 下拉刷新',
         title_en: 'Pull Refresh'
+    }, {
+        path: '/pages/componentsD/signature/signature',
+        icon: 'signature',
+        title: 'signature 签名签字',
+        title_en: 'Signature Refresh'
     }
         // {
         // 	path: '/pages/componentsA/fullScreen/fullScreen',

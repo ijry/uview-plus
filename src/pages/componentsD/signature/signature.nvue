@@ -1,0 +1,154 @@
+<template>
+    <view class="u-page">
+        <view class="u-page__item">
+            <text class="u-page__item__title" style="margin-top: 0;">基础签名示例</text>
+            <view class="u-page__item__content">
+                <u-signature 
+                    ref="signature1" 
+                    :width="700" 
+                    :height="200" 
+                    bg-color="#f5f5f5"
+                    :show-toolbar="false"
+                    @confirm="onConfirm1"
+                    @error="onError1"
+                ></u-signature>
+                
+                <view class="preview" v-if="signatureImage1">
+                    <text>签名预览:</text>
+                    <image :src="signatureImage1" class="preview-image"></image>
+                    <u-button type="primary" size="small" @click="clearSignature1">清除签名</u-button>
+                </view>
+            </view>
+        </view>
+        
+        <view class="u-page__item">
+            <text class="u-page__item__title">自定义颜色和工具栏示例</text>
+            <view class="u-page__item__content">
+                <u-signature 
+                    ref="signature2" 
+                    :width="700" 
+                    :height="200" 
+                    color="#ff0000"
+                    thickness="6"
+                    bg-color="#f5f5f5"
+                    @confirm="onConfirm2"
+                    @error="onError2"
+                ></u-signature>
+                
+                <view class="preview" v-if="signatureImage2">
+                    <text>签名预览:</text>
+                    <image :src="signatureImage2" class="preview-image"></image>
+                    <u-button type="primary" size="small" @click="clearSignature2">清除签名</u-button>
+                </view>
+            </view>
+        </view>
+    </view>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            signatureImage1: '',
+            signatureImage2: '',
+            signatureImage3: '',
+            bgColor: '#ffffff',
+            penColor: '#000000',
+            penThickness: 3
+        };
+    },
+    methods: {
+        onConfirm1(tempFilePath) {
+            this.signatureImage1 = tempFilePath;
+            console.log('签名图片路径1:', tempFilePath);
+        },
+        onError1(err) {
+            console.error('签名导出错误1:', err);
+            uni.showToast({
+                title: '签名导出失败',
+                icon: 'none'
+            });
+        },
+        clearSignature1() {
+            this.signatureImage1 = '';
+            this.$refs.signature1.clear();
+        },
+        
+        onConfirm2(tempFilePath) {
+            this.signatureImage2 = tempFilePath;
+            console.log('签名图片路径2:', tempFilePath);
+        },
+        onError2(err) {
+            console.error('签名导出错误2:', err);
+            uni.showToast({
+                title: '签名导出失败',
+                icon: 'none'
+            });
+        },
+        clearSignature2() {
+            this.signatureImage2 = '';
+            this.$refs.signature2.clear();
+        },
+        
+        onConfirm3(tempFilePath) {
+            this.signatureImage3 = tempFilePath;
+            console.log('签名图片路径3:', tempFilePath);
+        },
+        onError3(err) {
+            console.error('签名导出错误3:', err);
+            uni.showToast({
+                title: '签名导出失败',
+                icon: 'none'
+            });
+        },
+        clearSignature3() {
+            this.signatureImage3 = '';
+            this.$refs.signature3.clear();
+        }
+    }
+};
+</script>
+
+<style lang="scss" scoped>
+    .u-page__item {
+        margin-bottom: 35px;
+    }
+    .u-page__item__title {
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+    
+    .preview {
+        margin-top: 20px;
+        text-align: center;
+    }
+    
+    .preview-image {
+        width: 700px;
+        height: 200px;
+        margin: 10px auto;
+        border: 1px solid #e0e0e0;
+    }
+    
+    .config-controls {
+        margin-bottom: 15px;
+        padding: 10px;
+        background-color: #f8f8f8;
+        border-radius: 4px;
+    }
+    
+    .control-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    
+    .control-item text {
+        width: 80px;
+        font-size: 14px;
+    }
+    
+    .control-item ::v-deep .u-input {
+        flex: 1;
+    }
+</style>

@@ -619,6 +619,12 @@
                     "style" : {
                         "navigationBarTitleText" : "虚拟列表"
                     }
+                },
+                {
+                    "path" : "signature/signature",
+                    "style" : {
+                        "navigationBarTitleText" : "签名签字"
+                    }
                 }
             ]
         },
