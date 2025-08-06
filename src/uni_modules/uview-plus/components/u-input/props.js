@@ -193,6 +193,11 @@ export const props = defineMixin({
 		ignoreCompositionEvent: {
 			type: Boolean,
 			default: true
-		}
+		},
+		// 光标颜色
+		cursorColor: {
+			type: String,
+			default: () => defProps.input.cursorColor
+		},
 	}
 })

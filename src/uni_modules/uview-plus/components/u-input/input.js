@@ -43,6 +43,7 @@ export default {
 		border: 'surround',
 		readonly: false,
 		shape: 'square',
-		formatter: null
+		formatter: null,
+		cursorColor: ''
 	}
 }
