@@ -1,12 +1,12 @@
-<template name="u-cropper">
-	<view>
-		<image :src="imgSrc.imgSrc" @click="select" :style="[ imgStyle ]" class="my-avatar"></image>
-		<canvas canvas-id="avatar-canvas" id="avatar-canvas" class="my-canvas"
+<template>
+	<view class="u-cropper">
+		<!-- <image :src="imgSrc.imgSrc" @click="select" :style="[ imgStyle ]" class="my-avatar"></image> -->
+		<canvas :canvas-id="'avatar-canvas-' + instanceId" :id="'avatar-canvas-' + instanceId" class="my-canvas"
 			:style="{top: styleTop, height: cvsStyleHeight}" disable-scroll="false"></canvas>
-		<canvas canvas-id="oper-canvas" id="oper-canvas" class="oper-canvas"
+		<canvas :canvas-id="'oper-canvas-' + instanceId" :id="'oper-canvas-' + instanceId" class="oper-canvas"
 			:style="{top: styleTop, height: cvsStyleHeight}"
 			disable-scroll="false" @touchstart="start" @touchmove="move" @touchend="end"></canvas>
-		<canvas canvas-id="prv-canvas" id="prv-canvas" class="prv-canvas"disable-scroll="false"
+		<canvas :canvas-id="'prv-canvas-' + instanceId" :id="'prv-canvas-' + instanceId" class="prv-canvas"disable-scroll="false"
 			@touchstart="hideImg":style="{ height: cvsStyleHeight, top: prvTop }"></canvas>
 		<view class="oper-wrapper" :style="{display: styleDisplay}">
 			<view class="oper">
@@ -24,6 +24,11 @@
 				</view>
 			</view>
 		</view>
+		<view @click="chooseImage(0, {})" v-if="styleDisplay == 'none'">
+			<slot>
+				
+			</slot>
+		</view>
 	</view>
 </template>
 
@@ -33,6 +38,8 @@
 		name: "u-cropper",
 		data() {
 			return {
+				// 添加实例ID用于区分不同实例
+				instanceId: Date.now() + '-' + Math.random().toString(36).substr(2, 9),
 				cvsStyleHeight: '0px',
 				styleDisplay: 'none',
 				styleTop: '-10000px',
@@ -45,6 +52,17 @@
 				},
 				btnWidth: '19%',
 				btnDsp: 'flex',
+				// 裁剪区域宽度，用于设置选择区域的宽度
+				arWidth: '',
+				// 裁剪区域高度，用于设置选择区域的高度
+				arHeight: '',
+				// 导出图片宽度，用于设置最终导出图片的宽度
+				expWidth: '',
+				// 导出图片高度，用于设置最终导出图片的高度
+				expHeight: '',
+				// 是否允许调整裁剪框大小
+				letChangeSize: false,
+				
 			};
 		},
 		watch: {
@@ -54,16 +72,6 @@
 		},
 		emits: ['avtinit', 'confirm'],
 		props:{
-			// 裁剪区域宽度，用于设置选择区域的宽度
-			areaWidth: '',
-			// 裁剪区域高度，用于设置选择区域的高度
-			areaHeight: '',
-			// 导出图片宽度，用于设置最终导出图片的宽度
-			exportWidth: '',
-			// 导出图片高度，用于设置最终导出图片的高度
-			exportHeight: '',
-			// 是否允许调整裁剪框大小
-			canChangeSize: false,
 			minScale: '',
 			maxScale: '',
 			canScale: true,
@@ -76,17 +84,25 @@
 			inner: false,
 			quality: '',
 			index: '',
+			canChangeSize: false,
+			areaWidth: '300rpx',
+			// 裁剪区域高度，用于设置选择区域的高度
+			areaHeight: '300rpx',
+			// 导出图片宽度，用于设置最终导出图片的宽度
+			exportWidth: '260rpx',
+			// 导出图片高度，用于设置最终导出图片的高度
+			exportHeight: '260rpx',
 		},
 		created() {
-			this.ctxCanvas = uni.createCanvasContext('avatar-canvas', this);
-			this.ctxCanvasOper = uni.createCanvasContext('oper-canvas', this);
-			this.ctxCanvasPrv = uni.createCanvasContext('prv-canvas', this);
+			this.ctxCanvas = uni.createCanvasContext('avatar-canvas-' + this.instanceId, this);
+			this.ctxCanvasOper = uni.createCanvasContext('oper-canvas-' + this.instanceId, this);
+			this.ctxCanvasPrv = uni.createCanvasContext('prv-canvas-' + this.instanceId, this);
 			this.qlty = parseInt(this.quality) || 0.9;
-			this.imgSrc.imgSrc = this.avatarSrc;
+			this.imgSrc.imgSrc = this.imageSrc;
 			this.letRotate = (this.canRotate === false || this.inner === true) ? 0 : 1;
 			this.letScale = this.canScale === false ? 0 : 1;
 			// 是否允许调整裁剪框大小，false表示不允许，其他值表示允许
-			this.letChangeSize = this.canChangeSize === false ? 0 : 1;
+			this.letChangeSize = this.canChangeSize;
 			this.isin = this.inner === true ? 1 : 0;
 			this.indx = this.index || undefined;
 			this.mnScale = this.minScale || 0.3;
@@ -162,8 +178,8 @@
 					this.imgStyle = obj;
 				}
 
-				this.exportWidth && (this.exportWidth = this.exportWidth.indexOf('rpx') >= 0 ? parseInt(this.exportWidth)*this.pxRatio : parseInt(this.exportWidth));
-				this.exportHeight && (this.exportHeight = this.exportHeight.indexOf('rpx') >= 0 ? parseInt(this.exportHeight)*this.pxRatio : parseInt(this.exportHeight));
+				this.expWidth && (this.expWidth = this.expWidth.indexOf('rpx') >= 0 ? parseInt(this.expWidth)*this.pxRatio : parseInt(this.expWidth));
+				this.expHeight && (this.expHeight = this.expHeight.indexOf('rpx') >= 0 ? parseInt(this.expHeight)*this.pxRatio : parseInt(this.expHeight));
 
 				if(this.styleDisplay === 'flex') {
 					this.drawInit(true);
@@ -190,9 +206,9 @@
 								this.path = path;
 								if( !this.hasSel ) {
 									let style = this.selStyle || {};
-									if( this.areaWidth && this.areaHeight ) {
-										let areaWidth  = this.areaWidth.indexOf('rpx')  >= 0 ? parseInt(this.areaWidth)  * this.pxRatio: parseInt(this.areaWidth),
-											areaHeight = this.areaHeight.indexOf('rpx') >= 0 ? parseInt(this.areaHeight) * this.pxRatio: parseInt(this.areaHeight);
+									if( this.arWidth && this.arHeight ) {
+										let areaWidth  = this.arWidth.indexOf('rpx')  >= 0 ? parseInt(this.arWidth)  * this.pxRatio: parseInt(this.arWidth),
+											areaHeight = this.arHeight.indexOf('rpx') >= 0 ? parseInt(this.arHeight) * this.pxRatio: parseInt(this.arHeight);
 										style.width = areaWidth + 'px';
 										style.height = areaHeight + 'px';
 										style.top = (this.windowHeight - areaHeight - tabHeight)/2 + 'px';
@@ -240,12 +256,12 @@
 					y = parseInt(style.top),
 					width = parseInt(style.width),
 					height = parseInt(style.height),
-					expWidth = this.exportWidth || width,
-					expHeight = this.exportHeight || height;
+					expWidth = this.expWidth || width,
+					expHeight = this.expHeight || height;
 
 				// #ifdef H5
-				x *= this.pixelRatio;
-				y *= this.pixelRatio;
+				// x *= this.pixelRatio;
+				// y *= this.pixelRatio;
 				expWidth = width;
 				expHeight = height;
 				// #endif
@@ -262,18 +278,17 @@
 					height: height,
 					destWidth: expWidth,
 					destHeight: expHeight,
-					canvasId: 'avatar-canvas',
+					canvasId: 'avatar-canvas-' + this.instanceId,
 					fileType: 'png',
 					quality: this.qlty,
 					success: (r)=>{
 						r = r.tempFilePath;
 						// #ifdef H5
-						alert()
 						this.btop(r).then((r)=> {
-							if(this.exportWidth && this.exportHeight) {
+							if(this.expWidth && this.expHeight) {
 								let ctxCanvas = this.ctxCanvas;
-								expWidth = this.exportWidth,
-								expHeight = this.exportHeight;
+								expWidth = this.expWidth,
+								expHeight = this.expHeight;
 
 								ctxCanvas.drawImage(r, 0, 0, expWidth, expHeight);
 								ctxCanvas.draw(false,()=>{
@@ -284,7 +299,7 @@
 										height: expHeight,
 										destWidth: expWidth,
 										destHeight: expHeight,
-										canvasId: 'avatar-canvas',
+										canvasId: 'avatar-canvas-' + this.instanceId,
 										fileType: 'png',
 										quality: this.qlty,
 										success: (r)=>{
@@ -335,12 +350,12 @@
 					prvY = this.prvY,
 					prvWidth = this.prvWidth,
 					prvHeight = this.prvHeight,
-					expWidth = this.exportWidth || prvWidth,
-					expHeight = this.exportHeight || prvHeight;
+					expWidth = this.expWidth || prvWidth,
+					expHeight = this.expHeight || prvHeight;
 
 				// #ifdef H5
-				prvX *= this.pixelRatio;
-				prvY *= this.pixelRatio;
+				// prvX *= this.pixelRatio;
+				// prvY *= this.pixelRatio;
 				expWidth = prvWidth;
 				expHeight = prvHeight;
 				// #endif
@@ -358,17 +373,17 @@
 					height: prvHeight,
 					destWidth: expWidth,
 					destHeight: expHeight,
-					canvasId: 'prv-canvas',
+					canvasId: 'prv-canvas-' + this.instanceId,
 					fileType: 'png',
 					quality: this.qlty,
 					success: (r)=>{
 						r = r.tempFilePath;
 						// #ifdef H5
 						this.btop(r).then((r)=> {
-							if(this.exportWidth && this.exportHeight) {
+							if(this.expWidth && this.expHeight) {
 								let ctxCanvas = this.ctxCanvas;
-								expWidth = this.exportWidth,
-								expHeight = this.exportHeight;
+								expWidth = this.expWidth,
+								expHeight = this.expHeight;
 
 								ctxCanvas.drawImage(r, 0, 0, expWidth, expHeight);
 								ctxCanvas.draw(false, ()=>{
@@ -379,7 +394,7 @@
 										height: expHeight,
 										destWidth: expWidth,
 										destHeight: expHeight,
-										canvasId: 'avatar-canvas',
+										canvasId: 'avatar-canvas-' + this.instanceId,
 										fileType: 'png',
 										quality: this.qlty,
 										success: (r)=>{
@@ -592,30 +607,24 @@
 				if(this.fPreviewing) return;
 				this.fPreviewing = true;
 				setTimeout(()=>{ this.fPreviewing = false; }, 1000);
-
 				let style = this.selStyle,
 					x = parseInt(style.left),
 					y = parseInt(style.top),
 					width = parseInt(style.width),
 					height = parseInt(style.height);
 
-				// #ifdef H5
-				x *= this.pixelRatio;
-				y *= this.pixelRatio;
-				// #endif
-
 				uni.showLoading({ mask: true });
-				console.log('size', x, y, width, height)
+				// console.log('size', x, y, width, height)
 				uni.canvasToTempFilePath({
 					x: x,
 					y: y,
 					width: width,
 					height: height,
-					canvasId: 'avatar-canvas',
+					canvasId: 'avatar-canvas-' + this.instanceId,
 					fileType: 'png',
 					quality: this.qlty,
 					success: (r)=>{
-						console.log(r)
+						// console.log(r)
 						this.prvImgTmp = r = r.tempFilePath;
 
 						let ctxCanvasPrv = this.ctxCanvasPrv,
@@ -635,7 +644,7 @@
 								prvWidth *= radio;
 								prvHeight = useHeight;
 							}
-						// ctxCanvasPrv.setFillStyle('black');
+						ctxCanvasPrv.setFillStyle('black');
 						ctxCanvasPrv.fillRect(0, 0, prvX, prvY);
 						ctxCanvasPrv.fillRect(x, y, width, height);
 						this.prvX = prvX = (prvX-prvWidth)/2;
@@ -643,7 +652,7 @@
 						this.prvWidth = prvWidth;
 						this.prvHeight = prvHeight;
 						ctxCanvasPrv.drawImage(r, prvX, prvY, prvWidth, prvHeight);
-						ctxCanvasPrv.draw(false, () => {alert()
+						ctxCanvasPrv.draw(false, () => {
 							// #ifdef H5
 							this.btop(this.prvImgTmp).then((r)=> {
 								this.showOper = false;
@@ -671,26 +680,28 @@
 			},
 			chooseImage(index=undefined, params=undefined, data=undefined) {
 				if(params) {
-					let areaWidth = params.areaWidth,
-						areaHeight = params.areaHeight,
-						expWidth = params.expWidth,
-						expHeight = params.expHeight,
+					console.log(params)
+					let areaWidth = params.areaWidth || this.areaWidth,
+						areaHeight = params.areaHeight || this.areaHeight,
+						expWidth = params.exportWidth || this.exportWidth,
+						expHeight = params.exportHeight || this.exportHeight,
 						quality = params.quality,
 						canRotate = params.canRotate,
 						canScale = params.canScale,
-						canChangeSize = params.canChangeSize || false,
+						canChangeSize = params.canChangeSize,
 						minScale = params.minScale,
 						maxScale = params.maxScale,
 						stretch = params.stretch,
 						inner = params.inner,
 						lock = params.lock;
+						console.log('areaWidth', this.areaWidth)
 
-					expWidth && (this.exportWidth = expWidth.indexOf('rpx') >= 0 ? parseInt(expWidth)*this.pxRatio : parseInt(expWidth));
-					expHeight && (this.exportHeight = expHeight.indexOf('rpx') >= 0 ? parseInt(expHeight)*this.pxRatio : parseInt(expHeight));
+					expWidth && (this.expWidth = expWidth.indexOf('rpx') >= 0 ? parseInt(expWidth)*this.pxRatio : parseInt(expWidth));
+					expHeight && (this.expHeight = expHeight.indexOf('rpx') >= 0 ? parseInt(expHeight)*this.pxRatio : parseInt(expHeight));
 					this.letRotate = canRotate === false ? 0 : 1;
 					this.letScale = canScale === false ? 0 : 1;
 					// 设置是否允许调整裁剪框大小
-					this.letChangeSize = canChangeSize === false ? 0 : 1;
+					this.letChangeSize = canChangeSize || false;
 					this.qlty = parseInt(quality) || 0.9;
 					this.mnScale = minScale || 0.3;
 					this.mxScale = maxScale || 4;
@@ -712,6 +723,7 @@
 						this.selStyle.height = areaHeight + 'px';
 						this.selStyle.top = (this.windowHeight - areaHeight - tabHeight)/2 + 'px';
 						this.selStyle.left = (this.windowWidth - areaWidth)/2 + 'px';
+						// console.log(this.selStyle);
 						this.hasSel = true;
 					}
 				}
@@ -936,7 +948,7 @@
 					prvHeight *= this.pixelRatio;
 					// #endif
 					uni.canvasGetImageData({
-						canvasId: 'prv-canvas',
+						canvasId: 'prv-canvas-' + this.instanceId,
 						x: prvX,
 						y: prvY,
 						width: prvWidth,
@@ -1070,7 +1082,7 @@
 				prvHeight *= this.pixelRatio;
 				// #endif
 				uni.canvasPutImageData({
-					canvasId: 'prv-canvas',
+					canvasId: 'prv-canvas-' + this.instanceId,
 					x: prvX,
 					y: prvY,
 					width: prvWidth,
@@ -1104,7 +1116,8 @@
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
+.u-cropper {
 	.my-canvas{
 		display: flex;
 		position: fixed !important;
@@ -1196,4 +1209,5 @@
 	.my-slider {
 		flex-grow: 1;
 	}
+}
 </style>
