@@ -619,6 +619,12 @@
                     "style" : {
                         "navigationBarTitleText" : "虚拟列表"
                     }
+                },
+                {
+                    "path" : "cropper/cropper",
+                    "style" : {
+                        "navigationBarTitleText" : "图片裁剪"
+                    }
                 }
             ]
         },

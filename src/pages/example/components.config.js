@@ -455,12 +455,12 @@ export default [{
 	    title: 'Dragsort 拖动排序',
 	    title_en: 'Dragsort'
 	},
-    // {
-    // 	path: '/pages/componentsC/avatarCropper/avatarCropper',
-    // 	icon: 'avatarCropper',
-    // 	title: 'AvatarCropper 头像裁剪（暂无）',
-    // 	title_en: 'AvatarCropper',
-    // },
+    {
+        path: '/pages/componentsD/cropper/cropper',
+        icon: 'cropper',
+        title: 'cropper 图片裁剪',
+        title_en: 'Cropper'
+    },
     {
         path: '/pages/componentsC/loadmore/loadmore',
         icon: 'loadmore',
@@ -497,12 +497,12 @@ export default [{
         path: '/pages/componentsA/transition/transition',
         icon: 'transition',
         title: 'transition 动画',
-        title_en: '动画'
+        title_en: 'Transition'
     }, {
         path: '/pages/componentsD/qrcode/qrcode',
         icon: 'qrcode',
         title: 'qrcode 二维码',
-        title_en: '二维码'
+        title_en: 'Qrcode'
     },
     {
         path: '/pages/componentsD/cityLocate/cityLocate',
