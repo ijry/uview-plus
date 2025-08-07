@@ -50,5 +50,7 @@ export default {
 	// 拦截器
 	interceptor: {
 		navbarLeftClick: null
-	}
+	},
+    // 只加载一次字体
+    loadFontOnce: false
 }

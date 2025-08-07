@@ -6,7 +6,10 @@ let params = {
 // 加载字体方法
 const loadFont = () => {
     // console.log('加载字体图标');
-    params.loaded = true;
+    // 全局加载不稳定，默认关闭，需要开启可以配置loadFontOnce。
+    if (config.loadFontOnce) {
+        params.loaded = true;
+    }
     // #ifdef APP-NVUE
     // nvue通过weex的dom模块引入字体，相关文档地址如下：
     // https://weex.apache.org/zh/docs/modules/dom.html#addrule
