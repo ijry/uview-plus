@@ -1,3 +1,6 @@
+## 3.4.75（2025-08-07）
+feat: 新增loadFontOnce参数控制是否全局只加载一次字体图标
+
 ## 3.4.74（2025-08-07）
 feat: input组件新增cursorColor属性
 
