@@ -619,6 +619,12 @@
                     "style" : {
                         "navigationBarTitleText" : "虚拟列表"
                     }
+                },
+                {
+                    "path" : "barcode/barcode",
+                    "style" : {
+                        "navigationBarTitleText" : "条码"
+                    }
                 }
             ]
         },
