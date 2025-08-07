@@ -20,6 +20,21 @@
 					    desc="11:40"
 					>
 					</up-steps-item>
+					<up-steps-item
+					    title="已签收"
+					    desc="19:50"
+					>
+					</up-steps-item>
+					<up-steps-item
+					    title="已拒收"
+					    desc="20:10"
+					>
+					</up-steps-item>
+					<up-steps-item
+					    title="已退回"
+					    desc="23:20"
+					>
+					</up-steps-item>
 				</up-steps>
 			</view>
 		</view>
@@ -194,6 +209,7 @@
 </template>
 
 <script>
+	import { timeFormat } from '@/uni_modules/uview-plus'
 	export default {
 		data() {
 			return {
@@ -201,6 +217,7 @@
 			}
 		},
 		onLoad() {
+			console.log(timeFormat('2024-12-18T02:25:31.432Z', 'yyyy年mm月dd日'))
 		}
 	}
 </script>
