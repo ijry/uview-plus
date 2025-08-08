@@ -153,7 +153,6 @@
 </script>
 
 <style lang="scss" scoped>
-
 	// 变量定义
 	$u-icon-primary: $u-primary !default;
 	$u-icon-success: $u-success !default;
