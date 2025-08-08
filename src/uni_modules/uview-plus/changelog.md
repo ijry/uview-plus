@@ -1,3 +1,10 @@
+## 3.4.76（2025-08-08）
+feat: 取消props中tabs组件默认颜色影响主题色生效
+
+fix: 修复parse富文本组件报错$options
+
+feat: timeFormat时间格式化方法支持UTC格式时间 #596
+
 ## 3.4.75（2025-08-07）
 feat: 新增loadFontOnce参数控制是否全局只加载一次字体图标
 
