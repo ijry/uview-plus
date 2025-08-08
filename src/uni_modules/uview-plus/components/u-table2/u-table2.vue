@@ -1,5 +1,5 @@
 <template>
-    <view scroll-x class="u-table2" :style="{ height: height ? height + 'px' : 'auto' }">
+    <scroll-view scroll-x class="u-table2" :style="{ height: height ? height + 'px' : 'auto' }">
         <!-- 表头 -->
         <view v-if="showHeader" class="u-table-header" :class="{ 'u-table-sticky': fixedHeader }" :style="{minWidth: scrollWidth}">
             <view class="u-table-row">
@@ -89,7 +89,7 @@
                 <view v-if="!$slots['empty']" class="u-table-empty">{{ emptyText }}</view>
             </template>
         </view>
-    </view>
+    </scroll-view>
 </template>
 
 <script>

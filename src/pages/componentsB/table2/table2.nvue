@@ -15,7 +15,7 @@
 		<view class="u-demo-block">
 			<view class="u-demo-block__title">表格样式自定义</view>
 			<view class="u-demo-block__content">
-				<u-table2
+				<up-table2
 				    :data="tableData"
 				    :columns="columnsStyle"
 				    stripe
@@ -25,7 +25,7 @@
 				>
 				<template #cell="scope">
 				</template>
-				</u-table2>
+				</up-table2>
 			</view>
 		</view>
 		<view class="u-demo-block">
@@ -66,7 +66,16 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
-			<view class="u-demo-block__title">树形结构 + 固定列</view>
+			<view class="u-demo-block__title">列固定</view>
+			<view class="u-demo-block__content">
+				<u-table2
+				    :data="tableDataFixed"
+				    :columns="columnsFixed"
+				  />
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">树形结构</view>
 			<view class="u-demo-block__content">
 				<u-table2
 				    :data="tableData3"
@@ -75,6 +84,25 @@
 				    :expand-row-keys="['1']"
 				    @expand-change="onExpandChange"
 				  />
+			</view>
+		</view>
+		<!-- 新增弹窗示例 -->
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">弹窗中使用表格</view>
+			<view class="u-demo-block__content">
+				<up-button @click="showPopupTable">打开弹窗表格</up-button>
+				<up-popup v-model:show="popupShow" mode="bottom" :round="10" :closeable="true">
+					<view class="popup-table-wrap">
+						<u-table2
+						    :data="tableData"
+						    :columns="columns"
+						    stripe
+						    border
+						    height="300px"
+						    @row-click="handlePopupRowClick"
+						  />
+					</view>
+				</up-popup>
 			</view>
 		</view>
 	</view>
@@ -88,7 +116,7 @@
 				tableData: [
 					{ id: 1, name: '张三', age: 25 },
 					{ id: 2, name: '李四', age: 30 }
-				  ],
+				],
 				columns: [
 					{ title: '姓名', key: 'name', width: '50px' },
 					{ title: '年龄', key: 'age', width: '50px' },
@@ -148,7 +176,25 @@
 					{ title: '', type: 'expand', width: '50px' },
 					{ title: '名称', key: 'name', fixed: 'left' },
 					{ title: '年龄', key: 'age' }
-				]
+				],
+				columnsFixed: [
+					{ title: '名称', key: 'name', width: '50px', fixed: 'left' },
+					{ title: '年龄', key: 'age' , width: '50px' },
+					{ title: '年龄2', key: 'age' , width: '50px' },
+					{ title: '年龄3', key: 'age' , width: '50px' },
+					{ title: '年龄4', key: 'age' , width: '50px' },
+					{ title: '年龄5', key: 'age' , width: '50px' },
+					{ title: '年龄6', key: 'age' , width: '50px' },
+					{ title: '年龄7', key: 'age' , width: '50px' },
+					{ title: '年龄8', key: 'age' , width: '50px' },
+					{ title: '年龄9', key: 'age' , width: '50px' },
+				],
+				tableDataFixed: [
+					{ id: 1, name: '张三', age: 25 },
+					{ id: 2, name: '李四', age: 30 }
+				],
+				// 新增弹窗相关数据
+				popupShow: false
 			}
 		},
 		methods: {
@@ -167,6 +213,19 @@
 			},
 			onExpandChange(keys) {
 			  console.log('展开行 keys:', keys);
+			},
+			// 新增弹窗相关方法
+			showPopupTable() {
+				this.popupShow = true;
+			},
+			handlePopupRowClick(row) {
+				console.log('弹窗中点击了行:', row);
+				uni.showToast({
+					title: `选中: ${row.name}`,
+					icon: 'none'
+				});
+				// 选中后关闭弹窗
+				this.popupShow = false;
 			}
 		}
 	}
@@ -175,5 +234,8 @@
 <style lang="scss" scoped>
 	.wrap {
 		padding: 24rpx;
+	}
+	.popup-table-wrap {
+		padding: 20rpx;
 	}
 </style>
