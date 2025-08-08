@@ -174,24 +174,26 @@
 				],
 				columns3: [
 					{ title: '', type: 'expand', width: '50px' },
-					{ title: '名称', key: 'name', fixed: 'left' },
+					{ title: '名称', key: 'name'},
 					{ title: '年龄', key: 'age' }
 				],
 				columnsFixed: [
-					{ title: '名称', key: 'name', width: '50px', fixed: 'left' },
-					{ title: '年龄', key: 'age' , width: '50px' },
-					{ title: '年龄2', key: 'age' , width: '50px' },
-					{ title: '年龄3', key: 'age' , width: '50px' },
-					{ title: '年龄4', key: 'age' , width: '50px' },
-					{ title: '年龄5', key: 'age' , width: '50px' },
-					{ title: '年龄6', key: 'age' , width: '50px' },
-					{ title: '年龄7', key: 'age' , width: '50px' },
-					{ title: '年龄8', key: 'age' , width: '50px' },
-					{ title: '年龄9', key: 'age' , width: '50px' },
+					{ title: '名称', key: 'name', width: '50px'},
+					{ title: '年龄', key: 'age' , width: '60px', fixed: 'left' },
+					{ title: '年龄2', key: 'age2' , width: '60px' },
+					{ title: '年龄3', key: 'age3' , width: '50px' },
+					{ title: '年龄4', key: 'age4' , width: '50px', fixed: 'left' },
+					{ title: '年龄5', key: 'age5' , width: '50px' },
+					{ title: '年龄6', key: 'age6' , width: '50px' },
+					{ title: '年龄7', key: 'age7' , width: '50px' },
+					{ title: '年龄8', key: 'age8' , width: '50px' },
+					{ title: '年龄9', key: 'age9' , width: '50px' },
+					{ title: '年龄10', key: 'age10' , width: '60px' },
+					{ title: '年龄11', key: 'age11' , width: '60px' },
 				],
 				tableDataFixed: [
-					{ id: 1, name: '张三', age: 25 },
-					{ id: 2, name: '李四', age: 30 }
+					{ id: 1, name: '张三', age: 25, age2: 25, age3: 25, age4: 25, age5: 25, age6: 25, age7: 25, age8: 25, age9: 25, age10: 25, age11: 25  },
+					{ id: 2, name: '李四', age: 25, age2: 25, age3: 25, age4: 25, age5: 25, age6: 25, age7: 25, age8: 25, age9: 25, age10: 25, age11: 25   }
 				],
 				// 新增弹窗相关数据
 				popupShow: false
