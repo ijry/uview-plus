@@ -1,3 +1,10 @@
+## 3.4.77（2025-08-08）
+feat: 优化waterfall瀑布流组件逻辑
+
+feat: waterfall瀑布流组件支持多列
+
+feat: waterfall瀑布流组件支持响应式列数
+
 ## 3.4.76（2025-08-08）
 feat: 取消props中tabs组件默认颜色影响主题色生效
 
