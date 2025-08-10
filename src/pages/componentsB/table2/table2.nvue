@@ -83,11 +83,11 @@
 				    :expand-row-keys="['1']"
 				    @expand-change="onExpandChange">
 					<template #cell="scope">
-						<template v-if="scope.column.key == 'acitons'">
-							<up-button type="primary" text="编辑">编辑</up-button>
+						<template v-if="scope.column.key == 'actions'">
+							<up-tag type="primary" size="mini" text="编辑"></up-tag>
 						</template>
 						<template v-else>
-							{{ scope.row[scope.column.key] }}
+							{{ scope.row[scope.column.key] || '-' }}
 						</template>
 					</template>
 				</u-table2>
@@ -186,8 +186,9 @@
 					{ id: 4, name: '部门B', age: 30 }
 				],
 				columns3: [
+					{ type: 'selection', width: '50px'},
 					// { title: '', type: 'expand', width: '50px' },
-					{ title: '名称', key: 'name', width: '120px', fixed: 'left' },
+					{ title: '名称', key: 'name', width: '150px', fixed: 'left' },
 					{ title: '年龄', key: 'age' , width: '80px'},
 					{ title: '年龄', key: 'age2' , width: '80px' },
 					{ title: '操作', key: 'actions' , width: '150px' }

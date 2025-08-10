@@ -28,66 +28,42 @@
             <!-- 表体 -->
             <view class="u-table-body" :style="{ minWidth: scrollWidth, maxHeight: maxHeight ? maxHeight + 'px' : 'none' }">
                 <template v-if="data && data.length > 0">
-                    <template v-for="(row, index) in sortedData" :key="row[rowKey] || index">
-                        <view class="u-table-row" :class="[highlightCurrentRow && currentRow === row ? 'u-table-row-highlight' : '',
-                            rowClassName ? rowClassName(row, index) : '',
-                            stripe && index % 2 === 1 ? 'u-table-row-zebra' : ''
-                        ]" @click="handleRowClick(row)">
-                            <view v-for="(col, colIndex) in columns" :key="col.key"
-                                class="u-table-cell" :class="[col.align ? 'u-text-' + col.align : '',
-                                cellClassName ? cellClassName(row, col) : '',
-                                getFixedClass(col)
-                            ]" :style="cellStyleInner({row: row, column: col,
-                                rowIndex: index, columnIndex: colIndex, level: 0})">
-                                <!-- 复选框列 -->
-                                <view v-if="col.type === 'selection'">
-                                    <checkbox :checked="isSelected(row)"
-                                        @click.stop="toggleSelect(row)" />
-                                </view>
-                                <!-- 树形结构展开图标 -->
-                                <view v-if="col.key === computedMainCol && hasTree"
-                                       @click.stop="toggleExpand(row)" :style="{width: expandWidth}">
-                                    <view v-if="row.children && row.children.length > 0">
-                                        {{ isExpanded(row) ? '▼' : '▶' }}
-                                    </view>
-                                </view>
-                                <slot name="cell" :row="row" :column="col"
-                                    :rowIndex="index" :columnIndex="colIndex">
-                                    <view class="u-table-cell_content">
-                                        {{ row[col.key] }}
-                                    </view>
-                                </slot>
-                            </view>
-                        </view>
-
-                        <!-- 子级渲染 (递归组件) -->
-                        <template v-if="isExpanded(row) && row[treeProps.children] && row[treeProps.children].length">
-                            <table-row 
-                                :rows="row[treeProps.children]" 
-                                :parent-row="row"
-                                :columns="columns"
-                                :tree-props="treeProps"
-                                :row-key="rowKey"
-                                :expanded-keys="expandedKeys"
-                                :cell-style-inner="cellStyleInner"
-                                :is-expanded="isExpanded"
-                                :row-class-name="rowClassName"
-                                :stripe="stripe"
-                                :cell-class-name="cellClassName"
-                                :get-fixed-class="getFixedClass"
-                                :highlight-current-row="highlightCurrentRow"
-                                :current-row="currentRow"
-                                :handle-row-click="handleRowClick"
-                                :toggle-expand="toggleExpand"
-                                :level="1"
-                                :hasTree="hasTree"
-                                :expandWidth="expandWidth"
-                                :computedMainCol="computedMainCol"
-                                @row-click="handleRowClick"
-                                @toggle-expand="toggleExpand"
-                            />
+                    <table-row 
+                        v-for="(row, rowIndex) in sortedData"
+                        :key="row[rowKey] || rowIndex"
+                        :row="row" 
+                        :rowIndex="rowIndex"
+                        :parent-row="null"
+                        :columns="columns"
+                        :tree-props="treeProps"
+                        :row-key="rowKey"
+                        :expanded-keys="expandedKeys"
+                        :cell-style-inner="cellStyleInner"
+                        :is-expanded="isExpanded"
+                        :row-class-name="rowClassName"
+                        :stripe="stripe"
+                        :cell-class-name="cellClassName"
+                        :get-fixed-class="getFixedClass"
+                        :highlight-current-row="highlightCurrentRow"
+                        :current-row="currentRow"
+                        :handle-row-click="handleRowClick"
+                        :toggle-expand="toggleExpand"
+                        :level="1"
+                        :rowHeight="rowHeight"
+                        :hasTree="hasTree"
+                        :selectedRows="selectedRows"
+                        :expandWidth="expandWidth"
+                        :computedMainCol="computedMainCol"
+                        @toggle-select="toggleSelect"
+                        @row-click="handleRowClick"
+                        @toggle-expand="toggleExpand"
+                    >
+                        <template v-slot:cellChild="scope">
+                            <slot name="cell" :row="scope.row" :column="scope.column" :prow="scope.prow"
+                                :rowIndex="scope.rowIndex" :columnIndex="scope.columnIndex" :level="scope.level">
+                            </slot>                      
                         </template>
-                    </template>
+                    </table-row>
                 </template>
                 <template v-else>
                     <slot name="empty">
@@ -126,65 +102,42 @@
             <!-- 表体 -->
             <view class="u-table-body" :style="{ minWidth: scrollWidth, maxHeight: maxHeight ? maxHeight + 'px' : 'none' }">
                 <template v-if="data && data.length > 0">
-                    <template v-for="(row, index) in sortedData" :key="row[rowKey] || index">
-                        <view class="u-table-row" :class="[highlightCurrentRow && currentRow === row ? 'u-table-row-highlight' : '',
-                            rowClassName ? rowClassName(row, index) : '',
-                            stripe && index % 2 === 1 ? 'u-table-row-zebra' : ''
-                        ]" @click="handleRowClick(row)">
-                            <view v-for="(col, colIndex) in visibleFixedLeftColumns" :key="col.key"
-                                class="u-table-cell" :class="[col.align ? 'u-text-' + col.align : '',
-                                cellClassName ? cellClassName(row, col) : '',
-                                getFixedClass(col)
-                            ]" :style="cellStyleInner({row: row, column: col,
-                                rowIndex: index, columnIndex: colIndex, level: 0})">
-                                <!-- 复选框列 -->
-                                <view v-if="col.type === 'selection'">
-                                    <checkbox :checked="isSelected(row)"
-                                        @click.stop="toggleSelect(row)" />
-                                </view>
-
-                                <!-- 默认插槽或文本 -->
-                                <slot name="cell" :row="row" :column="col"
-                                    :rowIndex="index" :columnIndex="colIndex">
-                                    <!-- 树形结构展开图标 -->
-                                     <view v-if="col.key === computedMainCol"
-                                        @click.stop="toggleExpand(row)" :style="{width: expandWidth}">
-                                        <view v-if="row.children && row.children.length > 0">
-                                            {{ isExpanded(row) ? '▼' : '▶' }}
-                                        </view>
-                                    </view>
-                                    <view class="u-table-cell_content">
-                                        {{ row[col.key] }}
-                                    </view>
-                                </slot>
-                            </view>
-                        </view>
+                    <template v-for="(row, rowIndex) in sortedData" :key="row[rowKey] || rowIndex">
                         <!-- 子级渲染 (递归组件) -->
-                        <template v-if="isExpanded(row) && row[treeProps.children] && row[treeProps.children].length">
-                            <table-row 
-                                :rows="row[treeProps.children]" 
-                                :parent-row="row"
-                                :columns="visibleFixedLeftColumns"
-                                :tree-props="treeProps"
-                                :row-key="rowKey"
-                                :expanded-keys="expandedKeys"
-                                :cell-style-inner="cellStyleInner"
-                                :is-expanded="isExpanded"
-                                :row-class-name="rowClassName"
-                                :stripe="stripe"
-                                :cell-class-name="cellClassName"
-                                :get-fixed-class="getFixedClass"
-                                :highlight-current-row="highlightCurrentRow"
-                                :current-row="currentRow"
-                                :handle-row-click="handleRowClick"
-                                :toggle-expand="toggleExpand"
-                                :level="1"
-                                :expandWidth="expandWidth"
-                                :computedMainCol="computedMainCol"
-                                @row-click="handleRowClick"
-                                @toggle-expand="toggleExpand"
-                            />
-                        </template>
+                        <table-row 
+                            :row="row" 
+                            :rowIndex="rowIndex"
+                            :parent-row="null"
+                            :columns="visibleFixedLeftColumns"
+                            :tree-props="treeProps"
+                            :row-key="rowKey"
+                            :expanded-keys="expandedKeys"
+                            :cell-style-inner="cellStyleInner"
+                            :is-expanded="isExpanded"
+                            :row-class-name="rowClassName"
+                            :stripe="stripe"
+                            :cell-class-name="cellClassName"
+                            :get-fixed-class="getFixedClass"
+                            :highlight-current-row="highlightCurrentRow"
+                            :current-row="currentRow"
+                            :handle-row-click="handleRowClick"
+                            :toggle-expand="toggleExpand"
+                            :level="1"
+                            :rowHeight="rowHeight"
+                            :hasTree="hasTree"
+                            :selectedRows="selectedRows"
+                            :expandWidth="expandWidth"
+                            :computedMainCol="computedMainCol"
+                            @toggle-select="toggleSelect"
+                            @row-click="handleRowClick"
+                            @toggle-expand="toggleExpand"
+                        >
+                            <template v-slot:cellChild="scope">
+                                <slot name="cell" :row="scope.row" :column="scope.column" :prow="scope.prow"
+                                    :rowIndex="scope.rowIndex" :columnIndex="scope.columnIndex" :level="scope.level">
+                                </slot>                      
+                            </template>
+                        </table-row>
                     </template>
                 </template>
             </view>
@@ -343,6 +296,10 @@ export default {
         expandWidth: {
             type: String,
             default: '25px'
+        },
+        rowHeight: {
+            String,
+            default: '40px'
         }
     },
     emits: [
@@ -363,7 +320,6 @@ export default {
             showFixedColumnShadow: false, // 是否显示固定列阴影
             fixedLeftColumns: [], // 左侧固定列
             tableHeight: 'auto', // 表格高度
-            rowHeight: 40, // 行高
             headerHeight: 'auto', // 新增表头高度属性
             hasTree: false // 新增属性，用于判断是否存在树形结构
         }
@@ -447,7 +403,7 @@ export default {
             // 修改为排除有type值的列
             const validColumns = this.columns.filter(col => !col.type);
             let mainCol = validColumns && validColumns.length > 0 ? validColumns[0].key : '';
-            console.log('mainCol', mainCol)
+            // console.log('mainCol', mainCol)
             return mainCol;
         }
     },
@@ -525,7 +481,7 @@ export default {
 			};
             // 只有展开列设置padding
             if (scope.column.key == this.computedMainCol) {
-                style.paddingLeft = (16 * (scope.level || 0)) + 2 + 'px'
+                style.paddingLeft = (16 * (scope.level -1 )) + 2 + 'px'
             }
 			if (this.cellStyle != null) {
 				let styleCalc = this.cellStyle(scope)
@@ -551,7 +507,7 @@ export default {
             })
             
             // 遍历数据列表第一层判断是否存在树形结构
-            this.hasTree = this.data.some(item => {
+            this.hasTree = this.sortedData.some(item => {
                 return item[this.treeProps.children] && item[this.treeProps.children].length > 0;
             });
 		},
@@ -605,18 +561,22 @@ export default {
         toggleSelect(row) {
             const index = this.selectedRows.findIndex(r => r[this.rowKey] === row[this.rowKey]);
             if (index >= 0) {
+                // 取消选中当前行及其所有子节点
                 this.selectedRows.splice(index, 1);
+                // 递归取消所有子节点
+                this.unselectChildren(row);
             } else {
+                // 选中当前行及其所有子节点
                 this.selectedRows.push(row);
+                // 递归选中所有子节点
+                this.selectChildren(row);
             }
+            console.log(this.selectedRows)
             this.$emit('selection-change', this.selectedRows);
             this.$emit('select', row);
         },
-        isSelected(row) {
-            return this.selectedRows.some(r => r[this.rowKey] === row[this.rowKey]);
-        },
         toggleExpand(row) {
-            console.log(row)
+            // console.log(row)
             const key = row[this.rowKey];
             const index = this.expandedKeys.indexOf(key);
             if (index === -1) {
@@ -627,8 +587,40 @@ export default {
             this.$emit('expand-change', this.expandedKeys);
         },
         isExpanded(row) {
+            if (!row) {
+                return false;
+            }
             return this.expandedKeys.includes(row[this.rowKey]);
-        }
+        },
+        // 新增方法：递归选中所有子节点
+        selectChildren(row) {
+            const children = row[this.treeProps.children];
+            if (children && children.length > 0) {
+                children.forEach(child => {
+                    // 检查是否已选中，避免重复添加
+                    const childIndex = this.selectedRows.findIndex(r => r[this.rowKey] === child[this.rowKey]);
+                    if (childIndex === -1) {
+                        this.selectedRows.push(child);
+                    }
+                    // 递归处理子节点的子节点
+                    this.selectChildren(child);
+                });
+            }
+        },
+        // 新增方法：递归取消选中所有子节点
+        unselectChildren(row) {
+            const children = row[this.treeProps.children];
+            if (children && children.length > 0) {
+                children.forEach(child => {
+                    const childIndex = this.selectedRows.findIndex(r => r[this.rowKey] === child[this.rowKey]);
+                    if (childIndex >= 0) {
+                        this.selectedRows.splice(childIndex, 1);
+                    }
+                    // 递归处理子节点的子节点
+                    this.unselectChildren(child);
+                });
+            }
+        },
     }
 };
 </script>
