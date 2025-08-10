@@ -165,17 +165,19 @@
 					  id: 1,
 					  name: '部门A',
 					  age: 25,
+					  age2: 25,
 					  children: [
-						{ id: 2, name: '员工1', age: 22 },
-						{ id: 3, name: '员工2', age: 24 }
+						{ id: 2, name: '员工1', age: 22, age2: 25 },
+						{ id: 3, name: '员工2', age: 24, age2: 25 }
 					  ]
 					},
 					{ id: 4, name: '部门B', age: 30 }
 				],
 				columns3: [
 					{ title: '', type: 'expand', width: '50px' },
-					{ title: '名称', key: 'name'},
-					{ title: '年龄', key: 'age' }
+					{ title: '名称', key: 'name', width: '150px', fixed: 'left' },
+					{ title: '年龄', key: 'age' , width: '250px'},
+					{ title: '年龄', key: 'age2' , width: '250px' }
 				],
 				columnsFixed: [
 					{ title: '名称', key: 'name', width: '50px'},

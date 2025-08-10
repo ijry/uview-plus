@@ -146,6 +146,22 @@
                                 </slot>
                             </view>
                         </view>
+                        <!-- 子级渲染 -->
+                        <template v-if="isExpanded(row) && row[treeProps.children] && row[treeProps.children].length">
+                            <view v-for="childRow in row[treeProps.children]" :key="childRow[rowKey]"
+                                class="u-table-row u-table-row-child">
+                                <view v-for="(col2, col2Index) in visibleFixedLeftColumns" :key="col2.key" class="u-table-cell"
+                                    :style="cellStyleInner({row: childRow, column: col2,
+                                        rowIndex: index, columnIndex: col2Index, level: 1})">
+                                    <slot name="cell" :row="childRow" :column="col2" :prow="row"
+                                        :rowIndex="index" :columnIndex="col2Index" :level="1">
+                                        <view class="u-table-cell_content">
+                                            {{ childRow[col2.key] }}
+                                        </view>
+                                    </slot>
+                                </view>
+                            </view>
+                        </template>
                     </template>
                 </template>
             </view>
@@ -476,9 +492,9 @@ export default {
 			})
             
             // 获取表格高度
-            this.$uGetRect('.u-table2').then(size => {
-                this.tableHeight = size.height + 'px';
-            })
+            // this.$uGetRect('.u-table2').then(size => {
+            //     this.tableHeight = size.height + 'px';
+            // })
 		},
         // 将setup中的函数转换为methods
         handleRowClick(row) {
