@@ -1,5 +1,5 @@
 <template>
-    <view class="u-table2">
+    <view class="u-table2" :class="{ 'u-table-border': border }">
         <scroll-view scroll-x class="u-table2-content" :style="{ height: height ? height + 'px' : 'auto' }" @scroll="onScroll">
             <!-- 表头 -->
             <view v-if="showHeader" class="u-table-header" :class="{ 'u-table-sticky': fixedHeader }" :style="{minWidth: scrollWidth}">
@@ -44,13 +44,13 @@
                                     <checkbox :checked="isSelected(row)"
                                         @click.stop="toggleSelect(row)" />
                                 </view>
-
                                 <!-- 树形结构展开图标 -->
-                                <view v-else-if="col.type === 'expand'" @click.stop="toggleExpand(row)">
-                                    {{ isExpanded(row) ? '▼' : '▶' }}
+                                <view v-if="col.key === computedMainCol && hasTree"
+                                       @click.stop="toggleExpand(row)" :style="{width: expandWidth}">
+                                    <view v-if="row.children && row.children.length > 0">
+                                        {{ isExpanded(row) ? '▼' : '▶' }}
+                                    </view>
                                 </view>
-
-                                <!-- 默认插槽或文本 -->
                                 <slot name="cell" :row="row" :column="col"
                                     :rowIndex="index" :columnIndex="colIndex">
                                     <view class="u-table-cell_content">
@@ -60,21 +60,32 @@
                             </view>
                         </view>
 
-                        <!-- 子级渲染 -->
+                        <!-- 子级渲染 (递归组件) -->
                         <template v-if="isExpanded(row) && row[treeProps.children] && row[treeProps.children].length">
-                            <view v-for="childRow in row[treeProps.children]" :key="childRow[rowKey]"
-                                class="u-table-row u-table-row-child">
-                                <view v-for="(col2, col2Index) in columns" :key="col2.key" class="u-table-cell"
-                                    :style="cellStyleInner({row: childRow, column: col2,
-                                        rowIndex: index, columnIndex: col2Index, level: 1})">
-                                    <slot name="cell" :row="childRow" :column="col2" :prow="row"
-                                        :rowIndex="index" :columnIndex="col2Index" :level="1">
-                                        <view class="u-table-cell_content">
-                                            {{ childRow[col2.key] }}
-                                        </view>
-                                    </slot>
-                                </view>
-                            </view>
+                            <table-row 
+                                :rows="row[treeProps.children]" 
+                                :parent-row="row"
+                                :columns="columns"
+                                :tree-props="treeProps"
+                                :row-key="rowKey"
+                                :expanded-keys="expandedKeys"
+                                :cell-style-inner="cellStyleInner"
+                                :is-expanded="isExpanded"
+                                :row-class-name="rowClassName"
+                                :stripe="stripe"
+                                :cell-class-name="cellClassName"
+                                :get-fixed-class="getFixedClass"
+                                :highlight-current-row="highlightCurrentRow"
+                                :current-row="currentRow"
+                                :handle-row-click="handleRowClick"
+                                :toggle-expand="toggleExpand"
+                                :level="1"
+                                :hasTree="hasTree"
+                                :expandWidth="expandWidth"
+                                :computedMainCol="computedMainCol"
+                                @row-click="handleRowClick"
+                                @toggle-expand="toggleExpand"
+                            />
                         </template>
                     </template>
                 </template>
@@ -90,7 +101,7 @@
         <view v-if="showFixedColumnShadow" class="u-table-fixed-shadow" :style="{ height: tableHeight }">
             <!-- 表头 -->
             <view v-if="showHeader" class="u-table-header" :class="{ 'u-table-sticky': fixedHeader }" :style="{minWidth: scrollWidth}">
-                <view class="u-table-row">
+                <view class="u-table-row" :style="{height: headerHeight}">
                     <view v-for="(col, colIndex) in visibleFixedLeftColumns" :key="col.key" class="u-table-cell"
                         :style="headerColStyle(col)"
                         :class="[col.align ? 'u-text-' + col.align : '',
@@ -132,35 +143,47 @@
                                         @click.stop="toggleSelect(row)" />
                                 </view>
 
-                                <!-- 树形结构展开图标 -->
-                                <view v-else-if="col.type === 'expand'" @click.stop="toggleExpand(row)">
-                                    {{ isExpanded(row) ? '▼' : '▶' }}
-                                </view>
-
                                 <!-- 默认插槽或文本 -->
                                 <slot name="cell" :row="row" :column="col"
                                     :rowIndex="index" :columnIndex="colIndex">
+                                    <!-- 树形结构展开图标 -->
+                                     <view v-if="col.key === computedMainCol"
+                                        @click.stop="toggleExpand(row)" :style="{width: expandWidth}">
+                                        <view v-if="row.children && row.children.length > 0">
+                                            {{ isExpanded(row) ? '▼' : '▶' }}
+                                        </view>
+                                    </view>
                                     <view class="u-table-cell_content">
                                         {{ row[col.key] }}
                                     </view>
                                 </slot>
                             </view>
                         </view>
-                        <!-- 子级渲染 -->
+                        <!-- 子级渲染 (递归组件) -->
                         <template v-if="isExpanded(row) && row[treeProps.children] && row[treeProps.children].length">
-                            <view v-for="childRow in row[treeProps.children]" :key="childRow[rowKey]"
-                                class="u-table-row u-table-row-child">
-                                <view v-for="(col2, col2Index) in visibleFixedLeftColumns" :key="col2.key" class="u-table-cell"
-                                    :style="cellStyleInner({row: childRow, column: col2,
-                                        rowIndex: index, columnIndex: col2Index, level: 1})">
-                                    <slot name="cell" :row="childRow" :column="col2" :prow="row"
-                                        :rowIndex="index" :columnIndex="col2Index" :level="1">
-                                        <view class="u-table-cell_content">
-                                            {{ childRow[col2.key] }}
-                                        </view>
-                                    </slot>
-                                </view>
-                            </view>
+                            <table-row 
+                                :rows="row[treeProps.children]" 
+                                :parent-row="row"
+                                :columns="visibleFixedLeftColumns"
+                                :tree-props="treeProps"
+                                :row-key="rowKey"
+                                :expanded-keys="expandedKeys"
+                                :cell-style-inner="cellStyleInner"
+                                :is-expanded="isExpanded"
+                                :row-class-name="rowClassName"
+                                :stripe="stripe"
+                                :cell-class-name="cellClassName"
+                                :get-fixed-class="getFixedClass"
+                                :highlight-current-row="highlightCurrentRow"
+                                :current-row="currentRow"
+                                :handle-row-click="handleRowClick"
+                                :toggle-expand="toggleExpand"
+                                :level="1"
+                                :expandWidth="expandWidth"
+                                :computedMainCol="computedMainCol"
+                                @row-click="handleRowClick"
+                                @toggle-expand="toggleExpand"
+                            />
                         </template>
                     </template>
                 </template>
@@ -171,9 +194,13 @@
 
 <script>
 import { addUnit, sleep } from '../../libs/function/index';
+import tableRow from './tableRow.vue'; // 引入递归组件
 
 export default {
     name: 'u-table2',
+    components: {
+        tableRow // 注册递归组件
+    },
     props: {
         data: {
             type: Array,
@@ -308,6 +335,15 @@ export default {
             type: String,
             default: '暂无数据'
         },
+        // 添加mainCol属性，用于指定树形结构展开控制图标所在的列
+        mainCol: {
+            type: String,
+            default: ''
+        },
+        expandWidth: {
+            type: String,
+            default: '25px'
+        }
     },
     emits: [
         'select', 'select-all', 'selection-change',
@@ -327,7 +363,9 @@ export default {
             showFixedColumnShadow: false, // 是否显示固定列阴影
             fixedLeftColumns: [], // 左侧固定列
             tableHeight: 'auto', // 表格高度
-            rowHeight: 40 // 行高
+            rowHeight: 40, // 行高
+            headerHeight: 'auto', // 新增表头高度属性
+            hasTree: false // 新增属性，用于判断是否存在树形结构
         }
     },
     mounted() {
@@ -400,6 +438,17 @@ export default {
             }
             
             return visibleColumns;
+        },
+        // 获取mainCol的值，如果未设置则默认为第一列的key
+        computedMainCol() {
+            if (this.mainCol) {
+                return this.mainCol;
+            }
+            // 修改为排除有type值的列
+            const validColumns = this.columns.filter(col => !col.type);
+            let mainCol = validColumns && validColumns.length > 0 ? validColumns[0].key : '';
+            console.log('mainCol', mainCol)
+            return mainCol;
         }
     },
     watch: {
@@ -472,9 +521,12 @@ export default {
 		cellStyleInner(scope) {
 			let style = {
 				width: scope.column?.width ? addUnit(scope.column.width) : 'auto',
-				flex: scope.column?.width ? 'none' : 1,
-				paddingLeft: (24 * scope.level) + 'px'
+				flex: scope.column?.width ? 'none' : 1
 			};
+            // 只有展开列设置padding
+            if (scope.column.key == this.computedMainCol) {
+                style.paddingLeft = (16 * (scope.level || 0)) + 2 + 'px'
+            }
 			if (this.cellStyle != null) {
 				let styleCalc = this.cellStyle(scope)
 				if (styleCalc != null) {
@@ -491,10 +543,17 @@ export default {
 				this.scrollWidth = size.width + 'px'
 			})
             
-            // 获取表格高度
-            // this.$uGetRect('.u-table2').then(size => {
-            //     this.tableHeight = size.height + 'px';
-            // })
+            // 获取表头高度并设置
+            this.$uGetRect('.u-table-header').then(size => {
+                if (size.height) {
+                    this.headerHeight = size.height + 'px';
+                }
+            })
+            
+            // 遍历数据列表第一层判断是否存在树形结构
+            this.hasTree = this.data.some(item => {
+                return item[this.treeProps.children] && item[this.treeProps.children].length > 0;
+            });
 		},
         // 将setup中的函数转换为methods
         handleRowClick(row) {
@@ -557,6 +616,7 @@ export default {
             return this.selectedRows.some(r => r[this.rowKey] === row[this.rowKey]);
         },
         toggleExpand(row) {
+            console.log(row)
             const key = row[this.rowKey];
             const index = this.expandedKeys.indexOf(key);
             if (index === -1) {
@@ -574,10 +634,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.u-table2-wrapper {
-    position: relative;
-}
-
 .u-table2 {
     width: auto;
     overflow: auto;
@@ -606,21 +662,36 @@ export default {
         display: flex;
         flex-direction: row;
         align-items: center;
-        border-bottom: 1rpx solid #ebeef5;
+        border-bottom: 1px solid #ebeef5;
         overflow: hidden;
         position: relative;
-        min-height: 40px;
+        // min-height: 40px;
+    }
+
+    // 添加border样式支持
+    &.u-table-border {
+        border-top: 1px solid #ebeef5;
+        border-left: 1px solid #ebeef5;
+        border-right: 1px solid #ebeef5;
+        .u-table-cell {
+            border-right: 1px solid #ebeef5;
+        }
+        
+        .u-table-cell:last-child {
+            border-right: none;
+        }
     }
 
     .u-table-cell {
         flex: 1;
         display: flex;
         flex-direction: row;
-        padding: 5px 4px;
+        padding: 10px 10px;
         font-size: 14px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        line-height: 1.1;
     }
 
     .u-table-row-zebra {
@@ -662,23 +733,22 @@ export default {
     background-color: #ffffff;
 }
 
-.u-table-fixed-row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    border-bottom: 1rpx solid #ebeef5;
-    position: relative;
-}
+// .u-table-fixed-row {
+//     display: flex;
+//     flex-direction: row;
+//     align-items: center;
+//     border-bottom: 1rpx solid #ebeef5;
+//     position: relative;
+// }
 
-.u-table-fixed-cell {
-    flex: 1;
-    display: flex;
-    flex-direction: row;
-    padding: 5px 4px;
-    font-size: 14px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    background-color: #fff;
+// 为固定列也添加border样式支持
+.u-table-fixed-shadow .u-table-border {
+    .u-table-cell {
+        border-right: 1rpx solid #ebeef5;
+    }
+    
+    .u-table-cell:last-child {
+        border-right: none;
+    }
 }
 </style>

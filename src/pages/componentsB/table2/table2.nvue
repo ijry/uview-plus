@@ -19,7 +19,6 @@
 				    :data="tableData"
 				    :columns="columnsStyle"
 				    stripe
-				    border
 				    @row-click="handleRowClick"
 					:cellStyle="cellStyleFunc"
 				>
@@ -82,8 +81,16 @@
 				    :columns="columns3"
 				    :tree-props="{ children: 'children' }"
 				    :expand-row-keys="['1']"
-				    @expand-change="onExpandChange"
-				  />
+				    @expand-change="onExpandChange">
+					<template #cell="scope">
+						<template v-if="scope.column.key == 'acitons'">
+							<up-button type="primary" text="编辑">编辑</up-button>
+						</template>
+						<template v-else>
+							{{ scope.row[scope.column.key] }}
+						</template>
+					</template>
+				</u-table2>
 			</view>
 		</view>
 		<!-- 新增弹窗示例 -->
@@ -128,7 +135,7 @@
 					{ title: '年龄', key: 'age', width: '50px' },
 					{ title: '年龄', key: 'age', width: '50px' },
 					{ title: '年龄', key: 'age', width: '50px' },
-					{ title: '年龄', key: 'age'  }
+					{ title: '年龄', key: 'age', width: '50px'   }
 				],
 				columnsStyle: [
 					{ title: '姓名', key: 'name', width: '50px' },
@@ -167,31 +174,37 @@
 					  age: 25,
 					  age2: 25,
 					  children: [
-						{ id: 2, name: '员工1', age: 22, age2: 25 },
+						{ id: 2, name: '员工1', age: 22, age2: 25,
+							children: [
+								{ id: 22, name: '员工22', age: 22, age2: 25 },
+								{ id: 32, name: '员工32', age: 24, age2: 25 }
+							]
+						 },
 						{ id: 3, name: '员工2', age: 24, age2: 25 }
 					  ]
 					},
 					{ id: 4, name: '部门B', age: 30 }
 				],
 				columns3: [
-					{ title: '', type: 'expand', width: '50px' },
-					{ title: '名称', key: 'name', width: '150px', fixed: 'left' },
-					{ title: '年龄', key: 'age' , width: '250px'},
-					{ title: '年龄', key: 'age2' , width: '250px' }
+					// { title: '', type: 'expand', width: '50px' },
+					{ title: '名称', key: 'name', width: '120px', fixed: 'left' },
+					{ title: '年龄', key: 'age' , width: '80px'},
+					{ title: '年龄', key: 'age2' , width: '80px' },
+					{ title: '操作', key: 'actions' , width: '150px' }
 				],
 				columnsFixed: [
 					{ title: '名称', key: 'name', width: '50px'},
 					{ title: '年龄', key: 'age' , width: '60px', fixed: 'left' },
 					{ title: '年龄2', key: 'age2' , width: '60px' },
-					{ title: '年龄3', key: 'age3' , width: '50px' },
-					{ title: '年龄4', key: 'age4' , width: '50px', fixed: 'left' },
-					{ title: '年龄5', key: 'age5' , width: '50px' },
-					{ title: '年龄6', key: 'age6' , width: '50px' },
-					{ title: '年龄7', key: 'age7' , width: '50px' },
-					{ title: '年龄8', key: 'age8' , width: '50px' },
-					{ title: '年龄9', key: 'age9' , width: '50px' },
-					{ title: '年龄10', key: 'age10' , width: '60px' },
-					{ title: '年龄11', key: 'age11' , width: '60px' },
+					{ title: '年龄3', key: 'age3' , width: '60px' },
+					{ title: '年龄4', key: 'age4' , width: '60px', fixed: 'left' },
+					{ title: '年龄5', key: 'age5' , width: '60px' },
+					{ title: '年龄6', key: 'age6' , width: '60px' },
+					{ title: '年龄7', key: 'age7' , width: '60px' },
+					{ title: '年龄8', key: 'age8' , width: '60px' },
+					{ title: '年龄9', key: 'age9' , width: '60px' },
+					{ title: '年龄10', key: 'age10' , width: '66px' },
+					{ title: '年龄11', key: 'age11' , width: '66px' },
 				],
 				tableDataFixed: [
 					{ id: 1, name: '张三', age: 25, age2: 25, age3: 25, age4: 25, age5: 25, age6: 25, age7: 25, age8: 25, age9: 25, age10: 25, age11: 25  },
