@@ -501,8 +501,14 @@ export default [{
     }, {
         path: '/pages/componentsD/qrcode/qrcode',
         icon: 'qrcode',
-        title: 'qrcode 二维码',
+        title: 'Qrcode 二维码',
         title_en: '二维码'
+    },
+    {
+        path: '/pages/componentsD/barcode/barcode',
+        icon: 'barcode',
+        title: 'Barcode 条码',
+        title_en: '条码'
     },
     {
         path: '/pages/componentsD/cityLocate/cityLocate',
