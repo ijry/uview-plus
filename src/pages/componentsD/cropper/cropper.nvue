@@ -1,0 +1,57 @@
+<template>
+    <view class="u-page">
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">头像裁剪</text>
+          <view class="u-page__item__content">
+            <view class="cutBox">
+                <view class="avatar-wrapper" @click="chooseImage(0)">
+                    <up-avatar class="avatar" :src="urls[0]" size="120px"></up-avatar>
+                </view>
+                <up-cropper @confirm="cutImage" ref="avatarRef"></up-cropper>
+            </view>
+          </view>
+      </view>
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">自定义前缀</text>
+          <view class="u-page__item__content">
+            <up-title>
+                <template #prefix>
+                    <up-icon name="level" color="red" size="16px"></up-icon>
+                </template>
+                等级3
+            </up-title>
+          </view>
+      </view>
+  </view>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+        urls: []
+    };
+  },
+  methods: {
+    chooseImage(index) {
+        this.$refs.avatarRef.chooseImage(index,{
+            areaWidth: "300rpx", areaHeight: "300rpx",
+            exportWidth: '260rpx', exportHeight: '360rpx'
+        });
+    },
+    cutImage(rsp) {
+        console.log(rsp);
+        this.urls[rsp.index] = rsp.path;
+    }
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+  .u-page__item {
+      margin-bottom: 15px;
+  }
+  .u-page__item__title {
+      margin-bottom: 10px;
+  }
+</style>

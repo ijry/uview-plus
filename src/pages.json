@@ -625,6 +625,12 @@
                     "style" : {
                         "navigationBarTitleText" : "条码"
                     }
+                },
+                {
+                    "path" : "cropper/cropper",
+                    "style" : {
+                        "navigationBarTitleText" : "图片裁剪"
+                    }
                 }
             ]
         },
