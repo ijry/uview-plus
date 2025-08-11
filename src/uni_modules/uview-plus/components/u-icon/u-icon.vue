@@ -161,7 +161,7 @@
 	$u-icon-error: $u-error !default;
 	$u-icon-label-line-height:1 !default;
 
-	/* #ifdef MP-QQ || MP-TOUTIAO || MP-BAIDU || MP-KUAISHOU || MP-XHS */
+	/* #ifdef APP || MP-QQ || MP-TOUTIAO || MP-BAIDU || MP-KUAISHOU || MP-XHS */
 	// 2025/04/09在App/微信/支付宝/鸿蒙元服务已改用uni.loadFontFace加载字体
 	@font-face {
 		font-family: 'uicon-iconfont';
