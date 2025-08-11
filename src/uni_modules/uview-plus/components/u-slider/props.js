@@ -86,6 +86,10 @@ export const props = defineMixin({
         height: {
             type: String,
             default: () => defProps.slider.height
-        }
+        },
+        innerStyle: {
+            type: Object,
+            default: () => defProps.slider.innerStyle
+        },
     }
 })

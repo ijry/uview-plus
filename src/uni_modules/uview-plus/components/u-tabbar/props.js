@@ -18,6 +18,11 @@ export const props = defineMixin({
             type: Boolean,
             default: () => defProps.tabbar.border
         },
+        // 上方边框颜色
+        borderColor: {
+            type: Boolean,
+            default: () => defProps.tabbar.borderColor
+        },
         // 元素层级z-index
         zIndex: {
             type: [String, Number],
@@ -42,6 +47,11 @@ export const props = defineMixin({
         placeholder: {
             type: Boolean,
             default: () => defProps.tabbar.placeholder
+        },
+        // 背景色
+        backgroundColor: {
+            type: String,
+            default: () => defProps.tabbar.backgroundColor
         }
     }
 })

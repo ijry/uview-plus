@@ -17,6 +17,8 @@ export default {
         activeColor: '#1989fa',
         inactiveColor: '#7d7e80',
         fixed: true,
-        placeholder: true
+        placeholder: true,
+        borderColor: '',
+        backgroundColor: ''
     }
 }

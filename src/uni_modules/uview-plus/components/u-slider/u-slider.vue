@@ -7,9 +7,7 @@
 			<view ref="u-slider-inner" class="u-slider-inner" @click="onClick"
 				@onTouchStart="onTouchStart2($event, 1)" @touchmove="onTouchMove2($event, 1)"
 				@touchend="onTouchEnd2($event, 1)" @touchcancel="onTouchEnd2($event, 1)"
-				:class="[disabled ? 'u-slider--disabled' : '']" :style="{
-					height: (isRange && showValue) ? (getPx(blockSize) + 24) + 'px' : (getPx(blockSize)) + 'px',
-				}"
+				:class="[disabled ? 'u-slider--disabled' : '']" :style="innerStyleCpu"
 			>
 				<view ref="u-slider__base"
 					class="u-slider__base"
@@ -176,6 +174,13 @@
         	}
 		},
 		created() {
+		},
+		computed: {
+			innerStyleCpu() {
+				let style = this.innerStyle;
+				style.height = (this.isRange && this.showValue) ? (getPx(this.blockSize) + 24) + 'px' : (getPx(this.blockSize)) + 'px';
+				return style;
+			}
 		},
 		async mounted() {
 			// 获取滑块条的尺寸信息
