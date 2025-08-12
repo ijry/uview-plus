@@ -3,7 +3,7 @@
         <view class="u-page__item">
             <text class="u-page__item__title" style="margin-top: 0;">基础签名示例</text>
             <view class="u-page__item__content">
-                <u-signature 
+                <up-signature 
                     ref="signature1" 
                     :width="700" 
                     :height="200" 
@@ -11,7 +11,7 @@
                     :show-toolbar="false"
                     @confirm="onConfirm1"
                     @error="onError1"
-                ></u-signature>
+                ></up-signature>
                 
                 <view class="preview" v-if="signatureImage1">
                     <text>签名预览:</text>
@@ -24,7 +24,7 @@
         <view class="u-page__item">
             <text class="u-page__item__title">自定义颜色和工具栏示例</text>
             <view class="u-page__item__content">
-                <u-signature 
+                <up-signature 
                     ref="signature2" 
                     :width="700" 
                     :height="200" 
@@ -33,7 +33,7 @@
                     bg-color="#f5f5f5"
                     @confirm="onConfirm2"
                     @error="onError2"
-                ></u-signature>
+                ></up-signature>
                 
                 <view class="preview" v-if="signatureImage2">
                     <text>签名预览:</text>
