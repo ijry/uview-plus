@@ -60,7 +60,7 @@ export const props = defineMixin({
         },
         // 是否禁用
         disabled: {
-            type: String,
+            type: Boolean,
             default: () => defProps.subsection.disabled
         }
     }
