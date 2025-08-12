@@ -251,18 +251,23 @@ export default [{
 	, {
         path: '/pages/componentsD/copy/copy',
         icon: 'copy',
-        title: 'copy 复制',
+        title: 'Copy 复制',
         title_en: 'Copy'
     }, {
         path: '/pages/componentsD/floatButton/floatButton',
         icon: 'copy',
-        title: 'floatButton 悬浮按钮',
+        title: 'FloatButton 悬浮按钮',
         title_en: 'Float Button'
     }, {
         path: '/pages/componentsD/pullRefresh/pullRefresh',
         icon: 'pullRefresh',
-        title: 'pullRefresh 下拉刷新',
+        title: 'PullRefresh 下拉刷新',
         title_en: 'Pull Refresh'
+    }, {
+        path: '/pages/componentsD/signature/signature',
+        icon: 'signature',
+        title: 'Signature 签名签字',
+        title_en: 'Signature Refresh'
     }
         // {
         // 	path: '/pages/componentsA/fullScreen/fullScreen',

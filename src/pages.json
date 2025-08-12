@@ -631,6 +631,12 @@
                     "style" : {
                         "navigationBarTitleText" : "图片裁剪"
                     }
+                },
+                {
+                    "path" : "signature/signature",
+                    "style" : {
+                        "navigationBarTitleText" : "签名签字"
+                    }
                 }
             ]
         },
