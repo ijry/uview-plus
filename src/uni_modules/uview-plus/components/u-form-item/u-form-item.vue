@@ -15,7 +15,7 @@
 					v-if="required || leftIcon || label"
 					:style="{
 						width: addUnit(labelWidth || parentData.labelWidth),
-						marginBottom: parentData.labelPosition === 'left' ? 0 : '5px',
+						marginBottom: (labelPosition || parentData.labelPosition) === 'left' ? 0 : '5px',
 					}"
 				>
 					<!-- 为了块对齐 -->
@@ -62,7 +62,7 @@
 				v-if="!!message && parentData.errorType === 'message'"
 				class="u-form-item__body__right__message"
 				:style="{
-					marginLeft:  addUnit(parentData.labelPosition === 'top' ? 0 : (labelWidth || parentData.labelWidth))
+					marginLeft:  addUnit((labelPosition || parentData.labelPosition) === 'top' ? 0 : (labelWidth || parentData.labelWidth))
 				}"
 			>{{ message }}</text>
 		</slot>
