@@ -66,10 +66,10 @@ export function sys() {
 }
 export function getWindowInfo() {
 	let ret = {}
-	// #ifdef APP || H5 || MP-WEIXIN
+	// #ifdef APP || H5
 	ret = uni.getWindowInfo()
 	// #endif
-	// #ifndef APP || H5 || MP-WEIXIN
+	// #ifndef APP || H5
 	ret = sys()
 	// #endif
 	return ret
