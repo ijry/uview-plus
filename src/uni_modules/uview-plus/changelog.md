@@ -1,3 +1,6 @@
+## 3.4.90（2025-08-13）
+feat: datetimepicker新增datehour类型
+
 ## 3.4.89（2025-08-13）
 fix: 修复u-form-item组件缺少对labelPosition的判断
 
