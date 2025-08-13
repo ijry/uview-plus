@@ -1,3 +1,6 @@
+## 3.4.89（2025-08-13）
+fix: 修复u-form-item组件缺少对labelPosition的判断
+
 ## 3.4.88（2025-08-13）
 fix: subsection组件的disabled属性应为Boolean类型
 
