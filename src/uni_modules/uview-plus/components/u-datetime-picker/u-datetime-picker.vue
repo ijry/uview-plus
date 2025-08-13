@@ -176,6 +176,9 @@
 							case 'year-month':
 								format = 'YYYY-MM'
 								break;
+							case 'datehour':
+								format = 'YYYY-MM-DD HH'
+								break;
 							case 'datetime':
 								format = 'YYYY-MM-DD HH:mm'
 								break;
