@@ -1,3 +1,6 @@
+## 3.4.88（2025-08-13）
+fix: subsection组件的disabled属性应为Boolean类型
+
 ## 3.4.87（2025-08-12）
 improvment: 签名组件示例前缀改为up
 
