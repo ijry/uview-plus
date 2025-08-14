@@ -6,8 +6,8 @@
 		<canvas :canvas-id="'oper-canvas-' + instanceId" :id="'oper-canvas-' + instanceId" class="oper-canvas"
 			:style="{top: styleTop, height: cvsStyleHeight}"
 			disable-scroll="false" @touchstart="start" @touchmove="move" @touchend="end"></canvas>
-		<canvas :canvas-id="'prv-canvas-' + instanceId" :id="'prv-canvas-' + instanceId" class="prv-canvas"disable-scroll="false"
-			@touchstart="hideImg":style="{ height: cvsStyleHeight, top: prvTop }"></canvas>
+		<canvas :canvas-id="'prv-canvas-' + instanceId" :id="'prv-canvas-' + instanceId" class="prv-canvas"
+			disable-scroll="false" @touchstart="hideImg" :style="{ height: cvsStyleHeight, top: prvTop }"></canvas>
 		<view class="oper-wrapper" :style="{display: styleDisplay}">
 			<view class="oper">
 				<view class="btn-wrapper" v-if="showOper">
