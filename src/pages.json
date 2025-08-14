@@ -637,6 +637,12 @@
                     "style" : {
                         "navigationBarTitleText" : "签名签字"
                     }
+                },
+                {
+                    "path" : "agreement/agreement",
+                    "style" : {
+                        "navigationBarTitleText" : "弹窗协议"
+                    }
                 }
             ]
         },

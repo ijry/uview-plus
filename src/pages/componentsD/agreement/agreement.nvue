@@ -1,0 +1,92 @@
+<template>
+    <view class="u-page">
+        <view class="u-page__item">
+            <text class="u-page__item__title" style="margin-top: 0;">基础用法</text>
+            <view class="u-page__item__content">
+                <up-button type="primary" @click="showAgreement1">显示协议</up-button>
+                <up-agreement ref="agreement1" @confirm="change1"
+                    url-protocol="/pages/user_agreement/agreement/info?title=用户协议"
+                    url-privacy="/pages/user_agreement/agreement/info?title=隐私政策"></up-agreement>
+            </view>
+        </view>
+        <view class="u-page__item">
+            <text class="u-page__item__title">自定义插槽</text>
+            <view class="u-page__item__content">
+                <up-button type="error" @click="showAgreement2">显示协议</up-button>
+                <up-agreement ref="agreement2" @confirm="change2"
+                    url-protocol="/pages/user_agreement/agreement/info?title=用户协议"
+                    url-privacy="/pages/user_agreement/agreement/info?title=隐私政策">
+                  <view class="custom-content">
+                    <text class="title">请仔细阅读并同意以下协议：</text>
+                    <view class="agreement-item">
+                        <text>《</text>
+                        <navigator class="inline-link" :url="urlProtocol">用户服务协议</navigator>
+                        <text>》</text>
+                    </view>
+                    <view class="agreement-item">
+                        <text>《</text>
+                        <navigator class="inline-link" :url="urlPrivacy">隐私保护政策</navigator>
+                        <text>》</text>
+                    </view>
+                    <view class="agreement-item">
+                        <text>《</text>
+                        <navigator class="inline-link" :url="urlThird">第三方信息共享清单</navigator>
+                        <text>》</text>
+                    </view>
+                 </view>
+                </up-agreement>
+            </view>
+        </view>
+    </view>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            checked1: 0,
+            checked2: 0,
+            checked3: 0,
+            urlProtocol: '/pages/agreement/protocol',
+            urlPrivacy: '/pages/agreement/privacy',
+            urlThird: '/pages/agreement/third-party'
+        };
+    },
+    methods: {
+        change1(val) {
+            console.log('agreement1 change:', val);
+            this.checked1 = val;
+        },
+        change2(val) {
+            console.log('agreement2 change:', val);
+            this.checked2 = val;
+        },
+        change3(val) {
+            console.log('agreement3 change:', val);
+            this.checked3 = val;
+        },
+        showAgreement1() {
+            this.$refs.agreement1.showModal();
+        },
+        showAgreement2() {
+            this.$refs.agreement2.showModal();
+        },
+        showAgreement3() {
+            this.$refs.agreement3.showModal();
+        }
+    }
+};
+</script>
+
+<style lang="scss" scoped>
+.u-page__item {
+    margin-bottom: 15px;
+}
+.u-page__item__title {
+    margin-bottom: 10px;
+}
+.agreement-item,
+.inline-link {
+    display: inline-block;
+}
+</style>

@@ -268,6 +268,12 @@ export default [{
         icon: 'signature',
         title: 'Signature 签名签字',
         title_en: 'Signature Refresh'
+    },
+    {
+        path: '/pages/componentsD/agreement/agreement',
+        icon: 'agreement',
+        title: 'agreement 弹窗协议',
+        title_en: 'Agreement'
     }
         // {
         // 	path: '/pages/componentsA/fullScreen/fullScreen',
