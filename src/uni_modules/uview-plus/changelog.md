@@ -1,3 +1,6 @@
+## 3.4.91（2025-08-14）
+feat: 新增agreement弹窗协议组件
+
 ## 3.4.90（2025-08-13）
 feat: datetimepicker新增datehour类型
 
