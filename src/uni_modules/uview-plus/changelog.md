@@ -1,3 +1,6 @@
+## 3.4.94（2025-08-15）
+improvment: 组件库内部icon前缀统一
+
 ## 3.4.93（2025-08-15）
 fix: 修复dropdown组件在打开下拉菜单时content高度为NANpx的问题
 
