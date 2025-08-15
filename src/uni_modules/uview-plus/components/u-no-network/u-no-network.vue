@@ -12,12 +12,12 @@
 		<view
 		    class="u-no-network"
 		>
-			<u-icon
+			<up-icon
 			    :name="image"
 			    size="150"
 			    imgMode="widthFit"
 			    class="u-no-network__error-icon"
-			></u-icon>
+			></up-icon>
 			<text class="u-no-network__tips">{{tips}}</text>
 			<!-- 只有APP平台，才能跳转设置页，因为需要调用plus环境 -->
 			<!-- #ifdef APP-PLUS -->

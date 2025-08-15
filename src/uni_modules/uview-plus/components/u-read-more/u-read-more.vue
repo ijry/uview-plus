@@ -33,11 +33,11 @@
 					    margin="0 5px 0 0"
 					></up-text>
 					<view class="u-read-more__toggle__icon">
-						<u-icon
+						<up-icon
 						    :color="color"
 						    :size="fontSize + 2"
 						    :name="status === 'close' ? 'arrow-down' : 'arrow-up'"
-						></u-icon>
+						></up-icon>
 					</view>
 				</view>
 			</slot>

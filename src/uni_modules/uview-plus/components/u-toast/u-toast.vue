@@ -17,13 +17,13 @@
 					inactiveColor="rgb(120, 120, 120)"
 					size="25"
 				></u-loading-icon>
-				<u-icon
+				<up-icon
 					v-else-if="tmpConfig.type !== 'defalut' && iconName"
 					:name="iconName"
 					size="17"
 					:color="tmpConfig.type"
 					:customStyle="iconStyle"
-				></u-icon>
+				></up-icon>
 				<u-gap
 					v-if="tmpConfig.type === 'loading' || tmpConfig.loading"
 					height="12"
@@ -203,7 +203,7 @@
 	$u-toast-loading-border-padding: 20px 20px !default;
 	$u-toast-content-text-color:#fff !default;
 	$u-toast-content-text-font-size:15px !default;
-	$u-toast-u-icon:10rpx !default;
+	$u-toast-up-icon:10rpx !default;
 	$u-toast-u-type-primary-color:$u-primary !default;
 	$u-toast-u-type-primary-background-color:#ecf5ff !default;
 	$u-toast-u-type-primary-border-color:rgb(215, 234, 254) !default;

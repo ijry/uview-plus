@@ -42,12 +42,12 @@
 					hover-class="u-popup__content__close--hover"
 					hover-stay-time="150"
 				>
-					<u-icon
+					<up-icon
 						name="close"
 						color="#909399"
 						size="18"
 						bold
-					></u-icon>
+					></up-icon>
 				</view>
 				<u-safe-bottom v-if="safeAreaInsetBottom"></u-safe-bottom>
 			</view>

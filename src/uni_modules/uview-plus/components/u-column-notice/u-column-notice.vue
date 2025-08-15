@@ -8,11 +8,11 @@
 				class="u-notice__left-icon"
 				v-if="icon"
 			>
-				<u-icon
+				<up-icon
 					:name="icon"
 					:color="color"
 					size="19"
-				></u-icon>
+				></up-icon>
 			</view>
 		</slot>
 		<swiper
@@ -40,19 +40,19 @@
 			class="u-notice__right-icon"
 			v-if="['link', 'closable'].includes(mode)"
 		>
-			<u-icon
+			<up-icon
 				v-if="mode === 'link'"
 				name="arrow-right"
 				:size="17"
 				:color="color"
-			></u-icon>
-			<u-icon
+			></up-icon>
+			<up-icon
 				v-if="mode === 'closable'"
 				name="close"
 				:size="16"
 				:color="color"
 				@click="close"
-			></u-icon>
+			></up-icon>
 		</view>
 	</view>
 </template>

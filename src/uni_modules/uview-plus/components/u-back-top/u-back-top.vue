@@ -10,10 +10,10 @@
 		    v-if="!$slots.default && !$slots.$default"
 			@click="backToTop"
 		>
-			<u-icon
+			<up-icon
 			    :name="icon"
 			    :custom-style="iconStyle"
-			></u-icon>
+			></up-icon>
 			<text
 			    v-if="text"
 			    class="u-back-top__text"

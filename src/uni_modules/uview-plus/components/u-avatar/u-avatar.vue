@@ -23,12 +23,12 @@
 			<!-- #ifndef MP-WEIXIN && MP-QQ && MP-BAIDU  -->
 			<template v-if="mpAvatar && allowMp"></template>
 			<!-- #endif -->
-			<u-icon
+			<up-icon
 				v-else-if="icon"
 				:name="icon"
 				:size="fontSize"
 				:color="color"
-			></u-icon>
+			></up-icon>
 			<up-text
 				v-else-if="text"
 				:text="text"

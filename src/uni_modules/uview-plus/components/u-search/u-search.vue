@@ -21,12 +21,12 @@
 				</slot>
 			</template>
 			<view class="u-search__content__icon">
-				<u-icon
+				<up-icon
 					@tap="clickIcon"
 				    :size="searchIconSize"
 				    :name="searchIcon"
 				    :color="searchIconColor ? searchIconColor : color"
-				></u-icon>
+				></up-icon>
 			</view>
 			<input
 			    confirm-type="search"
@@ -58,12 +58,12 @@
 			    v-if="keyword && clearabled && focused"
 			    @click="clear"
 			>
-				<u-icon
+				<up-icon
 				    name="close"
 				    size="11"
 				    color="#ffffff"
 					customStyle="line-height: 12px"
-				></u-icon>
+				></up-icon>
 			</view>
             <slot name="inputRight"></slot>
 		</view>

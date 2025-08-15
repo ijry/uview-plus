@@ -12,7 +12,7 @@
 		    :style="[iconWrapStyle]"
 		>
 			<slot name="icon" :elIconSize="elIconSize" :elIconColor="elIconColor">
-				<u-icon
+				<up-icon
 				    class="u-radio__icon-wrap__icon"
 				    name="checkbox-mark"
 				    :size="elIconSize"

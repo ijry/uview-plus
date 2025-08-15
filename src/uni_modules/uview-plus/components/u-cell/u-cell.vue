@@ -7,9 +7,9 @@
 				<view class="u-cell__left-icon-wrap" v-if="$slots.icon || icon">
 					<slot name="icon" v-if="$slots.icon">
 					</slot>
-					<u-icon v-else :name="icon"
+					<up-icon v-else :name="icon"
 						:custom-style="iconStyle"
-						:size="size === 'large' ? 22 : 18"></u-icon>
+						:size="size === 'large' ? 22 : 18"></up-icon>
 				</view>
 				<view class="u-cell__title">
                     <!-- 将slot与默认内容用if/else分开主要是因为微信小程序不支持slot嵌套传递，这样才能解决collapse组件的slot不失效问题，label暂时未用到。 -->
@@ -30,9 +30,9 @@
 			</slot>
 			<view class="u-cell__right-icon-wrap" v-if="$slots['right-icon'] || isLink"
 				:class="[`u-cell__right-icon-wrap--${arrowDirection}`]">
-				<u-icon v-if="rightIcon && !$slots['right-icon']" :name="rightIcon"
+				<up-icon v-if="rightIcon && !$slots['right-icon']" :name="rightIcon"
 					:custom-style="rightIconStyle" :color="disabled ? '#c8c9cc' : 'info'"
-					:size="size === 'large' ? 18 : 16"></u-icon>
+					:size="size === 'large' ? 18 : 16"></up-icon>
 				<slot v-else name="right-icon">
 				</slot>
 			</view>

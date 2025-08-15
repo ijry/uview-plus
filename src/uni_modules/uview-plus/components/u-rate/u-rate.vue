@@ -21,7 +21,7 @@
                     ref="u-rate__content__item__icon-wrap"
                     @tap.stop="clickHandler($event, index + 1)"
                 >
-                    <u-icon
+                    <up-icon
                         :name="
                             Math.floor(activeIndex) > index
                                 ? activeIcon
@@ -38,7 +38,7 @@
                             padding: `0 ${addUnit(gutter / 2)}`,
                         }"
                         :size="size"
-                    ></u-icon>
+                    ></up-icon>
                 </view>
                 <view
                     v-if="allowHalf"
@@ -49,7 +49,7 @@
                     }]"
                     ref="u-rate__content__item__icon-wrap"
                 >
-                    <u-icon
+                    <up-icon
                         :name="
                             Math.ceil(activeIndex) > index
                                 ? activeIcon
@@ -66,7 +66,7 @@
                             padding: `0 ${addUnit(gutter / 2)}`
                         }"
                         :size="size"
-                    ></u-icon>
+                    ></up-icon>
                 </view>
             </view>
         </view>
@@ -319,7 +319,7 @@ $u-rate-item-icon-wrap-half-left: 0 !default;
     }
 }
 
-.u-icon {
+.up-icon {
     /* #ifndef APP-NVUE */
     box-sizing: border-box;
     /* #endif */

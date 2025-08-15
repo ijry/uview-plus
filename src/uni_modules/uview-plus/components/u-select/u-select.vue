@@ -11,7 +11,7 @@
 					</text>
 				</slot>
 				<slot name="icon">
-					<u-icon name="arrow-down" :size="iconSize" :color="iconColor"></u-icon>
+					<up-icon name="arrow-down" :size="iconSize" :color="iconColor"></up-icon>
 				</slot>
 			</view>
 			<u-overlay

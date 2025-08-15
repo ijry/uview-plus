@@ -13,11 +13,11 @@
 			    class="u-alert__icon"
 			    v-if="showIcon"
 			>
-				<u-icon
+				<up-icon
 				    :name="iconName"
 				    size="18"
 				    :color="iconColor"
-				></u-icon>
+				></up-icon>
 			</view>
 			<view
 			    class="u-alert__content"
@@ -49,11 +49,11 @@
 			    v-if="closable"
 			    @tap.stop="closeHandler"
 			>
-				<u-icon
+				<up-icon
 				    name="close"
 				    :color="iconColor"
 				    size="15"
-				></u-icon>
+				></up-icon>
 			</view>
 		</view>
 	</u-transition>

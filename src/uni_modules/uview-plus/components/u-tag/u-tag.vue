@@ -24,12 +24,12 @@
 							:src="icon"
 							:style="[imgStyle]"
 						></image>
-						<u-icon
+						<up-icon
 							v-else
 							:color="elIconColor"
 							:name="icon"
 							:size="iconSize"
-						></u-icon>
+						></up-icon>
 					</view>
 				</slot>
 				<view class="u-tag__content">
@@ -63,11 +63,11 @@
 				@tap.stop="closeHandler"
 				:style="{backgroundColor: closeColor}"
 			>
-				<u-icon
+				<up-icon
 					name="close"
 					:size="closeSize"
 					color="#ffffff"
-				></u-icon>
+				></up-icon>
 			</view>
 		</view>
 	</u-transition>

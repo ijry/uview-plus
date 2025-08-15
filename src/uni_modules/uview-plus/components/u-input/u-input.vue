@@ -6,11 +6,11 @@
                 v-if="prefixIcon || $slots.prefix"
             >
                 <slot name="prefix">
-                    <u-icon
+                    <up-icon
                         :name="prefixIcon"
                         size="18"
                         :customStyle="prefixIconStyle"
-                    ></u-icon>
+                    ></up-icon>
                 </slot>
             </view>
             <view class="u-input__content__field-wrapper" @tap="clickHandler">
@@ -54,23 +54,23 @@
                 v-if="isShowClear"
                 @click="onClear"
             >
-                <u-icon
+                <up-icon
                     name="close"
                     size="11"
                     color="#ffffff"
                     customStyle="line-height: 12px"
-                ></u-icon>
+                ></up-icon>
             </view>
             <view
                 class="u-input__content__subfix-icon"
                 v-if="suffixIcon || $slots.suffix"
             >
                 <slot name="suffix">
-                    <u-icon
+                    <up-icon
                         :name="suffixIcon"
                         size="18"
                         :customStyle="suffixIconStyle"
-                    ></u-icon>
+                    ></up-icon>
                 </slot>
             </view>
         </view>

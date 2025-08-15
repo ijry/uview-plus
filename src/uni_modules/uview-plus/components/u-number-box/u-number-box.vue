@@ -20,13 +20,13 @@
 		    :class="{ 'u-number-box__minus--disabled': isDisabled('minus') }"
 		    :style="[buttonStyle('minus')]"
 		>
-			<u-icon
+			<up-icon
 			    name="minus"
 			    :color="isDisabled('minus') ? '#c8c9cc' : '#323233'"
 			    size="15"
 			    bold
 				:customStyle="iconStyle"
-			></u-icon>
+			></up-icon>
 		</view>
 
 		<template v-if="!hideMinus">
@@ -81,13 +81,13 @@
 		    :class="{ 'u-number-box__minus--disabled': isDisabled('plus') }"
 		    :style="[buttonStyle('plus')]"
 		>
-			<u-icon
+			<up-icon
 			    name="plus"
 			    :color="isDisabled('plus') ? '#c8c9cc' : '#323233'"
 			    size="15"
 			    bold
 				:customStyle="iconStyle"
-			></u-icon>
+			></up-icon>
 		</view>
 	</view>
 </template>
