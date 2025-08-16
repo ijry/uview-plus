@@ -1,3 +1,11 @@
+/*
+ * @Author       : LQ
+ * @Description  :
+ * @version      : 3.0
+ * @LastAuthor   : jry
+ * @lastTime     : 2025-08-16 10:52:35
+ * @FilePath     : /uview-plus/libs/config/props/props.js
+ */
 import { defineMixin } from '../../libs/vue'
 import defProps from '../../libs/config/props.js'
 

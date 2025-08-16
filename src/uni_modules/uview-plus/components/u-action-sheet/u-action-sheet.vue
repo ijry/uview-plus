@@ -1,4 +1,3 @@
-
 <template>
 	<u-popup
 	    :show="show"
@@ -8,6 +7,7 @@
 	    :round="round"
 	>
 		<view class="u-action-sheet">
+			<!-- 顶部标题区域 -->
 			<view
 			    class="u-action-sheet__header"
 			    v-if="title"
@@ -25,6 +25,7 @@
 					></up-icon>
 				</view>
 			</view>
+			<!-- 描述信息 -->
 			<text
 			    class="u-action-sheet__description"
 				:style="[{
@@ -33,7 +34,9 @@
 			    v-if="description"
 			>{{description}}</text>
 			<slot>
+				<!-- 分割线 -->
 				<u-line v-if="description"></u-line>
+				<!-- 操作项列表 -->
 				<scroll-view scroll-y class="u-action-sheet__item-wrap" :style="{maxHeight: wrapMaxHeight}">
 					<view :key="index" v-for="(item, index) in actions">
 						<!-- #ifdef MP -->
@@ -73,6 +76,7 @@
 									    class="u-action-sheet__item-wrap__item__subname"
 									>{{ item.subname }}</text>
 								</template>
+								<!-- 加载状态图标 -->
 								<u-loading-icon
 								    v-else
 								    custom-class="van-action-sheet__loading"
@@ -83,15 +87,18 @@
 							<!-- #ifdef MP -->
 						</button>
 						<!-- #endif -->
+						<!-- 选项间分割线 -->
 						<u-line v-if="index !== actions.length - 1"></u-line>
 					</view>
 				</scroll-view>
 			</slot>
+			<!-- 取消按钮前的分割区域 -->
 			<u-gap
 			    bgColor="#eaeaec"
 			    height="6"
 			    v-if="cancelText"
 			></u-gap>
+			<!-- 取消按钮 -->
 			<view class="u-action-sheet__item-wrap__item u-action-sheet__cancel"
 				hover-class="u-action-sheet--hover" @tap="cancel" v-if="cancelText">
 				<text
@@ -168,6 +175,7 @@
 		},
 		emits: ["close", "select", "update:show"],
 		methods: {
+			// 关闭操作菜单事件处理
 			closeHandler() {
 				// 允许点击遮罩关闭时，才发出close事件
 				if(this.closeOnClickOverlay) {
@@ -180,6 +188,7 @@
 				this.$emit('update:show', false)
 				this.$emit('close')
 			},
+			// 选择操作项处理
 			selectHandler(index) {
 				const item = this.actions[index]
 				if (item && !item.disabled && !item.loading) {
