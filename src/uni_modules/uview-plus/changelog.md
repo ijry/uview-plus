@@ -1,3 +1,6 @@
+## 3.4.97（2025-08-16）
+improvment: 完善album组件注释
+
 ## 3.4.96（2025-08-16）
 improvment: 完善action-sheet注释
 

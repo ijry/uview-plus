@@ -1,5 +1,14 @@
+/*
+ * @Author       : jry
+ * @Description  :
+ * @version      : 3.0
+ * @LastAuthor   : jry
+ * @lastTime     : 2025-08-16 16:35:24
+ * @FilePath     : /uview-plus/components/u-album/props.js
+ */
 import { defineMixin } from '../../libs/vue'
 import defProps from '../../libs/config/props.js'
+
 export const props = defineMixin({
     props: {
         // 图片地址，Array<String>|Array<Object>形式

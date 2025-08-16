@@ -3,9 +3,9 @@
  * @Description  :
  * @version      : 1.0
  * @Date         : 2021-08-20 16:44:21
- * @LastAuthor   : LQ
- * @lastTime     : 2021-08-20 16:47:24
- * @FilePath     : /u-view2.0/uview-ui/libs/config/props/album.js
+ * @LastAuthor   : jry
+ * @lastTime     : 2025-08-16 16:32:24
+ * @FilePath     : /uview-plus/libs/config/props/album.js
  */
 export default {
     // album 组件
