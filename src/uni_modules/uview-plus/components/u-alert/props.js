@@ -1,5 +1,14 @@
+/*
+ * @Author       : jry
+ * @Description  :
+ * @version      : 3.0
+ * @LastAuthor   : jry
+ * @lastTime     : 2025-08-17 17:23:53
+ * @FilePath     : /uview-plus/libs/config/props/props.js
+ */
 import { defineMixin } from '../../libs/vue'
 import defProps from '../../libs/config/props.js'
+
 export const props = defineMixin({
     props: {
         // 显示文字
@@ -41,6 +50,26 @@ export const props = defineMixin({
         fontSize: {
             type: [String, Number],
             default: () => defProps.alert.fontSize
+        },
+        // 动画类型
+        transitionMode: {
+            type: [String],
+            default: () => defProps.alert.transitionMode
+        },
+        // 自动定时关闭毫秒
+        duration: {
+            type: [Number],
+            default: () => defProps.alert.duration
+        },
+        // 自定义图标
+        icon: {
+            type: [String],
+            default: () => defProps.alert.icon
+        },
+        // 是否显示
+        modelValue: {
+            type: [String],
+            default: () => defProps.alert.value
         }
     }
 })

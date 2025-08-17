@@ -1,3 +1,8 @@
+## 3.4.98（2025-08-17）
+feat: alert组件新增transitionMode/icon/duration/modelValue等参数
+
+improvment:  完善alert组件注释
+
 ## 3.4.97（2025-08-16）
 improvment: 完善album组件注释
 

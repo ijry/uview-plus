@@ -1,6 +1,6 @@
 <template>
-	<u-transition
-	    mode="fade"
+	<up-transition
+	    :mode="transitionMode"
 	    :show="show"
 	>
 		<view
@@ -9,6 +9,7 @@
 		    @tap.stop="clickHandler"
 		    :style="[addStyle(customStyle)]"
 		>
+			<!-- 左侧图标 -->
 			<view
 			    class="u-alert__icon"
 			    v-if="showIcon"
@@ -19,12 +20,14 @@
 				    :color="iconColor"
 				></up-icon>
 			</view>
+			<!-- 内容区域 -->
 			<view
 			    class="u-alert__content"
 			    :style="[{
 					paddingRight: closable ? '20px' : 0
 				}]"
 			>
+				<!-- 标题 -->
 				<text
 				    class="u-alert__content__title"
 				    v-if="title"
@@ -34,6 +37,7 @@
 					}]"
 				    :class="[effect === 'dark' ? 'u-alert__text--dark' : `u-alert__text--${type}--light`]"
 				>{{ title }}</text>
+				<!-- 描述信息 -->
 				<text
 				    class="u-alert__content__desc"
 					v-if="description"
@@ -44,19 +48,22 @@
 				    :class="[effect === 'dark' ? 'u-alert__text--dark' : `u-alert__text--${type}--light`]"
 				>{{ description }}</text>
 			</view>
+			<!-- 关闭按钮 -->
 			<view
 			    class="u-alert__close"
 			    v-if="closable"
 			    @tap.stop="closeHandler"
 			>
-				<up-icon
-				    name="close"
-				    :color="iconColor"
-				    size="15"
-				></up-icon>
+				<slot name="close">
+					<up-icon
+					    name="close"
+					    :color="iconColor"
+					    size="15"
+					></up-icon>
+				</slot>
 			</view>
 		</view>
-	</u-transition>
+	</up-transition>
 </template>
 
 <script>
@@ -70,7 +77,7 @@
 	 * @tutorial https://ijry.github.io/uview-plus/components/alertTips.html
 	 * 
 	 * @property {String}			title       显示的文字 
-	 * @property {String}			type        使用预设的颜色  （默认 'warning' ）
+	 * @property {String}			type        使用预设的颜色 （默认 'warning' ）
 	 * @property {String}			description 辅助性文字，颜色比title浅一点，字号也小一点，可选  
 	 * @property {Boolean}			closable    关闭按钮(默认为叉号icon图标)  （默认 false ）
 	 * @property {Boolean}			showIcon    是否显示左边的辅助图标   （ 默认 false ）
@@ -78,24 +85,34 @@
 	 * @property {Boolean}			center		文字是否居中  （默认 false ）
 	 * @property {String | Number}	fontSize    字体大小  （默认 14 ）
 	 * @property {Object}			customStyle	定义需要用到的外部样式
+	 * @property {String}			transitionMode 过渡动画模式 （默认 'fade' ）
+	 * @property {String | Number}	duration	自动关闭延时(毫秒)，设置为0或负数则不自动关闭 （默认 0 ）
+	 * @property {String}			icon		自定义图标名称，优先级高于type默认图标
+	 * @property {Boolean}			modelValue/v-model	绑定值，控制是否显示 （默认 true ）
 	 * @event    {Function}        click       点击组件时触发
 	 * @event    {Function}        close       点击关闭按钮时触发
-	 * @example  <u-alert :title="title"  type = "warning" :closable="closable" :description = "description"></u-alert>
+	 * @event    {Function}        closed      关闭动画结束时触发
+	 * @example  <up-alert :title="title"  type = "warning" :closable="closable" :description = "description"></up-alert>
 	 */
 	export default {
 		name: 'u-alert',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
+				// 控制组件显示隐藏
 				show: true
 			}
 		},
 		computed: {
+			// 根据不同的主题类型返回对应的图标颜色
 			iconColor() {
 				return this.effect === 'light' ? this.type : '#fff'
 			},
 			// 不同主题对应不同的图标
 			iconName() {
+				// 如果用户自定义了图标，则优先使用自定义图标
+				if (this.icon) return this.icon;
+				
 				switch (this.type) {
 					case 'success':
 						return 'checkmark-circle-fill';
@@ -117,18 +134,44 @@
 				}
 			}
 		},
-		emits: ["click","close"],
+		emits: ["click","close", "closed", "update:modelValue"],
+		watch: {
+			modelValue: {
+				handler(newVal) {
+					this.show = newVal;
+				},
+				immediate: true
+			},
+			show: {
+				handler(newVal) {
+					this.$emit('update:modelValue', newVal);
+					
+					// 如果是从显示到隐藏，且启用了自动关闭功能
+					if (!newVal && this.duration > 0) {
+						this.$emit('closed');
+					}
+				}
+			}
+		},
+		mounted() {
+			// 如果设置了自动关闭时间，则在指定时间后自动关闭
+			if (this.duration > 0) {
+				setTimeout(() => {
+					this.closeHandler();
+				}, this.duration);
+			}
+		},
 		methods: {
 			addUnit,
 			addStyle,
-			// 点击内容
+			// 点击内容区域触发click事件
 			clickHandler() {
 				this.$emit('click')
 			},
-			// 点击关闭按钮
+			// 点击关闭按钮触发close事件并隐藏组件
 			closeHandler() {
 				this.show = false   
-				this.$emit('close')
+				this.$emit('close');
 			}
 		}
 	}
