@@ -149,7 +149,8 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-      for (this.root = this?.$parent; this.root?.$options.name !== 'mp-html'; this.root = this.root?.$parent);
+      // 修复可能导致死循环的问题
+      for (this.root = this?.$parent; this.root && this.root?.$options.name !== 'mp-html'; this.root = this.root?.$parent);
     })
     // #ifdef H5 || APP-PLUS
     if (this.opts[0]) {
