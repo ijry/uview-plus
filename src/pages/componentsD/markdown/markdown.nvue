@@ -1,0 +1,82 @@
+<template>
+    <view class="u-page">
+        <view class="u-page__item">
+            <text class="u-page__item__title" style="margin-top: 0;">基础用法</text>
+            <view class="u-page__item__content">
+                <up-markdown :content="basicContent"></up-markdown>
+            </view>
+        </view>
+        
+        <view class="u-page__item">
+            <text class="u-page__item__title">带代码块行号</text>
+            <view class="u-page__item__content">
+                <up-markdown :content="codeContent" :show-line-number="true"></up-markdown>
+            </view>
+        </view>
+        
+        <view class="u-page__item">
+            <text class="u-page__item__title">深色主题</text>
+            <view class="u-page__item__content">
+                <up-markdown :content="basicContent" theme="dark"></up-markdown>
+            </view>
+        </view>
+    </view>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            basicContent: `# 标题1
+这是段落文本，包含**粗体**和*斜体*文本。
+
+## 标题2
+这是一个链接：[uview-plus](https://ijry.github.io/uview-plus)
+
+### 列表示例
+- 列表项1
+- 列表项2
+- 列表项3
+
+> 这是一个引用块
+
+---
+
+段落中的行内代码： \`console.log('Hello World')\``,
+            
+            codeContent: `# 代码示例
+
+以下是一个JavaScript函数：
+
+\`\`\`javascript
+function hello(name) {
+    console.log('Hello, ' + name + '!');
+}
+
+hello('World');
+\`\`\`
+
+以下是一个Python示例：
+
+\`\`\`python
+def hello(name):
+    print(f"Hello, {name}!")
+
+hello("World")
+\`\`\``
+        };
+    },
+    methods: {
+    }
+};
+</script>
+
+<style lang="scss" scoped>
+.u-page__item {
+    margin-bottom: 15px;
+}
+
+.u-page__item__title {
+    margin-bottom: 10px;
+}
+</style>
