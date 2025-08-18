@@ -513,13 +513,18 @@ export default [{
         path: '/pages/componentsD/qrcode/qrcode',
         icon: 'qrcode',
         title: 'Qrcode 二维码',
-        title_en: '二维码'
+        title_en: 'Qrcode'
     },
     {
         path: '/pages/componentsD/barcode/barcode',
         icon: 'barcode',
         title: 'Barcode 条码',
-        title_en: '条码'
+        title_en: 'Barcode'
+    },{
+        path: '/pages/componentsD/colorPicker/colorPicker',
+        icon: 'colorPicker',
+        title: 'ColorPicker 颜色选择器',
+        title_en: 'ColorPicker'
     },
     {
         path: '/pages/componentsD/cityLocate/cityLocate',
