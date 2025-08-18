@@ -454,6 +454,12 @@ export default [{
         title: 'Parse 富文本解析器',
         title_en: 'Parse'
     },
+    {
+        path: '/pages/componentsD/markdown/markdown',
+        icon: 'markdown',
+        title: 'Markdown 解析器',
+        title_en: 'Markdown'
+    },
 	{
         path: '/pages/componentsC/codeInput/codeInput',
         icon: 'messageInput',
