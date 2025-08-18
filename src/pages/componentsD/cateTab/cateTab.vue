@@ -11,8 +11,8 @@
 </style>
 <template>
     <view class="u-page">
-        <view style="height: 138px;background: #f1f1f1;margin-bottom: 10px;"></view>
-		<up-cate-tab class="cate-tab" height="calc(100vh - 150px)" :tabList="tabList"
+        <view style="height: 68px;background: linear-gradient(135deg,#fce38a,#f38181);margin-bottom: 10px;"></view>
+		<up-cate-tab class="cate-tab" :height="height" :tabList="tabList"
 			tabKeyName="title" itemKeyName="title">
             <template #pageItem="{pageItem}">
                 <view class="w-full" style="width: 100%;">
@@ -46,27 +46,35 @@
  </template>
  
  <script setup>
- import { ref, onMounted } from 'vue';  
+ import { ref, onMounted } from 'vue';
+
+ const height = ref('calc(100vh - 150px)');
    
  // 响应式数据  
- const tabList = ref([  
-   { title: '选项一',  children: [
-     {title: '水煮肉片', cover: 'https://s3.bmp.ovh/imgs/2024/12/16/35bc6d28ab1c8bc7.png', price: 88}
-     ]
-   },  
-   { title: '选项一',  children: [
-     {title: '酸菜鱼', cover: 'https://s3.bmp.ovh/imgs/2024/12/16/35bc6d28ab1c8bc7.png', price: 99}
-     ]
-   },
-   { title: '选项一',  children: [
-     {title: '水煮肉片', cover: 'https://s3.bmp.ovh/imgs/2024/12/16/35bc6d28ab1c8bc7.png', price: 88}
-     ]
-   },  
-   { title: '选项一',  children: [
-     {title: '酸菜鱼', cover: 'https://s3.bmp.ovh/imgs/2024/12/16/35bc6d28ab1c8bc7.png', price: 99}
-     ]
-   },
- ]);
+ const tabList = ref([]);
+
+ setTimeout(() => {
+    console.log('加载数据')
+    tabList.value = [
+        { title: '选项一',  children: [
+            {title: '水煮肉片', cover: 'https://s3.bmp.ovh/imgs/2024/12/16/35bc6d28ab1c8bc7.png', price: 88}
+            ]
+        },  
+        { title: '选项二',  children: [
+            {title: '酸菜鱼', cover: 'https://s3.bmp.ovh/imgs/2024/12/16/35bc6d28ab1c8bc7.png', price: 99}
+            ]
+        },
+        { title: '选项三',  children: [
+            {title: '水煮肉片', cover: 'https://s3.bmp.ovh/imgs/2024/12/16/35bc6d28ab1c8bc7.png', price: 88}
+            ]
+        },  
+        { title: '选项四',  children: [
+            {title: '酸菜鱼', cover: 'https://s3.bmp.ovh/imgs/2024/12/16/35bc6d28ab1c8bc7.png', price: 99}
+            ]
+        }
+    ]
+//    height.value = 'calc(100vh - 150px)';
+ }, 1000);   
  </script>
  
  <style lang="scss">
