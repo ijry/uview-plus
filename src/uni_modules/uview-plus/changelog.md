@@ -1,3 +1,6 @@
+## 3.4.99（2025-08-18）
+fix: 修复parse富文本组件可能导致无限循环的问题
+
 ## 3.4.98（2025-08-17）
 feat: alert组件新增transitionMode/icon/duration/modelValue等参数
 
