@@ -37,7 +37,7 @@
 	import { colorGradient } from '../../libs/function/colorGradient';
 	import test from '../../libs/function/test';
 	import defProps from '../../libs/config/props';
-	import dayjs from 'dayjs/esm/index'
+	import dayjs from '../u-datetime-picker/dayjs.esm.min.js';
 	export default {
 		name: 'u-calendar-month',
 		mixins: [mpMixin, mixin],

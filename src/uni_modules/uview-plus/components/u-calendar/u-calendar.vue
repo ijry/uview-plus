@@ -71,7 +71,7 @@ import uHeader from './header.vue'
 import uMonth from './month.vue'
 import { props } from './props.js'
 import util from './util.js'
-import dayjs from 'dayjs/esm/index'
+import dayjs from '../u-datetime-picker/dayjs.esm.min.js';
 import Calendar from '../../libs/util/calendar.js'
 import { mpMixin } from '../../libs/mixin/mpMixin.js'
 import { mixin } from '../../libs/mixin/mixin.js'

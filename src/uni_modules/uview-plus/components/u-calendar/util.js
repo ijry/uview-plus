@@ -1,4 +1,4 @@
-import dayjs from 'dayjs/esm/index'
+import dayjs from '../u-datetime-picker/dayjs.esm.min.js';
 export default {
     methods: {
         // 设置月份数据
