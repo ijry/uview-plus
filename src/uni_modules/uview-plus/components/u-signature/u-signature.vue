@@ -263,20 +263,6 @@
 				}
 			},
 			
-			// 获取相对于canvas的坐标点
-			getCanvasPoint(e) {
-				const touch = e.touches[0]
-				const rect = uni.createSelectorQuery().in(this).select('.u-signature__canvas').boundingClientRect()
-				
-				return new Promise((resolve) => {
-					rect.boundingClientRect(data => {
-						const x = touch.x - data.left
-						const y = touch.y - data.top
-						resolve({ x, y })
-					}).exec()
-				})
-			},
-			
 			// 同步获取canvas坐标点（兼容处理）
 			getCanvasPoint(e) {
 				const touch = e.touches[0]

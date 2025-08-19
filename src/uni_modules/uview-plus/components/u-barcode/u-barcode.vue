@@ -418,55 +418,6 @@ export default {
         throw error
       }
     },
-    
-    /**
-     * CODE128编码实现
-     * @author jry <ijry@qq.com>
-     * @param {String} data - 要编码的数据
-     * @returns {String|null} 编码后的条形码数据
-     */
-    encodeCode128(data) {
-      const CODE128_START_CODE_B = 104
-      const CODE128_STOP = 106
-      
-      // CODE128 Code B 字符集
-      const CODE128_CODE_B_CHARS = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
-      
-      // 条形码模式 (B 模式)
-      const codes = []
-      let checksum = CODE128_START_CODE_B
-      
-      // 添加起始字符
-      codes.push(CODE128_START_CODE_B)
-      
-      // 编码每个字符
-      for (let i = 0; i < data.length; i++) {
-        const char = data[i]
-        const code = CODE128_CODE_B_CHARS.indexOf(char)
-        
-        if (code === -1) {
-          throw new Error('Invalid character in CODE128: ' + char)
-        }
-        
-        codes.push(code)
-        checksum += code * (i + 1)
-      }
-      
-      // 添加校验字符
-      codes.push(checksum % 103)
-      
-      // 添加结束字符
-      codes.push(CODE128_STOP)
-      
-      // 转换为条形码模式 (1 = 黑条, 0 = 白条)
-      let barcode = ''
-      for (let i = 0; i < codes.length; i++) {
-        const code = codes[i]
-        barcode += this.getCode128Pattern(code)
-      }
-      
-      return barcode
-    },
 
     /**
      * 添加右侧安静区（至少2个模块宽度的空白）
