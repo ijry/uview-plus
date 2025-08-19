@@ -1,3 +1,12 @@
+## 3.4.104（2025-08-19）
+feat: tooltip支持自定义触发器
+
+feat: tooltip支持插槽自定义内容
+
+feat: tooltip支持单击触发
+
+feat: tooltip支持设置弹窗背景色
+
 ## 3.4.103（2025-08-19）
 feat: 内置一份dayjs库
 
