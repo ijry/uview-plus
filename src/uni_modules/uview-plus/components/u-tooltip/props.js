@@ -27,6 +27,11 @@ export const props = defineMixin({
             type: String,
             default: () => defProps.tooltip.bgColor
         },
+        // 弹出提示框的背景色
+        popupBgColor: {
+            type: String,
+            default: () => defProps.tooltip.popupBgColor
+        },
         // 弹出提示的方向，top-上方，bottom-下方
         direction: {
             type: String,
@@ -56,6 +61,11 @@ export const props = defineMixin({
         showToast: {
             type: Boolean,
             default: () => defProps.tooltip.showToast
-        }
+        },
+        // 触发方式，可选值：longpress/click
+        triggerMode: {
+            type: String,
+            default: () => defProps.tooltip.triggerMode
+        },
     }
 })

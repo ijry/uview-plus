@@ -47,6 +47,25 @@
 				></up-tooltip>
 			</view>
 		</view>
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">自定义触发器</text>
+			<view class="u-demo-block__content">
+				<up-tooltip
+				    :text="text5"
+					color="#333"
+					bgColor="#e3e4e6"
+					popupBgColor="#f7f7f7"
+					triggerMode="click"
+				>
+					<template #trigger>
+						<up-button :stop="false" type="primary">点击</up-button>
+					</template>
+					<template #content>
+						<view style="padding: 6px 12px;">自定义内容</view>
+					</template>
+				</up-tooltip>
+			</view>
+		</view>
 	</view>
 </template>
 
