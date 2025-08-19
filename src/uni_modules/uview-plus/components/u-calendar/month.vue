@@ -38,6 +38,7 @@
 	import test from '../../libs/function/test';
 	import defProps from '../../libs/config/props';
 	import dayjs from '../u-datetime-picker/dayjs.esm.min.js';
+	import { t } from '../../libs/i18n'
 	export default {
 		name: 'u-calendar-month',
 		mixins: [mpMixin, mixin],
@@ -415,7 +416,7 @@
 								if(this.rangePrompt) {
 									toast(this.rangePrompt)
 								} else {
-									toast(`选择天数不能超过 ${this.maxRange} 天`)
+									toast(t("up.calendar.daysExceed", { days: this.maxRange }))
 								}
 								return
 							}

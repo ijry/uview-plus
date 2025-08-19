@@ -65,7 +65,7 @@
 						    :name="item.isVideo || (item.type && item.type === 'video') ? 'movie' : 'folder'"
 						></up-icon>
 						<text class="u-upload__wrap__preview__other__text">
-							{{item.isVideo || (item.type && item.type === 'video') ? item.name || '视频' : item.name || '文件'}}
+							{{item.isVideo || (item.type && item.type === 'video') ? item.name || t("up.common.video") : item.name || t("up.common.file")}}
 						</text>
 					</view>
 					<view
@@ -194,6 +194,7 @@
 	import { mixin } from '../../libs/mixin/mixin';
 	import { addStyle, addUnit, toast } from '../../libs/function/index';
 	import test from '../../libs/function/test';
+	import { t } from '../../libs/i18n'
 	/**
 	 * upload 上传
 	 * @description 该组件用于上传图片场景
@@ -270,6 +271,7 @@
 		emits: ['error', 'beforeRead', 'oversize', 'afterRead', 'delete', 'clickPreview', 'update:fileList', 'afterAutoUpload'],
 		// #endif
 		methods: {
+			t,
 			addUnit,
 			addStyle,
 			videoErrorCallback() {},
@@ -422,7 +424,7 @@
 					file.size > maxSize;
 				if (oversize) {
 					uni.showToast({
-						title: '超过大小限制'
+						title: t("up.upload.sizeExceed")
 					})
 					this.$emit('oversize', Object.assign({
 						file
@@ -438,7 +440,7 @@
 						this.fileList.push({
 							...item,
 							status: 'uploading',
-							message: '上传中',
+							message: t("up.upload.uploading"),
 							progress: 0
 						});
 					});
@@ -639,7 +641,7 @@
                     urls: urls,
                     current: current,
 					fail() {
-						toast('预览图片失败')
+						toast(t("up.upload.previewImageFail"))
 					},
 				});
 			},
@@ -673,7 +675,7 @@
 					sources: sources,
 					current: current,
 					fail() {
-						toast('预览视频失败')
+						toast(t("up.upload.previewVideoFail"))
 					},
 				});
 				// #endif

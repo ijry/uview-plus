@@ -22,17 +22,17 @@
 			<!-- 只有APP平台，才能跳转设置页，因为需要调用plus环境 -->
 			<!-- #ifdef APP-PLUS -->
 			<view class="u-no-network__app">
-				<text class="u-no-network__app__setting">请检查网络，或前往</text>
+				<text class="u-no-network__app__setting">{{ t("up.noNetwork.pleaseCheck") }}</text>
 				<text
 				    class="u-no-network__app__to-setting"
 				    @tap="openSettings"
-				>设置</text>
+				>{{ t("up.common.settings") }}</text>
 			</view>
 			<!-- #endif -->
 			<view class="u-no-network__retry">
 				<u-button
 				    size="mini"
-				    text="重试"
+				    :text="t('up.common.retry')"
 				    type="primary"
 					plain
 				    @click="retry"
@@ -47,6 +47,7 @@
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
 	import { toast, getDeviceInfo } from '../../libs/function/index';
+	import { t } from '../../libs/i18n'
 	/**
 	 * noNetwork 无网络提示
 	 * @description 该组件无需任何配置，引入即可，内部自动处理所有功能和事件。
@@ -87,6 +88,7 @@
 		},
 		emits: ["disconnected", "connected"],
 		methods: {
+			t,
 			retry() {
 				// 重新检查网络
 				uni.getNetworkType({
@@ -94,10 +96,10 @@
 						this.networkType = res.networkType
 						this.emitEvent(this.networkType)
 						if (res.networkType == 'none') {
-							toast('无网络连接')
+							toast(t("up.noNetwork.disconnect"))
 							this.isConnected = false
 						} else {
-							toast('网络已连接')
+							toast(t("up.noNetwork.connect"))
 							this.isConnected = true
 						}
 					}

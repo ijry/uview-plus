@@ -175,28 +175,39 @@
 						transform: `translateY(${this.direction === 'top' ? '-100%' : '100%'})`,
 					},
 					sysInfo = getWindowInfo()
-				if (this.tooltipInfo.width / 2 > this.textInfo.left + this.textInfo.width / 2 - this.screenGap) {
+				if (this.direction === 'right') {
+					// 右侧显示逻辑
+					style.transform = 'translateX(100%)' // 恢复原始逻辑
+					style.marginLeft = '8px' // 使用margin替代修改transform，避免影响定位计算
+					// 垂直居中对齐
+					style.top = addUnit(this.textInfo.top - (this.tooltipInfo.height - this.textInfo.height) / 2)
 					this.indicatorStyle = {}
-					style.left = `-${addUnit(this.textInfo.left - this.screenGap)}`
-					this.indicatorStyle.left = addUnit(this.textInfo.width / 2 - getPx(style.left) - this.indicatorWidth /
-						2)
-				} else if (this.tooltipInfo.width / 2 > sysInfo.windowWidth - this.textInfo.right + this.textInfo.width / 2 -
-					this.screenGap) {
-					this.indicatorStyle = {}
-					style.right = `-${addUnit(sysInfo.windowWidth - this.textInfo.right - this.screenGap)}`
-					this.indicatorStyle.right = addUnit(this.textInfo.width / 2 - getPx(style.right) - this
-						.indicatorWidth / 2)
-				} else {
-					const left = Math.abs(this.textInfo.width / 2 - this.tooltipInfo.width / 2)
-					style.left = this.textInfo.width > this.tooltipInfo.width ? addUnit(left) : -addUnit(left)
-					this.indicatorStyle = {}
-				}
-				if (this.direction === 'top') {
-					style.marginTop = '-10px'
-					this.indicatorStyle.bottom = '-4px'
-				} else {
-					style.marginBottom = '-10px'
-					this.indicatorStyle.top = '-4px'
+					this.indicatorStyle.left = '-4px'
+					this.indicatorStyle.top = addUnit((this.tooltipInfo.height - this.indicatorWidth) / 2)
+				} else if (this.direction === 'top' || this.direction === 'bottom') { 
+					if (this.tooltipInfo.width / 2 > this.textInfo.left + this.textInfo.width / 2 - this.screenGap) {
+						this.indicatorStyle = {}
+						style.left = `-${addUnit(this.textInfo.left - this.screenGap)}`
+						this.indicatorStyle.left = addUnit(this.textInfo.width / 2 - getPx(style.left) - this.indicatorWidth /
+							2)
+					} else if (this.tooltipInfo.width / 2 > sysInfo.windowWidth - this.textInfo.right + this.textInfo.width / 2 -
+						this.screenGap) {
+						this.indicatorStyle = {}
+						style.right = `-${addUnit(sysInfo.windowWidth - this.textInfo.right - this.screenGap)}`
+						this.indicatorStyle.right = addUnit(this.textInfo.width / 2 - getPx(style.right) - this
+							.indicatorWidth / 2)
+					} else {
+						const left = Math.abs(this.textInfo.width / 2 - this.tooltipInfo.width / 2)
+						style.left = this.textInfo.width > this.tooltipInfo.width ? addUnit(left) : -addUnit(left)
+						this.indicatorStyle = {}
+					}
+					if (this.direction === 'top') {
+						style.marginTop = '-10px'
+						this.indicatorStyle.bottom = '-4px'
+					} else {
+						style.marginBottom = '-10px'
+						this.indicatorStyle.top = '-4px'
+					}
 				}
 				return style
 			}

@@ -38,7 +38,7 @@
 			<!-- 笔画设置 -->
 			<view v-if="showBrushSettings" class="u-signature__brush-settings">
 				<view class="u-signature__progress">
-					<text class="u-signature__progress-label">笔画大小:</text>
+					<text class="u-signature__progress-label">{{ t("up.signature.penSize") }}:</text>
 					<up-slider 
 						v-model="lineWidth" 
 						:min="1" 
@@ -53,7 +53,7 @@
 			<!-- 颜色设置 -->
 			<view v-if="showColorSettings" class="u-signature__color-settings">
 				<view class="u-signature__color-picker">
-                    <text class="u-signature__color-label">笔画颜色:</text>
+                    <text class="u-signature__color-label">{{ t("up.signature.penColor") }}:</text>
 					<view class="u-signature__colors">
 						<view 
 							v-for="(color, index) in presetColors" 
@@ -71,6 +71,7 @@
 </template>
 
 <script>
+	import { t } from '../../libs/i18n'
 	export default {
 		name: 'u-signature',
 		props: {

@@ -3,7 +3,7 @@
 		<up-index-list :indexList="indexList">
 			<template #header>
 				<view class="u-current-city-wrap">
-					<view class="u-current-city-title">定位城市</view>
+					<view class="u-current-city-title">{{ t("up.cityLocate.locateCity") }}</view>
 					<view class="u-current-city-item" @tap="location">
 						<view class="u-location-city">{{locationCity}}</view>
 					</view>
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+	import { t } from '../../libs/i18n'
 	export default{
 		name: 'u-city-locate',
 		props:{
@@ -96,11 +97,12 @@
 		},
 		data(){
 			return{
-				locationCity: '定位中....'
+				locationCity: t("up.cityLocate.locating") + '....'
 			}
 		},
 		emits: ['location-success', 'select-city'],
 		methods:{
+			t,
 			// 获取城市
 			selectedCity(city){
 				this.locationCity = city[this.nameKey];
@@ -123,7 +125,7 @@
 						});
 				    },
 					fail(){
-						That.locationCity = "定位失败，请点击重试"
+						That.locationCity = t("up.cityLocate.fail");
 					}
 				});
 			},

@@ -177,7 +177,7 @@
 				const style = {}
 				if (!this.usedAlone) {
 					if (this.parentData.borderBottom && this.parentData.placement === 'row') {
-						error('检测到您将borderBottom设置为true，需要同时将u-checkbox-group的placement设置为column才有效')
+						error('检测到您将borderBottom设置为true，需要同时将up-checkbox-group的placement设置为column才有效')
 					}
 					// 当父组件设置了显示下边框并且排列形式为纵向时，给内容和边框之间加上一定间隔
 					if (this.parentData.borderBottom && this.parentData.placement === 'column') {
@@ -197,7 +197,7 @@
 					// 支付宝小程序不支持provide/inject，所以使用这个方法获取整个父组件，在created定义，避免循环引用
 					this.updateParentData()
 					if (!this.parent) {
-						error('u-checkbox必须搭配u-checkbox-group组件使用')
+						error('up-checkbox必须搭配up-checkbox-group组件使用')
 					}
 					// #ifdef VUE2
 					const value = this.parentData.value

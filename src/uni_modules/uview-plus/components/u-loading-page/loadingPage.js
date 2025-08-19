@@ -7,10 +7,11 @@
  * @lastTime     : 2021-08-20 17:00:23
  * @FilePath     : /u-view2.0/uview-ui/libs/config/props/loadingPage.js
  */
+import { t } from '../../libs/i18n'
 export default {
     // loading-page组件
     loadingPage: {
-        loadingText: '正在加载',
+        loadingText: t("up.common.loading2"),
         image: '',
         loadingMode: 'circle',
         loading: false,

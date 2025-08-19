@@ -7,6 +7,7 @@
  * @lastTime     : 2021-08-20 17:15:26
  * @FilePath     : /u-view2.0/uview-ui/libs/config/props/loadmore.js
  */
+import { t } from '../../libs/i18n'
 export default {
     // loadmore 组件
     loadmore: {
@@ -17,9 +18,9 @@ export default {
 		iconSize: 17,
         color: '#606266',
         loadingIcon: 'spinner',
-        loadmoreText: '加载更多',
-        loadingText: '正在加载...',
-        nomoreText: '没有更多了',
+        loadmoreText: t("up.loadmoe.loadmore"),
+        loadingText: t("up.common.loading2") + '...',
+        nomoreText: t("up.loadmoe.nomore"),
         isDot: false,
         iconColor: '#b7b7b7',
         marginTop: 10,
