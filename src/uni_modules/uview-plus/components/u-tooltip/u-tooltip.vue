@@ -9,13 +9,12 @@
 			@click="overlayClickHandler"
 		></u-overlay>
 		<view class="u-tooltip__wrapper">
-			<view class="u-tooltip__trigger" @click.stop="clickHander"
+			<view class="u-tooltip__trigger" :id="textId"
+				:ref="textId" @click.stop="clickHander"
 				@longpress.stop="longpressHandler">
 				<slot name="trigger"></slot>
 				<text v-if="!$slots['trigger']"
 					class="u-tooltip__wrapper__text"
-					:id="textId"
-					:ref="textId"
 					:userSelect="false"
 					:selectable="false"
 					:style="{
@@ -156,11 +155,13 @@
 				screenGap: 12,
 				// 三角形指示器的宽高，由于对元素进行了角度旋转，精确计算指示器位置时，需要用到其尺寸信息
 				indicatorWidth: 14,
+				tooltipStyle: {}
 			}
 		},
 		watch: {
-			propsChange() {
-				this.getElRect()
+			async propsChange() {
+				await this.getElRect()
+				this.getTooltipStyle();
 			}
 		},
 		computed: {
@@ -169,37 +170,7 @@
 			propsChange() {
 				return [this.text, this.buttons]
 			},
-			// 计算气泡和指示器的位置信息
-			tooltipStyle() {
-				const style = {
-						transform: `translateY(${this.direction === 'top' ? '-100%' : '100%'})`,
-					},
-					sysInfo = getWindowInfo()
-				if (this.tooltipInfo.width / 2 > this.textInfo.left + this.textInfo.width / 2 - this.screenGap) {
-					this.indicatorStyle = {}
-					style.left = `-${addUnit(this.textInfo.left - this.screenGap)}`
-					this.indicatorStyle.left = addUnit(this.textInfo.width / 2 - getPx(style.left) - this.indicatorWidth /
-						2)
-				} else if (this.tooltipInfo.width / 2 > sysInfo.windowWidth - this.textInfo.right + this.textInfo.width / 2 -
-					this.screenGap) {
-					this.indicatorStyle = {}
-					style.right = `-${addUnit(sysInfo.windowWidth - this.textInfo.right - this.screenGap)}`
-					this.indicatorStyle.right = addUnit(this.textInfo.width / 2 - getPx(style.right) - this
-						.indicatorWidth / 2)
-				} else {
-					const left = Math.abs(this.textInfo.width / 2 - this.tooltipInfo.width / 2)
-					style.left = this.textInfo.width > this.tooltipInfo.width ? addUnit(left) : -addUnit(left)
-					this.indicatorStyle = {}
-				}
-				if (this.direction === 'top') {
-					style.marginTop = '-10px'
-					this.indicatorStyle.bottom = '-4px'
-				} else {
-					style.marginBottom = '-10px'
-					this.indicatorStyle.top = '-4px'
-				}
-				return style
-			}
+			
 		},
 		mounted() {
 			this.init()
@@ -208,11 +179,64 @@
 		methods: {
 			addStyle,
 			addUnit,
-			init() {
-				this.getElRect()
+			async init() {
+				await this.getElRect()
+				this.getTooltipStyle();
+			},
+			// 计算气泡和指示器的位置信息
+			getTooltipStyle() {
+				const style = {},
+					sysInfo = getWindowInfo()
+				if (this.direction === 'left') {
+					// 右侧显示逻辑
+					style.transform = ``
+					// 垂直居中对齐
+					style.top = '-' + addUnit((this.tooltipInfo.height - this.indicatorWidth) / 2, 'px')
+					style.right = addUnit(this.textInfo.width + this.indicatorWidth, 'px')
+					this.indicatorStyle = {}
+					this.indicatorStyle.right = '-4px'
+					this.indicatorStyle.top = addUnit((this.tooltipInfo.height - this.indicatorWidth) / 2, 'px')
+				} else if (this.direction === 'right') {
+					// 右侧显示逻辑
+					style.transform = ``
+					// 垂直居中对齐
+					style.top = addUnit((this.textInfo.height - this.tooltipInfo.height) / 2, 'px')
+					style.left = addUnit(this.textInfo.width + this.indicatorWidth, 'px')
+					this.indicatorStyle = {}
+					this.indicatorStyle.left = '-4px'
+					this.indicatorStyle.top = addUnit((this.textInfo.height - this.indicatorWidth) / 2, 'px')
+				} else if (this.direction === 'top' || this.direction === 'bottom') { 
+					style.transform = `translateY(${this.direction === 'top' ? '-100%' : '100%'})`
+					if (this.tooltipInfo.width / 2 > this.textInfo.left + this.textInfo.width / 2 - this.screenGap) {
+						this.indicatorStyle = {}
+						style.left = `-${addUnit(this.textInfo.left - this.screenGap)}`
+						this.indicatorStyle.left = addUnit(this.textInfo.width / 2 - getPx(style.left) - this.indicatorWidth /
+							2, 'px')
+					} else if (this.tooltipInfo.width / 2 > sysInfo.windowWidth - this.textInfo.right + this.textInfo.width / 2 -
+						this.screenGap) {
+						this.indicatorStyle = {}
+						style.right = `-${addUnit(sysInfo.windowWidth - this.textInfo.right - this.screenGap)}`
+						this.indicatorStyle.right = addUnit(this.textInfo.width / 2 - getPx(style.right) - this
+							.indicatorWidth / 2)
+					} else {
+						const left = Math.abs(this.textInfo.width / 2 - this.tooltipInfo.width / 2)
+						style.left = this.textInfo.width > this.tooltipInfo.width ? addUnit(left) : -addUnit(left)
+						this.indicatorStyle = {}
+					}
+					if (this.direction === 'top') {
+						style.marginTop = '-10px'
+						this.indicatorStyle.bottom = '-4px'
+					} else {
+						style.marginBottom = '-10px'
+						this.indicatorStyle.top = '-4px'
+					}
+				}
+				this.tooltipStyle = style
+				return style
 			},
 			// 点击触发事件
-			clickHander() {
+			async clickHander() {
+				// this.getTooltipStyle();
 				if (this.triggerMode == 'click') {
 					this.tooltipTop = 0
 					this.showTooltip = true
@@ -220,6 +244,7 @@
 			},
 			// 长按触发事件
 			async longpressHandler() {
+				// this.getTooltipStyle();
 				if (this.triggerMode == 'longpress') {
 					this.tooltipTop = 0
 					this.showTooltip = true
@@ -238,7 +263,7 @@
 			// 查询内容高度
 			queryRect(ref) {
 				// #ifndef APP-NVUE
-				// $uGetRect为uView自带的节点查询简化方法，详见文档介绍：https://ijry.github.io/uview-plus/js/getRect.html
+				// $uGetRect为uview-plus自带的节点查询简化方法，详见文档介绍：https://ijry.github.io/uview-plus/js/getRect.html
 				// 组件内部一般用this.$uGetRect，对外的为uni.$u.getRect，二者功能一致，名称不同
 				return new Promise(resolve => {
 					this.$uGetRect(`#${ref}`).then(size => {
@@ -259,17 +284,16 @@
 			},
 			// 元素尺寸
 			getElRect() {
-				// 调用之前，先将指示器调整到屏幕外，方便获取尺寸
-				this.showTooltip = true
-				this.tooltipTop = -10000
-				sleep(500).then(() => {
-					this.queryRect(this.tooltipId).then(size => {
-						this.tooltipInfo = size
+				return new Promise(async(resolve) => {
+					// 调用之前，先将指示器调整到屏幕外，方便获取尺寸
+					this.showTooltip = true
+					this.tooltipTop = -10000
+					sleep(500).then(async () => {
+						this.tooltipInfo = await this.queryRect(this.tooltipId)
 						// 获取气泡尺寸之后，将其隐藏，为了让下次切换气泡显示与隐藏时，有淡入淡出的效果
 						this.showTooltip = false
-					})
-					this.queryRect(this.textId).then(size => {
-						this.textInfo = size
+						this.textInfo = await this.queryRect(this.textId)
+						resolve()
 					})
 				})
 			},
