@@ -20,6 +20,29 @@
                 <up-markdown :content="basicContent" theme="dark"></up-markdown>
             </view>
         </view>
+        
+        <!-- 新增流式显示示例 -->
+        <view class="u-page__item">
+            <text class="u-page__item__title">AI流式内容显示</text>
+            <view class="u-page__item__content">
+                <up-markdown :content="streamingContent"  :show-line-number="true"></up-markdown>
+                <view style="flex-direction: row; margin-top: 10px;">
+                    <up-button 
+                        type="primary" 
+                        size="mini" 
+                        :text="isStreaming ? '停止' : '开始'" 
+                        @click="toggleStreaming"
+                        style="margin-right: 10px;"
+                    ></up-button>
+                    <up-button 
+                        type="default" 
+                        size="mini" 
+                        text="重置" 
+                        @click="resetStreaming"
+                    ></up-button>
+                </view>
+            </view>
+        </view>
     </view>
 </template>
 
@@ -63,10 +86,111 @@ def hello(name):
     print(f"Hello, {name}!")
 
 hello("World")
-\`\`\``
+\`\`\``,
+            
+            // 流式内容相关数据
+            fullAIContent: `# AI助手回答
+
+你好！我是AI助手，正在为你逐步生成回答内容...
+
+## 问题分析
+
+让我来分析你提出的问题：
+
+1. 需要实现流式内容显示
+2. 模拟AI逐步输出文字的效果
+3. 使用定时器控制内容显示速度
+
+## 解决方案
+
+我们可以使用以下方法实现：
+
+### 第一步：创建数据模型
+\`\`\`javascript
+data() {
+  return {
+    streamingContent: '',
+    isStreaming: false,
+    streamTimer: null
+  }
+}
+\`\`\`
+
+### 第二步：实现流式显示逻辑
+\`\`\`javascript
+methods: {
+  startStreaming() {
+    // 实现流式显示逻辑
+  }
+}
+\`\`\`
+
+## 总结
+
+以上就是实现流式内容显示的基本方法。通过定时器控制内容逐字显示，可以营造出AI正在思考和逐步输出的效果。
+
+这种交互方式在现代Web应用中非常常见，特别是在AI助手类产品中。
+
+---
+
+*内容生成完毕*`,
+            streamingContent: '',
+            isStreaming: false,
+            streamTimer: null,
+            streamIndex: 0
         };
     },
     methods: {
+        // 开始/停止流式显示
+        toggleStreaming() {
+            if (this.isStreaming) {
+                this.stopStreaming();
+            } else {
+                this.startStreaming();
+            }
+        },
+        
+        // 开始流式显示
+        startStreaming() {
+            if (this.isStreaming) return;
+            
+            // 如果是重新开始，重置索引
+            if (this.streamIndex >= this.fullAIContent.length) {
+                this.streamIndex = 0;
+                this.streamingContent = '';
+            }
+            
+            this.isStreaming = true;
+            this.streamTimer = setInterval(() => {
+                if (this.streamIndex < this.fullAIContent.length) {
+                    this.streamingContent += this.fullAIContent[this.streamIndex];
+                    this.streamIndex++;
+                } else {
+                    this.stopStreaming();
+                }
+            }, 50); // 50ms间隔，模拟AI逐步输出
+        },
+        
+        // 停止流式显示
+        stopStreaming() {
+            if (this.streamTimer) {
+                clearInterval(this.streamTimer);
+                this.streamTimer = null;
+            }
+            this.isStreaming = false;
+        },
+        
+        // 重置流式显示
+        resetStreaming() {
+            this.stopStreaming();
+            this.streamingContent = '';
+            this.streamIndex = 0;
+        }
+    },
+    
+    // 组件销毁前清理定时器
+    beforeDestroy() {
+        this.stopStreaming();
     }
 };
 </script>
