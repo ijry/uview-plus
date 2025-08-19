@@ -2,7 +2,7 @@
   "id": "uview-plus",
   "name": "uview-plus",
   "displayName": "零云®uview-plus3.0重磅发布，全面的Vue3鸿蒙跨端移动组件库，组件丰富维护更新稳定。",
-  "version": "3.4.102",
+  "version": "3.4.103",
   "description": "零云®uview-plus已兼容vue3，100+全面的组件和便捷的工具会让您信手拈来。近期新增拖动排序、条码、图片裁剪、下拉刷新、虚拟列表、签名等。",
   "keywords": [
     "uview",
