@@ -20,6 +20,8 @@ export default {
         showCopy: true,
         buttons: [],
         overlay: true,
-        showToast: true
+        showToast: true,
+        popupBgColor: '',
+        triggerMode: 'longpress'
     }
 }

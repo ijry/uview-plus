@@ -9,18 +9,21 @@
 			@click="overlayClickHandler"
 		></u-overlay>
 		<view class="u-tooltip__wrapper">
-			<text
-				class="u-tooltip__wrapper__text"
-				:id="textId"
-				:ref="textId"
-				:userSelect="false"
-				:selectable="false"
-				@longpress.stop="longpressHandler"
-				:style="{
-					color: color,
-					backgroundColor: bgColor && showTooltip && tooltipTop !== -10000 ? bgColor : 'transparent'
-				}"
-			>{{ text }}</text>
+			<view class="u-tooltip__trigger" @click.stop="clickHander"
+				@longpress.stop="longpressHandler">
+				<slot name="trigger"></slot>
+				<text v-if="!$slots['trigger']"
+					class="u-tooltip__wrapper__text"
+					:id="textId"
+					:ref="textId"
+					:userSelect="false"
+					:selectable="false"
+					:style="{
+						color: color,
+						backgroundColor: bgColor && showTooltip && tooltipTop !== -10000 ? bgColor : 'transparent'
+					}"
+				>{{ text }}</text>
+			</view>
 			<u-transition
 				mode="fade"
 				:show="showTooltip"
@@ -44,44 +47,52 @@
 						:style="[indicatorStyle, {
 							width: addUnit(indicatorWidth),
 							height: addUnit(indicatorWidth),
+							backgroundColor: popupBgColor
 						}]"
 					>
 						<!-- 由于nvue不支持三角形绘制，这里就做一个四方形，再旋转45deg，得到露出的一个三角 -->
 					</view>
-					<view class="u-tooltip__wrapper__popup__list">
-						<view
-							v-if="showCopy"
-							class="u-tooltip__wrapper__popup__list__btn"
-							hover-class="u-tooltip__wrapper__popup__list__btn--hover"
-							@tap="setClipboardData"
-						>
-							<text
-								class="u-tooltip__wrapper__popup__list__btn__text"
-							>复制</text>
-						</view>
-						<u-line
-							direction="column"
-							color="#8d8e90"
-							v-if="showCopy && buttons.length > 0"
-							length="18"
-						></u-line>
-						<block v-for="(item , index) in buttons" :key="index">
+					<view class="u-tooltip__wrapper__popup__list" :style="{
+						backgroundColor: popupBgColor,
+						color: color
+					}">
+						<slot name="content"></slot>
+						<template v-if="!$slots['content']">
 							<view
+								v-if="showCopy"
 								class="u-tooltip__wrapper__popup__list__btn"
 								hover-class="u-tooltip__wrapper__popup__list__btn--hover"
+								:style="{backgroundColor: popupBgColor}"
+								@tap="setClipboardData"
 							>
 								<text
 									class="u-tooltip__wrapper__popup__list__btn__text"
-									@tap="btnClickHandler(index)"
-								>{{ item }}</text>
+								>复制</text>
 							</view>
 							<u-line
 								direction="column"
 								color="#8d8e90"
-								v-if="index < buttons.length - 1"
+								v-if="showCopy && buttons.length > 0"
 								length="18"
 							></u-line>
-						</block>
+							<block v-for="(item , index) in buttons" :key="index">
+								<view
+									class="u-tooltip__wrapper__popup__list__btn"
+									hover-class="u-tooltip__wrapper__popup__list__btn--hover"
+								>
+									<text
+										class="u-tooltip__wrapper__popup__list__btn__text"
+										@tap="btnClickHandler(index)"
+									>{{ item }}</text>
+								</view>
+								<u-line
+									direction="column"
+									color="#8d8e90"
+									v-if="index < buttons.length - 1"
+									length="18"
+								></u-line>
+							</block>
+						</template>
 					</view>
 				</view>
 			</u-transition>
@@ -101,17 +112,18 @@
 	 * Tooltip 
 	 * @description 
 	 * @tutorial https://ijry.github.io/uview-plus/components/tooltip.html
-	 * @property {String | Number}	text		需要显示的提示文字
-	 * @property {String | Number}	copyText	点击复制按钮时，复制的文本，为空则使用text值
-	 * @property {String | Number}	size		文本大小（默认 14 ）
-	 * @property {String}			color		字体颜色（默认 '#606266' ）
-	 * @property {String}			bgColor		弹出提示框时，文本的背景色（默认 'transparent' ）
-	 * @property {String}			direction	弹出提示的方向，top-上方，bottom-下方（默认 'top' ）
-	 * @property {String | Number}	zIndex		弹出提示的z-index，nvue无效（默认 10071 ）
-	 * @property {Boolean}			showCopy	是否显示复制按钮（默认 true ）
-	 * @property {Array}			buttons		扩展的按钮组
-	 * @property {Boolean}			overlay		是否显示透明遮罩以防止触摸穿透（默认 true ）
-	 * @property {Object}			customStyle	定义需要用到的外部样式
+	 * @property {String | Number}	text		 需要显示的提示文字
+	 * @property {String | Number}	copyText	 点击复制按钮时，复制的文本，为空则使用text值
+	 * @property {String | Number}	size		 文本大小（默认 14 ）
+	 * @property {String}			color		 字体颜色（默认 '#606266' ）
+	 * @property {String}			bgColor		 弹出提示框时，文本的背景色（默认 'transparent' ）
+	 * @property {String}			popupBgColor 弹出提示框的背景色
+	 * @property {String}			direction	 弹出提示的方向，top-上方，bottom-下方（默认 'top' ）
+	 * @property {String | Number}	zIndex		 弹出提示的z-index，nvue无效（默认 10071 ）
+	 * @property {Boolean}			showCopy	 是否显示复制按钮（默认 true ）
+	 * @property {Array}			buttons		 扩展的按钮组
+	 * @property {Boolean}			overlay		 是否显示透明遮罩以防止触摸穿透（默认 true ）
+	 * @property {Object}			customStyle	 定义需要用到的外部样式
 	 * 
 	 * @event {Function} 
 	 * @example 
@@ -199,10 +211,19 @@
 			init() {
 				this.getElRect()
 			},
+			// 点击触发事件
+			clickHander() {
+				if (this.triggerMode == 'click') {
+					this.tooltipTop = 0
+					this.showTooltip = true
+				}
+			},
 			// 长按触发事件
 			async longpressHandler() {
-				this.tooltipTop = 0
-				this.showTooltip = true
+				if (this.triggerMode == 'longpress') {
+					this.tooltipTop = 0
+					this.showTooltip = true
+				}
 			},
 			// 点击透明遮罩
 			overlayClickHandler() {
@@ -298,6 +319,7 @@
 
 				&__list {
 					background-color: #060607;
+					color: #FFFFFF;
 					position: relative;
 					flex: 1;
 					border-radius: 5px;
