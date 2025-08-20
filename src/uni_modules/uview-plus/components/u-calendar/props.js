@@ -156,5 +156,9 @@ export const props = defineMixin({
 			type: String,
 			default: defProps.calendar.forbidDaysToast
 		},
+        monthFormat:{
+			type: String,
+			default: defProps.calendar.monthFormat
+		}
     }
 })
