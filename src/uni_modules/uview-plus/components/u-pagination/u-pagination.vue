@@ -56,7 +56,7 @@
       @click="next"
     >
       <template v-if="nextText">
-        下一页
+        {{ nextText }}
       </template>
       <up-icon v-else name="arrow-right"></up-icon>
     </view>
@@ -77,6 +77,7 @@
 </template>
 
 <script>
+import { t } from '../../libs/i18n'
 export default {
   name: 'u-pagination',
   props: {
@@ -194,6 +195,7 @@ export default {
     }
   },
   methods: {
+    t,
     handleSizeChange(e) {
       const selected = e.detail.value;
       const size = this.pageSizes[selected]?.value || this.pageSizes[0].value;

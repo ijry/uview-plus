@@ -108,7 +108,7 @@
 				// #ifdef VUE2
 				this.$emit("input", values);
 				// #endif
-        // 放在最后更新，否则change事件传出去的values不会更新
+       			// 放在最后更新，否则change事件传出去的values不会更新
 				this.$emit('change', values)
 			},
 		}

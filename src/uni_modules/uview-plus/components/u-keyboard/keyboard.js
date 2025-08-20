@@ -7,6 +7,7 @@
  * @lastTime     : 2021-08-20 17:07:49
  * @FilePath     : /u-view2.0/uview-ui/libs/config/props/keyboard.js
  */
+import { t } from '../../libs/i18n'
 export default {
     // 键盘组件
     keyboard: {
@@ -23,8 +24,8 @@ export default {
         show: false,
         overlay: true,
         zIndex: 10075,
-        cancelText: '取消',
-        confirmText: '确定',
+        cancelText: t("up.common.cancel"),
+        confirmText: t("up.common.confirm"),
         autoChange: false
     }
 }

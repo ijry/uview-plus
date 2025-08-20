@@ -11,16 +11,29 @@
 		<view class="oper-wrapper" :style="{display: styleDisplay}">
 			<view class="oper">
 				<view class="btn-wrapper" v-if="showOper">
-					<view @click="select"  hover-class="hover" :style="{width: btnWidth}"><text>重选</text></view>
-					<view @click="close"  hover-class="hover" :style="{width: btnWidth}"><text>关闭</text></view>
-					<view @click="rotate"  hover-class="hover" :style="{width: btnWidth, display: btnDsp}"><text>旋转</text></view>
-					<view @click="preview" hover-class="hover" :style="{width: btnWidth}"><text>预览</text></view>
-					<view @click="confirm"  hover-class="hover" :style="{width: btnWidth}"><text>确认</text></view>
+					<view @click="select"  hover-class="hover" :style="{width: btnWidth}">
+						<text>{{ t("up.common.re-select") }}</text>
+					</view>
+					<view @click="close"  hover-class="hover" :style="{width: btnWidth}">
+						<text>{{ t("up.common.close") }}</text>
+					</view>
+					<view @click="rotate"  hover-class="hover" :style="{width: btnWidth, display: btnDsp}">
+						<text>{{ t("up.common.rotate") }}</text>
+					</view>
+					<view @click="preview" hover-class="hover" :style="{width: btnWidth}">
+						<text>{{ t("up.common.preview") }}</text>
+					</view>
+					<view @click="confirm"  hover-class="hover" :style="{width: btnWidth}">
+						<text>{{ t("up.common.confirm") }}</text>
+					</view>
 				</view>
 				<view class="clr-wrapper" v-else>
 					<slider class="my-slider" @change="colorChange"
-					block-size="25" value="0" min="-100" max="100" activeColor="red" backgroundColor="green" block-color="grey" show-value></slider>
-					<view @click="prvUpload"  hover-class="hover" :style="{width: btnWidth}"><text>确认</text></view>
+					block-size="25" value="0" min="-100" max="100" activeColor="red"
+					backgroundColor="green" block-color="grey" show-value></slider>
+					<view @click="prvUpload"  hover-class="hover" :style="{width: btnWidth}">
+						<text>{{ t("up.common.confirm") }}</text>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -33,6 +46,7 @@
 </template>
 
 <script>
+	import { t } from '../../libs/i18n'
 	const tabHeight = 50;
 	export default {
 		name: "u-cropper",
@@ -131,6 +145,7 @@
 			}
 		},
 		methods: {
+			t,
 			windowResize() {
 				let sysInfo = uni.getSystemInfoSync();
 				this.platform = sysInfo.platform;
@@ -215,7 +230,7 @@
 										style.left = (this.windowWidth - areaWidth)/2 + 'px';
 									} else {
 										uni.showModal({
-											title: '裁剪框的宽或高没有设置',
+											title: t("up.cropper.emptyWidhtOrHeight"),
 											showCancel: false
 										})
 										return;

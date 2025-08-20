@@ -7,15 +7,16 @@
  * @lastTime     : 2021-08-20 16:52:43
  * @FilePath     : /u-view2.0/uview-ui/libs/config/props/calendar.js
  */
+import { t } from '../../libs/i18n'
 export default {
     // calendar 组件
     calendar: {
-        title: '日期选择',
+        title: t("up.calendar.chooseDates"),
         showTitle: true,
         showSubtitle: true,
         mode: 'single',
-        startText: '开始',
-        endText: '结束',
+        startText: t("up.common.start"),
+        endText: t("up.common.end"),
         customList: [],
         color: '#3c9cff',
         minDate: 0,
@@ -26,8 +27,8 @@ export default {
         formatter: null,
         showLunar: false,
         showMark: true,
-        confirmText: '确定',
-        confirmDisabledText: '确定',
+        confirmText: t("up.common.confirm"),
+        confirmDisabledText: t("up.common.confirm"),
         show: false,
         closeOnClickOverlay: false,
         readonly: false,
@@ -38,8 +39,8 @@ export default {
         allowSameDay: false,
 		round: 0,
 		monthNum: 3,
-        weekText: ['一', '二', '三', '四', '五', '六', '日'],
+        weekText: [t("up.week.one"), t("up.week.two"), t("up.week.three"), t("up.week.four"), t("up.week.five"), t("up.week.six"), t("up.week.seven")],
         forbidDays: [],
-        forbidDaysToast: '该日期已禁用',
+        forbidDaysToast: t("up.calendar.disabled"),
     }
 }

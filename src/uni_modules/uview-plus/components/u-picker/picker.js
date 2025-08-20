@@ -7,6 +7,7 @@
  * @lastTime     : 2021-08-20 17:18:20
  * @FilePath     : /u-view2.0/uview-ui/libs/config/props/picker.js
  */
+import { t } from '../../libs/i18n'
 export default {
     // picker
     picker: {
@@ -17,8 +18,8 @@ export default {
         columns: [],
         loading: false,
         itemHeight: 44,
-        cancelText: '取消',
-        confirmText: '确定',
+        cancelText: t("up.common.cancel"),
+        confirmText: t("up.common.confirm"),
         cancelColor: '#909193',
         confirmColor: '',
         visibleItemCount: 5,
@@ -30,7 +31,7 @@ export default {
 		zIndex: 10076,
         disabled: false,
         disabledColor: '',
-        placeholder: '请选择',
+        placeholder: t("up.common.pleaseChoose"),
         inputProps: {},
         bgColor: '',
         round: 0,

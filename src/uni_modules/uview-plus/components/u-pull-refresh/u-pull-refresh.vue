@@ -24,7 +24,7 @@
           <view class="refresh-indicator">
             <up-icon name="arrow-downward" size="26px"></up-icon>
           </view>
-          <text class="refresh-text">下拉刷新</text>
+          <text class="refresh-text">{{ t("up.pullRefresh.pullRefresh") }}</text>
         </view>
       </slot>
       
@@ -39,7 +39,7 @@
           <view class="refresh-indicator">
             <up-icon name="arrow-upward" size="26px"></up-icon>
           </view>
-          <text class="refresh-text">释放刷新</text>
+          <text class="refresh-text">{{ t("up.pullRefresh.release") }}</text>
         </view>
       </slot>
       
@@ -52,7 +52,7 @@
           <view class="refresh-indicator">
             <view class="spinner"></view>
           </view>
-          <text class="refresh-text">正在刷新...</text>
+          <text class="refresh-text">{{ t("up.pullRefresh.refreshing") }}...</text>
         </view>
       </slot>
     </view>
@@ -95,6 +95,7 @@
 </template>
 
 <script>
+import { t } from '../../libs/i18n'
 export default {
   name: 'u-pull-refresh',
   props: {
@@ -128,9 +129,9 @@ export default {
       type: Object,
       default: () => ({
         status: 'loadmore',
-        loadmoreText: '加载更多',
-        loadingText: '正在加载...',
-        nomoreText: '没有更多了'
+        // loadmoreText: '加载更多',
+        // loadingText: '正在加载...',
+        // nomoreText: '没有更多了'
       })
     },
     // 是否使用 scroll-view 包装内容
@@ -179,6 +180,7 @@ export default {
     }
   },
   methods: {
+    t,
     // 触摸开始
     onTouchStart(e) {
       if (this.isRefreshing) return

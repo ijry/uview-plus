@@ -24,6 +24,7 @@
 
 <script>
 import { nextTick } from 'vue'
+import { t } from '../../libs/i18n'
 
 export default {
   name: 'u-barcode',
@@ -290,7 +291,7 @@ export default {
         })
       } catch (error) {
         console.error('生成条码失败:', error)
-        this.error = error.message || '生成条码失败'
+        this.error = error.message || t('up.barcode.error')
         this.$emit('error', error)
       }
     },

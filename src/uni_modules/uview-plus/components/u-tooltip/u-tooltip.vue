@@ -169,8 +169,7 @@
 			// 当一些依赖参数变化时，需要重新计算气泡和指示器的位置信息
 			propsChange() {
 				return [this.text, this.buttons]
-			},
-			
+			}
 		},
 		mounted() {
 			this.init()
