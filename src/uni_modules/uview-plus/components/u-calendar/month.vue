@@ -169,7 +169,7 @@
 					// #ifdef APP-NVUE
 					style.width = addUnit(dayWidth, 'px')
 					// #endif
-					style.height = addUnit(this.rowHeight)
+					style.height = addUnit(this.rowHeight, 'px')
 					if (index2 === 0) {
 						// 获取当前为星期几，如果为0，则为星期天，减一为每月第一天时，需要向左偏移的item个数
 						week = (week === 0 ? 7 : week) - 1

@@ -17,7 +17,7 @@
 			></uHeader>
 			<scroll-view
 				:style="{
-                    height: addUnit(listHeight)
+                    height: addUnit(listHeight, 'px')
                 }"
 				scroll-y
 				@scroll="onScroll"
@@ -76,7 +76,7 @@ import dayjs from '../u-datetime-picker/dayjs.esm.min.js';
 import Calendar from '../../libs/util/calendar.js'
 import { mpMixin } from '../../libs/mixin/mpMixin.js'
 import { mixin } from '../../libs/mixin/mixin.js'
-import { addUnit, range, error, padZero } from '../../libs/function/index';
+import { addUnit, getPx, range, error, padZero } from '../../libs/function/index';
 import test from '../../libs/function/test';
 /**
  * Calendar 日历
@@ -249,7 +249,7 @@ export default {
 				return error('maxDate不能小于minDate时间')
 			}
 			// 滚动区域的高度
-			this.listHeight = this.rowHeight * 5 + 30
+			this.listHeight = getPx(this.rowHeight) * 5 + 30
 			this.setMonth()
 		},
 		close() {
