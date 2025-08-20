@@ -42,5 +42,6 @@ export default {
         weekText: [t("up.week.one"), t("up.week.two"), t("up.week.three"), t("up.week.four"), t("up.week.five"), t("up.week.six"), t("up.week.seven")],
         forbidDays: [],
         forbidDaysToast: t("up.calendar.disabled"),
+        monthFormat: ''
     }
 }

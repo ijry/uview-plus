@@ -2,7 +2,7 @@
 	<view class="u-calendar-month-wrapper" ref="u-calendar-month-wrapper">
 		<view v-for="(item, index) in months" :key="index" :class="[`u-calendar-month-${index}`]"
 			:ref="`u-calendar-month-${index}`" :id="`month-${index}`">
-			<text v-if="index !== 0" class="u-calendar-month__title">{{ item.year }}年{{ item.month }}月</text>
+			<text v-if="index !== 0" class="u-calendar-month__title">{{ monthTitle(item) }}</text>
 			<view class="u-calendar-month__days">
 				<view v-if="showMark" class="u-calendar-month__days__month-mark-wrapper">
 					<text class="u-calendar-month__days__month-mark-wrapper__text">{{ item.month }}</text>
@@ -306,6 +306,13 @@
 						this.getMonthRect()
 					})
 				})
+			},
+			monthTitle(item) {
+				if (uni.getLocale() == 'zh-Hans' || uni.getLocale() == 'zh-Hant') {
+					return item.year + '年' + (item.month < 10 ? '0' + item.month : item.month) + '月'
+				} else {
+					return (item.month < 10 ? '0' + item.month : item.month) + '/' + item.year
+				}
 			},
 			isForbid(item) {
 				let date = dayjs(item.date).format("YYYY-MM-DD")

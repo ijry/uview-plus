@@ -44,6 +44,7 @@
 					:allowSameDay="allowSameDay"
 					:forbidDays="forbidDays"
 					:forbidDaysToast="forbidDaysToast"
+					:monthFormat="monthFormat"
 					ref="month"
 					@monthSelected="monthSelected"
 					@updateMonthTop="updateMonthTop"
@@ -186,9 +187,11 @@ export default {
 		subtitle() {
 			// 初始化时，this.months为空数组，所以需要特别判断处理
 			if (this.months.length) {
-				return `${this.months[this.monthIndex].year}年${
-					this.months[this.monthIndex].month
-				}月`
+				if (uni.getLocale() == 'zh-Hans' || uni.getLocale() == 'zh-Hant') {
+					return this.months[this.monthIndex].year + '年' + (this.months[this.monthIndex].month < 10 ? '0' + this.months[this.monthIndex].month : this.months[this.monthIndex].month) + '月'
+				} else {
+					return (this.months[this.monthIndex].month < 10 ? '0' + this.months[this.monthIndex].month : this.months[this.monthIndex].month) + '/' + this.months[this.monthIndex].year
+				}
 			} else {
 				return ''
 			}
