@@ -21,7 +21,7 @@
                     ref="input-native"
             	    class="u-input__content__field-wrapper__field"
             	    :style="[inputStyle]"
-            	    :type="type"
+            	    :type="showPassword && 'password' == type ? 'text' : type"
             	    :focus="focus"
             	    :cursor="cursor"
             	    :value="innerValue"
@@ -39,7 +39,7 @@
             	    :adjust-position="adjustPosition"
             	    :selection-end="selectionEnd"
             	    :selection-start="selectionStart"
-            	    :password="password || type === 'password' || false"
+            	    :password="isPassword"
                     :ignoreCompositionEvent="ignoreCompositionEvent"
             	    @input="onInput"
             	    @blur="onBlur"
@@ -59,6 +59,15 @@
                     size="11"
                     color="#ffffff"
                     customStyle="line-height: 12px"
+                ></up-icon>
+            </view>
+            <view
+                class="u-input__content__subfix-password-shower"
+                v-if="(type == 'password' || password) && passwordVisibilityToggle"
+            >
+                <up-icon @click="showPassword = !showPassword"
+                    :name="showPassword ? 'eye-off' : 'eye-fill'"
+                    size="18"
                 ></up-icon>
             </view>
             <view
@@ -142,7 +151,8 @@ export default {
             // value绑定值的变化是由内部还是外部引起的
             changeFromInner: false,
 			// 过滤处理方法
-			innerFormatter: value => value
+			innerFormatter: value => value,
+            showPassword: false
         };
     },
     created() {
@@ -178,6 +188,21 @@ export default {
         }
     },
     computed: {
+        // 是否密码
+        isPassword() {
+            let ret = false;
+            if(this.password) {
+                ret = true;
+            } else if (this.type == 'password') {
+                ret = true;
+            } else {
+                ret = false;
+            }
+            if (this.showPassword) {
+                ret = false;
+            }
+            return ret;
+        },
         // 是否显示清除控件
         isShowClear() {
             const { clearable, readonly, focused, innerValue } = this;

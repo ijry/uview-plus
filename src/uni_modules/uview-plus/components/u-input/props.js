@@ -199,5 +199,10 @@ export const props = defineMixin({
 			type: String,
 			default: () => defProps.input.cursorColor
 		},
+		// 密码类型可见性切换
+		passwordVisibilityToggle: {
+			type: Boolean,
+			default: () => defProps.input.passwordVisibilityToggle
+		}
 	}
 })
