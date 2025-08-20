@@ -32,7 +32,7 @@ export const props = defineMixin({
             type: String,
             default: () => defProps.tooltip.popupBgColor
         },
-        // 弹出提示的方向，top-上方，bottom-下方
+        // 弹出提示的方向，top-上方，bottom-下方，left-左方，right-右方
         direction: {
             type: String,
             default: () => defProps.tooltip.direction

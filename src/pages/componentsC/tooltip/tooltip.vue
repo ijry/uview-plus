@@ -44,6 +44,8 @@
 				    :text="text5"
 					:buttons="buttons3"
 					bgColor="#e3e4e6"
+					triggerMode="click"
+					direction="top"
 				></up-tooltip>
 			</view>
 		</view>
@@ -56,9 +58,10 @@
 					bgColor="#e3e4e6"
 					popupBgColor="#f7f7f7"
 					triggerMode="click"
+					direction="right"
 				>
 					<template #trigger>
-						<up-button :stop="false" type="primary">点击</up-button>
+						<up-button style="width: 100px" :stop="false" type="primary">点击</up-button>
 					</template>
 					<template #content>
 						<view style="padding: 6px 12px;">自定义内容</view>
