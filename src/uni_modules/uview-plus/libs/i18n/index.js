@@ -31,7 +31,7 @@ uni.onLocaleChange((locale) => {
  * 多语言方法
  */
 export function t(value, params = {}) {
-    console.log(settings.locales[settings.lang])
+    // console.log(settings.locales[settings.lang])
     if (value) {
         let result = settings.locales[settings.lang][value] || value;
         // 替换{xxx}格式的变量
