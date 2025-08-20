@@ -1,3 +1,8 @@
+## 3.5.2（2025-08-20）
+fix: 修复非cli模式下引入的三方库报An error occurred while trying to read the map file错误
+
+fix: 去除i18n多语言多余console
+
 ## 3.5.1（2025-08-20）
 feat: calendar组件月份标题自动适配多语言
 
