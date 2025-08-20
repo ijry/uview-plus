@@ -38,5 +38,6 @@ export default {
         disabledColor: '',
         placeholder: '请选择',
         inputProps: {},
+        pageInline: false
     }
 }

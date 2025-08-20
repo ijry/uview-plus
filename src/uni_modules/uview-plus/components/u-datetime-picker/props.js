@@ -163,6 +163,11 @@ export const props = defineMixin({
         defaultIndex: {
             type: Array,
             default: () => defProps.datetimePicker.defaultIndex
+        },
+        // 是否页面内展示
+        pageInline:{
+            type: Boolean,
+            default: () => defProps.datetimePicker.pageInline
         }
     }
 })

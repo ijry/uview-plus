@@ -35,6 +35,7 @@ export default {
         bgColor: '',
         round: 0,
         duration: 300,
-        overlayOpacity: 0.5
+        overlayOpacity: 0.5,
+        pageInline: false
     }
 }

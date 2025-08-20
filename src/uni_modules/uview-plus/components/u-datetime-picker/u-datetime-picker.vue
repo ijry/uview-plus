@@ -9,13 +9,13 @@
 					v-model="inputValue"
 					v-bind="inputPropsInner"
 				></up-input>
-				<div class="input-cover">
-				</div>
+				<view class="input-cover">
+				</view>
 			</slot>
         </view>
         <u-picker
             ref="picker"
-            :show="show || (hasInput && showByClickInput)"
+            :show="pageInline || show || (hasInput && showByClickInput)"
             :popupMode="popupMode"
             :closeOnClickOverlay="closeOnClickOverlay"
             :columns="columns"
@@ -29,6 +29,7 @@
             :cancelColor="cancelColor"
             :confirmColor="confirmColor"
             :toolbarRightSlot="toolbarRightSlot"
+			:pageInline="pageInline"
             @close="close"
             @cancel="cancel"
             @confirm="confirm"
