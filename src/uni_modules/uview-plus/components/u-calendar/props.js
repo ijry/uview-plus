@@ -156,5 +156,10 @@ export const props = defineMixin({
 			type: String,
 			default: defProps.calendar.forbidDaysToast
 		},
+        // 是否页面内展示
+        pageInline:{
+			type: Boolean,
+			default: defProps.calendar.pageInline
+		},
     }
 })

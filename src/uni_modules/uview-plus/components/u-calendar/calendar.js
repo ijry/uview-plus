@@ -41,5 +41,6 @@ export default {
         weekText: ['一', '二', '三', '四', '五', '六', '日'],
         forbidDays: [],
         forbidDaysToast: '该日期已禁用',
+        pageInline: false,
     }
 }

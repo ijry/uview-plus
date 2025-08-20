@@ -2,9 +2,10 @@
 	<u-popup
 		:show="show"
 		mode="bottom"
-		closeable
+		:closeable="!pageInline"
 		@close="close"
 		:round="round"
+		:pageInline="pageInline"
 		:closeOnClickOverlay="closeOnClickOverlay"
 	>
 		<view class="u-calendar">
@@ -246,7 +247,13 @@ export default {
 				return error('maxDate不能小于minDate时间')
 			}
 			// 滚动区域的高度
-			this.listHeight = this.rowHeight * 5 + 30
+			let bottomPadding = 0;
+			if (this.pageInline) {
+				bottomPadding = 0
+			} else {
+				bottomPadding = 30
+			}
+			this.listHeight = this.rowHeight * 5 + bottomPadding
 			this.setMonth()
 		},
 		close() {

@@ -24,6 +24,7 @@ export default {
         round: 0,
         zoom: true,
         bgColor: '',
-        overlayOpacity: 0.5
+        overlayOpacity: 0.5,
+        pageInline: false
     }
 }
