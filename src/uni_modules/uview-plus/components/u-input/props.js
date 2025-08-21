@@ -44,7 +44,12 @@ export const props = defineMixin({
 		// 是否显示清除控件
 		clearable: {
 			type: Boolean,
-			default: () => defProps.input.clearable
+			default: false
+		},
+		// 是否仅在聚焦时显示清除控件
+		onlyClearableOnFocused: {
+			type: Boolean,
+			default: true
 		},
 		// 是否密码类型
 		password: {

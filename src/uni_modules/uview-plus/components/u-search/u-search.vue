@@ -55,7 +55,7 @@
 			/>
 			<view
 			    class="u-search__content__icon u-search__content__close"
-			    v-if="keyword && clearabled && focused"
+			    v-if="isShowClear"
 			    @click="clear"
 			>
 				<up-icon
@@ -111,6 +111,7 @@
 	 * @property {String | Number}	label				搜索框左边显示内容
 	 * @property {Boolean}	        adjustPosition	    键盘弹起时，是否自动上推页面
 	 * @property {Boolean}	        autoBlur	        键盘收起时，是否自动失去焦点
+	 * @property {Boolean}	        onlyClearableOnFocused	是否仅在聚焦时显示清除控件（默认 true ）
 	 * @property {Object}			customStyle			定义需要用到的外部样式
 	 *
 	 * @event {Function} change 输入框内容发生变化时触发
@@ -125,7 +126,6 @@
 		data() {
 			return {
 				keyword: '',
-				showClear: false, // 是否显示右边的清除图标
 				show: false,
 				// 标记input当前状态是否处于聚焦中，如果是，才会显示右侧的清除控件
 				focused: this.focus
@@ -165,6 +165,18 @@
 		computed: {
 			showActionBtn() {
 				return !this.animation && this.showAction
+			},
+			// 是否显示清除控件
+			isShowClear() {
+				const { clearabled, focused, keyword, onlyClearableOnFocused } = this;
+				if (!clearabled) {
+					return false;
+				}
+				if (onlyClearableOnFocused) {
+					return !!focused && keyword !== "";
+				} else {
+					return keyword !== "";
+				}
 			}
 		},
 		emits: ['clear', 'search', 'custom', 'focus', 'blur', 'click', 'clickIcon', 'update:modelValue', 'change'],

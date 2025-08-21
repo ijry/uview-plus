@@ -20,7 +20,6 @@
 						v-model="value2"
 						:show-action="false"
 					></up-search>
-					{{value2}}
 				</view>
 			</view>
 		</view>
@@ -49,7 +48,32 @@
 			<text class="u-demo-block__title">右侧控件</text>
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
-					<up-search v-model="value5"></up-search>
+					<up-search v-model="value5" :animation="true"></up-search>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">可清空内容(仅focus时显示清除图标)</text>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-search
+						v-model="value2"
+						:show-action="false"
+						clearable
+					></up-search>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">可清空内容(始终显示清除图标)</text>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-search
+						v-model="value2"
+						:show-action="false"
+						clearable
+						:onlyClearableOnFocused="false"
+					></up-search>
 				</view>
 			</view>
 		</view>

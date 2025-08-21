@@ -205,8 +205,15 @@ export default {
         },
         // 是否显示清除控件
         isShowClear() {
-            const { clearable, readonly, focused, innerValue } = this;
-            return !!clearable && !readonly && !!focused && innerValue !== "";
+            const { clearable, readonly, focused, innerValue, onlyClearableOnFocused } = this;
+            if (!clearable || readonly) {
+                return false;
+            }
+            if (onlyClearableOnFocused) {
+                return !!focused && innerValue !== "";
+            } else {
+                return innerValue !== "";
+            }
         },
         // 组件的类名
         inputClass() {
