@@ -1,3 +1,6 @@
+## 3.5.6（2025-08-21）
+feat: picker弹窗及datetime-picker组件支持页面内模式
+
 ## 3.5.5（2025-08-21）
 feat: popup弹窗及canlendar组件支持页面内插入无弹窗模式
 
