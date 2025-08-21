@@ -24,7 +24,7 @@
           <view class="refresh-indicator">
             <up-icon name="arrow-downward" size="26px"></up-icon>
           </view>
-          <text class="refresh-text">{{ t("up.pullRefresh.pullRefresh") }}</text>
+          <text class="refresh-text">{{ t("up.pullRefresh.pull") }}</text>
         </view>
       </slot>
       
