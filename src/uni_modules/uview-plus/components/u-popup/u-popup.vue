@@ -9,7 +9,7 @@
 				class="u-popup__trigger__cover"></view>
 		</view>
 		<u-overlay
-			:show="show"
+			:show="show && pageInline == false"
 			@click="overlayClick"
 			v-if="overlay"
 			:zIndex="zIndex"
@@ -20,7 +20,7 @@
 		<u-transition
 			:show="show"
 			:customStyle="transitionStyle"
-			:mode="position"
+			:mode="pageInline ? 'none' : position"
 			:duration="duration"
 			@afterEnter="afterEnter"
 			@click="clickHandler"
@@ -107,9 +107,11 @@
 		computed: {
 			transitionStyle() {
 				const style = {
-					zIndex: this.zIndex,
-					position: 'fixed',
 					display: 'flex',
+				}
+				if (!this.pageInline) {
+					style.zIndex = this.zIndex
+					style.position = 'fixed'
 				}
 				style[this.mode] = 0
 				if (this.mode === 'left') {

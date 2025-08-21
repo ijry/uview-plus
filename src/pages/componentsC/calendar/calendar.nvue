@@ -24,6 +24,14 @@
 					></image>
 				</template>
 			</up-cell>
+			<up-alert description="页面行内模式"></up-alert>
+			<up-calendar
+				:show="showInline"
+				:pageInline="true"
+				:showTitle="false"
+				:showConfirm="false"
+				defaultDate="2022-02-15"
+			></up-calendar>
 		</up-cell-group>
 		<up-calendar
 			:show="show1"
@@ -102,6 +110,7 @@
 			const date = d.getDate()
 			return {
 				index: 0,
+				showInline: true,
 				show1: false,
 				show2: false,
 				show3: false,

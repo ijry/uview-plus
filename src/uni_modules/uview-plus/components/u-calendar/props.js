@@ -159,6 +159,11 @@ export const props = defineMixin({
         monthFormat:{
 			type: String,
 			default: defProps.calendar.monthFormat
+		},
+        // 是否页面内展示
+        pageInline:{
+			type: Boolean,
+			default: defProps.calendar.pageInline
 		}
     }
 })

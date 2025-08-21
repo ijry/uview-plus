@@ -43,5 +43,6 @@ export default {
         forbidDays: [],
         forbidDaysToast: t("up.calendar.disabled"),
         monthFormat: ''
+        pageInline: false
     }
 }
