@@ -11,7 +11,7 @@
 				v-model="inputLabel"
 				v-bind="inputPropsInner">
 			</up-input>
-			<div class="input-cover"></div>
+			<view class="input-cover"></view>
 		</view>
 		<u-popup
 			:show="show || (hasInput && showByClickInput)"
@@ -20,6 +20,7 @@
 			:bgColor="bgColor"
 			:round="round"
 			:duration="duration"
+			:pageInline="pageInline"
 			:overlayOpacity="overlayOpacity"
 			@close="closeHandler"
 		>

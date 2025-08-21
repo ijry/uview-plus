@@ -80,7 +80,7 @@ export const props = defineMixin({
         // 是否页面内展示
         pageInline:{
 			type: Boolean,
-			default: defProps.popup.pageInline
-		},
+			default: () => defProps.popup.pageInline
+		}
     }
 })

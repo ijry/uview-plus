@@ -39,5 +39,6 @@ export default {
         disabledColor: '',
         placeholder: t("up.common.pleaseChoose"),
         inputProps: {},
+        pageInline: false
     }
 }

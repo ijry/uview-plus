@@ -142,6 +142,11 @@ export const props = defineMixin({
         overlayOpacity: {
             type: [Number, String],
             default: () => defProps.picker.overlayOpacity
-        }
+        },
+        // 是否页面内展示
+        pageInline:{
+			type: Boolean,
+			default: () => defProps.picker.pageInline
+		}
     }
 })
