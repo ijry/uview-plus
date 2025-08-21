@@ -466,6 +466,12 @@
                     }
                 },
                 {
+                    "path" : "popover/popover",
+                    "style" : {
+                        "navigationBarTitleText" : "Popover弹窗"
+                    }
+                },
+                {
                     "path" : "tabs/tabs",
                     "style" : {
                         "navigationBarTitleText" : "标签"
