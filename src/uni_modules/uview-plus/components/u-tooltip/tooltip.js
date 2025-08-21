@@ -22,6 +22,7 @@ export default {
         overlay: true,
         showToast: true,
         popupBgColor: '',
-        triggerMode: 'longpress'
+        triggerMode: 'longpress',
+        forcePosition: {}
     }
 }

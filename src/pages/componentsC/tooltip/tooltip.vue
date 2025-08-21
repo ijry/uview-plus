@@ -69,6 +69,27 @@
 				</up-tooltip>
 			</view>
 		</view>
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">左侧弹出</text>
+			<view class="u-demo-block__content u-flex-x u-flex-end">
+				<up-tooltip
+				    :text="text5"
+					color="#fff"
+					bgColor="#333"
+					popupBgColor="#333"
+					triggerMode="click"
+					:forcePosition="{right: '108px', top: '0px'}"
+					direction="left"
+				>
+					<template #trigger>
+						<up-button style="width: 100px" :stop="false" type="primary">点击</up-button>
+					</template>
+					<template #content>
+						<view style="padding: 6px 12px;">自定义内容</view>
+					</template>
+				</up-tooltip>
+			</view>
+		</view>
 	</view>
 </template>
 

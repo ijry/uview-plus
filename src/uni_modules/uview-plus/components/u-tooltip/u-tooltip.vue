@@ -31,7 +31,7 @@
 					position: 'absolute', 
 					top: addUnit(tooltipTop),
 					zIndex: zIndex,
-					...tooltipStyle
+					...tooltipStyleCpu
 				}"
 			>
 				<view
@@ -161,7 +161,7 @@
 		watch: {
 			async propsChange() {
 				await this.getElRect()
-				this.getTooltipStyle();
+				// this.getTooltipStyle();
 			}
 		},
 		computed: {
@@ -169,28 +169,16 @@
 			// 当一些依赖参数变化时，需要重新计算气泡和指示器的位置信息
 			propsChange() {
 				return [this.text, this.buttons]
-			}
-		},
-		mounted() {
-			this.init()
-		},
-		emits: ["click"],
-		methods: {
-			addStyle,
-			addUnit,
-			async init() {
-				await this.getElRect()
-				this.getTooltipStyle();
 			},
 			// 计算气泡和指示器的位置信息
-			getTooltipStyle() {
+			tooltipStyleCpu() {
 				const style = {},
 					sysInfo = getWindowInfo()
 				if (this.direction === 'left') {
 					// 右侧显示逻辑
 					style.transform = ``
 					// 垂直居中对齐
-					style.top = '-' + addUnit((this.tooltipInfo.height - this.indicatorWidth) / 2, 'px')
+					style.top = '-' + addUnit((this.textInfo.height - this.tooltipInfo.height) / 2, 'px')
 					style.right = addUnit(this.textInfo.width + this.indicatorWidth, 'px')
 					this.indicatorStyle = {}
 					this.indicatorStyle.right = '-4px'
@@ -199,8 +187,8 @@
 					// 右侧显示逻辑
 					style.transform = ``
 					// 垂直居中对齐
-					style.top = addUnit((this.textInfo.height - this.tooltipInfo.height) / 2, 'px')
-					style.left = addUnit(this.textInfo.width + this.indicatorWidth, 'px')
+					style.top = '-' + addUnit((this.textInfo.height - this.tooltipInfo.height) / 2, 'px')
+					style.left = addUnit(this.tooltipInfo.width + this.indicatorWidth, 'px')
 					this.indicatorStyle = {}
 					this.indicatorStyle.left = '-4px'
 					this.indicatorStyle.top = addUnit((this.textInfo.height - this.indicatorWidth) / 2, 'px')
@@ -230,8 +218,20 @@
 						this.indicatorStyle.top = '-4px'
 					}
 				}
-				this.tooltipStyle = style
-				return style
+				this.tooltipStyle = {...style, ...this.forcePosition}
+				return this.tooltipStyle
+			}
+		},
+		mounted() {
+			this.init()
+		},
+		emits: ["click"],
+		methods: {
+			addStyle,
+			addUnit,
+			async init() {
+				await this.getElRect()
+				// this.getTooltipStyle();
 			},
 			// 点击触发事件
 			async clickHander() {
