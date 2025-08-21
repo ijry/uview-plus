@@ -186,7 +186,7 @@
 			</up-tabbar>
 		</view>
 		<view class="u-page__item">
-			<text class="u-page__item__title">固定在底部(固定在屏幕最下方)</text>
+			<text class="u-page__item__title">固定在底部及中间按钮</text>
 			<up-gap height="150"></up-gap>
 			<up-tabbar
 			    :value="value6"
@@ -204,6 +204,12 @@
 				<up-tabbar-item
 					text="放映厅"
 					icon="photo"
+				></up-tabbar-item>
+				<up-tabbar-item
+					text=""
+					icon="plus"
+					mode="midButton"
+					@click="clickMidButton"
 				></up-tabbar-item>
 				<up-tabbar-item
 					text="直播"
@@ -229,7 +235,8 @@
 				value4: 0,
 				value5: 0,
 				value6: 0,
-				value7: 3
+				value7: 3,
+				value8: 0 // 中间按钮示例的值
 			}
 		},
 		onLoad() {
@@ -250,6 +257,13 @@
 			goNext() {
 				uni.navigateTo({
 					url: 'tabbar2'
+				})
+			},
+			// 中间按钮点击事件
+			clickMidButton() {
+				uni.showToast({
+					title: '点击了中间按钮',
+					icon: 'none'
 				})
 			}
 		},
