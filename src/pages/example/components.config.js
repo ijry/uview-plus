@@ -528,6 +528,12 @@ export default [{
         title_en: '条码'
     },
     {
+        path: '/pages/componentsD/poster/poster',
+        icon: 'poster',
+        title: 'Poster 海报生成',
+        title_en: 'Poster'
+    },
+    {
         path: '/pages/componentsD/cityLocate/cityLocate',
         icon: 'cityLocate',
         title: 'CityLocate 城市定位',

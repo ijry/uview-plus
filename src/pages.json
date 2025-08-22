@@ -649,6 +649,12 @@
                     "style" : {
                         "navigationBarTitleText" : "Markdown解析器"
                     }
+                },
+                {
+                    "path" : "poster/poster",
+                    "style" : {
+                        "navigationBarTitleText" : "海报生成"
+                    }
                 }
             ]
         },
