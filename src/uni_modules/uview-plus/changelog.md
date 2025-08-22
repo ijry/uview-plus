@@ -1,3 +1,6 @@
+## 3.5.9（2025-08-22）
+feat: 优化qrcode组件支持toTempFilePath方法
+
 ## 3.5.8（2025-08-22）
 fix: 优化rpx下calendar高度计算强制px
 
