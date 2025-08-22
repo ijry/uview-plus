@@ -1,3 +1,7 @@
+## 3.5.10（2025-08-22）
+feat: 新增poster海报生成组件
+
+
 ## 3.5.9（2025-08-22）
 feat: 优化qrcode组件支持toTempFilePath方法
 
