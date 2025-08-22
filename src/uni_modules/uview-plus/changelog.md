@@ -1,3 +1,6 @@
+## 3.5.7（2025-08-22）
+feat: input和search新增onlyClearableOnFocused参数支持控制是否仅聚焦时显示清除按钮
+
 ## 3.5.6（2025-08-21）
 feat: picker弹窗及datetime-picker组件支持页面内模式
 
