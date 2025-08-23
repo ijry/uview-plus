@@ -42,8 +42,33 @@
 		>
 			<swiper-item v-for="(item, index) in videoList" :key="index">
 				<view class="u-short-video__content__item">
-					<!-- 视频播放区域（此处简化为背景色） -->
-					<view class="u-short-video__content__video" :style="{ backgroundColor: item.bgColor || '#ccc' }"></view>
+					<!-- 视频播放区域 -->
+					<view class="u-short-video__content__video">
+						<video 
+							:id="'video-' + index"
+							:src="item.videoUrl" 
+							:autoplay="index === currentVideo" 
+							:controls="false"
+							:show-fullscreen-btn="false"
+							:show-play-btn="false"
+							:show-center-play-btn="false"
+							:enable-progress-gesture="true"
+							:loop="true"
+							:playback-rate="item.playbackRate || 1.0"
+							@play="onVideoPlay"
+							@pause="onVideoPause"
+							@ended="onVideoEnded"
+							@timeupdate="onTimeUpdate"
+							@loadedmetadata="onLoadedMetadata"
+							style="width: 100%; height: 100%;"
+						></video>
+						
+						<!-- 倍速设置按钮 -->
+						<!-- <view class="u-short-video__content__video__speed" @click="showSpeedOptions(index)">
+							<text class="speed-text">{{ item.playbackRate || 1.0 }}x</text>
+							<up-icon name="arrow-down" size="12" color="#fff"></up-icon>
+						</view> -->
+					</view>
 					
 					<!-- 作者信息 -->
 					<view class="u-short-video__content__author">
@@ -84,12 +109,21 @@
 			</swiper-item>
 		</swiper>
 		
+		<!-- 倍速选择弹窗 -->
+		<up-action-sheet
+			:show="showSpeedSheet"
+			:actions="speedOptions"
+			title="播放速度"
+			@close="showSpeedSheet = false"
+			@select="selectSpeed"
+		></up-action-sheet>
+		
 		<!-- 底部导航栏 -->
 		<view class="u-short-video__footer">
 			<!-- 进度条 -->
 			<view class="u-short-video__progress" style="z-index: 999;">
 				<up-slider 
-					v-model="videoList[currentVideo]?.progress" 
+					:value="videoList[currentVideo]?.progress" 
 					:min="0" 
 					:max="100" 
 					:step="1"
@@ -169,7 +203,17 @@
 		},
 		data() {
 			return {
-				progressValue: 0
+				progressValue: 0,
+				showSpeedSheet: false,
+				currentSpeedVideoIndex: 0,
+				speedOptions: [
+					{ name: '0.5x', value: 0.5 },
+					{ name: '0.75x', value: 0.75 },
+					{ name: '1.0x', value: 1.0 },
+					{ name: '1.25x', value: 1.25 },
+					{ name: '1.5x', value: 1.5 },
+					{ name: '2.0x', value: 2.0 }
+				]
 			}
 		},
 		methods: {
@@ -180,6 +224,12 @@
 			// 处理swiper切换
 			handleSwiperChange(e) {
 				const currentIndex = e.detail.current;
+				// 暂停当前播放的视频
+				this.pauseCurrentVideo();
+				// 播放新切换到的视频
+				this.$nextTick(() => {
+					this.playVideo(currentIndex);
+				});
 				this.$emit('videoChange', currentIndex);
 			},
 			// 处理点赞
@@ -202,7 +252,7 @@
 			onProgressChanging(value) {
 				// 更新当前视频的进度值
 				if (this.videoList[this.currentVideo]) {
-					this.$set(this.videoList[this.currentVideo], 'progressValue', value.detail.value);
+					this.videoList[this.currentVideo]['progressValue'] = value.detail.value
 				}
 				this.$emit('progressChanging', {
 					progress: value.detail.value,
@@ -219,6 +269,54 @@
 					progress: value.detail.value,
 					index: this.currentVideo
 				});
+			},
+			// 显示倍速选项
+			showSpeedOptions(index) {
+				this.currentSpeedVideoIndex = index;
+				this.showSpeedSheet = true;
+			},
+			// 选择倍速
+			selectSpeed(action) {
+				const videoContext = uni.createVideoContext('video-' + this.currentSpeedVideoIndex, this);
+				videoContext.playbackRate(action.value);
+				
+				// 更新视频倍速数据
+				this.$set(this.videoList[this.currentSpeedVideoIndex], 'playbackRate', action.value);
+				this.showSpeedSheet = false;
+			},
+			// 播放指定索引的视频
+			playVideo(index) {
+				const videoContext = uni.createVideoContext('video-' + index, this);
+				videoContext.play();
+			},
+			// 暂停当前视频
+			pauseCurrentVideo() {
+				const videoContext = uni.createVideoContext('video-' + this.currentVideo, this);
+				videoContext.pause();
+			},
+			// 视频播放事件
+			onVideoPlay(e) {
+				this.$emit('videoPlay', { index: this.currentVideo, event: e });
+			},
+			// 视频暂停事件
+			onVideoPause(e) {
+				this.$emit('videoPause', { index: this.currentVideo, event: e });
+			},
+			// 视频结束事件
+			onVideoEnded(e) {
+				this.$emit('videoEnded', { index: this.currentVideo, event: e });
+			},
+			// 视频时间更新事件
+			onTimeUpdate(e) {
+				const progress = (e.detail.currentTime / e.detail.duration) * 100;
+				if (this.videoList[this.currentVideo]) {
+					this.$set(this.videoList[this.currentVideo], 'progress', progress);
+				}
+				this.$emit('timeUpdate', { index: this.currentVideo, event: e });
+			},
+			// 视频元数据加载完成事件
+			onLoadedMetadata(e) {
+				this.$emit('loadedMetadata', { index: this.currentVideo, event: e });
 			}
 		}
 	}
@@ -272,6 +370,25 @@
 			&__video {
 				width: 100%;
 				height: 100%;
+				position: relative;
+				
+				&__speed {
+					position: absolute;
+					top: 15px;
+					right: 15px;
+					z-index: 10;
+					background-color: rgba(0, 0, 0, 0.3);
+					border-radius: 20px;
+					padding: 5px 10px;
+					display: flex;
+					align-items: center;
+					
+					.speed-text {
+						color: #fff;
+						font-size: 12px;
+						margin-right: 4px;
+					}
+				}
 			}
 			
 			&__author {
