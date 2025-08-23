@@ -104,7 +104,7 @@
 				],
 				videoList: [
 					{
-						videoUrl: 'http://qn-o.jiangruyi.com/rjtsdl.MP4',
+						videoUrl: 'https://qn-o.jiangruyi.com/rjtsdl.MP4',
 						progress: 0,
 						bgColor: '#000',
 						author: {
@@ -120,7 +120,7 @@
 						isCollected: false
 					},
 					{
-						videoUrl: 'http://qn-o.jiangruyi.com/shanghai.mp4',
+						videoUrl: 'https://qn-o.jiangruyi.com/shanghai.mp4',
 						progress: 0,
 						bgColor: '#000',
 						author: {
@@ -136,7 +136,7 @@
 						isCollected: true
 					},
 					{
-						videoUrl: 'http://qn-o.jiangruyi.com/shanghai.mp4',
+						videoUrl: 'https://qn-o.jiangruyi.com/shanghai.mp4',
 						progress: 0,
 						bgColor: '#000',
 						author: {
