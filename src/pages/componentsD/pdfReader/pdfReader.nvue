@@ -1,0 +1,33 @@
+<template>
+    <view class="u-page">
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">默认</text>
+          <view class="u-page__item__content">
+            <up-button @click="show = true">
+                 打开PDF预览
+            </up-button>
+            <up-popup v-model:show="show">
+                <up-pdf-reader :src="pdfFileUrl" baseUrl=""></up-pdf-reader>
+            </up-popup>
+          </view>
+      </view>
+  </view>
+</template>
+
+<script setup>
+import { onMounted, ref } from 'vue'
+
+const show = ref(false)
+
+const pdfFileUrl = ref('https://qn-o.jiangruyi.com/plus.pdf')
+
+</script>
+
+<style lang="scss" scoped>
+  .u-page__item {
+      margin-bottom: 15px;
+  }
+  .u-page__item__title {
+      margin-bottom: 10px;
+  }
+</style>

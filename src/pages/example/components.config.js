@@ -543,6 +543,12 @@ export default [{
         icon: 'cityLocate',
         title: 'CityLocate 城市定位',
         title_en: 'CityLocate'
+    },
+    {
+        path: '/pages/componentsD/pdfReader/pdfReader',
+        icon: 'pdfReader',
+        title: 'PdfReader PDF阅读器',
+        title_en: 'PdfReader'
     }]
 }
 ]

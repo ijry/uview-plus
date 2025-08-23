@@ -662,6 +662,12 @@
                         "navigationBarTitleText" : "短视频切换",
                         "navigationStyle" : "custom"
                     }
+                },
+                {
+                    "path" : "pdfReader/pdfReader",
+                    "style" : {
+                        "navigationBarTitleText" : "PDF阅读器"
+                    }
                 }
             ]
         },
