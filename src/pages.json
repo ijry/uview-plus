@@ -655,6 +655,13 @@
                     "style" : {
                         "navigationBarTitleText" : "海报生成"
                     }
+                },
+                {
+                    "path" : "shortVideo/shortVideo",
+                    "style" : {
+                        "navigationBarTitleText" : "短视频切换",
+                        "navigationStyle" : "custom"
+                    }
                 }
             ]
         },

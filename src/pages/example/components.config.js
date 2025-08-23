@@ -361,8 +361,13 @@ export default [{
 		icon: 'title',
 		title: 'Title 标题',
 		title_en: 'Title'
-    }
-    ]
+    },
+    {
+        path: '/pages/componentsD/shortVideo/shortVideo',
+        icon: 'shortVideo',
+        title: 'ShortVideo 短视频切换',
+        title_en: 'ShortVideo'
+    }]
 },
 {
     groupName: '导航组件',
