@@ -1,3 +1,10 @@
+## 3.5.11（2025-08-23）
+feat: 新增short-video短视频切换组件
+
+feat: tabbar支持backgroundColor和borderColor属性
+
+feat: slider支持innerStyle样式属性
+
 ## 3.5.10（2025-08-22）
 feat: 新增poster海报生成组件
 
