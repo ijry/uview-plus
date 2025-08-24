@@ -8,7 +8,7 @@ export default {
         // 组件高度
         height: {
             type: String,
-            default: '700px'
+            default: '500px'
         },
         // pdfjs资源域名
         baseUrl: {
