@@ -1,0 +1,129 @@
+<template>
+	<view class="content">		
+		<view class="main">
+			<view class="card">
+				<text class="title">颜色选择器示例</text>
+				
+                <up-color-picker
+                    v-model="selectedColor"
+                    :show="showColorPicker"
+                    @confirm="confirmColor"
+                    @close="showColorPicker = false"
+                >
+                    <view class="color-preview">
+                        <view class="color-block" :style="{ backgroundColor: selectedColor }"></view>
+                        <text class="color-text">{{ selectedColor }}</text>
+                    </view>
+                </up-color-picker>
+				
+				
+				<text class="desc">点击上方色块选择颜色</text>
+			</view>
+			
+			<view class="card">
+				<text class="title">带常用颜色的示例</text>
+				<up-color-picker
+                    v-model="selectedColor2"
+                    :show="showColorPickerWithCommon"
+                    :commonColors="commonColors"
+                    @confirm="confirmColor2"
+                    @close="showColorPickerWithCommon = false"
+                >
+                    <view class="color-preview">
+                        <view class="color-block" :style="{ backgroundColor: selectedColor2 }"></view>
+                        <text class="color-text">{{ selectedColor2 }}</text>
+                    </view>
+                    </up-color-picker>
+				<text class="desc">包含常用颜色选项</text>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				selectedColor: '#ff0000',
+				selectedColor2: '#00ff00',
+				commonColors: [
+					'#ff0000',
+					'#00ff00',
+					'#0000ff',
+					'#ffff00',
+					'#00ffff',
+					'#ff00ff',
+					'#ffffff',
+					'#000000'
+				]
+			}
+		},
+		methods: {
+			confirmColor(color) {
+				this.selectedColor = color;
+			},
+			confirmColor2(color) {
+				this.selectedColor2 = color;
+			}
+		}
+	}
+</script>
+
+<style>
+	.content {
+		flex: 1;
+		background-color: #f5f5f5;
+	}
+	
+	.main {
+		padding: 20rpx;
+	}
+	
+	.card {
+		background-color: #ffffff;
+		border-radius: 16rpx;
+		padding: 30rpx;
+		margin-bottom: 20rpx;
+	}
+	
+	.title {
+		font-size: 32rpx;
+		font-weight: bold;
+		color: #333;
+		display: block;
+		margin-bottom: 30rpx;
+	}
+	
+	.color-preview {
+		display: flex;
+		align-items: center;
+		padding: 30rpx;
+		background-color: #f8f8f8;
+		border-radius: 12rpx;
+		cursor: pointer;
+	}
+	
+	.color-block {
+		width: 80rpx;
+		height: 80rpx;
+		border-radius: 12rpx;
+		margin-right: 30rpx;
+		border: 1px solid #eee;
+	}
+	
+	.color-text {
+		font-size: 28rpx;
+		color: #666;
+		flex: 1;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	
+	.desc {
+		display: block;
+		font-size: 24rpx;
+		color: #999;
+		margin-top: 20rpx;
+	}
+</style>

@@ -645,6 +645,7 @@
                     }
                 },
                 {
+<<<<<<< HEAD
                     "path" : "markdown/markdown",
                     "style" : {
                         "navigationBarTitleText" : "Markdown解析器"
@@ -667,6 +668,12 @@
                     "path" : "pdfReader/pdfReader",
                     "style" : {
                         "navigationBarTitleText" : "PDF阅读器"
+                    }
+                },
+                {
+                    "path" : "colorPicker/colorPicker",
+                    "style" : {
+                        "navigationBarTitleText" : "颜色选择器"
                     }
                 }
             ]
