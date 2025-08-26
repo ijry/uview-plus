@@ -2,14 +2,20 @@
 	<view
 	    class="u-tabbar-item"
 	    :style="[addStyle(customStyle)]"
+	    :class="[isMidButton ? 'u-tabbar-item--mid-button' : '']"
 	    @tap="clickHandler"
 	>
-		<view class="u-tabbar-item__icon">
+		<view 
+			class="u-tabbar-item__icon"
+			:class="[isMidButton ? 'u-tabbar-item__icon--mid-button' : '']"
+		>
+			<view class="u-tabbar-item--mid-button-cover" v-if="isMidButton">
+			</view>
 			<up-icon
 			    v-if="icon"
 			    :name="icon"
 			    :color="isActive? parentData.activeColor : parentData.inactiveColor"
-			    :size="20"
+			    :size="isMidButton ? 26 : 20"
 			></up-icon>
 			<template v-else>
 				<slot
@@ -78,6 +84,12 @@
 		options: {
 		    virtualHost: true //将自定义节点设置成虚拟的，更加接近Vue组件的表现。我们不希望自定义组件的这个节点本身可以设置样式、响应 flex 布局等
 		},
+		computed: {
+			// 计算是否为中间按钮
+			isMidButton() {
+				return this.mode === 'midButton';
+			}
+		},
 		created() {
 			this.init()
 		},
@@ -88,7 +100,7 @@
 				// 支付宝小程序不支持provide/inject，所以使用这个方法获取整个父组件，在created定义，避免循环引用
 				this.updateParentData()
 				if (!this.parent) {
-					error('u-tabbar-item必须搭配u-tabbar组件使用')
+					error('up-tabbar-item必须搭配up-tabbar组件使用')
 				}
 				// 本子组件在u-tabbar的children数组中的索引
 				const index = this.parent.children.indexOf(this)
@@ -145,6 +157,34 @@
 			font-size: 12px;
 			color: $u-content-color;
 		}
+	}
+	
+	// 中间按钮样式
+	.u-tabbar-item--mid-button {
+		/* #ifndef APP-NVUE */
+		transform: translateY(-10px);
+		/* #endif */
+	}
+	
+	.u-tabbar-item--mid-button-cover {
+		background-color: #fff;
+		position: absolute;
+		top: 22px;
+		left: -10px;
+		// right: -10px;
+		width: 90px;
+		bottom: 0;
+	}
+	
+	.u-tabbar-item__icon--mid-button {
+		width: 70px;
+		height: 70px;
+		border-radius: 100px;
+		background-color: #ffffff;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 	/* #ifdef MP */

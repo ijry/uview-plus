@@ -7,7 +7,7 @@ export const props = defineMixin({
             type: [String, Number, null],
             default: () => defProps.tabbarItem.name
         },
-        // uView内置图标或者绝对路径的图片
+        // uview-plus内置图标或者绝对路径的图片
         icon: {
             icon: String,
             default: () => defProps.tabbarItem.icon
@@ -31,7 +31,11 @@ export const props = defineMixin({
         badgeStyle: {
             type: [Object, String],
             default: () => defProps.tabbarItem.badgeStyle
+        },
+        // 模式，默认普通模式，midButton中间按钮模式
+        mode: {
+            type: String,
+            default: () => defProps.tabbarItem.mode
         }
-
     }
 })
