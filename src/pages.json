@@ -674,6 +674,12 @@
                     "style" : {
                         "navigationBarTitleText" : "颜色选择器"
                     }
+                },
+                {
+                    "path" : "coupon/coupon",
+                    "style" : {
+                        "navigationBarTitleText" : "优惠券"
+                    }
                 }
             ]
         },

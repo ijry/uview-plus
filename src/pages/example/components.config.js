@@ -527,6 +527,12 @@ export default [{
         title_en: 'Qrcode'
     },
     {
+        path: '/pages/componentsD/coupon/coupon',
+        icon: 'coupon',
+        title: 'Coupon 优惠券',
+        title_en: '优惠券'
+    },
+    {
         path: '/pages/componentsD/barcode/barcode',
         icon: 'barcode',
         title: 'Barcode 条码',
