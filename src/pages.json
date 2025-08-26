@@ -645,7 +645,6 @@
                     }
                 },
                 {
-<<<<<<< HEAD
                     "path" : "markdown/markdown",
                     "style" : {
                         "navigationBarTitleText" : "Markdown解析器"
