@@ -1,3 +1,8 @@
+## 3.5.17（2025-08-26）
+fix: 分支合并冲突修复
+
+feat: picker-data组件新增cancel/close/confirm事件支持
+
 ## 3.5.16（2025-08-26）
 feat: tabbar新增支持中间凸起按钮
 
