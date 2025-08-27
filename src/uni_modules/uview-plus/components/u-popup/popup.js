@@ -21,10 +21,13 @@ export default {
         safeAreaInsetBottom: true,
         safeAreaInsetTop: false,
         closeIconPos: 'top-right',
-        round: 0,
+        round: '20px',
         zoom: true,
         bgColor: '',
         overlayOpacity: 0.5,
-        pageInline: false
+        pageInline: false,
+        touchable: false,
+        minHeight: '200px',
+        maxHeight: '600px'
     }
 }

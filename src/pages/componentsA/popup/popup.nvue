@@ -42,6 +42,9 @@
 			:borderRadius="popupData.borderRadius"
 			:closeable="popupData.closeable"
 			:closeOnClickOverlay="popupData.closeOnClickOverlay"
+			:touchable="popupData.touchable"
+			:minHeight="popupData.minHeight"
+			:maxHeight="popupData.maxHeight"
 			@close="close"
 			@open="open"
 		>
@@ -53,7 +56,8 @@
 					marginTop: ['left', 'right'].includes(popupData.mode) ? '480rpx' : '0',
 				}"
 			>
-				<scroll-view scroll-y enable-flex style="width: 120px;height: 80px;margin-bottom: 10px;">
+				<scroll-view scroll-y enable-flex style="width: 120px;height: 80px;margin-bottom: 10px;"
+					:style="{height: popupData.height ? popupData.height: '80px'}">
 					<view v-for="i in 30">
 						列表滚动{{i}}
 					</view>
@@ -165,6 +169,21 @@
 						},
 						title: '显示关闭按钮',
 						iconUrl: 'https://cdn.uviewui.com/uview/demo/popup/showCloseBtn.png'
+					},
+					// 添加触摸示例
+					{
+						popupData: {
+							overlay: true,
+							mode: 'bottom',
+							height: '500px',
+							touchable: true,
+							minHeight: '300rpx',
+							maxHeight: '80%',
+							closeable: true,
+							closeOnClickOverlay: true
+						},
+						title: '底部弹出(支持手势)',
+						iconUrl: 'https://cdn.uviewui.com/uview/demo/popup/showCloseBtn.png'
 					}
 				]
 			}
@@ -193,7 +212,7 @@
 <style lang="scss">
 	.u-popup-slot {
 		width: 200px;
-		height: 150px;
+		// height: 150px;
 		@include flex;
 		justify-content: center;
 		align-items: center;

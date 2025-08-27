@@ -81,6 +81,21 @@ export const props = defineMixin({
         pageInline:{
 			type: Boolean,
 			default: () => defProps.popup.pageInline
+		},
+        // 是否页开启手势滑动
+        touchable:{
+			type: Boolean,
+			default: () => defProps.popup.touchable
+		},
+        // 手势滑动最小高度
+        minHeight:{
+			type: [String],
+			default: () => defProps.popup.minHeight
+		},
+        // 手势滑动最大高度
+        maxHeight:{
+			type: [String],
+			default: () => defProps.popup.maxHeight
 		}
     }
 })
