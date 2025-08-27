@@ -199,11 +199,12 @@
 					if (!this.parent) {
 						error('up-checkbox必须搭配up-checkbox-group组件使用')
 					}
+					let value = '';
 					// #ifdef VUE2
-					const value = this.parentData.value
+					value = this.parentData.value
 					// #endif
 					// #ifdef VUE3
-					const value = this.parentData.modelValue
+					value = this.parentData.modelValue
 					// #endif
 					// 设置初始化时，是否默认选中的状态，父组件u-checkbox-group的value可能是array，所以额外判断
 					if (this.checked) {
