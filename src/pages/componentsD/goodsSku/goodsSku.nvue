@@ -1,0 +1,191 @@
+<template>
+	<view class="u-page">
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">基本使用</text>
+			<view class="u-demo-block__content">
+				<up-goods-sku
+					:goodsInfo="goodsInfo"
+					:skuTree="skuTree"
+					:skuList="skuList"
+					@confirm="confirmSku"
+				>
+                    <template #trigger>
+                        <up-button :stop="false" type="primary">打开SKU弹窗</up-button>
+                    </template>
+                </up-goods-sku>
+			</view>
+		</view>
+		
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">自定义最大购买数量</text>
+			<view class="u-demo-block__content">
+				<up-goods-sku
+					:goodsInfo="goodsInfo"
+					:skuTree="skuTree"
+					:skuList="skuList"
+					:maxBuy="10"
+					@confirm="confirmSku"
+				>
+                    <template #trigger>
+                        <up-button :stop="false" type="error">打开SKU弹窗(最大购买10件)</up-button>
+                    </template>
+                </up-goods-sku>
+			</view>
+		</view>
+		
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">自定义确认按钮文字</text>
+			<view class="u-demo-block__content">
+				<up-goods-sku
+					:goodsInfo="goodsInfo"
+					:skuTree="skuTree"
+					:skuList="skuList"
+					confirmText="立即购买"
+					@confirm="confirmSku"
+				>
+                    <template #trigger>
+                        <up-button :stop="false" type="warning">打开SKU弹窗</up-button>
+                    </template>
+                </up-goods-sku>
+			</view>
+		</view>
+
+        <view class="u-demo-block">
+			<text class="u-demo-block__title">无弹窗页面模式</text>
+			<view class="u-demo-block__content">
+				<up-goods-sku
+					:goodsInfo="goodsInfo"
+					:skuTree="skuTree"
+					:skuList="skuList"
+                    :pageInline="true"
+					confirmText="立即购买"
+					@confirm="confirmSku"
+				>
+                </up-goods-sku>
+			</view>
+		</view>
+		
+		<!-- 显示选择结果 -->
+		<view v-if="result" class="u-demo-result">
+			<text class="u-demo-result__title">选择结果:</text>
+			<text class="u-demo-result__content">{{ result }}</text>
+		</view>
+	</view>
+</template>
+
+<script>
+export default {
+	data() {
+		return {
+			result: '',
+			// 商品信息
+			goodsInfo: {
+				image: 'https://picsum.photos/200/200',
+				price: 99.00,
+				stock: 100
+			},
+			// SKU树形结构
+			skuTree: [
+				{
+					label: '颜色',
+					name: 'color',
+					children: [
+						{ id: 1, name: '红色' },
+						{ id: 2, name: '蓝色' },
+						{ id: 3, name: '黑色' }
+					]
+				},
+				{
+					label: '尺寸',
+					name: 'size',
+					children: [
+						{ id: 1, name: 'S' },
+						{ id: 2, name: 'M' },
+						{ id: 3, name: 'L' },
+						{ id: 4, name: 'XL' }
+					]
+				}
+			],
+			// SKU列表
+			skuList: [
+				{
+					id: 1,
+					color: 1,
+					size: 1,
+					price: 99.00,
+					stock: 50
+				},
+				{
+					id: 2,
+					color: 1,
+					size: 2,
+					price: 99.00,
+					stock: 40
+				},
+				{
+					id: 3,
+					color: 2,
+					size: 1,
+					price: 109.00,
+					stock: 30
+				},
+				{
+					id: 4,
+					color: 2,
+					size: 3,
+					price: 109.00,
+					stock: 20
+				},
+				{
+					id: 5,
+					color: 3,
+					size: 4,
+					price: 89.00,
+					stock: 60
+				}
+			]
+		};
+	},
+	methods: {
+		confirmSku(e) {
+			this.result = `选择了: ${e.selectedText}, 数量: ${e.num}, 价格: ${e.sku.price}`;
+		}
+	}
+};
+</script>
+
+<style lang="scss" scoped>
+.u-demo-block {
+	margin-bottom: 30rpx;
+	
+	&__title {
+		padding: 20rpx;
+		font-size: 30rpx;
+		color: #333;
+	}
+	
+	&__content {
+		padding: 0 20rpx;
+	}
+}
+
+.u-demo-result {
+	padding: 20rpx;
+	background-color: #f5f5f5;
+	margin: 30rpx 20rpx;
+	border-radius: 10rpx;
+	
+	&__title {
+		font-size: 28rpx;
+		color: #333;
+		font-weight: bold;
+		display: block;
+		margin-bottom: 10rpx;
+	}
+	
+	&__content {
+		font-size: 26rpx;
+		color: #666;
+	}
+}
+</style>

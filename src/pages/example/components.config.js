@@ -550,6 +550,12 @@ export default [{
         title_en: 'Poster'
     },
     {
+        path: '/pages/componentsD/goodsSku/goodsSku',
+        icon: 'goodsSku',
+        title: 'GoodsSku 商品SKU',
+        title_en: 'GoodsSku'
+    },
+    {
         path: '/pages/componentsD/cityLocate/cityLocate',
         icon: 'cityLocate',
         title: 'CityLocate 城市定位',

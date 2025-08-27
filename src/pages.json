@@ -680,6 +680,12 @@
                     "style" : {
                         "navigationBarTitleText" : "优惠券"
                     }
+                },
+                {
+                    "path" : "goodsSku/goodsSku",
+                    "style" : {
+                        "navigationBarTitleText" : "商品SKU"
+                    }
                 }
             ]
         },

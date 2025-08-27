@@ -20,7 +20,7 @@
 		<u-transition
 			class="u-popup__content—transition"
 			:style="contentStyleWrap"
-			:show="show"
+			:show="pageInline ? true : show"
 			:customStyle="transitionStyle"
 			:mode="pageInline ? 'none' : position"
 			:duration="duration"
