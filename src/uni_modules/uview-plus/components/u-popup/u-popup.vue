@@ -96,8 +96,8 @@
 	 * @property {String }	        bgColor				背景色值（默认 '' ）
 	 * @property {Boolean}			zoom				当mode=center时 是否开启缩放（默认 true ）
 	 * @property {Boolean}			touchable			是否开启底部弹窗手势功能（默认 false ）
-	 * @property {String | Number}	minHeight			最小高度，单位任意，数值默认为px（默认 '200' ）
-	 * @property {String | Number}	maxHeight			最大高度，单位任意，数值默认为px（默认 '80%' ）
+	 * @property {String}			minHeight			最小高度，单位任意，数值默认为px（默认 '200px' ）
+	 * @property {String}			maxHeight			最大高度，单位任意，数值默认为px（默认 '80%' ）
 	 * @property {Object}			customStyle			组件的样式，对象形式
 	 * @event {Function} open 弹出层打开
 	 * @event {Function} close 弹出层收起
