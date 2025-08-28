@@ -67,5 +67,10 @@ export const props = defineMixin({
             type: String,
             default: () => defProps.tooltip.triggerMode
         },
+        // 强制定位
+        forcePosition: {
+            type: Object,
+            default: () => defProps.tooltip.forcePosition
+        }
     }
 })
