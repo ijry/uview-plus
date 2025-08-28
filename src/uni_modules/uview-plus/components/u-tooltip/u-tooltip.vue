@@ -29,7 +29,7 @@
 				duration="300"
 				:customStyle="{
 					position: 'absolute', 
-					top: addUnit(tooltipTop),
+					top: addUnit(tooltipTop, 'px'),
 					zIndex: zIndex,
 					...tooltipStyleCpu
 				}"
@@ -155,7 +155,8 @@
 				screenGap: 12,
 				// 三角形指示器的宽高，由于对元素进行了角度旋转，精确计算指示器位置时，需要用到其尺寸信息
 				indicatorWidth: 14,
-				tooltipStyle: {}
+				tooltipStyle: {},
+				calcReacted: false
 			}
 		},
 		watch: {
@@ -172,6 +173,9 @@
 			},
 			// 计算气泡和指示器的位置信息
 			tooltipStyleCpu() {
+				if (!this.calcReacted) {
+					return {}
+				}
 				const style = {},
 					sysInfo = getWindowInfo()
 				if (this.direction === 'left') {
@@ -188,7 +192,7 @@
 					style.transform = ``
 					// 垂直居中对齐
 					style.top = '-' + addUnit((this.textInfo.height - this.tooltipInfo.height) / 2, 'px')
-					style.left = addUnit(this.tooltipInfo.width + this.indicatorWidth, 'px')
+					style.left = addUnit(this.textInfo.width + this.indicatorWidth, 'px')
 					this.indicatorStyle = {}
 					this.indicatorStyle.left = '-4px'
 					this.indicatorStyle.top = addUnit((this.textInfo.height - this.indicatorWidth) / 2, 'px')
@@ -218,8 +222,9 @@
 						this.indicatorStyle.top = '-4px'
 					}
 				}
-				this.tooltipStyle = {...style, ...this.forcePosition}
-				return this.tooltipStyle
+				let styleMerge = {...style, ...this.forcePosition}
+				this.tooltipStyle = styleMerge
+				return styleMerge
 			}
 		},
 		mounted() {
@@ -292,6 +297,9 @@
 						// 获取气泡尺寸之后，将其隐藏，为了让下次切换气泡显示与隐藏时，有淡入淡出的效果
 						this.showTooltip = false
 						this.textInfo = await this.queryRect(this.textId)
+						sleep(500).then(() => {
+							this.calcReacted = true
+						})
 						resolve()
 					})
 				})
