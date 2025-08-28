@@ -33,7 +33,11 @@ uni.onLocaleChange((locale) => {
 export function t(value, params = {}) {
     // console.log(settings.locales[settings.lang])
     if (value) {
-        let result = settings.locales[settings.lang][value] || value;
+        let lang = settings.lang
+        if (!settings.locales[settings.lang]) {
+            lang = 'zh-Hans'
+        }
+        let result = settings.locales[lang][value] || value;
         // 替换{xxx}格式的变量
         Object.keys(params).forEach(key => {
             const reg = new RegExp(`{${key}}`, 'g');

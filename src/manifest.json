@@ -167,5 +167,6 @@
         "distribute" : {
             "bundleName" : "com.jiangruyi.uviewplus"
         }
-    }
+    },
+    "fallbackLocale" : "zh-Hans"
 }
