@@ -1,3 +1,8 @@
+## 3.5.24（2025-08-28）
+feat: 优化tooltip弹窗定位
+
+feat: tooltip组件新增forcePosition支持强制精确定位
+
 ## 3.5.23（2025-08-28）
 improvment: 调整pdf阅读器默认高度
 
