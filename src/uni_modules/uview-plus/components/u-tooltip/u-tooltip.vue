@@ -145,7 +145,7 @@
 					left: 0
 				},
 				// 文本的位置信息
-				textInfo: {
+				triggerInfo: {
 					width: 0,
 					left: 0
 				},
@@ -182,8 +182,8 @@
 					// 右侧显示逻辑
 					style.transform = ``
 					// 垂直居中对齐
-					style.top = '-' + addUnit((this.textInfo.height - this.tooltipInfo.height) / 2, 'px')
-					style.right = addUnit(this.textInfo.width + this.indicatorWidth, 'px')
+					style.top = '-' + addUnit((this.triggerInfo.height - this.tooltipInfo.height) / 2, 'px')
+					style.right = addUnit(this.triggerInfo.width + this.indicatorWidth, 'px')
 					this.indicatorStyle = {}
 					this.indicatorStyle.right = '-4px'
 					this.indicatorStyle.top = addUnit((this.tooltipInfo.height - this.indicatorWidth) / 2, 'px')
@@ -191,27 +191,27 @@
 					// 右侧显示逻辑
 					style.transform = ``
 					// 垂直居中对齐
-					style.top = '-' + addUnit((this.textInfo.height - this.tooltipInfo.height) / 2, 'px')
-					style.left = addUnit(this.textInfo.width + this.indicatorWidth, 'px')
+					style.top = '-' + addUnit((this.triggerInfo.height - this.tooltipInfo.height) / 2, 'px')
+					style.left = addUnit(this.triggerInfo.width + this.indicatorWidth, 'px')
 					this.indicatorStyle = {}
 					this.indicatorStyle.left = '-4px'
-					this.indicatorStyle.top = addUnit((this.textInfo.height - this.indicatorWidth) / 2, 'px')
+					this.indicatorStyle.top = addUnit((this.triggerInfo.height - this.indicatorWidth) / 2, 'px')
 				} else if (this.direction === 'top' || this.direction === 'bottom') { 
 					style.transform = `translateY(${this.direction === 'top' ? '-100%' : '100%'})`
-					if (this.tooltipInfo.width / 2 > this.textInfo.left + this.textInfo.width / 2 - this.screenGap) {
+					if (this.tooltipInfo.width / 2 > this.triggerInfo.left + this.triggerInfo.width / 2 - this.screenGap) {
 						this.indicatorStyle = {}
-						style.left = `-${addUnit(this.textInfo.left - this.screenGap)}`
-						this.indicatorStyle.left = addUnit(this.textInfo.width / 2 - getPx(style.left) - this.indicatorWidth /
+						style.left = `-${addUnit(this.triggerInfo.left - this.screenGap)}`
+						this.indicatorStyle.left = addUnit(this.triggerInfo.width / 2 - getPx(style.left) - this.indicatorWidth /
 							2, 'px')
-					} else if (this.tooltipInfo.width / 2 > sysInfo.windowWidth - this.textInfo.right + this.textInfo.width / 2 -
+					} else if (this.tooltipInfo.width / 2 > sysInfo.windowWidth - this.triggerInfo.right + this.triggerInfo.width / 2 -
 						this.screenGap) {
 						this.indicatorStyle = {}
-						style.right = `-${addUnit(sysInfo.windowWidth - this.textInfo.right - this.screenGap)}`
-						this.indicatorStyle.right = addUnit(this.textInfo.width / 2 - getPx(style.right) - this
+						style.right = `-${addUnit(sysInfo.windowWidth - this.triggerInfo.right - this.screenGap)}`
+						this.indicatorStyle.right = addUnit(this.triggerInfo.width / 2 - getPx(style.right) - this
 							.indicatorWidth / 2)
 					} else {
-						const left = Math.abs(this.textInfo.width / 2 - this.tooltipInfo.width / 2)
-						style.left = this.textInfo.width > this.tooltipInfo.width ? addUnit(left) : -addUnit(left)
+						const left = Math.abs(this.triggerInfo.width / 2 - this.tooltipInfo.width / 2)
+						style.left = this.triggerInfo.width > this.tooltipInfo.width ? addUnit(left) : -addUnit(left)
 						this.indicatorStyle = {}
 					}
 					if (this.direction === 'top') {
@@ -296,7 +296,7 @@
 						this.tooltipInfo = await this.queryRect(this.tooltipId)
 						// 获取气泡尺寸之后，将其隐藏，为了让下次切换气泡显示与隐藏时，有淡入淡出的效果
 						this.showTooltip = false
-						this.textInfo = await this.queryRect(this.textId)
+						this.triggerInfo = await this.queryRect(this.textId)
 						sleep(500).then(() => {
 							this.calcReacted = true
 						})
