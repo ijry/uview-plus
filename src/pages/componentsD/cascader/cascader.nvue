@@ -1,0 +1,215 @@
+<template>
+    <view class="u-page">
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">基础用法</text>
+          <view class="u-page__item__content">
+            <up-button @click="openCascader1">选择地区</up-button>
+            <text v-if="result1.length>0" style="margin-top: 10px;display: block;">
+              已选择：{{ formatResult(result1) }}
+            </text>
+            <up-cascader 
+              v-model:show="show1"
+              v-model="result1"
+              valueKey="label"
+              :data="areaData" 
+            ></up-cascader>
+          </view>
+      </view>
+      
+      <view class="u-page__item">
+          <text class="u-page__item__title">带默认值</text>
+          <view class="u-page__item__content">
+            <up-button @click="openCascader2">选择商品分类</up-button>
+            <text v-if="result2.length>0" style="margin-top: 10px;display: block;">
+              已选择：{{ formatResult(result2) }}
+            </text>
+            <up-cascader 
+              v-model:show="show2" 
+              :data="categoryData" 
+              :default-value="defaultCategory"
+              @confirm="e => result2 = e"
+            ></up-cascader>
+          </view>
+      </view>
+      
+      <view class="u-page__item">
+          <text class="u-page__item__title">自定义字段名</text>
+          <view class="u-page__item__content">
+            <up-button @click="openCascader3">选择组织架构</up-button>
+            <text v-if="result3.length>0" style="margin-top: 10px;display: block;">
+              已选择：{{ formatResult(result3) }}
+            </text>
+            <up-cascader 
+              v-model:show="show3" 
+              :data="orgData" 
+              value-key="id"
+              label-key="name"
+              children-key="childs"
+              @confirm="e => result3 = e"
+            ></up-cascader>
+          </view>
+      </view>
+  </view>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      show1: false,
+      result1: [],
+      
+      show2: false,
+      result2: [],
+      defaultCategory: ['2', '2-2'],
+      
+      show3: false,
+      result3: [],
+      
+      // 地区数据（省市区）
+      areaData: [
+        {
+          label: '北京市',
+          value: '11',
+          children: [
+            {
+              label: '北京市',
+              value: '1101',
+              children: [
+                { label: '东城区', value: '110101' },
+                { label: '西城区', value: '110102' },
+                { label: '朝阳区', value: '110105' }
+              ]
+            }
+          ]
+        },
+        {
+          label: '广东省',
+          value: '44',
+          children: [
+            {
+              label: '广州市',
+              value: '4401',
+              children: [
+                { label: '越秀区', value: '440103' },
+                { label: '荔湾区', value: '440103' },
+                { label: '海珠区', value: '440105' }
+              ]
+            },
+            {
+              label: '深圳市',
+              value: '4403',
+              children: [
+                { label: '罗湖区', value: '440303' },
+                { label: '福田区', value: '440304' }
+              ]
+            }
+          ]
+        }
+      ],
+      
+      // 商品分类数据
+      categoryData: [
+        {
+          label: '服装',
+          value: '1',
+          children: [
+            {
+              label: '上装',
+              value: '1-1',
+              children: [
+                { label: 'T恤', value: '1-1-1' },
+                { label: '衬衫', value: '1-1-2' }
+              ]
+            },
+            {
+              label: '下装',
+              value: '1-2',
+              children: [
+                { label: '裤子', value: '1-2-1' },
+                { label: '裙子', value: '1-2-2' }
+              ]
+            }
+          ]
+        },
+        {
+          label: '数码',
+          value: '2',
+          children: [
+            {
+              label: '手机',
+              value: '2-1',
+              children: [
+                { label: '智能手机', value: '2-1-1' },
+                { label: '功能手机', value: '2-1-2' }
+              ]
+            },
+            {
+              label: '电脑',
+              value: '2-2',
+              children: [
+                { label: '笔记本', value: '2-2-1' },
+                { label: '台式机', value: '2-2-2' }
+              ]
+            }
+          ]
+        }
+      ],
+      
+      // 组织架构数据（自定义字段名）
+      orgData: [
+        {
+          name: '总部',
+          id: '1',
+          childs: [
+            {
+              name: '研发部',
+              id: '1-1',
+              childs: [
+                { name: '前端组', id: '1-1-1' },
+                { name: '后端组', id: '1-1-2' }
+              ]
+            },
+            {
+              name: '市场部',
+              id: '1-2',
+              childs: [
+                { name: '销售组', id: '1-2-1' },
+                { name: '推广组', id: '1-2-2' }
+              ]
+            }
+          ]
+        }
+      ]
+    };
+  },
+  methods: {
+    openCascader1() {
+      this.show1 = true;
+    },
+    openCascader2() {
+      this.show2 = true;
+    },
+    openCascader3() {
+      this.show3 = true;
+    },
+    formatResult(result) {
+      if (!result || result.length === 0) return '';
+      return result.join(' / ');
+    }
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+  .u-page__item {
+      margin-bottom: 15px;
+      padding: 15px;
+      background-color: #fff;
+  }
+  .u-page__item__title {
+      margin-bottom: 10px;
+      font-size: 16px;
+      font-weight: bold;
+  }
+</style>

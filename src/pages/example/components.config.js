@@ -87,6 +87,11 @@ export default [{
         title: 'Select 经典下拉框',
         title_en: 'Picker'
     }, {
+        path: '/pages/componentsD/cascader/cascader',
+        icon: 'cascader',
+        title: 'Cascader 级联选择器',
+        title_en: 'Cascader'
+    }, {
         path: '/pages/componentsC/datetimePicker/datetimePicker',
         icon: 'datetimePicker',
         title: 'DatetimePicker 时间选择器',

@@ -692,7 +692,13 @@
                     "style" : {
                         "navigationBarTitleText" : "商品SKU"
                     }
-                }
+                },
+                {
+                    "path" : "cascader/cascader",
+                    "style" : {
+                        "navigationBarTitleText" : "级联选择器"
+                    }
+                },
             ]
         },
         {
