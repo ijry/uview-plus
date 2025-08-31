@@ -91,5 +91,15 @@ export const props = defineMixin({
             type: Object,
             default: () => defProps.slider.innerStyle
         },
+        // 是否垂直方向
+        vertical: {
+            type: Boolean,
+            default: false
+        },
+        // 垂直方向时滑块宽度
+        width: {
+            type: [Number, String],
+            default: '300px'
+        }
     }
 })

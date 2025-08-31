@@ -7,12 +7,18 @@
 			<view ref="u-slider-inner" class="u-slider-inner" @click="onClick"
 				@onTouchStart="onTouchStart2($event, 1)" @touchmove="onTouchMove2($event, 1)"
 				@touchend="onTouchEnd2($event, 1)" @touchcancel="onTouchEnd2($event, 1)"
-				:class="[disabled ? 'u-slider--disabled' : '']" :style="innerStyleCpu"
+				:class="[disabled ? 'u-slider--disabled' : '', vertical ? 'u-slider-inner--vertical' : '']" 
+				:style="[innerStyleCpu, vertical ? { width: width } : {}]"
 			>
 				<view ref="u-slider__base"
 					class="u-slider__base"
+					:class="{ 'u-slider__base--vertical': vertical }"
 					:style="[
-						{
+						vertical ? {
+							width: height,
+							height: width,
+							backgroundColor: inactiveColor
+						} : {
 							height: height,
 							backgroundColor: inactiveColor
 						}
@@ -22,9 +28,15 @@
 				<view
 					@click="onClick"
 					class="u-slider__gap"
+					:class="{ 'u-slider__gap--vertical': vertical }"
 					:style="[
 						barStyle,
-						{
+						vertical ? {
+							width: height,
+							backgroundColor: activeColor,
+							left: 0,
+							bottom: 0
+						} : {
 							height: height,
 							marginTop: '-' + height,
 							backgroundColor: activeColor
@@ -34,9 +46,15 @@
 				</view>
 				<view v-if="isRange"
 					class="u-slider__gap u-slider__gap-0"
+					:class="{ 'u-slider__gap--vertical': vertical }"
 					:style="[
 						barStyle0,
-						{
+						vertical ? {
+							width: height,
+							backgroundColor: inactiveColor,
+							left: 0,
+							bottom: 0
+						} : {
 							height: height,
 							marginTop: '-' + height,
 							backgroundColor: inactiveColor
@@ -44,18 +62,31 @@
 					]"
 				>
 				</view>
-				<text v-if="isRange && showValue"
+				<text v-if="isRange && showValue && !vertical"
 					class="u-slider__show-range-value" :style="{left: (getPx(barStyle0.width) + getPx(blockSize)/2) + 'px'}">
 					{{ this.rangeValue[0] }}
 				</text>
-				<text v-if="isRange && showValue"
+				<text v-if="isRange && showValue && !vertical"
 					class="u-slider__show-range-value" :style="{left: (getPx(barStyle.width) + getPx(blockSize)/2) + 'px'}">
 					{{ this.rangeValue[1] }}
 				</text>
+				<text v-if="isRange && showValue && vertical"
+					class="u-slider__show-range-value" :class="{ 'u-slider__show-range-value--vertical': vertical }" 
+					:style="{bottom: (getPx(barStyle0.height) - getPx(blockSize)/2) + 'px'}">
+					{{ this.rangeValue[0] }}
+				</text>
+				<text v-if="isRange && showValue && vertical"
+					class="u-slider__show-range-value" :class="{ 'u-slider__show-range-value--vertical': vertical }" 
+					:style="{bottom: (getPx(barStyle.height) - getPx(blockSize)/2) + 'px'}">
+					{{ this.rangeValue[1] }}
+				</text>
 				<template v-if="isRange">
-					<view class="u-slider__button-wrap u-slider__button-wrap-0" @touchstart="onTouchStart($event, 0)"
+					<view class="u-slider__button-wrap u-slider__button-wrap-0" 
+						:class="{ 'u-slider__button-wrap--vertical': vertical }"
+						@touchstart="onTouchStart($event, 0)"
 						@touchmove="onTouchMove($event, 0)" @touchend="onTouchEnd($event, 0)"
-						@touchcancel="onTouchEnd($event, 0)" :style="{left: (getPx(barStyle0.width) + getPx(blockSize)/2) + 'px'}">
+						@touchcancel="onTouchEnd($event, 0)" 
+						:style="vertical ? {bottom: (getPx(barStyle0.height) - getPx(blockSize)/2) + 'px', left: '50%', transform: 'translateX(-50%)'} : {left: (getPx(barStyle0.width) + getPx(blockSize)/2) + 'px'}">
 						<slot name="min" v-if="$slots.min || $slots.$min"/>
 						<view v-else class="u-slider__button" :style="[blockStyle, {
 							height: getPx(blockSize, true),
@@ -64,9 +95,12 @@
 						}]"></view>
 					</view>
 				</template>
-				<view class="u-slider__button-wrap" @touchstart="onTouchStart"
+				<view class="u-slider__button-wrap" 
+					:class="{ 'u-slider__button-wrap--vertical': vertical }"
+					@touchstart="onTouchStart"
 					@touchmove="onTouchMove" @touchend="onTouchEnd"
-					@touchcancel="onTouchEnd" :style="{left: (getPx(barStyle.width) + getPx(blockSize)/2) + 'px'}">
+					@touchcancel="onTouchEnd" 
+					:style="vertical ? {bottom: (getPx(barStyle.height) - getPx(blockSize)/2) + 'px', left: '50%', transform: 'translateX(-50%)'} : {left: (getPx(barStyle.width) + getPx(blockSize)/2) + 'px'}">
 					<slot name="max" v-if="isRange && ($slots.max || $slots.$max)"/>
 					<slot v-else-if="$slots.default || $slots.$default"/>
 					<view v-else class="u-slider__button" :style="[blockStyle, {
@@ -76,7 +110,9 @@
 					}]"></view>
 				</view>
 			</view>
-			<view class="u-slider__show-value" v-if="showValue && !isRange">{{ modelValue }}</view>
+			<view class="u-slider__show-value" v-if="showValue && !isRange && !vertical">{{ modelValue }}</view>
+			<view class="u-slider__show-value" :class="{'u-slider__show-value--vertical': vertical}" 
+				v-if="showValue && !isRange && vertical">{{ modelValue }}</view>
 		</template>
 		<slider
 			class="u-slider__native"
@@ -91,6 +127,8 @@
 			:blockColor="blockColor"
 			:showValue="showValue"
 			:disabled="disabled"
+			:vertical="vertical"
+			:style="vertical ? { height: width } : {}"
 			@changing="changingHandler"
 			@change="changeHandler"
 		></slider>
@@ -119,6 +157,8 @@
 	 * @property {String} blockColor 滑块颜色（默认#ffffff）
 	 * @property {Object} blockStyle 给滑块自定义样式，对象形式
 	 * @property {Boolean} disabled 是否禁用滑块(默认为false)
+	 * @property {Boolean} vertical 是否垂直方向(默认为false)
+	 * @property {Number | String} width 垂直方向时滑块条宽度，默认300px
 	 * @event {Function} changing 正在滑动中
 	 * @event {Function} change 滑动结束
 	 * @example <up-slider v-model="value" />
@@ -130,16 +170,20 @@
 		data() {
 			return {
 				startX: 0,
+				startY: 0,
 				status: 'end',
 				newValue: 0,
 				distanceX: 0,
+				distanceY: 0,
 				startValue0: 0,
 				startValue: 0,
 				barStyle0: {},
 				barStyle: {},
 				sliderRect: {
 					left: 0,
-					width: 0
+					top: 0,
+					width: 0,
+					height: 0
 				}
 			};
 		},
@@ -178,7 +222,12 @@
 		computed: {
 			innerStyleCpu() {
 				let style = this.innerStyle;
-				style.height = (this.isRange && this.showValue) ? (getPx(this.blockSize) + 24) + 'px' : (getPx(this.blockSize)) + 'px';
+				if (this.vertical) {
+					style.width = this.width;
+					style.height = (this.isRange && this.showValue) ? (getPx(this.blockSize) + 24) + 'px' : (getPx(this.blockSize)) + 'px';
+				} else {
+					style.height = (this.isRange && this.showValue) ? (getPx(this.blockSize) + 24) + 'px' : (getPx(this.blockSize)) + 'px';
+				}
 				return style;
 			}
 		},
@@ -203,7 +252,9 @@
 						// console.log(res)
 						this.sliderRect = {
 							left: res.size.left,
-							width: res.size.width
+							top: res.size.top,
+							width: res.size.width,
+							height: res.size.height
 						};
 						this.init()
 					})
@@ -259,10 +310,15 @@
 			onTouchStart(event, index = 1) {
 				if (this.disabled) return;
 				this.startX = 0;
+				this.startY = 0;
 				// 触摸点集
 				let touches = event.touches[0];
 				// 触摸点到屏幕左边的距离
-				this.startX = touches.clientX;
+				if (this.vertical) {
+					this.startY = touches.clientY;
+				} else {
+					this.startX = touches.clientX;
+				}
 				// 此处的this.modelValue虽为props值，但是通过$emit('update:modelValue')进行了修改
 				if (this.isRange) {
 					this.startValue0 = this.format(this.rangeValue[0], 0);
@@ -279,16 +335,28 @@
 				this.status = 'start';
 
 				let clientX = 0;
+				let clientY = 0;
 				// #ifndef APP-NVUE
 				clientX = touches.clientX;
+				clientY = touches.clientY;
 				// #endif
 				// #ifdef APP-NVUE
 				clientX = touches.screenX;
+				clientY = touches.screenY;
 				// #endif
-				this.distanceX = clientX - this.sliderRect.left;
-				// 获得移动距离对整个滑块的值，此为带有多位小数的值，不能用此更新视图
-				// 否则造成通信阻塞，需要每改变一个step值时修改一次视图
-				this.newValue = ((this.distanceX / this.sliderRect.width) * (this.max - this.min)) + parseFloat(this.min);
+				
+				if (this.vertical) {
+					this.distanceY = this.sliderRect.top + this.sliderRect.height - clientY;
+					// 获得移动距离对整个滑块的值，此为带有多位小数的值，不能用此更新视图
+					// 否则造成通信阻塞，需要每改变一个step值时修改一次视图
+					this.newValue = ((this.distanceY / this.sliderRect.height) * (this.max - this.min)) + parseFloat(this.min);
+				} else {
+					this.distanceX = clientX - this.sliderRect.left;
+					// 获得移动距离对整个滑块的值，此为带有多位小数的值，不能用此更新视图
+					// 否则造成通信阻塞，需要每改变一个step值时修改一次视图
+					this.newValue = ((this.distanceX / this.sliderRect.width) * (this.max - this.min)) + parseFloat(this.min);
+				}
+				
 				this.status = 'moving';
 				// 发出moving事件
 				let $crtFmtValue = this.updateValue(this.newValue, true, index);
@@ -303,16 +371,28 @@
 				// console.log('touchs', touches)
 				// 滑块的左边不一定跟屏幕左边接壤，所以需要减去最外层父元素的左边值
 				let clientX = 0;
+				let clientY = 0;
 				// #ifndef APP-NVUE
 				clientX = touches.clientX;
+				clientY = touches.clientY;
 				// #endif
 				// #ifdef APP-NVUE
 				clientX = touches.screenX;
+				clientY = touches.screenY;
 				// #endif
-				this.distanceX = clientX - this.sliderRect.left;
-				// 获得移动距离对整个滑块的值，此为带有多位小数的值，不能用此更新视图
-				// 否则造成通信阻塞，需要每改变一个step值时修改一次视图
-				this.newValue = ((this.distanceX / this.sliderRect.width) * (this.max - this.min)) + parseFloat(this.min);
+				
+				if (this.vertical) {
+					this.distanceY = this.sliderRect.top + this.sliderRect.height - clientY;
+					// 获得移动距离对整个滑块的值，此为带有多位小数的值，不能用此更新视图
+					// 否则造成通信阻塞，需要每改变一个step值时修改一次视图
+					this.newValue = ((this.distanceY / this.sliderRect.height) * (this.max - this.min)) + parseFloat(this.min);
+				} else {
+					this.distanceX = clientX - this.sliderRect.left;
+					// 获得移动距离对整个滑块的值，此为带有多位小数的值，不能用此更新视图
+					// 否则造成通信阻塞，需要每改变一个step值时修改一次视图
+					this.newValue = ((this.distanceX / this.sliderRect.width) * (this.max - this.min)) + parseFloat(this.min);
+				}
+				
 				this.status = 'moving';
 				// 发出moving事件
 				let $crtFmtValue = this.updateValue(this.newValue, true, index);
@@ -348,8 +428,13 @@
 				// console.log('click', event)
 				// #ifndef APP-NVUE
 				// nvue下暂时无法获取坐标
-				let clientX = event.detail.x - this.sliderRect.left
-				this.newValue = ((clientX / this.sliderRect.width) * (this.max - this.min)) + parseFloat(this.min);
+				if (this.vertical) {
+					let clientY = event.detail.y;
+					this.newValue = ((this.sliderRect.top + this.sliderRect.height - clientY) / this.sliderRect.height) * (this.max - this.min) + parseFloat(this.min);
+				} else {
+					let clientX = event.detail.x - this.sliderRect.left
+					this.newValue = ((clientX / this.sliderRect.width) * (this.max - this.min)) + parseFloat(this.min);
+				}
 				this.updateValue(this.newValue, false, 1);
 				// #endif
 			},
@@ -361,10 +446,19 @@
 					valueFormat = this.max
 				}
 				// 设置移动的距离，不能用百分比，因为NVUE不支持。
-				let width = Math.min((valueFormat - this.min) / (this.max - this.min) * this.sliderRect.width, this.sliderRect.width)
-				let barStyle = {
-					width: width + 'px'
-				};
+				let barStyle = {};
+				if (this.vertical) {
+					let height = Math.min((valueFormat - this.min) / (this.max - this.min) * this.sliderRect.height, this.sliderRect.height);
+					barStyle = {
+						height: height + 'px'
+					};
+				} else {
+					let width = Math.min((valueFormat - this.min) / (this.max - this.min) * this.sliderRect.width, this.sliderRect.width)
+					barStyle = {
+						width: width + 'px'
+					};
+				}
+				
 				// 移动期间无需过渡动画
 				if (drag == true) {
 					barStyle.transition = 'none';
@@ -450,10 +544,21 @@
 			border-radius: 999px;
 			padding: 10px 18px;
 			justify-content: center;
+			
+			&--vertical {
+				padding: 18px 10px;
+				flex-direction: row;
+				align-items: center;
+				height: 100%;
+			}
 		}
 
 		&__show-value {
 			margin: 10px 18px 10px 0px;
+			
+			&--vertical {
+				margin: 0 10px 18px 10px;
+			}
 		}
 
 		&__show-range-value {
@@ -462,10 +567,23 @@
 			line-height: 12px;
 			position: absolute;
     		bottom: 0;
+			
+			&--vertical {
+				padding-top: 0;
+				padding-left: 2px;
+				line-height: 12px;
+				position: absolute;
+				right: 0;
+				transform: translateY(50%);
+			}
 		}
 
 		&__base {
 			background-color: #ebedf0;
+			
+			&--vertical {
+				background-color: #ebedf0;
+			}
 		}
 
 		/* #ifndef APP-NVUE */
@@ -478,6 +596,16 @@
 			bottom: -8px;
 			z-index: -1;
 		}
+		
+		&-inner--vertical:before {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			content: '';
+			left: -8px;
+			right: -8px;
+			z-index: -1;
+		}
 		/* #endif */
 
 		&__gap {
@@ -485,6 +613,14 @@
 			border-radius: 999px;
 			transition: width 0.2s;
 			background-color: #1989fa;
+			
+			&--vertical {
+				position: absolute;
+				bottom: 0;
+				border-radius: 999px;
+				transition: height 0.2s;
+				background-color: #1989fa;
+			}
 		}
 
 		&__button {
@@ -502,6 +638,11 @@
 		&__button-wrap {
 			position: absolute;
 			// transform: translate3d(50%, -50%, 0);
+			
+			&--vertical {
+				position: absolute;
+				transform: translate3d(-50%, 0, 0);
+			}
 		}
 
 		&--disabled {

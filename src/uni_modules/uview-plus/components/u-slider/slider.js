@@ -23,6 +23,8 @@ export default {
         blockStyle: {},
         useNative: false,
         height: '2px',
-        innerStyle: {}
+        innerStyle: {},
+        vertical: false,
+        width: '300px'
     }
 }
