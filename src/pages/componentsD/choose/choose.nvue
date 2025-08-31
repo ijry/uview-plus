@@ -1,0 +1,193 @@
+<template>
+	<view class="u-demo">
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">基本用法</text>
+			<view class="u-demo-block__content">
+				<up-choose v-model="value1" :options="options1"></up-choose>
+			</view>
+		</view>
+		
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">不换行显示</text>
+			<view class="u-demo-block__content">
+				<up-choose v-model="value2" :options="options2" :wrap="false"></up-choose>
+			</view>
+		</view>
+
+        <view class="u-demo-block">
+			<text class="u-demo-block__title">时间选择</text>
+			<view class="u-demo-block__content">
+				<up-choose v-model="value5" :options="options3" itemWidth="340rpx" itemHeight="70rpx"></up-choose>
+			</view>
+		</view>
+		
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">快递上门时间预约</text>
+			<view class="u-demo-block__content">
+				<up-cate-tab height="300px" :tab-list="deliveryOptions" v-model:current="deliveryCurrent">
+					<template v-slot:itemList="{item}">
+						<view class="delivery-time-container">
+							<view class="item-title">
+								<text>{{item.name}}</text>
+							</view>
+							<view class="item-container">
+								<up-choose 
+									v-model="item.selectedIndex" 
+									:options="item.times" 
+									item-width="460rpx" 
+									item-height="60rpx"
+									@change="onDeliveryTimeChange">
+								</up-choose>
+							</view>
+						</view>
+					</template>
+				</up-cate-tab>
+			</view>
+		</view>
+
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">自定义尺寸</text>
+			<view class="u-demo-block__content">
+				<up-choose v-model="value5" :options="options4" :wrap="false" itemWidth="250rpx" itemHeight="220rpx"></up-choose>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script lang="ts">
+	export default {
+		data() {
+			return {
+				value1: 0,
+				value2: 1,
+				value3: 2,
+				value4: 1,
+				value5: 0,
+				deliveryCurrent: 0,
+				options1: [
+					{id: 1, title: '选项1'},
+					{id: 2, title: '选项2'},
+					{id: 3, title: '选项3'},
+					{id: 4, title: '选项4'},
+					{id: 5, title: '选项5'},
+					{id: 6, title: '选项6'}
+				],
+				options2: [
+					{id: 1, title: '选项A'},
+					{id: 2, title: '选项B'},
+					{id: 3, title: '选项C'},
+					{id: 4, title: '选项D'},
+					{id: 5, title: '选项E'},
+					{id: 6, title: '选项F'}
+				],
+				options3: [
+					{id: 1, title: '9:00-10:00'},
+					{id: 2, title: '10:00-11:00'},
+					{id: 3, title: '11:00-12:00'},
+					{id: 4, title: '12:00-13:00'},
+					{id: 5, title: '13:00-14:00'},
+					{id: 6, title: '14:00-15:00'},
+					{id: 7, title: '15:00-16:00'},
+					{id: 8, title: '16:00-17:00'}
+				],
+				options4: [
+					{id: 1, title: '较宽选项1'},
+					{id: 2, title: '较宽选项2'},
+					{id: 3, title: '较宽选项3'}
+				],
+				deliveryOptions: [
+					{
+						name: '今天',
+						selectedIndex: 0,
+						times: [
+							{id: 1, title: '9:00-10:00'},
+							{id: 2, title: '10:00-11:00'},
+							{id: 3, title: '11:00-12:00'},
+							{id: 4, title: '12:00-13:00'},
+							{id: 5, title: '13:00-14:00'},
+							{id: 6, title: '14:00-15:00'},
+							{id: 7, title: '15:00-16:00'},
+							{id: 8, title: '16:00-17:00'},
+							{id: 9, title: '17:00-18:00'},
+							{id: 10, title: '18:00-19:00'},
+							{id: 11, title: '19:00-20:00'},
+							{id: 12, title: '20:00-21:00'}
+						]
+					},
+					{
+						name: '明天',
+						selectedIndex: 0,
+						times: [
+							{id: 1, title: '9:00-10:00'},
+							{id: 2, title: '10:00-11:00'},
+							{id: 3, title: '11:00-12:00'},
+							{id: 4, title: '12:00-13:00'},
+							{id: 5, title: '13:00-14:00'},
+							{id: 6, title: '14:00-15:00'},
+							{id: 7, title: '15:00-16:00'},
+							{id: 8, title: '16:00-17:00'},
+							{id: 9, title: '17:00-18:00'},
+							{id: 10, title: '18:00-19:00'},
+							{id: 11, title: '19:00-20:00'},
+							{id: 12, title: '20:00-21:00'}
+						]
+					},
+					{
+						name: '后天',
+						selectedIndex: 0,
+						times: [
+							{id: 1, title: '9:00-10:00'},
+							{id: 2, title: '10:00-11:00'},
+							{id: 3, title: '11:00-12:00'},
+							{id: 4, title: '12:00-13:00'},
+							{id: 5, title: '13:00-14:00'},
+							{id: 6, title: '14:00-15:00'},
+							{id: 7, title: '15:00-16:00'},
+							{id: 8, title: '16:00-17:00'},
+							{id: 9, title: '17:00-18:00'},
+							{id: 10, title: '18:00-19:00'},
+							{id: 11, title: '19:00-20:00'},
+							{id: 12, title: '20:00-21:00'}
+						]
+					}
+				]
+			}
+		},
+		methods: {
+			onDeliveryTimeChange(index) {
+				console.log('选择的时间索引:', index);
+			}
+		}
+	}
+</script>
+
+<style lang="scss">
+	.u-demo {
+	}
+	
+	.u-demo-block {
+		padding: 20rpx 30rpx;
+	}
+	
+	.u-demo-block__title {
+		font-size: 28rpx;
+		color: $u-content-color;
+		margin-bottom: 20rpx;
+		display: block;
+	}
+	
+	.delivery-time-container {
+		padding: 10rpx 0;
+	}
+	
+	.item-title {
+		font-size: 28rpx;
+		color: $u-content-color;
+		margin-bottom: 20rpx;
+	}
+	
+	.item-container {
+		display: flex;
+		flex-wrap: wrap;
+	}
+</style>

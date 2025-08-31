@@ -87,6 +87,11 @@ export default [{
         title: 'Select 经典下拉框',
         title_en: 'Picker'
     }, {
+        path: '/pages/componentsD/choose/choose',
+        icon: 'choose',
+        title: 'Choose 选项选择器',
+        title_en: 'Choose'
+    }, {
         path: '/pages/componentsC/datetimePicker/datetimePicker',
         icon: 'datetimePicker',
         title: 'DatetimePicker 时间选择器',

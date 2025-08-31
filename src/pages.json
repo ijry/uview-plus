@@ -686,6 +686,12 @@
                     "style" : {
                         "navigationBarTitleText" : "商品SKU"
                     }
+                },
+                {
+                    "path" : "choose/choose",
+                    "style" : {
+                        "navigationBarTitleText" : "选项选择器"
+                    }
                 }
             ]
         },
