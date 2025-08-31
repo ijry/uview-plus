@@ -24,7 +24,7 @@
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">快递上门时间预约</text>
 			<view class="u-demo-block__content">
-				<up-cate-tab height="300px" :tab-list="deliveryOptions" v-model:current="deliveryCurrent">
+				<up-cate-tab height="300px" mode="tab" :tab-list="deliveryOptions" v-model:current="deliveryCurrent">
 					<template v-slot:itemList="{item}">
 						<view class="delivery-time-container">
 							<view class="item-title">

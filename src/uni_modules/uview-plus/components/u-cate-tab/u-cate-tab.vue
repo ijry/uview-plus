@@ -19,26 +19,28 @@
                 	</slot>
 				</view>
 				<view class="u-cate-tab__page-view">
-					<view class="u-cate-tab__page-item" :id="'item' + index"
-						v-for="(item , index) in tabList" :key="index">
-                        <slot name="itemList" :item="item">
-                        </slot>
-						<template v-if="!$slots['itemList']">
-							<view class="item-title">
-                                <text>{{item[tabKeyName]}}</text>
-                            </view>
-                            <view class="item-container">
-                                <template v-for="(item1, index1) in item.children" :key="index1">
-                                    <slot name="pageItem" :pageItem="item1">
-                                        <view class="thumb-box" >
-                                            <image class="item-menu-image" :src="item1.icon" mode=""></image>
-                                            <view class="item-menu-name">{{item1[itemKeyName]}}</view>
-                                        </view>
-                                    </slot>
-                                </template>
-                            </view>
-						</template>
-					</view>
+					<template :key="index" v-for="(item , index) in tabList">
+						<view v-if="mode == 'follow' || ( mode == 'tab' && index == innerCurrent)"
+							class="u-cate-tab__page-item" :id="'item' + index">
+							<slot name="itemList" :item="item">
+							</slot>
+							<template v-if="!$slots['itemList']">
+								<view class="item-title">
+									<text>{{item[tabKeyName]}}</text>
+								</view>
+								<view class="item-container">
+									<template v-for="(item1, index1) in item.children" :key="index1">
+										<slot name="pageItem" :pageItem="item1">
+											<view class="thumb-box" >
+												<image class="item-menu-image" :src="item1.icon" mode=""></image>
+												<view class="item-menu-name">{{item1[itemKeyName]}}</view>
+											</view>
+										</slot>
+									</template>
+								</view>
+							</template>
+						</view>
+					</template>
 				</view>
 			</scroll-view>
 		</view>
@@ -49,6 +51,10 @@
 	export default {
 		name: 'up-cate-tab',
         props: {
+			mode: {
+                type: String,
+                default: 'follow' // follo跟随联动, tab单一显示。
+            },
 			height: {
                 type: String,
                 default: '100%'
@@ -119,10 +125,13 @@
 			addUnit,
 			// 点击左边的栏目切换
 			async swichMenu(index) {
-				if(this.arr.length == 0) {
-					await this.getMenuItemTop();
+				if (this.mode == 'follow') {
+					if(this.arr.length == 0) {
+						await this.getMenuItemTop();
+					}
+					this.scrollIntoView = 'item' + index;
 				}
-				this.scrollIntoView = 'item' + index;
+
 				if (index == this.innerCurrent) return;
 				this.$nextTick(function(){
 					this.innerCurrent = index;
@@ -216,6 +225,7 @@
 			},
 			// 右边菜单滚动
 			async rightScroll(e) {
+				if (this.mode !== 'follow') return;
 				this.oldScrollTop = e.detail.scrollTop;
                 // console.log(e.detail.scrollTop)
                 // console.log(JSON.stringify(this.arr))
