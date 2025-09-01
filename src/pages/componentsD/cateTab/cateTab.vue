@@ -12,7 +12,7 @@
 <template>
     <view class="u-page">
         <view style="height: 68px;background: linear-gradient(135deg,#fce38a,#f38181);margin-bottom: 10px;"></view>
-		<up-cate-tab class="cate-tab" :height="height" :tabList="tabList"
+		<up-cate-tab class="cate-tab" mode="follow" :height="height" :tabList="tabList"
 			tabKeyName="title" itemKeyName="title">
             <template #pageItem="{pageItem}">
                 <view class="w-full" style="width: 100%;">
