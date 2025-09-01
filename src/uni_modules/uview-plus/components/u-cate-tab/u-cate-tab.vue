@@ -261,6 +261,7 @@
 	.u-cate-tab__wrap {
 		flex: 1;
 		display: flex;
+		flex-direction: row;
 		overflow: hidden;
 	}
 

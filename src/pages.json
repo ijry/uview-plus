@@ -699,6 +699,12 @@
                         "navigationBarTitleText" : "级联选择器"
                     }
                 },
+                {
+                    "path" : "choose/choose",
+                    "style" : {
+                        "navigationBarTitleText" : "选项选择器"
+                    }
+                }
             ]
         },
         {

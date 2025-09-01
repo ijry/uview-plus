@@ -92,6 +92,11 @@ export default [{
         title: 'Cascader 级联选择器',
         title_en: 'Cascader'
     }, {
+        path: '/pages/componentsD/choose/choose',
+        icon: 'choose',
+        title: 'Choose 选项选择器',
+        title_en: 'Choose'
+    }, {
         path: '/pages/componentsC/datetimePicker/datetimePicker',
         icon: 'datetimePicker',
         title: 'DatetimePicker 时间选择器',
