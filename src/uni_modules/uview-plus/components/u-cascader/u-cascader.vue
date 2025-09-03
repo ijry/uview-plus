@@ -3,27 +3,39 @@
 		:mask="true" :closeable="true" :safe-area-inset-bottom="true"
 		close-icon-color="#ffffff" :z-index="uZIndex"
 		:maskCloseAble="maskCloseAble" @close="close">
-		<up-tabs v-if="popupShow" :list="genTabsList"
-			:scrollable="true" v-model:current="tabsIndex" @change="tabsChange" ref="tabs"></up-tabs>
+		<view class="up-p-t-30 up-p-l-20 up-m-b-10" v-if="headerDirection =='column'">
+			<up-steps v-if="popupShow" dot direction="column" v-model:current="tabsIndex">
+				<up-steps-item  v-for="(item, index) in genTabsList"
+					@click="tabsIndex = index" :title="item.name"></up-steps-item>
+			</up-steps>
+		</view>
+		<view class="up-p-t-20 up-m-b-10" v-else>
+			<up-tabs v-if="popupShow" :list="genTabsList"
+				:scrollable="true" v-model:current="tabsIndex" @change="tabsChange" ref="tabs"></up-tabs>
+		</view>
 		<view class="area-box">
-			<view class="u-flex" :class="{ 'change':isChange }">
-				<view class="area-item" v-for="(levelData, levelIndex) in levelList" :key="levelIndex">
-					<view class="u-padding-10 u-bg-gray" style="height: 100%;">
-						<scroll-view :scroll-y="true" style="height: 100%">
-							<up-cell-group v-if="levelIndex === 0 || selectedValueIndexs[levelIndex - 1] !== undefined">
-								<up-cell v-for="(item,index) in levelData"
-									:title="item[labelKey]" :arrow="false"
-									:index="index" :key="index"
-									@click="levelChange(levelIndex, index)">
-									<template v-slot:right-icon>
-										<up-icon v-if="selectedValueIndexs[levelIndex] === index"
-											size="17" name="checkbox-mark"></up-icon>
-									</template>
-								</up-cell>
-							</up-cell-group>
-						</scroll-view>
+			<view class="u-flex" :class="{ 'change':isChange }"
+				:style="{transform: optionsCols == 2 && isChange ? 'translateX(-33.3333333%)' : ''}">
+				<template v-for="(levelData, levelIndex) in levelList" :key="levelIndex">
+					<view v-if="optionsCols == 2 || levelIndex == tabsIndex" class="area-item"
+						:style="{ width: optionsCols == 2 ? '33.33333%' : '750rpx'}">
+						<view class="u-padding-10 u-bg-gray" style="height: 100%;">
+							<scroll-view :scroll-y="true" style="height: 100%">
+								<up-cell-group v-if="levelIndex === 0 || selectedValueIndexs[levelIndex - 1] !== undefined">
+									<up-cell v-for="(item,index) in levelData"
+										:title="item[labelKey]" :arrow="false"
+										:index="index" :key="index"
+										@click="levelChange(levelIndex, index)">
+										<template v-slot:right-icon>
+											<up-icon v-if="selectedValueIndexs[levelIndex] === index"
+												size="17" name="checkbox-mark"></up-icon>
+										</template>
+									</up-cell>
+								</up-cell-group>
+							</scroll-view>
+						</view>
 					</view>
-				</view>
+				</template>
 			</view>
 		</view>
 		<!-- 添加按钮区域 -->
@@ -101,6 +113,16 @@
 			autoClose: {
 				type: Boolean,
 				default: false
+			},
+			// 选中项目的展示方向direction垂直方向适合文字长度过长
+			headerDirection: {
+				type: String,
+				default: 'row'
+			},
+			// 选项区域列数，支持1列和2列，默认为2列
+			optionsCols: {
+				type: [Number],
+				default: 2
 			}
 		},
 		data() {
@@ -292,12 +314,12 @@
 			transform: translateX(0);
 
 			&.change {
-				transform: translateX(-33.3333333%);
+				// transform: translateX(-33.3333333%);
 			}
 		}
 
 		.area-item {
-			width: 33.3333333%;
+			// width: 750rpx;
 			height: 800rpx;
 		}
 	}

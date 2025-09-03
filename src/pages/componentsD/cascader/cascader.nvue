@@ -25,7 +25,8 @@
             </text>
             <up-cascader 
               v-model:show="show2" 
-              :data="categoryData" 
+              :data="categoryData"
+              headerDirection="column"
               :default-value="defaultCategory"
               @confirm="e => result2 = e"
             ></up-cascader>
@@ -46,6 +47,24 @@
               label-key="name"
               children-key="childs"
               @confirm="e => result3 = e"
+            ></up-cascader>
+          </view>
+      </view>
+
+      <view class="u-page__item">
+          <text class="u-page__item__title">垂直头部及单列选项</text>
+          <view class="u-page__item__content">
+            <up-button @click="openCascader2">选择商品分类</up-button>
+            <text v-if="result2.length>0" style="margin-top: 10px;display: block;">
+              已选择：{{ formatResult(result2) }}
+            </text>
+            <up-cascader 
+              v-model:show="show2" 
+              :data="categoryData"
+              headerDirection="column"
+              :optionsCols="1"
+              :default-value="defaultCategory"
+              @confirm="e => result2 = e"
             ></up-cascader>
           </view>
       </view>
