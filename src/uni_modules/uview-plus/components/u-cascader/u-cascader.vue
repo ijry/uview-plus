@@ -41,10 +41,10 @@
 		<!-- 添加按钮区域 -->
 		<view class="u-cascader-action up-flex up-flex-between">
 			<view class="u-padding-20 up-flex-fill">
-				<up-button @click="handleCancel" type="default">取消</up-button>
+				<up-button @click="handleCancel" type="default">{{ t("up.common.cancel") }}</up-button>
 			</view>
 			<view class="u-padding-20 up-flex-fill">
-				<up-button @click="handleConfirm" type="primary">确认</up-button>
+				<up-button @click="handleConfirm" type="primary">{{ t("up.common.confirm") }}</up-button>
 			</view>
 		</view>
 	</up-popup>
