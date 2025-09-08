@@ -62,6 +62,7 @@
 	 * @property {String} childrenKey 指定选项的子选项为选项对象中的哪个属性值
 	 * @property {Boolean} autoClose 是否在选择最后一级时自动关闭并触发confirm（默认false）
 	 */
+	import { t } from '../../libs/i18n'
 	export default {
 		name: 'up-cascader',
 		props: {
@@ -155,6 +156,7 @@
 			}
 		},
 		computed: {
+			t,
 			isChange() {
 				return this.tabsIndex > 1;
 			},
