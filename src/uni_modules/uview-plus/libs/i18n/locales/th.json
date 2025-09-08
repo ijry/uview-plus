@@ -76,5 +76,10 @@
     "up.upload.sizeExceed": "เกินขนาดที่กำหนด",
     "up.upload.uploading": "กำลังอัปโหลด",
     "up.upload.previewImageFail": "ดูตัวอย่างภาพไม่สำเร็จ",
-    "up.upload.previewVideoFail": "ดูตัวอย่างวิดีโอไม่สำเร็จ"
+    "up.upload.previewVideoFail": "ดูตัวอย่างวิดีโอไม่สำเร็จ",
+    "up.goodsSku.stock": "สินค้าคงคลัง",
+    "up.goodsSku.price": "ราคา",
+    "up.goodsSku.amount": "ชิ้น",
+    "up.goodsSku.choosed": "เลือกแล้ว",
+    "up.goodsSku.buyAmount": "จำนวน"
 }

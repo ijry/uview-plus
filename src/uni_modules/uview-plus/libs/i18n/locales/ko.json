@@ -76,5 +76,10 @@
     "up.upload.sizeExceed": "용량 제한 초과",
     "up.upload.uploading": "업로드 중",
     "up.upload.previewImageFail": "이미지 미리보기 실패",
-    "up.upload.previewVideoFail": "비디오 미리보기 실패"
+    "up.upload.previewVideoFail": "비디오 미리보기 실패",
+    "up.goodsSku.stock": "재고",
+    "up.goodsSku.price": "가격",
+    "up.goodsSku.amount": "개",
+    "up.goodsSku.choosed": "선택됨",
+    "up.goodsSku.buyAmount": "구매 수량"
 }

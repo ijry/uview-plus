@@ -76,5 +76,10 @@
     "up.upload.sizeExceed": "Excede el límite de tamaño",
     "up.upload.uploading": "Subiendo",
     "up.upload.previewImageFail": "Error al previsualizar imagen",
-    "up.upload.previewVideoFail": "Error al previsualizar vídeo"
+    "up.upload.previewVideoFail": "Error al previsualizar vídeo",
+    "up.goodsSku.stock": "Inventario",
+    "up.goodsSku.price": "Precio",
+    "up.goodsSku.amount": "Piezas",
+    "up.goodsSku.choosed": "Seleccionado",
+    "up.goodsSku.buyAmount": "Cantidad"
 }

@@ -76,5 +76,10 @@
     "up.upload.sizeExceed": "Größenbegrenzung überschritten",
     "up.upload.uploading": "Upload läuft",
     "up.upload.previewImageFail": "Bildvorschau fehlgeschlagen",
-    "up.upload.previewVideoFail": "Videovorschau fehlgeschlagen"
+    "up.upload.previewVideoFail": "Videovorschau fehlgeschlagen",
+    "up.goodsSku.stock": "Lagerbestand",
+    "up.goodsSku.price": "Preis",
+    "up.goodsSku.amount": "Stück",
+    "up.goodsSku.choosed": "Ausgewählt",
+    "up.goodsSku.buyAmount": "Anzahl"
 }

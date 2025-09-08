@@ -76,5 +76,10 @@
     "up.upload.sizeExceed": "Size limit exceeded",
     "up.upload.uploading": "Uploading",
     "up.upload.previewImageFail": "Failed to preview image",
-    "up.upload.previewVideoFail": "Failed to preview video"
+    "up.upload.previewVideoFail": "Failed to preview video",
+    "up.goodsSku.stock": "Stock",
+    "up.goodsSku.price": "Price",
+    "up.goodsSku.amount": "Items",
+    "up.goodsSku.choosed": "Selected",
+    "up.goodsSku.buyAmount": "Quantity"
 }

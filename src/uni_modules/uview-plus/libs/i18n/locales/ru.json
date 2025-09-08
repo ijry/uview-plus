@@ -76,5 +76,10 @@
     "up.upload.sizeExceed": "Превышен лимит размера",
     "up.upload.uploading": "Загрузка",
     "up.upload.previewImageFail": "Ошибка предпросмотра изображения",
-    "up.upload.previewVideoFail": "Ошибка предпросмотра видео"
+    "up.upload.previewVideoFail": "Ошибка предпросмотра видео",
+    "up.goodsSku.stock": "Запас",
+    "up.goodsSku.price": "Цена",
+    "up.goodsSku.amount": "Штук",
+    "up.goodsSku.choosed": "Выбрано",
+    "up.goodsSku.buyAmount": "Количество"
 }

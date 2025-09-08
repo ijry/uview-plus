@@ -76,5 +76,10 @@
     "up.upload.sizeExceed": "サイズ制限を超えています",
     "up.upload.uploading": "アップロード中",
     "up.upload.previewImageFail": "画像プレビュー失敗",
-    "up.upload.previewVideoFail": "ビデオプレビュー失敗"
+    "up.upload.previewVideoFail": "ビデオプレビュー失敗",
+    "up.goodsSku.stock": "在庫",
+    "up.goodsSku.price": "価格",
+    "up.goodsSku.amount": "個",
+    "up.goodsSku.choosed": "選択済み",
+    "up.goodsSku.buyAmount": "購入数量"
 }

@@ -22,8 +22,8 @@
                                 <text class="up-goods-sku__header__info__price__symbol">¥</text>
                                 <text class="up-goods-sku__header__info__price__value">{{ price }}</text>
                             </view>
-                            <view class="up-goods-sku__header__info__stock">库存 {{ stock }} 件</view>
-                            <view class="up-goods-sku__header__info__selected">已选: {{ selectedSkuText }}</view>
+                            <view class="up-goods-sku__header__info__stock">{{ t('up.goodsSku.stock') }} {{ stock }} {{ t('up.goodsSku.amount') }}</view>
+                            <view class="up-goods-sku__header__info__selected">{{ t('up.goodsSku.choosed') }}: {{ selectedSkuText }}</view>
                         </view>
                     </slot>
                 </view>
@@ -48,7 +48,7 @@
                     </view>
                     
                     <view class="up-goods-sku__content__count">
-                        <view class="up-goods-sku__content__count__title">购买数量</view>
+                        <view class="up-goods-sku__content__count__title">{{ t('"up.goodsSku.buyAmount"') }}</view>
                         <view class="up-goods-sku__content__count__control">
                             <up-number-box 
                                 v-model="buyNum" 
@@ -76,6 +76,7 @@
 </template>
 
 <script>
+	import { t } from '../../libs/i18n'
 	export default {
 		name: 'up-goods-sku',
 		props: {
@@ -181,6 +182,7 @@
             }
 		},
 		methods: {
+			t,
 			// 判断SKU是否被选中
 			isSelected(skuKey, skuValueId) {
 				return this.selectedSku[skuKey] === skuValueId

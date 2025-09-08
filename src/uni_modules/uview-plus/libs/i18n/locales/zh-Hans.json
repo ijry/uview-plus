@@ -76,5 +76,10 @@
     "up.upload.sizeExceed": "超过大小限制",
     "up.upload.uploading": "上传中",
     "up.upload.previewImageFail": "预览图片失败",
-    "up.upload.previewVideoFail": "预览视频失败"
+    "up.upload.previewVideoFail": "预览视频失败",
+    "up.goodsSku.stock": "库存",
+    "up.goodsSku.price": "价格",
+    "up.goodsSku.amount": "件",
+    "up.goodsSku.choosed": "已选",
+    "up.goodsSku.buyAmount": "购买数量"
 }

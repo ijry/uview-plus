@@ -1,6 +1,6 @@
 {
     "up.common.cancel": "取消",
-    "up.common.confirm": "确定",
+    "up.common.confirm": "確定",
     "up.common.start": "開始",
     "up.common.end": "結束",
     "up.common.stop": "停止",
@@ -76,5 +76,10 @@
     "up.upload.sizeExceed": "超過大小限制",
     "up.upload.uploading": "上傳中",
     "up.upload.previewImageFail": "預覽圖片失敗",
-    "up.upload.previewVideoFail": "預覽視頻失敗"
+    "up.upload.previewVideoFail": "預覽視頻失敗",
+    "up.goodsSku.stock": "庫存",
+    "up.goodsSku.price": "價格",
+    "up.goodsSku.amount": "件",
+    "up.goodsSku.choosed": "已選",
+    "up.goodsSku.buyAmount": "購買數量"
 }
