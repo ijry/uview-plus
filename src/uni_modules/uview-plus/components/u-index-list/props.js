@@ -32,5 +32,9 @@ export const props = defineMixin({
             type: Boolean,
             default: () => defProps.indexList.safeBottomFix
         },
+        itemMarginRpx: {
+            type: String,
+            default: () => defProps.indexList.itemMarginRpx
+        },
     }
 })
