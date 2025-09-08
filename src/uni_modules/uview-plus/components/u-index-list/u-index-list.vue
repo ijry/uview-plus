@@ -411,7 +411,7 @@
 				const anchors = this.anchors
 				// 由于list组件无法获取cell的top值，这里通过header slot和各个item之间的height，模拟出类似非nvue下的位置信息
 				let children = this.children.map((item, index) => {
-					const childHeight = item.height + getPx(this.itemMarginRpx)
+					const childHeight = item.height + getPx(this.itemMargin)
 					const child = {
 						height: childHeight,
 						top: top
@@ -495,7 +495,7 @@
 				const anchors = this.anchors
 				// 由于list组件无法获取cell的top值，这里通过header slot和各个item之间的height，模拟出类似非nvue下的位置信息
 				children = this.children.map((item, index) => {
-					const childHeight = item.height + getPx(this.itemMarginRpx)
+					const childHeight = item.height + getPx(this.itemMargin)
 					const child = {
 						height: childHeight,
 						top: top

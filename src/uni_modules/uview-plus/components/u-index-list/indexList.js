@@ -16,6 +16,6 @@ export default {
         sticky: true,
         customNavHeight: 0,
         safeBottomFix: false,
-        itemMarginRpx: '0rpx'
+        itemMargin: '0rpx'
     }
 }
