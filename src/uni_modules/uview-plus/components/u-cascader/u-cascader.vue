@@ -156,7 +156,6 @@
 			}
 		},
 		computed: {
-			t,
 			isChange() {
 				return this.tabsIndex > 1;
 			},
@@ -195,6 +194,7 @@
 		// 新增confirm事件
 		emits: ['update:modelValue', 'change', 'confirm'],
 		methods: {
+			t,
 			init() {
 				// 初始化选中值
 				if (this.modelValue && this.modelValue.length > 0) {
