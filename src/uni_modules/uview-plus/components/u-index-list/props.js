@@ -32,5 +32,10 @@ export const props = defineMixin({
             type: Boolean,
             default: () => defProps.indexList.safeBottomFix
         },
+        //自定义下边距
+        itemMargin: {
+            type: String,
+            default: () => defProps.indexList.itemMargin
+        },
     }
 })

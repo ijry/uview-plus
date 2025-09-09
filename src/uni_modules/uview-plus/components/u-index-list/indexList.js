@@ -15,6 +15,7 @@ export default {
         indexList: [],
         sticky: true,
         customNavHeight: 0,
-        safeBottomFix: false
+        safeBottomFix: false,
+        itemMargin: '0rpx'
     }
 }

@@ -411,12 +411,13 @@
 				const anchors = this.anchors
 				// 由于list组件无法获取cell的top值，这里通过header slot和各个item之间的height，模拟出类似非nvue下的位置信息
 				let children = this.children.map((item, index) => {
+					const childHeight = item.height + getPx(this.itemMargin)
 					const child = {
-						height: item.height,
+						height: childHeight,
 						top: top
 					}
 					// 进行累加，给下一个item提供计算依据
-					top = top + item.height
+					top = top + childHeight
 					// #ifdef APP-NVUE
 					// 只有nvue下，需要将锚点的高度也累加，非nvue下锚点高度是包含在index-item中的。
 					top = top + anchors[index].height
@@ -494,12 +495,13 @@
 				const anchors = this.anchors
 				// 由于list组件无法获取cell的top值，这里通过header slot和各个item之间的height，模拟出类似非nvue下的位置信息
 				children = this.children.map((item, index) => {
+					const childHeight = item.height + getPx(this.itemMargin)
 					const child = {
-						height: item.height,
+						height: childHeight,
 						top: top
 					}
 					// 进行累加，给下一个item提供计算依据
-					top = top + item.height
+					top = top + childHeight
 					// #ifdef APP-NVUE
 					// 只有nvue下，需要将锚点的高度也累加，非nvue下锚点高度是包含在index-item中的。
 					top = top + anchors[index].height
