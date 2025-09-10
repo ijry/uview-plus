@@ -101,7 +101,7 @@ export default {
             immediate: true,
             handler(n) {
                 if (n !== this.innerCurrent) {
-                    this.innerCurrent = n
+                    this.innerCurrent = Number(n)
                 }
                 // #ifdef APP-NVUE
                 // 在安卓nvue上，如果通过translateX进行位移，到最后一个时，会导致右侧无法绘制圆角
