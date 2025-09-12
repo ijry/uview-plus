@@ -71,6 +71,8 @@ export default {
 					this.defaultIndex = [index]
 				}
 			})
+		} else {
+			this.clear();
 		}
     },
 	watch: {
@@ -82,6 +84,8 @@ export default {
 						this.defaultIndex = [index]
 					}
 				})
+			} else {
+				this.clear();
 			}
 		}
 	},
@@ -101,6 +105,10 @@ export default {
 		},
 		close() {
 			this.$emit('close')
+		},
+		clear() {
+			this.current = '';
+			this.defaultIndex = [];
 		},
         confirm(e) {
 			const {
