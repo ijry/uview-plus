@@ -155,7 +155,7 @@
                 window.removeEventListener('resize', this.handleWindowResize);
             }
             // #endif
-        }
+        },
         // #endif
         computed: {
             // 破坏flowList变量的引用，否则watch的结果新旧值是一样的
@@ -252,8 +252,8 @@
                     this.columnList[minHeightIndex].push(item);
                     
                     // 获取实际渲染后的元素高度而不是估算
-                    await sleep(30)
-                    this.$nextTick(async () => {
+                    await sleep(this.addTime)
+                    await this.$nextTick(async () => {
                     try {
                         const rect = await this.$uGetRect(`#u-column-${minHeightIndex}`);
                         // console.log(`#u-column-${minHeightIndex}`, rect.height)
