@@ -1,8 +1,12 @@
 <template>
     <view class="u-table2" :class="{ 'u-table-border': border }">
-        <scroll-view scroll-x class="u-table2-content" :style="{ height: height ? height + 'px' : 'auto' }" @scroll="onScroll">
+        <scroll-view scroll-x scroll-y class="u-table2-content"
+            :style="{ height: height ? addUnit(height) : 'auto' }"
+            @scroll="onScroll">
             <!-- 表头 -->
-            <view v-if="showHeader" class="u-table-header" :class="{ 'u-table-sticky': fixedHeader }" :style="{minWidth: scrollWidth}">
+            <view v-if="showHeader" class="u-table-header"
+                :class="{ 'u-table-sticky': fixedHeader }"
+                :style="{minWidth: scrollWidth}">
                 <view class="u-table-row">
                     <view v-for="(col, colIndex) in columns" :key="col.key" class="u-table-cell"
                         :class="[col.headerAlign ? 'u-text-' + col.headerAlign : (col.align ? 'u-text-' + col.align : '') ,
