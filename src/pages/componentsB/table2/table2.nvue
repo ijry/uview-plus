@@ -125,8 +125,8 @@
 					{ id: 2, name: '李四', age: 30 }
 				],
 				columns: [
-					{ title: '姓名', key: 'name', width: '50px' },
-					{ title: '年龄', key: 'age', width: '50px' },
+					{ title: '姓名', key: 'name', width: '50px', align: 'center' },
+					{ title: '年龄', key: 'age', width: '50px', align: 'right', headerAlign: 'center' },
 					{ title: '年龄', key: 'age', width: '50px' },
 					{ title: '年龄', key: 'age', width: '50px' },
 					{ title: '年龄', key: 'age', width: '50px' },
@@ -256,4 +256,13 @@
 	.popup-table-wrap {
 		padding: 20rpx;
 	}
+	.u-text-left {
+        justify-content: flex-start;
+    }
+    .u-text-center {
+        justify-content: center;
+    }
+    .u-text-right {
+        justify-content: flex-end;
+    }
 </style>

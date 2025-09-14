@@ -5,11 +5,10 @@
             <view v-if="showHeader" class="u-table-header" :class="{ 'u-table-sticky': fixedHeader }" :style="{minWidth: scrollWidth}">
                 <view class="u-table-row">
                     <view v-for="(col, colIndex) in columns" :key="col.key" class="u-table-cell"
-                        :style="headerColStyle(col)"
-                        :class="[col.align ? 'u-text-' + col.align : '',
+                        :class="[col.headerAlign ? 'u-text-' + col.headerAlign : (col.align ? 'u-text-' + col.align : '') ,
                             headerCellClassName ? headerCellClassName(col) : '',
                             getFixedClass(col)
-                        ]" @click="handleHeaderClick(col)">
+                        ]" :style="headerColStyle(col)" @click="handleHeaderClick(col)">
                         <slot name="header" :column="col" :columnIndex="colIndex" :level="1">
                         </slot>
                         <text v-if="!$slots['header']">{{ col.title }}</text>
@@ -299,7 +298,7 @@ export default {
         },
         rowHeight: {
             String,
-            default: '40px'
+            default: '36px'
         }
     },
     emits: [
@@ -678,12 +677,24 @@ export default {
         flex: 1;
         display: flex;
         flex-direction: row;
-        padding: 10px 10px;
+        padding: 10px 1px;
         font-size: 14px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         line-height: 1.1;
+        &.u-text-left {
+            justify-content: flex-start;
+            text-align: left;
+        }
+        &.u-text-center {
+            justify-content: center;
+            text-align: center;
+        }
+        &.u-text-right {
+            justify-content: flex-end;
+            text-align: right;
+        }
     }
 
     .u-table-row-zebra {
@@ -698,18 +709,6 @@ export default {
         text-align: center;
         padding: 20px;
         color: #999;
-    }
-
-    .u-text-left {
-        text-align: left;
-    }
-
-    .u-text-center {
-        text-align: center;
-    }
-
-    .u-text-right {
-        text-align: right;
     }
 }
 

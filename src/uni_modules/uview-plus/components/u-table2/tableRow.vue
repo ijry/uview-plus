@@ -26,12 +26,24 @@
     flex: 1;
     display: flex;
     flex-direction: row;
-    padding: 10px 10px;
+    padding: 10px 1px;
     font-size: 14px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     line-height: 1.1;
+    &.u-text-left {
+        justify-content: flex-start;
+        text-align: left;
+    }
+    &.u-text-center {
+        justify-content: center;
+        text-align: center;
+    }
+    &.u-text-right {
+        justify-content: flex-end;
+        text-align: right;
+    }
 }
 
 .u-table-row-zebra {
@@ -46,18 +58,6 @@
     text-align: center;
     padding: 20px;
     color: #999;
-}
-
-.u-text-left {
-    text-align: left;
-}
-
-.u-text-center {
-    text-align: center;
-}
-
-.u-text-right {
-    text-align: right;
 }
 </style>
 <template>
