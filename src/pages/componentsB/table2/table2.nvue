@@ -93,6 +93,18 @@
 				</u-table2>
 			</view>
 		</view>
+		<!-- 单元格合并示例 -->
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">单元格合并</view>
+			<view class="u-demo-block__content">
+				<u-table2
+				    :data="tableSpanData"
+				    :columns="columnsSpan"
+				    :span-method="arraySpanMethod"
+				    border
+				  />
+			</view>
+		</view>
 		<!-- 新增弹窗示例 -->
 		<view class="u-demo-block">
 			<view class="u-demo-block__title">弹窗中使用表格</view>
@@ -199,6 +211,7 @@
 					{ title: '年龄2', key: 'age2' , width: '60px' },
 					{ title: '年龄3', key: 'age3' , width: '60px' },
 					{ title: '年龄4', key: 'age4' , width: '60px', fixed: 'left' },
+					{ title: '年龄4', key: 'age4' , width: '60px' },
 					{ title: '年龄5', key: 'age5' , width: '60px' },
 					{ title: '年龄6', key: 'age6' , width: '60px' },
 					{ title: '年龄7', key: 'age7' , width: '60px' },
@@ -210,6 +223,20 @@
 				tableDataFixed: [
 					{ id: 1, name: '张三', age: 25, age2: 25, age3: 25, age4: 25, age5: 25, age6: 25, age7: 25, age8: 25, age9: 25, age10: 25, age11: 25  },
 					{ id: 2, name: '李四', age: 25, age2: 25, age3: 25, age4: 25, age5: 25, age6: 25, age7: 25, age8: 25, age9: 25, age10: 25, age11: 25   }
+				],
+				// 单元格合并示例数据
+				tableSpanData: [
+					{ id: 1, name: '张三', age: 25, address: '北京市朝阳区', department: '技术部' },
+					{ id: 2, name: '李四', age: 30, address: '北京市朝阳区', department: '技术部' },
+					{ id: 3, name: '王五', age: 28, address: '上海市浦东新区', department: '销售部' },
+					{ id: 4, name: '赵六', age: 35, address: '广州市天河区', department: '人事部' }
+				],
+				columnsSpan: [
+					{ title: 'ID', key: 'id', width: '50px' },
+					{ title: '姓名', key: 'name', width: '100px', align: 'center' },
+					{ title: '年龄', key: 'age', width: '100px', align: 'center' },
+					{ title: '地址', key: 'address', width: '150px', align: 'center' },
+					{ title: '部门', key: 'department', width: '100px' }
 				],
 				// 新增弹窗相关数据
 				popupShow: false
@@ -244,6 +271,35 @@
 				});
 				// 选中后关闭弹窗
 				this.popupShow = false;
+			},
+			// 单元格合并方法
+			arraySpanMethod({ row, column, rowIndex, columnIndex }) {
+				// 合并第1行的第1列和第2列单元格
+				if (rowIndex === 0 && columnIndex === 1) {
+					return [1, 2]; // 合并两行，一列
+				} else if (rowIndex === 0 && columnIndex === 2) {
+					// 对于被合并的单元格，返回 [0, 0]
+					return [0, 0];
+				}
+
+				// 合并第1列的第0行和第1行单元格
+				if (rowIndex === 0 && columnIndex === 3) {
+					return [2, 1]; // 合并两行，一列
+				} else if (rowIndex === 1 && columnIndex === 3) {
+					// 对于被合并的单元格，返回 [0, 0]
+					return [0, 0];
+				}
+				
+				// 合并第4列的第0行和第1行单元格
+				if (rowIndex === 0 && columnIndex === 4) {
+					return [2, 1]; // 合并两行，一列
+				} else if (rowIndex === 1 && columnIndex === 4) {
+					// 对于被合并的单元格，返回 [0, 0]
+					return [0, 0];
+				}
+				
+				// 默认不合并
+				return [1, 1];
 			}
 		}
 	}

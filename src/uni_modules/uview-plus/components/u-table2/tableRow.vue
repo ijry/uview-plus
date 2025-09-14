@@ -2,9 +2,6 @@
 .u-table-row {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    border-bottom: 1px solid #ebeef5;
-    overflow: hidden;
     position: relative;
 }
 
@@ -26,12 +23,14 @@
     flex: 1;
     display: flex;
     flex-direction: row;
+    align-items: center;
     padding: 10px 1px;
     font-size: 14px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     line-height: 1.1;
+    border-bottom: 1px solid #ebeef5;
     &.u-text-left {
         justify-content: flex-start;
         text-align: left;
@@ -59,6 +58,16 @@
     padding: 20px;
     color: #999;
 }
+
+// 隐藏被合并的单元格
+.u-table-cell-hidden {
+    opacity: 0;
+}
+
+// 合并单元格样式
+.u-table-cell-merged {
+    z-index: 1;
+}
 </style>
 <template>
     <view class="u-table-row u-table-row-child"
@@ -70,9 +79,10 @@
             class="u-table-cell"
             :class="[col.align ? 'u-text-' + col.align : '',
                 cellClassName ? cellClassName(row, col) : '',
-                getFixedClass(col)
+                getFixedClass(col),
+                getCellSpanClass(rowIndex, colIndex)
             ]"
-            :style="cellStyleInner({row: row, column: col, rowIndex: rowIndex, columnIndex: colIndex, level: level})">
+            :style="[cellStyleInner({row: row, column: col, rowIndex: rowIndex, columnIndex: colIndex, level: level}), getCellSpanStyle(rowIndex, colIndex)]">
                 <!-- 复选框列 -->
                 <view v-if="col.type === 'selection'">
                     <checkbox :checked="isSelected(row)"
@@ -122,6 +132,7 @@
                     :selectedRows="selectedRows"
                     :expandWidth="expandWidth"
                     :computed-main-col="computedMainCol"
+                    :span-method="spanMethod"
                     @toggle-select="$emit('toggleSelect', $event)"
                     @row-click="$emit('rowClick', $event)"
                     @toggle-expand="$emit('toggleExpand', $event)"
@@ -232,12 +243,85 @@ export default {
         rowHeight: {
             type: String,
             required: true
+        },
+        // 添加spanMethod属性
+        spanMethod: {
+            type: Function,
+            default: null
         }
     },
     emits: ['rowClick', 'toggleExpand', 'toggleSelect'],
     methods: {
         isSelected(row) {
             return this.selectedRows.some(r => r[this.rowKey] === row[this.rowKey]);
+        },
+        // 获取单元格的合并信息
+        getCellSpan(rowIndex, columnIndex) {
+            if (typeof this.spanMethod !== 'function') {
+                return { rowspan: 1, colspan: 1 };
+            }
+            
+            const row = this.row;
+            const column = this.columns[columnIndex];
+            
+            const result = this.spanMethod({
+                row,
+                column,
+                rowIndex,
+                columnIndex
+            });
+            
+            if (Array.isArray(result)) {
+                const [rowspan, colspan] = result;
+                return { rowspan: rowspan != null ? rowspan : 1, colspan: colspan != null ? colspan : 1 };
+            } else if (typeof result === 'object') {
+                return {
+                    rowspan: rowspan != null ? rowspan : 1,
+                    colspan: colspan != null ? colspan : 1
+                };
+            }
+            
+            return { rowspan: 1, colspan: 1 };
+        },
+        // 获取单元格的样式类
+        getCellSpanClass(rowIndex, columnIndex) {
+            const span = this.getCellSpan(rowIndex, columnIndex);
+            
+            // 如果rowspan为0或colspan为0，表示该单元格被合并，需要隐藏
+            if (span.rowspan === 0 || span.colspan === 0) {
+                return 'u-table-cell-hidden';
+            } else if (span.rowspan > 1 || span.colspan > 1) {
+                // 如果有合并，添加合并样式类
+                return 'u-table-cell-merged';
+            }
+            
+            return '';
+        },
+        // 获取单元格的样式
+        getCellSpanStyle(rowIndex, columnIndex) {
+            const span = this.getCellSpan(rowIndex, columnIndex);
+            const style = {};
+            
+            // 设置rowspan
+            if (span.rowspan > 1) {
+                // 正确计算合并后的高度
+                const currentHeight = parseInt(this.rowHeight);
+                if (!isNaN(currentHeight)) {
+                    style.height = `${span.rowspan * currentHeight}px`;
+                }
+            }
+            
+            // 设置colspan
+            if (span.colspan > 1) {
+                style.flex = span.colspan;
+            }
+            
+            // 如果rowspan为0或colspan为0，表示该单元格被合并，需要隐藏
+            if (span.rowspan === 0 || span.colspan === 0) {
+                style.display = 'none';
+            }
+            
+            return style;
         }
     }
 }

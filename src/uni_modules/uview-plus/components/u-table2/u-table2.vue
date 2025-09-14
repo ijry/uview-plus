@@ -53,6 +53,7 @@
                         :selectedRows="selectedRows"
                         :expandWidth="expandWidth"
                         :computedMainCol="computedMainCol"
+                        :span-method="spanMethod"
                         @toggle-select="toggleSelect"
                         @row-click="handleRowClick"
                         @toggle-expand="toggleExpand"
@@ -127,6 +128,7 @@
                             :selectedRows="selectedRows"
                             :expandWidth="expandWidth"
                             :computedMainCol="computedMainCol"
+                            :span-method="spanMethod"
                             @toggle-select="toggleSelect"
                             @row-click="handleRowClick"
                             @toggle-expand="toggleExpand"
@@ -297,8 +299,13 @@ export default {
             default: '25px'
         },
         rowHeight: {
-            String,
+            type: String,
             default: '36px'
+        },
+        // 添加spanMethod属性，用于合并单元格
+        spanMethod: {
+            type: Function,
+            default: null
         }
     },
     emits: [
@@ -652,8 +659,6 @@ export default {
     .u-table-row {
         display: flex;
         flex-direction: row;
-        align-items: center;
-        border-bottom: 1px solid #ebeef5;
         overflow: hidden;
         position: relative;
         // min-height: 40px;
@@ -677,12 +682,14 @@ export default {
         flex: 1;
         display: flex;
         flex-direction: row;
+        align-items: center;
         padding: 10px 1px;
         font-size: 14px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         line-height: 1.1;
+        border-bottom: 1px solid #ebeef5;
         &.u-text-left {
             justify-content: flex-start;
             text-align: left;
