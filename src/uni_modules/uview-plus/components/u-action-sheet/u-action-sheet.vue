@@ -65,6 +65,7 @@
 							    @tap.stop="selectHandler(index)"
 							    :hover-class="!item.disabled && !item.loading ? 'u-action-sheet--hover' : ''"
 							    :hover-stay-time="150"
+							    :style="getItemHoverStyle(index)"
 							>
 								<template v-if="!item.loading">
 									<text
@@ -198,6 +199,16 @@
 						this.$emit('close')
 					}
 				}
+			},
+			// 动态处理Hover时候第一个item的圆角
+			getItemHoverStyle(index) {
+				if (index === 0 && this.round && !this.title && !this.description) {
+					return {
+						borderTopLeftRadius: `${this.round}px`,
+						borderTopRightRadius: `${this.round}px`,
+					}
+				}
+				return {}
 			},
 		}
 	}
