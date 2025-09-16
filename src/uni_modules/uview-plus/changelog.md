@@ -1,3 +1,6 @@
+## 3.5.47（2025-09-16）
+fix: 修复modelValue类型
+
 ## 3.5.46（2025-09-15）
 feat: table2新增支持span-method合并单元格
 
