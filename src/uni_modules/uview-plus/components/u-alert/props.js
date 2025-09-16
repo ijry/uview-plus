@@ -68,7 +68,7 @@ export const props = defineMixin({
         },
         // 是否显示
         modelValue: {
-            type: [String],
+            type: [Boolean],
             default: () => defProps.alert.value
         }
     }
