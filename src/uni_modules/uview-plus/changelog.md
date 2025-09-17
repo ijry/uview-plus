@@ -1,3 +1,6 @@
+## 3.5.48（2025-09-17）
+fix: 修复table2的fixedHeader参数生效
+
 ## 3.5.47（2025-09-16）
 fix: 修复modelValue类型
 
