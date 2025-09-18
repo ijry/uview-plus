@@ -20,7 +20,7 @@ export const props = defineMixin({
         },
         // 上方边框颜色
         borderColor: {
-            type: Boolean,
+            type: String,
             default: () => defProps.tabbar.borderColor
         },
         // 元素层级z-index

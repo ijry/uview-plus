@@ -1,3 +1,6 @@
+## 3.5.50（2025-09-18）
+fix: 修复tabbar组件borderColor类型
+
 ## 3.5.49（2025-09-18）
 fix: 修复action-sheet列表中第一个item的hover style
 
