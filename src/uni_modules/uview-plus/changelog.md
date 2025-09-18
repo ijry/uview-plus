@@ -1,3 +1,6 @@
+## 3.5.49（2025-09-18）
+fix: 修复action-sheet列表中第一个item的hover style
+
 ## 3.5.48（2025-09-17）
 fix: 修复table2的fixedHeader参数生效
 
