@@ -1,3 +1,6 @@
+## 3.5.51（2025-09-19）
+fix: 微信小程序下u-transition包裹的内容因为没有默认flex column而出现布局错误
+
 ## 3.5.50（2025-09-18）
 fix: 修复tabbar组件borderColor类型
 
