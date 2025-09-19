@@ -61,7 +61,7 @@
 					zIndex: this.zIndex
 				}
 				if (this.borderColor) {
-					style.borderColor = this.borderColor
+					style.borderColor = this.borderColor + ' !important'
 				}
 				if (this.backgroundColor) {
 					style.backgroundColor = this.backgroundColor
