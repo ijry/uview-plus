@@ -1,3 +1,6 @@
+## 3.5.53（2025-09-19）
+improvment: back-top示例组合式API改造
+
 ## 3.5.52（2025-09-19）
 fix: 优化tabbar的borderColor优先级
 

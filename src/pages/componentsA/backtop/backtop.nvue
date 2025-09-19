@@ -39,87 +39,96 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				value: ['自定义图标'],
-				backTopData: {
-					mode: 'circle',
-					icon: 'arrow-upward',
-					bottom: 100,
-					customStyle: {},
-					iconStyle: {},
-					right:20,
-					duration: 300
-				},
-				scrollTop: 0,
-				// 被自定义的样式
-				checkboxList: [{
-						name: '显示方形',
-					},
-					{
-						name: '自定义图标',
-					},
-					{
-						name: '自定义距离',
-					},
-					{
-						name: '自定义样式',
-					},
-					{
-						name:'自定义返回顶部滚动时间',
-					}
-				]
+<script setup>
+	import { ref, reactive, onMounted, onUnmounted } from 'vue'
+	
+	const value = ref(['自定义图标'])
+	const scrollTop = ref(0)
+	
+	const backTopData = reactive({
+		mode: 'circle',
+		icon: 'arrow-upward',
+		bottom: 100,
+		customStyle: {},
+		iconStyle: {},
+		right: 20,
+		duration: 300
+	})
+	
+	const checkboxList = [
+		{
+			name: '显示方形',
+		},
+		{
+			name: '自定义图标',
+		},
+		{
+			name: '自定义距离',
+		},
+		{
+			name: '自定义样式',
+		},
+		{
+			name:'自定义返回顶部滚动时间',
+		}
+	]
+	
+	const checkboxChange = (n) => {
+		if (n.includes('显示方形')) {
+			backTopData.mode = 'square'
+		} else {
+			backTopData.mode = "circle"
+		}
+		if (n.includes('自定义图标')) {
+			backTopData.icon = "arrow-up"
+		} else {
+			backTopData.icon = "arrow-upward"
+		}
+		if (n.includes('自定义距离')) {
+			backTopData.bottom = 300
+			backTopData.right = 20
+		} else {
+			backTopData.bottom = 100
+		}
+		if (n.includes('自定义样式')) {
+			backTopData.customStyle = {
+				backgroundColor: '#2979ff',
 			}
-		},
-		onLoad() {
-			// 演示中默认勾选了自定义图标
-			this.backTopData.icon = "arrow-up"
-		},
-		onPageScroll(e) {
-			this.scrollTop = e.scrollTop;
-		},
-		methods: {
-			checkboxChange(n) {
-				if (n.includes('显示方形')) {
-					this.backTopData.mode = 'square'
-				} else {
-					this.backTopData.mode = "circle"
-				}
-				if (n.includes('自定义图标')) {
-					this.backTopData.icon = "arrow-up"
-				} else {
-					this.backTopData.icon = "arrow-upward"
-				}
-				if (n.includes('自定义距离')) {
-					this.backTopData.bottom = 300
-					this.backTopData.right=20
-				} else {
-					this.backTopData.bottom = 100
-				}
-				if (n.includes('自定义样式')) {
-					this.backTopData.customStyle = {
-						backgroundColor: '#2979ff',
-					}
-					this.backTopData.iconStyle = {
-						color: '#ffffff'
-					}
-				} else {
-					this.backTopData.customStyle = {}
-					this.backTopData.iconStyle = {}
-				}
-				if (n.includes('自定义返回顶部滚动时间')) {
-					this.backTopData.duration =1500 
-				} else {
-					this.backTopData.duration =300
-				}
-			},
-			click() {
-				console.log('click');
+			backTopData.iconStyle = {
+				color: '#ffffff'
 			}
+		} else {
+			backTopData.customStyle = {}
+			backTopData.iconStyle = {}
+		}
+		if (n.includes('自定义返回顶部滚动时间')) {
+			backTopData.duration = 1500 
+		} else {
+			backTopData.duration = 300
 		}
 	}
+	
+	const click = () => {
+		console.log('click');
+	}
+	
+	// 处理页面滚动事件
+	const handlePageScroll = (e) => {
+		scrollTop.value = e.scrollTop;
+	};
+	
+	// 监听页面滚动
+	onMounted(() => {
+		// 演示中默认勾选了自定义图标
+		backTopData.icon = "arrow-up"
+		// 添加页面滚动事件监听
+		uni.$on('pageScroll', handlePageScroll);
+	})
+	
+	// 移除事件监听
+	onUnmounted(() => {
+		uni.$off('pageScroll', handlePageScroll);
+	})
 </script>
 
 <style lang="scss">
