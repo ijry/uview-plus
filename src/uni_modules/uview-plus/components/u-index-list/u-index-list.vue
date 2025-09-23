@@ -284,8 +284,10 @@
 				return new Promise(resolve => {
 					// 延时一定时间，以获取dom尺寸
 					// #ifndef APP-NVUE
-					this.$uGetRect('.u-index-list__scroll-view').then(size => {
-						resolve(size)
+					this.$nextTick(() => {
+						this.$uGetRect('.u-index-list__scroll-view').then(size => {
+							resolve(size)
+						})
 					})
 					// #endif
 
