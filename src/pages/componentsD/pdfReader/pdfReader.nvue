@@ -19,7 +19,7 @@ import { onMounted, ref } from 'vue'
 
 const show = ref(false)
 
-const pdfFileUrl = ref('https://qn-o.jiangruyi.com/plus.pdf')
+const pdfFileUrl = ref('https://uview-plus.jiangruyi.com/big/plus.pdf')
 
 </script>
 
