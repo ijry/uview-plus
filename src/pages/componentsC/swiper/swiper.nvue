@@ -120,7 +120,7 @@
 				current: 0,
 				currentNum: 0,
 				list: [{
-						// image: 'https://uview-plus.jiangruyi.com/uview/resources/video.mp4',
+						// image: 'https://uview-plus.jiangruyi.com/big/shanghai.mp4',
 						image: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png',
 						title: '昨夜星辰昨夜风，画楼西畔桂堂东',
 						poster: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png'
@@ -159,7 +159,7 @@
 					'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png',
 				],
 				list4: [{
-						url: 'https://uview-plus.jiangruyi.com/uview/resources/video.mp4',
+						url: 'https://uview-plus.jiangruyi.com/big/shanghai.mp4',
 						title: '昨夜星辰昨夜风，画楼西畔桂堂东',
 						poster: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png',
 					},
