@@ -1,3 +1,6 @@
+## 3.5.56（2025-09-29）
+fix: 修复picker和datetime-picker在部分原生渲染时hasInput触发键盘弹起
+
 ## 3.5.55（2025-09-29）
 feat: waterfall新增after-add-one和after-add-all事件
 
