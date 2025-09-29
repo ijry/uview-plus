@@ -173,7 +173,7 @@
                 // #endif
             }
         },
-        emits: ['update:modelValue'],
+        emits: ['update:modelValue', 'after-add-one', 'after-add-all'],
         methods: {
             // 初始化列数据数组
             initColumnList() {
@@ -254,16 +254,21 @@
                     // 获取实际渲染后的元素高度而不是估算
                     await sleep(this.addTime)
                     await this.$nextTick(async () => {
-                    try {
-                        const rect = await this.$uGetRect(`#u-column-${minHeightIndex}`);
-                        // console.log(`#u-column-${minHeightIndex}`, rect.height)
-                        if (rect.height) {
-                            columnHeights[minHeightIndex] = rect.height
+                        try {
+                            const rect = await this.$uGetRect(`#u-column-${minHeightIndex}`);
+                            // console.log(`#u-column-${minHeightIndex}`, rect.height)
+                            if (rect.height) {
+                                columnHeights[minHeightIndex] = rect.height;
+                                // 加载一个后置事件
+                                this.$emit('after-add-one', {
+                                    ...item,
+                                    height: rect.height
+                                });
+                            }
+                        } catch (e) {
+                            // console.log(e)
+                            // columnHeights[i] = 0;
                         }
-                    } catch (e) {
-                        // console.log(e)
-                        // columnHeights[i] = 0;
-                    }
                     });
                     // this.$nextTick(async () => {
                     //     try {
@@ -285,6 +290,11 @@
                     //     }
                     // });
                 }
+                // 加载所有后置事件
+                this.$emit('after-add-all', {
+                    columnHeights: columnHeights,
+                    newData: newData
+                });
             },
 
             // 复制而不是引用对象和数组
