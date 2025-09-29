@@ -80,10 +80,10 @@ export function sys() {
 }
 export function getWindowInfo() {
 	let ret = {}
-	// #ifdef APP || H5
+	// #ifdef APP || H5 || MP-WEIXIN
 	ret = uni.getWindowInfo()
 	// #endif
-	// #ifndef APP || H5
+	// #ifndef APP || H5 || MP-WEIXIN
 	ret = sys()
 	// #endif
 	return ret
