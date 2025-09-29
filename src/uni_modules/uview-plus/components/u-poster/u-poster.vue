@@ -38,6 +38,10 @@
  * 
  * @example <up-poster :json="posterJson"></up-poster>
  */
+
+import {
+	rpx2px
+} from '../../libs/function/index.js';
 export default {
 	name: 'up-poster',
 	props: {
@@ -461,10 +465,10 @@ export default {
 		convertRpxToPx(rpxValue) {
 			if (typeof rpxValue === 'number') return rpxValue;
 			
-			// 使用uni-app自带的uni.rpx2px方法
+			// 使用rpx2px方法
 			if (typeof rpxValue === 'string' && rpxValue.endsWith('rpx')) {
 				const value = parseFloat(rpxValue);
-				return uni.rpx2px(value);
+				return rpx2px(value);
 			}
 			
 			return parseFloat(rpxValue) || 0;

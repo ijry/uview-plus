@@ -46,7 +46,7 @@ import i18n, { t } from './libs/i18n/index.js'
 
 // 导出
 let themeType = ['primary', 'success', 'error', 'warning', 'info'];
-export { route, http, debounce, throttle, calc, digit, platform, themeType, mixin, mpMixin, props, color, test, zIndex, fontUtil, i18n ,t}
+export { route, http, debounce, throttle, calc, digit, platform, themeType, mixin, mpMixin, props, color, test, zIndex, fontUtil, i18n , rpx2px, t}
 export * from './libs/function/index.js'
 export * from './libs/function/colorGradient.js'
 

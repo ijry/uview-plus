@@ -33,6 +33,20 @@ export function getPx(value, unit = false) {
 }
 
 /**
+ * @description 用于统一rpx2px方法，因uni-app现有API未统一。
+ * @param {number} value 用户传递值的rpx值
+ * @returns {number}
+ */
+export function rpx2px(value) {
+	// #ifdef APP
+	return uni.upx2px(value)
+	// #endif
+	// #ifndef APP
+	return uni.rpx2px(value)
+	// #endif
+}
+
+/**
  * @description 进行延时，以达到可以简写代码的目的 比如: await uni.$u.sleep(20)将会阻塞20ms
  * @param {number} value 堵塞时间 单位ms 毫秒
  * @returns {Promise} 返回promise
