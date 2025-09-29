@@ -166,9 +166,12 @@ export default {
 					if (n != null) {
 						n.forEach((element, index) => {
 							let currentCols = this.getColumnValues(index)
-							if (currentCols && Object.prototype.toString.call(currentCols) === '[object Object]') {
+							if(!Array.isArray(currentCols) && currentCols.length===0) {
+								return
+							}
+							if (typeof currentCols[0] === 'object') {
 								currentCols.forEach((item, index2) => {
-									if (item[this.keyName] == element) {
+									if (item[this.valueName] == element) {
 										arr.push(index2)
 									}
 								})
