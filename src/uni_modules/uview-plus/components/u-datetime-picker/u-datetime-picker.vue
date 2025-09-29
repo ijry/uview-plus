@@ -9,8 +9,8 @@
 					v-model="inputValue"
 					v-bind="inputPropsInner"
 				></up-input>
-				<view class="input-cover">
-				</view>
+				<cover-view class="input-cover">
+				</cover-view>
 			</slot>
         </view>
         <u-picker
