@@ -225,20 +225,23 @@ export default {
 						uni.getImageInfo({
 							src: item.src,
 							success: (res) => {
+								// console.log('图片加载成功: ' + item.src, res);
 								// 处理圆角
 								if (css.radius) {
 									const radius = this.convertRpxToPx(css.radius);
 									this.clipRoundRect(ctx, left, top, width, height, radius);
 								}
-								ctx.drawImage(item.src, left, top, width, height);
+								// 不能用item.src，要用res.path。
+								ctx.drawImage(res.path, left, top, width, height);
 								// 恢复剪切区域
 								ctx.restore();
 								resolve();
 							},
-							fail: () => {
+							fail: (e) => {
 								// 图片加载失败时绘制占位符
 								ctx.setFillStyle('#f5f5f5');
 								ctx.fillRect(left, top, width, height);
+								console.log('图片加载失败: ' + item.src, e);
 								resolve();
 							}
 						});
