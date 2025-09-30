@@ -42,7 +42,13 @@ export const props = defineMixin({
 		  type: Boolean,
 		  default: () => defProps.parse.showImgMenu
         },
-        tagStyle: Object,
-        useAnchor: null
-	  }
+        tagStyle: {
+		  type: Object,
+		  default: () => {}
+        },
+        useAnchor: {
+          type: Boolean,
+          default: null
+		}
+	}
 }
