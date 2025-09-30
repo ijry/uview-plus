@@ -1,6 +1,6 @@
 <template>
 	<view class="page">
-		<u-short-video 
+		<up-short-video 
 			:tabs-list="tabsList"
 			:video-list="videoList"
 			:current-tab="currentTab"
@@ -58,7 +58,7 @@
 					</view> -->
 				</view>
 			</template>
-			<template v-slot:tabbar"> 
+			<template #tabbar> 
 				<up-tabbar
                     :fixed="true"
                     :placeholder="true"
@@ -86,7 +86,7 @@
                     ></up-tabbar-item>
                 </up-tabbar>
 			</template>
-		</u-short-video>
+		</up-short-video>
 	</view>
 </template>
 

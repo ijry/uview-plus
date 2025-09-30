@@ -38,6 +38,10 @@
  * 
  * @example <up-poster :json="posterJson"></up-poster>
  */
+
+import {
+	rpx2px
+} from '../../libs/function/index.js';
 export default {
 	name: 'up-poster',
 	props: {
@@ -221,20 +225,23 @@ export default {
 						uni.getImageInfo({
 							src: item.src,
 							success: (res) => {
+								// console.log('图片加载成功: ' + item.src, res);
 								// 处理圆角
 								if (css.radius) {
 									const radius = this.convertRpxToPx(css.radius);
 									this.clipRoundRect(ctx, left, top, width, height, radius);
 								}
-								ctx.drawImage(item.src, left, top, width, height);
+								// 不能用item.src，要用res.path。
+								ctx.drawImage(res.path, left, top, width, height);
 								// 恢复剪切区域
 								ctx.restore();
 								resolve();
 							},
-							fail: () => {
+							fail: (e) => {
 								// 图片加载失败时绘制占位符
 								ctx.setFillStyle('#f5f5f5');
 								ctx.fillRect(left, top, width, height);
+								console.log('图片加载失败: ' + item.src, e);
 								resolve();
 							}
 						});
@@ -461,10 +468,10 @@ export default {
 		convertRpxToPx(rpxValue) {
 			if (typeof rpxValue === 'number') return rpxValue;
 			
-			// 使用uni-app自带的uni.rpx2px方法
+			// 使用rpx2px方法
 			if (typeof rpxValue === 'string' && rpxValue.endsWith('rpx')) {
 				const value = parseFloat(rpxValue);
-				return uni.rpx2px(value);
+				return rpx2px(value);
 			}
 			
 			return parseFloat(rpxValue) || 0;

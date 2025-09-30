@@ -19,7 +19,8 @@
 <script>
     import {
         addUnit,
-        guid
+        guid,
+        rpx2px
     } from '../../libs/function/index.js';
     /**
      * lazyLoad 懒加载
@@ -114,7 +115,7 @@
             // 将threshold从rpx转为px
             getThreshold() {
                 // 先取绝对值，因为threshold可能是负数，最后根据this.threshold是正数或者负数，重新还原
-                let thresholdPx = uni.upx2px(Math.abs(this.threshold));
+                let thresholdPx = rpx2px(Math.abs(this.threshold));
                 return this.threshold < 0 ? -thresholdPx : thresholdPx;
             },
             // 计算图片的高度，可能为auto，带%，或者直接数值
