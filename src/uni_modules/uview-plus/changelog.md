@@ -1,3 +1,6 @@
+## 3.5.57（2025-09-30）
+improvment: 更换部分资源域名提升访问速度
+
 ## 3.5.56（2025-09-29）
 fix: 修复picker和datetime-picker在部分原生渲染时hasInput触发键盘弹起
 
