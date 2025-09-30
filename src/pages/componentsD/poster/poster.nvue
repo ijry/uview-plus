@@ -64,7 +64,7 @@
 						{
 							type: 'image',
                             // H5下图片域名要注意允许跨域
-							src: 'https://uiadmin.net/uview-plus/uview/swiper/swiper1.png',
+							src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png',
 							css: {
 								position: 'absolute',
 								left: '72rpx',
