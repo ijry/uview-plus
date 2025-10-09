@@ -1,3 +1,6 @@
+## 3.6.4（2025-10-09）
+🐛fix: import rpx2px function and add to exports in index.js
+
 ## 3.6.3（2025-10-09）
 fix: 修复getWindowInfo微信小程序下报警告
 
