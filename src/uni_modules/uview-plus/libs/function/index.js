@@ -867,5 +867,6 @@ export default {
 	page,
 	pages,
 	getValueByPath,
-	genLightColor
+	genLightColor,
+	rpx2px
 }
