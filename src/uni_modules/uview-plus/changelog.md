@@ -1,3 +1,6 @@
+## 3.6.5（2025-10-11）
+🐛fix: 修复picker双向绑定 #753
+
 ## 3.6.4（2025-10-09）
 🐛fix: import rpx2px function and add to exports in index.js
 
