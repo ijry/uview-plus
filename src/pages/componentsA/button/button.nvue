@@ -304,33 +304,29 @@
 	</view>
 </template>
 
-<script>
+<script setup>
+	import { ref } from 'vue'
+	import { onLoad } from '@dcloudio/uni-app'
 	import { http } from '@/uni_modules/uview-plus'
-	export default {
-		data() {
-			return {
-				show: false,
-				// type: 'default',
-				// disabled: false
-			}
-		},
-		onLoad() {
-			setTimeout(() => {
-				this.type = 'primary'
-				this.disabled = true
-			}, 2000)
-		},
-		methods: {
-			click() {
-				this.show = true;
-				console.log('click');
-				http.post('/api/v1/core/user/login', {params: {account: 'name', password: '123456'}}).then(res => {
-					console.log(res)
-				}).catch(err => {
-					console.log(err)
-				})
-			}
-		}
+	
+	const show = ref(false)
+	// const type = ref('default')
+	// const disabled = ref(false)
+	
+	// onLoad 生命周期
+	onLoad(() => {
+		// type.value = 'primary'
+		// disabled.value = true
+	})
+	
+	const click = () => {
+		show.value = true
+		console.log('click')
+		http.post('/api/v1/core/user/login', {params: {account: 'name', password: '123456'}}).then(res => {
+			console.log(res)
+		}).catch(err => {
+			console.log(err)
+		})
 	}
 </script>
 
