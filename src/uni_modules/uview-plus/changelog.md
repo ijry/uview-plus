@@ -1,3 +1,6 @@
+## 3.6.9（2025-10-21）
+improvment: cell示例改为组合式API
+
 ## 3.6.8（2025-10-20）
 imporvment: button示例改为组合式API
 

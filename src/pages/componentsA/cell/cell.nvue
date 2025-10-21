@@ -132,16 +132,9 @@
 		<up-gap height="30"></up-gap>
 	</view>
 </template>
-<script>
-	export default {
-		data() {
-			return {}
-		},
-		methods: {
-			click() {
-				console.log('Cell is clicked.');
-			}
-		}
+<script setup>
+	const click = () => {
+		console.log('Cell is clicked.');
 	}
 </script>
 
