@@ -1,3 +1,6 @@
+## 3.6.10（2025-11-04）
+improvment: checkbox示例改为组合式API
+
 ## 3.6.9（2025-10-21）
 improvment: cell示例改为组合式API
 
