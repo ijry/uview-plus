@@ -1,3 +1,6 @@
+## 3.6.11（2025-11-05）
+improvment: divider示例改为组合式API
+
 ## 3.6.10（2025-11-04）
 improvment: checkbox示例改为组合式API
 
