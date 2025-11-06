@@ -40,7 +40,7 @@ import DatetimePicker from '../../components/u-datetime-picker/datetimePicker'
 import Divider from '../../components/u-divider/divider'
 import Empty from '../../components/u-empty/empty'
 import Form from '../../components/u-form/form'
-import GormItem from '../../components/u-form-item/formItem'
+import FormItem from '../../components/u-form-item/formItem'
 import Gap from '../../components/u-gap/gap'
 import Grid from '../../components/u-grid/grid'
 import GridItem from '../../components/u-grid-item/gridItem'
@@ -131,7 +131,7 @@ const props = {
     ...Divider,
     ...Empty,
     ...Form,
-    ...GormItem,
+    ...FormItem,
     ...Gap,
     ...Grid,
     ...GridItem,
