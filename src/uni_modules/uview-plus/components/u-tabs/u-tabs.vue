@@ -239,7 +239,9 @@
 				// 如果点击当前不触发change
 				if (this.innerCurrent == index) return
 				this.innerCurrent = index
-				this.resize()
+                this.$nextTick(() => {
+                    this.resize()
+                })
 				this.$emit('update:current', index)
 				this.$emit('change', {
 					...item,
