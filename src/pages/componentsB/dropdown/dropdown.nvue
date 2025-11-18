@@ -2,13 +2,15 @@
 	<view class="u-page">
 		<view class="u-m-p-50">
 			<view class="u-demo-area u-flex u-row-center">
-				<up-dropdown :close-on-click-mask="mask" ref="uDropdownRef" :activeColor="activeColor" :borderBottom="borderBottom">
+				<up-dropdown :close-on-click-mask="mask" ref="uDropdownRef"
+					:activeColor="activeColor" :borderBottom="borderBottom">
 					<up-dropdown-item @change="change" v-model="value1" title="距离" :options="options1"></up-dropdown-item>
 					<up-dropdown-item @change="change" v-model="value2" title="温度" :options="options2"></up-dropdown-item>
 					<up-dropdown-item title="属性">
 						<view class="slot-content">
 							<view class="item-box">
-								<view class="item" :class="[item.active ? 'active' : '']" @tap="tagClick(index)" v-for="(item, index) in list" :key="index">
+								<view class="item" :class="[item.active ? 'active' : '']"
+									@tap="tagClick(index)" v-for="(item, index) in list" :key="index">
 									{{item.label}}
 								</view>
 							</view>
@@ -45,6 +47,7 @@
 </template>
 
 <script>
+	import { toast } from '@/uni_modules/uview-plus';
 	export default {
 		data() { 
 			return {
@@ -126,7 +129,7 @@
 				this.activeColor = ['#2979ff', '#ff9900', '#19be6b'][index];
 			},
 			change(index) {
-				this.$u.toast(`点击了第${index}项`);
+				toast(`点击了第${index}项`);
 			},
 			closeDropdown() {
 				this.$refs.uDropdownRef.close();
