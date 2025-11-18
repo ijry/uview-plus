@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import { formValidate } from '../../libs/function/index';
 export default {
 	name: 'u-picker-data',
     props: {
@@ -122,6 +123,8 @@ export default {
 			this.defaultIndex = columnIndex;
 			this.current = value[0][this.labelKey];
 			this.$emit('confirm')
+			// 表单验证
+			formValidate(this, 'change')
         }
     }
 }
