@@ -39,7 +39,7 @@
 	/**
 	 * empty 内容为空
 	 * @description 该组件用于需要加载内容，但是加载的第一页数据就为空，提示一个"没有内容"的场景， 我们精心挑选了十几个场景的图标，方便您使用。
-	 * @tutorial https://ijry.github.io/uview-plus/components/empty.html
+	 * @tutorial https://uview-plus.jiangruyi.com/components/empty.html
 	 * @property {String}			icon		内置图标名称，或图片路径，建议绝对路径
 	 * @property {String}			text		提示文字
 	 * @property {String}			textColor	文字颜色 (默认 '#c0c4cc' )

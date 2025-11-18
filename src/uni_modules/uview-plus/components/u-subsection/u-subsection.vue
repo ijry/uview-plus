@@ -61,7 +61,7 @@ import { addStyle, addUnit, sleep } from '../../libs/function/index';
 /**
  * Subsection 分段器
  * @description 该分段器一般用于用户从几个选项中选择某一个的场景
- * @tutorial https://ijry.github.io/uview-plus/components/subsection.html
+ * @tutorial https://uview-plus.jiangruyi.com/components/subsection.html
  * @property {Array}			list			        tab的数据
  * @property {String ｜ Number}	current			        当前活动的tab的index（默认 0 ）
  * @property {String}			activeColor		        激活时的颜色（默认 '#3c9cff' ）

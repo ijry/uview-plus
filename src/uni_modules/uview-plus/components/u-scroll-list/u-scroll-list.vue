@@ -83,7 +83,7 @@
 /**
  * scrollList 横向滚动列表
  * @description 该组件一般用于同时展示多个商品、分类的场景，也可以完成左右滑动的列表。
- * @tutorial https://ijry.github.io/uview-plus/components/scrollList.html
+ * @tutorial https://uview-plus.jiangruyi.com/components/scrollList.html
  * @property {String | Number}	indicatorWidth			指示器的整体宽度 (默认 50 )
  * @property {String | Number}	indicatorBarWidth		滑块的宽度 (默认 20 )
  * @property {Boolean}			indicator				是否显示面板指示器 (默认 true )

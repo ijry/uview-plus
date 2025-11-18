@@ -121,7 +121,7 @@ import color from '../../libs/config/color';
 /**
  * button 按钮
  * @description Button 按钮
- * @tutorial https://ijry.github.io/uview-plus/components/button.html
+ * @tutorial https://uview-plus.jiangruyi.com/components/button.html
  *
  * @property {Boolean}			hairline				是否显示按钮的细边框 (默认 true )
  * @property {String}			type					按钮的预置样式，info，primary，error，warning，success (默认 'info' )

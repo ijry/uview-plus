@@ -57,7 +57,7 @@
 	/**
 	 * List 列表
 	 * @description 该组件为高性能列表组件
-	 * @tutorial https://ijry.github.io/uview-plus/components/list.html
+	 * @tutorial https://uview-plus.jiangruyi.com/components/list.html
 	 * @property {Boolean}			showScrollbar		控制是否出现滚动条，仅nvue有效 （默认 false ）
 	 * @property {String ｜ Number}	lowerThreshold		距底部多少时触发scrolltolower事件 （默认 50 ）
 	 * @property {String ｜ Number}	upperThreshold		距顶部多少时触发scrolltoupper事件，非nvue有效 （默认 0 ）

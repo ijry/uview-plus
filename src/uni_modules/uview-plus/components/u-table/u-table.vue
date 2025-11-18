@@ -13,7 +13,7 @@
 	/**
 	 * Table 表格 
 	 * @description 表格组件一般用于展示大量结构化数据的场景 本组件标签类似HTML的table表格，由table、tr、th、td四个组件组成
-	 * @tutorial https://ijry.github.io/uview-plus/components/table.html
+	 * @tutorial https://uview-plus.jiangruyi.com/components/table.html
 	 * @property {String} border-color 表格边框的颜色（默认#e4e7ed）
 	 * @property {String} bg-color 表格的背景颜色（默认#ffffff）
 	 * @property {String} align 单元格的内容对齐方式，作用类似css的text-align（默认center）

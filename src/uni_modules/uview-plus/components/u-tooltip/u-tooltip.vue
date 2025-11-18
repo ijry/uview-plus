@@ -110,7 +110,7 @@
 	/**
 	 * Tooltip 
 	 * @description 
-	 * @tutorial https://ijry.github.io/uview-plus/components/tooltip.html
+	 * @tutorial https://uview-plus.jiangruyi.com/components/tooltip.html
 	 * @property {String | Number}	text		 需要显示的提示文字
 	 * @property {String | Number}	copyText	 点击复制按钮时，复制的文本，为空则使用text值
 	 * @property {String | Number}	size		 文本大小（默认 14 ）
@@ -267,7 +267,7 @@
 			// 查询内容高度
 			queryRect(ref) {
 				// #ifndef APP-NVUE
-				// $uGetRect为uview-plus自带的节点查询简化方法，详见文档介绍：https://ijry.github.io/uview-plus/js/getRect.html
+				// $uGetRect为uview-plus自带的节点查询简化方法，详见文档介绍：https://uview-plus.jiangruyi.com/js/getRect.html
 				// 组件内部一般用this.$uGetRect，对外的为uni.$u.getRect，二者功能一致，名称不同
 				return new Promise(resolve => {
 					this.$uGetRect(`#${ref}`).then(size => {

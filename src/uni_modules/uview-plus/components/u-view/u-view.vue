@@ -23,7 +23,7 @@ import { addStyle, addUnit, deepMerge } from '../../libs/function/index';
 /**
  * View 视图
  * @description 对View默认标签的封装
- * @tutorial https://ijry.github.io/uview-plus/components/view.html
+ * @tutorial https://uview-plus.jiangruyi.com/components/view.html
  * @property {String} 					bgColor		背景颜色
  * @event {Function} click  点击触发事件
  * @example <up-view></up-view>

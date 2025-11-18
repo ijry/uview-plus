@@ -26,7 +26,7 @@
 	/**
 	 * List 列表
 	 * @description 该组件为高性能列表组件
-	 * @tutorial https://ijry.github.io/uview-plus/components/list.html
+	 * @tutorial https://uview-plus.jiangruyi.com/components/list.html
 	 * @property {String | Number}	anchor	用于滚动到指定item
 	 * @example <u-list-ite v-for="(item, index) in indexList" :key="index" ></u-list-item>
 	 */

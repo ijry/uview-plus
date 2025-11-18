@@ -74,7 +74,7 @@
 	/**
 	 * Alert  警告提示
 	 * @description 警告提示，展现需要关注的信息。
-	 * @tutorial https://ijry.github.io/uview-plus/components/alertTips.html
+	 * @tutorial https://uview-plus.jiangruyi.com/components/alertTips.html
 	 * 
 	 * @property {String}			title       显示的文字 
 	 * @property {String}			type        使用预设的颜色 （默认 'warning' ）

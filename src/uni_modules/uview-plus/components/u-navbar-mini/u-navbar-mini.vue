@@ -47,7 +47,7 @@
 	/**
 	 * NavbarMini 迷你导航栏
 	 * @description 此组件一般用于在全屏页面中，典型的如微信小程序左上角。
-	 * @tutorial https://ijry.github.io/uview-plus/components/navbar-mini.html
+	 * @tutorial https://uview-plus.jiangruyi.com/components/navbar-mini.html
 	 * @property {Boolean}			safeAreaInsetTop	是否开启顶部安全区适配  （默认 true ）
 	 * @property {Boolean}			placeholder			固定在顶部时，是否生成一个等高元素，以防止塌陷 （默认 false ）
 	 * @property {Boolean}			fixed				导航栏是否固定在顶部 （默认 false ）

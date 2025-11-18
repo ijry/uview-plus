@@ -55,7 +55,7 @@
 	/**
 	 * Toolbar 工具条
 	 * @description 
-	 * @tutorial https://ijry.github.io/uview-plus/components/toolbar.html
+	 * @tutorial https://uview-plus.jiangruyi.com/components/toolbar.html
 	 * @property {Boolean}	show			是否展示工具条（默认 true ）
 	 * @property {String}	cancelText		取消按钮的文字（默认 '取消' ）
 	 * @property {String}	confirmText		确认按钮的文字（默认 '确认' ）

@@ -26,7 +26,7 @@
 /**
  * Poster 海报组件
  * @description 用于生成海报的组件，支持文本、图片、二维码等元素
- * @tutorial https://ijry.github.io/uview-plus/components/poster.html
+ * @tutorial https://uview-plus.jiangruyi.com/components/poster.html
  * 
  * @property {Object} json 海报配置JSON数据
  * @property {Object} json.css 海报容器样式

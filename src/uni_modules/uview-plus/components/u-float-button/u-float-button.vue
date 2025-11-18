@@ -54,7 +54,7 @@ import { addStyle, addUnit, deepMerge } from '../../libs/function/index';
 /**
  * FloatButton 悬浮按钮
  * @description 悬浮按钮常用于屏幕右下角点击展开的操作菜单
- * @tutorial https://ijry.github.io/uview-plus/components/floatButton.html
+ * @tutorial https://uview-plus.jiangruyi.com/components/floatButton.html
  * @property {String}                backgroundColor      背景颜色
  * @event {Function} click  点击触发事件
  * @example <up-float-button></up-float-button>

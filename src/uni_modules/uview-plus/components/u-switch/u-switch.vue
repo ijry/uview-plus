@@ -45,7 +45,7 @@
 	/**
 	 * switch 开关选择器
 	 * @description 选择开关一般用于只有两个选择，且只能选其一的场景。
-	 * @tutorial https://ijry.github.io/uview-plus/components/switch.html
+	 * @tutorial https://uview-plus.jiangruyi.com/components/switch.html
 	 * @property {Boolean}						loading			是否处于加载中（默认 false ）
 	 * @property {Boolean}						disabled		是否禁用（默认 false ）
 	 * @property {String | Number}				size			开关尺寸，单位px （默认 25 ）

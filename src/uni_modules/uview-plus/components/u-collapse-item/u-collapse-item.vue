@@ -71,7 +71,7 @@
 	/**
 	 * collapseItem 折叠面板Item
 	 * @description 通过折叠面板收纳内容区域（搭配u-collapse使用）
-	 * @tutorial https://ijry.github.io/uview-plus/components/collapse.html
+	 * @tutorial https://uview-plus.jiangruyi.com/components/collapse.html
 	 * @property {String}			title 		标题
 	 * @property {String}			value 		标题右侧内容
 	 * @property {String}			label 		标题下方的描述信息
@@ -201,7 +201,7 @@
 			// 查询内容高度
 			queryRect() {
 				// #ifndef APP-NVUE
-				// $uGetRect为uView自带的节点查询简化方法，详见文档介绍：https://ijry.github.io/uview-plus/js/getRect.html
+				// $uGetRect为uView自带的节点查询简化方法，详见文档介绍：https://uview-plus.jiangruyi.com/js/getRect.html
 				// 组件内部一般用this.$uGetRect，对外的为uni.$u.getRect，二者功能一致，名称不同
 				return new Promise(resolve => {
 					this.$uGetRect(`#${this.elId}`).then(size => {

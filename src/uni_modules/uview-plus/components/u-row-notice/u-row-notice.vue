@@ -64,7 +64,7 @@
 	/**
 	 * RowNotice 滚动通知中的水平滚动模式
 	 * @description 水平滚动
-	 * @tutorial https://ijry.github.io/uview-plus/components/noticeBar.html
+	 * @tutorial https://uview-plus.jiangruyi.com/components/noticeBar.html
 	 * @property {String | Number}	text			显示的内容，字符串
 	 * @property {String}			icon			是否显示左侧的音量图标 (默认 'volume' )
 	 * @property {String}			mode			通告模式，link-显示右箭头，closable-显示右侧关闭图标

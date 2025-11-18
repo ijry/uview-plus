@@ -11,7 +11,7 @@
 	/**
 	 * SwipeAction 滑动单元格 
 	 * @description 该组件一般用于左滑唤出操作菜单的场景，用的最多的是左滑删除操作
-	 * @tutorial https://ijry.github.io/uview-plus/components/swipeAction.html
+	 * @tutorial https://uview-plus.jiangruyi.com/components/swipeAction.html
 	 * @property {Boolean}	autoClose	是否自动关闭其他swipe按钮组
 	 * @event {Function(index)}	click	点击组件时触发
 	 * @example	<u-swipe-action><u-swipe-action-item :rightOptions="options1" ></u-swipe-action-item></u-swipe-action>

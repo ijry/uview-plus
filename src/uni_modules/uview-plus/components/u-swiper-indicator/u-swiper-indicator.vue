@@ -38,7 +38,7 @@
 	/**
 	 * SwiperIndicator 轮播图指示器
 	 * @description 该组件一般用于导航轮播，广告展示等场景,可开箱即用，
-	 * @tutorial https://ijry.github.io/uview-plus/components/swiper.html
+	 * @tutorial https://uview-plus.jiangruyi.com/components/swiper.html
 	 * @property {String | Number}	length					轮播的长度（默认 0 ）
 	 * @property {String | Number}	current					当前处于活动状态的轮播的索引（默认 0 ）
 	 * @property {String}			indicatorActiveColor	指示器非激活颜色

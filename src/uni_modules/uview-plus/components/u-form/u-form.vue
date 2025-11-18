@@ -16,7 +16,7 @@
 	/**
 	 * Form 表单
 	 * @description 此组件一般用于表单场景，可以配置Input输入框，Select弹出框，进行表单验证等。
-	 * @tutorial https://ijry.github.io/uview-plus/components/form.html
+	 * @tutorial https://uview-plus.jiangruyi.com/components/form.html
 	 * @property {Object}						model			当前form的需要验证字段的集合
 	 * @property {Object | Function | Array}	rules			验证规则
 	 * @property {String}						errorType		错误的提示方式，见上方说明 ( 默认 message )
