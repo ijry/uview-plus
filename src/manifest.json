@@ -165,7 +165,34 @@
     "locale" : "zh-Hans",
     "app-harmony" : {
         "distribute" : {
-            "bundleName" : "com.jiangruyi.uviewplus"
+            "bundleName" : "com.jiangruyi.uviewplus.hos",
+            "splashScreens" : {
+                "startWindowIcon" : "unpackage/res/icons/1024x1024.png"
+            },
+            "icons" : {
+                "background" : "unpackage/res/icons/1024x1024.png",
+                "foreground" : "unpackage/res/icons/1024x1024.png"
+            },
+            "signingConfigs" : {
+                "default" : {
+                    "certpath" : "c:\\Users\\Jry\\AppData\\Roaming\\HBuilder X\\extensions\\launcher\\agc-certs\\1763917417142.cer",
+                    "keyAlias" : "debugKey",
+                    "keyPassword" : "0000001B40CD843FE60FDE882BE7E3C5B587515A209E8081CCBF34B58A9D50C50352F19D9F88C6294CD424",
+                    "profile" : "c:\\Users\\Jry\\AppData\\Roaming\\HBuilder X\\extensions\\launcher\\agc-certs\\1763917417142.p7b",
+                    "signAlg" : "SHA256withECDSA",
+                    "storeFile" : "c:\\Users\\Jry\\AppData\\Roaming\\HBuilder X\\extensions\\launcher\\agc-certs\\1763917417142.p12",
+                    "storePassword" : "0000001B40CD843FE60FDE882BE7E3C5B587515A209E8081CCBF34B58A9D50C50352F19D9F88C6294CD424"
+                },
+                "release" : {
+                    "certpath" : "uviewplus-prod.cer",
+                    "keyAlias" : "uviewplus-prod",
+                    "keyPassword" : "00000019B7ABC0513CAA4C3C7D91E1F86CA29E7872574B0F269709FBBAFC6A5F75B7AC659D41015DB7",
+                    "profile" : "uviewplusRelease.p7b",
+                    "signAlg" : "SHA256withECDSA",
+                    "storeFile" : "C:/Users/Jry/Documents/WWW/xyito/config/hos/uviewplus/prod.p12",
+                    "storePassword" : "00000019015DD2C0F59D0B74AA8152784E0586AF979664BE90722EF0F48E5B35769D97D56D8AA937DE"
+                }
+            }
         }
     },
     "fallbackLocale" : "zh-Hans"
