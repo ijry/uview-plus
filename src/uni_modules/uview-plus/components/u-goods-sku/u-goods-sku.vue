@@ -48,7 +48,7 @@
                     </view>
                     
                     <view class="up-goods-sku__content__count">
-                        <view class="up-goods-sku__content__count__title">{{ t('"up.goodsSku.buyAmount"') }}</view>
+                        <view class="up-goods-sku__content__count__title">{{ t('up.goodsSku.buyAmount') }}</view>
                         <view class="up-goods-sku__content__count__control">
                             <up-number-box 
                                 v-model="buyNum" 
