@@ -133,25 +133,21 @@ export function chooseFile({
         // #ifdef MP-WEIXIN || H5
         // 只有微信小程序才支持chooseMessageFile接口
         case 'file':
-            // #ifdef MP-WEIXIN
-            wx.chooseMessageFile({
-                count: multiple ? maxCount : 1,
-                type: accept,
-                success: (res) => resolve(formatFile(res)),
-                fail: reject
-            })
-            // #endif
-            // #ifdef H5
-            // 需要hx2.9.9以上才支持uni.chooseFile
             let params = {
                 count: multiple ? maxCount : 1,
                 type: accept,
                 success: (res) => resolve(formatFile(res)),
                 fail: reject
             }
+            // Array<string>根据文件拓展名过滤，仅 type==file 时有效。每一项都不能是空字符串。默认不过滤。
             if (extension.length && extension.length > 0) {
                 params.extension = extension
             }
+            // #ifdef MP-WEIXIN
+            wx.chooseMessageFile(params)
+            // #endif
+            // #ifdef H5
+            // 需要hx2.9.9以上才支持uni.chooseFile
             uni.chooseFile(params)
             // #endif
             break

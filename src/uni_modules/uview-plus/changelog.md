@@ -1,3 +1,6 @@
+## 3.6.18（2025-11-30）
+feature: upload组件file模式支持微信小程序chooseMessageFile的extension属性 #913
+
 ## 3.6.17（2025-11-18）
 add: picker-data支持表单验证
 
