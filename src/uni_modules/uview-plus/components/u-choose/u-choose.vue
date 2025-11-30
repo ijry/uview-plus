@@ -23,7 +23,7 @@
 		:scroll-x="wrap === false" 
 		:class="['up-choose', wrap ? 'up-choose-wrap' : 'up-choose-nowrap']">
         <template :key="item.id"  v-for="(item,index) in options">
-            <view :style="{width: width, display: 'inline-block'}">
+            <view :style="{width: itemWidth, display: 'inline-block'}">
                 <slot :item="item" :index="index">
                     <up-tag :type="index == currentIndex ? 'primary' : 'info'"
                         size="large" :plain="index == currentIndex ? false : true"
