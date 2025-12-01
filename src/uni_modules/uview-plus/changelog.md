@@ -1,3 +1,8 @@
+## 3.6.19（2025-12-01）
+fix: 修复商品SKU组件i18n
+
+fix: Choose组件会有width警告提示 #915
+
 ## 3.6.18（2025-11-30）
 feature: upload组件file模式支持微信小程序chooseMessageFile的extension属性 #913
 
