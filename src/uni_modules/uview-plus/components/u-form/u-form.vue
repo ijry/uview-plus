@@ -28,7 +28,7 @@
 	 * @example <up-form labelPosition="left" :model="model1" :rules="rules" ref="form1"></up-form>
 	 */
 	export default {
-		name: "u-form",
+		name: "up-form",
 		mixins: [mpMixin, mixin, props],
 		provide() {
 			return {
