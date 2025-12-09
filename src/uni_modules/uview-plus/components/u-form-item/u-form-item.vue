@@ -127,7 +127,9 @@
 			}
 		},
 		mounted() {
-			this.init()
+			this.$nextTick(() => {
+				this.init()
+			})
 		},
 		emits: ["click"],
 		watch: {
