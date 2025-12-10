@@ -203,6 +203,7 @@ export default {
     'uicon-empty-list': '\ue68b',
     'uicon-empty-page': '\ue627',
     'uicon-empty-order': '\ue639',
+    'uicon-empty-wifi': '\ue668',
     'uicon-man': '\ue697',
     'uicon-woman': '\ue69c',
     'uicon-man-add': '\ue61c',
