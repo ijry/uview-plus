@@ -20,7 +20,7 @@
 <script>
 import { mpMixin } from '../../libs/mixin/mpMixin';
 import { mixin } from '../../libs/mixin/mixin';
-import { addStyle, addUnit, sleep } from '../../libs/function/index';
+import { sleep } from '../../libs/function/index';
 export default {
     name: 'u-dragsort',
     // #ifdef MP
@@ -74,7 +74,7 @@ export default {
                 };
             } else if (this.direction === 'horizontal') {
                 return {
-                    height: '100%',
+                    height: `${this.itemHeight}px`,
                     width: `${this.list.length * this.itemWidth}px`
                 };
             } else {
@@ -171,21 +171,42 @@ export default {
         },
         updatePositions() {
             // 更新所有项目的位置
-            this.list.forEach((item, index) => {
-                if (this.direction === 'vertical') {
-                    item.y = index * this.itemHeight;
-                    item.x = 0;
-                } else if (this.direction === 'horizontal') {
-                    item.x = index * this.itemWidth;
-                    item.y = 0;
-                } else {
-                    // all模式，网格布局
-                    const col = index % this.columns;
-                    const row = Math.floor(index / this.columns);
-                    item.x = col * this.itemWidth;
-                    item.y = row * this.itemHeight;
+            this.list = this.list.map((item, index) => {
+                // 当前正在拖动的项目保持拖动位置不动，避免抖动
+                if (this.dragIndex === index) {
+                    return {
+                        ...item,
+                        x: this.currentPosition.x,
+                        y: this.currentPosition.y
+                    }
                 }
-            });
+
+                if (this.direction === 'vertical') {
+                    return {
+                        ...item,
+                        x: 0,
+                        y: index * this.itemHeight
+                    }
+                }
+
+                if (this.direction === 'horizontal') {
+                    return {
+                        ...item,
+                        x: index * this.itemWidth,
+                        y: 0
+                    }
+                }
+
+                // all模式，网格布局
+                const col = index % this.columns
+                const row = Math.floor(index / this.columns)
+
+                return {
+                    ...item,
+                    x: col * this.itemWidth,
+                    y: row * this.itemHeight
+                }
+            })
         },
         onTouchStart(index) {
             this.dragIndex = index;
@@ -330,12 +351,14 @@ export default {
         }
 
         .u-dragsort-item-content {
-            padding: 0px;
-            text-align: center;
+            padding: 0;
             box-sizing: border-box;
-            padding-bottom: 6px;
-            border-radius: 8rpx;
-            transition: all 0.3s ease;
+        }
+    }
+
+    &.u-dragsort--vertical {
+        .u-dragsort-item {
+            height: auto;
         }
     }
 
@@ -347,9 +370,8 @@ export default {
         }
 
         .u-dragsort-item {
-            display: flex;
             width: auto;
-            height: 100%;
+            height: auto;
         }
     }
 
