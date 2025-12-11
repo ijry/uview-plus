@@ -1,6 +1,6 @@
 <template>
     <view class="u-dragsort"
-        :class="[direction == 'horizontal' ? 'u-dragsort--horizontal' : '', direction == 'all' ? 'u-dragsort--all' : 'u-dragsort--vertical']">
+        :class="[direction == 'horizontal' ? 'u-dragsort--horizontal' : '', direction == 'vertical' ? 'u-dragsort--vertical' : '', direction == 'all' ? 'u-dragsort--all' : '']">
         <movable-area class="u-dragsort-area" :style="movableAreaStyle">
             <movable-view v-for="(item, index) in list" :key="item.id" :id="`u-dragsort-item-${index}`"
                 class="u-dragsort-item" :class="{ 'dragging': dragIndex === index }"
