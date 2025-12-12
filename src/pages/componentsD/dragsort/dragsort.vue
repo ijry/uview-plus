@@ -98,6 +98,7 @@ export default {
   .custom-item {
 	  background-color: #f5f5f5;
 	  padding: 10px;
+	  text-align: center;
 	  box-sizing: border-box;
   }
   .custom-item-h {
