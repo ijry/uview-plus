@@ -244,6 +244,10 @@
 				
 				// 清除后续级别的选中值
 				this.selectedValueIndexs.splice(levelIndex + 1);
+				this.tabsIndex = Math.min(this.tabsIndex, levelIndex);
+				
+				// 清除后续级别的列表
+				this.levelList.splice(levelIndex + 1);
 				
 				// 获取当前选中项
 				const currentItem = this.levelList[levelIndex][index];
