@@ -44,7 +44,7 @@ export default {
 		readonly: false,
 		shape: 'square',
 		formatter: null,
-		cursorColor: '',
+		cursorColor: '#53c21d',
 		passwordVisibilityToggle: true
 	}
 }
