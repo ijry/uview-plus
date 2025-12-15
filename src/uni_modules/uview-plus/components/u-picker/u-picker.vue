@@ -43,6 +43,8 @@
 				<slot name="toolbar-bottom"></slot>
 				<picker-view
 					class="u-picker__view"
+					:mask-class="maskClass"
+					:mask-style="maskStyle"
 					:indicatorStyle="`height: ${addUnit(itemHeight, 'px')}`"
 					:value="innerIndex"
 					:immediateChange="immediateChange"

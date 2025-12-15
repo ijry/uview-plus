@@ -147,6 +147,16 @@ export const props = defineMixin({
         pageInline:{
 			type: Boolean,
 			default: () => defProps.picker.pageInline
+		},
+		// 蒙层样式样式
+		maskClass: {
+			type: String,
+			defualt: ''
+		},
+		// 蒙层样式样式
+		maskStyle: {
+			type: String,
+			defualt: ''
 		}
     }
 })
