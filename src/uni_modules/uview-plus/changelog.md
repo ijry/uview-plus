@@ -1,3 +1,7 @@
+## 3.6.26（2025-12-16）
+add: picker增加maskClass/maskStyle属性
+
+
 ## 3.6.25（2025-12-15）
 fix: 修复cascader对列表数据层级差异的兼容问题
 
