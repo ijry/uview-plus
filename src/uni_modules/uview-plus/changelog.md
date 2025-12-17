@@ -1,3 +1,6 @@
+## 3.6.27（2025-12-17）
+add: datetimepicker增加maskClass和maskStyle属性
+
 ## 3.6.26（2025-12-16）
 add: picker增加maskClass/maskStyle属性
 
