@@ -158,8 +158,8 @@ export function $parent(name = undefined) {
 	// 通过while历遍，这里主要是为了H5需要多层解析的问题
 	while (parent) {
 		// 父组件
-        name = name.replace(/up-([a-zA-Z0-9-_]+)/g, 'u-$1')        
-		if (parent.$options && parent.$options.name !== name) {
+        let name2 = name.replace(/up-([a-zA-Z0-9-_]+)/g, 'u-$1')        
+		if (parent.$options && parent.$options.name !== name && && parent.$options.name !== name2) {
 			// 如果组件的name不相等，继续上一级寻找
 			parent = parent.$parent
 		} else {
