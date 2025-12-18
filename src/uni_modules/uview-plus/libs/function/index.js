@@ -159,7 +159,7 @@ export function $parent(name = undefined) {
 	while (parent) {
 		// 父组件
         let name2 = name.replace(/up-([a-zA-Z0-9-_]+)/g, 'u-$1')        
-		if (parent.$options && parent.$options.name !== name && && parent.$options.name !== name2) {
+		if (parent.$options && parent.$options.name !== name && parent.$options.name !== name2) {
 			// 如果组件的name不相等，继续上一级寻找
 			parent = parent.$parent
 		} else {
@@ -870,3 +870,4 @@ export default {
 	genLightColor,
 	rpx2px
 }
+
