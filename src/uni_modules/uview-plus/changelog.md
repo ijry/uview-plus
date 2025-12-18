@@ -1,3 +1,6 @@
+## 3.6.28（2025-12-18）
+fix: 优化$parent方法兼容性
+
 ## 3.6.27（2025-12-17）
 add: datetimepicker增加maskClass和maskStyle属性
 
