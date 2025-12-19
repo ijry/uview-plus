@@ -30,7 +30,7 @@
 			</view>
 			<input
 			    confirm-type="search"
-			    @blur="blur"
+			    @blur="blurFunc"
 			    :value="keyword"
 			    @confirm="search"
 			    @input="inputChange"
@@ -220,7 +220,7 @@
 				this.$emit('focus', this.keyword);
 			},
 			// 失去焦点
-			blur() {
+			blurFunc() {
 				// 最开始使用的是监听图标@touchstart事件，自从hx2.8.4后，此方法在微信小程序出错
 				// 这里改为监听点击事件，手点击清除图标时，同时也发生了@blur事件，导致图标消失而无法点击，这里做一个延时
 				setTimeout(() => {
