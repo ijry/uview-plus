@@ -97,17 +97,14 @@
 	</view>
 </template>
 
-<script setup> 
-import { ref } from "vue";
-const modelShow = ref(false);
-const popupShow = ref(false);
-const sliderValue = ref(4);
-</script>
-
 <script>
 	export default {
 		data() {
 			return {
+				modelShow: false,
+				popupShow: false,
+				sliderValue: 4,
+				useNative: false,
 				useNative: false,
 				value1: 30,
 				value2: 30,

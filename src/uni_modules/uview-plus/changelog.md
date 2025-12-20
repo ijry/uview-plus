@@ -1,3 +1,6 @@
+## 3.6.32（2025-12-21）
+improvment: 优化slider、search、steps等组件细节
+
 ## 3.6.31（2025-12-19）
 improvment: 优化search组件等
 

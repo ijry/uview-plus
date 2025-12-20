@@ -34,6 +34,8 @@ export default {
         value: '',
         maxlength: '-1',
         height: 32,
-        label: null
+        label: null,
+        adjustPosition: true,
+        autoBlur: true
     }
 }
