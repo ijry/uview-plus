@@ -158,7 +158,12 @@ export function $parent(name = undefined) {
 	// 通过while历遍，这里主要是为了H5需要多层解析的问题
 	while (parent) {
 		// 父组件
-        let name2 = name.replace(/up-([a-zA-Z0-9-_]+)/g, 'u-$1')        
+		let name2 = ''
+		if (name.startsWith('up-')) {
+			name2 = name.replace(/up-([a-zA-Z0-9-_]+)/g, 'u-$1') 
+		} else if (name.startsWith('u-')) {
+			name2 = name.replace(/u-([a-zA-Z0-9-_]+)/g, 'up-$1') 
+		}     
 		if (parent.$options && parent.$options.name !== name && parent.$options.name !== name2) {
 			// 如果组件的name不相等，继续上一级寻找
 			parent = parent.$parent
@@ -645,8 +650,8 @@ export function padZero(value) {
  * @param {*} event
  */
 export function formValidate(instance, event) {
-	const formItem = $parent.call(instance, 'u-form-item')
-	const form = $parent.call(instance, 'u-form')
+	const formItem = $parent.call(instance, 'up-form-item')
+	const form = $parent.call(instance, 'up-form')
 	// 如果发生变化的input或者textarea等，其父组件中有u-form-item或者u-form等，就执行form的validate方法
 	// 同时将form-item的pros传递给form，让其进行精确对象验证
 	if (formItem && form) {
