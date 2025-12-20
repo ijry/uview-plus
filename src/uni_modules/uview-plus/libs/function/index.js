@@ -645,8 +645,8 @@ export function padZero(value) {
  * @param {*} event
  */
 export function formValidate(instance, event) {
-	const formItem = $parent.call(instance, 'u-form-item')
-	const form = $parent.call(instance, 'u-form')
+	const formItem = $parent.call(instance, 'up-form-item')
+	const form = $parent.call(instance, 'up-form')
 	// 如果发生变化的input或者textarea等，其父组件中有u-form-item或者u-form等，就执行form的validate方法
 	// 同时将form-item的pros传递给form，让其进行精确对象验证
 	if (formItem && form) {
