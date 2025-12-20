@@ -62,6 +62,10 @@ declare interface _CodeRef {
    * 结束当前正在进行中的倒计时，设置组件为可以重新获取验证码的状态
    */
   reset: () => void
+  /**
+   * 是否可以执行验证码操作
+   */
+  canGetCode: boolean, 
 }
 
 export declare const Code: _Code

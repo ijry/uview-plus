@@ -1,4 +1,5 @@
 /// <reference path="./comps.d.ts" />
+import HttpRequest from '../libs/luch-request';
 declare module 'uview-plus' {
 	export function install(): void  //必要
 	interface test {
@@ -78,7 +79,16 @@ declare module 'uview-plus' {
 		v: string;
 		version: string;
 		color: Partial<Color>;
-		unit: 'px' | 'rpx'
+		unit: 'px' | 'rpx';
+		/** 扩充自定义字体链接 */
+		customIcon: {
+			family: string;
+			url: string;
+		}
+		/** 扩充自定义字体图标名称映射 */
+		customIcons: {
+			[key: string]: string;
+		}
 	}
 	interface Color {
 		primary: string,
@@ -93,9 +103,23 @@ declare module 'uview-plus' {
 		lightColor: string,
 		borderColor: string
 	}
+	interface ZIndex {
+		toast: number;
+		noNetwork: number;
+		// popup包含popup，actionsheet，keyboard，picker的值
+		popup: number;
+		mask: number;
+		navbar: number;
+		topTips: number;
+		sticky: number;
+		indexListSticky: number;
+	}
 	interface GlobalConfig {
+		/** 全局颜色配置 */
+		color: Partial<Color>;
 		config: Partial<Config>;
 		props: {};
+		zIndex: Partial<ZIndex>;
 	}
 	interface $u {
 		route: (url: string | RouteParam) => void;
@@ -126,19 +150,9 @@ declare module 'uview-plus' {
 		colorToRgba: (color: string, alpha: number) => string;
 		test: test;
 		type: {},
-		http: {},
+		http: HttpRequest,
 		config: Config;
-		zIndex: {
-			toast: number;
-			noNetwork: number;
-			// popup包含popup，actionsheet，keyboard，picker的值
-			popup: number;
-			mask: number;
-			navbar: number;
-			topTips: number;
-			sticky: number;
-			indexListSticky: number;
-		},
+		zIndex: ZIndex,
 		debounce: (func, wait, immediate) => void;
 		throttle: (func, wait, immediate) => void;
 		mixin: {},
