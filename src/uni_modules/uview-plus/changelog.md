@@ -1,3 +1,6 @@
+## 3.6.33（2025-12-23）
+fix: 提升$parent方法兼容性修复表单验证失效
+
 ## 3.6.32（2025-12-21）
 improvment: 优化slider、search、steps等组件细节
 
