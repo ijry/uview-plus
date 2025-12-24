@@ -19,7 +19,7 @@ jobs:
 
         # 生成静态文件
       - name: Build
-        run: npm install && yarn build:h5
+        run: yarn install && yarn build:h5
 
         # 部署到gh-pages分支的h5目录
       - name: Deploy
