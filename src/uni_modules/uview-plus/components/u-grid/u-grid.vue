@@ -107,7 +107,7 @@
 		/* #ifndef APP-NVUE */
 		display: grid !important;
 		grid-gap: v-bind(gap);
-		grid-template-columns: repeat(v-bind(col), 1fr);
+		grid-template-columns: repeat(v-bind(col), minmax(0, 1fr));
 		/* #endif */
 	}
 </style>
