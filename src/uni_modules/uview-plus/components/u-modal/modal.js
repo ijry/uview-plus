@@ -29,7 +29,7 @@ export default {
         confirmButtonShape: '',
         duration: 400,
         contentTextAlign: 'left',
-        asyncCloseTip: t("up.common.inOperatio") + '...',
+        asyncCloseTip: t("up.common.inOperation") + '...',
         asyncCancelClose: false,
         contentStyle: {}
     }
