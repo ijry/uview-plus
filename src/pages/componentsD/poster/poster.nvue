@@ -1,0 +1,172 @@
+<template>
+    <view class="u-page">
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">基础示例</text>
+          <view class="u-page__item__content">
+            <!-- 生成海报按钮 -->
+			<up-button type="primary" shape="circle" @click="generatePoster">生成海报</up-button>
+			
+            <!-- 海报预览区域 -->
+			<view class="poster-preview" v-if="posterImageUrl">
+				<image :src="posterImageUrl" class="poster-image" mode="widthFix"></image>
+			</view>
+
+            <!-- 海报组件 -->
+			<up-poster 
+				ref="poster" 
+				:json="posterConfig"
+				@export="onPosterExport"
+			></up-poster>
+          </view>
+      </view>
+  </view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				// 海报配置数据
+				posterConfig: {
+					css: {
+						width: '750rpx',
+						height: '1114rpx',
+						background: 'linear-gradient(135deg,#fce38a,#f38181)',
+					},
+					views: [
+						// 背景卡片
+						{
+							type: 'view',
+							css: {
+								position: 'absolute',
+								left: '40rpx',
+								top: '144rpx',
+								background: '#fff',
+								radius: '16rpx',
+								width: '670rpx',
+								height: '930rpx',
+								shadow: '0 20rpx 48rpx rgba(0,0,0,.05)'
+							}
+						},
+						// 标题文本
+						{
+							type: 'text',
+							text: '为您挑选了一个好物',
+							css: {
+								position: 'absolute',
+								color: '#666',
+								left: '144rpx',
+								top: '90rpx',
+								fontSize: '30rpx'
+							}
+						},
+						// 商品图片
+						{
+							type: 'image',
+                            // H5下图片域名要注意允许跨域
+							src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png',
+							css: {
+								position: 'absolute',
+								left: '72rpx',
+								top: '176rpx',
+								width: '606rpx',
+								height: '606rpx',
+								radius: '12rpx'
+							}
+						},
+						// 价格
+						{
+							type: 'text',
+							text: '￥299',
+							css: {
+								position: 'absolute',
+								color: '#FF0000',
+								left: '66rpx',
+								top: '840rpx',
+								fontSize: '56rpx',
+								fontWeight: 'bold'
+							}
+						},
+						// 商品标题
+						{
+							type: 'text',
+							text: '精美陶瓷茶具套装，高端大气上档次，送礼自用两相宜',
+							css: {
+								position: 'absolute',
+								lineClamp: 2,
+								width: '396rpx',
+								color: '#333',
+								left: '72rpx',
+								top: '930rpx',
+								fontSize: '36rpx',
+								lineHeight: '50rpx'
+							}
+						},
+						// 二维码
+						{
+							type: 'qrcode',
+							text: 'https://example.com/product/123',
+							css: {
+								position: 'absolute',
+								left: '500rpx',
+								top: '864rpx',
+								width: '178rpx',
+								height: '178rpx'
+							}
+						}
+					]
+				},
+				// 生成的海报图片URL
+				posterImageUrl: ''
+			}
+		},
+		methods: {
+			// 生成海报
+			async generatePoster() {
+				try {
+					uni.showLoading({
+						title: '海报生成中...'
+					});
+					
+					// 调用海报组件的导出方法
+					const result = await this.$refs.poster.exportImage();
+					this.posterImageUrl = result.path;
+					
+					uni.hideLoading();
+					uni.showToast({
+						title: '海报生成成功',
+						icon: 'success'
+					});
+				} catch (error) {
+					uni.hideLoading();
+					uni.showToast({
+						title: '海报生成失败',
+						icon: 'none'
+					});
+					console.error('海报生成失败:', error);
+				}
+			},
+			
+			// 海报导出回调
+			onPosterExport(result) {
+				console.log('海报导出结果:', result);
+			}
+		}
+	}
+</script>
+
+<style scoped>
+	.poster-preview {
+		width: 100%;
+        margin-top: 20px;
+		margin-bottom: 40rpx;
+		background-color: #fff;
+		border-radius: 20rpx;
+		overflow: hidden;
+		box-shadow: 0 10rpx 30rpx rgba(0,0,0,0.1);
+	}
+	
+	.poster-image {
+		width: 100%;
+	}
+</style>

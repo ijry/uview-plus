@@ -1,0 +1,206 @@
+<template>
+    <view class="u-page">
+        <view class="u-page__item">
+            <text class="u-page__item__title" style="margin-top: 0;">基础用法</text>
+            <view class="u-page__item__content">
+                <up-markdown :content="basicContent"></up-markdown>
+            </view>
+        </view>
+        
+        <view class="u-page__item">
+            <text class="u-page__item__title">带代码块行号</text>
+            <view class="u-page__item__content">
+                <up-markdown :content="codeContent" :show-line-number="true"></up-markdown>
+            </view>
+        </view>
+        
+        <view class="u-page__item">
+            <text class="u-page__item__title">深色主题</text>
+            <view class="u-page__item__content">
+                <up-markdown :content="basicContent" theme="dark"></up-markdown>
+            </view>
+        </view>
+        
+        <!-- 新增流式显示示例 -->
+        <view class="u-page__item">
+            <text class="u-page__item__title">AI流式内容显示</text>
+            <view class="u-page__item__content">
+                <up-markdown :content="streamingContent"  :show-line-number="true"></up-markdown>
+                <view style="flex-direction: row; margin-top: 10px;">
+                    <up-button 
+                        type="primary" 
+                        size="mini" 
+                        :text="isStreaming ? '停止' : '开始'" 
+                        @click="toggleStreaming"
+                        style="margin-right: 10px;"
+                    ></up-button>
+                    <up-button 
+                        type="default" 
+                        size="mini" 
+                        text="重置" 
+                        @click="resetStreaming"
+                    ></up-button>
+                </view>
+            </view>
+        </view>
+    </view>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            basicContent: `# 标题1
+这是段落文本，包含**粗体**和*斜体*文本。
+
+## 标题2
+这是一个链接：[uview-plus](https://ijry.github.io/uview-plus)
+
+### 列表示例
+- 列表项1
+- 列表项2
+- 列表项3
+
+> 这是一个引用块
+
+---
+
+段落中的行内代码： \`console.log('Hello World')\``,
+            
+            codeContent: `# 代码示例
+
+以下是一个JavaScript函数：
+
+\`\`\`javascript
+function hello(name) {
+    console.log('Hello, ' + name + '!');
+}
+
+hello('World');
+\`\`\`
+
+以下是一个Python示例：
+
+\`\`\`python
+def hello(name):
+    print(f"Hello, {name}!")
+
+hello("World")
+\`\`\``,
+            
+            // 流式内容相关数据
+            fullAIContent: `# AI助手回答
+
+你好！我是AI助手，正在为你逐步生成回答内容...
+
+## 问题分析
+
+让我来分析你提出的问题：
+
+1. 需要实现流式内容显示
+2. 模拟AI逐步输出文字的效果
+3. 使用定时器控制内容显示速度
+
+## 解决方案
+
+我们可以使用以下方法实现：
+
+### 第一步：创建数据模型
+\`\`\`javascript
+data() {
+  return {
+    streamingContent: '',
+    isStreaming: false,
+    streamTimer: null
+  }
+}
+\`\`\`
+
+### 第二步：实现流式显示逻辑
+\`\`\`javascript
+methods: {
+  startStreaming() {
+    // 实现流式显示逻辑
+  }
+}
+\`\`\`
+
+## 总结
+
+以上就是实现流式内容显示的基本方法。通过定时器控制内容逐字显示，可以营造出AI正在思考和逐步输出的效果。
+
+这种交互方式在现代Web应用中非常常见，特别是在AI助手类产品中。
+
+---
+
+*内容生成完毕*`,
+            streamingContent: '',
+            isStreaming: false,
+            streamTimer: null,
+            streamIndex: 0
+        };
+    },
+    methods: {
+        // 开始/停止流式显示
+        toggleStreaming() {
+            if (this.isStreaming) {
+                this.stopStreaming();
+            } else {
+                this.startStreaming();
+            }
+        },
+        
+        // 开始流式显示
+        startStreaming() {
+            if (this.isStreaming) return;
+            
+            // 如果是重新开始，重置索引
+            if (this.streamIndex >= this.fullAIContent.length) {
+                this.streamIndex = 0;
+                this.streamingContent = '';
+            }
+            
+            this.isStreaming = true;
+            this.streamTimer = setInterval(() => {
+                if (this.streamIndex < this.fullAIContent.length) {
+                    this.streamingContent += this.fullAIContent[this.streamIndex];
+                    this.streamIndex++;
+                } else {
+                    this.stopStreaming();
+                }
+            }, 50); // 50ms间隔，模拟AI逐步输出
+        },
+        
+        // 停止流式显示
+        stopStreaming() {
+            if (this.streamTimer) {
+                clearInterval(this.streamTimer);
+                this.streamTimer = null;
+            }
+            this.isStreaming = false;
+        },
+        
+        // 重置流式显示
+        resetStreaming() {
+            this.stopStreaming();
+            this.streamingContent = '';
+            this.streamIndex = 0;
+        }
+    },
+    
+    // 组件销毁前清理定时器
+    beforeDestroy() {
+        this.stopStreaming();
+    }
+};
+</script>
+
+<style lang="scss" scoped>
+.u-page__item {
+    margin-bottom: 15px;
+}
+
+.u-page__item__title {
+    margin-bottom: 10px;
+}
+</style>

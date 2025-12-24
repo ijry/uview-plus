@@ -1,0 +1,58 @@
+<template>
+	<view class="u-page">
+		<!-- <up-navbar
+			title="吸顶"
+			@leftClick="navigateBack"
+			safeAreaInsetTop
+			fixed
+			placeholder
+		></up-navbar> -->
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">基础使用</text>
+			<up-text
+				type="content"
+				text="滚动页面,即可看到下方的按钮会吸顶。"
+			></up-text>
+			<!-- #ifdef APP-NVUE -->
+			<up-text
+				type="warning"
+				text="目前由于nvue的bug,设置sticky的top值无效。"
+			></up-text>
+			<!-- #endif -->
+		</view>
+		<up-sticky>
+			<up-button
+				text="吸顶按钮"
+				type="success"
+			></up-button>
+		</up-sticky>
+		<up-gap
+			bgColor="#fff"
+			height="1500px"
+		></up-gap>
+		<up-divider text="已到底部"></up-divider>
+	</view>
+</template>
+
+<script>
+	import { mixin } from '@/uni_modules/uview-plus'
+	export default {
+		data() {
+			return {
+
+			}
+		},
+		mixins: [mixin],
+		methods: {
+			navigateBack() {
+				uni.navigateBack()
+			}
+		}
+	}
+</script>
+
+<style lang="scss">
+	.u-page {
+		
+	}
+</style>

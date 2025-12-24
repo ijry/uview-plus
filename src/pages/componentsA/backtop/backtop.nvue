@@ -1,0 +1,141 @@
+<template>
+	<view
+	    class="u-page"
+	    ref="u-back-top"
+	>
+	<view class="u-demo-block">
+		<text class="u-demo-block__title">自定义backTop(滚动页面即可在右下角看到图标)</text>
+		<view class="u-demo-block__content">
+			<view class="u-page__backTop-item">
+				<up-checkbox-group
+				    placement="column"
+					shape="square"
+				    @change="checkboxChange"
+					v-model="value"
+				>
+					<up-checkbox
+					    :customStyle="{marginBottom: '8px'}"
+					    v-for="(item, index) in checkboxList"
+					    :key="index"
+					    :label="item.name"
+					    :name="item.name"
+					>
+					</up-checkbox>
+				</up-checkbox-group>
+			</view>
+		</view>
+	</view>
+		<up-back-top
+		    :right="backTopData.right"
+		    :customStyle="backTopData.customStyle"
+		    :bottom="backTopData.bottom"
+		    :icon="backTopData.icon"
+		    :mode="backTopData.mode"
+		    :iconStyle="backTopData.iconStyle"
+			:duration="backTopData.duration"
+		    :scrollTop="scrollTop"
+			@click="click"
+		></up-back-top>
+	</view>
+</template>
+
+<script setup>
+	import { ref, reactive, onMounted, onUnmounted } from 'vue'
+	
+	const value = ref(['自定义图标'])
+	const scrollTop = ref(0)
+	
+	const backTopData = reactive({
+		mode: 'circle',
+		icon: 'arrow-upward',
+		bottom: 100,
+		customStyle: {},
+		iconStyle: {},
+		right: 20,
+		duration: 300
+	})
+	
+	const checkboxList = [
+		{
+			name: '显示方形',
+		},
+		{
+			name: '自定义图标',
+		},
+		{
+			name: '自定义距离',
+		},
+		{
+			name: '自定义样式',
+		},
+		{
+			name:'自定义返回顶部滚动时间',
+		}
+	]
+	
+	const checkboxChange = (n) => {
+		if (n.includes('显示方形')) {
+			backTopData.mode = 'square'
+		} else {
+			backTopData.mode = "circle"
+		}
+		if (n.includes('自定义图标')) {
+			backTopData.icon = "arrow-up"
+		} else {
+			backTopData.icon = "arrow-upward"
+		}
+		if (n.includes('自定义距离')) {
+			backTopData.bottom = 300
+			backTopData.right = 20
+		} else {
+			backTopData.bottom = 100
+		}
+		if (n.includes('自定义样式')) {
+			backTopData.customStyle = {
+				backgroundColor: '#2979ff',
+			}
+			backTopData.iconStyle = {
+				color: '#ffffff'
+			}
+		} else {
+			backTopData.customStyle = {}
+			backTopData.iconStyle = {}
+		}
+		if (n.includes('自定义返回顶部滚动时间')) {
+			backTopData.duration = 1500 
+		} else {
+			backTopData.duration = 300
+		}
+	}
+	
+	const click = () => {
+		console.log('click');
+	}
+	
+	// 处理页面滚动事件
+	const handlePageScroll = (e) => {
+		scrollTop.value = e.scrollTop;
+	};
+	
+	// 监听页面滚动
+	onMounted(() => {
+		// 演示中默认勾选了自定义图标
+		backTopData.icon = "arrow-up"
+		// 添加页面滚动事件监听
+		uni.$on('pageScroll', handlePageScroll);
+	})
+	
+	// 移除事件监听
+	onUnmounted(() => {
+		uni.$off('pageScroll', handlePageScroll);
+	})
+</script>
+
+<style lang="scss">
+	.u-page {
+		height: 1200px;
+		&__backTop-item{
+			margin-top:10px;
+		}
+	}
+</style>

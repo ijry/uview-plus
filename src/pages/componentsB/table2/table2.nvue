@@ -1,0 +1,324 @@
+<template>
+	<view class="u-page">
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">基础表格（斑马纹 + 边框）</view>
+			<view class="u-demo-block__content">
+				<u-table2
+				    :data="tableData"
+				    :columns="columns"
+				    stripe
+				    border
+				    @row-click="handleRowClick"
+				  />
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">表格样式自定义</view>
+			<view class="u-demo-block__content">
+				<up-table2
+				    :data="tableData"
+				    :columns="columnsStyle"
+				    stripe
+				    @row-click="handleRowClick"
+					:cellStyle="cellStyleFunc"
+				>
+				<template #cell="scope">
+				</template>
+				</up-table2>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">支持单选的表格</view>
+			<view class="u-demo-block__content">
+				<u-table2
+				    :data="tableData"
+				    :columns="columns"
+				    highlight-current-row
+				    :current-row-key="currentRowId"
+				    @row-click="handleRowClick"
+				  />
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">支持复选框的表格</view>
+			<view class="u-demo-block__content">
+				<u-table2
+				    :data="tableData"
+				    :columns="columnsCheck"
+				    row-key="id"
+				    @selection-change="handleSelectionChange"
+				  />
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">支持排序与筛选</view>
+			<view class="u-demo-block__content">
+				<u-table2
+				    :data="tableData"
+				    :columns="columns2"
+				    :sortable="true"
+				    :multiSort="true"
+				    :filters="filters"
+				    @sort-change="onSortChange"
+				    @filter-change="onFilterChange"
+				  />
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">列固定</view>
+			<view class="u-demo-block__content">
+				<u-table2
+				    :data="tableDataFixed"
+				    :columns="columnsFixed"
+				  />
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">树形结构</view>
+			<view class="u-demo-block__content">
+				<u-table2
+				    :data="tableData3"
+				    :columns="columns3"
+				    :tree-props="{ children: 'children' }"
+				    :expand-row-keys="['1']"
+				    @expand-change="onExpandChange">
+					<template #cell="scope">
+						<template v-if="scope.column.key == 'actions'">
+							<up-tag type="primary" size="mini" text="编辑"></up-tag>
+						</template>
+						<template v-else>
+							{{ scope.row[scope.column.key] || '-' }}
+						</template>
+					</template>
+				</u-table2>
+			</view>
+		</view>
+		<!-- 单元格合并示例 -->
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">单元格合并</view>
+			<view class="u-demo-block__content">
+				<u-table2
+				    :data="tableSpanData"
+				    :columns="columnsSpan"
+				    :span-method="arraySpanMethod"
+				    border
+				  />
+			</view>
+		</view>
+		<!-- 新增弹窗示例 -->
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">弹窗中使用表格</view>
+			<view class="u-demo-block__content">
+				<up-button @click="showPopupTable">打开弹窗表格</up-button>
+				<up-popup v-model:show="popupShow" mode="bottom" :round="10" :closeable="true">
+					<view class="popup-table-wrap">
+						<u-table2
+						    :data="tableData"
+						    :columns="columns"
+						    stripe
+						    border
+						    height="300px"
+						    @row-click="handlePopupRowClick"
+						  />
+					</view>
+				</up-popup>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				currentRowId: '',
+				tableData: [
+					{ id: 1, name: '张三', age: 25 },
+					{ id: 2, name: '李四', age: 30 }
+				],
+				columns: [
+					{ title: '姓名', key: 'name', width: '50px', align: 'center' },
+					{ title: '年龄', key: 'age', width: '50px', align: 'right', headerAlign: 'center' },
+					{ title: '年龄', key: 'age', width: '50px' },
+					{ title: '年龄', key: 'age', width: '50px' },
+					{ title: '年龄', key: 'age', width: '50px' },
+					{ title: '年龄', key: 'age', width: '50px' },
+					{ title: '年龄', key: 'age', width: '50px' },
+					{ title: '年龄', key: 'age', width: '50px' },
+					{ title: '年龄', key: 'age', width: '50px' },
+					{ title: '年龄', key: 'age', width: '50px' },
+					{ title: '年龄', key: 'age', width: '50px'   }
+				],
+				columnsStyle: [
+					{ title: '姓名', key: 'name', width: '50px' },
+					{ title: '年龄', key: 'age', width: '50px', style: {
+						background: 'red', color: '#fff', 'justify-content': 'center'},
+					},
+					{ title: '年龄', key: 'age', width: '50px' }
+				],
+				cellStyleFunc: (scope) => {
+					if (scope.column.key == 'age' && scope.row.age == '25') {
+						return {
+							background: 'blue',
+							color: 'yellow'
+						}
+					} else {
+						return {
+						}
+					}
+				},
+				columnsCheck: [
+					// 复选框列
+					{ type: 'selection', width: '50px'},
+					// 普通列
+					{ title: '姓名', key: 'name' },
+					{ title: '年龄', key: 'age' }
+				],
+				columns2: [
+					{ title: '姓名', key: 'name', sortable: true },
+					{ title: '年龄', key: 'age', sortable: true }
+				],
+				filters: { name: '张' },
+				tableData3: [
+					{
+					  id: 1,
+					  name: '部门A',
+					  age: 25,
+					  age2: 25,
+					  children: [
+						{ id: 2, name: '员工1', age: 22, age2: 25,
+							children: [
+								{ id: 22, name: '员工22', age: 22, age2: 25 },
+								{ id: 32, name: '员工32', age: 24, age2: 25 }
+							]
+						 },
+						{ id: 3, name: '员工2', age: 24, age2: 25 }
+					  ]
+					},
+					{ id: 4, name: '部门B', age: 30 }
+				],
+				columns3: [
+					{ type: 'selection', width: '50px'},
+					// { title: '', type: 'expand', width: '50px' },
+					{ title: '名称', key: 'name', width: '150px', fixed: 'left' },
+					{ title: '年龄', key: 'age' , width: '80px'},
+					{ title: '年龄', key: 'age2' , width: '80px' },
+					{ title: '操作', key: 'actions' , width: '150px' }
+				],
+				columnsFixed: [
+					{ title: '名称', key: 'name', width: '50px'},
+					{ title: '年龄', key: 'age' , width: '60px', fixed: 'left' },
+					{ title: '年龄2', key: 'age2' , width: '60px' },
+					{ title: '年龄3', key: 'age3' , width: '60px' },
+					{ title: '年龄4', key: 'age4' , width: '60px', fixed: 'left' },
+					{ title: '年龄4', key: 'age4' , width: '60px' },
+					{ title: '年龄5', key: 'age5' , width: '60px' },
+					{ title: '年龄6', key: 'age6' , width: '60px' },
+					{ title: '年龄7', key: 'age7' , width: '60px' },
+					{ title: '年龄8', key: 'age8' , width: '60px' },
+					{ title: '年龄9', key: 'age9' , width: '60px' },
+					{ title: '年龄10', key: 'age10' , width: '66px' },
+					{ title: '年龄11', key: 'age11' , width: '66px' },
+				],
+				tableDataFixed: [
+					{ id: 1, name: '张三', age: 25, age2: 25, age3: 25, age4: 25, age5: 25, age6: 25, age7: 25, age8: 25, age9: 25, age10: 25, age11: 25  },
+					{ id: 2, name: '李四', age: 25, age2: 25, age3: 25, age4: 25, age5: 25, age6: 25, age7: 25, age8: 25, age9: 25, age10: 25, age11: 25   }
+				],
+				// 单元格合并示例数据
+				tableSpanData: [
+					{ id: 1, name: '张三', age: 25, address: '北京市朝阳区', department: '技术部' },
+					{ id: 2, name: '李四', age: 30, address: '北京市朝阳区', department: '技术部' },
+					{ id: 3, name: '王五', age: 28, address: '上海市浦东新区', department: '销售部' },
+					{ id: 4, name: '赵六', age: 35, address: '广州市天河区', department: '人事部' }
+				],
+				columnsSpan: [
+					{ title: 'ID', key: 'id', width: '50px' },
+					{ title: '姓名', key: 'name', width: '100px', align: 'center' },
+					{ title: '年龄', key: 'age', width: '100px', align: 'center' },
+					{ title: '地址', key: 'address', width: '150px', align: 'center' },
+					{ title: '部门', key: 'department', width: '100px' }
+				],
+				// 新增弹窗相关数据
+				popupShow: false
+			}
+		},
+		methods: {
+			handleRowClick(row) {
+			  this.currentRowId = row.id;
+			  console.log('点击了行:', row);
+			},
+			handleSelectionChange(selection) {
+			  console.log('当前选中的行:', JSON.stringify(selection));
+			},
+			onSortChange(conditions) {
+			  console.log('排序条件:', conditions);
+			},
+			onFilterChange(filters) {
+			  console.log('筛选条件:', filters);
+			},
+			onExpandChange(keys) {
+			  console.log('展开行 keys:', keys);
+			},
+			// 新增弹窗相关方法
+			showPopupTable() {
+				this.popupShow = true;
+			},
+			handlePopupRowClick(row) {
+				console.log('弹窗中点击了行:', row);
+				uni.showToast({
+					title: `选中: ${row.name}`,
+					icon: 'none'
+				});
+				// 选中后关闭弹窗
+				this.popupShow = false;
+			},
+			// 单元格合并方法
+			arraySpanMethod({ row, column, rowIndex, columnIndex }) {
+				// 合并第1行的第1列和第2列单元格
+				if (rowIndex === 0 && columnIndex === 1) {
+					return [1, 2]; // 合并两行，一列
+				} else if (rowIndex === 0 && columnIndex === 2) {
+					// 对于被合并的单元格，返回 [0, 0]
+					return [0, 0];
+				}
+
+				// 合并第1列的第0行和第1行单元格
+				if (rowIndex === 0 && columnIndex === 3) {
+					return [2, 1]; // 合并两行，一列
+				} else if (rowIndex === 1 && columnIndex === 3) {
+					// 对于被合并的单元格，返回 [0, 0]
+					return [0, 0];
+				}
+				
+				// 合并第4列的第0行和第1行单元格
+				if (rowIndex === 0 && columnIndex === 4) {
+					return [2, 1]; // 合并两行，一列
+				} else if (rowIndex === 1 && columnIndex === 4) {
+					// 对于被合并的单元格，返回 [0, 0]
+					return [0, 0];
+				}
+				
+				// 默认不合并
+				return [1, 1];
+			}
+		}
+	}
+</script>
+
+<style lang="scss" scoped>
+	.wrap {
+		padding: 24rpx;
+	}
+	.popup-table-wrap {
+		padding: 20rpx;
+	}
+	.u-text-left {
+        justify-content: flex-start;
+    }
+    .u-text-center {
+        justify-content: center;
+    }
+    .u-text-right {
+        justify-content: flex-end;
+    }
+</style>

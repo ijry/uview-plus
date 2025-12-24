@@ -1,0 +1,85 @@
+<template>
+	<view class="u-page">
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">演示效果</view>
+			<view class="u-demo-block__content">
+				<up-toast ref="uToastRef"></up-toast>
+				<up-table :align="align" :borderColor="borderColor">
+					<up-tr class="up-tr">
+						<up-th class="up-th">姓名</up-th>
+						<up-th class="up-th">年龄</up-th>
+						<up-th class="up-th">籍贯</up-th>
+						<up-th class="up-th">性别</up-th>
+					</up-tr>
+					<up-tr class="up-tr">
+						<up-td class="up-td">吕布</up-td>
+						<up-td class="up-td">22</up-td>
+						<up-td class="up-td">楚河</up-td>
+						<up-td class="up-td">男</up-td>
+					</up-tr>
+					<up-tr class="up-tr">
+						<up-td class="up-td">项羽</up-td>
+						<up-td class="up-td">28</up-td>
+						<up-td class="up-td">汉界</up-td>
+						<up-td class="up-td">男</up-td>
+					</up-tr>
+					<up-tr class="up-tr">
+						<up-td class="up-td">木兰</up-td>
+						<up-td class="up-td">24</up-td>
+						<up-td class="up-td">南国</up-td>
+						<up-td class="up-td">女</up-td>
+					</up-tr>
+				</up-table>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__content">
+				<view class="u-demo-block__title">边框颜色</view>   
+				<up-subsection :list="['gray', 'primary', 'warning']" @change="borderColorChange"></up-subsection>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__content">
+				<view class="u-demo-block__title">对齐方式</view>
+				<up-subsection current="1" :list="['左', '中', '右']" @change="alignChange"></up-subsection>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				mode: false,
+				borderColor: '#e4e7ed',
+				align: 'center',
+				index: 0,
+			}
+		},
+		methods: {
+			modeChange(index) {
+				// #ifdef MP-WEIXIN
+				uni.showToast({
+					title: '微信小程序暂不支持单元格合并'
+				})
+				return;
+				// #endif
+				this.mode = index == 0 ? true : false;
+				this.key ++;
+			},
+			borderColorChange(index) {
+				this.borderColor = index == 0 ? '#e4e7ed' : index == 1 ? '#2979ff' : '#ff9900';
+			},
+			alignChange(index) {
+				this.align = index == 0 ? 'left' : index == 1 ? 'center' : 'right';
+			}
+		}
+	}
+</script>
+
+<style lang="scss" scoped>
+	.wrap {
+		padding: 24rpx;
+	}
+</style>

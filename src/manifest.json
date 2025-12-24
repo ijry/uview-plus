@@ -1,0 +1,199 @@
+{
+    "name" : "UviewPlus",
+    "appid" : "__UNI__0FF8111",
+    "description" : "多平台快速开发的UI框架",
+    "versionName" : "3.1.52",
+    "versionCode" : 1,
+    "transformPx" : false,
+    "app-plus" : {
+        // APP-VUE分包，可提升APP启动速度，2.7.12开始支持，兼容微信小程序分包方案，默认关闭
+        "optimization" : {
+            "subPackages" : true
+        },
+        "safearea" : {
+            "bottom" : {
+                "offset" : "none"
+            }
+        },
+        "splashscreen" : {
+            "alwaysShowBeforeRender" : true,
+            "waiting" : true,
+            "autoclose" : true,
+            "delay" : 0
+        },
+        "usingComponents" : true,
+        "nvueCompiler" : "uni-app",
+        "compilerVersion" : 3,
+        "modules" : {
+            "Webview-x5" : {}
+        },
+        "distribute" : {
+            "android" : {
+                "permissions" : [
+                    "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>",
+                    "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+                    "<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CAMERA\"/>",
+                    "<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>",
+                    "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
+                    "<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
+                    "<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
+                    "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
+                    "<uses-feature android:name=\"android.hardware.camera\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
+                ],
+                "abiFilters" : [ "armeabi-v7a", "arm64-v8a" ],
+                "minSdkVersion" : 21
+            },
+            "ios" : {
+                "idfa" : false,
+                "dSYMs" : false
+            },
+            "sdkConfigs" : {
+                "ad" : {}
+            },
+            "icons" : {
+                "android" : {
+                    "hdpi" : "unpackage/res/icons/72x72.png",
+                    "xhdpi" : "unpackage/res/icons/96x96.png",
+                    "xxhdpi" : "unpackage/res/icons/144x144.png",
+                    "xxxhdpi" : "unpackage/res/icons/192x192.png"
+                },
+                "ios" : {
+                    "appstore" : "unpackage/res/icons/1024x1024.png",
+                    "ipad" : {
+                        "app" : "unpackage/res/icons/76x76.png",
+                        "app@2x" : "unpackage/res/icons/152x152.png",
+                        "notification" : "unpackage/res/icons/20x20.png",
+                        "notification@2x" : "unpackage/res/icons/40x40.png",
+                        "proapp@2x" : "unpackage/res/icons/167x167.png",
+                        "settings" : "unpackage/res/icons/29x29.png",
+                        "settings@2x" : "unpackage/res/icons/58x58.png",
+                        "spotlight" : "unpackage/res/icons/40x40.png",
+                        "spotlight@2x" : "unpackage/res/icons/80x80.png"
+                    },
+                    "iphone" : {
+                        "app@2x" : "unpackage/res/icons/120x120.png",
+                        "app@3x" : "unpackage/res/icons/180x180.png",
+                        "notification@2x" : "unpackage/res/icons/40x40.png",
+                        "notification@3x" : "unpackage/res/icons/60x60.png",
+                        "settings@2x" : "unpackage/res/icons/58x58.png",
+                        "settings@3x" : "unpackage/res/icons/87x87.png",
+                        "spotlight@2x" : "unpackage/res/icons/80x80.png",
+                        "spotlight@3x" : "unpackage/res/icons/120x120.png"
+                    }
+                }
+            }
+        }
+    },
+    "quickapp" : {},
+    "mp-weixin" : {
+        "appid" : "wx546bb258086e3454",
+        "setting" : {
+            "urlCheck" : false,
+            "es6" : true,
+            "minified" : true,
+            "postcss" : false
+        },
+        "optimization" : {
+            "subPackages" : true
+        },
+        "mergeVirtualHostAttributes" : true,
+        "lazyCodeLoading" : "requiredComponents",
+        "usingComponents" : true
+    },
+    "mp-alipay" : {
+        "usingComponents" : true,
+        "component2" : true
+    },
+    "mp-qq" : {
+        "optimization" : {
+            "subPackages" : true
+        },
+        "appid" : "123",
+        "setting" : {
+            "minified" : true,
+            "urlCheck" : false
+        }
+    },
+    "mp-baidu" : {
+        "usingComponents" : true,
+        "appid" : ""
+    },
+    "mp-toutiao" : {
+        "usingComponents" : true,
+        "mergeVirtualHostAttributes" : true,
+        "appid" : ""
+    },
+    "h5" : {
+        "template" : "",
+        "router" : {
+            "mode" : "hash",
+            "base" : "./"
+        },
+        "optimization" : {
+            "treeShaking" : {
+                "enable" : false
+            }
+        },
+        "title" : "uview-plus",
+        "sdkConfigs" : {
+            "maps" : {
+                "qqmap" : {
+                    "key" : ""
+                }
+            }
+        },
+        "domain" : "",
+        "devServer" : {
+            "https" : false,
+            "port" : 5273
+        }
+    },
+    "vueVersion" : "3",
+    "locale" : "zh-Hans",
+    "app-harmony" : {
+        "distribute" : {
+            "bundleName" : "com.jiangruyi.uviewplus.hos",
+            "splashScreens" : {
+                "startWindowIcon" : "unpackage/res/icons/1024x1024.png"
+            },
+            "icons" : {
+                "background" : "unpackage/res/icons/1024x1024.png",
+                "foreground" : "unpackage/res/icons/1024x1024.png"
+            },
+            "signingConfigs" : {
+                "default" : {
+                    "certpath" : "c:\\Users\\Jry\\AppData\\Roaming\\HBuilder X\\extensions\\launcher\\agc-certs\\1763917417142.cer",
+                    "keyAlias" : "debugKey",
+                    "keyPassword" : "0000001B40CD843FE60FDE882BE7E3C5B587515A209E8081CCBF34B58A9D50C50352F19D9F88C6294CD424",
+                    "profile" : "c:\\Users\\Jry\\AppData\\Roaming\\HBuilder X\\extensions\\launcher\\agc-certs\\1763917417142.p7b",
+                    "signAlg" : "SHA256withECDSA",
+                    "storeFile" : "c:\\Users\\Jry\\AppData\\Roaming\\HBuilder X\\extensions\\launcher\\agc-certs\\1763917417142.p12",
+                    "storePassword" : "0000001B40CD843FE60FDE882BE7E3C5B587515A209E8081CCBF34B58A9D50C50352F19D9F88C6294CD424"
+                },
+                "release" : {
+                    "certpath" : "uviewplus-prod.cer",
+                    "keyAlias" : "uviewplus-prod",
+                    "keyPassword" : "00000019B7ABC0513CAA4C3C7D91E1F86CA29E7872574B0F269709FBBAFC6A5F75B7AC659D41015DB7",
+                    "profile" : "uviewplusRelease.p7b",
+                    "signAlg" : "SHA256withECDSA",
+                    "storeFile" : "C:/Users/Jry/Documents/WWW/xyito/config/hos/uviewplus/prod.p12",
+                    "storePassword" : "00000019015DD2C0F59D0B74AA8152784E0586AF979664BE90722EF0F48E5B35769D97D56D8AA937DE"
+                }
+            }
+        }
+    },
+    "fallbackLocale" : "zh-Hans"
+}

@@ -1,0 +1,60 @@
+<template>
+    <view class="u-page">
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">头像裁剪</text>
+          <view class="u-page__item__content">
+            <view class="cut-box">
+                <up-cropper @confirm="cutImage" ref="avatarRef0" :canChangeSize="false"
+                    areaWidth="300rpx" areaHeight="300rpx" exportWidth="260rpx" exportHeight="260rpx">
+                    <view class="avatar-wrapper">
+                        <up-avatar class="avatar" :src="urls[0]" size="120px"></up-avatar>
+                    </view>
+                </up-cropper>
+            </view>
+          </view>
+      </view>
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">可变大小</text>
+          <view class="u-page__item__content">
+            <view class="cut-box">
+                <view class="avatar-wrapper" @click="chooseImage1(1)">
+                    <up-image :src="urls[1]" height="160px"></up-image>
+                </view>
+                <up-cropper @confirm="cutImage" ref="avatarRef1"></up-cropper>
+            </view>
+          </view>
+      </view>
+  </view>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+        urls: []
+    };
+  },
+  methods: {
+    chooseImage1(index) {
+        this.$refs.avatarRef1.chooseImage(index,{
+            canChangeSize: true,
+            areaWidth: "300rpx", areaHeight: "180rpx",
+            exportWidth: '260rpx', exportHeight: '160rpx'
+        });
+    },
+    cutImage(rsp) {
+        console.log(rsp);
+        this.urls[rsp.index] = rsp.path;
+    }
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+  .u-page__item {
+      margin-bottom: 15px;
+  }
+  .u-page__item__title {
+      margin-bottom: 10px;
+  }
+</style>

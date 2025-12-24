@@ -1,0 +1,43 @@
+<template>
+    <view class="u-page">
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">默认</text>
+          <view class="u-page__item__content">
+            <up-title>
+                默认标题
+            </up-title>
+          </view>
+      </view>
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">自定义前缀</text>
+          <view class="u-page__item__content">
+            <up-title>
+                <template #prefix>
+                    <up-icon name="level" color="red" size="16px"></up-icon>
+                </template>
+                等级3
+            </up-title>
+          </view>
+      </view>
+  </view>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+    };
+  },
+  methods: {
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+  .u-page__item {
+      margin-bottom: 15px;
+  }
+  .u-page__item__title {
+      margin-bottom: 10px;
+  }
+</style>

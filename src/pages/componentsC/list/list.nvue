@@ -1,0 +1,69 @@
+<template>
+	<view class="u-page">
+		<up-list
+			@scrolltolower="scrolltolower"
+		>
+			<up-list-item
+				v-for="(item, index) in indexList"
+				:key="index"
+			>
+				<up-cell
+					:title="`列表长度-${index + 1}`"
+				>
+					<template #icon>
+						<up-avatar
+							shape="square"
+							size="35"
+							:src="item.url"
+							customStyle="margin: -3px 5px -3px 0"
+						></up-avatar>
+					</template>
+				</up-cell>
+			</up-list-item>
+		</up-list>
+	</view>
+</template>
+
+<script>
+	import { random } from '@/uni_modules/uview-plus'
+	export default {
+		data() {
+			return {
+				indexList: [],
+				urls: [
+					'https://uview-plus.jiangruyi.com/album/1.jpg',
+					'https://uview-plus.jiangruyi.com/album/2.jpg',
+					'https://uview-plus.jiangruyi.com/album/3.jpg',
+					'https://uview-plus.jiangruyi.com/album/4.jpg',
+					'https://uview-plus.jiangruyi.com/album/5.jpg',
+					'https://uview-plus.jiangruyi.com/album/6.jpg',
+					'https://uview-plus.jiangruyi.com/album/7.jpg',
+					'https://uview-plus.jiangruyi.com/album/8.jpg',
+					'https://uview-plus.jiangruyi.com/album/9.jpg',
+					'https://uview-plus.jiangruyi.com/album/10.jpg',
+				]
+			}
+		},
+		onLoad() {
+			this.loadmore()
+		},
+		methods: {
+			scrolltolower() {
+				this.loadmore()
+			},
+			loadmore() {
+				for (let i = 0; i < 30; i++) {
+					this.indexList.push({
+						url: this.urls[random(0, this.urls.length - 1)]
+					})
+				}
+			}
+		},
+	}
+</script>
+
+<style lang="scss">
+	.u-page {
+		padding: 0;
+	}
+</style>

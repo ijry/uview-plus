@@ -1,0 +1,162 @@
+<template>
+	<view class="u-page">
+		<view class="u-page__item">
+			<text class="u-page__item__title">基础优惠券</text>
+			<view class="u-page__item__content">
+				<up-coupon 
+					:amount="100" 
+					title="满减券" 
+                    color="#333"
+					limit="满200可用" 
+					time="2023-12-31前使用">
+				</up-coupon>
+			</view>
+		</view>
+		
+		<view class="u-page__item">
+			<text class="u-page__item__title">小尺寸</text>
+			<view class="u-page__item__content">
+				<up-coupon 
+					:amount="20" 
+					title="满减券" 
+					size="small"
+					action-text="去使用">
+				</up-coupon>
+			</view>
+		</view>
+		
+		<view class="u-page__item">
+			<text class="u-page__item__title">大尺寸</text>
+			<view class="u-page__item__content">
+				<up-coupon 
+					:amount="200" 
+					unit="￥" 
+					title="大额优惠券" 
+					desc="仅限VIP用户" 
+					limit="满500可用" 
+					time="有效期至2023-12-31"
+					size="large"
+					type="error">
+				</up-coupon>
+			</view>
+		</view>
+		
+		<view class="u-page__item">
+			<text class="u-page__item__title">自定义内容</text>
+			<view class="u-page__item__content">
+				<up-coupon 
+					:amount="66" 
+					title="自定义样式" 
+					desc="通过插槽自定义内容"
+					shape="card">
+					<template #amount="{ amount }">
+						<text class="custom-amount">{{ amount }}</text>
+					</template>
+					<template #title="{ title }">
+						<text class="custom-title">{{ title }}</text>
+					</template>
+					<template #action="{ circle }">
+						<up-button type="success" size="mini" :hairline="false" :custom-style="{ borderRadius: circle ? '50rpx' : '6rpx' }">
+							立即使用
+						</up-button>
+					</template>
+				</up-coupon>
+			</view>
+		</view>
+		
+		<view class="u-page__item">
+			<text class="u-page__item__title">圆形按钮</text>
+			<view class="u-page__item__content">
+				<up-coupon 
+					:amount="30" 
+					title="限时优惠" 
+					desc="今日专享"
+					:circle="true"
+					action-text="抢购">
+				</up-coupon>
+			</view>
+		</view>
+
+		<view class="u-page__item">
+			<text class="u-page__item__title">禁用状态</text>
+			<view class="u-page__item__content">
+				<up-coupon 
+					:amount="50" 
+					title="已过期" 
+					desc="活动已结束"
+					time="2023-01-01至2023-01-31"
+					:disabled="true">
+				</up-coupon>
+			</view>
+		</view>
+		
+		<view class="u-page__item">
+			<text class="u-page__item__title">红包样式</text>
+			<view class="u-page__item__content">
+				<up-coupon 
+					:amount="50" 
+					unit="元" 
+					title="新人红包" 
+					desc="限时专享" 
+					shape="envelope"
+					type="warning">
+				</up-coupon>
+			</view>
+		</view>
+		
+		<view class="u-page__item">
+			<text class="u-page__item__title">卡片样式</text>
+			<view class="u-page__item__content">
+				<up-coupon 
+					:amount="88" 
+					unit="折" 
+					title="折扣券" 
+					desc="全场通用" 
+					shape="card"
+					type="success"
+					action-text="立即领取">
+				</up-coupon>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script setup>
+	// 组合式API示例
+	import { ref, reactive } from 'vue'
+	
+	// 定义响应式数据
+	const couponData = reactive({
+		amount: 100,
+		title: "满减券",
+		limit: "满200可用"
+	})
+	
+	const isDisabled = ref(false)
+	
+	// 定义方法
+	const toggleDisabled = () => {
+		isDisabled.value = !isDisabled.value
+	}
+</script>
+
+<style lang="scss" scoped>
+	.u-page__item {
+		margin-bottom: 15px;
+	}
+	.u-page__item__title {
+		margin-bottom: 10px;
+	}
+	
+	.custom-amount {
+		font-size: 60rpx;
+		font-weight: bold;
+		color: #ff0000;
+	}
+	
+	.custom-title {
+		font-size: 36rpx;
+		font-weight: bold;
+		color: #333;
+	}
+</style>
