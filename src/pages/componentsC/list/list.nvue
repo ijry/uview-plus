@@ -1,7 +1,11 @@
 <template>
 	<view class="u-page">
 		<up-list
+
+			@scroll-to-lower="scrollToLower"
 			@scrolltolower="scrolltolower"
+			@scrolltoupper="scrolltoupper"
+		
 		>
 			<up-list-item
 				v-for="(item, index) in indexList"
@@ -48,8 +52,16 @@
 			this.loadmore()
 		},
 		methods: {
+			scrollToLower() {
+				console.log('scrollToLower到外部啦')
+			},
 			scrolltolower() {
-				this.loadmore()
+				console.log('scrolltolower 外部到啦')
+				
+			},
+
+			scrolltoupper() {
+				console.log('scrolltoupper到scrolltoupper')
 			},
 			loadmore() {
 				for (let i = 0; i < 30; i++) {

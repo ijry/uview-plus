@@ -114,7 +114,7 @@
 			this.anchors = []
 		},
 		mounted() {},
-		emits: ["scroll", "scrolltolower", "scrolltoupper",
+		emits: ["scroll", "scroll-to-lower","scrolltolower", "scrolltoupper",
 			"refresherpulling", "refresherrefresh", "refresherrestore", "refresherabort"],
 		methods: {
 			updateOffsetFromChild(top) {
@@ -143,13 +143,18 @@
 			},
 			// 滚动到底部触发事件
 			scrolltolower(e) {
+				
+				
 				sleep(30).then(() => {
 					this.$emit('scrolltolower')
+					this.$emit('scroll-to-lower')
 				})
+	
 			},
 			// #ifndef APP-NVUE
 			// 滚动到底部时触发，非nvue有效
 			scrolltoupper(e) {
+		
 				sleep(30).then(() => {
 					this.$emit('scrolltoupper')
 					// 这一句很重要，能绝对保证在性功能障碍的webview，滚动条到顶时，取消偏移值，让页面置顶
