@@ -126,58 +126,62 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				baseList: [{
-						name: 'photo',
-						title: '图片'
-					},
-					{
-						name: 'lock',
-						title: '锁头'
-					},
-					// {
-					// 	name: 'star',
-					// 	title: '星星'
-					// },
-				],
-				list: [{
-						name: 'photo',
-						title: '图片'
-					},
-					{
-						name: 'lock',
-						title: '锁头'
-					},
-					{
-						name: 'star',
-						title: '星星'
-					},
-					{
-						name: 'hourglass',
-						title: '沙漏'
-					},
-					{
-						name: 'home',
-						title: '首页'
-					},
-					{
-						name: 'volume',
-						title: '音量'
-					},
-				],
-				swiperList: ['integral', 'kefu-ermai', 'coupon', 'gift', 'scan', 'pause-circle', 'wifi', 'email', 'list'],
-			}
-		},
-		methods: {
-			click(name) {
-				console.log(name)
-				this.$refs.uToastRef.success(`点击了第${name}个`)
-			}
-		}
+<script setup>
+const baseList = [{
+		name: 'photo',
+		title: '图片'
+	}, {
+		name: 'lock',
+		title: '锁头'
+	}, {
+		name: 'star',
+		title: '星星'
+	}, {
+		name: 'hourglass',
+		title: '沙漏'
+	}, {
+		name: 'home',
+		title: '首页'
+	}, {
+		name: 'volume',
+		title: '音量'
 	}
+]
+
+const list = [{
+		name: 'photo',
+		title: '图片'
+	},
+	{
+		name: 'lock',
+		title: '锁头'
+	},
+	{
+		name: 'star',
+		title: '星星'
+	},
+	{
+		name: 'hourglass',
+		title: '沙漏'
+	},
+	{
+		name: 'home',
+		title: '首页'
+	},
+	{
+		name: 'volume',
+		title: '音量'
+	},
+]
+
+const swiperList = ['integral', 'kefu-ermai', 'coupon', 'gift', 'scan', 'pause-circle', 'wifi', 'email', 'list']
+
+const uToastRef = ref(null)
+const click = (name) => {
+	console.log(name)
+	uToastRef.value.success(`点击了第${name}个`)
+}
+
 </script>
 
 <style lang="scss">
