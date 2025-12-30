@@ -143,13 +143,10 @@
 			},
 			// 滚动到底部触发事件
 			scrolltolower(e) {
-				
-				
 				sleep(30).then(() => {
 					this.$emit('scrolltolower')
 					this.$emit('scroll-to-lower')
 				})
-	
 			},
 			// #ifndef APP-NVUE
 			// 滚动到底部时触发，非nvue有效

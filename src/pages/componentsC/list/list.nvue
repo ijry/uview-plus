@@ -54,10 +54,11 @@
 		methods: {
 			scrollToLower() {
 				console.log('scrollToLower到外部啦')
+				 this.loadmore()
 			},
 			scrolltolower() {
 				console.log('scrolltolower 外部到啦')
-				
+				//this.loadmore()
 			},
 
 			scrolltoupper() {
