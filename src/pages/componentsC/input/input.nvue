@@ -3,6 +3,7 @@
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">基础使用</text>
 			<view class="u-demo-block__content">
+				{{value}}
 				<up-input
 					placeholder="请输入内容"
 					border="surround"
@@ -201,6 +202,7 @@
 		},
 		watch: {
 			value(newValue, oldValue) {
+				console.log(newValue,'新的数据')
 				// console.log('v-model', newValue);
 			},
 			inputNumber(newValue) {
@@ -229,7 +231,10 @@
 				}
 			},
 			change(e) {
-				console.log('change', e);
+				
+				console.log(this.value,'当前value值')
+				console.log(e,'change数据')
+				
 			},
 			handleSearch(e) {
 				toast('@confirm触发');
