@@ -105,13 +105,13 @@
 					<template v-slot:active-icon>
 						<image
 						    class="u-page__item__slot-icon"
-						    src="https://cdn.uviewui.com/uview/common/bell-selected.png"
+						    src="https://uview-plus.jiangruyi.com/uview/common/bell-selected.png"
 						></image>
 					</template>
 					<template v-slot:inactive-icon>
 						<image
 							class="u-page__item__slot-icon"
-							src="https://cdn.uviewui.com/uview/common/bell.png"
+							src="https://uview-plus.jiangruyi.com/uview/common/bell.png"
 						></image>
 					</template>
 				</up-tabbar-item>

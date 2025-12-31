@@ -49,7 +49,7 @@
 							duration: 3000
 						},
 						title: '主要通知',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/notify/main.png'
+						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/notify/main.png'
 					}, {
 						notifyData: {
 							message: 'notify顶部提示',
@@ -61,7 +61,7 @@
 							safeAreaInsetTop: false
 						},
 						title: '成功通知',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/notify/success.png'
+						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/notify/success.png'
 					}, {
 						notifyData: {
 							message: 'notify顶部提示',
@@ -73,7 +73,7 @@
 							safeAreaInsetTop: false
 						},
 						title: '危险通知',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/notify/error.png'
+						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/notify/error.png'
 					}, {
 						notifyData: {
 							message: 'notify顶部提示',
@@ -85,7 +85,7 @@
 							safeAreaInsetTop: false
 						},
 						title: '警告通知',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/notify/warning.png'
+						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/notify/warning.png'
 					},
 					{
 						notifyData: {
@@ -97,7 +97,7 @@
 							safeAreaInsetTop: false
 						},
 						title: '自定义样式',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/notify/customStyle.png'
+						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/notify/customStyle.png'
 					},
 					{
 						notifyData: {
@@ -110,7 +110,7 @@
 							safeAreaInsetTop: false
 						},
 						title: '自定义时间',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/notify/customTime.png'
+						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/notify/customTime.png'
 					},
 					{
 						notifyData: {
@@ -122,7 +122,7 @@
 							safeAreaInsetTop: true
 						},
 						title: '插入状态栏高度',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/notify/height.png'
+						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/notify/height.png'
 					}
 				]
 			}

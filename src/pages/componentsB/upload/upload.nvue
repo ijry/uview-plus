@@ -93,7 +93,7 @@
 						width="250"
 						height="150"
 					>
-						<image src="https://cdn.uviewui.com/uview/demo/upload/positive.png" mode="widthFix" style="width: 250px;height: 150px;"></image>
+						<image src="https://uview-plus.jiangruyi.com/uview/demo/upload/positive.png" mode="widthFix" style="width: 250px;height: 150px;"></image>
 					</up-upload>
 				</view>
 			</view>
@@ -108,13 +108,13 @@
 				fileList1: [],
 				fileList2: [],
 				fileList3: [{
-					url: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
+					url: 'https://uview-plus.jiangruyi.com/uview/swiper/1.jpg',
 				}],
 				fileList4: [{
-						url: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
+						url: 'https://uview-plus.jiangruyi.com/uview/swiper/1.jpg',
 					},
 					{
-						url: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
+						url: 'https://uview-plus.jiangruyi.com/uview/swiper/1.jpg',
 					}
 				],
 				fileList5: [],

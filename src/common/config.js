@@ -1,3 +1,3 @@
 export default {
-    baseUrl: 'https://uview-plus.lingyun.net'
+    baseUrl: 'https://uview-plus.jiangruyi.com'
 }

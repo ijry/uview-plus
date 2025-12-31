@@ -57,19 +57,19 @@
     console.log('加载数据')
     tabList.value = [
         { title: '选项一',  children: [
-            {title: '水煮肉片', cover: 'https://s3.bmp.ovh/imgs/2024/12/16/35bc6d28ab1c8bc7.png', price: 88}
+            {title: '水煮肉片', cover: 'https://uview-plus.jiangruyi.com/uview/ext/59c256f85a8c3757.jpg', price: 88}
             ]
         },  
         { title: '选项二',  children: [
-            {title: '酸菜鱼', cover: 'https://s3.bmp.ovh/imgs/2024/12/16/35bc6d28ab1c8bc7.png', price: 99}
+            {title: '酸菜鱼', cover: 'https://uview-plus.jiangruyi.com/uview/ext/59c256f85a8c3757.jpg', price: 99}
             ]
         },
         { title: '选项三',  children: [
-            {title: '水煮肉片', cover: 'https://s3.bmp.ovh/imgs/2024/12/16/35bc6d28ab1c8bc7.png', price: 88}
+            {title: '水煮肉片', cover: 'https://uview-plus.jiangruyi.com/uview/ext/59c256f85a8c3757.jpg', price: 88}
             ]
         },  
         { title: '选项四',  children: [
-            {title: '酸菜鱼', cover: 'https://s3.bmp.ovh/imgs/2024/12/16/35bc6d28ab1c8bc7.png', price: 99}
+            {title: '酸菜鱼', cover: 'https://uview-plus.jiangruyi.com/uview/ext/59c256f85a8c3757.jpg', price: 99}
             ]
         }
     ]

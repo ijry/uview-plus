@@ -73,8 +73,8 @@ import { toast } from '@/uni_modules/uview-plus'
 export default {
 	data() {
 		return {
-			goodsBaseUrl: 'https://cdn.uviewui.com/uview/goods/',
-			menuBaseUrl: 'https://cdn.uviewui.com/uview/menu/',
+			goodsBaseUrl: 'https://uview-plus.jiangruyi.com/uview/goods/',
+			menuBaseUrl: 'https://uview-plus.jiangruyi.com/uview/menu/',
 			goodsArr: [{
 					price: '230.5',
 					thumbnail: '1.jpg'

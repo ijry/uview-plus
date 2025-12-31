@@ -57,7 +57,7 @@
 		<view class="taobao">
 			<view class="title">
 				<view class="left">
-					<image class="buddha" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1975388697,1068670603&fm=26&gp=0.jpg" mode="aspectFill"></image>
+					<image class="buddha" src="" mode="aspectFill"></image>
 					<view class="store">袜子精保护协会</view>
 				</view>
 				<view class="entrance">进店</view>
@@ -66,7 +66,7 @@
 				<view class="left">
 					<image
 						class="picture"
-						src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1578059523488&di=5f592ac19c1b983005d3e85add469756&imgtype=0&src=http%3A%2F%2Fimg010.hc360.cn%2Fg7%2FM00%2F2D%2FB9%2FwKhQs1QfUo6EdeM-AAAAALwk1hM072.jpg"
+						src=""
 						mode="widthFix"
 					></image>
 					<view class="introduce">

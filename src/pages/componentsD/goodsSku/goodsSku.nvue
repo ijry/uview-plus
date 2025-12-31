@@ -80,7 +80,7 @@ export default {
 			result: '',
 			// 商品信息
 			goodsInfo: {
-				image: 'https://picsum.photos/200/200',
+				image: 'https://uview-plus.jiangruyi.com/uview/ext/200.jpg',
 				price: 99.00,
 				stock: 100
 			},

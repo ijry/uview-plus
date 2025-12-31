@@ -86,6 +86,7 @@
 			},
 			// 观看完成提交后台接口
 			watchEnd() {
+				// #ifdef MP-WEIXIN
 				uni.request({
 				    url: 'https://uiadmin.net/api/v1/wxapp/ad/end',
 				    data: {
@@ -105,6 +106,7 @@
 						}
 				    }
 				});
+				// #endif
 			},
 			videoAdErrHandle(err){
 				 console.log('视频加载失败')

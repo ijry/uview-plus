@@ -189,7 +189,7 @@
                     "keyPassword" : "00000019B7ABC0513CAA4C3C7D91E1F86CA29E7872574B0F269709FBBAFC6A5F75B7AC659D41015DB7",
                     "profile" : "uviewplusRelease.p7b",
                     "signAlg" : "SHA256withECDSA",
-                    "storeFile" : "C:/Users/Jry/Documents/WWW/xyito/config/hos/uviewplus/prod.p12",
+                    "storeFile" : "prod.p12",
                     "storePassword" : "00000019015DD2C0F59D0B74AA8152784E0586AF979664BE90722EF0F48E5B35769D97D56D8AA937DE"
                 }
             }

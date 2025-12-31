@@ -142,7 +142,7 @@
 	export default {
 		data() {
 			return {
-				src: 'https://cdn.uviewui.com/uview/album/1.jpg',
+				src: 'https://uview-plus.jiangruyi.com/uview/album/1.jpg',
 				src1:''
 			}
 		},

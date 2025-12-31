@@ -101,7 +101,7 @@
 							closeOnClickOverlay: true
 						},
 						title: '顶部弹出',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/popup/modeTop.png'
+						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/popup/modeTop.png'
 					},
 					{
 						popupData: {
@@ -110,7 +110,7 @@
 							closeOnClickOverlay: true
 						},
 						title: '右侧弹出',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/popup/modeRight.png'
+						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/popup/modeRight.png'
 					},
 					{
 						popupData: {
@@ -119,7 +119,7 @@
 							closeOnClickOverlay: true
 						},
 						title: '底部弹出',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/popup/modeBottom.png'
+						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/popup/modeBottom.png'
 					},
 					{
 						popupData: {
@@ -128,7 +128,7 @@
 							closeOnClickOverlay: true
 						},
 						title: '左侧弹出',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/popup/modeLeft.png'
+						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/popup/modeLeft.png'
 					},
 					{
 						popupData: {
@@ -138,7 +138,7 @@
 							closeOnClickOverlay: true
 						},
 						title: '居中弹出',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/popup/modeCenter.png'
+						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/popup/modeCenter.png'
 					},
 					{
 						popupData: {
@@ -148,7 +148,7 @@
 							closeOnClickOverlay: true
 						},
 						title: '显示圆角',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/popup/showRadis.png'
+						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/popup/showRadis.png'
 					},
 					{
 						popupData: {
@@ -158,7 +158,7 @@
 							closeOnClickOverlay: false
 						},
 						title: '禁止点击遮罩关闭',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/popup/noClose.png'
+						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/popup/noClose.png'
 					},
 					{
 						popupData: {
@@ -168,7 +168,7 @@
 							closeOnClickOverlay: true
 						},
 						title: '显示关闭按钮',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/popup/showCloseBtn.png'
+						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/popup/showCloseBtn.png'
 					},
 					// 添加触摸示例
 					{
@@ -183,7 +183,7 @@
 							closeOnClickOverlay: true
 						},
 						title: '底部弹出(支持手势)',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/popup/showCloseBtn.png'
+						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/popup/showCloseBtn.png'
 					}
 				]
 			}

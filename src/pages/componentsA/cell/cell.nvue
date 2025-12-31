@@ -24,7 +24,7 @@
 				></up-cell>
 				<up-cell
 				    title="单元格"
-				    icon="https://cdn.uviewui.com/uview/example/tag.png"
+				    icon="https://uview-plus.jiangruyi.com/uview/example/tag.png"
 				></up-cell>
 			</up-cell-group>
 		</view>

@@ -233,7 +233,7 @@
 					    type="success"
 					    plain
 					    size="large"
-					    icon="https://cdn.uviewui.com/uview/example/tag.png"
+					    icon="https://uview-plus.jiangruyi.com/uview/example/tag.png"
 					>
 					</up-tag>
 				</view>

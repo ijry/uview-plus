@@ -139,26 +139,26 @@
 				show6: false,
 				list: [{
 						title: '基础使用',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/picker/2.png'
+						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/picker/2.png'
 					},
 					{
 						title: '设置默认项',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/picker/5.png'
+						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/picker/5.png'
 					},
 					{
 						title: '多列联动',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/picker/1.png'
+						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/picker/1.png'
 					},
 					{
 						title: '加载中状态(切换第一列)',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/picker/3.png'
+						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/picker/3.png'
 					},
 					{
 						title: '设置标题',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/picker/4.png'
+						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/picker/4.png'
 					}, {
 						title: '允许点击遮罩关闭',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/picker/6.png'
+						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/picker/6.png'
 					},
 				]
 			}
