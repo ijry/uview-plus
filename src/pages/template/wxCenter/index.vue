@@ -50,7 +50,7 @@
 	export default {
 		data() {
 			return {
-				pic:'https://uviewui.com/common/logo.png',
+				pic:'https://uview-plus.jiangruyi.com/h5/static/uview/common/logo.png',
 				show:true
 			}
 		},
