@@ -138,25 +138,21 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				src: 'https://uview-plus.jiangruyi.com/uview/album/1.jpg',
-				src1:''
-			}
-		},
-		onLoad() {
-			setTimeout(()=>{
-				this.src1 = this.src
-			},3000)
-		},
-		methods: {
-			click() {
-				console.log('click');
-			}
-		}
-	}
+<script setup>
+import { ref, onLoad } from 'vue'
+
+const src = ref('https://uview-plus.jiangruyi.com/uview/album/1.jpg')
+const src1 = ref('')
+
+onLoad(() => {
+	setTimeout(()=>{
+		src1.value = src.value
+	},3000)
+})
+
+const click = () => {
+	console.log('click');
+}
 </script>
 
 <style lang="scss">

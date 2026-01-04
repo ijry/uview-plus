@@ -1,3 +1,6 @@
+## 3.6.39（2026-01-04）
+improvment: image组件示例改为组合式API
+
 ## 3.6.38（2026-01-03）
 improvment:  icon示例改为组合式API
 
