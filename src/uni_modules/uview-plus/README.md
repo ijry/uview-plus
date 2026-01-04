@@ -41,9 +41,6 @@ uview-plus现已推出免费可视化设计，可以方便的进行页面可视�
 - [升级指南](https://uview-plus.jiangruyi.com/components/changeGuide.html)
 - [关于我们](https://uview-plus.jiangruyi.com/cooperation/about.html)
 
-## 交流反馈
-
-欢迎加入我们的QQ群交流反馈：[点此跳转](https://uview-plus.jiangruyi.com/components/addQQGroup.html)
 
 ## 关于PR
 

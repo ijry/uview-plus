@@ -1,3 +1,6 @@
+## 3.6.40（2026-01-04）
+improvment: 去除ReadmeQQ群链接
+
 ## 3.6.39（2026-01-04）
 improvment: image组件示例改为组合式API
 
