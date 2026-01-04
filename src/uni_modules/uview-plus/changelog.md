@@ -1,3 +1,6 @@
+## 3.6.41（2026-01-04）
+fix: 修复select组件缺少mixin
+
 ## 3.6.40（2026-01-04）
 improvment: 去除ReadmeQQ群链接
 
