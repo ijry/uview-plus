@@ -1,3 +1,6 @@
+## 3.6.43（2026-01-05）
+improvment: line组件示例改为组合式API
+
 ## 3.6.42（2026-01-04）
 improvment: layzload组件示例改为组合式API
 
