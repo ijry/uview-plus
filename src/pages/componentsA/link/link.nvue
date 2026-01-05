@@ -51,18 +51,9 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-
-			}
-		},
-		methods: {
-			click() {
-				console.log('click');
-			}
-		}
+<script setup>
+	const click = () => {
+		console.log('click');
 	}
 </script>
 
