@@ -1,3 +1,6 @@
+## 3.6.47（2026-01-06）
+improvment: overlay示例改为组合式API
+
 ## 3.6.46（2026-01-05）
 improvment: loading-page组建示例改为组合式API
 
