@@ -81,132 +81,131 @@
 	</view>
 </template>
 
-<script>
-	import { sleep } from '@/uni_modules/uview-plus'
-	export default {
-		data() {
-			return {
-				show: false,
-				popupData: {
-					overlay: true,
-					mode: 'bottom',
-					borderRadius: '',
-					closeable: true,
-					closeOnClickOverlay: true
-				},
-				list: [{
-						popupData: {
-							overlay: true,
-							mode: 'top',
-							closeOnClickOverlay: true
-						},
-						title: '顶部弹出',
-						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/popup/modeTop.png'
-					},
-					{
-						popupData: {
-							overlay: true,
-							mode: 'right',
-							closeOnClickOverlay: true
-						},
-						title: '右侧弹出',
-						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/popup/modeRight.png'
-					},
-					{
-						popupData: {
-							overlay: true,
-							mode: 'bottom',
-							closeOnClickOverlay: true
-						},
-						title: '底部弹出',
-						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/popup/modeBottom.png'
-					},
-					{
-						popupData: {
-							overlay: true,
-							mode: 'left',
-							closeOnClickOverlay: true
-						},
-						title: '左侧弹出',
-						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/popup/modeLeft.png'
-					},
-					{
-						popupData: {
-							overlay: true,
-							mode: 'center',
-							round: 10,
-							closeOnClickOverlay: true
-						},
-						title: '居中弹出',
-						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/popup/modeCenter.png'
-					},
-					{
-						popupData: {
-							overlay: true,
-							mode: 'bottom',
-							round: 10,
-							closeOnClickOverlay: true
-						},
-						title: '显示圆角',
-						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/popup/showRadis.png'
-					},
-					{
-						popupData: {
-							overlay: true,
-							mode: 'bottom',
-							closeable: false,
-							closeOnClickOverlay: false
-						},
-						title: '禁止点击遮罩关闭',
-						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/popup/noClose.png'
-					},
-					{
-						popupData: {
-							overlay: true,
-							mode: 'bottom',
-							closeable: true,
-							closeOnClickOverlay: true
-						},
-						title: '显示关闭按钮',
-						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/popup/showCloseBtn.png'
-					},
-					// 添加触摸示例
-					{
-						popupData: {
-							overlay: true,
-							mode: 'bottom',
-							height: '500px',
-							touchable: true,
-							minHeight: '300rpx',
-							maxHeight: '80%',
-							closeable: true,
-							closeOnClickOverlay: true
-						},
-						title: '底部弹出(支持手势)',
-						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/popup/showCloseBtn.png'
-					}
-				]
-			}
+<script setup>
+import { ref, reactive } from 'vue'
+import { sleep } from '@/uni_modules/uview-plus'
+
+const show = ref(false)
+const popupData = reactive({
+	overlay: true,
+	mode: 'bottom',
+	borderRadius: '',
+	closeable: true,
+	closeOnClickOverlay: true
+})
+
+const list = reactive([{
+		popupData: {
+			overlay: true,
+			mode: 'top',
+			closeOnClickOverlay: true
 		},
-		methods: {
-			openPopup(popupData) {
-				this.popupData = popupData
-				sleep().then(() => {
-					this.show = !this.show
-				})
-			},
-			navigateBack() {
-				uni.navigateBack()
-			},
-			open() {
-				// console.log('open');
-			},
-			close() {
-				this.show = false
-				// console.log('close');
-			}
-		}
+		title: '顶部弹出',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/popup/modeTop.png'
+	},
+	{
+		popupData: {
+			overlay: true,
+			mode: 'right',
+			closeOnClickOverlay: true
+		},
+		title: '右侧弹出',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/popup/modeRight.png'
+	},
+	{
+		popupData: {
+			overlay: true,
+			mode: 'bottom',
+			closeOnClickOverlay: true
+		},
+		title: '底部弹出',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/popup/modeBottom.png'
+	},
+	{
+		popupData: {
+			overlay: true,
+			mode: 'left',
+			closeOnClickOverlay: true
+		},
+		title: '左侧弹出',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/popup/modeLeft.png'
+	},
+	{
+		popupData: {
+			overlay: true,
+			mode: 'center',
+			round: 10,
+			closeOnClickOverlay: true
+		},
+		title: '居中弹出',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/popup/modeCenter.png'
+	},
+	{
+		popupData: {
+			overlay: true,
+			mode: 'bottom',
+			round: 10,
+			closeOnClickOverlay: true
+		},
+		title: '显示圆角',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/popup/showRadis.png'
+	},
+	{
+		popupData: {
+			overlay: true,
+			mode: 'bottom',
+			closeable: false,
+			closeOnClickOverlay: false
+		},
+		title: '禁止点击遮罩关闭',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/popup/noClose.png'
+	},
+	{
+		popupData: {
+			overlay: true,
+			mode: 'bottom',
+			closeable: true,
+			closeOnClickOverlay: true
+		},
+		title: '显示关闭按钮',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/popup/showCloseBtn.png'
+	},
+	// 添加触摸示例
+	{
+		popupData: {
+			overlay: true,
+			mode: 'bottom',
+			height: '500px',
+			touchable: true,
+			minHeight: '300rpx',
+			maxHeight: '80%',
+			closeable: true,
+			closeOnClickOverlay: true
+		},
+		title: '底部弹出(支持手势)',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/popup/showCloseBtn.png'
 	}
+])
+
+const openPopup = (popupDataParam) => {
+	Object.assign(popupData, popupDataParam)
+	sleep().then(() => {
+		show.value = !show.value
+	})
+}
+
+const navigateBack = () => {
+	uni.navigateBack()
+}
+
+const open = () => {
+	// console.log('open');
+}
+
+const close = () => {
+	show.value = false
+	// console.log('close');
+}
 </script>
 
 <style lang="scss">

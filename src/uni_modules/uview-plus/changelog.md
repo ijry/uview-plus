@@ -1,3 +1,6 @@
+## 3.6.48（2026-01-06）
+improvment: popup组件示例改为组合式API
+
 ## 3.6.47（2026-01-06）
 improvment: overlay示例改为组合式API
 
