@@ -1,3 +1,6 @@
+## 3.6.46（2026-01-05）
+improvment: loading-page组建示例改为组合式API
+
 ## 3.6.45（2026-01-05）
 improvment: loading-icon组件示例改为组合式API
 
