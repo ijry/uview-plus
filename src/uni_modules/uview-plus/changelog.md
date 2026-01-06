@@ -1,3 +1,6 @@
+## 3.6.50（2026-01-06）
+improvment: rate组件示例改为组合式API
+
 ## 3.6.49（2026-01-06）
 improvment: radio组件示例改为组合式API
 
