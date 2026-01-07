@@ -9,7 +9,8 @@
 		<view class="u-page__item">
 			<text class="u-page__item__title" style="margin-top: 0;">带logo</text>
 			<view class="u-page__item__content">
-				<up-qrcode :cid="'up2'" :size="150" val="https://click.meituan.com/t?t=1&c=2&p=WhaD2b5zGU-h" :icon="logo"></up-qrcode>
+				<up-qrcode :cid="'up2'" :size="150" val="https://click.meituan.com/t?t=1&c=2&p=WhaD2b5zGU-h"
+				icon="https://uview-plus.jiangruyi.com/h5/static/uview/common/logo.png"></up-qrcode>
 			</view>
 		</view>
 		<view class="u-page__item">
@@ -22,7 +23,6 @@
 </template>
 
 <script setup>
-import logo from '@/static/uview/common/logo.png';
 </script>
 
 <style lang="scss" scoped>

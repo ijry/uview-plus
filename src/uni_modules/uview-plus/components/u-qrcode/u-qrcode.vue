@@ -25,14 +25,6 @@
                 :style="{ width: sizeLocal + unit, height: sizeLocal + unit }" />
             <!-- #endif -->
 
-            <!-- #ifdef APP-PLUS -->
-            <canvas
-                class="u-qrcode__canvas"
-                :id="cid"
-                :canvas-id="cid"
-                :style="{ width: sizeLocal + unit, height: sizeLocal + unit }" />
-            <!-- #endif -->
-
             <!-- #ifdef APP-NVUE -->
             <gcanvas class="u-qrcode__canvas" ref="gcanvess"
                      :style="{ width: sizeLocal + unit, height: sizeLocal + unit }">
@@ -53,7 +45,8 @@ import QRCode from "./qrcode.js"
 // https://github.com/dcloudio/NvueCanvasDemo/blob/master/README.md
 import {
     enable,
-    WeexBridge
+    WeexBridge,
+	Image as GImage
 } from '../../libs/util/gcanvas/index.js';
 // #endif
 let qrcode
@@ -147,7 +140,6 @@ export default {
             ],
             rootId: `rootId${Number(Math.random() * 100).toFixed(0)}`,
             ganvas: null,
-            context: '',
             canvasObj: {},
             sizeLocal: this.size,
             ctx: null, // ctx 在new Qrcode 时js文件内部设置
@@ -159,17 +151,15 @@ export default {
         if(this.useRootHeightAndWidth){
             await this.setNewSize()
         }
-
+		this.canvas = await this.getCanvasNode(this.cid)
         // #ifdef APP-NVUE
-        /*获取元素引用*/
-        this.ganvas = this.$refs["gcanvess"]
-        /*通过元素引用获取canvas对象*/
-        this.canvasObj = enable(this.ganvas, {
-            bridge: WeexBridge
-        })
+		this.isNvue = true
         /*获取绘图所需的上下文，目前不支持3d*/
-        this.context = this.canvasObj.getContext('2d')
+        this.ctx = this.canvas.getContext('2d')
         // #endif
+		// #ifndef APP-NVUE
+		this.ctx = this.getContext()
+		// #endif
 
         if (this.loadMake) {
             if (!this._empty(this.val)) {
@@ -189,9 +179,11 @@ export default {
                 this.loading = true
                 // #endif
                 qrcode = new QRCode({
-                    context: that, // 上下文环境
+                    vuectx: that, // 上下文环境
                     canvasId: that.cid, // canvas-id
-                    nvueContext: that.context,
+					canvas: that.canvas,
+					ctx: that.ctx,
+                    isNvue: that.isNvue,
                     usingComponents: that.usingComponents, // 是否是自定义组件
                     showLoading: false, // 是否显示loading
                     loadingText: that.loadingText, // loading文字
@@ -232,7 +224,25 @@ export default {
                         });
                     }
                 });
-            }
+            } else {
+				this.toTempFilePath({
+				    success: res => {
+						that.result = res.tempFilePath
+						uni.saveImageToPhotosAlbum({
+						    filePath: that.result,
+						    success: function () {
+						        uni.showToast({
+						            title: '二维码保存成功',
+						            icon: 'success',
+						            duration: 2000
+						        });
+						    }
+						});
+				    },
+				    fail: err => {
+				    }
+				})
+			}
         },
         preview(e) {
             // 预览图片
@@ -261,7 +271,7 @@ export default {
             }, e)
         },
         async toTempFilePath({success, fail}) {
-            if (this.context) {
+            if (this.ct) {
                 this.ctx.toTempFilePath(
                     0,
                     0,
@@ -277,29 +287,16 @@ export default {
                 );
             }
             else {
-                // #ifdef MP-TOUTIAO || H5
+                // #ifdef H5
                 success({
                     tempFilePath: this.ctx.canvas.toDataURL("image/png", 1)
                 })
                 // #endif
 
-                // #ifdef APP-PLUS
+                // #ifndef H5
                 uni.canvasToTempFilePath(
                     {
                         canvasId: this.cid,
-                        success :res => {
-                            success(res)
-                        },
-                        fail: fail
-                    },
-                    this)
-                // #endif
-
-                // #ifndef MP-TOUTIAO || H5 || APP-PLUS
-                const canvas = await this.getNode(this.cid,true);
-                uni.canvasToTempFilePath(
-                    {
-                        canvas,
                         success :res => {
                             success(res)
                         },
@@ -324,7 +321,7 @@ export default {
          * @return {Promise<void>}
          */
         async setNewSize(){
-            const rootNode = await this.getNode(this.rootId,false);
+            const rootNode = await this.getCanvasNode(this.rootId, false);
             const { width , height } = rootNode;
             // 将最短的设置为二维码 的size
             if(width > height){
@@ -341,27 +338,88 @@ export default {
          * @param isCanvas 是否为Canvas节点
          * @return {Promise<unknown>}
          */
-        async getNode(id,isCanvas){
-            return new Promise((resolve, reject)=>{
-                try {
-                    const query = uni.createSelectorQuery().in(this);
-                    query.select(`#${id}`)
-                    .fields({ node: true, size: true })
-                    .exec((res) => {
-                        if(isCanvas){
-                            resolve(res[0].node)
-                        }
-                        else{
-                            resolve(res[0])
-                        }
-
-                    })
-                }
-                catch (e) {
-                    console.error("获取节点失败",e)
-                }
-            })
+        async getCanvasNode(id, isCanvas = true) {
+        	return new Promise((resolve, reject) => {
+        		try {
+        			// #ifdef APP-NVUE
+        			setTimeout(() => {
+        				/*获取元素引用*/
+        				this.ganvas = this.$refs["gcanvess"]
+        				/*通过元素引用获取canvas对象*/
+        				let canvasNode = enable(this.ganvas, {
+        				    bridge: WeexBridge
+        				})
+        				resolve(canvasNode)
+        			}, 200)
+        			// #endif
+        			// #ifndef APP-NVUE
+        			const query = uni.createSelectorQuery().in(this);
+        			query.select(`#${id}`)
+        				.fields({
+        					node: true,
+        					size: true
+        				})
+        				.exec((res) => {
+        					if (isCanvas) {
+        						resolve(res[0].node)
+        					} else {
+        						resolve(res[0])
+        					}
+        				})
+        			// #endif
+        		} catch (e) {
+        			console.error("获取节点失败", e)
+        		}
+        	})
         },
+		getContext() {
+			// #ifdef APP-PLUS
+			return uni.createCanvasContext(this.cid, this);
+			// #endif
+			// #ifndef APP-PLUS
+			return this.canvas.getContext('2d');
+			// #endif
+		},
+		drawImage(url, x, y, w, h) {
+			try {
+				let img = {}
+				// #ifdef APP-NVUE
+				img = new GImage();
+				// #endif
+				
+				// #ifdef H5
+				// APP下不支持会一直卡住
+				img = new Image();
+				// #endif
+				
+				// #ifdef MP
+				// 小程序2d
+				// https://developers.weixin.qq.com/miniprogram/dev/api/canvas/Canvas.createImage.html
+				img = canvas.createImage();
+				// #endif
+				// #ifdef APP-NVUE
+				let that = this
+				console.log(img)
+				img.onload = function(){
+					if (process.env.NODE_ENV === 'development') {
+						console.log('drawImage绘制2...')
+					}
+					that.cxt.drawImage(img, x, y, w, h);
+				}
+				// #endif
+				// #ifdef H5 || MP
+				img.onload = () => {
+					this.ctx.drawImage(img, x, y, w, h);
+				};
+				// #endif
+				img.src = url;
+				// #ifdef APP-PLUS
+				this.ctx.drawImage(url, x, y, w, h);
+				// #endif
+			} catch (error) {
+				console.log('drawImage绘制出错', error)
+			}
+		},
 
         selectClick(index) {
             switch (index) {
