@@ -158,7 +158,6 @@ export default {
 		let wi = getWindowInfo();
 		let windowWidth = wi.windowWidth;
 		this.$uGetRect('.u-select__options__wrap').then(rect => {
-			console.log(rect)
 			if (rect.left + rect.width > windowWidth) {
 				// 如果右侧被遮挡，则调整到左侧
 				this.optionsWrapLeft = 'auto';
@@ -219,3 +218,4 @@ export default {
     }
   }
 </style>
+
