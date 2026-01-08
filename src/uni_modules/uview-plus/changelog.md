@@ -1,3 +1,6 @@
+## 3.6.52（2026-01-08）
+fix: nvue下采用webview支持二维码显示logo(因为gcanvas不支持图片渲染)
+
 ## 3.6.51（2026-01-08）
 fix: 修复qrcode组件在App不显示logo
 

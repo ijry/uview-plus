@@ -17,7 +17,7 @@
                 :style="{ width: sizeLocal + unit, height: sizeLocal + unit }" />
             <!-- #endif -->
 
-            <!-- #ifdef APP-PLUS -->
+            <!-- #ifdef APP-VUE -->
             <canvas
                 class="u-qrcode__canvas"
                 :id="cid"
@@ -26,8 +26,11 @@
             <!-- #endif -->
 
             <!-- #ifdef APP-NVUE -->
-            <gcanvas class="u-qrcode__canvas" ref="gcanvess"
-                     :style="{ width: sizeLocal + unit, height: sizeLocal + unit }">
+			<web-view v-if="icon != ''" ref="web" src="/static/app-plus/up-canvas/local.html"
+				:style="'width:' + sizeLocal + 'px;height:' + sizeLocal + 'px'"
+				@onPostMessage="_onMessage" />
+            <gcanvas v-else class="u-qrcode__canvas" ref="gcanvess"
+                :style="{ width: sizeLocal + unit, height: sizeLocal + unit }">
             </gcanvas>
             <!-- #endif -->
             <view v-if="showLoading && loading" class="u-qrcode__loading"
@@ -144,6 +147,7 @@ export default {
             sizeLocal: this.size,
             ctx: null, // ctx 在new Qrcode 时js文件内部设置
             canvas: null, // ctx 在new Qrcode 时js文件内部设置
+			_ready: false
         }
     },
     async mounted(){
@@ -172,33 +176,52 @@ export default {
         }
     },
     methods: {
+		_onMessage(e) {
+			// console.log('post message', e)
+			const message = e.detail.data[0]
+			switch (message.action) {
+				// web-view 初始化完毕
+				case 'onJSBridgeReady':
+					this._ready = true
+					this.$refs.web.evalJs('setContent('+JSON.stringify(this.$props) +')')
+					break
+				// qrcodeOk
+				case 'qrcodeOk':
+					this._result(message.imageData)
+					// this.$emit('load')
+					break
+			}
+		},
         _makeCode() {
             let that = this
             if (!this._empty(this.val)) {
                 // #ifndef APP-NVUE
                 this.loading = true
-                // #endif
-                qrcode = new QRCode({
-                    vuectx: that, // 上下文环境
-                    canvasId: that.cid, // canvas-id
-					canvas: that.canvas,
-					ctx: that.ctx,
-                    isNvue: that.isNvue,
-                    usingComponents: that.usingComponents, // 是否是自定义组件
-                    showLoading: false, // 是否显示loading
-                    loadingText: that.loadingText, // loading文字
-                    text: that.val, // 生成内容
-                    size: that.sizeLocal, // 二维码大小
-                    background: that.background, // 背景色
-                    foreground: that.foreground, // 前景色
-                    pdground: that.pdground, // 定位角点颜色
-                    correctLevel: that.lv, // 容错级别
-                    image: that.icon, // 二维码图标
-                    imageSize: that.iconSize,// 二维码图标大小
-                    cbResult: function (res) { // 生成二维码的回调
-                        that._result(res)
-                    },
-                });
+				// #endif
+				// nvue下时因为gcanvas的GImage不生效，因此icon模式会采用webview
+				if ((this.icon == '' && that.isNvue) || !that.isNvue) {
+					qrcode = new QRCode({
+						vuectx: that, // 上下文环境
+						canvasId: that.cid, // canvas-id
+						canvas: that.canvas,
+						ctx: that.ctx,
+						isNvue: that.isNvue,
+						usingComponents: that.usingComponents, // 是否是自定义组件
+						showLoading: false, // 是否显示loading
+						loadingText: that.loadingText, // loading文字
+						text: that.val, // 生成内容
+						size: that.sizeLocal, // 二维码大小
+						background: that.background, // 背景色
+						foreground: that.foreground, // 前景色
+						pdground: that.pdground, // 定位角点颜色
+						correctLevel: that.lv, // 容错级别
+						image: that.icon, // 二维码图标
+						imageSize: that.iconSize,// 二维码图标大小
+						cbResult: function (res) { // 生成二维码的回调
+							that._result(res)
+						},
+					});
+				}
             } else {
                 uni.showToast({
                     title: '二维码内容不能为空',
