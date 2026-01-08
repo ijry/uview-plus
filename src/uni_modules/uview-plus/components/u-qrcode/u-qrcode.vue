@@ -8,7 +8,7 @@
           @longpress="longpress">
         <view class="u-qrcode__content" @click="preview">
 
-            <!-- #ifndef APP-NVUE || APP-PLUS -->
+            <!-- #ifndef APP-NVUE || APP-VUE -->
             <canvas
                 class="u-qrcode__canvas"
                 :id="cid"
@@ -396,10 +396,10 @@ export default {
         	})
         },
 		getContext() {
-			// #ifdef APP-PLUS
+			// #ifdef APP-VUE
 			return uni.createCanvasContext(this.cid, this);
 			// #endif
-			// #ifndef APP-PLUS
+			// #ifndef APP-VUE
 			return this.canvas.getContext('2d');
 			// #endif
 		},
@@ -436,7 +436,7 @@ export default {
 				};
 				// #endif
 				img.src = url;
-				// #ifdef APP-PLUS
+				// #ifdef APP-VUE
 				this.ctx.drawImage(url, x, y, w, h);
 				// #endif
 			} catch (error) {

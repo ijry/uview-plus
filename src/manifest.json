@@ -175,10 +175,10 @@
             },
             "signingConfigs" : {
                 "default" : {
-                    "certpath" : "c:\\Users\\Jry\\AppData\\Roaming\\HBuilder X\\extensions\\launcher\\agc-certs\\1763917417142.cer",
+                    "certpath" : "c:\\Users\\Jry\\AppData\\Roaming\\HBuilder X\\extensions\\launcher\\agc-certs\\1767838227005.cer",
                     "keyAlias" : "debugKey",
                     "keyPassword" : "0000001B40CD843FE60FDE882BE7E3C5B587515A209E8081CCBF34B58A9D50C50352F19D9F88C6294CD424",
-                    "profile" : "c:\\Users\\Jry\\AppData\\Roaming\\HBuilder X\\extensions\\launcher\\agc-certs\\1763917417142.p7b",
+                    "profile" : "c:\\Users\\Jry\\AppData\\Roaming\\HBuilder X\\extensions\\launcher\\agc-certs\\1767838227005.p7b",
                     "signAlg" : "SHA256withECDSA",
                     "storeFile" : "c:\\Users\\Jry\\AppData\\Roaming\\HBuilder X\\extensions\\launcher\\agc-certs\\1763917417142.p12",
                     "storePassword" : "0000001B40CD843FE60FDE882BE7E3C5B587515A209E8081CCBF34B58A9D50C50352F19D9F88C6294CD424"
