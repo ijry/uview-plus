@@ -1,3 +1,8 @@
+## 3.6.51（2026-01-08）
+fix: 修复qrcode组件在App不显示logo
+
+improvment: qrcode逻辑优化封装
+
 ## 3.6.50（2026-01-06）
 improvment: rate组件示例改为组合式API
 
