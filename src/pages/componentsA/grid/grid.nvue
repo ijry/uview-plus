@@ -127,6 +127,7 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 const baseList = [{
 		name: 'photo',
 		title: '图片'

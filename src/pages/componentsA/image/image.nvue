@@ -139,7 +139,8 @@
 </template>
 
 <script setup>
-import { ref, onLoad } from 'vue'
+import { ref } from 'vue'
+import { onLoad } from '@dcloudio/uni-app'
 
 const src = ref('https://uview-plus.jiangruyi.com/uview/album/1.jpg')
 const src1 = ref('')
