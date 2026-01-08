@@ -1,84 +1,51 @@
 /// <reference path="./comps.d.ts" />
+type Func = import('./func').Func
 declare module 'uview-plus' {
-	export function install(): void  //必要
-	interface test {
-		/** 邮箱格式校验 */
-		email(email: string): boolean
-		/** 手机号校验 */
-		mobile(phone: number): boolean;
-		/** url路径验证 */
-		url(value: string): boolean;
-		/** 验证日期格式 */
-		date(value: string | number): boolean;
-		/** 验证ISO类型的日期格式 YYYY-MM-DD | YYYY/MM/DD */
-		dateISO(value: string): boolean;
-		/** 验证十进制数字 */
-		number(value: number): boolean;
-		/** 验证字符串 */
-		string(value: string): boolean;
-		/** 验证整数 */
-		digits(value: number): boolean;
-		/** 验证身份证号码 */
-		idCard(value: string | number): boolean;
-		/** 是否车牌号 */
-		carNo(value: string): boolean;
-		/** 金额,只允许2位小数 */
-		amount(value: string | number): boolean;
-		/** 校验是否是中文 */
-		chinese(value: any): boolean;
-		/** 校验是否是字母 */
-		letter(value: any): boolean;
-		/** 校验字母或者数字 */
-		enOrNum(value: any): boolean;
-		/** 验证是否包含某个值 */
-		contains(source: string, value: string): boolean;
-		/** 验证一个值范围[min, max] */
-		range(value: string, between: number[]): boolean;
-		/** 验证一个长度范围[min, max] */
-		rangeLength(value: string, between: number[]): boolean;
-		/** 是否固定电话 */
-		landline(value: string | number): boolean;
-		/** 判断是否为空 */
-		empty(value: string | number | undefined | boolean | object | null): boolean;
-		/** 是否json字符串 */
-		jsonString(value: string): boolean;
-		/** 是否数组 */
-		array(value: any): boolean;
-		/** 是否对象 */
-		object(value: any): boolean;
-		/** 是否短信验证码 */
-		code(value: any, len: number): boolean;
-		/** 是否函数方法 */
-		func(value: any): boolean;
-		/** 是否promise对象 */
-		promise(value: any): boolean;
-		/** 是否图片格式 */
-		image(value: string): boolean;
-		/** 是否视频格式 */
-		video(value: string): boolean;
-		/** 是否为正则对象 */
-		regExp(value: any): boolean;
-	}
-	interface RouteParam {
-		type: 'navigateTo' | 'redirect' | 'switchTab' | 'reLaunch' | 'navigateBack';
-		/** 路由地址 */
-		url: string;
-		/** navigateBack页面后退时,回退的层数 */
-		delta?: number;
-		/** 传递的参数 */
-		params?: {};
-		/** 窗口动画,只在APP有效 */
-		animationType?: string;
-		/** 窗口动画持续时间,单位毫秒,只在APP有效 */
-		animationDuration?: number;
-		/** 是否需要拦截 */
-		intercept?: boolean;
-	}
+  export function install(
+    vm: import('vue').App,
+    upuiParams?: () => {
+      httpIns?: (http: HttpRequest) => void;
+      options?: Partial<GlobalConfig>;
+    }
+  ): void; //必要
+	type test = import('./func').test
+	type RouteParam = import('./func').RouteParam
+	type HttpRequest = InstanceType<typeof import('../libs/luch-request')['default']>
 	interface Config {
 		v: string;
 		version: string;
 		color: Partial<Color>;
-		unit: 'px' | 'rpx'
+		/**
+		 * - 修改默认单位，相当于执行 uni.$u.config.unit = 'rpx'
+		 * - 组件的很多单位仍然为px并非配置不生效，而是rpx配置目前无法做到修改Vue单文件组件中的Css/Sass中写死的px单位。
+		 * - 这个配置主要用于prop传参时的单位修改，比如<up-image width="80"></up-image>中的80会是rpx单位。
+		 * - 如果需要全局组件样式变为rpx，可以尝试使用postcss等第三方插件转换。
+		 * @default 'px'
+		 */
+		unit: 'px' | 'rpx';
+		/** 
+		 * 只加载一次字体图标
+		 * @default false
+		 */
+		loadFontOnce: boolean;
+		/** 
+		 * 扩充自定义字体图标
+		 * @version 3.4.14
+		 */
+		customIcon: {
+			/** 字体族名称 */
+			family: string;
+			/** ttf文件远程链接 */
+			url: string;
+		};
+		/** 
+		 * unicode映射表，为了更直观书写，语义更明确
+		 * - 如'light-mode': '\ue66c'
+		 * - <up-icon customPrefix="xyicon" name="light-mode"></up-icon>
+		 */
+		customIcons: {
+			[key: string]: string
+		}
 	}
 	interface Color {
 		primary: string,
@@ -97,36 +64,10 @@ declare module 'uview-plus' {
 		config: Partial<Config>;
 		props: {};
 	}
-	interface $u {
-		route: (url: string | RouteParam) => void;
-		/**
-		  * 求两个颜色之间的渐变值
-		  * @param {string} startColor 开始的颜色
-		  * @param {string} endColor 结束的颜色
-		  * @param {number} step 颜色等分的份额
-		  */
-		colorGradient: (startColor: string, endColor: string, step: number) => any[];
-		/**
-		 * 将hex表示方式转换为rgb
-		 * @param color "#000000"-> "rgb(0,0,0)" | "rgb(0,0,0)" -> "#000000"
-		 * @param str 是否返回颜色数组 true -> 不返回
-		 * @returns 
-		 */
-		hexToRgb: (color: string, str?: boolean) => any[];
-		/**
-		 * 将rgb表示方式转换为hex
-		 */
-		rgbToHex: (color: string) => string;
-		/**
-		 * 十六进制转换为rgb或rgba
-		 * @param color 
-		 * @param alpha 透明度
-		 * @returns  rgba（255，255，255，0.5）字符串
-		 */
-		colorToRgba: (color: string, alpha: number) => string;
+	interface $u extends Func {
 		test: test;
 		type: {},
-		http: {},
+		http: HttpRequest,
 		config: Config;
 		zIndex: {
 			toast: number;
@@ -139,8 +80,6 @@ declare module 'uview-plus' {
 			sticky: number;
 			indexListSticky: number;
 		},
-		debounce: (func, wait, immediate) => void;
-		throttle: (func, wait, immediate) => void;
 		mixin: {},
 		mpMixin: {},
 		props: {},
@@ -149,6 +88,35 @@ declare module 'uview-plus' {
 	}
 
 	export function setConfig(config: Partial<GlobalConfig>): void;
+	// 可单独导入使用,也可以在 uni.$u 中使用
+	export const test: $u['test']
+	export const http: $u['http']
+	export const config: $u['config']
+	export const platform: $u['platform']
+	export const range: $u['range']
+	export const getPx: $u['getPx']
+	export const rpx2px: $u['rpx2px']
+	export const sleep: $u['sleep']
+	export const os: $u['os']
+	export const sys: $u['sys']
+	export const random: $u['random']
+	export const guid: $u['guid']
+	export const addStyle: $u['addStyle']
+	export const addUnit: $u['addUnit']
+	export const timeFormat: $u['timeFormat']
+	export const timeFrom: $u['timeFrom']
+	export const trim: $u['trim']
+	export const queryParams: $u['queryParams']
+	export const toast: $u['toast']
+	export const priceFormat: $u['priceFormat']
+	export const genLightColor: $u['genLightColor']
+	export const debounce: $u['debounce']
+	export const throttle: $u['throttle']
+	export const colorGradient: $u['colorGradient']
+	export const hexToRgb: $u['hexToRgb']
+	export const rgbToHex: $u['rgbToHex']
+	export const colorToRgba: $u['colorToRgba']
+	export const route: $u['route']
 
 	global {
 		interface Uni {
