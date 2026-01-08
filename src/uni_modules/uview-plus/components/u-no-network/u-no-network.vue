@@ -30,13 +30,13 @@
 			</view>
 			<!-- #endif -->
 			<view class="u-no-network__retry">
-				<u-button
+				<up-button
 				    size="mini"
 				    :text="t('up.common.retry')"
 				    type="primary"
 					plain
 				    @click="retry"
-				></u-button>
+				></up-button>
 			</view>
 		</view>
 	</u-overlay>
@@ -56,7 +56,7 @@
 	 * @property {String | Number}	zIndex	组件的z-index值 
 	 * @property {String}			image	无网络的图片提示，可用的src地址或base64图片 
 	 * @event {Function}			retry	用户点击页面的"重试"按钮时触发
-	 * @example <u-no-network></u-no-network>
+	 * @example <up-no-network></u-no-network>
 	 */
 	export default {
 		name: "u-no-network",
@@ -69,6 +69,7 @@
 		},
 		mounted() {
 			this.isIOS = (getDeviceInfo().platform === 'ios')
+			// HarmonyOS Next 平台使用时需要添加权限 ohos.permission.GET_NETWORK_INFO
 			uni.onNetworkStatusChange((res) => {
 				this.isConnected = res.isConnected
 				this.networkType = res.networkType
@@ -83,6 +84,9 @@
 					} else {
 						this.isConnected = true
 					}
+				},
+				fail: (res) => {
+					console.log(res)
 				}
 			})
 		},
