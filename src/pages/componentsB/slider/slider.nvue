@@ -105,7 +105,6 @@
 				popupShow: false,
 				sliderValue: 4,
 				useNative: false,
-				useNative: false,
 				value1: 30,
 				value2: 30,
 				value3: 30,
