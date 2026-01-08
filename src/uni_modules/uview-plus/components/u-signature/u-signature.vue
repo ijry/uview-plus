@@ -163,6 +163,7 @@
 			}
 		},
 		methods: {
+			t,
 			initCanvas() {
 				// #ifndef APP-NVUE
 				const ctx = uni.createCanvasContext(this.canvasId, this)
