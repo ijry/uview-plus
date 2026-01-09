@@ -1,3 +1,6 @@
+## 3.6.58（2026-01-09）
+improvment: sticky组件示例改为组合式API
+
 ## 3.6.57（2026-01-08）
 improvment: 优化完善no-nerwork组件细节
 
