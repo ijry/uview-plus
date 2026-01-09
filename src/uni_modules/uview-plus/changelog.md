@@ -1,3 +1,6 @@
+## 3.6.61（2026-01-09）
+improvment: action-sheet组件示例改为组合式API
+
 ## 3.6.60（2026-01-09）
 improvment: transition组件示例改为组合式API
 
