@@ -1,3 +1,6 @@
+## 3.6.59（2026-01-09）
+improvment: swipe-action组件示例改为组合式API
+
 ## 3.6.58（2026-01-09）
 improvment: sticky组件示例改为组合式API
 
