@@ -122,19 +122,12 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				description: '',
-				title: ''
-			}
-		},
-		methods: {
-			close() {
-				// console.log('close');
-			}
-		}
+<script setup>
+	import { ref } from 'vue'
+	const title = ref('')
+	const description = ref('')
+	const close = () => {
+		console.log('close')
 	}
 </script>
 
