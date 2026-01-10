@@ -60,9 +60,13 @@ declare interface RadioProps {
 
 declare interface RadioSlots {
   /**
-   * 自定义修改label内容
+   * 自定义icon内容
    */
-  ['default']?: () => any
+  ['icon']?: () => any
+  /**
+   * 自定义label内容
+   */
+  ['label']?: () => any
 }
 
 declare interface _Radio {
