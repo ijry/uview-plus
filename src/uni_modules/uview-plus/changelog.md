@@ -1,3 +1,9 @@
+## 3.6.63（2026-01-10）
+improvment: badge组建示例改为组合式API
+
+## 3.6.62（2026-01-10）
+improvment: alert组件示例改为组合式API
+
 ## 3.6.61（2026-01-09）
 improvment: action-sheet组件示例改为组合式API
 
