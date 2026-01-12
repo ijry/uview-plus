@@ -1,3 +1,6 @@
+## 3.6.66（2026-01-12）
+fix: 修正 RadioSlots 类型定义
+
 ## 3.6.65（2026-01-12）
 fix: 修复u-picker在hasInput下回显异常和vue报错
 
