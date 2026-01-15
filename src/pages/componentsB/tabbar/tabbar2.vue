@@ -217,37 +217,33 @@
 	</view>
 </template>
 
-<script>
-	import { toast } from '@/uni_modules/uview-plus'
-	export default {
-		data() {
-			return {
-				value1: 0,
-				value2: 1,
-				value3: 'play-right',
-				value4: 0,
-				value5: 0,
-				value6: 0,
-				value7: 3
-			}
-		},
-		onLoad() {
+<script setup>
+import { ref } from 'vue'
+import { toast } from '@/uni_modules/uview-plus'
 
-		},
-		methods: {
-			change5(name) {
-				if (name === 1) return toast('请您先登录')
-				else this.value5 = name
-			},
-			change1(e) {
-				this.value1 = e
-				console.log('change1', e);
-			},
-			click1(e) {
-				console.log('click1', e);
-			}
-		},
-	}
+// 响应式数据
+const value1 = ref(0)
+const value2 = ref(1)
+const value3 = ref('play-right')
+const value4 = ref(0)
+const value5 = ref(0)
+const value6 = ref(0)
+const value7 = ref(3)
+
+// 方法
+const change5 = (name) => {
+	if (name === 1) return toast('请您先登录')
+	else value5.value = name
+}
+
+const change1 = (e) => {
+	value1.value = e
+	console.log('change1', e);
+}
+
+const click1 = (e) => {
+	console.log('click1', e);
+}
 </script>
 
 <style lang="scss">
