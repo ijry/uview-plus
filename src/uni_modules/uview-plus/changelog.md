@@ -1,3 +1,6 @@
+## 3.6.85（2026-01-15）
+improvment: switch组件示例改为组合式API
+
 ## 3.6.84（2026-01-15）
 improvment: slider组件示例改为组合式API
 
