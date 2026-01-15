@@ -1,3 +1,6 @@
+## 3.6.74（2026-01-15）
+fix: 修复parse组件props缺少)
+
 ## 3.6.73（2026-01-15）
 improvment: count-to组件示例改为组合式API
 
