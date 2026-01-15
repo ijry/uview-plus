@@ -1,3 +1,6 @@
+## 3.6.76（2026-01-15）
+ improvment: keyborad组件示例改为组合式API
+
 ## 3.6.75（2026-01-15）
 improvment: dropdown组件示例改为组合式API
 
