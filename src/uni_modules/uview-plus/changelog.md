@@ -1,3 +1,6 @@
+## 3.6.75（2026-01-15）
+improvment: dropdown组件示例改为组合式API
+
 ## 3.6.74（2026-01-15）
 fix: 修复parse组件props缺少)
 
