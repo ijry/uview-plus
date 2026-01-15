@@ -93,23 +93,18 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {}
-		},
-		methods: {
-			open(e) {
-				// console.log('open', e)
-			},
-			close(e) {
-				// console.log('close', e)
-			},
-			change(e) {
-				// console.log('change', e)
-			}
-		}
-	}
+<script setup>
+const open = (e) => {
+	// console.log('open', e)
+}
+
+const close = (e) => {
+	// console.log('close', e)
+}
+
+const change = (e) => {
+	// console.log('change', e)
+}
 </script>
 
 <style lang="scss">

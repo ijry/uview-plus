@@ -1,3 +1,12 @@
+## 3.6.71（2026-01-14）
+improvment: collapse组件示例改为组合式API
+
+## 3.6.70（2026-01-14）
+improvment: code组件示例改为组合式API
+
+## 3.6.69（2026-01-14）
+improvment: card组件示例改为组合式API
+
 ## 3.6.68（2026-01-13）
 fix: 修复list组件在支付宝小程序下scrolltolower无法触发 #422
 ## 3.6.67（2026-01-13）

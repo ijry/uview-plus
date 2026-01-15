@@ -63,39 +63,39 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				title: '素胚勾勒出青花，笔锋浓转淡',
-				subTitle: '2023-05-15',
-				thumb: 'https://uview-plus.jiangruyi.com/uview/ext/59c256f85a8c3757.jpg',
-				padding: 15,
-				bottomSlot: true,
-				border: true
-			}
-		},
-		methods: {
-			thumbChange(index) {
-				this.thumb = index == 0 ? 'https://uview-plus.jiangruyi.com/uview/ext/59c256f85a8c3757.jpg' : '';
-			},
-			paddingChange(index) {
-				this.padding = [10, 15, 20][index];
-			},
-			bottomChange(index) {
-				this.bottomSlot = !index;
-			},
-			borderChange(index) {
-				this.border = !index;
-			},
-			click(index) {
-				console.log(index);
-			},
-			headClick(index) {
-				console.log(index);
-			}
-		}
-	}
+<script setup>
+import { ref } from 'vue'
+
+const title = ref('素胚勾勒出青花，笔锋浓转淡')
+const subTitle = ref('2023-05-15')
+const thumb = ref('https://uview-plus.jiangruyi.com/uview/ext/59c256f85a8c3757.jpg')
+const padding = ref(15)
+const bottomSlot = ref(true)
+const border = ref(true)
+
+const thumbChange = (index) => {
+	thumb.value = index == 0 ? 'https://uview-plus.jiangruyi.com/uview/ext/59c256f85a8c3757.jpg' : ''
+}
+
+const paddingChange = (index) => {
+	padding.value = [10, 15, 20][index]
+}
+
+const bottomChange = (index) => {
+	bottomSlot.value = !index
+}
+
+const borderChange = (index) => {
+	border.value = !index
+}
+
+const click = (index) => {
+	console.log(index)
+}
+
+const headClick = (index) => {
+	console.log(index)
+}
 </script>
 
 <style scoped lang="scss">
