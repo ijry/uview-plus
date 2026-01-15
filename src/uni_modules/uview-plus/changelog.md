@@ -1,3 +1,6 @@
+## 3.6.83（2026-01-15）
+improvment: search组件示例改为组合式API
+
 ## 3.6.82（2026-01-15）
 improvment: progress组件示例改为组合式API
 
