@@ -1,3 +1,6 @@
+## 3.6.73（2026-01-15）
+improvment: count-to组件示例改为组合式API
+
 ## 3.6.72（2026-01-15）
 improvment: count-down组件示例改为组合式API
 
