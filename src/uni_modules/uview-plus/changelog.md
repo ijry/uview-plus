@@ -1,3 +1,7 @@
+## 3.6.81（2026-01-15）
+improvment: parse组件示例改为组合式API
+
+
 ## 3.6.80（2026-01-15）
 improvment: number-box组件示例改为组合式API
 
