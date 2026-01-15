@@ -1,3 +1,6 @@
+## 3.6.78（2026-01-15）
+improvment: notify组件示例改为组合式API
+
 ## 3.6.77（2026-01-15）
 improvment: notice-bar组件示例改为组合式API
 
