@@ -47,35 +47,34 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				mode: false,
-				borderColor: '#e4e7ed',
-				align: 'center',
-				index: 0,
-			}
-		},
-		methods: {
-			modeChange(index) {
-				// #ifdef MP-WEIXIN
-				uni.showToast({
-					title: '微信小程序暂不支持单元格合并'
-				})
-				return;
-				// #endif
-				this.mode = index == 0 ? true : false;
-				this.key ++;
-			},
-			borderColorChange(index) {
-				this.borderColor = index == 0 ? '#e4e7ed' : index == 1 ? '#2979ff' : '#ff9900';
-			},
-			alignChange(index) {
-				this.align = index == 0 ? 'left' : index == 1 ? 'center' : 'right';
-			}
-		}
-	}
+<script setup>
+import { ref } from 'vue'
+
+// 响应式数据
+const mode = ref(false)
+const borderColor = ref('#e4e7ed')
+const align = ref('center')
+const index = ref(0)
+
+// 方法
+const modeChange = (index) => {
+	// #ifdef MP-WEIXIN
+	uni.showToast({
+		title: '微信小程序暂不支持单元格合并'
+	})
+	return;
+	// #endif
+	mode.value = index == 0 ? true : false;
+	index.value ++;
+}
+
+const borderColorChange = (index) => {
+	borderColor.value = index == 0 ? '#e4e7ed' : index == 1 ? '#2979ff' : '#ff9900';
+}
+
+const alignChange = (index) => {
+	align.value = index == 0 ? 'left' : index == 1 ? 'center' : 'right';
+}
 </script>
 
 <style lang="scss" scoped>
