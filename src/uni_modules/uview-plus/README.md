@@ -32,7 +32,13 @@ uview-plus现已推出免费可视化设计，可以方便的进行页面可视�
 您可以通过**微信**扫码，查看最佳的演示效果。
 <br>
 <br>
-<img src="https://uview-plus.jiangruyi.com/common/h5_qrcode.png" width="220" height="220" >
+
+|  H5     |   微信小程序    |    安卓    |   鸿蒙Next（已上架）   | 
+| --- | --- | --- | --- |
+| <img src="https://uview-plus.jiangruyi.com/common/h5_qrcode.png" width="200" height="200" />   |     <img src="https://uview-plus.jiangruyi.com/common/weixin_mini_qrcode.jpg" width="200" height="200" /> | <img src="https://uview-plus.jiangruyi.com/common/android_qrcode.png" width="200" height="200" /> |    <img src="https://uview-plus.jiangruyi.com/common/hos_qrcode.jpg" width="200" height="200" /> |
+<br>
+<img src="https://uview-plus.jiangruyi.com/common/hos.png">
+
 
 ## 链接
 
