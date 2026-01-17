@@ -1,3 +1,6 @@
+## 3.6.92（2026-01-17）
+improvment: toast组件示例改为组合式API
+
 ## 3.6.91（2026-01-16）
 improvment: tag组件示例改为组合式API
 
