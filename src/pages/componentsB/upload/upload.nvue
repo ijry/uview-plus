@@ -101,79 +101,93 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				fileList1: [],
-				fileList2: [],
-				fileList3: [{
-					url: 'https://uview-plus.jiangruyi.com/uview/swiper/1.jpg',
-				}],
-				fileList4: [{
-						url: 'https://uview-plus.jiangruyi.com/uview/swiper/1.jpg',
-					},
-					{
-						url: 'https://uview-plus.jiangruyi.com/uview/swiper/1.jpg',
-					}
-				],
-				fileList5: [],
-				fileList6: [],
-				fileList7: []
-			}
-		},
-		onLoad() {
-		},
-		methods: {
-			// 删除图片
-			deletePic(event) {
-				this[`fileList${event.name}`].splice(event.index, 1)
-			},
-			beforeRead() {
-				console.log('beforeRead')
-			},
-			// 新增图片
-			async afterRead(event) {
-				// 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
-				let lists = [].concat(event.file)
-				let fileListLen = this[`fileList${event.name}`].length
-				lists.map((item) => {
-					this[`fileList${event.name}`].push({
-						...item,
-						status: 'uploading',
-						message: '上传中'
-					})
-				})
-				for (let i = 0; i < lists.length; i++) {
-					const result = await this.uploadFilePromise(lists[i].url)
-					let item = this[`fileList${event.name}`][fileListLen]
-					this[`fileList${event.name}`].splice(fileListLen, 1, Object.assign(item, {
-						status: 'success',
-						message: '',
-						url: result
-					}))
-					fileListLen++
-				}
-			},
-			uploadFilePromise(url) {
-				return new Promise((resolve, reject) => {
-					let a = uni.uploadFile({
-						url: 'http://www.example.com/upload', // 仅为示例，非真实的接口地址
-						filePath: url,
-						name: 'file',
-						formData: {
-							user: 'test'
-						},
-						success: (res) => {
-							setTimeout(() => {
-								resolve(res.data.data)
-							}, 1000)
-						}
-					});
-				})
-			},
-		},
-	}
+<script setup>
+import { ref } from 'vue';
+
+// 创建一个响应式对象来存储所有的 fileList
+const fileLists = {
+  fileList1: ref([]),
+  fileList2: ref([]),
+  fileList3: ref([{
+    url: 'https://uview-plus.jiangruyi.com/uview/swiper/1.jpg',
+  }]),
+  fileList4: ref([{
+      url: 'https://uview-plus.jiangruyi.com/uview/swiper/1.jpg',
+    },
+    {
+      url: 'https://uview-plus.jiangruyi.com/uview/swiper/1.jpg',
+    }
+  ]),
+  fileList5: ref([]),
+  fileList6: ref([]),
+  fileList7: ref([])
+};
+
+// 为了在模板中直接使用，我们将其解构
+const fileList1 = fileLists.fileList1;
+const fileList2 = fileLists.fileList2;
+const fileList3 = fileLists.fileList3;
+const fileList4 = fileLists.fileList4;
+const fileList5 = fileLists.fileList5;
+const fileList6 = fileLists.fileList6;
+const fileList7 = fileLists.fileList7;
+
+// 删除图片
+const deletePic = (event) => {
+  const targetList = fileLists[`fileList${event.name}`];
+  if (targetList) {
+    targetList.value.splice(event.index, 1);
+  }
+};
+
+const beforeRead = () => {
+  console.log('beforeRead');
+};
+
+// 新增图片
+const afterRead = async (event) => {
+  // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
+  let lists = [].concat(event.file);
+  const targetList = fileLists[`fileList${event.name}`];
+  if (!targetList) return;
+  
+  let fileListLen = targetList.value.length;
+  lists.map((item) => {
+    targetList.value.push({
+      ...item,
+      status: 'uploading',
+      message: '上传中'
+    });
+  });
+  for (let i = 0; i < lists.length; i++) {
+    const result = await uploadFilePromise(lists[i].url);
+    let item = targetList.value[fileListLen];
+    targetList.value.splice(fileListLen, 1, Object.assign(item, {
+      status: 'success',
+      message: '',
+      url: result
+    }));
+    fileListLen++;
+  }
+};
+
+const uploadFilePromise = (url) => {
+  return new Promise((resolve, reject) => {
+    let a = uni.uploadFile({
+      url: 'http://www.example.com/upload', // 仅为示例，非真实的接口地址
+      filePath: url,
+      name: 'file',
+      formData: {
+        user: 'test'
+      },
+      success: (res) => {
+        setTimeout(() => {
+          resolve(res.data.data);
+        }, 1000);
+      }
+    });
+  });
+};
 </script>
 
 <style lang="scss">
