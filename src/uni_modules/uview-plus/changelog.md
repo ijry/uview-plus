@@ -1,3 +1,6 @@
+## 3.6.101（2026-01-20）
+improvment: form组件示例改为组合式API
+
 ## 3.6.100（2026-01-20）
 improvment: datetimepicker组件示例改为组合式API
 
