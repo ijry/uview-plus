@@ -1,3 +1,6 @@
+## 3.6.97（2026-01-20）
+improvment: calendar组件示例改为组合式API
+
 ## 3.6.96（2026-01-20）
 improvment: avatar组件示例改为组合式API
 
