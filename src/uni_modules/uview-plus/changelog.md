@@ -1,3 +1,6 @@
+## 3.6.99（2026-01-20）
+fix: 修复cate-tab组件设置默认current不生效
+
 ## 3.6.98（2026-01-20）
 improvment: code-input组件示例改为组合式API
 
