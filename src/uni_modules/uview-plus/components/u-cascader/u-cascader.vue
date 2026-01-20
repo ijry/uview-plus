@@ -192,7 +192,7 @@
 			}
 		},
 		// 新增confirm事件
-		emits: ['update:modelValue', 'change', 'confirm'],
+		emits: ['update:modelValue', 'update:show', 'change', 'confirm'],
 		methods: {
 			t,
 			init() {

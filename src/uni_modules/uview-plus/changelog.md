@@ -1,3 +1,6 @@
+## 3.6.102（2026-01-20）
+fix: 修复cascader缺少emits申明
+
 ## 3.6.101（2026-01-20）
 improvment: form组件示例改为组合式API
 
