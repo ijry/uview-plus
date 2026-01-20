@@ -145,114 +145,153 @@
 		></up-datetime-picker>
 	</view>
 </template>
-<script>
-	import { padZero, timeFormat, toast } from '@/uni_modules/uview-plus'
-	export default {
-		data() {
-			const d = new Date()
-			const year = d.getFullYear()
-			let month = padZero(d.getMonth() + 1)
-			const date = d.getDate()
-			return {
-				current: 0,
-				value1: Number(new Date()),
-				value2: Number(new Date()),
-				value3: Number(new Date()),
-				value4: '05:28',
-				value5: Number(new Date()),
-				value6: Number(new Date()),
-				value7: Number(new Date()),
-				show1: false,
-				show2: false,
-				show3: false,
-				show4: false,
-				show5: false,
-				show6: false,
-				show7: false,
-				list: [{
-						title: '完整日期时间',
-						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/datetime-picker/6.png'
-					},
-					{
-						title: '年月日',
-						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/datetime-picker/4.png'
-					},
-					{
-						title: '年月',
-						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/datetime-picker/3.png'
-					},
-					{
-						title: '时间',
-						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/datetime-picker/5.png'
-					}, {
-						title: '过滤器(保留偶数年)',
-						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/datetime-picker/2.png'
-					}, {
-						title: '格式化',
-						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/datetime-picker/1.png'
-					}, {
-						title: '限制最大最小值',
-						iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/datetime-picker/7.png'
-					}
-				]
-			}
-		},
-		methods: {
-			close() {
-				this[`show${this.current}`] = false
-			},
-			cancel() {
-				this[`show${this.current}`] = false
-			},
-			confirm(e) {
-				this[`show${this.current}`] = false
-				this.result(e.value, e.mode)
-			},
-			change(e) {
-				// console.log('change', e)
-			},
-			navigateBack() {
-				uni.navigateBack()
-			},
-			filter(mode, options) {
-				if (mode === 'year') {
-					return options.filter((option) => option % 2 === 0);
-				}
 
-				return options;
-			},
-			showDatetimePicker(index) {
-				this.current = index + 1
-				this[`show${index + 1}`] = true
-			},
-			result(time, mode) {
-				switch (mode) {
-					case 'datetime':
-						return toast(timeFormat(time, 'yyyy-mm-dd hh:MM'))
-					case 'date':
-						return toast(timeFormat(time, 'yyyy-mm-dd'))
-					case 'year-month':
-						return toast(timeFormat(time, 'yyyy-mm'))
-					case 'time':
-						return toast(time)
-					default:
-						return ''
-				}
-			},
-			formatter(type, value) {
-				if (type === 'year') {
-					return `${value}年`
-				}
-				if (type === 'month') {
-					return `${value}月`
-				}
-				if (type === 'day') {
-					return `${value}日`
-				}
-				return value
-			},
-		},
+<script setup>
+import { ref } from 'vue';
+import { padZero, timeFormat, toast } from '@/uni_modules/uview-plus'
+
+// 创建响应式数据
+const d = new Date()
+const year = d.getFullYear()
+let month = padZero(d.getMonth() + 1)
+const date = d.getDate()
+
+const current = ref(0)
+const value1 = ref(Number(new Date()))
+const value2 = ref(Number(new Date()))
+const value3 = ref(Number(new Date()))
+const value4 = ref('05:28')
+const value5 = ref(Number(new Date()))
+const value6 = ref(Number(new Date()))
+const value7 = ref(Number(new Date()))
+const show1 = ref(false)
+const show2 = ref(false)
+const show3 = ref(false)
+const show4 = ref(false)
+const show5 = ref(false)
+const show6 = ref(false)
+const show7 = ref(false)
+const form1 = ref(null)
+const item1 = ref(null)
+
+// 定义列表数据
+const list = ref([{
+		title: '完整日期时间',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/datetime-picker/6.png'
+	},
+	{
+		title: '年月日',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/datetime-picker/4.png'
+	},
+	{
+		title: '年月',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/datetime-picker/3.png'
+	},
+	{
+		title: '时间',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/datetime-picker/5.png'
+	}, {
+		title: '过滤器(保留偶数年)',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/datetime-picker/2.png'
+	}, {
+		title: '格式化',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/datetime-picker/1.png'
+	}, {
+		title: '限制最大最小值',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/datetime-picker/7.png'
 	}
+])
+
+// 定义方法
+const close = () => {
+	show1.value = false
+	show2.value = false
+	show3.value = false
+	show4.value = false
+	show5.value = false
+	show6.value = false
+	show7.value = false
+}
+
+const cancel = () => {
+	show1.value = false
+	show2.value = false
+	show3.value = false
+	show4.value = false
+	show5.value = false
+	show6.value = false
+	show7.value = false
+}
+
+const confirm = (e) => {
+	const showVar = `show${current.value}`
+	show1.value = false
+	show2.value = false
+	show3.value = false
+	show4.value = false
+	show5.value = false
+	show6.value = false
+	show7.value = false
+	result(e.value, e.mode)
+}
+
+const change = (e) => {
+	// console.log('change', e)
+}
+
+const navigateBack = () => {
+	uni.navigateBack()
+}
+
+const filter = (mode, options) => {
+	if (mode === 'year') {
+		return options.filter((option) => option % 2 === 0);
+	}
+
+	return options;
+}
+
+const showDatetimePicker = (index) => {
+	current.value = index + 1
+	const showVar = `show${index + 1}`
+	switch(showVar) {
+		case 'show1': show1.value = true; break;
+		case 'show2': show2.value = true; break;
+		case 'show3': show3.value = true; break;
+		case 'show4': show4.value = true; break;
+		case 'show5': show5.value = true; break;
+		case 'show6': show6.value = true; break;
+		case 'show7': show7.value = true; break;
+	}
+}
+
+const result = (time, mode) => {
+	switch (mode) {
+		case 'datetime':
+			return toast(timeFormat(time, 'yyyy-mm-dd hh:MM'))
+		case 'date':
+			return toast(timeFormat(time, 'yyyy-mm-dd'))
+		case 'year-month':
+			return toast(timeFormat(time, 'yyyy-mm'))
+		case 'time':
+			return toast(time)
+		default:
+			return ''
+	}
+}
+
+const formatter = (type, value) => {
+	if (type === 'year') {
+		return `${value}年`
+	}
+	if (type === 'month') {
+		return `${value}月`
+	}
+	if (type === 'day') {
+		return `${value}日`
+	}
+	return value
+}
 </script>
 
 <style lang="scss">
