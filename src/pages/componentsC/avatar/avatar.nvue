@@ -137,37 +137,38 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				src1: 'https://uview-plus.jiangruyi.com/album/1.jpg',
-				src2: 'https://uview-plus.jiangruyi.com/album/2.jpg',
-				src3: 'https://uview-plus.jiangruyi.com/album/3.jpg',
-				src4: 'https://uview-plus.jiangruyi.com/album/4.jpg',
-				src5: 'https://uview-plus.jiangruyi.com/album/5.jpg',
-				src6: 'https://uview-plus.jiangruyi.com/album/6.jpg',
-				src7: 'https://uview-plus.jiangruyi.com/album/noExist.jpg',
-				urls: [
-					'https://uview-plus.jiangruyi.com/album/1.jpg',
-					'https://uview-plus.jiangruyi.com/album/2.jpg',
-					'https://uview-plus.jiangruyi.com/album/3.jpg',
-					'https://uview-plus.jiangruyi.com/album/4.jpg',
-					'https://uview-plus.jiangruyi.com/album/7.jpg',
-					'https://uview-plus.jiangruyi.com/album/6.jpg',
-					'https://uview-plus.jiangruyi.com/album/5.jpg'
-				]
-			}
-		},
-		onLoad() {
+<script setup>
+import { ref, onMounted } from 'vue';
 
-		},
-		methods: {
-			click(name) {
-				console.log('click', name);
-			}
-		},
-	}
+// 定义响应式数据
+const src1 = ref('https://uview-plus.jiangruyi.com/album/1.jpg');
+const src2 = ref('https://uview-plus.jiangruyi.com/album/2.jpg');
+const src3 = ref('https://uview-plus.jiangruyi.com/album/3.jpg');
+const src4 = ref('https://uview-plus.jiangruyi.com/album/4.jpg');
+const src5 = ref('https://uview-plus.jiangruyi.com/album/5.jpg');
+const src6 = ref('https://uview-plus.jiangruyi.com/album/6.jpg');
+const src7 = ref('https://uview-plus.jiangruyi.com/album/noExist.jpg');
+
+const urls = ref([
+	'https://uview-plus.jiangruyi.com/album/1.jpg',
+	'https://uview-plus.jiangruyi.com/album/2.jpg',
+	'https://uview-plus.jiangruyi.com/album/3.jpg',
+	'https://uview-plus.jiangruyi.com/album/4.jpg',
+	'https://uview-plus.jiangruyi.com/album/7.jpg',
+	'https://uview-plus.jiangruyi.com/album/6.jpg',
+	'https://uview-plus.jiangruyi.com/album/5.jpg'
+]);
+
+// 定义方法
+const click = (name) => {
+	console.log('click', name);
+};
+
+// 模拟 onLoad 生命周期
+onMounted(() => {
+	// 在这里添加 onLoad 逻辑，如果有的话
+});
+
 </script>
 
 <style lang="scss">

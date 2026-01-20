@@ -1,3 +1,6 @@
+## 3.6.96（2026-01-20）
+improvment: avatar组件示例改为组合式API
+
 ## 3.6.95（2026-01-20）
 improvment: album组件示例改为组合式API
 
