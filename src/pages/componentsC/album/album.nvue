@@ -243,48 +243,47 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				albumWidth: 0,
-				urls1: [{
-					src2: 'https://uview-plus.jiangruyi.com/uview/album/1.jpg',
-				}],
-				urls2: [
-					'https://uview-plus.jiangruyi.com/uview/album/1.jpg',
-					'https://uview-plus.jiangruyi.com/uview/album/2.jpg',
-					'https://uview-plus.jiangruyi.com/uview/album/3.jpg',
-					'https://uview-plus.jiangruyi.com/uview/album/4.jpg',
-					'https://uview-plus.jiangruyi.com/uview/album/5.jpg',
-					'https://uview-plus.jiangruyi.com/uview/album/6.jpg',
-					'https://uview-plus.jiangruyi.com/uview/album/7.jpg',
-					'https://uview-plus.jiangruyi.com/uview/album/8.jpg',
-					'https://uview-plus.jiangruyi.com/uview/album/9.jpg',
-					'https://uview-plus.jiangruyi.com/uview/album/10.jpg',
-				],
-				urls3: [
-					'https://uview-plus.jiangruyi.com/uview/album/5.jpg',
-					'https://uview-plus.jiangruyi.com/uview/album/6.jpg',
-					'https://uview-plus.jiangruyi.com/uview/album/7.jpg',
-					'https://uview-plus.jiangruyi.com/uview/album/8.jpg',
-				],
-				urls4: [
-					'https://uview-plus.jiangruyi.com/uview/album/7.jpg',
-					'https://uview-plus.jiangruyi.com/uview/album/8.jpg',
-					'https://uview-plus.jiangruyi.com/uview/album/9.jpg',
-					'https://uview-plus.jiangruyi.com/uview/album/10.jpg',
-				]
-			}
-		},
-		methods: {
-			testStop() {
-				uni.showToast({
-					title: 'test'
-				})
-			}
-		}
-	}
+<script setup>
+import { ref } from 'vue';
+
+const albumWidth = ref(0);
+
+const urls1 = ref([{
+	src2: 'https://uview-plus.jiangruyi.com/uview/album/1.jpg',
+}]);
+
+const urls2 = ref([
+	'https://uview-plus.jiangruyi.com/uview/album/1.jpg',
+	'https://uview-plus.jiangruyi.com/uview/album/2.jpg',
+	'https://uview-plus.jiangruyi.com/uview/album/3.jpg',
+	'https://uview-plus.jiangruyi.com/uview/album/4.jpg',
+	'https://uview-plus.jiangruyi.com/uview/album/5.jpg',
+	'https://uview-plus.jiangruyi.com/uview/album/6.jpg',
+	'https://uview-plus.jiangruyi.com/uview/album/7.jpg',
+	'https://uview-plus.jiangruyi.com/uview/album/8.jpg',
+	'https://uview-plus.jiangruyi.com/uview/album/9.jpg',
+	'https://uview-plus.jiangruyi.com/uview/album/10.jpg',
+]);
+
+const urls3 = ref([
+	'https://uview-plus.jiangruyi.com/uview/album/5.jpg',
+	'https://uview-plus.jiangruyi.com/uview/album/6.jpg',
+	'https://uview-plus.jiangruyi.com/uview/album/7.jpg',
+	'https://uview-plus.jiangruyi.com/uview/album/8.jpg',
+]);
+
+const urls4 = ref([
+	'https://uview-plus.jiangruyi.com/uview/album/7.jpg',
+	'https://uview-plus.jiangruyi.com/uview/album/8.jpg',
+	'https://uview-plus.jiangruyi.com/uview/album/9.jpg',
+	'https://uview-plus.jiangruyi.com/uview/album/10.jpg',
+]);
+
+const testStop = () => {
+	uni.showToast({
+		title: 'test'
+	});
+};
 </script>
 
 <style lang="scss">
