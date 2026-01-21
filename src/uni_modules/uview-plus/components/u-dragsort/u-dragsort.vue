@@ -174,11 +174,7 @@ export default {
             this.list = this.list.map((item, index) => {
                 // 当前正在拖动的项目保持拖动位置不动，避免抖动
                 if (this.dragIndex === index) {
-                    return {
-                        ...item,
-                        x: this.currentPosition.x,
-                        y: this.currentPosition.y
-                    }
+                    return item
                 }
 
                 if (this.direction === 'vertical') {
@@ -209,6 +205,8 @@ export default {
             })
         },
         onTouchStart(index) {
+            if (this.list[index]?.draggable === false) return;
+            if (this.timer) clearTimeout(this.timer);
             this.dragIndex = index;
             // 保存当前位置作为原始位置
             this.saveOriginalPositions();
@@ -294,8 +292,10 @@ export default {
                     item.x = this.originalPositions[index].x;
                     item.y = this.originalPositions[index].y;
                 });
-                this.dragIndex = -1;
                 this.$emit('drag-end', [...this.list]);
+                this.timer = setTimeout(() => {
+                    this.dragIndex = -1
+                }, 600)
             });
         }
     },
