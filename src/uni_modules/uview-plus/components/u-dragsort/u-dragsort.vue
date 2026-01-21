@@ -344,6 +344,8 @@ export default {
     .u-dragsort-item {
         position: absolute;
         width: 100%;
+        transition: box-shadow 0.45s ease-out;
+        cursor: pointer;
 
         &.dragging {
             z-index: 1000;
