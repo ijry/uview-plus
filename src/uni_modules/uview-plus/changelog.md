@@ -1,3 +1,6 @@
+## 3.6.104（2026-01-21）
+improvment: layout组件示例改为组合式API
+
 ## 3.6.103（2026-01-21）
 improvment: input组件示例改为组合式API
 
