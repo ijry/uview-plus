@@ -57,56 +57,57 @@
 	</up-popup>
 </template>
 
-<script>
-	import { random } from '@/uni_modules/uview-plus'
-	const indexList = () => {
-		const indexList = []
-		const charCodeOfA = 'A'.charCodeAt(0)
-		indexList.push("↑")
-		indexList.push("☆")
+<script setup>
+import { ref, computed } from 'vue';
+import { random } from '@/uni_modules/uview-plus';
+
+// 响应式数据
+const show = ref(false);
+
+// 创建索引列表
+const indexList = computed(() => {
+	const indexList = []
+	const charCodeOfA = 'A'.charCodeAt(0)
+	indexList.push("↑")
+	indexList.push("☆")
+	for (let i = 0; i < 10; i++) {
+		indexList.push(String.fromCharCode(charCodeOfA + i))
+	}
+	indexList.push('#')
+	return indexList
+})
+
+// 定义urls和names
+const urls = [
+	'https://uview-plus.jiangruyi.com/album/1.jpg',
+	'https://uview-plus.jiangruyi.com/album/2.jpg',
+	'https://uview-plus.jiangruyi.com/album/3.jpg',
+	'https://uview-plus.jiangruyi.com/album/4.jpg',
+	'https://uview-plus.jiangruyi.com/album/5.jpg',
+	'https://uview-plus.jiangruyi.com/album/6.jpg',
+	'https://uview-plus.jiangruyi.com/album/7.jpg',
+	'https://uview-plus.jiangruyi.com/album/8.jpg',
+	'https://uview-plus.jiangruyi.com/album/9.jpg',
+	'https://uview-plus.jiangruyi.com/album/10.jpg',
+];
+
+const names = ["勇往无敌", "疯狂的迪飙", "磊爱可", "梦幻梦幻梦", "枫中飘瓢", "飞翔天使",
+	"曾经第一", "追风幻影族长", "麦小姐", "胡格罗雅", "Red磊磊", "乐乐立立", "青龙爆风", "跑跑卡叮车", "山里狼", "supersonic超"
+];
+
+// 计算属性：生成列表项数组
+const itemArr = computed(() => {
+	return indexList.value.map(item => {
+		const arr = []
 		for (let i = 0; i < 10; i++) {
-			indexList.push(String.fromCharCode(charCodeOfA + i))
+			arr.push({
+				name: names[random(0, names.length - 1)],
+				url: urls[random(0, urls.length - 1)]
+			})
 		}
-		indexList.push('#')
-		return indexList
-	}
-	export default {
-		data() {
-			return {
-				show: false,
-				indexList: indexList(),
-				urls: [
-					'https://uview-plus.jiangruyi.com/album/1.jpg',
-					'https://uview-plus.jiangruyi.com/album/2.jpg',
-					'https://uview-plus.jiangruyi.com/album/3.jpg',
-					'https://uview-plus.jiangruyi.com/album/4.jpg',
-					'https://uview-plus.jiangruyi.com/album/5.jpg',
-					'https://uview-plus.jiangruyi.com/album/6.jpg',
-					'https://uview-plus.jiangruyi.com/album/7.jpg',
-					'https://uview-plus.jiangruyi.com/album/8.jpg',
-					'https://uview-plus.jiangruyi.com/album/9.jpg',
-					'https://uview-plus.jiangruyi.com/album/10.jpg',
-				],
-				names: ["勇往无敌", "疯狂的迪飙", "磊爱可", "梦幻梦幻梦", "枫中飘瓢", "飞翔天使",
-					"曾经第一", "追风幻影族长", "麦小姐", "胡格罗雅", "Red磊磊", "乐乐立立", "青龙爆风", "跑跑卡叮车", "山里狼", "supersonic超"
-				]
-			}
-		},
-		computed: {
-			itemArr() {
-				return this.indexList.map(item => {
-					const arr = []
-					for (let i = 0; i < 10; i++) {
-						arr.push({
-							name: this.names[random(0, this.names.length - 1)],
-							url: this.urls[random(0, this.urls.length - 1)]
-						})
-					}
-					return arr
-				})
-			}
-		},
-	}
+		return arr
+	})
+});
 </script>
 
 <style lang="scss">
