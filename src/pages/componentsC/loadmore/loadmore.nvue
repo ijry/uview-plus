@@ -74,22 +74,13 @@
 	</view>
 </template>
 
-<script>
-	import { toast } from '@/uni_modules/uview-plus'
-	
-	export default {
-		data() {
-			return {
+<script setup>
+import { toast } from '@/uni_modules/uview-plus'
 
-			}
-		},
-		methods: {
-			loadmore() {
-				console.log('loadmore');
-				toast('加载更多')
-			}
-		},
-	}
+const loadmore = () => {
+	console.log('loadmore');
+	toast('加载更多')
+}
 </script>
 
 <style lang="scss">

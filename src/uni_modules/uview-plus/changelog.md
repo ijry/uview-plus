@@ -1,3 +1,6 @@
+## 3.6.108（2026-01-22）
+improvment: loadmore组件示例改为组合式API
+
 ## 3.6.107（2026-01-21）
 improvment: list组件示例改为组合式API
 
