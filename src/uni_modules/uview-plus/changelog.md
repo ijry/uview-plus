@@ -1,3 +1,6 @@
+## 3.6.110（2026-01-22）
+improvment: navbar组件示例改为组合式API
+
 ## 3.6.109（2026-01-22）
 improvment: modal组件示例改为组合式API
 

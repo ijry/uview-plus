@@ -65,27 +65,27 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
+<script setup>
+// 导入必要的函数
+import { getCurrentInstance } from 'vue'
 
-			}
-		},
-		methods: {
-			navigateBack() {
-				uni.navigateBack({
-					delta: 1
-				})
-			},
-			rightClick() {
-				console.log('rightClick');
-			},
-			leftClick() {
-				console.log('leftClick');
-			}
-		}
-	}
+// 使用 getCurrentInstance 获取当前实例
+const instance = getCurrentInstance()
+
+// 定义方法
+const navigateBack = () => {
+	uni.navigateBack({
+		delta: 1
+	})
+}
+
+const rightClick = () => {
+	console.log('rightClick');
+}
+
+const leftClick = () => {
+	console.log('leftClick');
+}
 </script>
 
 <style lang="scss">
