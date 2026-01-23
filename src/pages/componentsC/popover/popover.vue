@@ -40,22 +40,21 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				text5: '长按文本，显示背景色',
-			}
-		},
-		onLoad() {
-			
-		},
-		methods: {
-			click(index) {
-				console.log('index', index);
-			}
-		}
-	}
+<script setup>
+import { ref, onLoad } from 'vue'
+
+// 响应式数据
+const text5 = ref('长按文本，显示背景色')
+
+// 页面生命周期
+onLoad(() => {
+	// 页面加载时的逻辑
+})
+
+// 定义方法
+const click = (index) => {
+	console.log('index', index);
+}
 </script>
 
 <style lang="scss">

@@ -1,3 +1,6 @@
+## 3.6.113（2026-01-23）
+improvment: popover组就示例改为组合式API
+
 ## 3.6.112（2026-01-23）
 improvment: picker组件示例改为组合式API
 
