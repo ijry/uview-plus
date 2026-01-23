@@ -1,3 +1,6 @@
+## 3.6.112（2026-01-23）
+improvment: picker组件示例改为组合式API
+
 ## 3.6.111（2026-01-23）
 improvment: no-network组件示例改为组合式API
 
