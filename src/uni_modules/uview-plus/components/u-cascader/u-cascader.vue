@@ -1,6 +1,6 @@
 <template>
 	<up-popup :show="popupShow" mode="bottom" :popup="false"
-		:mask="true" :closeable="true" :safe-area-inset-bottom="true"
+		:mask="true" :closeable="closeable" :safe-area-inset-bottom="true"
 		close-icon-color="#ffffff" :z-index="uZIndex"
 		:maskCloseAble="maskCloseAble" @close="close">
 		<view class="up-p-t-30 up-p-l-20 up-m-b-10" v-if="headerDirection =='column'">
@@ -61,6 +61,7 @@
 	 * @property {String} labelKey 指定选项标签为选项对象中的哪个属性值
 	 * @property {String} childrenKey 指定选项的子选项为选项对象中的哪个属性值
 	 * @property {Boolean} autoClose 是否在选择最后一级时自动关闭并触发confirm（默认false）
+	 * @property {Boolean} closeable 是否显示关闭图标（默认true）
 	 */
 	import { t } from '../../libs/i18n'
 	export default {
@@ -124,6 +125,11 @@
 			optionsCols: {
 				type: [Number],
 				default: 2
+			},
+			// 是否显示关闭图标
+			closeable: {
+				type: Boolean,
+				default: true
 			}
 		},
 		data() {
