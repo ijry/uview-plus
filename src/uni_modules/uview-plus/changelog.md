@@ -1,3 +1,6 @@
+## 3.6.117（2026-01-24）
+improvment: subsection组就示例改为组合式API
+
 ## 3.6.116（2026-01-24）
 improvment: 优化Cascader级联选择器右上角关闭图标的显示控制
 
