@@ -1,3 +1,6 @@
+## 3.6.119（2026-01-26）
+improvment: skeleton组件示例改为组合式API
+
 ## 3.6.118（2026-01-26）
 improvment: steps组件示例改为组合式API
 
