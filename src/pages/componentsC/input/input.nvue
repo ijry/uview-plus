@@ -3,6 +3,7 @@
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">基础使用</text>
 			<view class="u-demo-block__content">
+				{{value}}
 				<up-input
 					placeholder="请输入内容"
 					border="surround"

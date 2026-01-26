@@ -322,14 +322,17 @@ export default {
                 if (!isOut || this.clearInput) {
                     // 标识value值的变化是由内部引起的
                     this.changeFromInner = true;
-                    this.$emit("change", value);
-
+                   
                     // #ifdef VUE3
                     this.$emit("update:modelValue", value);
                     // #endif
                     // #ifdef VUE2
                     this.$emit("input", value);
                     // #endif
+					
+					//change方法需要放在下面，否则会引起change先触发，model后变化的异常
+					this.$emit("change", value);
+					
                 }
 
                 // 尝试调用u-form的验证方法
