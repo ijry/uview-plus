@@ -1,3 +1,6 @@
+## 3.6.120（2026-01-26）
+improvment: 增加Cascader级联选择器的取消事件
+
 ## 3.6.119（2026-01-26）
 improvment: skeleton组件示例改为组合式API
 
