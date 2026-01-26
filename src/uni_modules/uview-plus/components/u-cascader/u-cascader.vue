@@ -198,7 +198,7 @@
 			}
 		},
 		// 新增confirm事件
-		emits: ['update:modelValue', 'update:show', 'change', 'confirm'],
+		emits: ['update:modelValue', 'update:show', 'change', 'confirm', 'cancel'],
 		methods: {
 			t,
 			init() {
@@ -240,6 +240,7 @@
 				}
 			},
 			close() {
+				this.$emit('cancel');
 				this.$emit('update:show', false);
 			},
 			tabsChange(item) {
