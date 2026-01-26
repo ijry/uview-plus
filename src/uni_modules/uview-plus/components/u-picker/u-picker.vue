@@ -212,7 +212,7 @@ export default {
 			let firstItem = this.innerColumns[0] && this.innerColumns[0][0];
 			// //区分是不是对象数组
 			if (firstItem && Object.prototype.toString.call(firstItem) === '[object Object]') {
-				let res = this.innerColumns[0].filter(item => this.modelValue.includes(item['id']))
+				let res = this.innerColumns[0].filter(item => this.modelValue.includes(item[this.valueName]))
 				res = res.map(item => item[this.keyName]);
 				return res.join("/");
 

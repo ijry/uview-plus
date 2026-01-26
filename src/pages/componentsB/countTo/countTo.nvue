@@ -106,43 +106,49 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				value: 3000,
-				startVal1: 300,
-				startVal2: 100.00,
-				endVal: 10.55,
-				decimals: 2,
-				startVal3: 2000,
-				endVal2: 1542,
-				endVal3: 3000,
-				autoplay: false,
-				color: '#FF0000',
-				fontSize: 40,
-			}
-		},
-		onLoad() {
-			// setTimeout(() => {
-			// 	this.value = 3000
-			// }, 3000)
-		},
-		methods: {
-			start() {
-				this.$refs.uCountTo.start();
-			},
-			paused() {
-				this.$refs.uCountTo.stop()
-			},
-			resume() {
-				this.$refs.uCountTo.resume()
-			},
-			end() {
-				console.log('end');
-			}
-		}
-	}
+<script setup>
+import { ref } from 'vue'
+
+// 响应式数据
+const value = ref(3000)
+const startVal1 = ref(300)
+const startVal2 = ref(100.00)
+const endVal = ref(10.55)
+const decimals = ref(2)
+const startVal3 = ref(2000)
+const endVal2 = ref(1542)
+const endVal3 = ref(3000)
+const autoplay = ref(false)
+const color = ref('#FF0000')
+const fontSize = ref(40)
+
+// 组件引用
+const uCountTo = ref(null)
+
+// 页面生命周期 - onLoad 事件需要使用 onMounted 来替代
+// import { onMounted } from 'vue'
+// onMounted(() => {
+// 	// setTimeout(() => {
+// 	// 	value.value = 3000
+// 	// }, 3000)
+// })
+
+// 方法
+const start = () => {
+	uCountTo.value.start()
+}
+
+const paused = () => {
+	uCountTo.value.stop()
+}
+
+const resume = () => {
+	uCountTo.value.resume()
+}
+
+const end = () => {
+	console.log('end')
+}
 </script>
 
 <style lang="scss">

@@ -93,38 +93,37 @@
 	</view>
 </template>
 
-<script>
-	import { os, sleep, range } from '@/uni_modules/uview-plus'
-	export default {
-		data() {
-			return {
-				androidNvue: false,
-				percentage1: 30,
-				percentage2: 40,
-				percentage3: 50,
-				percentage4: 60,
-				percentage5: 70,
-				percentage6: 50,
-			}
-		},
-		onLoad() {
-			// #ifdef APP-NVUE
-			this.androidNvue = os() === 'android'
-			// #endif
-			sleep(2500).then(() => {
-				this.percentage1 = 120
-			})
-		},
-		methods: {
-			computedWidth(type) {
-				if(type === 'plus') {
-					this.percentage6 = range(0, 100, this.percentage6 + 10)
-				} else {
-					this.percentage6 = range(0, 100, this.percentage6 - 10)
-				}
-			}
-		},
+<script setup>
+import { ref, onMounted } from 'vue'
+import { os, sleep, range } from '@/uni_modules/uview-plus'
+
+// 响应式数据
+const androidNvue = ref(false)
+const percentage1 = ref(30)
+const percentage2 = ref(40)
+const percentage3 = ref(50)
+const percentage4 = ref(60)
+const percentage5 = ref(70)
+const percentage6 = ref(50)
+
+// 生命周期
+onMounted(() => {
+	// #ifdef APP-NVUE
+	androidNvue.value = os() === 'android'
+	// #endif
+	sleep(2500).then(() => {
+		percentage1.value = 120
+	})
+})
+
+// 方法
+const computedWidth = (type) => {
+	if(type === 'plus') {
+		percentage6.value = range(0, 100, percentage6.value + 10)
+	} else {
+		percentage6.value = range(0, 100, percentage6.value - 10)
 	}
+}
 </script>
 
 <style lang="scss">

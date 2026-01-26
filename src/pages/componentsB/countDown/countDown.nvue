@@ -121,37 +121,35 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				timeData: {},
-			}
-		},
-		onLoad() {
+<script setup>
+import { ref } from 'vue'
 
-		},
-		methods: {
-			//开始
-			start() {
-				this.$refs.countDown.start();
-			},
-			// 暂停
-			pause() {
-				this.$refs.countDown.pause();
-			},
-			// 重置
-			reset() {
-				this.$refs.countDown.reset();
-			},
-			onChange(e) {
-				this.timeData = e
-			},
-			finish() {
-				console.log('finish');
-			}
-		}
-	}
+const timeData = ref({})
+
+const countDown = ref(null)
+
+//开始
+const start = () => {
+	countDown.value.start();
+}
+
+// 暂停
+const pause = () => {
+	countDown.value.pause();
+}
+
+// 重置
+const reset = () => {
+	countDown.value.reset();
+}
+
+const onChange = (e) => {
+	timeData.value = e
+}
+
+const finish = () => {
+	console.log('finish');
+}
 </script>
 
 <style lang="scss">

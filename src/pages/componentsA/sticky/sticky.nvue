@@ -34,20 +34,15 @@
 	</view>
 </template>
 
+<script setup>
+const navigateBack = () => {
+	uni.navigateBack()
+}
+</script>
 <script>
 	import { mixin } from '@/uni_modules/uview-plus'
 	export default {
-		data() {
-			return {
-
-			}
-		},
-		mixins: [mixin],
-		methods: {
-			navigateBack() {
-				uni.navigateBack()
-			}
-		}
+		mixins: [mixin]
 	}
 </script>
 

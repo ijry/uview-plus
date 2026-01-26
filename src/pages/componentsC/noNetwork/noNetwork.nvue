@@ -19,20 +19,19 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		methods: {
-			disconnected() {
-				console.log('disconnected');
-			},
-			connected() {
-				console.log('connected');
-			},
-			retry() {
-				console.log('retry');
-			}
-		},
-	}
+<script setup>
+// 定义方法
+const disconnected = () => {
+	console.log('disconnected');
+}
+
+const connected = () => {
+	console.log('connected');
+}
+
+const retry = () => {
+	console.log('retry');
+}
 </script>
 
 <style lang="scss">

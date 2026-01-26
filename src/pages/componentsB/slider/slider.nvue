@@ -97,43 +97,42 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				modelShow: false,
-				popupShow: false,
-				sliderValue: 4,
-				useNative: false,
-				useNative: false,
-				value1: 30,
-				value2: 30,
-				value3: 30,
-				value4: 30,
-				value5: 30,
-				value6: [10, 20]
-			}
-		},
-		watch: {
-			value1(n) {
-				// console.log(n);
-			}
-		},
-		methods: {
-			moving(value) {
-				// console.log('moving', value)
-			},
-			click(value) {
-				// console.log('click', value)
-			},
-			end(value) {
-				// console.log('end', value)
-			},
-			start(value) {
-				// console.log('start', value)
-			}
-		}
-	}
+<script setup>
+import { ref, watch } from 'vue'
+
+// 响应式数据
+const modelShow = ref(false)
+const popupShow = ref(false)
+const sliderValue = ref(4)
+const useNative = ref(false)
+const value1 = ref(30)
+const value2 = ref(30)
+const value3 = ref(30)
+const value4 = ref(30)
+const value5 = ref(30)
+const value6 = ref([10, 20])
+
+// 监听器
+watch(value1, (n) => {
+	// console.log(n);
+})
+
+// 方法
+const moving = (value) => {
+	// console.log('moving', value)
+}
+
+const click = (value) => {
+	// console.log('click', value)
+}
+
+const end = (value) => {
+	// console.log('end', value)
+}
+
+const start = (value) => {
+	// console.log('start', value)
+}
 </script>
 
 <style lang="scss">

@@ -100,7 +100,7 @@
 						<view class="page-box">
 							<view>
 								<view class="centre">
-									<image src="https://cdn.uviewui.com/uview/template/taobao-order.png" mode=""></image>
+									<image src="https://uview-plus.jiangruyi.com/uview/template/taobao-order.png" mode=""></image>
 									<view class="explain">
 										您还没有相关的订单
 										<view class="tips">可以去看看有那些想买的</view>

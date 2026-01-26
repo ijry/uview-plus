@@ -1,3 +1,256 @@
+## 3.6.120（2026-01-26）
+improvment: 增加Cascader级联选择器的取消事件
+
+## 3.6.119（2026-01-26）
+improvment: skeleton组件示例改为组合式API
+
+## 3.6.118（2026-01-26）
+improvment: steps组件示例改为组合式API
+
+## 3.6.117（2026-01-24）
+improvment: subsection组就示例改为组合式API
+
+## 3.6.116（2026-01-24）
+improvment: 优化Cascader级联选择器右上角关闭图标的显示控制
+
+如果在级联文本过长或者类目过多时关闭图标会与类目文字重合，现在增加控制关闭图标的控制可以控制是否需要显示关闭图标，底部有取消按钮，关闭图标不是必须的
+
+## 3.6.115（2026-01-23）
+improvment: scroll-list组就示例改为组合式API
+
+## 3.6.114（2026-01-23）
+improvment: readmore组就示例改为组合式API
+
+## 3.6.113（2026-01-23）
+improvment: popover组就示例改为组合式API
+
+## 3.6.112（2026-01-23）
+improvment: picker组件示例改为组合式API
+
+## 3.6.111（2026-01-23）
+improvment: no-network组件示例改为组合式API
+
+## 3.6.110（2026-01-22）
+improvment: navbar组件示例改为组合式API
+
+## 3.6.109（2026-01-22）
+improvment: modal组件示例改为组合式API
+
+## 3.6.108（2026-01-22）
+improvment: loadmore组件示例改为组合式API
+
+## 3.6.107（2026-01-21）
+improvment: list组件示例改为组合式API
+
+## 3.6.106（2026-01-21）
+improvment: index-list2组件示例改为组合式API
+
+## 3.6.105（2026-01-21）
+improvment: index-list组件示例改为组合式API
+
+## 3.6.104（2026-01-21）
+improvment: layout组件示例改为组合式API
+
+## 3.6.103（2026-01-21）
+improvment: input组件示例改为组合式API
+
+## 3.6.102（2026-01-20）
+fix: 修复cascader缺少emits申明
+
+## 3.6.101（2026-01-20）
+improvment: form组件示例改为组合式API
+
+## 3.6.100（2026-01-20）
+improvment: datetimepicker组件示例改为组合式API
+
+## 3.6.99（2026-01-20）
+fix: 修复cate-tab组件设置默认current不生效
+
+## 3.6.98（2026-01-20）
+improvment: code-input组件示例改为组合式API
+
+## 3.6.97（2026-01-20）
+improvment: calendar组件示例改为组合式API
+
+## 3.6.96（2026-01-20）
+improvment: avatar组件示例改为组合式API
+
+## 3.6.95（2026-01-20）
+improvment: album组件示例改为组合式API
+
+## 3.6.94（2026-01-19）
+improvment: waterfall组件示例改为组合式API
+
+## 3.6.93（2026-01-19）
+improvment: upload组件示例改为组合式API
+
+## 3.6.92（2026-01-17）
+improvment: toast组件示例改为组合式API
+
+## 3.6.91（2026-01-16）
+improvment: tag组件示例改为组合式API
+
+## 3.6.90（2026-01-16）
+improvment: table2组件示例改为组合式API
+
+## 3.6.89（2026-01-16）
+add: 增加鸿蒙Next已上架二维码
+
+## 3.6.88（2026-01-16）
+improvment: table组件示例改为组合式API
+
+## 3.6.87（2026-01-15）
+tabbar2组件示例改为组合式API
+## 3.6.86（2026-01-15）
+improvment: tabbar组件示例改为组合式API
+## 3.6.85（2026-01-15）
+improvment: switch组件示例改为组合式API
+
+## 3.6.84（2026-01-15）
+improvment: slider组件示例改为组合式API
+
+## 3.6.83（2026-01-15）
+improvment: search组件示例改为组合式API
+
+## 3.6.82（2026-01-15）
+improvment: progress组件示例改为组合式API
+
+## 3.6.81（2026-01-15）
+improvment: parse组件示例改为组合式API
+
+
+## 3.6.80（2026-01-15）
+improvment: number-box组件示例改为组合式API
+
+## 3.6.78（2026-01-15）
+improvment: notify组件示例改为组合式API
+
+## 3.6.77（2026-01-15）
+improvment: notice-bar组件示例改为组合式API
+
+## 3.6.76（2026-01-15）
+ improvment: keyborad组件示例改为组合式API
+
+## 3.6.75（2026-01-15）
+improvment: dropdown组件示例改为组合式API
+
+## 3.6.74（2026-01-15）
+fix: 修复parse组件props缺少)
+
+## 3.6.73（2026-01-15）
+improvment: count-to组件示例改为组合式API
+
+## 3.6.72（2026-01-15）
+improvment: count-down组件示例改为组合式API
+
+## 3.6.71（2026-01-14）
+improvment: collapse组件示例改为组合式API
+
+## 3.6.70（2026-01-14）
+improvment: code组件示例改为组合式API
+
+## 3.6.69（2026-01-14）
+improvment: card组件示例改为组合式API
+
+## 3.6.68（2026-01-13）
+fix: 修复list组件在支付宝小程序下scrolltolower无法触发 #422
+## 3.6.67（2026-01-13）
+fix: 删除经典下拉框的打印
+
+## 3.6.66（2026-01-12）
+fix: 修正 RadioSlots 类型定义
+
+## 3.6.65（2026-01-12）
+fix: 修复u-picker在hasInput下回显异常和vue报错
+
+## 3.6.64（2026-01-12）
+fix: 解决cropper在ios小程序中底部操作栏被遮挡的问题
+
+## 3.6.63（2026-01-10）
+improvment: badge组建示例改为组合式API
+
+## 3.6.62（2026-01-10）
+improvment: alert组件示例改为组合式API
+
+## 3.6.61（2026-01-09）
+improvment: action-sheet组件示例改为组合式API
+
+## 3.6.60（2026-01-09）
+improvment: transition组件示例改为组合式API
+
+## 3.6.59（2026-01-09）
+improvment: swipe-action组件示例改为组合式API
+
+## 3.6.58（2026-01-09）
+improvment: sticky组件示例改为组合式API
+
+## 3.6.57（2026-01-08）
+improvment: 优化完善no-nerwork组件细节
+
+## 3.6.56（2026-01-08）
+fix: 修复signature的t方法
+
+## 3.6.55（2026-01-08）
+perf：补充多处TS声明提示信息 #953
+
+## 3.6.54（2026-01-08）
+fix: 修复slider示例页面变量重复
+## 3.6.53（2026-01-08）
+fix: 修复qrcode组件鸿蒙兼容
+
+## 3.6.52（2026-01-08）
+fix: nvue下采用webview支持二维码显示logo(因为gcanvas不支持图片渲染)
+
+## 3.6.51（2026-01-08）
+fix: 修复qrcode组件在App不显示logo
+
+improvment: qrcode逻辑优化封装
+
+## 3.6.50（2026-01-06）
+improvment: rate组件示例改为组合式API
+
+## 3.6.49（2026-01-06）
+improvment: radio组件示例改为组合式API
+
+## 3.6.48（2026-01-06）
+improvment: popup组件示例改为组合式API
+
+## 3.6.47（2026-01-06）
+improvment: overlay示例改为组合式API
+
+## 3.6.46（2026-01-05）
+improvment: loading-page组建示例改为组合式API
+
+## 3.6.45（2026-01-05）
+improvment: loading-icon组件示例改为组合式API
+
+## 3.6.44（2026-01-05）
+improvment: link组件示例改为组合式API
+
+## 3.6.43（2026-01-05）
+improvment: line组件示例改为组合式API
+
+## 3.6.42（2026-01-04）
+improvment: layzload组件示例改为组合式API
+
+## 3.6.41（2026-01-04）
+fix: 修复select组件缺少mixin
+
+## 3.6.40（2026-01-04）
+improvment: 去除ReadmeQQ群链接
+
+## 3.6.39（2026-01-04）
+improvment: image组件示例改为组合式API
+
+## 3.6.38（2026-01-03）
+improvment:  icon示例改为组合式API
+
+## 3.6.37（2025-12-31）
+improvment: 静态资源修复
+
+## 3.6.36（2025-12-30）
+improvment: grid示例改为组合式API
+
 ## 3.6.35（2025-12-25）
 fix: 修复grid布局由于内容溢出导致形变
 

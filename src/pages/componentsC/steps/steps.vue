@@ -208,18 +208,15 @@
 	</view>
 </template>
 
-<script>
-	import { timeFormat } from '@/uni_modules/uview-plus'
-	export default {
-		data() {
-			return {
-				current1: 1
-			}
-		},
-		onLoad() {
-			console.log(timeFormat('2024-12-18T02:25:31.432Z', 'yyyy年mm月dd日'))
-		}
-	}
+<script setup>
+import { ref } from 'vue'
+import { timeFormat } from '@/uni_modules/uview-plus'
+
+// 响应式数据
+const current1 = ref(1)
+
+// 页面加载时的逻辑
+console.log(timeFormat('2024-12-18T02:25:31.432Z', 'yyyy年mm月dd日'))
 </script>
 
 <style lang="scss">

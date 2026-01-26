@@ -26,118 +26,117 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				show: false,
-				notifyData: {
-					message: 'notify顶部提示',
-					type: 'primary',
-					color: '#ffffff',
-					bgColor: '',
-					fontSize: 15,
-					duration: 3000,
-				},
-				list: [{
-						notifyData: {
-							message: 'notify顶部提示',
-							type: 'primary',
-							color: '#ffffff',
-							bgColor: '',
-							fontSize: 15,
-							duration: 3000
-						},
-						title: '主要通知',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/notify/main.png'
-					}, {
-						notifyData: {
-							message: 'notify顶部提示',
-							type: 'success',
-							color: '#ffffff',
-							bgColor: '',
-							fontSize: 15,
-							duration: 3000,
-							safeAreaInsetTop: false
-						},
-						title: '成功通知',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/notify/success.png'
-					}, {
-						notifyData: {
-							message: 'notify顶部提示',
-							type: 'error',
-							color: '#ffffff',
-							bgColor: '',
-							fontSize: 14,
-							duration: 3000,
-							safeAreaInsetTop: false
-						},
-						title: '危险通知',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/notify/error.png'
-					}, {
-						notifyData: {
-							message: 'notify顶部提示',
-							type: 'warning',
-							color: '#ffffff',
-							bgColor: '',
-							fontSize: 15,
-							duration: 3000,
-							safeAreaInsetTop: false
-						},
-						title: '警告通知',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/notify/warning.png'
-					},
-					{
-						notifyData: {
-							message: 'notify顶部提示',
-							color: '#fff',
-							bgColor: '#000',
-							fontSize: 15,
-							duration: 3000,
-							safeAreaInsetTop: false
-						},
-						title: '自定义样式',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/notify/customStyle.png'
-					},
-					{
-						notifyData: {
-							message: 'notify顶部提示',
-							type: 'primary',
-							color: '#ffffff',
-							bgColor: '',
-							fontSize: 15,
-							duration: 6000,
-							safeAreaInsetTop: false
-						},
-						title: '自定义时间',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/notify/customTime.png'
-					},
-					{
-						notifyData: {
-							message: 'notify顶部提示',
-							color: '#fff',
-							bgColor: '',
-							fontSize: 15,
-							duration: 3000,
-							safeAreaInsetTop: true
-						},
-						title: '插入状态栏高度',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/notify/height.png'
-					}
-				]
-			}
+<script setup>
+import { ref } from 'vue'
+
+// 响应式数据
+const notifyData = ref({
+	message: 'notify顶部提示',
+	type: 'primary',
+	color: '#ffffff',
+	bgColor: '',
+	fontSize: 15,
+	duration: 3000,
+})
+
+const list = ref([{
+		notifyData: {
+			message: 'notify顶部提示',
+			type: 'primary',
+			color: '#ffffff',
+			bgColor: '',
+			fontSize: 15,
+			duration: 3000
 		},
-		onLoad() {},
-		methods: {
-			openNotify(params) {
-				this.$refs.uNotify.show({
-					...params
-				})
-				// 也可以通过主题形式调用，如：
-				// this.$refs.uNotify.primary('Primary主题')
-			}
-		}
+		title: '主要通知',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/notify/main.png'
+	}, {
+		notifyData: {
+			message: 'notify顶部提示',
+			type: 'success',
+			color: '#ffffff',
+			bgColor: '',
+			fontSize: 15,
+			duration: 3000,
+			safeAreaInsetTop: false
+		},
+		title: '成功通知',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/notify/success.png'
+	}, {
+		notifyData: {
+			message: 'notify顶部提示',
+			type: 'error',
+			color: '#ffffff',
+			bgColor: '',
+			fontSize: 14,
+			duration: 3000,
+			safeAreaInsetTop: false
+		},
+		title: '危险通知',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/notify/error.png'
+	}, {
+		notifyData: {
+			message: 'notify顶部提示',
+			type: 'warning',
+			color: '#ffffff',
+			bgColor: '',
+			fontSize: 15,
+			duration: 3000,
+			safeAreaInsetTop: false
+		},
+		title: '警告通知',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/notify/warning.png'
+	},
+	{
+		notifyData: {
+			message: 'notify顶部提示',
+			color: '#fff',
+			bgColor: '#000',
+			fontSize: 15,
+			duration: 3000,
+			safeAreaInsetTop: false
+		},
+		title: '自定义样式',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/notify/customStyle.png'
+	},
+	{
+		notifyData: {
+			message: 'notify顶部提示',
+			type: 'primary',
+			color: '#ffffff',
+			bgColor: '',
+			fontSize: 15,
+			duration: 6000,
+			safeAreaInsetTop: false
+		},
+		title: '自定义时间',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/notify/customTime.png'
+	},
+	{
+		notifyData: {
+			message: 'notify顶部提示',
+			color: '#fff',
+			bgColor: '',
+			fontSize: 15,
+			duration: 3000,
+			safeAreaInsetTop: true
+		},
+		title: '插入状态栏高度',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/notify/height.png'
 	}
+])
+
+// 组件引用
+const uNotify = ref(null)
+
+// 方法
+const openNotify = (params) => {
+	uNotify.value.show({
+		...params
+	})
+	// 也可以通过主题形式调用，如：
+	// this.$refs.uNotify.primary('Primary主题')
+}
 </script>
 
 <style lang="scss">

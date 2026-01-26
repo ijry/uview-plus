@@ -58,7 +58,6 @@ export default {
             itemWidth: 80,
             areaWidth: 0, // 可拖动区域宽度
             areaHeight: 0, // 可拖动区域高度
-            originalPositions: [], // 保存原始位置
             currentPosition: {
                 x: 0,
                 y: 0
@@ -120,15 +119,6 @@ export default {
                     y
                 };
             });
-            // 保存初始位置
-            this.saveOriginalPositions();
-        },
-        saveOriginalPositions() {
-            // 保存当前位置作为原始位置
-            this.originalPositions = this.list.map(item => ({
-                x: item.x,
-                y: item.y
-            }));
         },
         async calculateItemSize() {
             // 计算项目尺寸
@@ -144,8 +134,6 @@ export default {
 
                             // 更新所有项目的位置
                             this.updatePositions();
-                            // 保存原始位置
-                            this.saveOriginalPositions();
                         }
                         resolve(res);
                     })
@@ -169,16 +157,12 @@ export default {
                     .exec();
             });
         },
-        updatePositions() {
+        updatePositions(isDragging) {
             // 更新所有项目的位置
             this.list = this.list.map((item, index) => {
                 // 当前正在拖动的项目保持拖动位置不动，避免抖动
-                if (this.dragIndex === index) {
-                    return {
-                        ...item,
-                        x: this.currentPosition.x,
-                        y: this.currentPosition.y
-                    }
+                if (isDragging && this.dragIndex === index) {
+                    return item
                 }
 
                 if (this.direction === 'vertical') {
@@ -209,9 +193,9 @@ export default {
             })
         },
         onTouchStart(index) {
+            if (this.list[index]?.draggable === false) return;
+            if (this.timer) clearTimeout(this.timer);
             this.dragIndex = index;
-            // 保存当前位置作为原始位置
-            this.saveOriginalPositions();
         },
         onChange(index, event) {
             if (!event.detail.source || event.detail.source !== 'touch') return;
@@ -265,19 +249,16 @@ export default {
             const movedItem = this.list.splice(fromIndex, 1)[0];
             this.list.splice(toIndex, 0, movedItem);
 
-            // 震动反馈
-            if (uni.vibrateShort) {
-                uni.vibrateShort();
-            }
-
             // 更新当前拖拽项目的新索引
             this.dragIndex = toIndex;
 
             // 更新所有项目的位置
-            this.updatePositions();
+            this.updatePositions(true);
 
-            // 保存当前位置作为原始位置
-            this.saveOriginalPositions();
+            // 震动反馈
+            if (uni.vibrateShort) {
+                uni.vibrateShort();
+            }
         },
         onTouchEnd() {
             // 0.001是为了解决拖动过快等某些极限场景下位置还原不生效问题
@@ -290,12 +271,11 @@ export default {
 
             // 重置到位置，需要延迟触发动，否则无效。
             sleep(50).then(() => {
-                this.list.forEach((item, index) => {
-                    item.x = this.originalPositions[index].x;
-                    item.y = this.originalPositions[index].y;
-                });
-                this.dragIndex = -1;
+                this.updatePositions();
                 this.$emit('drag-end', [...this.list]);
+                this.timer = setTimeout(() => {
+                    this.dragIndex = -1
+                }, 600)
             });
         }
     },
@@ -323,7 +303,6 @@ export default {
                     this.$nextTick(() => {
                         this.initList();
                         this.updatePositions();
-                        this.saveOriginalPositions();
                     });
                 }
             }
@@ -344,6 +323,8 @@ export default {
     .u-dragsort-item {
         position: absolute;
         width: 100%;
+        transition: box-shadow 0.45s ease-out;
+        cursor: pointer;
 
         &.dragging {
             z-index: 1000;

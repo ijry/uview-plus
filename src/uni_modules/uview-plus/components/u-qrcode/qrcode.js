@@ -1031,8 +1031,10 @@ let QRCode = {};
             image: '',
             imageSize: 30,
             canvasId: opt.canvasId,
-            nvueContext: opt.nvueContext,
-            context: opt.context,
+			canvas: opt.canvas,
+			ctx: opt.ctx,
+            isNvue: opt.isNvue,
+            vuectx: opt.vuectx,
             usingComponents: opt.usingComponents,
             showLoading: opt.showLoading,
             loadingText: opt.loadingText,
@@ -1087,21 +1089,6 @@ let QRCode = {};
             return options.foreground;
         }
 
-        let getCanvas = async (id) => {
-            return new Promise((resolve, reject)=>{
-                try {
-                    const query = uni.createSelectorQuery().in(this.options.context);
-                    query.select(`#${id}`)
-                    .fields({ node: true, size: true })
-                    .exec((res) => {
-                        resolve(res[0].node)
-                    })
-                }
-                catch (e) {
-                    console.error("createCanvasContextFail",e)
-                }
-            })
-        }
         // 创建canvas
         let createCanvas = async function (options) {
             let isApp = false;
@@ -1116,28 +1103,17 @@ let QRCode = {};
                 });
             }
             var ctx = '';
-            if (options.nvueContext) {
-                ctx = options.nvueContext;
-            }
-            else {
-                // 获取canvas node节点
-                canvas = await getCanvas(options.canvasId);
-                // #ifdef MP
-                // 不清楚是小程序的bug还是什么原因，canvas的node节点宽高和设置的宽高不一致 重新设置下
-                canvas.width = options.size;
-                canvas.height = options.size;
-                // #endif
-                // #ifdef APP
-                ctx = uni.createCanvasContext(options.canvasId, options.context);
-                // #endif
-                // #ifndef APP
-                ctx = canvas.getContext('2d');
-                // #endif
-
-            }
+			canvas = options.canvas;
+			ctx = options.ctx;
+			// 获取canvas node节点
+			// #ifdef MP
+			// 不清楚是小程序的bug还是什么原因，canvas的node节点宽高和设置的宽高不一致 重新设置下
+			canvas.width = options.size;
+			canvas.height = options.size;
+			// #endif
             // 设置组件中data里面的ctx
-            options.context.ctx = ctx;
-            options.context.canvas = canvas;
+            // options.vuectx.ctx = ctx;
+            // options.vuectx.canvas = canvas;
 
             var count = qrCodeAlg.getModuleCount();
             var ratioSize = options.size;
@@ -1156,7 +1132,7 @@ let QRCode = {};
                         count: count,
                         options: options
                     });
-                    if (options.nvueContext) {
+                    if (options.isNvue) {
                         ctx.setFillStyle(qrCodeAlg.modules[row][col] ? foreground : options.background);
                     } else {
                         ctx.fillStyle = qrCodeAlg.modules[row][col] ? foreground : options.background;
@@ -1168,26 +1144,10 @@ let QRCode = {};
                 var x = Number(((ratioSize - ratioImgSize) / 2).toFixed(2));
                 var y = Number(((ratioSize - ratioImgSize) / 2).toFixed(2));
                 drawRoundedRect(ctx, x, y, ratioImgSize, ratioImgSize, 2, 6, true, true)
-                if (options.nvueContext) {
-                    ctx.drawImage(options.image, x, y, ratioImgSize, ratioImgSize);
-                }
-                else {
-                    // #ifdef H5 || APP
-                    const img = new Image();
-                    // #endif
-
-                    // #ifndef H5 || APP
-                    const img = canvas.createImage();
-                    // #endif
-
-                    img.onload = () => {
-                        ctx.drawImage(img, x, y, ratioImgSize, ratioImgSize);
-                    };
-                    img.src = options.image;
-                }
+				options.vuectx.drawImage(options.image, x, y, ratioImgSize, ratioImgSize);
                 // 画圆角矩形
                 function drawRoundedRect(ctxi, x, y, width, height, r, lineWidth, fill, stroke) {
-                    if (options.nvueContext || isApp) {
+                    if (options.isNvue || isApp) {
                         ctxi.setLineWidth(lineWidth);
                         ctxi.setFillStyle(options.background);
                         ctxi.setStrokeStyle(options.background);
@@ -1222,11 +1182,11 @@ let QRCode = {};
             }
             setTimeout(() => {
                 // canvas2 绘制是自动的不需要手动绘制
-                if(options.nvueContext || isApp){
+                if(options.isNvue || isApp){
                     ctx.draw(true, () => {
                         // 保存到临时区域
                         setTimeout(() => {
-                            if (options.nvueContext) {
+                            if (options.isNvue) {
                                 ctx.toTempFilePath(
                                     0,
                                     0,
@@ -1251,6 +1211,7 @@ let QRCode = {};
                                     canvasId: options.canvasId,
                                     quality: Number(1),
                                     success: function (res) {
+										// console.log('绘制成功', res)
                                         if (options.cbResult) {
                                             // 由于官方还没有统一此接口的输出字段，所以先判定下  支付宝为 res.apFilePath
                                             if (!empty(res.tempFilePath)) {
@@ -1263,6 +1224,7 @@ let QRCode = {};
                                         }
                                     },
                                     fail: function (res) {
+										console.log('绘制失败', res)
                                         if (options.cbResult) {
                                             options.cbResult(res)
                                         }
@@ -1270,7 +1232,7 @@ let QRCode = {};
                                     complete: function () {
                                         uni.hideLoading();
                                     },
-                                }, options.context);
+                                }, options.vuectx);
                             }
                         }, options.text.length + 100);
                     });
@@ -1279,7 +1241,7 @@ let QRCode = {};
                     options.cbResult("")
                 }
 
-            }, options.usingComponents ? 0 : 150);
+            }, options.usingComponents ? 100 : 200);
         }
         createCanvas(this.options);
         // 空判定
@@ -1302,10 +1264,10 @@ let QRCode = {};
     };
     QRCode.prototype.clear = function (fn) {
         var ctx = '';
-        if (options.nvueContext) {
-            ctx = options.nvueContext;
+        if (options.isNvue) {
+            ctx = options.ctx;
         } else {
-            uni.createCanvasContext(this.options.canvasId, this.options.context)
+            uni.createCanvasContext(this.options.canvasId, this.options.vuectx)
         }
         ctx.clearRect(0, 0, this.options.size, this.options.size)
         ctx.draw(false, () => {

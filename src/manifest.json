@@ -175,10 +175,10 @@
             },
             "signingConfigs" : {
                 "default" : {
-                    "certpath" : "c:\\Users\\Jry\\AppData\\Roaming\\HBuilder X\\extensions\\launcher\\agc-certs\\1763917417142.cer",
+                    "certpath" : "c:\\Users\\Jry\\AppData\\Roaming\\HBuilder X\\extensions\\launcher\\agc-certs\\1767838227005.cer",
                     "keyAlias" : "debugKey",
                     "keyPassword" : "0000001B40CD843FE60FDE882BE7E3C5B587515A209E8081CCBF34B58A9D50C50352F19D9F88C6294CD424",
-                    "profile" : "c:\\Users\\Jry\\AppData\\Roaming\\HBuilder X\\extensions\\launcher\\agc-certs\\1763917417142.p7b",
+                    "profile" : "c:\\Users\\Jry\\AppData\\Roaming\\HBuilder X\\extensions\\launcher\\agc-certs\\1767838227005.p7b",
                     "signAlg" : "SHA256withECDSA",
                     "storeFile" : "c:\\Users\\Jry\\AppData\\Roaming\\HBuilder X\\extensions\\launcher\\agc-certs\\1763917417142.p12",
                     "storePassword" : "0000001B40CD843FE60FDE882BE7E3C5B587515A209E8081CCBF34B58A9D50C50352F19D9F88C6294CD424"
@@ -189,7 +189,7 @@
                     "keyPassword" : "00000019B7ABC0513CAA4C3C7D91E1F86CA29E7872574B0F269709FBBAFC6A5F75B7AC659D41015DB7",
                     "profile" : "uviewplusRelease.p7b",
                     "signAlg" : "SHA256withECDSA",
-                    "storeFile" : "C:/Users/Jry/Documents/WWW/xyito/config/hos/uviewplus/prod.p12",
+                    "storeFile" : "prod.p12",
                     "storePassword" : "00000019015DD2C0F59D0B74AA8152784E0586AF979664BE90722EF0F48E5B35769D97D56D8AA937DE"
                 }
             }

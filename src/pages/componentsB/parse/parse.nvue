@@ -4,42 +4,42 @@
 	</view>
 </template>
 
-<script>
-	// const content = import('./content')
-	import parseContent from './content';
-	export default {
-		data() {
-			return {
-				content: '',
-				tagStyle: {
-					table: 'box-sizing: border-box; border-top: 1px solid #dfe2e5; border-left: 1px solid #dfe2e5;',
-					th: 'border-right: 1px solid #dfe2e5; border-bottom: 1px solid #dfe2e5;',
-					td: 'border-right: 1px solid #dfe2e5; border-bottom: 1px solid #dfe2e5;',
-					li: 'margin: 5px 0;'
-				}
-			}
-		},
-		onLoad() {
-			// 模拟网络请求
-			setTimeout(() => {
-				this.content = parseContent
-			}, 200)
-		},
-		methods: {
-			load() {
-				// dom 结构加载完毕时触发
-			},
-			ready() {
-				// 渲染完毕时触发
-			},
-			imgTap() {
-				// 图片被点击时触发
-			},
-			linkTap() {
-				// 链接被点击时触发
-			}
-		}
-	}
+<script setup>
+import { ref, onMounted } from 'vue'
+import parseContent from './content'
+
+// 响应式数据
+const content = ref('')
+const tagStyle = ref({
+	table: 'box-sizing: border-box; border-top: 1px solid #dfe2e5; border-left: 1px solid #dfe2e5;',
+	th: 'border-right: 1px solid #dfe2e5; border-bottom: 1px solid #dfe2e5;',
+	td: 'border-right: 1px solid #dfe2e5; border-bottom: 1px solid #dfe2e5;',
+	li: 'margin: 5px 0;'
+})
+
+// 模拟网络请求
+onMounted(() => {
+	setTimeout(() => {
+		content.value = parseContent
+	}, 200)
+})
+
+// 方法
+const load = () => {
+	// dom 结构加载完毕时触发
+}
+
+const ready = () => {
+	// 渲染完毕时触发
+}
+
+const imgTap = () => {
+	// 图片被点击时触发
+}
+
+const linkTap = () => {
+	// 链接被点击时触发
+}
 </script>
 
 <style lang="scss">

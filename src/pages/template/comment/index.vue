@@ -65,7 +65,7 @@ export default {
 					name: '叶轻眉',
 					date: '12-25 18:58',
 					contentText: '我不信伊朗会没有后续反应，美国肯定会为今天的事情付出代价的',
-					url: 'https://cdn.uviewui.com/uview/template/SmilingDog.jpg',
+					url: 'https://uview-plus.jiangruyi.com/uview/template/SmilingDog.jpg',
 					allReply: 12,
 					likeNum: 33,
 					isLike: false,
@@ -88,7 +88,7 @@ export default {
 					allReply: 0,
 					likeNum: 11,
 					isLike: false,
-					url: 'https://cdn.uviewui.com/uview/template/niannian.jpg',
+					url: 'https://uview-plus.jiangruyi.com/uview/template/niannian.jpg',
 				},
 				{
 					id: 3,
@@ -116,7 +116,7 @@ export default {
 					name: '叶轻眉3',
 					date: '06-20 13:58',
 					contentText: '我不信伊朗会没有后续反应，美国肯定会为今天的事情付出代价的',
-					url: 'https://cdn.uviewui.com/uview/template/SmilingDog.jpg',
+					url: 'https://uview-plus.jiangruyi.com/uview/template/SmilingDog.jpg',
 					allReply: 0,
 					likeNum: 150,
 					isLike: false

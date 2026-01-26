@@ -121,31 +121,29 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				value1: '',
-				value2: '',
-				value3: '',
-				value4: '',
-				value5: '',
-				value6: '',
-				value7: '',
-				value8: '',
-				value9: '123',
-				value10: '34'
-			}
-		},
-		methods: {
-			change(e) {
-				console.log('change', e);
-			},
-			finish(e) {
-				console.log('finish', e);
-			}
-		},
-	}
+<script setup>
+import { ref } from 'vue';
+
+// 定义响应式数据
+const value1 = ref('');
+const value2 = ref('');
+const value3 = ref('');
+const value4 = ref('');
+const value5 = ref('');
+const value6 = ref('');
+const value7 = ref('');
+const value8 = ref('');
+const value9 = ref('123');
+const value10 = ref('34');
+
+// 定义方法
+const change = (e) => {
+	console.log('change', e);
+};
+
+const finish = (e) => {
+	console.log('finish', e);
+};
 </script>
 
 <style lang="scss">

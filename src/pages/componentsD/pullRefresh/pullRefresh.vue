@@ -54,7 +54,7 @@
 			  <template #refreshing>
 				<view class="custom-refresh-content u-flex-y u-flex-items-center" style="background-color: gray;">
 				  <view class="refreshing-animation" style="margin-bottom: -32px;">
-					<up-icon size="100px" name="https://s3.bmp.ovh/imgs/2025/07/25/772bb6ae58cbd2c1.gif"></up-icon>
+					<up-icon size="100px" name="https://uview-plus.jiangruyi.com/uview/ext/772bb6ae58cbd2c1.gif"></up-icon>
 				  </view>
 				  <!-- <text class="refresh-text">正在刷新...</text> -->
 				</view>

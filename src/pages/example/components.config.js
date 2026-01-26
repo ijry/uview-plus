@@ -535,13 +535,14 @@ export default [{
         icon: 'transition',
         title: 'transition 动画',
         title_en: 'Transition'
-    }, {
+    }
+	, {
         path: '/pages/componentsD/qrcode/qrcode',
         icon: 'qrcode',
         title: 'Qrcode 二维码',
         title_en: 'Qrcode'
-    },
-    {
+    }
+	,{
         path: '/pages/componentsD/coupon/coupon',
         icon: 'coupon',
         title: 'Coupon 优惠券',

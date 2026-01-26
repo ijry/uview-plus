@@ -83,14 +83,18 @@
 				deep: true,
 				handler(newVal, oldVal) {
 					// this.observer();
-					sleep(30);
-					this.getMenuItemTop();
-					this.leftMenuStatus(this.innerCurrent);
+					sleep(30).then(() => {
+						this.getMenuItemTop();
+						this.leftMenuStatus(this.innerCurrent);
+					})
 				}
 			},
 			current(nval) {
 				this.innerCurrent = nval;
 				this.leftMenuStatus(this.innerCurrent);
+				sleep(30).then(() => {
+					this.swichMenu(this.innerCurrent)
+				})
 			},
 			height() {
 				// console.log('height change');
@@ -120,6 +124,10 @@
 			this.innerCurrent = this.current;
 			this.leftMenuStatus(this.innerCurrent);
 			this.getMenuItemTop()
+			// 设置默认index
+			sleep(50).then(() => {
+				this.swichMenu(this.innerCurrent)
+			})
 		},
 		methods: {
 			addUnit,
@@ -129,7 +137,9 @@
 					if(this.arr.length == 0) {
 						await this.getMenuItemTop();
 					}
-					this.scrollIntoView = 'item' + index;
+					if (this.scrollIntoView != 'item' + index) {
+						this.scrollIntoView = 'item' + index;
+					}
 				}
 
 				if (index == this.innerCurrent) return;

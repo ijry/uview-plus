@@ -124,90 +124,94 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				content: '模态框，常用于消息提示、消息确认、在当前页面内完成特定的交互操作',
-				show1: false,
-				show2: false,
-				show3: false,
-				show4: false,
-				show5: false,
-				show6: false,
-				show7: false,
-				show8: false,
-				show9: false,
-				show10: false,
-				list: [{
-						title: '基础使用',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/modal/4.png'
-					},
-					{
-						title: '无标题',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/modal/5.png'
-					},
-					{
-						title: '带取消按钮',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/modal/2.png'
-					},
-					{
-						title: '异步关闭',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/modal/6.png'
-					},
-					{
-						title: '对调取消和确认按钮',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/modal/3.png'
-					},
-					{
-						title: '允许点击遮罩关闭',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/modal/7.png'
-					},
-					{
-						title: '传入slot',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/modal/1.png'
-					},
-					{
-						title: '自定义按钮',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/modal/8.png'
-					},
-					{
-						title: '淡入淡出动画',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/modal/9.png'
-					},
-					{
-						title: '带底部关闭按钮',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/modal/2.png'
-					}
-				]
-			}
-		},
-		methods: {
-			showModal(index) {
-				this[`show${index + 1}`] = true
-			},
-			navigateBack() {
-				uni.navigateBack()
-			},
-			confirm4() {
-				setTimeout(() => {
-					this.show4 = false
-				}, 2000)
-			},
-			confirm() {
-				this.show3 = false
-				console.log('confirm');
-			},
-			cancel() {
-				this.show3 = false
-				console.log('cancel');
-			},
-			close() {
-				this.show3 = false
-				console.log('close');
-			}
-		}
+<script setup>
+import { ref } from 'vue'
+
+const content = ref('模态框，常用于消息提示、消息确认、在当前页面内完成特定的交互操作')
+const show1 = ref(false)
+const show2 = ref(false)
+const show3 = ref(false)
+const show4 = ref(false)
+const show5 = ref(false)
+const show6 = ref(false)
+const show7 = ref(false)
+const show8 = ref(false)
+const show9 = ref(false)
+const show10 = ref(false)
+
+// 创建一个数组来存储所有的 show ref 对象
+const showRefs = [show1, show2, show3, show4, show5, show6, show7, show8, show9, show10]
+
+const list = ref([{
+		title: '基础使用',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/modal/4.png'
+	},
+	{
+		title: '无标题',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/modal/5.png'
+	},
+	{
+		title: '带取消按钮',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/modal/2.png'
+	},
+	{
+		title: '异步关闭',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/modal/6.png'
+	},
+	{
+		title: '对调取消和确认按钮',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/modal/3.png'
+	},
+	{
+		title: '允许点击遮罩关闭',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/modal/7.png'
+	},
+	{
+		title: '传入slot',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/modal/1.png'
+	},
+	{
+		title: '自定义按钮',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/modal/8.png'
+	},
+	{
+		title: '淡入淡出动画',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/modal/9.png'
+	},
+	{
+		title: '带底部关闭按钮',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/modal/2.png'
 	}
+])
+
+const showModal = (index) => {
+  showRefs[index].value = true
+}
+
+const navigateBack = () => {
+	uni.navigateBack()
+}
+
+const confirm4 = () => {
+	setTimeout(() => {
+		show4.value = false
+	}, 2000)
+}
+
+const confirm = () => {
+	show3.value = false
+	console.log('confirm');
+}
+
+const cancel = () => {
+	show3.value = false
+	console.log('cancel');
+}
+
+const close = () => {
+	show3.value = false
+	console.log('close');
+}
 </script>
 
 <style lang="scss">

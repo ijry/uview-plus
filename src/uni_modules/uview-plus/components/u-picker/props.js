@@ -16,6 +16,10 @@ export const props = defineMixin({
                 return {}
             }
         },
+        inputBorder: {
+            type: String,
+            default: () => defProps.input.inputBorder
+        },
         disabled: {
             type: Boolean,
             default: () => defProps.picker.disabled

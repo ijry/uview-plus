@@ -100,123 +100,141 @@
 		></up-calendar>
 	</view>
 </template>
-<script>
-	export default {
-		data() {
-			const d = new Date()
-			const year = d.getFullYear()
-			let month = d.getMonth() + 1
-			month = month < 10 ? `0${month}` : month
-			const date = d.getDate()
-			return {
-				index: 0,
-				showInline: true,
-				show1: false,
-				show2: false,
-				show3: false,
-				show4: false,
-				show5: false,
-				show6: false,
-				show7: false,
-				show8: false,
-				show9: false,
-				values: ['','','','','','','',''],
-				customThemeDefaultDate: [`${year}-${month}-${date}`, `${year}-${month}-${date + 5}`], 
-				customTextDefaultDate: [`${year}-${month}-${date}`],
-				minDate: `2022-08-09`,
-				maxDate: `${year}-${month}-${date + 10}`,
-				defaultDateMultiple: [`${year}-${month}-${date}`, `${year}-${month}-${date + 1}`, `${year}-${month}-${date + 2}`],
-				list: [{
-						title: '单个日期',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/calendar/7.png'
-					},
-					{
-						title: '多个日期',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/calendar/8.png'
-					},
-					{
-						title: '日期范围',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/calendar/9.png'
-					},
-					{
-						title: '自定义主题颜色',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/calendar/15.png'
-					},{
-						title: '自定义文案',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/calendar/14.png'
-					},{
-						title: '日期最大范围',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/calendar/13.png'
-					},{
-						title: '显示农历',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/calendar/5.png'
-					},{
-						title: '默认日期',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/calendar/10.png'
-					},{
-						title: '日期最小范围',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/calendar/10.png'
-					}
-				]
-			}
-		},
-		methods: {
-			showCalendar(index) {
-				this.index = index + 1
-				this[`show${index + 1}`] = true
-			},
-			navigateBack() {
-				uni.navigateBack();
-			},
-			confirm(e) {
-				this[`show${this.index}`] = false
-				console.log(e);
-				switch(this.index - 1) {
-					case 0:
-						this.values[this.index - 1] = e[0];
-						break;
-					case 1:
-						e.forEach((value, index) => {
-							index === 0 ? this.values[this.index - 1] = value : this.values[this.index - 1] += ';' + value
-						})
-						break;
-					case 2:
-						this.values[this.index - 1] = e[0] + '~' + e[e.length - 1];
-						break;
-					case 3:
-						this.values[this.index - 1] = e[0] + '~' + e[e.length - 1];
-						break;
-					case 4:
-						this.values[this.index - 1] = e[0] + '~' + e[e.length - 1];
-						break;
-					case 5:
-						this.values[this.index - 1] = e[0];
-						break;
-					case 6:
-						this.values[this.index - 1] = e[0];
-						break;
-					case 7:
-						e.forEach((value, index) => {
-							index === 0 ? this.values[this.index - 1] = value : this.values[this.index - 1] += ';' + value
-						})
-						break;
-				}
-			},
-			close() {
-				this[`show${this.index}`] = false
-			},
-			formatter(day) {
-				const d = new Date()
-				let month = d.getMonth() + 1
-				const date = d.getDate()
-				if(day.month == month && day.day == date + 3) {
-					day.bottomInfo = '有优惠'
-					day.dot = true
-				}
-				return day
-			}
-		},
+
+<script setup>
+import { ref } from 'vue';
+
+// 初始化日期数据
+const d = new Date()
+const year = d.getFullYear()
+let month = d.getMonth() + 1
+month = month < 10 ? `0${month}` : month
+const date = d.getDate()
+
+// 定义响应式数据
+const index = ref(0)
+const showInline = ref(true)
+const show1 = ref(false)
+const show2 = ref(false)
+const show3 = ref(false)
+const show4 = ref(false)
+const show5 = ref(false)
+const show6 = ref(false)
+const show7 = ref(false)
+const show8 = ref(false)
+const show9 = ref(false)
+const values = ref(['','','','','','','',''])
+const customThemeDefaultDate = ref([`${year}-${month}-${date}`, `${year}-${month}-${date + 5}`])
+const customTextDefaultDate = ref([`${year}-${month}-${date}`])
+const minDate = ref(`2022-08-09`)
+const maxDate = ref(`${year}-${month}-${date + 10}`)
+const defaultDateMultiple = ref([`${year}-${month}-${date}`, `${year}-${month}-${date + 1}`, `${year}-${month}-${date + 2}`])
+
+const list = ref([{
+		title: '单个日期',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/calendar/7.png'
+	},
+	{
+		title: '多个日期',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/calendar/8.png'
+	},
+	{
+		title: '日期范围',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/calendar/9.png'
+	},
+	{
+		title: '自定义主题颜色',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/calendar/15.png'
+	},{
+		title: '自定义文案',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/calendar/14.png'
+	},{
+		title: '日期最大范围',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/calendar/13.png'
+	},{
+		title: '显示农历',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/calendar/5.png'
+	},{
+		title: '默认日期',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/calendar/10.png'
+	},{
+		title: '日期最小范围',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/calendar/10.png'
 	}
+])
+
+// 定义方法
+const showCalendar = (indexVal) => {
+	index.value = indexVal + 1
+	show1.value = false;
+	show2.value = false;
+	show3.value = false;
+	show4.value = false;
+	show5.value = false;
+	show6.value = false;
+	show7.value = false;
+	show8.value = false;
+	show9.value = false;
+	const showRef = `show${indexVal + 1}`;
+	eval(`${showRef}.value = true`);
+}
+
+const navigateBack = () => {
+	uni.navigateBack();
+}
+
+const confirm = (e) => {
+	const showRef = `show${index.value}`;
+	eval(`${showRef}.value = false`);
+	console.log(e);
+	switch(index.value - 1) {
+		case 0:
+			values.value[index.value - 1] = e[0];
+			break;
+		case 1:
+			e.forEach((value, indexItem) => {
+				indexItem === 0 ? values.value[index.value - 1] = value : values.value[index.value - 1] += ';' + value
+			})
+			break;
+		case 2:
+			values.value[index.value - 1] = e[0] + '~' + e[e.length - 1];
+			break;
+		case 3:
+			values.value[index.value - 1] = e[0] + '~' + e[e.length - 1];
+			break;
+		case 4:
+			values.value[index.value - 1] = e[0] + '~' + e[e.length - 1];
+			break;
+		case 5:
+			values.value[index.value - 1] = e[0];
+			break;
+		case 6:
+			values.value[index.value - 1] = e[0];
+			break;
+		case 7:
+			e.forEach((value, indexItem) => {
+				indexItem === 0 ? values.value[index.value - 1] = value : values.value[index.value - 1] += ';' + value
+			})
+			break;
+	}
+}
+
+const close = () => {
+	const showRef = `show${index.value}`;
+	eval(`${showRef}.value = false`);
+}
+
+const formatter = (day) => {
+	const d = new Date()
+	let month = d.getMonth() + 1
+	const date = d.getDate()
+	if(day.month == month && day.day == date + 3) {
+		day.bottomInfo = '有优惠'
+		day.dot = true
+	}
+	return day
+}
+
 </script>
 
 <style lang="scss">

@@ -51,4 +51,4 @@ export const props = defineMixin({
           default: null
 		}
 	}
-}
+})

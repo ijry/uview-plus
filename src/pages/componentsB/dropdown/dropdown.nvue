@@ -46,102 +46,110 @@
 	</view>
 </template>
 
-<script>
-	import { toast } from '@/uni_modules/uview-plus';
-	export default {
-		data() { 
-			return {
-				value1: '',
-				value2: '2',
-				mask: true,
-				options1: [{
-						label: '默认排序',
-						value: 1,
-					},
-					{
-						label: '距离优先',
-						value: 2,
-					},
-					{
-						label: '价格优先',
-						value: 3,
-					}
-				],
-				options2: [{
-						label: '去冰',
-						value: 1,
-					},
-					{
-						label: '加冰',
-						value: 2,
-					},
-					{
-						label: '正常温',
-						value: 3,
-					},
-					{
-						label: '加热',
-						value: 4,
-					},
-					{
-						label: '极寒风暴',
-						value: 5,
-					}
-				],
-				list: [{
-						label: '琪花瑶草',
-						active: true,
-					},
-					{
-						label: '清词丽句',
-						active: false,
-					},
-					{
-						label: '宛转蛾眉',
-						active: false,
-					},
-					{
-						label: '煦色韶光',
-						active: false,
-					},
-					{
-						label: '鱼沉雁落',
-						active: false,
-					},
-					{
-						label: '章台杨柳',
-						active: false,
-					},
-					{
-						label: '霞光万道',
-						active: false,
-					}
-				],
-				borderBottom: false,
-				activeColor: '#2979ff'
-			}
-		},
-		methods: {
-			borderChange(index) {
-				this.borderBottom = !index;
-			},
-			activeColorChange(index) {
-				this.activeColor = ['#2979ff', '#ff9900', '#19be6b'][index];
-			},
-			change(index) {
-				toast(`点击了第${index}项`);
-			},
-			closeDropdown() {
-				this.$refs.uDropdownRef.close();
-			},
-			tagClick(index) {
-				this.list[index].active = !this.list[index].active;
-			},
-			maskChange(index) {
-				this.mask = !index;
-			}
-		}
+<script setup>
+import { ref } from 'vue'
+import { toast } from '@/uni_modules/uview-plus';
+
+// 响应式数据
+const value1 = ref('')
+const value2 = ref('2')
+const mask = ref(true)
+const borderBottom = ref(false)
+const activeColor = ref('#2979ff')
+
+const options1 = ref([{
+		label: '默认排序',
+		value: 1,
+	},
+	{
+		label: '距离优先',
+		value: 2,
+	},
+	{
+		label: '价格优先',
+		value: 3,
 	}
+])
+
+const options2 = ref([{
+		label: '去冰',
+		value: 1,
+	},
+	{
+		label: '加冰',
+		value: 2,
+	},
+	{
+		label: '正常温',
+		value: 3,
+	},
+	{
+		label: '加热',
+		value: 4,
+	},
+	{
+		label: '极寒风暴',
+		value: 5,
+	}
+])
+
+const list = ref([{
+		label: '琪花瑶草',
+		active: true,
+	},
+	{
+		label: '清词丽句',
+		active: false,
+	},
+	{
+		label: '宛转蛾眉',
+		active: false,
+	},
+	{
+		label: '煦色韶光',
+		active: false,
+	},
+	{
+		label: '鱼沉雁落',
+		active: false,
+	},
+	{
+		label: '章台杨柳',
+		active: false,
+	},
+	{
+		label: '霞光万道',
+		active: false,
+	}
+])
+
+// 组件引用
+const uDropdownRef = ref(null)
+
+// 方法
+const borderChange = (index) => {
+	borderBottom.value = !index;
+}
+
+const activeColorChange = (index) => {
+	activeColor.value = ['#2979ff', '#ff9900', '#19be6b'][index];
+}
+
+const change = (index) => {
+	toast(`点击了第${index}项`);
+}
+
+const closeDropdown = () => {
+	uDropdownRef.value.close();
+}
+
+const tagClick = (index) => {
+	list.value[index].active = !list.value[index].active;
+}
+
+const maskChange = (index) => {
+	mask.value = !index;
+}
 </script>
 
 <style scoped lang="scss">

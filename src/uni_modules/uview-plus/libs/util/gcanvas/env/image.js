@@ -1,5 +1,6 @@
 let incId = 1;
 
+import GBridge from '../bridge/bridge-weex.js'
 const noop = function () { };
 
 class GImage {
@@ -42,22 +43,29 @@ class GImage {
         }
 
         this._src = v;
-
-        GImage.GBridge.perloadImage([this._src, this._id], (data) => {
-            if (typeof data === 'string') {
-                data = JSON.parse(data);
-            }
-            if (data.error) {
-                var evt = { type: 'error', target: this };
-                this.onerror(evt);
-            } else {
-                this.complete = true;
-                this.width = typeof data.width === 'number' ? data.width : 0;
-                this.height = typeof data.height === 'number' ? data.height : 0;
-                var evt = { type: 'load', target: this };
-                this.onload(evt);
-            }
-        });
+		try {
+			GBridge.perloadImage([this._src, this._id], (data) => {
+				if (process.env.NODE_ENV === 'development') {
+					console.log('****GBridge.perloadImage****')
+				}
+				if (typeof data === 'string') {
+					data = JSON.parse(data);
+				}
+				
+				if (data.error) {
+					var evt = { type: 'error', target: this };
+					this.onerror(evt);
+				} else {
+					this.complete = true;
+					this.width = typeof data.width === 'number' ? data.width : 0;
+					this.height = typeof data.height === 'number' ? data.height : 0;
+					var evt = { type: 'load', target: this };
+					this.onload(evt);
+				}
+			});
+		} catch (error) {
+			console.log('perloadImage fail', error)
+		}
     }
 
     addEventListener(name, listener) {

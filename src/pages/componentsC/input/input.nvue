@@ -162,7 +162,7 @@
 						<!-- #endif -->
 						<template #suffix>
 							<up-code
-								ref="uCode"
+								ref="uCodeRef"
 								@change="codeChange"
 								seconds="20"
 								changeText="X秒重新获取哈哈哈"
@@ -189,59 +189,59 @@
 	</view>
 </template>
 
-<script>
-	import { toast } from '@/uni_modules/uview-plus'
-	export default {
-		data() {
-			return {
-				tips: '',
-				value: '',
-				inputNumber: '',
-				inputPassword: '123456'
-			}
-		},
-		watch: {
-			value(newValue, oldValue) {
-				console.log(newValue,'新的数据')
-				// console.log('v-model', newValue);
-			},
-			inputNumber(newValue) {
-				// console.log('v-model', newValue);
-			}
-		},
-		methods: {
-			codeChange(text) {
-				this.tips = text;
-			},
-			getCode() {
-				if (this.$refs.uCode.canGetCode) {
-					// 模拟向后端请求验证码
-					uni.showLoading({
-						title: '正在获取验证码'
-					})
-					setTimeout(() => {
-						uni.hideLoading();
-						// 这里此提示会被this.start()方法中的提示覆盖
-						toast('验证码已发送');
-						// 通知验证码组件内部开始倒计时
-						this.$refs.uCode.start();
-					}, 2000);
-				} else {
-					toast('倒计时结束后再发送');
-				}
-			},
-			change(e) {
-				
-				console.log(this.value,'当前value值')
-				console.log(e,'change数据')
-				
-			},
-			handleSearch(e) {
-				toast('@confirm触发');
-				console.log('change', e);
-			}
-		}
+<script setup>
+import { ref, watch } from 'vue';
+import { toast } from '@/uni_modules/uview-plus'
+
+// 响应式数据
+const tips = ref('');
+const value = ref('');
+const inputNumber = ref('');
+const inputPassword = ref('123456');
+
+// 监听器
+watch(value, (newValue, oldValue) => {
+	// console.log('v-model', newValue);
+});
+
+watch(inputNumber, (newValue) => {
+	// console.log('v-model', newValue);
+});
+
+// 组件引用
+const uCodeRef = ref(null);
+
+// 方法定义
+const codeChange = (text) => {
+	tips.value = text;
+};
+
+const getCode = () => {
+	if (uCodeRef.value.canGetCode) {
+		// 模拟向后端请求验证码
+		uni.showLoading({
+			title: '正在获取验证码'
+		})
+		setTimeout(() => {
+			uni.hideLoading();
+			// 这里此提示会被this.start()方法中的提示覆盖
+			toast('验证码已发送');
+			// 通知验证码组件内部开始倒计时
+			uCodeRef.value.start();
+		}, 2000);
+	} else {
+		toast('倒计时结束后再发送');
 	}
+};
+
+const change = (e) => {
+	console.log('change', e);
+};
+
+const handleSearch = (e) => {
+	toast('@confirm触发');
+	console.log('change', e);
+};
 </script>
 
 <style lang="scss">

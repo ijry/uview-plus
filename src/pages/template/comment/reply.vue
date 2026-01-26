@@ -85,7 +85,7 @@ export default {
 				name: '叶轻眉',
 				date: '12-25 18:58',
 				contentText: '我不信伊朗会没有后续反应，美国肯定会为今天的事情付出代价的',
-				url: 'https://cdn.uviewui.com/uview/template/SmilingDog.jpg',
+				url: 'https://uview-plus.jiangruyi.com/uview/template/SmilingDog.jpg',
 				allReply: 12,
 				likeNum: 33,
 				isLikes: false
@@ -95,7 +95,7 @@ export default {
 					name: '新八几',
 					date: '12-25 18:58',
 					contentText: '不要乱打广告啊喂！虽然是真的超好用',
-					url: 'https://cdn.uviewui.com/uview/template/SmilingDog.jpg',
+					url: 'https://uview-plus.jiangruyi.com/uview/template/SmilingDog.jpg',
 					likeNum: 33,
 					isLike: false,
 					reply: {
@@ -106,7 +106,7 @@ export default {
 				{
 					name: '叶轻眉1',
 					date: '01-25 13:58',
-					url: 'https://cdn.uviewui.com/uview/template/SmilingDog.jpg',
+					url: 'https://uview-plus.jiangruyi.com/uview/template/SmilingDog.jpg',
 					contentText: '我不信伊朗会没有后续反应，美国肯定会为今天的事情付出代价的',
 					allReply: 0,
 					likeNum: 11,
@@ -122,7 +122,7 @@ export default {
 					contentText: '我不信伊朗会没有后续反应，美国肯定会为今天的事情付出代价的',
 					allReply: 0,
 					likeNum: 21,
-					url: 'https://cdn.uviewui.com/uview/template/SmilingDog.jpg',
+					url: 'https://uview-plus.jiangruyi.com/uview/template/SmilingDog.jpg',
 					isLike: false,
 					allReply: 2,
 					reply: {
@@ -136,7 +136,7 @@ export default {
 					contentText: '我不信伊朗会没有后续反应，美国肯定会为今天的事情付出代价的',
 					allReply: 0,
 					likeNum: 150,
-					url: 'https://cdn.uviewui.com/uview/template/SmilingDog.jpg',
+					url: 'https://uview-plus.jiangruyi.com/uview/template/SmilingDog.jpg',
 					isLike: false
 				}
 			];

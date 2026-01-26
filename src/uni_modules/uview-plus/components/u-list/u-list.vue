@@ -114,7 +114,7 @@
 			this.anchors = []
 		},
 		mounted() {},
-		emits: ["scroll", "scrolltolower", "scrolltoupper",
+		emits: ["scroll", "scrolltolower", "scroll-to-lower", "scrolltoupper", "scroll-to-upper",
 			"refresherpulling", "refresherrefresh", "refresherrestore", "refresherabort"],
 		methods: {
 			updateOffsetFromChild(top) {
@@ -145,6 +145,8 @@
 			scrolltolower(e) {
 				sleep(30).then(() => {
 					this.$emit('scrolltolower')
+					// 支付宝小程序奇怪无法触发scrolltolowerhttps://github.com/ijry/uview-plus/issues/422
+					this.$emit('scroll-to-lower')
 				})
 			},
 			// #ifndef APP-NVUE
@@ -152,6 +154,7 @@
 			scrolltoupper(e) {
 				sleep(30).then(() => {
 					this.$emit('scrolltoupper')
+					this.$emit('scroll-to-upper')
 					// 这一句很重要，能绝对保证在性功能障碍的webview，滚动条到顶时，取消偏移值，让页面置顶
 					this.offset = 0
 				})

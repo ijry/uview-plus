@@ -22,7 +22,6 @@ const logCommand = (function () {
     }
     const logCommand = (id, cmds) => {
         const mId = cmds.split(',')[0];
-        const mName = queryMethod(mId);
         console.log(`=== callNative - componentId:${id}; method: ${mName}; cmds: ${cmds}`);
     }
     return logCommand;
@@ -214,7 +213,9 @@ const GBridge = {
     },
 
     perloadImage([url, id], callback) {
+		console.log('********************asda**********')
         GCanvasModule.preLoadImage([url, id], function (image) {
+			console.log('********************asda2**********')
             image.url = url;
             image.id = id;
             callback(image);

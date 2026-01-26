@@ -45,43 +45,40 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				show: false,
-				showSlot: false,
-				showOpcatiy: false,
-				list: [{
-						title: '基本案列',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/overlay/baseCases.png'
-					},
-					{
-						title: '嵌入内容',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/overlay/embeddedContent.png'
-					},
-					{
-						title: '设置透明度',
-						iconUrl: 'https://cdn.uviewui.com/uview/demo/overlay/setTransparency.png'
-					},
-				]
-			}
-		},
-		methods: {
-			openMask(indexNum) {
-				if (indexNum == 0) {
-					this.show = !this.show;
-				} else if (indexNum == 1) {
-					this.showSlot = !this.showSlot
-				} else if (indexNum == 2) {
-					this.showOpcatiy = !this.showOpcatiy
-				}
-			},
-			navigateBack() {
-				uni.navigateBack()
-			}
-		}
+<script setup>
+import { ref } from 'vue';
+
+const show = ref(false);
+const showSlot = ref(false);
+const showOpcatiy = ref(false);
+
+const list = ref([{
+		title: '基本案列',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/overlay/baseCases.png'
+	},
+	{
+		title: '嵌入内容',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/overlay/embeddedContent.png'
+	},
+	{
+		title: '设置透明度',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/overlay/setTransparency.png'
+	},
+]);
+
+const openMask = (indexNum) => {
+	if (indexNum == 0) {
+		show.value = !show.value;
+	} else if (indexNum == 1) {
+		showSlot.value = !showSlot.value
+	} else if (indexNum == 2) {
+		showOpcatiy.value = !showOpcatiy.value
 	}
+};
+
+const navigateBack = () => {
+	uni.navigateBack()
+};
 </script>
 
 <style lang="scss">

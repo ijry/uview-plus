@@ -76,7 +76,8 @@
 				expHeight: '',
 				// 是否允许调整裁剪框大小
 				letChangeSize: false,
-				
+				// 底部安全区大小
+				safeAreaInsetsBottom: 0,
 			};
 		},
 		watch: {
@@ -151,6 +152,7 @@
 				this.platform = sysInfo.platform;
 				this.pixelRatio = sysInfo.pixelRatio;
 				this.windowWidth = sysInfo.windowWidth;
+				this.safeAreaInsetsBottom = sysInfo.safeAreaInsets.bottom;
 				// #ifdef H5
 				this.drawTop = sysInfo.windowTop;
 				this.windowHeight = sysInfo.windowHeight + sysInfo.windowBottom;
@@ -162,12 +164,12 @@
 					this.cvsStyleHeight = this.windowHeight - tabHeight + 'px';
 				} else {
 					this.windowHeight = sysInfo.windowHeight + this.moreHeight;
-					this.cvsStyleHeight = this.windowHeight - tabHeight + 6 + 'px';
+					this.cvsStyleHeight = this.windowHeight - tabHeight - this.safeAreaInsetsBottom + 6 + 'px';
 				}
 				// #endif
 				// #ifdef MP
 				this.windowHeight = sysInfo.windowHeight + this.moreHeight;
-				this.cvsStyleHeight = this.windowHeight - tabHeight - 2 + 'px';
+				this.cvsStyleHeight = this.windowHeight - tabHeight - this.safeAreaInsetsBottom - 2 + 'px';
 				// #endif
 				this.pxRatio = this.windowWidth/750;
 
@@ -1226,3 +1228,4 @@
 	}
 }
 </style>
+
