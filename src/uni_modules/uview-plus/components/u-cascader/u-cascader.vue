@@ -218,11 +218,13 @@
 				// 根据默认值设置选中项
 				// 根据modelValue获取indexs给selectedValueIndexs
 				this.selectedValueIndexs = [];
+				this.levelList = []; // 设置层级数据为空
 				let currentLevelData = this.data;
 				
 				for (let i = 0; i < this.modelValue.length; i++) {
 					const value = this.modelValue[i];
 					const index = currentLevelData.findIndex(item => item[this.valueKey] === value);
+					this.levelList[i] = currentLevelData; // 设置每一层级的数据
 					
 					if (index !== -1) {
 						this.selectedValueIndexs.push(index);
