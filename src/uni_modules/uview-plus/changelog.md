@@ -1,3 +1,6 @@
+## 3.6.124（2026-01-27）
+improvment: tabs组件示例改为组合式API
+
 ## 3.6.123（2026-01-27）
 improvment: swiper组件示例改为组合式API
 
