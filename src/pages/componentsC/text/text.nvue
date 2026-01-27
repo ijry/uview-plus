@@ -56,57 +56,67 @@
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">拨打电话</text>
 			<view class="u-demo-block__content">
-				<view class="u-page__text-item">
-					<up-text
-					    mode="phone"
-					    text="15019479320"
-					></up-text>
+				<view class="u-demo-block__content">
+					<view class="u-page__text-item">
+						<up-text
+						    mode="phone"
+						    text="15019479320"
+						></up-text>
+					</view>
 				</view>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">日期格式化</text>
 			<view class="u-demo-block__content">
-				<view class="u-page__text-item">
-					<up-text
-					    mode="date"
-					    text="1612959739"
-					></up-text>
+				<view class="u-demo-block__content">
+					<view class="u-page__text-item">
+						<up-text
+						    mode="date"
+						    text="1612959739"
+						></up-text>
+					</view>
 				</view>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">姓名脱敏</text>
 			<view class="u-demo-block__content">
-				<view class="u-page__text-item">
-					<up-text
-					    mode="name"
-					    text="张三三"
-						format="encrypt"
-					></up-text>
+				<view class="u-demo-block__content">
+					<view class="u-page__text-item">
+						<up-text
+						    mode="name"
+						    text="张三三"
+							format="encrypt"
+						></up-text>
+					</view>
 				</view>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">超链接</text>
 			<view class="u-demo-block__content">
-				<view class="u-page__text-item">
-					<up-text
-					    mode="link"
-					    text="Go to uview-plus docs"
-					    href="https://uview-plus.jiangruyi.com"
-					></up-text>
+				<view class="u-demo-block__content">
+					<view class="u-page__text-item">
+						<up-text
+						    mode="link"
+						    text="Go to uview-plus docs"
+						    href="https://uview-plus.jiangruyi.com"
+						></up-text>
+					</view>
 				</view>
 			</view>
 		</view>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">显示金额</text>
 			<view class="u-demo-block__content">
-				<view class="u-page__text-item">
-					<up-text
-					    mode="price"
-					    text="728732.32"
-					></up-text>
+				<view class="u-demo-block__content">
+					<view class="u-page__text-item">
+						<up-text
+						    mode="price"
+						    text="728732.32"
+						></up-text>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -155,21 +165,19 @@
 	</view>
 </template>
 
-<script>
-	import { toast } from '@/uni_modules/uview-plus'
-	export default {
-		onLoad() {},
-		methods: {
-			test() {
-				console.log('test')
-			},
-			clickHandler() {
-				// #ifndef MP-WEIXIN
-				toast('请在微信小程序内查看效果')
-				// #endif
-			}
-		},
-	}
+<script setup>
+import { toast } from '@/uni_modules/uview-plus'
+
+// 定义方法
+const test = () => {
+	console.log('test')
+};
+
+const clickHandler = () => {
+	// #ifndef MP-WEIXIN
+	toast('请在微信小程序内查看效果')
+	// #endif
+};
 </script>
 
 <style lang="scss">
