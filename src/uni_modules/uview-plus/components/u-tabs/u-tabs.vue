@@ -3,49 +3,28 @@
 		<view class="u-tabs__wrapper">
 			<slot name="left" />
 			<view class="u-tabs__wrapper__scroll-view-wrapper">
-				<scroll-view
-					:scroll-x="scrollable"
-					:scroll-left="scrollLeft"
-					scroll-with-animation
-					class="u-tabs__wrapper__scroll-view"
-					:show-scrollbar="false"
-					ref="u-tabs__wrapper__scroll-view"
-				>
-					<view
-						class="u-tabs__wrapper__nav"
-						ref="u-tabs__wrapper__nav"
-					>
-						<view
-							class="u-tabs__wrapper__nav__item"
-							v-for="(item, index) in list"
-							:key="index"
-							@tap="clickHandler(item, index)"
-							@longpress="longPressHandler(item,index)"
+				<scroll-view :scroll-x="scrollable" :scroll-left="scrollLeft" scroll-with-animation
+					class="u-tabs__wrapper__scroll-view" :show-scrollbar="false" ref="u-tabs__wrapper__scroll-view">
+					<view class="u-tabs__wrapper__nav" ref="u-tabs__wrapper__nav">
+						<view class="u-tabs__wrapper__nav__item" v-for="(item, index) in tabList" :key="index"
+							@tap="clickHandler(item, index)" @longpress="longPressHandler(item,index)"
 							:ref="`u-tabs__wrapper__nav__item-${index}`"
-							:style="[addStyle(itemStyle), {flex: scrollable ? '' : 1}]"
-							:class="[`u-tabs__wrapper__nav__item-${index}`,
+							:style="[addStyle(itemStyle), {flex: scrollable ? '' : 1}]" :class="[`u-tabs__wrapper__nav__item-${index}`,
 								item.disabled && 'u-tabs__wrapper__nav__item--disabled',
-								innerCurrent == index ? 'u-tabs__wrapper__nav__item-active' : '']"
-						>
+								innerCurrent == index ? 'u-tabs__wrapper__nav__item-active' : '']">
 							<slot v-if="$slots.icon" name="icon" :item="item" :keyName="keyName" :index="index" />
 							<template v-else>
 								<view class="u-tabs__wrapper__nav__item__prefix-icon" v-if="item.icon">
-									<up-icon
-										:name="item.icon"
-										:customStyle="addStyle(iconStyle)"
-									></up-icon>
+									<up-icon :name="item.icon" :customStyle="addStyle(iconStyle)"></up-icon>
 								</view>
 							</template>
 							<slot v-if="$slots.content" name="content" :item="item" :keyName="keyName" :index="index" />
-							<slot v-else-if="!$slots.content && ($slots.default || $slots.$default)"
-								:item="item" :keyName="keyName" :index="index" />
-							<text v-else
-								:class="[item.disabled && 'u-tabs__wrapper__nav__item__text--disabled']"
+							<slot v-else-if="!$slots.content && ($slots.default || $slots.$default)" :item="item"
+								:keyName="keyName" :index="index" />
+							<text v-else :class="[item.disabled && 'u-tabs__wrapper__nav__item__text--disabled']"
 								class="u-tabs__wrapper__nav__item__text"
-								:style="[textStyle(index)]"
-							>{{ item[keyName] }}</text>
-							<u-badge
-								:show="!!(item.badge && (item.badge.show || item.badge.isDot || item.badge.value))"
+								:style="[textStyle(index)]">{{ item[keyName] }}</text>
+							<u-badge :show="!!(item.badge && (item.badge.show || item.badge.isDot || item.badge.value))"
 								:isDot="item.badge && item.badge.isDot || propsBadge.isDot"
 								:value="item.badge && item.badge.value || propsBadge.value"
 								:max="item.badge && item.badge.max || propsBadge.max"
@@ -56,35 +35,28 @@
 								:shape="item.badge && item.badge.shape || propsBadge.shape"
 								:numberType="item.badge && item.badge.numberType || propsBadge.numberType"
 								:inverted="item.badge && item.badge.inverted || propsBadge.inverted"
-								customStyle="margin-left: 4px;"
-							></u-badge>
+								customStyle="margin-left: 4px;"></u-badge>
 						</view>
 						<!-- #ifdef APP-NVUE -->
-						<view
-							class="u-tabs__wrapper__nav__line"
-							ref="u-tabs__wrapper__nav__line"
-							:style="[{
+						<view class="u-tabs__wrapper__nav__line" ref="u-tabs__wrapper__nav__line" :style="[{
 								width: addUnit(lineWidth),
 								height: addUnit(lineHeight),
 								background: lineColor,
 								backgroundSize: lineBgSize,
-							}]"
-						>
+							}]">
 						</view>
 						<!-- #endif -->
 						<!-- #ifndef APP-NVUE -->
-						<view
-							class="u-tabs__wrapper__nav__line"
-							ref="u-tabs__wrapper__nav__line"
+						<view class="u-tabs__wrapper__nav__line" ref="u-tabs__wrapper__nav__line"
 							:style="[{
 								width: addUnit(lineWidth),
 								transform: `translate(${lineOffsetLeft}px)`,
-								transitionDuration: `${firstTime ? 0 : duration}ms`,
+								transitionDuration: `${duration}ms`,
 								height: addUnit(lineHeight),
 								background: lineColor,
 								backgroundSize: lineBgSize,
-							}]"
-						>
+								display: lineShow ? 'block': 'none'
+							}]">
 						</view>
 						<!-- #endif -->
 					</view>
@@ -100,11 +72,25 @@
 	const animation = uni.requireNativePlugin('animation')
 	const dom = uni.requireNativePlugin('dom')
 	// #endif
-	import { props } from './props';
-	import { mpMixin } from '../../libs/mixin/mpMixin';
-	import { mixin } from '../../libs/mixin/mixin';
+	import {
+		props
+	} from './props';
+	import {
+		mpMixin
+	} from '../../libs/mixin/mpMixin';
+	import {
+		mixin
+	} from '../../libs/mixin/mixin';
 	import defProps from '../../libs/config/props.js'
-	import { addUnit, addStyle, deepMerge, getPx, sleep, getWindowInfo } from '../../libs/function/index';
+	import {
+		addUnit,
+		addStyle,
+		deepMerge,
+		deepClone,
+		getPx,
+		sleep,
+		getWindowInfo
+	} from '../../libs/function/index';
 	/**
 	 * Tabs 标签
 	 * @description tabs标签组件，在标签多的时候，可以配置为左右滑动，标签少的时候，可以禁止滑动。 该组件的一个特点是配置为滚动模式时，激活的tab会自动移动到组件的中间位置。
@@ -122,10 +108,11 @@
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
-				firstTime: true,
+				tabList: [],
 				scrollLeft: 0,
 				scrollViewWidth: 0,
 				lineOffsetLeft: 0,
+				lineShow: false,
 				tabsRect: {
 					left: 0
 				},
@@ -136,7 +123,7 @@
 		watch: {
 			current: {
 				immediate: true,
-				handler (newValue, oldValue) {
+				handler(newValue, oldValue) {
 					// 内外部值不相等时，才尝试移动滑块
 					if (newValue !== this.innerCurrent) {
 						if (typeof newValue == 'string') {
@@ -151,10 +138,16 @@
 				}
 			},
 			// list变化时，重新渲染list各项信息
-			list() {
-				this.$nextTick(() => {
-					this.resize()
-				})
+			list: {
+				handler(newValue, oldValue) {
+					// 重新拷贝一份list用于增加其他额外信息处理后导致重复监听的死循环
+					this.tabList = deepClone(newValue);
+					this.$nextTick(() => {
+						this.resize()
+					})
+				},
+				immediate: true,
+				deep: true,
 			}
 		},
 		computed: {
@@ -162,11 +155,11 @@
 				return index => {
 					const style = {}
 					// 取当期是否激活的样式
-					const customeStyle = (index == this.innerCurrent)
-						? addStyle(this.activeStyle) 
-						: addStyle(this.inactiveStyle)
+					const customeStyle = (index == this.innerCurrent) ?
+						addStyle(this.activeStyle) :
+						addStyle(this.inactiveStyle)
 					// 如果当前菜单被禁用，则加上对应颜色，需要在此做处理，是因为nvue下，无法在style样式中通过!import覆盖标签的内联样式
-					if (this.list[index].disabled) {
+					if (this.tabList[index].disabled) {
 						style.color = '#c8c9cc'
 					}
 					return deepMerge(customeStyle, style)
@@ -178,42 +171,37 @@
 		},
 		async mounted() {
 			this.init()
-            this.windowResizeCallback = (res) => {
-                this.init()
-            }
-            uni.onWindowResize(this.windowResizeCallback)
+			this.windowResizeCallback = (res) => {
+				this.init()
+			}
+			uni.onWindowResize(this.windowResizeCallback)
 		},
-        beforeUnmount() {
-            uni.offWindowResize(this.windowResizeCallback)
-        },
+		beforeUnmount() {
+			uni.offWindowResize(this.windowResizeCallback)
+		},
 		emits: ['click', 'longPress', 'change', 'update:current'],
 		methods: {
 			addStyle,
 			addUnit,
 			setLineLeft() {
-				const tabItem = this.list[this.innerCurrent];
+				const tabItem = this.tabList[this.innerCurrent];
 				if (!tabItem) {
 					return;
 				}
 				// 获取滑块该移动的位置
-				let lineOffsetLeft = this.list
+				let lineOffsetLeft = this.tabList
 					.slice(0, this.innerCurrent)
 					.reduce((total, curr) => total + curr.rect.width, 0);
-                // 获取下划线的数值px表示法
+				// 获取下划线的数值px表示法
 				const lineWidth = getPx(this.lineWidth);
 				this.lineOffsetLeft = lineOffsetLeft + (tabItem.rect.width - lineWidth) / 2
 				// #ifdef APP-NVUE
 				// 第一次移动滑块，无需过渡时间
-				this.animation(this.lineOffsetLeft, this.firstTime ? 0 : parseInt(this.duration))
+				this.animation(this.lineOffsetLeft, parseInt(this.duration))
 				// #endif
 
-				// 如果是第一次执行此方法，让滑块在初始化时，瞬间滑动到第一个tab item的中间
-				// 这里需要一个定时器，因为在非nvue下，是直接通过style绑定过渡时间，需要等其过渡完成后，再设置为false(非第一次移动滑块)
-				if (this.firstTime) {
-					setTimeout(() => {
-						this.firstTime = false
-					}, 10);
-				}
+				// 如果是第一次执行此方法，滑块默认不显示，在加载完成后进行显示
+				if (!this.lineShow) this.lineShow = true;
 			},
 			// nvue下设置滑块的位置
 			animation(x, duration = 0) {
@@ -239,9 +227,9 @@
 				// 如果点击当前不触发change
 				if (this.innerCurrent == index) return
 				this.innerCurrent = index
-                this.$nextTick(() => {
-                    this.resize()
-                })
+				this.$nextTick(() => {
+					this.resize()
+				})
 				this.$emit('update:current', index)
 				this.$emit('change', {
 					...item,
@@ -263,11 +251,11 @@
 			setScrollLeft() {
 				// 当前活动tab的布局信息，有tab菜单的width和left(为元素左边界到父元素左边界的距离)等信息
 				if (this.innerCurrent < 0) {
-                    this.innerCurrent = 0;
-                }
-				const tabRect = this.list[this.innerCurrent]
+					this.innerCurrent = 0;
+				}
+				const tabRect = this.tabList[this.innerCurrent]
 				// 累加得到当前item到左边的距离
-				const offsetLeft = this.list
+				const offsetLeft = this.tabList
 					.slice(0, this.innerCurrent)
 					.reduce((total, curr) => {
 						return total + curr.rect.width
@@ -284,13 +272,14 @@
 			// 获取所有标签的尺寸
 			resize() {
 				// 如果不存在list，则不处理
-				if(this.list.length === 0) {
+				if (this.tabList.length === 0) {
 					return
 				}
 				Promise.all([this.getTabsRect(), this.getAllItemRect()]).then(([tabsRect, itemRect = []]) => {
 					// 兼容在swiper组件中使用
 					if (tabsRect.left > tabsRect.width) {
-						tabsRect.right = tabsRect.right - Math.floor(tabsRect.left / tabsRect.width) * tabsRect.width
+						tabsRect.right = tabsRect.right - Math.floor(tabsRect.left / tabsRect.width) * tabsRect
+							.width
 						tabsRect.left = tabsRect.left % tabsRect.width
 					}
 					// console.log(tabsRect)
@@ -300,7 +289,7 @@
 						// 计算scroll-view的宽度，这里
 						this.scrollViewWidth += item.width
 						// 另外计算每一个item的中心点X轴坐标
-						this.list[index].rect = item
+						this.tabList[index].rect = item
 					})
 					// 获取了tabs的尺寸之后，设置滑块的位置
 					this.setLineLeft()
@@ -316,9 +305,9 @@
 			// 获取所有标签的尺寸
 			getAllItemRect() {
 				return new Promise(resolve => {
-					const promiseAllArr = this.list.map((item, index) => this.queryRect(
-						`u-tabs__wrapper__nav__item-${index}`, true))
-					Promise.all(promiseAllArr).then(sizes => resolve(sizes))
+					const promiseAllArr = this.tabList.map((item, index) => this.queryRect(
+						`u-tabs__wrapper__nav__item-${index}`, true));
+					Promise.all(promiseAllArr).then(sizes => resolve(sizes));
 				})
 			},
 			// 获取各个标签的尺寸
@@ -348,7 +337,6 @@
 </script>
 
 <style lang="scss" scoped>
-
 	.u-tabs {
 
 		&__wrapper {
@@ -389,7 +377,7 @@
 					&__text {
 						font-size: 15px;
 						color: $u-content-color;
-                        white-space: nowrap !important;
+						white-space: nowrap !important;
 
 						&--disabled {
 							color: $u-disabled-color !important;
