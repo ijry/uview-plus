@@ -93,29 +93,23 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				text1: '长按文本，上方提示',
-				text2: '长按文本，下方提示',
-				text3: '显示多个扩展按钮',
-				text4: '自动调整气泡位置',
-				text5: '长按文本，显示背景色',
-				buttons1: ['扩展'],
-				buttons2: ['扩展', '搜索', '翻译'],
-				buttons3: ['扩展', '搜索', '翻译']
-			}
-		},
-		onLoad() {
-			
-		},
-		methods: {
-			click(index) {
-				console.log('index', index);
-			}
-		}
-	}
+<script setup>
+import { ref } from 'vue';
+
+// 定义响应式数据
+const text1 = ref('长按文本，上方提示');
+const text2 = ref('长按文本，下方提示');
+const text3 = ref('显示多个扩展按钮');
+const text4 = ref('自动调整气泡位置');
+const text5 = ref('长按文本，显示背景色');
+const buttons1 = ref(['扩展']);
+const buttons2 = ref(['扩展', '搜索', '翻译']);
+const buttons3 = ref(['扩展', '搜索', '翻译']);
+
+// 定义方法
+const click = (index) => {
+	console.log('index', index);
+};
 </script>
 
 <style lang="scss">
