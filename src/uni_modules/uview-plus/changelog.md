@@ -1,3 +1,6 @@
+## 3.6.123（2026-01-27）
+improvment: swiper组件示例改为组合式API
+
 ## 3.6.122（2026-01-26）
 fix: 🐛 修复u-input在change事件里无法获取value的异常情况 #950
 

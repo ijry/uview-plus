@@ -113,86 +113,91 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				current: 0,
-				currentNum: 0,
-				list: [{
-						// image: 'https://uview-plus.jiangruyi.com/big/shanghai.mp4',
-						image: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png',
-						title: '昨夜星辰昨夜风，画楼西畔桂堂东',
-						poster: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png'
-					},
-					{
-						image: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png',
-						title: '身无彩凤双飞翼，心有灵犀一点通'
-					},
-					{
-						image: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png',
-						title: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳'
-					}
-				],
-				list1: [
-					'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png',
-					'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png',
-					'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png',
-				],
-				list2: [{
-						image: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png',
-						title: '昨夜星辰昨夜风，画楼西畔桂堂东',
-						type: 'image',
-					},
-					{
-						image: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png',
-						title: '身无彩凤双飞翼，心有灵犀一点通'
-					},
-					{
-						image: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png',
-						title: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳'
-					}
-				],
-				list3: [
-					'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png',
-					'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png',
-					'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png',
-				],
-				list4: [{
-						url: 'https://uview-plus.jiangruyi.com/big/shanghai.mp4',
-						title: '昨夜星辰昨夜风，画楼西畔桂堂东',
-						poster: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png',
-					},
-					{
-						url: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png',
-						title: '身无彩凤双飞翼，心有灵犀一点通'
-					},
-					{
-						url: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png',
-						title: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳'
-					}
-				],
-				list5: [
-					'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png',
-					'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png',
-					'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png',
-				],
-				list6: [
-					'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png',
-					'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png',
-					'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png',
-				]
-			}
-		},
-		methods: {
-			change(e) {
-				// console.log('change', e);
-			},
-			click(e) {
-				console.log('click', e);
-			}
-		},
+<script setup>
+import { ref } from 'vue';
+
+// 响应式数据
+const current = ref(0);
+const currentNum = ref(0);
+
+const list = ref([{
+		// image: 'https://uview-plus.jiangruyi.com/big/shanghai.mp4',
+		image: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png',
+		title: '昨夜星辰昨夜风，画楼西畔桂堂东',
+		poster: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png'
+	},
+	{
+		image: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png',
+		title: '身无彩凤双飞翼，心有灵犀一点通'
+	},
+	{
+		image: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png',
+		title: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳'
 	}
+]);
+
+const list1 = ref([
+	'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png',
+	'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png',
+	'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png',
+]);
+
+const list2 = ref([{
+		image: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png',
+		title: '昨夜星辰昨夜风，画楼西畔桂堂东',
+		type: 'image',
+	},
+	{
+		image: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png',
+		title: '身无彩凤双飞翼，心有灵犀一点通'
+	},
+	{
+		image: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png',
+		title: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳'
+	}
+]);
+
+const list3 = ref([
+	'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png',
+	'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png',
+	'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png',
+]);
+
+const list4 = ref([{
+		url: 'https://uview-plus.jiangruyi.com/big/shanghai.mp4',
+		title: '昨夜星辰昨夜风，画楼西畔桂堂东',
+		poster: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png',
+	},
+	{
+		url: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png',
+		title: '身无彩凤双飞翼，心有灵犀一点通'
+	},
+	{
+		url: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png',
+		title: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳'
+	}
+]);
+
+const list5 = ref([
+	'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png',
+	'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png',
+	'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png',
+]);
+
+const list6 = ref([
+	'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png',
+	'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png',
+	'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png',
+]);
+
+// 方法定义
+const change = (e) => {
+	// console.log('change', e);
+};
+
+const click = (e) => {
+	console.log('click', e);
+};
 </script>
 
 <style lang="scss">
