@@ -55,23 +55,20 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				value1: '',
-				value2: '统计字数',
-				value3: '',
-				value4: '',
-				value5: ''
-			}
-		},
-		methods: {
-			formatter(value) {
-				return value.replace(/[^0-9]/ig,"")
-			}
-		}
-	}
+<script setup>
+import { ref } from 'vue';
+
+// 定义响应式数据
+const value1 = ref('');
+const value2 = ref('统计字数');
+const value3 = ref('');
+const value4 = ref('');
+const value5 = ref('');
+
+// 定义方法
+const formatter = (value) => {
+	return value.replace(/[^0-9]/ig,"");
+};
 </script>
 
 <style lang="scss">

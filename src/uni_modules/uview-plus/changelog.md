@@ -1,3 +1,6 @@
+## 3.6.127（2026-01-27）
+improvment: textarea组件示例改为组合式API
+
 ## 3.6.126（2026-01-27）
 improvment: text组件示例改为组合式API
 
