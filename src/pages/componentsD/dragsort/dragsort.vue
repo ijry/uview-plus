@@ -54,37 +54,35 @@
   </view>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      list: [
-		  { id: 1, label: '项目 A' },
-		  { id: 2, label: '项目 B' },
-		  { id: 3, label: '项目 C' },
-		  { id: 4, label: '项目 D' },
-		  { id: 5, label: '项目 E' },
-		  { id: 6, label: '项目 F' },
-		  { id: 7, label: '项目 G' },
-		  { id: 8, label: '项目 H' },
-      ],
-	  list2: [
-		  { id: 1, label: '横向 A' },
-		  { id: 2, label: '横向 B' },
-		  { id: 3, label: '横向 C' },
-		  { id: 4, label: '横向 D' },
-		  { id: 5, label: '横向 E' },
-		  { id: 6, label: '横向 F' },
-		  { id: 7, label: '横向 G' },
-		  { id: 8, label: '横向 H' },
-      ]
-    };
-  },
-  methods: {
-    handleDragEnd(sortedList) {
-	  console.log('拖拽结束，新的顺序:', sortedList);
-	}
-  }
+<script setup>
+import { ref } from 'vue';
+
+// 定义响应式数据
+const list = ref([
+	{ id: 1, label: '项目 A' },
+	{ id: 2, label: '项目 B' },
+	{ id: 3, label: '项目 C' },
+	{ id: 4, label: '项目 D' },
+	{ id: 5, label: '项目 E' },
+	{ id: 6, label: '项目 F' },
+	{ id: 7, label: '项目 G' },
+	{ id: 8, label: '项目 H' },
+]);
+
+const list2 = ref([
+	{ id: 1, label: '横向 A' },
+	{ id: 2, label: '横向 B' },
+	{ id: 3, label: '横向 C' },
+	{ id: 4, label: '横向 D' },
+	{ id: 5, label: '横向 E' },
+	{ id: 6, label: '横向 F' },
+	{ id: 7, label: '横向 G' },
+	{ id: 8, label: '横向 H' },
+]);
+
+// 定义方法
+const handleDragEnd = (sortedList) => {
+	console.log('拖拽结束，新的顺序:', sortedList);
 };
 </script>
 
