@@ -15,6 +15,24 @@
           </view>
       </view>
 	  <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">自定义拖动句柄</text>
+          <view class="u-page__item__content">
+            <u-dragsort :initial-list="list" @drag-end="handleDragEnd">
+			  <template #handler>
+				<view class="custom-item-handler">
+					<view class="handle"></view>
+				</view>
+              </template>
+			  <template #default="{ item, index }">
+				<view class="custom-item">
+				  <text>序号：{{ index + 1 }}</text> -
+				  <text>{{ item.label }}</text>
+				</view>
+			  </template>
+			</u-dragsort>
+          </view>
+      </view>
+	  <view class="u-page__item">
 	      <text class="u-page__item__title" style="margin-top: 0;">多行多列模式</text>
 	      <view class="u-page__item__content">
 	        <u-dragsort
@@ -98,6 +116,43 @@ const handleDragEnd = (sortedList) => {
 	  padding: 10px;
 	  text-align: center;
 	  box-sizing: border-box;
+  }
+  .custom-item-handler {
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	padding: 10px;
+	display: flex;
+	align-items: center;
+	z-index: 10;
+	cursor: grab;
+
+	.handle {
+		position: relative;
+		width: 10px;
+		height: 2px;
+		background-color: #666;
+		
+		&::before,
+		&::after { 
+			content: '';
+			position: absolute;
+			width: 100%;
+			height: 2px;
+			left: 0;
+			background-color: inherit;
+		}
+
+		&::before {
+			top: -4px;
+		}
+
+		&::after {
+			top: 4px;
+		}
+	}
+
   }
   .custom-item-h {
 	  background-color: #f5f5f5;
