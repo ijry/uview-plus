@@ -27,26 +27,28 @@
   </view>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-        urls: []
-    };
-  },
-  methods: {
-    chooseImage1(index) {
-        this.$refs.avatarRef1.chooseImage(index,{
-            canChangeSize: true,
-            areaWidth: "300rpx", areaHeight: "180rpx",
-            exportWidth: '260rpx', exportHeight: '160rpx'
-        });
-    },
-    cutImage(rsp) {
-        console.log(rsp);
-        this.urls[rsp.index] = rsp.path;
-    }
-  }
+<script setup>
+import { ref } from 'vue';
+
+// 定义响应式数据
+const urls = ref([]);
+
+// 定义引用
+const avatarRef0 = ref(null);
+const avatarRef1 = ref(null);
+
+// 定义方法
+const chooseImage1 = (index) => {
+    avatarRef1.value.chooseImage(index, {
+        canChangeSize: true,
+        areaWidth: "300rpx", areaHeight: "180rpx",
+        exportWidth: '260rpx', exportHeight: '160rpx'
+    });
+};
+
+const cutImage = (rsp) => {
+    console.log(rsp);
+    urls.value[rsp.index] = rsp.path;
 };
 </script>
 

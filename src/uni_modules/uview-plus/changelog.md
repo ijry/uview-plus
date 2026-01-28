@@ -1,3 +1,6 @@
+## 3.6.130（2026-01-28）
+improvment: cropper组件示例改为组合式API
+
 ## 3.6.129（2026-01-28）
 improvment: drag组件示例改为组合式API
 
