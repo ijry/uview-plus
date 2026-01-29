@@ -1,7 +1,9 @@
 <template>
     <view class="u-dragsort"
-        :class="[direction == 'horizontal' ? 'u-dragsort--horizontal' : '', direction == 'vertical' ? 'u-dragsort--vertical' : '', direction == 'all' ? 'u-dragsort--all' : '']">
-        <movable-area class="u-dragsort-area" :style="movableAreaStyle">
+        :class="[direction == 'horizontal' ? 'u-dragsort--horizontal' : '', direction == 'vertical' ? 'u-dragsort--vertical' : '', direction == 'all' ? 'u-dragsort--all' : '']"
+        :style="movableAreaStyle"
+        >
+        <movable-area class="u-dragsort-area">
             <movable-view v-for="(item, index) in list" :key="item.id" :id="`u-dragsort-item-${index}`"
                 class="u-dragsort-item" :class="{ 'dragging': dragIndex === index }"
                 :direction="direction === 'all' ? 'all' : direction" :x="item.x" :y="item.y" :inertia="false"
@@ -54,6 +56,7 @@ export default {
         return {
             list: [],
             dragIndex: -1,
+            sortChanged: false,
             itemHeight: 40,
             itemWidth: 80,
             areaWidth: 0, // 可拖动区域宽度
@@ -195,6 +198,7 @@ export default {
         onTouchStart(index) {
             if (this.list[index]?.draggable === false) return;
             if (this.timer) clearTimeout(this.timer);
+            this.sortChanged = false;
             this.dragIndex = index;
         },
         onChange(index, event) {
@@ -251,6 +255,7 @@ export default {
 
             // 更新当前拖拽项目的新索引
             this.dragIndex = toIndex;
+            this.sortChanged = true;
 
             // 更新所有项目的位置
             this.updatePositions(true);
@@ -272,7 +277,10 @@ export default {
             // 重置到位置，需要延迟触发动，否则无效。
             sleep(50).then(() => {
                 this.updatePositions();
-                this.$emit('drag-end', [...this.list]);
+                if (this.sortChanged) {
+                    this.$emit('drag-end', [...this.list]);
+                    this.sortChanged = false;
+                }
                 this.timer = setTimeout(() => {
                     this.dragIndex = -1
                 }, 600)
@@ -314,9 +322,11 @@ export default {
 <style scoped lang="scss">
 .u-dragsort {
     width: 100%;
+    height: auto;
 
     .u-dragsort-area {
         width: 100%;
+        height: 100%;
         position: relative;
     }
 
@@ -347,7 +357,6 @@ export default {
         .u-dragsort-area {
             display: flex;
             white-space: nowrap;
-            height: auto;
         }
 
         .u-dragsort-item {
@@ -357,10 +366,6 @@ export default {
     }
 
     &.u-dragsort--all {
-        .u-dragsort-area {
-            height: auto;
-        }
-
         .u-dragsort-item {
             width: auto;
             height: auto;
