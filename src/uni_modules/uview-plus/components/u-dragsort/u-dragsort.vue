@@ -49,6 +49,10 @@ export default {
             type: Boolean,
             default: true
         },
+        vibrate: {
+            type: Boolean,
+            default: true
+        },
         direction: {
             type: String,
             default: 'vertical',
@@ -280,8 +284,8 @@ export default {
             this.updatePositions(true);
 
             // 震动反馈
-            if (uni.vibrateShort) {
-                uni.vibrateShort();
+            if (this.vibrate && uni.vibrateShort) {
+                uni.vibrateShort({ type: 'light' });
             }
         },
         onTouchEnd() {
