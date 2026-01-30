@@ -5,11 +5,19 @@
         >
         <movable-area class="u-dragsort-area">
             <movable-view v-for="(item, index) in list" :key="item.id" :id="`u-dragsort-item-${index}`"
-                class="u-dragsort-item" :class="{ 'dragging': dragIndex === index }"
+                class="u-dragsort-item" :class="{ 'dragging': dragIndex === index, disabled: !draggable || item.draggable === false }"
                 :direction="direction === 'all' ? 'all' : direction" :x="item.x" :y="item.y" :inertia="false"
-                :disabled="!draggable || (item.draggable === false)" @change="onChange(index, $event)"
-                @touchstart="onTouchStart(index)" @touchend="onTouchEnd" @touchcancel="onTouchEnd">
+                :disabled="!draggable || dragIndex === -1 || item.draggable === false" @change="onChange(index, $event)"
+                @touchstart="onTouchStart(index, $event)" @touchend="onTouchEnd" @touchcancel="onTouchEnd" @touchmove="onTouchMove">
                 <view class="u-dragsort-item-content">
+                    <view
+                        class="ui-dragSort-item-handler"
+                        v-if="$slots.handler"
+                        data-action="handler"
+                        @touchstart="onTouchStart(index, $event)"
+                    >
+                        <slot name="handler" :item="item" :index="index"></slot>
+                    </view>
                     <slot :item="item" :index="index">
                         {{ item.label }}
                     </slot>
@@ -57,8 +65,8 @@ export default {
             list: [],
             dragIndex: -1,
             sortChanged: false,
-            itemHeight: 40,
-            itemWidth: 80,
+            itemHeight: 0,
+            itemWidth: 0,
             areaWidth: 0, // 可拖动区域宽度
             areaHeight: 0, // 可拖动区域高度
             currentPosition: {
@@ -71,21 +79,21 @@ export default {
         movableAreaStyle() {
             if (this.direction === 'vertical') {
                 return {
-                    height: `${this.list.length * this.itemHeight}px`,
+                    height: this.itemHeight ? `${this.list.length * this.itemHeight}px` : 'auto',
                     width: '100%'
-                };
+                }
             } else if (this.direction === 'horizontal') {
                 return {
-                    height: `${this.itemHeight}px`,
-                    width: `${this.list.length * this.itemWidth}px`
-                };
+                    height: this.itemHeight ? `${this.itemHeight}px` : 'auto',
+                    width: this.itemWidth ? `${this.list.length * this.itemWidth}px` : 'auto'
+                }
             } else {
                 // all模式，计算网格布局所需的高度
-                const rows = Math.ceil(this.list.length / this.columns);
+                const rows = Math.ceil(this.list.length / this.columns)
                 return {
-                    height: `${rows * this.itemHeight}px`,
+                    height: this.itemHeight ? `${rows * this.itemHeight}px` : 'auto',
                     width: '100%'
-                };
+                }
             }
         }
     },
@@ -100,28 +108,29 @@ export default {
         initList() {
             // 初始化列表项的位置
             this.list = this.initialList.map((item, index) => {
-                let x = 0, y = 0;
+                let x
+                let y
 
-                if (this.direction === 'horizontal') {
-                    x = index * this.itemWidth;
-                    y = 0;
-                } else if (this.direction === 'vertical') {
-                    x = 0;
-                    y = index * this.itemHeight;
-                } else {
+                if (this.direction === 'horizontal' && this.itemWidth) {
+                    x = index * this.itemWidth
+                    y = 0
+                } else if (this.direction === 'vertical' && this.itemHeight) {
+                    x = 0
+                    y = index * this.itemHeight
+                } else if (this.itemWidth && this.itemHeight) {
                     // all模式，网格布局
-                    const col = index % this.columns;
-                    const row = Math.floor(index / this.columns);
-                    x = col * this.itemWidth;
-                    y = row * this.itemHeight;
+                    const col = index % this.columns
+                    const row = Math.floor(index / this.columns)
+                    x = col * this.itemWidth
+                    y = row * this.itemHeight
                 }
 
                 return {
                     ...item,
                     x,
                     y
-                };
-            });
+                }
+            })
         },
         async calculateItemSize() {
             // 计算项目尺寸
@@ -195,11 +204,21 @@ export default {
                 }
             })
         },
-        onTouchStart(index) {
+        onTouchStart(index, e) {
+            if (this.$slots.handler && e.currentTarget.dataset.action !== 'handler') {
+                return
+            }
             if (this.list[index]?.draggable === false) return;
             if (this.timer) clearTimeout(this.timer);
             this.sortChanged = false;
             this.dragIndex = index;
+        },
+        onTouchMove(e) {
+            if (this.dragIndex !== -1) {
+                // 目前只对H5生效, 如果该组件放置在开启了下拉刷新的scroll-view中, 向下拖动item还是会触发下拉刷新
+                e.stopPropagation()
+                e.preventDefault()
+            }
         },
         onChange(index, event) {
             if (!event.detail.source || event.detail.source !== 'touch') return;
@@ -266,6 +285,9 @@ export default {
             }
         },
         onTouchEnd() {
+            // 未发生位移
+            if (this.dragIndex === -1) return
+
             // 0.001是为了解决拖动过快等某些极限场景下位置还原不生效问题
             if (this.direction === 'horizontal') {
                 this.list[this.dragIndex].x = this.currentPosition.x + 0.001;
@@ -294,7 +316,7 @@ export default {
                     this.initList();
                 });
             },
-            deep: true
+            // deep: true
         },
         direction: {
             handler() {
@@ -342,6 +364,7 @@ export default {
         }
 
         .u-dragsort-item-content {
+            position: relative;
             padding: 0;
             box-sizing: border-box;
         }
