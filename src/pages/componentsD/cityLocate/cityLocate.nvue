@@ -17,76 +17,74 @@
   </view>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-        currentCity: '',
-        indexList: [
-            '🔥', { name: '所有城市', key: 'All'}
-        ],
-        hotCity: [
-            {
-              name: '北京',
-              value: 'beijing'
-            },
-            {
-              name: '上海',
-              value: 'shanghai'
-            },
-            {
-              name: '广州',
-              value: 'guangzhou'
-            },
-        ],
-        cityList: [
-            [
-                {
-                name: '北京',
-                value: 'beijing'
-                },
-                {
-                name: '上海',
-                value: 'shanghai'
-                },
-                {
-                name: '广州',
-                value: 'guangzhou'
-                },
-            ],
-            [{
-              name: '北京',
-              value: 'beijing'
-            },
-            {
-              name: '上海',
-              value: 'shanghai'
-            },
-            {
-              name: '广州',
-              value: 'guangzhou'
-            },
-            {
-              name: '深圳',
-              value: 'shenzhen'
-            },
-            {
-              name: '杭州',
-              value: 'hangzhou'
-            }]
-        ],
-    };
-  },
-  methods: {
-    locationSuccess(e) {
-        // 根据gps坐标去换取地址
-        // 然后传递给组件
-        this.currentCity = '南京'
-    },
-    selectCity(e) {
+<script setup>
+import { ref } from 'vue';
 
-    }
-  }
+// 定义响应式数据
+const currentCity = ref('');
+const indexList = ref([
+    '🔥', { name: '所有城市', key: 'All'}
+]);
+const hotCity = ref([
+    {
+      name: '北京',
+      value: 'beijing'
+    },
+    {
+      name: '上海',
+      value: 'shanghai'
+    },
+    {
+      name: '广州',
+      value: 'guangzhou'
+    },
+]);
+const cityList = ref([
+    [
+        {
+        name: '北京',
+        value: 'beijing'
+        },
+        {
+        name: '上海',
+        value: 'shanghai'
+        },
+        {
+        name: '广州',
+        value: 'guangzhou'
+        },
+    ],
+    [{
+      name: '北京',
+      value: 'beijing'
+    },
+    {
+      name: '上海',
+      value: 'shanghai'
+    },
+    {
+      name: '广州',
+      value: 'guangzhou'
+    },
+    {
+      name: '深圳',
+      value: 'shenzhen'
+    },
+    {
+      name: '杭州',
+      value: 'hangzhou'
+    }]
+]);
+
+// 定义方法
+const locationSuccess = (e) => {
+    // 根据gps坐标去换取地址
+    // 然后传递给组件
+    currentCity.value = '南京';
+};
+
+const selectCity = (e) => {
+    // 选择城市处理
 };
 </script>
 

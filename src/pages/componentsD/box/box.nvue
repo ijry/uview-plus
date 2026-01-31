@@ -45,24 +45,19 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
+<script setup>
+import { ref } from 'vue';
 
-			}
-		},
-		methods: {
-			navigateBack() {
-				uni.navigateBack({
-					delta: 1
-				})
-			},
-			leftClick() {
-				console.log('leftClick');
-			}
-		}
-	}
+// 定义方法
+const navigateBack = () => {
+	uni.navigateBack({
+		delta: 1
+	})
+};
+
+const leftClick = () => {
+	console.log('leftClick');
+};
 </script>
 
 <style lang="scss">

@@ -40,33 +40,33 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				selectedColor: '#ff0000',
-				selectedColor2: '#00ff00',
-				commonColors: [
-					'#ff0000',
-					'#00ff00',
-					'#0000ff',
-					'#ffff00',
-					'#00ffff',
-					'#ff00ff',
-					'#ffffff',
-					'#000000'
-				]
-			}
-		},
-		methods: {
-			confirmColor(color) {
-				this.selectedColor = color;
-			},
-			confirmColor2(color) {
-				this.selectedColor2 = color;
-			}
-		}
-	}
+<script setup>
+import { ref } from 'vue';
+
+// 定义响应式数据
+const selectedColor = ref('#ff0000');
+const selectedColor2 = ref('#00ff00');
+const showColorPicker = ref(false);
+const showColorPickerWithCommon = ref(false);
+const commonColors = ref([
+	'#ff0000',
+	'#00ff00',
+	'#0000ff',
+	'#ffff00',
+	'#00ffff',
+	'#ff00ff',
+	'#ffffff',
+	'#000000'
+]);
+
+// 定义方法
+const confirmColor = (color) => {
+	selectedColor.value = color;
+};
+
+const confirmColor2 = (color) => {
+	selectedColor2.value = color;
+};
 </script>
 
 <style>

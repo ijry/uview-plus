@@ -40,41 +40,48 @@
     </view>
 </template>
 
-<script>
-export default {
-    data() {
-        return {
-            checked1: 0,
-            checked2: 0,
-            checked3: 0,
-            urlProtocol: '/pages/agreement/protocol',
-            urlPrivacy: '/pages/agreement/privacy',
-            urlThird: '/pages/agreement/third-party'
-        };
-    },
-    methods: {
-        change1(val) {
-            console.log('agreement1 change:', val);
-            this.checked1 = val;
-        },
-        change2(val) {
-            console.log('agreement2 change:', val);
-            this.checked2 = val;
-        },
-        change3(val) {
-            console.log('agreement3 change:', val);
-            this.checked3 = val;
-        },
-        showAgreement1() {
-            this.$refs.agreement1.showModal();
-        },
-        showAgreement2() {
-            this.$refs.agreement2.showModal();
-        },
-        showAgreement3() {
-            this.$refs.agreement3.showModal();
-        }
-    }
+<script setup>
+import { ref } from 'vue';
+
+// 定义响应式数据
+const checked1 = ref(0);
+const checked2 = ref(0);
+const checked3 = ref(0);
+const urlProtocol = ref('/pages/agreement/protocol');
+const urlPrivacy = ref('/pages/agreement/privacy');
+const urlThird = ref('/pages/agreement/third-party');
+
+// 定义引用
+const agreement1 = ref(null);
+const agreement2 = ref(null);
+const agreement3 = ref(null);
+
+// 定义方法
+const change1 = (val) => {
+    console.log('agreement1 change:', val);
+    checked1.value = val;
+};
+
+const change2 = (val) => {
+    console.log('agreement2 change:', val);
+    checked2.value = val;
+};
+
+const change3 = (val) => {
+    console.log('agreement3 change:', val);
+    checked3.value = val;
+};
+
+const showAgreement1 = () => {
+    agreement1.value.showModal();
+};
+
+const showAgreement2 = () => {
+    agreement2.value.showModal();
+};
+
+const showAgreement3 = () => {
+    agreement3.value.showModal();
 };
 </script>
 

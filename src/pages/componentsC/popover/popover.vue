@@ -41,7 +41,8 @@
 </template>
 
 <script setup>
-import { ref, onLoad } from 'vue'
+import { ref } from 'vue'
+import { onLoad } from '@dcloudio/uni-app'
 
 // 响应式数据
 const text5 = ref('长按文本，显示背景色')
