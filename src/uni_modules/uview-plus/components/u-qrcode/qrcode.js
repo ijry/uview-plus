@@ -18,6 +18,7 @@ let QRCode = {};
             return [c0, c1];
             // 3 bytes
         } else {
+			
             c0 = 224 + (code >> 12);
             c1 = 128 + (code >> 6 & 63);
             c2 = 128 + (code & 63);
@@ -1031,7 +1032,6 @@ let QRCode = {};
             image: '',
             imageSize: 30,
             canvasId: opt.canvasId,
-			canvas: opt.canvas,
 			ctx: opt.ctx,
             isNvue: opt.isNvue,
             vuectx: opt.vuectx,
@@ -1039,8 +1039,6 @@ let QRCode = {};
             showLoading: opt.showLoading,
             loadingText: opt.loadingText,
         };
-
-        let canvas = null;
 
         if (typeof opt === 'string') { // 只编码ASCII字符串
             opt = {
@@ -1103,17 +1101,7 @@ let QRCode = {};
                 });
             }
             var ctx = '';
-			canvas = options.canvas;
 			ctx = options.ctx;
-			// 获取canvas node节点
-			// #ifdef MP
-			// 不清楚是小程序的bug还是什么原因，canvas的node节点宽高和设置的宽高不一致 重新设置下
-			canvas.width = options.size;
-			canvas.height = options.size;
-			// #endif
-            // 设置组件中data里面的ctx
-            // options.vuectx.ctx = ctx;
-            // options.vuectx.canvas = canvas;
 
             var count = qrCodeAlg.getModuleCount();
             var ratioSize = options.size;

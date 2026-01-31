@@ -7,8 +7,7 @@
           }"
           @longpress="longpress">
         <view class="u-qrcode__content" @click="preview">
-
-            <!-- #ifndef APP-NVUE || APP-VUE -->
+            <!-- #ifdef MP || H5 -->
             <canvas
                 class="u-qrcode__canvas"
                 :id="cid"
@@ -17,7 +16,7 @@
                 :style="{ width: sizeLocal + unit, height: sizeLocal + unit }" />
             <!-- #endif -->
 
-            <!-- #ifdef APP-VUE -->
+            <!-- #ifdef APP-PLUS -->
             <canvas
                 class="u-qrcode__canvas"
                 :id="cid"
@@ -44,6 +43,7 @@
 
 <script>
 import QRCode from "./qrcode.js"
+import { sleep } from '../../libs/function/index';
 // #ifdef APP-NVUE
 // https://github.com/dcloudio/NvueCanvasDemo/blob/master/README.md
 import {
@@ -51,14 +51,19 @@ import {
     WeexBridge,
 	Image as GImage
 } from '../../libs/util/gcanvas/index.js';
+import { nextTick } from "vue";
 // #endif
 let qrcode
+// 20260201不能在data中存储canvas，否则会导致在微信小程序getContext获取不到canvas对象报错Cannot read property 'type'
+let canvas = null
 export default {
     name: "u-qrcode",
     props: {
         cid: {
             type: String,
-            default: () => `u-qrcode-canvas${Math.floor(Math.random() * 1000000)}`
+            default: () => {
+				return `u-qrcode-canvas${Math.floor(Math.random() * 1000000)}`
+			}
         },
         size: {
             type: Number,
@@ -145,8 +150,7 @@ export default {
             ganvas: null,
             canvasObj: {},
             sizeLocal: this.size,
-            ctx: null, // ctx 在new Qrcode 时js文件内部设置
-            canvas: null, // ctx 在new Qrcode 时js文件内部设置
+            ctx: null,
 			_ready: false
         }
     },
@@ -155,15 +159,18 @@ export default {
         if(this.useRootHeightAndWidth){
             await this.setNewSize()
         }
-		this.canvas = await this.getCanvasNode(this.cid)
-        // #ifdef APP-NVUE
-		this.isNvue = true
-        /*获取绘图所需的上下文，目前不支持3d*/
-        this.ctx = this.canvas.getContext('2d')
-        // #endif
-		// #ifndef APP-NVUE
-		this.ctx = this.getContext()
+		canvas = await this.getCanvasNode(this.cid)
+
+		if (!canvas) return
+		// #ifdef MP
+		// 不清楚是小程序的bug还是什么原因，canvas的node节点宽高和设置的宽高不一致 重新设置下
+		canvas.width = this.sizeLocal
+		canvas.height = this.sizeLocal
 		// #endif
+        // #ifdef APP-PLUS-NVUE
+		this.isNvue = true
+		// #endif
+		this.ctx = this.getUPCanvasContext('2d')
 
         if (this.loadMake) {
             if (!this._empty(this.val)) {
@@ -194,6 +201,7 @@ export default {
 		},
         _makeCode() {
             let that = this
+			if (!canvas) return
             if (!this._empty(this.val)) {
                 // #ifndef APP-NVUE
                 this.loading = true
@@ -203,7 +211,6 @@ export default {
 					qrcode = new QRCode({
 						vuectx: that, // 上下文环境
 						canvasId: that.cid, // canvas-id
-						canvas: that.canvas,
 						ctx: that.ctx,
 						isNvue: that.isNvue,
 						usingComponents: that.usingComponents, // 是否是自定义组件
@@ -362,6 +369,7 @@ export default {
          * @return {Promise<unknown>}
          */
         async getCanvasNode(id, isCanvas = true) {
+			let that = this
         	return new Promise((resolve, reject) => {
         		try {
         			// #ifdef APP-NVUE
@@ -375,32 +383,36 @@ export default {
         				resolve(canvasNode)
         			}, 200)
         			// #endif
-        			// #ifndef APP-NVUE
-        			const query = uni.createSelectorQuery().in(this);
-        			query.select(`#${id}`)
-        				.fields({
-        					node: true,
-        					size: true
-        				})
-        				.exec((res) => {
-        					if (isCanvas) {
-        						resolve(res[0].node)
-        					} else {
-        						resolve(res[0])
-        					}
-        				})
+        			// #ifndef APP-PLUS-NVUE
+                    const query = uni.createSelectorQuery().in(that).select(`#${id}`);
+                    query.fields({
+                            node: true,
+                            size: true
+                        })
+                        .exec((res) => {
+                            if (isCanvas) {
+                                if (res[0]?.node) {
+                                    resolve(res[0].node)
+                                } else {
+                                    resolve(false)
+                                    console.error("获取节点出错", res)
+                                }
+                            } else {
+                                resolve(res[0])
+                            }
+                        })
         			// #endif
         		} catch (e) {
         			console.error("获取节点失败", e)
         		}
         	})
         },
-		getContext() {
-			// #ifdef APP-VUE
+		getUPCanvasContext() {
+			// #ifdef APP-PLUS
 			return uni.createCanvasContext(this.cid, this);
 			// #endif
-			// #ifndef APP-VUE
-			return this.canvas.getContext('2d');
+			// #ifdef APP-PLUS-NVUE || MP || H5
+			return canvas.getContext('2d');
 			// #endif
 		},
 		drawImage(url, x, y, w, h) {
@@ -422,7 +434,7 @@ export default {
 				// #endif
 				// #ifdef APP-NVUE
 				let that = this
-				console.log(img)
+				// console.log(img)
 				img.onload = function(){
 					if (process.env.NODE_ENV === 'development') {
 						console.log('drawImage绘制2...')
