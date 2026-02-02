@@ -135,7 +135,7 @@ export default {
             default: () => false
         },
     },
-    emits: ['result', 'longpressCallback'],
+    emits: ['preview', 'result', 'longpressCallback'],
     data() {
         return {
             loading: false,
