@@ -1,3 +1,6 @@
+## 3.7.5（2026-02-03）
+add: up-slider组件新增垂直模式
+
 ## 3.7.4（2026-02-03）
 add: box组件props优化及新增leftIcon/leftTitle/rightTopIcon/rightTopTitle/rightBottomIcon/rightBottomTitle参数
 
