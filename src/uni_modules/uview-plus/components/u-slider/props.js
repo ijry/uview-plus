@@ -82,7 +82,7 @@ export const props = defineMixin({
             type: Boolean,
             default: () => defProps.slider.useNative
         },
-        // 滑块高度
+        // 滑块厚度
         height: {
             type: String,
             default: () => defProps.slider.height
@@ -91,5 +91,20 @@ export const props = defineMixin({
             type: Object,
             default: () => defProps.slider.innerStyle
         },
+        // 是否垂直方向
+        vertical: {
+            type: Boolean,
+            default: defProps.slider.vertical
+        },
+        // 滑块粗细，为了支持垂直模式下统一粗细参数，用size代替height。
+        size: {
+            type: [Number, String],
+            default: () => defProps.slider.size
+        },
+        // 滑块长度，水平和垂直模式的长度。
+        length: {
+            type: [Number, String],
+            default: 'auto'
+        }
     }
 })

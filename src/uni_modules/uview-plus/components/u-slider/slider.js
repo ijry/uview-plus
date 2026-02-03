@@ -22,7 +22,10 @@ export default {
 		disabled:false,
         blockStyle: {},
         useNative: false,
-        height: '2px',
-        innerStyle: {}
+        height: '',
+        innerStyle: {},
+        vertical: false,
+        size: '2px',
+        length: 'auto'
     }
 }

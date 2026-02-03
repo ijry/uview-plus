@@ -1,7 +1,7 @@
 <template>
 	<view
 		class="u-slider"
-		:style="[addStyle(customStyle)]"
+		:style="[addStyle(customStyle), {width: vertical ? addUnit(this.blockSize): ''}]"
 	>
 		<template v-if="!useNative || isRange">
 			<view ref="u-slider-inner" class="u-slider-inner" @click="onClick"
@@ -13,7 +13,8 @@
 					class="u-slider__base"
 					:style="[
 						{
-							height: height,
+							width: vertical ? addUnit(sizeLocal) : addUnit(length),
+							height: vertical ? addUnit(length) : addUnit(sizeLocal),
 							backgroundColor: inactiveColor
 						}
 					]"
@@ -25,8 +26,6 @@
 					:style="[
 						barStyle,
 						{
-							height: height,
-							marginTop: '-' + height,
 							backgroundColor: activeColor
 						}
 					]"
@@ -37,8 +36,6 @@
 					:style="[
 						barStyle0,
 						{
-							height: height,
-							marginTop: '-' + height,
 							backgroundColor: inactiveColor
 						}
 					]"
@@ -55,7 +52,7 @@
 				<template v-if="isRange">
 					<view class="u-slider__button-wrap u-slider__button-wrap-0" @touchstart="onTouchStart($event, 0)"
 						@touchmove="onTouchMove($event, 0)" @touchend="onTouchEnd($event, 0)"
-						@touchcancel="onTouchEnd($event, 0)" :style="{left: (getPx(barStyle0.width) + getPx(blockSize)/2) + 'px'}">
+						@touchcancel="onTouchEnd($event, 0)" :style="touchButtonStyle(barStyle0)">
 						<slot name="min" v-if="$slots.min || $slots.$min"/>
 						<view v-else class="u-slider__button" :style="[blockStyle, {
 							height: getPx(blockSize, true),
@@ -66,7 +63,7 @@
 				</template>
 				<view class="u-slider__button-wrap" @touchstart="onTouchStart"
 					@touchmove="onTouchMove" @touchend="onTouchEnd"
-					@touchcancel="onTouchEnd" :style="{left: (getPx(barStyle.width) + getPx(blockSize)/2) + 'px'}">
+					@touchcancel="onTouchEnd" :style="touchButtonStyle(barStyle)">
 					<slot name="max" v-if="isRange && ($slots.max || $slots.$max)"/>
 					<slot v-else-if="$slots.default || $slots.$default"/>
 					<view v-else class="u-slider__button" :style="[blockStyle, {
@@ -76,7 +73,9 @@
 					}]"></view>
 				</view>
 			</view>
-			<view class="u-slider__show-value" v-if="showValue && !isRange">{{ modelValue }}</view>
+			<view class="u-slider__show-value" v-if="showValue && !isRange">
+				{{ modelValue }}
+			</view>
 		</template>
 		<slider
 			class="u-slider__native"
@@ -98,10 +97,10 @@
 </template>
 
 <script>
-	import { props } from './props';
-	import { mpMixin } from '../../libs/mixin/mpMixin';
-	import { mixin } from '../../libs/mixin/mixin';
-	import { addStyle, getPx, sleep } from '../../libs/function/index.js';
+	import { props } from './props'
+	import { mpMixin } from '../../libs/mixin/mpMixin'
+	import { mixin } from '../../libs/mixin/mixin'
+	import { addUnit, addStyle, getPx, sleep } from '../../libs/function/index.js'
 	// #ifdef APP-NVUE
 	const dom = uni.requireNativePlugin('dom')
 	// #endif
@@ -130,17 +129,22 @@
 		data() {
 			return {
 				startX: 0,
+				startY: 0,
 				status: 'end',
 				newValue: 0,
 				distanceX: 0,
+				distanceY: 0,
 				startValue0: 0,
 				startValue: 0,
 				barStyle0: {},
 				barStyle: {},
 				sliderRect: {
 					left: 0,
-					width: 0
-				}
+					top: 0,
+					width: 0,
+					height: 0
+				},
+				sizeLocal: '2px'
 			};
 		},
 		watch: {
@@ -173,12 +177,41 @@
             	deep:true
         	}
 		},
-		created() {
+		mounted() {
+			if (this.height != '') {
+				this.sizeLocal = val
+			} else {
+				this.sizeLocal = this.size
+			}
 		},
 		computed: {
+			touchButtonStyle() {
+				return (barStyle) => {
+					let style = {}
+					if (this.blockSize) {
+						if (this.vertical) {
+							style.top = (getPx(barStyle.height) ) + 'px'
+						} else {
+							if (barStyle.width) {
+								style.left = (getPx(barStyle.width) + getPx(this.blockSize)/2) + 'px'
+								// console.log(style)
+							}
+						}
+					}
+					return style
+				}
+			},
 			innerStyleCpu() {
-				let style = this.innerStyle;
-				style.height = (this.isRange && this.showValue) ? (getPx(this.blockSize) + 24) + 'px' : (getPx(this.blockSize)) + 'px';
+				let style = {...this.innerStyle};
+				if (this.vertical) {
+					style.flexDirection = 'row'
+					style.height = this.length
+					style.padding = '0'
+					style.width = (this.isRange && this.showValue) ? (getPx(this.blockSize) + 24) + 'px' : (getPx(this.blockSize)) + 'px';
+				} else {
+					style.flexDirection = 'column'
+					style.height = (this.isRange && this.showValue) ? (getPx(this.blockSize) + 24) + 'px' : (getPx(this.blockSize)) + 'px';
+				}
 				return style;
 			}
 		},
@@ -202,8 +235,10 @@
 					dom.getComponentRect(ref, (res) => {
 						// console.log(res)
 						this.sliderRect = {
+							top: res.size.top,
 							left: res.size.left,
-							width: res.size.width
+							width: res.size.width,
+							height: res.size.height
 						};
 						this.init()
 					})
@@ -211,6 +246,7 @@
 			}
 		},
 		methods: {
+			addUnit,
 			addStyle,
 			getPx,
 			init() {
@@ -259,10 +295,12 @@
 			onTouchStart(event, index = 1) {
 				if (this.disabled) return;
 				this.startX = 0;
+				this.startY = 0;
 				// 触摸点集
 				let touches = event.touches[0];
 				// 触摸点到屏幕左边的距离
 				this.startX = touches.clientX;
+				this.startY = touches.clientY;
 				// 此处的this.modelValue虽为props值，但是通过$emit('update:modelValue')进行了修改
 				if (this.isRange) {
 					this.startValue0 = this.format(this.rangeValue[0], 0);
@@ -277,18 +315,30 @@
 				}
 				// 标示当前的状态为开始触摸滑动
 				this.status = 'start';
+				// console.log('start', this.startValue)
 
 				let clientX = 0;
+				let clientY = 0;
 				// #ifndef APP-NVUE
 				clientX = touches.clientX;
+				clientY = touches.clientY;
 				// #endif
 				// #ifdef APP-NVUE
 				clientX = touches.screenX;
+				clientY = touches.screenY;
 				// #endif
-				this.distanceX = clientX - this.sliderRect.left;
-				// 获得移动距离对整个滑块的值，此为带有多位小数的值，不能用此更新视图
-				// 否则造成通信阻塞，需要每改变一个step值时修改一次视图
-				this.newValue = ((this.distanceX / this.sliderRect.width) * (this.max - this.min)) + parseFloat(this.min);
+				if (this.vertical) {
+					this.distanceY = clientY - this.sliderRect.top;
+					// 获得移动距离对整个滑块的值，此为带有多位小数的值，不能用此更新视图
+					// 否则造成通信阻塞，需要每改变一个step值时修改一次视图
+					this.newValue = ((this.distanceY / this.sliderRect.height) * (this.max - this.min)) + parseFloat(this.min);
+				} else {
+					this.distanceX = clientX - this.sliderRect.left;
+					// 获得移动距离对整个滑块的值，此为带有多位小数的值，不能用此更新视图
+					// 否则造成通信阻塞，需要每改变一个step值时修改一次视图
+					this.newValue = ((this.distanceX / this.sliderRect.width) * (this.max - this.min)) + parseFloat(this.min);
+				}
+				
 				this.status = 'moving';
 				// 发出moving事件
 				let $crtFmtValue = this.updateValue(this.newValue, true, index);
@@ -303,16 +353,26 @@
 				// console.log('touchs', touches)
 				// 滑块的左边不一定跟屏幕左边接壤，所以需要减去最外层父元素的左边值
 				let clientX = 0;
+				let clientY = 0;
 				// #ifndef APP-NVUE
 				clientX = touches.clientX;
+				clientY = touches.clientY;
 				// #endif
 				// #ifdef APP-NVUE
 				clientX = touches.screenX;
+				clientY = touches.screenY;
 				// #endif
-				this.distanceX = clientX - this.sliderRect.left;
-				// 获得移动距离对整个滑块的值，此为带有多位小数的值，不能用此更新视图
-				// 否则造成通信阻塞，需要每改变一个step值时修改一次视图
-				this.newValue = ((this.distanceX / this.sliderRect.width) * (this.max - this.min)) + parseFloat(this.min);
+				if (this.vertical) {
+					this.distanceY = clientY - this.sliderRect.top;
+					// 获得移动距离对整个滑块的值，此为带有多位小数的值，不能用此更新视图
+					// 否则造成通信阻塞，需要每改变一个step值时修改一次视图
+					this.newValue = ((this.distanceY / this.sliderRect.height) * (this.max - this.min)) + parseFloat(this.min);
+				} else {
+					this.distanceX = clientX - this.sliderRect.left;
+					// 获得移动距离对整个滑块的值，此为带有多位小数的值，不能用此更新视图
+					// 否则造成通信阻塞，需要每改变一个step值时修改一次视图
+					this.newValue = ((this.distanceX / this.sliderRect.width) * (this.max - this.min)) + parseFloat(this.min);
+				}
 				this.status = 'moving';
 				// 发出moving事件
 				let $crtFmtValue = this.updateValue(this.newValue, true, index);
@@ -348,23 +408,40 @@
 				// console.log('click', event)
 				// #ifndef APP-NVUE
 				// nvue下暂时无法获取坐标
-				let clientX = event.detail.x - this.sliderRect.left
-				this.newValue = ((clientX / this.sliderRect.width) * (this.max - this.min)) + parseFloat(this.min);
-				this.updateValue(this.newValue, false, 1);
+				if (this.vertical) {
+					let clientY = event.detail.y - this.sliderRect.top
+					// console.log(this.sliderRect.top, event.detail.y)
+					this.newValue = ((clientY / this.sliderRect.height) * (this.max - this.min)) + parseFloat(this.min)
+					this.updateValue(this.newValue, false, 1)
+				} else {
+					let clientX = event.detail.x - this.sliderRect.left
+					this.newValue = ((clientX / this.sliderRect.width) * (this.max - this.min)) + parseFloat(this.min)
+					this.updateValue(this.newValue, false, 1)
+				}
 				// #endif
 			},
 			updateValue(value, drag, index = 1) {
 				// 去掉小数部分，同时也是对step步进的处理
-				let valueFormat = this.format(value, index);
+				let valueFormat = this.format(value, index)
 				// 不允许滑动的值超过max最大值
 				if(valueFormat > this.max ) {
 					valueFormat = this.max
 				}
 				// 设置移动的距离，不能用百分比，因为NVUE不支持。
-				let width = Math.min((valueFormat - this.min) / (this.max - this.min) * this.sliderRect.width, this.sliderRect.width)
-				let barStyle = {
-					width: width + 'px'
-				};
+				let sliderLength = 0
+				let barStyle = {}
+				if (this.vertical) {
+					sliderLength = Math.min((valueFormat - this.min) / (this.max - this.min) * this.sliderRect.height, this.sliderRect.height)
+					barStyle['height'] = addUnit(sliderLength)
+					barStyle['width'] = addUnit(this.sizeLocal)
+					barStyle['marginLeft'] = '-' + getPx(this.sizeLocal, true)
+				} else {
+					sliderLength = Math.min((valueFormat - this.min) / (this.max - this.min) * this.sliderRect.width, this.sliderRect.width)
+					barStyle['width'] = addUnit(sliderLength)
+					barStyle['height'] = addUnit(this.sizeLocal)
+					barStyle['marginTop'] = '-' + getPx(this.sizeLocal, true)
+				}
+				
 				// 移动期间无需过渡动画
 				if (drag == true) {
 					barStyle.transition = 'none';
