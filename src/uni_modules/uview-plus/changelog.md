@@ -1,3 +1,12 @@
+## 3.7.4（2026-02-03）
+add: box组件props优化及新增leftIcon/leftTitle/rightTopIcon/rightTopTitle/rightBottomIcon/rightBottomTitle参数
+
+## 3.7.3（2026-02-03）
+improvment: city-locate组件示例改为组合式API
+
+## 3.7.2（2026-02-02）
+improvment: color-picker组件示例改为组合式API
+
 ## 3.7.1（2026-02-02）
 fix:修复qrcode缺失的preview定义emit
 

@@ -1,18 +1,33 @@
 <template>
 	<view class="u-box" :style="[{height: height}, addStyle(customStyle)]">
-        <view class="u-box__left" :style="{borderRadius: borderRadius, backgroundColor: bgColors[0]}">
-            <slot name="left">左</slot>
-        </view>
-        <view class="u-box__gap" :style="{width: gap, height: height}"></view>
-        <view class="u-box__right">
-            <view class="u-box__right-top" :style="{borderRadius: borderRadius, backgroundColor: bgColors[1]}">
-                <slot name="rightTop">右上</slot>
-            </view>
-            <view class="u-box__right-gap" :style="{height: gap}"></view>
-            <view class="u-box__right-bottom" :style="{borderRadius: borderRadius, backgroundColor: bgColors[2]}">
-                <slot name="rightBottom">右下</slot>
-            </view>
-        </view>
+	    <view class="u-box__left" :style="{borderRadius: borderRadius, backgroundColor: bgColors[0]}">
+	        <slot name="left">
+	            <view class="flex flex-row items-center justify-center">
+	                <u-icon size="36" :name="leftIcon"></u-icon>
+	                <text class="ml-2 text-16px">{{leftTitle}}</text>
+	            </view>
+	        </slot>
+	    </view>
+	    <view class="u-box__gap" :style="{width: gap, height: height}"></view>
+	    <view class="u-box__right">
+	        <view class="u-box__right-top" :style="{borderRadius: borderRadius, backgroundColor: bgColors[1]}">
+	            <slot name="rightTop">
+	                <view class="flex flex-row items-center justify-center">
+	                    <u-icon size="36" :name="rightTopIcon"></u-icon>
+	                    <text class="ml-2 text-15px">{{rightTopTitle}}</text>
+	                </view>
+	            </slot>
+	        </view>
+	        <view class="u-box__right-gap" :style="{height: gap}"></view>
+	        <view class="u-box__right-bottom" :style="{borderRadius: borderRadius, backgroundColor: bgColors[2]}">
+	            <slot name="rightBottom">
+	                <view class="flex flex-row items-center justify-center">
+	                    <u-icon size="36" :name="rightBottomIcon"></u-icon>
+	                    <text class="ml-2 text-15px">{{rightBottomTitle}}</text>
+	                </view>
+	            </slot>
+	        </view>
+	    </view>
 	</view>
 </template>
 
