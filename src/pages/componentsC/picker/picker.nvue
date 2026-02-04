@@ -89,6 +89,7 @@
 <script setup>
 import { ref } from 'vue'
 import { toast } from '@/uni_modules/uview-plus'
+import { onLoad } from '@dcloudio/uni-app'
 
 // 响应式数据
 const index = ref(0)
@@ -100,6 +101,13 @@ const columnData = ref([
 const columns1 = ref([
 	['中国', '美国', '日本']
 ])
+onLoad(()=> {
+	setTimeout(() => {
+		columns1.value = [
+			['中国onLoad', '美国onLoad', '日本onLoad']
+		]
+	}, 3000)
+})
 const columns2 = ref([
 	['中国', '美国', '日本']
 ])
