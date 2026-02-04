@@ -146,6 +146,9 @@ export default {
 			}
 		});
       },
+	  closeSelect() {
+		this.isOpen = false;
+	  },
 	  overlayClick() {
 		  this.isOpen = false;
 	  },
