@@ -1,3 +1,7 @@
+## 3.7.7（2026-02-05）
+add: select组件新增closeSelect方法用于自定义控制关闭
+
+
 ## 3.7.6（2026-02-04）
 add: picker组件示例onLoad后加载数据
 
