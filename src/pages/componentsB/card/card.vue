@@ -16,11 +16,11 @@
 					<view>
 						<view class="u-body-item u-flex u-flex-items-start u-border-bottom u-col-between u-p-t-0">
 							<view class="u-body-item-title u-line-2">瓶身描绘的牡丹一如你初妆，冉冉檀香透过窗心事我了然，宣纸上走笔至此搁一半</view>
-							<image src="https://uview-plus.jiangruyi.com/uview/ext/59c256f85a8c3757.jpg" mode="aspectFill"></image>
+							<image class="image" src="https://uview-plus.jiangruyi.com/uview/ext/59c256f85a8c3757.jpg" mode="aspectFill"></image>
 						</view>
 						<view class="u-body-item u-flex u-row-between u-p-b-0">
 							<view class="u-body-item-title u-line-2">釉色渲染仕女图韵味被私藏，而你嫣然的一笑如含苞待放</view>
-							<image src="https://uview-plus.jiangruyi.com/uview/ext/59c256f85a8c3757.jpg" mode="aspectFill"></image>
+							<image class="image" src="https://uview-plus.jiangruyi.com/uview/ext/59c256f85a8c3757.jpg" mode="aspectFill"></image>
 						</view>
 					</view>
 				</template>
@@ -113,7 +113,7 @@ const headClick = (index) => {
 			padding: 20rpx 10rpx;
 		}
 			
-		.u-body-item image {
+		.u-body-item .image {
 			width: 120rpx;
 			flex: 0 0 120rpx;
 			height: 120rpx;
