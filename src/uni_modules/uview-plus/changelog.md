@@ -1,3 +1,6 @@
+## 3.7.10（2026-02-06）
+add: checkbox-group组件的change事件增加第二个返回参数为当前触发变化的checkbox组件name信息等
+
 ## 3.7.9（2026-02-06）
 fix: 修复align-self属性值缺少d导致样式不生效的问题
 

@@ -109,7 +109,10 @@
 				this.$emit("input", values);
 				// #endif
        			// 放在最后更新，否则change事件传出去的values不会更新
-				this.$emit('change', values)
+				this.$emit('change', values, {
+					isChecked: childInstance.$data['isChecked'],
+					name: childInstance.$props['name'] // 当前变动的checkbox的name值
+				})
 			},
 		}
 	}
