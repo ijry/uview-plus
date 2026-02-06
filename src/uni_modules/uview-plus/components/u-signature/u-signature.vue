@@ -1,22 +1,22 @@
 <template>
 	<view class="u-signature">
-		<view class="u-signature__canvas-wrap">
-			<!-- #ifdef MP || H5 -->
-			<canvas class="u-signature__canvas" :id="canvasId" :canvas-id="canvasId" type="2d" :disable-scroll="true"
-				@touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd" :style="{
+		<view class="u-signature__canvas-wrap" :style="{background: bgColor}">
+			<up-canvas 
+				ref="signatureCanvas"
+				:canvas-id="canvasId"
+				:width="canvasWidth"
+				:height="canvasHeight"
+				:bg-color="bgColor"
+				@touchstart="touchStart" 
+				@touchmove="touchMove" 
+				@touchend="touchEnd"
+				:disable-scroll="true"
+				class="u-signature__canvas"
+				:style="{
 					width: canvasWidth + 'px',
 					height: canvasHeight + 'px',
-					background: bgColor
-				}"></canvas>
-			<!-- #endif -->
-			<!-- #ifdef APP-PLUS -->
-			<canvas class="u-signature__canvas" :id="canvasId" :canvas-id="canvasId" :disable-scroll="true"
-				@touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd" :style="{
-					width: canvasWidth + 'px',
-					height: canvasHeight + 'px',
-					background: bgColor
-				}"></canvas>
-			<!-- #endif -->
+				}">
+			</up-canvas>
 		</view>
 		
 		<view v-if="showToolbar" class="u-signature__toolbar">
@@ -75,7 +75,6 @@
 
 <script>
 	import { t } from '../../libs/i18n'
-	let canvas = null
 	export default {
 		name: 'u-signature',
 		props: {
@@ -120,7 +119,6 @@
 				isDrawing: false,
 				pathStack: [], // 存储绘制路径用于回退
 				currentPath: [], // 当前绘制路径
-				ctx: null,
 				isEmpty: true,
 				presetColors: [
 					'#000000', // 黑色
@@ -134,11 +132,16 @@
 				],
 				showBrushSettings: false,
 				showColorSettings: false,
-				lastPoint: null // 保存上一个点的坐标
+				lastPoint: null, // 保存上一个点的坐标
+				canvasInstance: null // 缓存canvas实例
 			}
 		},
 		mounted() {
-			this.initCanvas()
+			// 初始化时获取canvas实例
+			this.$nextTick(() => {
+				this.getCanvasInstance();
+				this.clearCanvas();
+			});
 		},
 		watch: {
 			width: {
@@ -168,105 +171,40 @@
 		},
 		methods: {
 			t,
-			/**
-			 * 获取节点
-			 * @param id 节点id
-			 * @param isCanvas 是否为Canvas节点
-			 * @return {Promise<unknown>}
-			 */
-			async getCanvasNode(id, isCanvas = true) {
-				let that = this
-				return new Promise((resolve, reject) => {
-					try {
-						// #ifndef APP-PLUS-NVUE
-						const query = uni.createSelectorQuery().in(that).select(`#${id}`);
-						query.fields({
-								node: true,
-								size: true
-							})
-							.exec((res) => {
-								if (isCanvas) {
-									if (res[0]?.node) {
-										resolve(res[0].node)
-									} else {
-										resolve(false)
-										console.error("获取节点出错", res)
-									}
-								} else {
-									resolve(res[0])
-								}
-							})
-						// #endif
-					} catch (e) {
-						console.error("获取节点失败", e)
-					}
-				})
-			},
-			getUPCanvasContext() {
-				// #ifdef APP-PLUS
-				return uni.createCanvasContext(this.canvasId, this);
-				// #endif
-				// #ifdef APP-PLUS-NVUE || MP || H5
-				return canvas.getContext('2d');
-				// #endif
-			},
-			async initCanvas() {
-				canvas = await this.getCanvasNode(this.canvasId)
-				this.ctx = this.getUPCanvasContext('2d')
-				
-				// #ifdef MP-WEIXIN
-				// 在微信小程序中，为了提高清晰度，需要考虑设备像素比
-				const dpr = uni.getSystemInfoSync().pixelRatio
-				if(canvas){
-					// 设置canvas实际绘制尺寸为显示尺寸的dpr倍
-					canvas.width = this.canvasWidth * dpr
-					canvas.height = this.canvasHeight * dpr
-					// 缩放上下文以匹配设备像素比
-					this.ctx.scale(dpr, dpr)
+			
+			// 获取签名画布实例
+			getCanvasInstance() {
+				if (this.canvasInstance) {
+					return this.canvasInstance;
 				}
-				// #endif
+				
+				const canvasRef = this.$refs.signatureCanvas;
+				if (canvasRef) {
+					this.canvasInstance = canvasRef;
+					return canvasRef;
+				}
+				return null;
 			},
 			
 			touchStart(e) {
-				if (!this.ctx) return
+				if (!this.canvasInstance || !this.canvasInstance.ctx) {
+					this.getCanvasInstance();
+				}
 				
-				this.isDrawing = true
-				this.isEmpty = false
-				this.currentPath = []
+				if (!this.canvasInstance || !this.canvasInstance.ctx) return;
 				
-				const { x, y } = this.getCanvasPoint(e)
-				this.ctx.beginPath()
-				this.ctx.moveTo(x, y)
+				this.isDrawing = true;
+				this.isEmpty = false;
+				this.currentPath = [];
 				
-				// #ifndef APP-PLUS-NVUE
-				// 对于非nvue环境，尝试使用setLineCap/setLineJoin等方法
-				if (this.ctx.setLineCap) {
-					this.ctx.setLineCap('round')
-				} else {
-					this.ctx.lineCap = 'round'
-				}
-				if (this.ctx.setLineJoin) {
-					this.ctx.setLineJoin('round')
-				} else {
-					this.ctx.lineJoin = 'round'
-				}
-				if (this.ctx.setStrokeStyle) {
-					this.ctx.setStrokeStyle(this.lineColor)
-				} else {
-					this.ctx.strokeStyle = this.lineColor
-				}
-				if (this.ctx.setLineWidth) {
-					this.ctx.setLineWidth(this.lineWidth)
-				} else {
-					this.ctx.lineWidth = this.lineWidth
-				}
-				// #endif
-				// #ifdef APP-PLUS-NVUE
-				this.ctx.setLineCap('round')
-				this.ctx.setLineJoin('round')
-				this.ctx.setStrokeStyle(this.lineColor)
-				this.ctx.setLineWidth(this.lineWidth)
-				// #endif
+				const { x, y } = this.getCanvasPoint(e);
+				
+				// 设置线条样式
+				this.canvasInstance.setLineStyle(this.lineColor, this.lineWidth);
+				
+				// 开始路径
+				this.canvasInstance.beginPath();
+				this.canvasInstance.moveTo(x, y);
 				
 				// 记录起始点
 				this.currentPath.push({
@@ -275,74 +213,69 @@
 					type: 'start',
 					color: this.lineColor,
 					width: this.lineWidth
-				})
+				});
 				
 				// 保存上一个点
-				this.lastPoint = { x, y }
+				this.lastPoint = { x, y };
 				
 				// 阻止默认事件以提高性能
-				e.preventDefault()
+				e.preventDefault();
 			},
 			
 			touchMove(e) {
-				if (!this.isDrawing || !this.ctx) return
+				if (!this.isDrawing || !this.canvasInstance || !this.canvasInstance.ctx) return;
 				
 				// 阻止默认事件以提高性能
-				e.preventDefault()
+				e.preventDefault();
 				
-				const { x, y } = this.getCanvasPoint(e)
+				const { x, y } = this.getCanvasPoint(e);
 				
 				// 从上一个点画线到当前点
-				this.ctx.lineTo(x, y)
-				this.ctx.stroke() // 实时绘制当前线段
+				this.canvasInstance.lineTo(x, y);
+				this.canvasInstance.stroke(); // 实时绘制当前线段
 				this.currentPath.push({
 					x,
 					y,
 					type: 'move'
-				})
+				});
+				this.canvasInstance.draw(false);
 				
-				// #ifndef MP-WEIXIN
-				// 在非微信小程序平台使用draw方法刷新画布
-				if (typeof this.ctx.draw === 'function') {
-					this.ctx.draw(false) // 使用false参数优化性能，延迟绘制
-				}
-				// #endif
-				// #ifdef MP-WEIXIN
-				// 微信小程序中不使用draw方法，因为2D Canvas上下文没有draw方法
-				// 直接通过stroke方法绘制，不需要额外调用draw
-				// #endif
+				// 更新上一个点
+				this.lastPoint = { x, y };
 			},
 			
 			touchEnd(e) {
-				if (!this.isDrawing || !this.ctx) return
+				if (!this.isDrawing || !this.canvasInstance || !this.canvasInstance.ctx) return;
 				
-				this.isDrawing = false
-				this.ctx.closePath()
-				this.lastPoint = null
+				this.isDrawing = false;
+				this.canvasInstance.closePath();
+				this.lastPoint = null;
 				
 				// 将当前路径加入栈中用于回退
 				if (this.currentPath.length > 0) {
-					this.pathStack.push([...this.currentPath])
+					this.pathStack.push([...this.currentPath]);
 				}
 				
-				// #ifndef MP-WEIXIN
-				// 最后统一执行一次绘制，仅在非微信小程序平台
-				if (typeof this.ctx.draw === 'function') {
-					this.ctx.draw(true)
-				}
-				// #endif
+				// 最后统一执行一次绘制
+				this.canvasInstance.draw(true);
 			},
 			
 			// 同步获取canvas坐标点（兼容处理）
 			getCanvasPoint(e) {
-				const touch = e.touches[0]
-				const canvas = uni.createSelectorQuery().in(this).select('.u-signature__canvas')
+				// #ifdef MP-WEIXIN
+				const touch = e.touches && e.touches[0] ? e.touches[0] : e.mp.touches[0];
+				// #endif
+				// #ifndef MP-WEIXIN
+				const touch = e.touches[0];
+				// #endif
 				
-				// 返回一个包含坐标的对象
+				// 计算相对于canvas的坐标
+				// 由于无法直接获取canvas位置，这里简化处理
+				// 实际应用中可能需要通过uni.createSelectorQuery获取canvas位置
 				return {
 					x: touch.x,
 					y: touch.y
-				}
+				};
 			},
 			
 			// 选择颜色
@@ -363,172 +296,83 @@
 			
 			// 重新绘制所有路径
 			redraw() {
-				this.clearCanvas()
-				
-				if (this.pathStack.length === 0) {
-					this.isEmpty = true
-					return
+				if (!this.canvasInstance) {
+					this.getCanvasInstance();
 				}
 				
-				this.isEmpty = false
+				if (!this.canvasInstance) return;
 				
-				// #ifndef APP-NVUE
+				// 先清空画布
+				this.canvasInstance.clearCanvas();
+				
+				if (this.pathStack.length === 0) {
+					this.isEmpty = true;
+					return;
+				}
+				
+				this.isEmpty = false;
+				
+				// 逐个绘制路径
 				this.pathStack.forEach(path => {
-					if (path.length === 0) return
+					if (path.length === 0) return;
 					
-					this.ctx.beginPath()
-					// #ifndef APP-PLUS-NVUE
-					if (this.ctx.setLineCap) {
-						this.ctx.setLineCap('round')
-					} else {
-						this.ctx.lineCap = 'round'
-					}
-					if (this.ctx.setLineJoin) {
-						this.ctx.setLineJoin('round')
-					} else {
-						this.ctx.lineJoin = 'round'
-					}
-					// #endif
-					// #ifdef APP-PLUS-NVUE
-					this.ctx.setLineCap('round')
-					this.ctx.setLineJoin('round')
-					// #endif
+					this.canvasInstance.beginPath();
 					
-					let lastPoint = null
+					let lastPoint = null;
 					path.forEach((point, index) => {
 						if (index === 0 && point.type === 'start') {
-							// 设置起始点样式
-							// #ifndef APP-PLUS-NVUE
-							if (this.ctx.setStrokeStyle) {
-								this.ctx.setStrokeStyle(point.color)
-							} else {
-								this.ctx.strokeStyle = point.color
-							}
-							if (this.ctx.setLineWidth) {
-								this.ctx.setLineWidth(point.width)
-							} else {
-								this.ctx.lineWidth = this.lineWidth
-							}
-							// #endif
-							// #ifdef APP-PLUS-NVUE
-							this.ctx.setStrokeStyle(point.color)
-							this.ctx.setLineWidth(point.width)
-							// #endif
-							
-							this.ctx.moveTo(point.x, point.y)
-							lastPoint = { x: point.x, y: point.y }
+							// 设置线条样式
+							this.canvasInstance.setLineStyle(point.color, point.width);
+							this.canvasInstance.moveTo(point.x, point.y);
+							lastPoint = { x: point.x, y: point.y };
 						} else if (point.type === 'move') {
-							this.ctx.lineTo(point.x, point.y)
-							lastPoint = { x: point.x, y: point.y }
+							this.canvasInstance.lineTo(point.x, point.y);
+							lastPoint = { x: point.x, y: point.y };
 						}
-					})
-					
-					// #ifndef MP-WEIXIN
-					this.ctx.stroke()
-					this.ctx.draw(true)
-					// #endif
-					// #ifdef MP-WEIXIN
-					// 微信小程序中只需stroke，不需要draw
-					this.ctx.stroke()
-					// #endif
-				})
-				// #endif
-			},
-			
-			// 清空画布
-			clear() {
-				this.pathStack = []
-				this.currentPath = []
-				this.isEmpty = true
-				this.lastPoint = null
-				this.clearCanvas()
+					});
+					this.canvasInstance.stroke();
+					this.canvasInstance.draw(true);
+				});
 			},
 			
 			// 清空画布内容
 			clearCanvas() {
-				if (!this.ctx) return
-				
-				// #ifndef APP-NVUE
-				// 清除矩形区域并填充背景色
-				this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight)
-				
-				// 使用rect和fill方法替代setFillStyle，以提高兼容性
-				this.ctx.beginPath()
-				this.ctx.rect(0, 0, this.canvasWidth, this.canvasHeight)
-				
-				// #ifdef MP-WEIXIN
-				// 微信小程序使用fillStyle属性替代setFillStyle方法
-				this.ctx.fillStyle = this.bgColor
-				this.ctx.fill()
-				// 微信小程序中不调用draw方法，因为2D Canvas上下文没有draw方法
-				// #endif
-				// #ifndef MP-WEIXIN
-				// 其他平台继续使用setFillStyle方法
-				if (this.ctx.setFillStyle) {
-					this.ctx.setFillStyle(this.bgColor)
-				} else {
-					this.ctx.fillStyle = this.bgColor
+				if (!this.canvasInstance) {
+					this.getCanvasInstance();
 				}
-				this.ctx.fill()
 				
-				// 在非微信小程序平台使用draw方法刷新画布
-				if (typeof this.ctx.draw === 'function') {
-					this.ctx.draw()
-				}
-				// #endif
-				// #endif
+				if (!this.canvasInstance) return;
+				
+				this.canvasInstance.clearCanvas();
 			},
 			
 			// 导出签名图片
-			exportSignature() {
-				if (this.isEmpty) return
+			async exportSignature() {
+				if (this.isEmpty) {
+					console.warn('签名为空，无法导出');
+					return;
+				}
 				
-				// #ifdef MP-WEIXIN
-				// 微信小程序中需要先完成绘制，然后导出图片
-				// 由于2D Canvas的特性，需要等待绘制完成后再导出
-				this.redraw(); // 先重绘整个签名内容
-				// 使用 setTimeout 确保绘制完成后导出
-				setTimeout(() => {
-					uni.canvasToTempFilePath({
-						x: 0,
-						y: 0,
-						width: this.canvasWidth,
-						height: this.canvasHeight,
-						destWidth: this.canvasWidth * 2, // 使用双倍尺寸以提高清晰度
-						destHeight: this.canvasHeight * 2,
-						canvas: canvas, // 画布标识，传入 canvas 组件实例 （canvas type="2d" 时使用该属性）。
-						canvasId: this.canvasId,
-						fileType: 'png',
-						quality: 1,
-						success: (res) => {
-							this.$emit('confirm', res.tempFilePath)
-						},
-						fail: (err) => {
-							console.error('导出签名图片失败:', err)
-							this.$emit('error', err)
-						}
-					}, this)
-				}, 50) // 等待50毫秒确保绘制完成
-				// #endif
+				if (!this.canvasInstance) {
+					this.getCanvasInstance();
+				}
 				
-				// #ifndef MP-WEIXIN
-				uni.canvasToTempFilePath({
-					canvas: canvas,
-					canvasId: this.canvasId,
-					fileType: 'png',
-					quality: 1,
-					success: (res) => {
-						this.$emit('confirm', res.tempFilePath)
-					},
-					fail: (err) => {
-						this.$emit('error', err)
-					}
-				}, this)
-				// #endif
+				if (!this.canvasInstance) {
+					console.error('无法获取画布实例');
+					return;
+				}
 				
-				// #ifdef APP-NVUE
-				// NVUE环境下可能需要特殊处理
-				// #endif
+				try {
+					// 先重绘整个签名内容
+					this.redraw();
+					
+					// 导出图片
+					const imagePath = await this.canvasInstance.exportImage('png', 1);
+					this.$emit('confirm', imagePath);
+				} catch (error) {
+					console.error('导出签名图片失败:', error);
+					this.$emit('error', error);
+				}
 			},
 			
 			// 切换笔画设置显示
