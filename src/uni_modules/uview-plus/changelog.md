@@ -1,3 +1,6 @@
+## 3.7.11（2026-02-06）
+add: action-sheet组件新增nameKey和subnameKey属性
+
 ## 3.7.10（2026-02-06）
 add: checkbox-group组件的change事件增加第二个返回参数为当前触发变化的checkbox组件name信息等
 

@@ -31,6 +31,16 @@ export const props = defineMixin({
             type: Array,
             default: () => defProps.actionSheet.actions
         },
+        // 选项名称key
+        nameKey: {
+            type: String,
+            default: () => defProps.actionSheet.nameKey
+        },
+        // 选项子名称key
+        subnameKey: {
+            type: String,
+            default: () => defProps.actionSheet.subnameKey
+        },
         // 取消按钮的文字，不为空时显示按钮
         cancelText: {
             type: String,

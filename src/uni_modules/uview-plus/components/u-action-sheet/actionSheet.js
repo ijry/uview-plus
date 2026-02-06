@@ -14,6 +14,8 @@ export default {
         title: '',
         description: '',
         actions: [],
+        nameKey: 'name',
+        subnameKey: 'subnameKey',
         index: '',
         cancelText: '',
         closeOnClickAction: true,

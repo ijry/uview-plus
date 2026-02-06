@@ -71,11 +71,11 @@
 									<text
 									    class="u-action-sheet__item-wrap__item__name"
 									    :style="[itemStyle(index)]"
-									>{{ item.name }}</text>
+									>{{ item[nameKey] }}</text>
 									<text
-									    v-if="item.subname"
+									    v-if="item[subnameKey]"
 									    class="u-action-sheet__item-wrap__item__subname"
-									>{{ item.subname }}</text>
+									>{{ item[subnameKey] }}</text>
 								</template>
 								<!-- 加载状态图标 -->
 								<u-loading-icon
