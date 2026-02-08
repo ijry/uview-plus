@@ -1,3 +1,12 @@
+## 3.7.14（2026-02-08）
+refactor: up-signature组件改用up-canvas组件
+
+## 3.7.13（2026-02-07）
+add: 新增up-canvas组件
+
+## 3.7.12（2026-02-07）
+improvment: 优化签名组件兼容性修复微信小程序支持
+
 ## 3.7.11（2026-02-06）
 add: action-sheet组件新增nameKey和subnameKey属性
 
