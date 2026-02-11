@@ -1,3 +1,6 @@
+## 3.7.17（2026-02-11）
+fix: 修复steps组件current失效
+
 ## 3.7.16（2026-02-09）
 improvment: choose组件示例改为组合式API
 

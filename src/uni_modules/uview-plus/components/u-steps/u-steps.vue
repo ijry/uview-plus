@@ -36,7 +36,7 @@
 			children() {
 				this.updateChildData()
 			},
-			parentData() {
+			parentDataCpu() {
 				this.updateChildData()
 			}
 		},
