@@ -40,7 +40,7 @@
 <script setup>
 	// 如果使用这些图片，请勿直接引入uview-plus.jiangruyi.com的资源，因为此资源路径随时会有变动
 	// 变动后，您将会访问图片失败，如有需要，您可以将这些图片上传到自己的oss或者服务器再使用
-	const baseUrl = 'http://uview-plus.jiangruyi.com/uview/empty/'
+	const baseUrl = 'https://uview-plus.jiangruyi.com/uview/empty/'
 	
 	const mode = ref('car')
 	

@@ -1,3 +1,6 @@
+## 3.7.16（2026-02-09）
+improvment: choose组件示例改为组合式API
+
 ## 3.7.14（2026-02-08）
 refactor: up-signature组件改用up-canvas组件
 
