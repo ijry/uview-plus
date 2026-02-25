@@ -1,3 +1,9 @@
+## 3.7.19（2026-02-25）
+improvement：agreement组件示例改为组合式API
+
+## 3.7.18（2026-02-24）
+improvement：barcode组件示例改为组合式API
+
 ## 3.7.17（2026-02-11）
 fix: 修复steps组件current失效
 
