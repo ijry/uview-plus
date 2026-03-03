@@ -1,3 +1,6 @@
+## 3.7.20（2026-02-26）
+improvement：box组件示例改为组合式API
+
 ## 3.7.19（2026-02-25）
 improvement：agreement组件示例改为组合式API
 
