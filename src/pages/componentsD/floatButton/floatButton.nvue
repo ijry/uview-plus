@@ -41,24 +41,16 @@
    </view>
 </template>
 
-<script>
-   export default {
-      data() {
-         return {
+<script setup>
+const navigateBack = () => {
+   uni.navigateBack({
+      delta: 1
+   })
+}
 
-         }
-      },
-      methods: {
-         navigateBack() {
-            uni.navigateBack({
-               delta: 1
-            })
-         },
-         itemClick(e) {
-            console.log(e);
-         }
-      }
-   }
+const itemClick = (e) => {
+   console.log(e);
+}
 </script>
 
 <style lang="scss">
