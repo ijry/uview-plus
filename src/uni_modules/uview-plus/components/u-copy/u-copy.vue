@@ -36,7 +36,7 @@ export default {
 			}
             content = typeof content === 'string' ? content : content.toString() // 复制内容，必须字符串，数字需要转换为字符串
             /**
-			* 小程序端 和 app端的复制逻辑
+			* 复制逻辑
 			*/
 			let that = this;
             uni.setClipboardData({
