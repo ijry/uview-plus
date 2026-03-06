@@ -276,6 +276,7 @@
 					if (this.autoClose) {
 						// 如果启用自动关闭，则触发change事件并关闭
 						this.emitChange();
+						this.handleConfirm();
 					} else {
 						// 否则只触发change事件，不关闭
 						this.emitChange(false);

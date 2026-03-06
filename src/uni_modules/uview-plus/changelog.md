@@ -1,3 +1,6 @@
+## 3.7.23（2026-03-06）
+fix: up-cascader在开启auto-close时最后层级选择后未触发confirm
+
 ## 3.7.22（2026-03-05）
 improvment: floatButton组件示例改为组合式API
 
