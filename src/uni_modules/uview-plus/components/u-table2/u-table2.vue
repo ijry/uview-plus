@@ -31,6 +31,41 @@
             <!-- 表体 -->
             <view class="u-table-body" :style="{ minWidth: scrollWidth, maxHeight: maxHeight ? maxHeight + 'px' : 'none' }">
                 <template v-if="data && data.length > 0">
+                    <!-- #ifdef MP-WEIXIN -->
+                    <template v-for="(item, flatIndex) in flattenedSortedData" :key="item.row[rowKey] || flatIndex">
+                        <view class="u-table-row u-table-row-child" :class="[highlightCurrentRow && currentRow === item.row ? 'u-table-row-highlight' : '',
+                            rowClassName ? rowClassName(item.row, item.rowIndex) : '',
+                            stripe && flatIndex % 2 === 1 ? 'u-table-row-zebra' : ''
+                        ]" :style="{ height: rowHeight }" @click="handleRowClick(item.row)">
+                            <view v-for="(col, colIndex) in columns" :key="col.key" class="u-table-cell"
+                                :class="[col.align ? 'u-text-' + col.align : '',
+                                    cellClassName ? cellClassName(item.row, col) : '',
+                                    getFixedClass(col),
+                                    getCellSpanClass(item.row, col, item.rowIndex, colIndex)
+                                ]"
+                                :style="[cellStyleInner({ row: item.row, column: col, rowIndex: item.rowIndex, columnIndex: colIndex, level: item.level }), getCellSpanStyle(item.row, col, item.rowIndex, colIndex)]">
+                                <view v-if="col.type === 'selection'">
+                                    <checkbox :checked="isSelected(item.row)" @click.stop="toggleSelect(item.row)" />
+                                </view>
+                                <template v-else>
+                                    <view v-if="col.key === computedMainCol && hasTree" @click.stop="toggleExpand(item.row)"
+                                        :style="{ width: expandWidth }">
+                                        <view v-if="item.row[treeProps.children] && item.row[treeProps.children].length > 0">
+                                            {{ isExpanded(item.row) ? '▼' : '▶' }}
+                                        </view>
+                                    </view>
+                                    <slot name="cell" :row="item.row" :column="col" :prow="item.parentRow"
+                                        :rowIndex="item.rowIndex" :columnIndex="colIndex" :level="item.level">
+                                        <view class="u-table-cell_content">
+                                            {{ item.row[col.key] }}
+                                        </view>
+                                    </slot>
+                                </template>
+                            </view>
+                        </view>
+                    </template>
+                    <!-- #endif -->
+                    <!-- #ifndef MP-WEIXIN -->
                     <table-row 
                         v-for="(row, rowIndex) in sortedData"
                         :key="row[rowKey] || rowIndex"
@@ -68,6 +103,7 @@
                             </slot>                      
                         </template>
                     </table-row>
+                    <!-- #endif -->
                 </template>
                 <template v-else>
                     <slot name="empty">
@@ -106,6 +142,41 @@
             <!-- 表体 -->
             <view class="u-table-body" :style="{ minWidth: scrollWidth, maxHeight: maxHeight ? maxHeight + 'px' : 'none' }">
                 <template v-if="data && data.length > 0">
+                    <!-- #ifdef MP-WEIXIN -->
+                    <template v-for="(item, flatIndex) in flattenedSortedData" :key="item.row[rowKey] || flatIndex">
+                        <view class="u-table-row u-table-row-child" :class="[highlightCurrentRow && currentRow === item.row ? 'u-table-row-highlight' : '',
+                            rowClassName ? rowClassName(item.row, item.rowIndex) : '',
+                            stripe && flatIndex % 2 === 1 ? 'u-table-row-zebra' : ''
+                        ]" :style="{ height: rowHeight }" @click="handleRowClick(item.row)">
+                            <view v-for="(col, colIndex) in visibleFixedLeftColumns" :key="col.key" class="u-table-cell"
+                                :class="[col.align ? 'u-text-' + col.align : '',
+                                    cellClassName ? cellClassName(item.row, col) : '',
+                                    getFixedClass(col),
+                                    getCellSpanClass(item.row, col, item.rowIndex, colIndex)
+                                ]"
+                                :style="[cellStyleInner({ row: item.row, column: col, rowIndex: item.rowIndex, columnIndex: colIndex, level: item.level }), getCellSpanStyle(item.row, col, item.rowIndex, colIndex)]">
+                                <view v-if="col.type === 'selection'">
+                                    <checkbox :checked="isSelected(item.row)" @click.stop="toggleSelect(item.row)" />
+                                </view>
+                                <template v-else>
+                                    <view v-if="col.key === computedMainCol && hasTree" @click.stop="toggleExpand(item.row)"
+                                        :style="{ width: expandWidth }">
+                                        <view v-if="item.row[treeProps.children] && item.row[treeProps.children].length > 0">
+                                            {{ isExpanded(item.row) ? '▼' : '▶' }}
+                                        </view>
+                                    </view>
+                                    <slot name="cell" :row="item.row" :column="col" :prow="item.parentRow"
+                                        :rowIndex="item.rowIndex" :columnIndex="colIndex" :level="item.level">
+                                        <view class="u-table-cell_content">
+                                            {{ item.row[col.key] }}
+                                        </view>
+                                    </slot>
+                                </template>
+                            </view>
+                        </view>
+                    </template>
+                    <!-- #endif -->
+                    <!-- #ifndef MP-WEIXIN -->
                     <template v-for="(row, rowIndex) in sortedData" :key="row[rowKey] || rowIndex">
                         <!-- 子级渲染 (递归组件) -->
                         <table-row 
@@ -144,6 +215,7 @@
                             </template>
                         </table-row>
                     </template>
+                    <!-- #endif -->
                 </template>
             </view>
         </view>
@@ -379,6 +451,24 @@ export default {
                 return 0;
             });
         },
+        flattenedSortedData() {
+            const result = [];
+            const childrenKey = this.treeProps.children;
+
+            const walk = (rows, parentRow = null, level = 1) => {
+                if (!Array.isArray(rows) || rows.length === 0) return;
+                rows.forEach((row, rowIndex) => {
+                    result.push({ row, parentRow, level, rowIndex });
+                    const children = row && row[childrenKey];
+                    if (children && children.length > 0 && this.isExpanded(row)) {
+                        walk(children, row, level + 1);
+                    }
+                });
+            };
+
+            walk(this.sortedData);
+            return result;
+        },
         // 计算当前应该显示的固定左侧列
         visibleFixedLeftColumns() {
             if (this.scrollLeft <= 0) {
@@ -444,6 +534,64 @@ export default {
     },
     methods: {
         addUnit,
+        isSelected(row) {
+            return this.selectedRows.some(r => r[this.rowKey] === row[this.rowKey]);
+        },
+        getCellSpan(row, column, rowIndex, columnIndex) {
+            if (typeof this.spanMethod !== 'function') {
+                return { rowspan: 1, colspan: 1 };
+            }
+
+            const result = this.spanMethod({
+                row,
+                column,
+                rowIndex,
+                columnIndex
+            });
+
+            if (Array.isArray(result)) {
+                const [rowspan, colspan] = result;
+                return { rowspan: rowspan != null ? rowspan : 1, colspan: colspan != null ? colspan : 1 };
+            }
+
+            if (result && typeof result === 'object') {
+                const { rowspan, colspan } = result;
+                return { rowspan: rowspan != null ? rowspan : 1, colspan: colspan != null ? colspan : 1 };
+            }
+
+            return { rowspan: 1, colspan: 1 };
+        },
+        getCellSpanClass(row, column, rowIndex, columnIndex) {
+            const span = this.getCellSpan(row, column, rowIndex, columnIndex);
+            if (span.rowspan === 0 || span.colspan === 0) {
+                return 'u-table-cell-hidden';
+            }
+            if (span.rowspan > 1 || span.colspan > 1) {
+                return 'u-table-cell-merged';
+            }
+            return '';
+        },
+        getCellSpanStyle(row, column, rowIndex, columnIndex) {
+            const span = this.getCellSpan(row, column, rowIndex, columnIndex);
+            const style = {};
+
+            if (span.rowspan > 1) {
+                const currentHeight = parseInt(this.rowHeight);
+                if (!isNaN(currentHeight)) {
+                    style.height = `${span.rowspan * currentHeight}px`;
+                }
+            }
+
+            if (span.colspan > 1) {
+                style.flex = span.colspan;
+            }
+
+            if (span.rowspan === 0 || span.colspan === 0) {
+                style.display = 'none';
+            }
+
+            return style;
+        },
         onScroll(e) {
             this.scrollLeft = e.detail.scrollLeft;
             // 获取所有左侧固定列
@@ -720,6 +868,14 @@ export default {
         text-align: center;
         padding: 20px;
         color: #999;
+    }
+
+    .u-table-cell-hidden {
+        opacity: 0;
+    }
+
+    .u-table-cell-merged {
+        z-index: 1;
     }
 }
 
