@@ -163,6 +163,7 @@
 		border-radius: 8rpx;
 		background: #ffebf0;
 		color: $u-main-color;
+        width: 100%;
 		
 		&--coupon {
 			border-radius: 16rpx;
@@ -210,8 +211,6 @@
 		&--card {
 			border-radius: 16rpx;
 		}
-
-        width: 100%;
 		
 		&--small {
 			// width: 520rpx;
