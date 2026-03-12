@@ -1,5 +1,5 @@
 <template>
-	<view class="u-form-item" :class="{'u-form-item--error':(!!message && parentData['errorType'] === 'message')}">
+	<view class="u-form-item" :class="{'u-form-item--error':(message != '' && parentData['errorType'] === 'message')}">
 		<view
 			class="u-form-item__body"
 			@tap="clickHandler"
@@ -59,7 +59,7 @@
 		</view>
 		<slot name="error">
 			<text
-				v-if="!!message && parentData['errorType'] === 'message'"
+				v-if="message != '' && parentData['errorType'] === 'message'"
 				class="u-form-item__body__right__message"
 				:style="{
 					marginLeft:  addUnit((labelPosition || parentData['labelPosition']) === 'top' ? 0 : (labelWidth || parentData['labelWidth']))
@@ -68,8 +68,8 @@
 		</slot>
 		<u-line
 			v-if="borderBottom"
-			:color="message && parentData['errorType'] === 'border-bottom' ? color['error'] : propsLine['color']"
-			:customStyle="`margin-top: ${message && parentData['errorType'] === 'message' ? '5px' : 0}`"
+			:color="message != '' && parentData['errorType'] === 'border-bottom' ? color['error'] : propsLine['color']"
+			:customStyle="`margin-top: ${message != '' && parentData['errorType'] === 'message' ? '5px' : 0}`"
 		></u-line>
 	</view>
 </template>
@@ -167,7 +167,7 @@
 			},
 			// 移除u-form-item的校验结果
 			clearValidate() {
-				this.message = null
+				this.message = ''
 			},
 			// 清空当前的组件的校验结果，并重置为初始值
 			resetField() {
@@ -176,7 +176,7 @@
 				// 将up-form的model的prop属性链还原原始值
 				setProperty(this.parent.$props['model'], this.prop, value)
 				// 移除校验结果
-				this.message = null
+				this.message = ''
 			},
 			// 点击组件
 			clickHandler() {

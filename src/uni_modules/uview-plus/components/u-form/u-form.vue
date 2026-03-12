@@ -121,7 +121,7 @@
 				this.children.map((child) => {
 					// 如果u-form-item的prop在props数组中，则清除对应的校验结果信息
 					if (props[0] === undefined || props.includes(child.prop)) {
-						child.message = null;
+						child.message = '';
 					}
 				});
 			},
@@ -194,7 +194,7 @@
 											//没有配置，或者配置了showErrorMsg为true时候，才修改子组件message，默认没有配置
 											if(!options||options?.showErrorMsg==true){
 												child.message =
-													childErrors[0]?.message ? childErrors[0].message : null;
+													childErrors[0]?.message ? childErrors[0].message : '';
 											}
 											if (i == (rules.length - 1)) {
 												resolve(errorsRes)

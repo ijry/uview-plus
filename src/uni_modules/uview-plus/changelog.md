@@ -1,3 +1,6 @@
+## 3.7.27（2026-03-12）
+improvment: 优化up-form的错误提示message字段类型
+
 ## 3.7.26（2026-03-09）
 add: up-select增加禁用功能
 
