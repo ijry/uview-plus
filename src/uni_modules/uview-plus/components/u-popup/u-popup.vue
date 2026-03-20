@@ -196,9 +196,7 @@
 					style.flex = 1
 				}
 				// 背景色，一般用于设置为transparent，去除默认的白色背景
-				if (this.bgColor) {
-					style.backgroundColor = this.bgColor
-				}
+				style.backgroundColor = this.bgColor
 				if(this.round) {
 					const value = addUnit(this.round)
 					if(this.mode === 'top') {
@@ -344,7 +342,6 @@
 
 <style lang="scss" scoped>
 	$u-popup-flex:1 !default;
-	$u-popup-content-background-color: #fff !default;
 
 	.u-popup {
 		flex: $u-popup-flex;
@@ -361,7 +358,6 @@
 		}
 
 		&__content {
-			background-color: $u-popup-content-background-color;
 			position: relative;
 
 			&--round-top {
