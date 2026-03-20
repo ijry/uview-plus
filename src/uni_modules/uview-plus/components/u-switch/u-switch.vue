@@ -46,17 +46,19 @@
 	 * switch 开关选择器
 	 * @description 选择开关一般用于只有两个选择，且只能选其一的场景。
 	 * @tutorial https://uview-plus.jiangruyi.com/components/switch.html
-	 * @property {Boolean}						loading			是否处于加载中（默认 false ）
-	 * @property {Boolean}						disabled		是否禁用（默认 false ）
-	 * @property {String | Number}				size			开关尺寸，单位px （默认 25 ）
-	 * @property {String}						activeColor		打开时的背景色 （默认 '#2979ff' ）
-	 * @property {String} 						inactiveColor	关闭时的背景色 （默认 '#ffffff' ）
-	 * @property {Boolean | String | Number}	value			通过v-model双向绑定的值 （默认 false ）
-	 * @property {Boolean | String | Number}	activeValue		打开选择器时通过change事件发出的值 （默认 true ）
-	 * @property {Boolean | String | Number}	inactiveValue	关闭选择器时通过change事件发出的值 （默认 false ）
-	 * @property {Boolean}						asyncChange		是否开启异步变更，开启后需要手动控制输入值 （默认 false ）
-	 * @property {String | Number}				space			圆点与外边框的距离 （默认 0 ）
-	 * @property {Object}						customStyle		定义需要用到的外部样式
+	 * @property {Boolean}						loading				是否处于加载中（默认 false ）
+	 * @property {Boolean}						disabled			是否禁用（默认 false ）
+	 * @property {String | Number}				size				开关尺寸，单位px （默认 25 ）
+	 * @property {String}						activeColor			打开时的背景色 （默认 '#2979ff' ）
+	 * @property {String} 						inactiveColor		关闭时的背景色 （默认 '#ffffff' ）
+	 * @property {String}						dotActiveColor		打开时圆点的颜色 （默认 '#ffffff' ）
+	 * @property {String} 						dotInactiveColor	关闭时圆点的颜色 （默认 '#ffffff' ）
+	 * @property {Boolean | String | Number}	value				通过v-model双向绑定的值 （默认 false ）
+	 * @property {Boolean | String | Number}	activeValue			打开选择器时通过change事件发出的值 （默认 true ）
+	 * @property {Boolean | String | Number}	inactiveValue		关闭选择器时通过change事件发出的值 （默认 false ）
+	 * @property {Boolean}						asyncChange			是否开启异步变更，开启后需要手动控制输入值 （默认 false ）
+	 * @property {String | Number}				space				圆点与外边框的距离 （默认 0 ）
+	 * @property {Object}						customStyle			定义需要用到的外部样式
 	 *
 	 * @event {Function} change 在switch打开或关闭时触发
 	 * @example <u-switch v-model="checked" active-color="red" inactive-color="#eee"></u-switch>
@@ -121,6 +123,7 @@
 				style.height = addUnit(this.size - this.space)
 				const translateX = this.isActive ? addUnit(this.space) : addUnit(this.size);
 				style.transform = `translateX(-${translateX})`
+				style.backgroundColor = this.isActive ? this.dotActiveColor : this.dotInactiveColor
 				return style
 			},
 			bgStyle() {
@@ -190,9 +193,8 @@
 			justify-content: center;
 			border-radius: 100px;
 			background-color: #fff;
-			border-radius: 100px;
 			box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.25);
-			transition-property: transform;
+			transition-property: transform, background-color;
 			transition-duration: 0.4s;
 			transition-timing-function: cubic-bezier(0.3, 1.05, 0.4, 1.05);
 		}
