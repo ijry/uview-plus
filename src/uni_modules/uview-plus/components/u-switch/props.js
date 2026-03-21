@@ -27,6 +27,16 @@ export const props = defineMixin({
             type: String,
             default: () => defProps.switch.inactiveColor
         },
+        // 打开时圆点的颜色
+        dotActiveColor: {
+            type: String,
+            default: () => defProps.switch.dotActiveColor
+        },
+        // 关闭时圆点的颜色
+        dotInactiveColor: {
+            type: String,
+            default: () => defProps.switch.dotInactiveColor
+        },
         // 通过v-model双向绑定的值
         // #ifdef VUE3
         modelValue: {

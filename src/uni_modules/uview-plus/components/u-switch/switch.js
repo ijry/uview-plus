@@ -15,6 +15,8 @@ export default {
         size: 25,
         activeColor: '#2979ff',
         inactiveColor: '#ffffff',
+        dotActiveColor: '#ffffff',
+        dotInactiveColor: '#ffffff',
         value: false,
         activeValue: true,
         inactiveValue: false,
