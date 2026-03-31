@@ -1,5 +1,6 @@
 <template>
   <view class="u-pagination">
+    <view>{{currentPage}}</view>
     <!-- 上一页按钮 -->
     <view
       :class="[
@@ -16,8 +17,9 @@
     </view>
 
     <!-- 页码列表 -->
-    <block v-for="page in displayedPages" :key="page" v-if="layout.includes('pager')">
+    <template v-for="(page,index) in displayedPages" :key="index" v-if="layout.includes('pager')">
       <view
+        class="u-pagination-item"
         :class="[
           'u-pagination-item',
           { active: page === currentPage }
@@ -26,7 +28,7 @@
       >
         {{ page }}
       </view>
-    </block>
+    </template>
 
     <!-- 总数显示 -->
     <view v-if="total > 0 && layout.includes('total')" class="u-pagination-total">
