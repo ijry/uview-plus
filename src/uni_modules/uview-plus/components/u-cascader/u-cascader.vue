@@ -3,10 +3,12 @@
 		:mask="true" :closeable="closeable" :safe-area-inset-bottom="true"
 		close-icon-color="#ffffff" :z-index="uZIndex"
 		:maskCloseAble="maskCloseAble" @close="close">
-		<view class="up-p-t-30 up-p-l-20 up-m-b-10" v-if="headerDirection =='column'">
+		<view class="up-p-t-30 up-p-l-20 up-m-b-10" v-if="headerDirection ==='column'">
 			<up-steps v-if="popupShow" dot direction="column" v-model:current="tabsIndex">
-				<up-steps-item  v-for="(item, index) in genTabsList"
-					@click="tabsIndex = index" :title="item.name"></up-steps-item>
+                <view  v-for="(item, index) in genTabsList"  @click="toFatherIndex(index)">
+                    <up-steps-item
+                        :title="item.name"/>
+                </view>
 			</up-steps>
 		</view>
 		<view class="up-p-t-20 up-m-b-10" v-else>
@@ -171,7 +173,7 @@
 				let tabsList = [{
 					name: "请选择"
 				}];
-				
+
 				// 根据选中的值动态生成tabs
 				for (let i = 0; i < this.selectedValueIndexs.length; i++) {
 					if (this.selectedValueIndexs[i] !== undefined && this.levelList[i]) {
@@ -181,8 +183,8 @@
 								name: selectedItem[this.labelKey]
 							};
 							// 如果还有下一级，则添加"请选择"
-							if (i === this.selectedValueIndexs.length - 1 && 
-								selectedItem[this.childrenKey] && 
+							if (i === this.selectedValueIndexs.length - 1 &&
+								selectedItem[this.childrenKey] &&
 								selectedItem[this.childrenKey].length > 0) {
 								tabsList.push({
 									name: "请选择"
@@ -191,7 +193,7 @@
 						}
 					}
 				}
-				
+
 				return tabsList;
 			},
 			uZIndex() {
@@ -220,12 +222,12 @@
 				this.selectedValueIndexs = [];
 				this.levelList = []; // 设置层级数据为空
 				let currentLevelData = this.data;
-				
+
 				for (let i = 0; i < this.modelValue.length; i++) {
 					const value = this.modelValue[i];
 					const index = currentLevelData.findIndex(item => item[this.valueKey] === value);
 					this.levelList[i] = currentLevelData; // 设置每一层级的数据
-					
+
 					if (index !== -1) {
 						this.selectedValueIndexs.push(index);
 						// 更新下一级的数据
@@ -250,17 +252,17 @@
 			levelChange(levelIndex, index) {
 				// 设置当前级的选中值
 				this.$set(this.selectedValueIndexs, levelIndex, index);
-				
+
 				// 清除后续级别的选中值
 				this.selectedValueIndexs.splice(levelIndex + 1);
 				this.tabsIndex = Math.min(this.tabsIndex, levelIndex);
-				
+
 				// 清除后续级别的列表
 				this.levelList.splice(levelIndex + 1);
-				
+
 				// 获取当前选中项
 				const currentItem = this.levelList[levelIndex][index];
-				
+
 				// 如果有子级数据，则初始化下一级
 				if (currentItem && currentItem[this.childrenKey] && currentItem[this.childrenKey].length > 0) {
 					// 确保levelList数组足够长
@@ -292,13 +294,13 @@
 						result.push(this.levelList[i][this.selectedValueIndexs[i]][this.valueKey]);
 					}
 				}
-				
+
 				// 更新confirmValues
 				this.confirmValues = [...result];
-				
+
 				// 触发change事件，返回value数组
 				this.$emit('change', this.confirmValues);
-				
+
 				// 根据参数决定是否关闭弹窗
 				if (closePopup) {
 					this.close();
@@ -312,7 +314,11 @@
 				this.$emit('update:modelValue', this.confirmValues);
 				this.$emit('confirm', this.confirmValues);
 				this.close();
-			}
+			},
+            // 跳转父节点
+            toFatherIndex(index){
+                this.tabsIndex = index;
+            },
 		}
 	}
 </script>
@@ -337,7 +343,7 @@
 			height: 800rpx;
 		}
 	}
-	
+
 	// 添加按钮区域样式
 	.u-cascader-action {
 		border-top: 1px solid #eee;
