@@ -30,7 +30,8 @@
 		},
 		data() {
 			return {
-				version: uni.$u.config.v
+				// version: uni.$u.config.v,
+				version: '3.x'
 			}
 		},
 		methods: {

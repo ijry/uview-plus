@@ -45,6 +45,7 @@
 			:touchable="popupData.touchable"
 			:minHeight="popupData.minHeight"
 			:maxHeight="popupData.maxHeight"
+			bgColor="#fff"
 			@close="close"
 			@open="open"
 		>

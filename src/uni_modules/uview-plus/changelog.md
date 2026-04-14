@@ -1,3 +1,9 @@
+## 3.7.34（2026-04-14）
+fix: up-waterfall组件告警void app logic that relies on enumerating keys on a component instance #993
+
+## 3.7.33（2026-04-14）
+fix: up-waterfall组件告警void app logic that relies on enumerating keys on a component instance #993
+
 ## 3.7.32（2026-04-12）
 fix: up-picker添加默认背景色 防止其他使用该组件的没有配置背景色导致奇怪的样式
 

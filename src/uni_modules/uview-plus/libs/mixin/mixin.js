@@ -48,11 +48,16 @@ export const mixin = defineMixin({
         $u() {
             // #ifndef APP-NVUE
             // 在非nvue端，移除props，http，mixin等对象，避免在小程序setData时数据过大影响性能
-            return deepMerge(uni.$u, {
+            let mergeU = deepMerge(uni.$u, {
                 props: undefined,
                 http: undefined,
                 mixin: undefined
             })
+			// 缓存结果避免每次计算
+			if (!this.chacheU) {
+				this.chacheU = mergeU
+			}
+			return this.chacheU
             // #endif
             // #ifdef APP-NVUE
             return uni.$u
