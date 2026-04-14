@@ -381,7 +381,7 @@ export function timeFormat(dateTime = null, formatStr = 'yyyy-mm-dd') {
     date = new Date(Number(dateTime))
   }
   // 检查是否为UTC格式的时间字符串 (2024-12-18T02:25:31.432Z)
-  else if (typeof dateTime === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(dateTime)) {
+  else if (typeof dateTime === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{1,3})?(Z|[+-]\d{2}:\d{2})?$/.test(dateTime)) {
     date = new Date(dateTime)
   }
   // 其他都认为符合 RFC 2822 规范

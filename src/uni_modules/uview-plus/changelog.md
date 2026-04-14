@@ -1,3 +1,6 @@
+## 3.7.35（2026-04-14）
+fix: timeFormat方法支持多种ISO格式
+
 ## 3.7.34（2026-04-14）
 fix: up-waterfall组件告警void app logic that relies on enumerating keys on a component instance #993
 
