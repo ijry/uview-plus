@@ -154,7 +154,7 @@ const finish = () => {
 
 <style lang="scss">
 	.u-page {
-		
+
 	}
 
 	.time {

@@ -1,6 +1,6 @@
 <template>
 	<view class="wrap">
-		<view class="comment">
+		<view class="comment" :style="[upThemeCardStyle]">
 			<view class="top">
 				<view class="left">
 					<view class="heart-photo"><image :src="comment.url" mode=""></image></view>
@@ -17,10 +17,10 @@
 			</view>
 			<view class="content">{{ comment.contentText }}</view>
 		</view>
-		<view class="all-reply">
+		<view class="all-reply" :style="[upThemeCardStyle]">
 			<view class="all-reply-top">全部回复（{{ comment.allReply }}）</view>
 			<view class="item" v-for="(item, index) in commentList" :key="index">
-				<view class="comment">
+				<view class="comment" :style="[upThemeCardStyle]">
 					<view class="top">
 						<view class="left">
 							<view class="heart-photo"><image :src="item.url" mode=""></image></view>
@@ -147,7 +147,7 @@ export default {
 
 <style lang="scss" scoped>
 page {
-	background-color: #f2f2f2;
+	background-color: transparent;
 }
 .comment {
 	padding: 30rpx;
@@ -226,3 +226,4 @@ page {
 	}
 }
 </style>
+

@@ -1,13 +1,13 @@
 <template>
     <view class="u-page">
-      <view class="u-page__item">
+      <view class="u-page__item" :style="[upThemeCardStyle]">
           <text class="u-page__item__title" style="margin-top: 0;">基础示例</text>
           <view class="u-page__item__content">
             <!-- 生成海报按钮 -->
 			<up-button type="primary" shape="circle" @click="generatePoster">生成海报</up-button>
 			
             <!-- 海报预览区域 -->
-			<view class="poster-preview" v-if="posterImageUrl">
+			<view class="poster-preview" v-if="posterImageUrl" :style="{ backgroundColor: upThemeVar('--up-card-bg-color') }">
 				<image :src="posterImageUrl" class="poster-image" mode="widthFix"></image>
 			</view>
 
@@ -160,7 +160,6 @@
 		width: 100%;
         margin-top: 20px;
 		margin-bottom: 40rpx;
-		background-color: #fff;
 		border-radius: 20rpx;
 		overflow: hidden;
 		box-shadow: 0 10rpx 30rpx rgba(0,0,0,0.1);
@@ -170,3 +169,4 @@
 		width: 100%;
 	}
 </style>
+

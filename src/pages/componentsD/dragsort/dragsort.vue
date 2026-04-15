@@ -6,7 +6,7 @@
           <view class="u-page__item__content">
             <u-dragsort :initial-list="list" @drag-end="handleDragEnd">
 			  <template #default="{ item, index }">
-				<view class="custom-item">
+				<view class="custom-item" :style="{ backgroundColor: upThemeVar('--up-bg-color'), color: upThemeVar('--up-main-color') }">
 				  <text>序号：{{ index + 1 }}</text> -
 				  <text>{{ item.label }}</text>
 				</view>
@@ -24,7 +24,7 @@
 				</view>
               </template>
 			  <template #default="{ item, index }">
-				<view class="custom-item">
+				<view class="custom-item" :style="{ backgroundColor: upThemeVar('--up-bg-color'), color: upThemeVar('--up-main-color') }">
 				  <text>序号：{{ index + 1 }}</text> -
 				  <text>{{ item.label }}</text>
 				</view>
@@ -43,7 +43,7 @@
 	            @drag-end="handleDragEnd">
 			  <template #default="{ item, index }">
 				<view class="u-p-r-10">
-					<view class="custom-item-h">
+					<view class="custom-item-h" :style="{ backgroundColor: upThemeVar('--up-bg-color'), color: upThemeVar('--up-main-color') }">
 					<text>{{ item.label }}</text>
 					</view>
 				</view>
@@ -61,7 +61,7 @@
 	            @drag-end="handleDragEnd">
 			  <template #default="{ item, index }">
 				<view class="u-p-r-10">
-					<view class="custom-item-h">
+					<view class="custom-item-h" :style="{ backgroundColor: upThemeVar('--up-bg-color'), color: upThemeVar('--up-main-color') }">
 					<text>{{ item.label }}</text>
 					</view>
 				</view>
@@ -112,10 +112,11 @@ const handleDragEnd = (sortedList) => {
       margin-bottom: 10px;
   }
   .custom-item {
-	  background-color: #f5f5f5;
 	  padding: 10px;
 	  text-align: center;
 	  box-sizing: border-box;
+	  border: 1px solid var(--up-border-color, rgba(125, 126, 128, 0.35));
+	  border-radius: 8px;
   }
   .custom-item-handler {
 	position: absolute;
@@ -132,7 +133,7 @@ const handleDragEnd = (sortedList) => {
 		position: relative;
 		width: 10px;
 		height: 2px;
-		background-color: #666;
+		background-color: var(--up-content-color, #666);
 		
 		&::before,
 		&::after { 
@@ -155,8 +156,9 @@ const handleDragEnd = (sortedList) => {
 
   }
   .custom-item-h {
-	  background-color: #f5f5f5;
 	  padding: 10px;
 	  box-sizing: border-box;
+	  border: 1px solid var(--up-border-color, rgba(125, 126, 128, 0.35));
+	  border-radius: 8px;
   }
 </style>

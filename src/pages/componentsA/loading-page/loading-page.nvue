@@ -8,7 +8,6 @@
 			placeholder
 		></up-navbar>
 		<up-gap
-		    bgColor="#fff"
 		    height="20"
 		></up-gap>
 		<up-cell-group>
@@ -55,7 +54,7 @@ const loadingPageData = ref({
 	// 自定义加载动画模式
 	loadingMode: '',
 	// 自定义背景色
-	bgColor: '#ffffff',
+	bgColor: '',
 })
 
 const list = ref([{
@@ -86,7 +85,7 @@ const openLoadingPage = (indexNum) => {
 		loadingText: '',
 		image: '',
 		loadingMode: '',
-		bgColor: '#ffffff',
+		bgColor: '',
 		iconSize: 28
 	}
 	if (indexNum == 0) {
@@ -128,3 +127,5 @@ const openLoadingPage = (indexNum) => {
 		padding: 0;
 	}
 </style>
+
+

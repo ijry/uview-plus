@@ -1,0 +1,21 @@
+:root,
+page,
+body {
+	--up-tag-close-bg-color: #c8c9cc;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root,
+	page,
+	body {
+		--up-tag-close-bg-color: #4b5563;
+	}
+}
+
+[data-up-theme='light'] {
+	--up-tag-close-bg-color: #c8c9cc;
+}
+
+[data-up-theme='dark'] {
+	--up-tag-close-bg-color: #4b5563;
+}

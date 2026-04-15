@@ -156,28 +156,28 @@ const maskChange = (index) => {
 	.u-config-wrap {
 		padding: 20px;
 	}
-	
+
 	.slot-content {
-		background-color: #FFFFFF;
+		background-color: var(--up-card-bg-color, #FFFFFF);
 		padding: 24rpx;
-		
+
 		.item-box {
 			margin-bottom: 50rpx;
 			display: flex;
 			flex-wrap: wrap;
 			justify-content: space-between;
-			
+
 			.item {
-				border: 1px solid $u-primary;
-				color: $u-primary;
+				border: 1px solid var(--up-primary, #2979ff);
+				color: var(--up-primary, #2979ff);
 				padding: 8rpx 40rpx;
 				border-radius: 100rpx;
 				margin-top: 30rpx;
 			}
-			
+
 			.active {
-				color: #FFFFFF;
-				background-color: $u-primary;
+				color: var(--up-white, #FFFFFF);
+				background-color: var(--up-primary, #2979ff);
 			}
 		}
 	}

@@ -124,11 +124,58 @@ export default {
         },
     },
     computed: {
+        isDarkMode() {
+            return this.$u?.theme?.mode === 'dark';
+        },
+        resolvedInactiveColor() {
+            if (this.upHasProp('inactiveColor')) return this.inactiveColor;
+            return this.upThemeVar(
+                '--up-subsection-inactive-color',
+                this.isDarkMode
+                    ? (this.$u?.color?.contentColor || '#d1d5db')
+                    : '#303133'
+            );
+        },
+        resolvedButtonBgColor() {
+            if (this.upHasProp('bgColor')) return this.bgColor;
+            return this.upThemeVar(
+                '--up-subsection-bg-color',
+                this.isDarkMode ? '#2b2c30' : '#eeeeef'
+            );
+        },
+        resolvedButtonBarColor() {
+            if (this.disabled) {
+                return this.upThemeVar(
+                    '--up-subsection-disabled-bar-color',
+                    this.isDarkMode ? '#3a3a3c' : '#f5f5f5'
+                );
+            }
+            return this.upThemeVar(
+                '--up-subsection-bar-color',
+                this.isDarkMode ? '#3a3b40' : '#ffffff'
+            );
+        },
+        resolvedDisabledTextColor() {
+            return this.upThemeVar(
+                '--up-subsection-disabled-text-color',
+                this.isDarkMode
+                    ? (this.$u?.color?.lightColor || '#6b7280')
+                    : '#c8c9cc'
+            );
+        },
+        resolvedDisabledBorderColor() {
+            return this.upThemeVar(
+                '--up-subsection-disabled-border-color',
+                this.isDarkMode
+                    ? (this.$u?.color?.borderColor || '#3a3a3c')
+                    : '#d4d4d4'
+            );
+        },
         wrapperStyle() {
             const style = {};
             // button模式时，设置背景色
             if (this.mode === "button") {
-                style.backgroundColor = this.bgColor;
+                style.backgroundColor = this.resolvedButtonBgColor;
             }
             return style;
         },
@@ -145,7 +192,11 @@ export default {
             // #endif
             if (this.mode === "subsection") {
                 // 在subsection模式下，需要动态设置滑块的圆角，因为移动滑块使用的是translateX，无法通过父元素设置overflow: hidden隐藏滑块的直角
-                style.backgroundColor = this.activeColor;
+                style.backgroundColor = this.disabled
+                    ? this.resolvedDisabledBorderColor
+                    : this.activeColor;
+            } else {
+                style.backgroundColor = this.resolvedButtonBarColor;
             }
             return style;
         },
@@ -155,7 +206,9 @@ export default {
                 const style = {};
                 if (this.mode === "subsection") {
                     // 设置border的样式
-                    style.borderColor = this.activeColor;
+                    style.borderColor = this.disabled
+                        ? this.resolvedDisabledBorderColor
+                        : this.activeColor;
                     style.borderWidth = "1px";
                     style.borderStyle = "solid";
                 }
@@ -166,6 +219,12 @@ export default {
         textStyle(index,item) {
             return (index,item) => {
                 const style = {};
+                if (this.disabled) {
+                    style.fontWeight = 'normal';
+                    style.fontSize = addUnit(this.fontSize);
+                    style.color = this.resolvedDisabledTextColor;
+                    return style;
+                }
                 style.fontWeight =
                     this.bold && this.innerCurrent === index ? "bold" : "normal";
                 style.fontSize = addUnit(this.fontSize);
@@ -190,7 +249,7 @@ export default {
                     }
                     else{
                         // 判断当前是否有自定义的颜色
-                        style.color = inactiveColorTemp ? inactiveColorTemp : this.inactiveColor;
+                        style.color = inactiveColorTemp ? inactiveColorTemp : this.resolvedInactiveColor;
                     }
                 }
                 else {
@@ -201,7 +260,7 @@ export default {
                     }
                     else{
                         // 判断当前是否有自定义的颜色
-                        style.color = inactiveColorTemp ? inactiveColorTemp : this.inactiveColor;
+                        style.color = inactiveColorTemp ? inactiveColorTemp : this.resolvedInactiveColor;
                     }
                 }
                 return style;
@@ -278,6 +337,10 @@ export default {
     },
 };
 </script>
+
+<style lang="scss">
+@import "./theme-vars.scss";
+</style>
 
 <style lang="scss" scoped>
 .u-subsection {
@@ -387,19 +450,9 @@ export default {
 
 .item-button--disabled{
     cursor: no-drop;
-    color: #BDBDBD !important;
-    border-color: #BDBDBD !important;
-    text{
-        color: #BDBDBD !important;
-    }
 }
 .item-subsection--disabled{
     cursor: no-drop;
-    background: #FFFFFF !important;
-    color: #BDBDBD !important;
-    border-color: #BDBDBD !important;
-    text{
-        color: #BDBDBD !important;
-    }
+    background: transparent !important;
 }
 </style>

@@ -117,7 +117,6 @@ import { mixin } from '../../libs/mixin/mixin';
 import { props } from "./props";
 import { addStyle } from '../../libs/function/index';
 import { throttle } from '../../libs/function/throttle';
-import color from '../../libs/config/color';
 /**
  * button 按钮
  * @description Button 按钮
@@ -192,15 +191,21 @@ export default {
                 );
             }
         },
+        isDarkTheme() {
+            return this.$u.theme && this.$u.theme.mode === 'dark';
+        },
+        themeTypeColor() {
+            return this.$u.color[this.type] || this.$u.color.info;
+        },
         loadingColor() {
             if (this.plain) {
                 // 如果有设置color值，则用color值，否则使用type主题颜色
                 return this.color
                     ? this.color
-                    : color[`u-${this.type}`];
+                    : this.themeTypeColor;
             }
             if (this.type === "info") {
-                return "#c9c9c9";
+                return this.isDarkTheme ? "#9ca3af" : "#c9c9c9";
             }
             return "rgb(200, 200, 200)";
         },
@@ -211,7 +216,9 @@ export default {
 			if (this.plain) {
                 return this.color ? this.color : this.type;
             } else {
-                return this.type === "info" ? "#000000" : "#ffffff";
+                return this.type === "info"
+                    ? (this.isDarkTheme ? "#f3f4f6" : "#000000")
+                    : "#ffffff";
             }
         },
         baseColor() {
@@ -240,6 +247,27 @@ export default {
                     style.borderWidth = "1px";
                     style.borderStyle = "solid";
                 }
+                return style;
+            }
+            const typeColor = this.themeTypeColor;
+            if (this.plain) {
+                style.color = this.type === 'info' ? this.$u.color.mainColor : typeColor;
+                style.backgroundColor = this.isDarkTheme ? '#1c1c1e' : '#ffffff';
+                style.borderColor = this.type === 'info' ? this.$u.color.borderColor : typeColor;
+                style.borderWidth = this.hairline ? '0.5px' : '1px';
+                style.borderStyle = 'solid';
+            } else {
+                style.borderWidth = this.hairline ? '0.5px' : '1px';
+                style.borderStyle = 'solid';
+                if (this.type === 'info') {
+                    style.color = this.$u.color.mainColor;
+                    style.backgroundColor = this.isDarkTheme ? '#2c2c2e' : '#ffffff';
+                    style.borderColor = this.$u.color.borderColor;
+                } else {
+                    style.color = '#ffffff';
+                    style.backgroundColor = typeColor;
+                    style.borderColor = typeColor;
+                }
             }
             return style;
         },
@@ -248,10 +276,12 @@ export default {
             let style = {};
             // 针对自定义了color颜色的情况，镂空状态下，就是用自定义的颜色
             if (this.type === "info") {
-                style.color = "#323233";
+                style.color = this.$u.color.mainColor;
             }
             if (this.color) {
                 style.color = this.plain ? this.color : "white";
+            } else if (this.plain && this.type !== 'info') {
+                style.color = this.themeTypeColor;
             }
             style.fontSize = this.textSize + "px";
             return style;

@@ -34,7 +34,7 @@
 		</view>
 		<view class="u-demo-block">
 			<view class="u-demo-block__content">
-				<view class="u-demo-block__title">边框颜色</view>   
+				<view class="u-demo-block__title">边框颜色</view>
 				<up-subsection :list="['gray', 'primary', 'warning']" @change="borderColorChange"></up-subsection>
 			</view>
 		</view>

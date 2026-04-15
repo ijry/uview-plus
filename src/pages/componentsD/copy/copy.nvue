@@ -1,5 +1,5 @@
 <template>
-  	<view class="u-page">
+	<view class="u-page">
 		<view class="u-page__item">
 			<text class="u-page__item__title" style="margin-top: 0;">点击文字复制</text>
 			<view class="u-page__item__content">
@@ -21,3 +21,4 @@
 
 <script setup>
 </script>
+

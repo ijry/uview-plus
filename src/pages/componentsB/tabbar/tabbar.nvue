@@ -274,13 +274,13 @@ const clickMidButton = () => {
 		&__item {
 
 			&__title {
-				color: $u-tips-color;
-				background-color: $u-bg-color;
+				color: var(--up-tips-color, #909399);
+				background-color: var(--up-bg-color, #f3f4f6);
 				padding: 15px 15px 5px 15px;
 				font-size: 15px;
 
 				&__slot-title {
-					color: $u-primary;
+					color: var(--up-primary, #3c9cff);
 					font-size: 14px;
 				}
 			}

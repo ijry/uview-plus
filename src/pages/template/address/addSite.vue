@@ -1,6 +1,6 @@
 <template>
 	<view class="wrap">
-		<view class="top">
+		<view class="top" :style="[upThemeCardStyle]">
 			<view class="item">
 				<view class="left">收货人</view>
 				<input type="text" placeholder-class="line" placeholder="请填写收货人姓名" />
@@ -25,7 +25,7 @@
 				</view>
 			</view> -->
 		</view>
-		<view class="bottom">
+		<view class="bottom" :style="[upThemeCardStyle]">
 			<view class="tag">
 				<view class="left">标签</view>
 				<view class="right">
@@ -93,7 +93,7 @@ export default {
 			textarea {
 				// width: 100%;
 				height: 150rpx;
-				background-color: #f7f7f7;
+				background-color: $u-info-light;
 				line-height: 60rpx;
 				margin: 40rpx auto;
 				padding: 20rpx;
@@ -104,7 +104,7 @@ export default {
 			textarea {
 				// width: 100%;
 				height: 150rpx;
-				background-color: #f7f7f7;
+				background-color: $u-info-light;
 				line-height: 60rpx;
 				margin: 40rpx auto;
 				padding: 20rpx;
@@ -171,3 +171,4 @@ export default {
 	}
 }
 </style>
+

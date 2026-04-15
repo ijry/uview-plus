@@ -94,7 +94,7 @@ const leftClick = () => {
 		background-color: $u-bg-color;
 	}
 	/* #endif */
-	
+
 	.u-page {
 		padding: 0;
 		flex: 1;

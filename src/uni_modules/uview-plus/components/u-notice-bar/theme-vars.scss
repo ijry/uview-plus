@@ -1,0 +1,25 @@
+:root,
+page,
+body {
+	--up-notice-bar-color: #f9ae3d;
+	--up-notice-bar-bg-color: #fdf6ec;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root,
+	page,
+	body {
+		--up-notice-bar-color: #f9ae3d;
+		--up-notice-bar-bg-color: #3d2f1b;
+	}
+}
+
+[data-up-theme='light'] {
+	--up-notice-bar-color: #f9ae3d;
+	--up-notice-bar-bg-color: #fdf6ec;
+}
+
+[data-up-theme='dark'] {
+	--up-notice-bar-color: #f9ae3d;
+	--up-notice-bar-bg-color: #3d2f1b;
+}

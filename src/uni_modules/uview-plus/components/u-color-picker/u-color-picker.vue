@@ -800,7 +800,7 @@ export default {
 	&__content {
 		width: 100%;
 		padding: 20px;
-		background-color: #fff;
+		background-color: var(--up-card-bg-color, #fff);
 	}
 	
 	&__header {
@@ -811,7 +811,7 @@ export default {
 	&__title {
 		font-size: 18px;
 		font-weight: bold;
-		color: #333;
+		color: var(--up-main-color, #333);
 	}
 	
 	&__switch {
@@ -904,8 +904,8 @@ export default {
 		position: absolute;
 		width: 4px;
 		height: 16px;
-		background: #fff;
-		border: 1px solid #ccc;
+		background: var(--up-card-bg-color, #fff);
+		border: 1px solid var(--up-border-color, #ccc);
 		border-radius: 2px;
 		transform: translateX(-50%);
 		top: -2px;
@@ -938,7 +938,7 @@ export default {
 			height: 0;
 			border-left: 8px solid transparent;
 			border-right: 8px solid transparent;
-			border-top: 10px solid #333;
+			border-top: 10px solid var(--up-main-color, #333);
 			z-index: 10;
 		}
 		
@@ -949,7 +949,7 @@ export default {
 			width: 20px;
 			height: 20px;
 			border-radius: 50%;
-			border: 2px solid #fff;
+			border: 2px solid var(--up-card-bg-color, #fff);
 			box-shadow: 0 0 2px rgba(0,0,0,0.5);
 		}
 		
@@ -974,12 +974,12 @@ export default {
 			height: 20px;
 			border-radius: 50%;
 			margin-right: 5px;
-			border: 1px solid #eee;
+			border: 1px solid var(--up-border-color, #eee);
 		}
 		
 		&-percent {
 			font-size: 12px;
-			color: #666;
+			color: var(--up-content-color, #666);
 			margin-right: 5px;
 		}
 		
@@ -1006,15 +1006,15 @@ export default {
 			position: relative;
 			margin: 10px auto;
 			cursor: pointer;
-			border: 2px solid #eee;
+			border: 2px solid var(--up-border-color, #eee);
 		}
 		
 		&__direction-pointer {
 			position: absolute;
 			width: 6px;
 			height: 6px;
-			background: #fff;
-			border: 2px solid #333;
+			background: var(--up-card-bg-color, #fff);
+			border: 2px solid var(--up-main-color, #333);
 			border-radius: 50%;
 			transform: translate(-50%, -50%);
 			box-shadow: 0 0 2px rgba(0,0,0,0.5);
@@ -1034,7 +1034,7 @@ export default {
 			display: block;
 			margin-bottom: 10px;
 			font-size: 14px;
-			color: #666;
+			color: var(--up-content-color, #666);
 		}
 		
 		&-list {
@@ -1049,7 +1049,7 @@ export default {
 			border-radius: 50%;
 			margin-right: 10px;
 			margin-bottom: 10px;
-			border: 1px solid #eee;
+			border: 1px solid var(--up-border-color, #eee);
 			cursor: pointer;
 		}
 	}
@@ -1069,13 +1069,13 @@ export default {
 		width: 40px;
 		height: 40px;
 		border-radius: 4px;
-		border: 1px solid #eee;
+		border: 1px solid var(--up-border-color, #eee);
 		margin-right: 10px;
 	}
 	
 	&__preview-text {
 		font-size: 14px;
-		color: #333;
+		color: var(--up-main-color, #333);
 		flex: 1;
 		overflow: hidden;
 		text-overflow: ellipsis;

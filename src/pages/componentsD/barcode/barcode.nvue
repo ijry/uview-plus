@@ -4,68 +4,68 @@
 	  <view class="u-page__item">
 	      <text class="u-page__item__title">CODE128 条形码</text>
 	      <view class="u-page__item__content">
-	          <up-barcode 
-	              value="1234567890" 
+	          <up-barcode
+	              value="1234567890"
 	              format="CODE128"
 	              :height="70"
 	              :font-size="16">
 	          </up-barcode>
 	      </view>
 	  </view>
-	  
+
 	  <view class="u-page__item">
 	      <text class="u-page__item__title">EAN-13 条形码</text>
 	      <view class="u-page__item__content">
-	          <up-barcode 
-	              value="5901234123457" 
+	          <up-barcode
+	              value="5901234123457"
 	              format="EAN13"
 	              :height="70"
 	              :font-size="16">
 	          </up-barcode>
 	      </view>
 	  </view>
-	  
+
 	  <view class="u-page__item">
 	      <text class="u-page__item__title">EAN-8 条形码</text>
 	      <view class="u-page__item__content">
-	          <up-barcode 
-	              value="96385074" 
+	          <up-barcode
+	              value="96385074"
 	              format="EAN8"
 	              :height="70"
 	              :font-size="11">
 	          </up-barcode>
 	      </view>
 	  </view>
-	  
+
 	  <view class="u-page__item">
 	      <text class="u-page__item__title">UPC-A 条形码</text>
 	      <view class="u-page__item__content">
-	          <up-barcode 
-	              value="123456789012" 
+	          <up-barcode
+	              value="123456789012"
 	              format="UPCA"
 	              :height="70"
 	              :font-size="16">
 	          </up-barcode>
 	      </view>
 	  </view>
-	  
+
 	  <view class="u-page__item">
 	      <text class="u-page__item__title">CODE39 条形码</text>
 	      <view class="u-page__item__content">
-	          <up-barcode 
-	              value="CODE39" 
+	          <up-barcode
+	              value="CODE39"
 	              format="CODE39"
 	              :height="70"
 	              :font-size="16">
 	          </up-barcode>
 	      </view>
 	  </view>
-	  
+
 	  <view class="u-page__item">
 	      <text class="u-page__item__title">EAN-5 补充码</text>
 	      <view class="u-page__item__content">
-	          <up-barcode 
-	              value="12345" 
+	          <up-barcode
+	              value="12345"
 	              format="EAN5"
 				  :width="100"
 	              :height="60"
@@ -73,12 +73,12 @@
 	          </up-barcode>
 	      </view>
 	  </view>
-	  
+
 	  <view class="u-page__item">
 	      <text class="u-page__item__title">EAN-2 补充码</text>
 	      <view class="u-page__item__content">
-	          <up-barcode 
-	              value="12" 
+	          <up-barcode
+	              value="12"
 	              format="EAN2"
 				  :width="100"
 	              :height="60"
@@ -86,12 +86,12 @@
 	          </up-barcode>
 	      </view>
 	  </view>
-	  
+
 	  <view class="u-page__item">
 	      <text class="u-page__item__title">自定义样式条形码</text>
 	      <view class="u-page__item__content">
-	          <up-barcode 
-	              value="CUSTOM123" 
+	          <up-barcode
+	              value="CUSTOM123"
 	              format="CODE128"
 	              :height="70"
 	              :width="200"

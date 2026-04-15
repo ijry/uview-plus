@@ -104,12 +104,12 @@ const headClick = (index) => {
 	}
 	
 	.u-card-wrap { 
-		background-color: $u-bg-color;
+		background-color: var(--up-bg-color, #f3f4f6);
 		padding: 1px;
 		
 		.u-body-item {
 			font-size: 32rpx;
-			color: #333;
+			color: var(--up-main-color, #333);
 			padding: 20rpx 10rpx;
 		}
 			

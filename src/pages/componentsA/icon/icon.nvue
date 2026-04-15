@@ -645,7 +645,7 @@ const selectIcon = (name) => {
 				height: 240rpx;
 				width: 240rpx;
 				padding: 0 5px;
-				
+
 				&__icon {
 					height: 130rpx;
 					/* #ifndef APP-NVUE */
@@ -654,7 +654,7 @@ const selectIcon = (name) => {
 					flex-direction: row;
 					align-items: flex-end;
 				}
-				
+
 				&__text {
 					color: $u-tips-color;
 					/* #ifndef APP-NVUE */
@@ -668,3 +668,4 @@ const selectIcon = (name) => {
 		}
 	}
 </style>
+

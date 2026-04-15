@@ -9,7 +9,6 @@
 		></up-navbar>
 		<up-gap
 			height="20"
-			bgColor="#fff"
 		></up-gap>
 		<up-cell-group>
 			<up-cell
@@ -45,7 +44,6 @@
 			:touchable="popupData.touchable"
 			:minHeight="popupData.minHeight"
 			:maxHeight="popupData.maxHeight"
-			bgColor="#fff"
 			@close="close"
 			@open="open"
 		>
@@ -219,3 +217,4 @@ const close = () => {
 		flex-direction: column;
 	}
 </style>
+

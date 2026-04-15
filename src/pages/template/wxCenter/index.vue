@@ -7,7 +7,7 @@
 				</view>
 			</view>
 		</up-navbar>
-		<view class="u-flex u-flex-y-center u-flex-around user-box u-p-l-30 u-p-r-20 u-p-b-30">
+		<view class="u-flex u-flex-y-center u-flex-around user-box u-p-l-30 u-p-r-20 u-p-b-30" :style="[upThemeCardStyle]">
 			<view class="u-m-r-10">
 				<up-avatar :src="pic" size="140"></up-avatar>
 			</view>
@@ -64,10 +64,6 @@
 </script>
 
 <style lang="scss">
-page{
-	background-color: #ededed;
-}
-
 .camera{
 	width: 54px;
 	height: 44px;
@@ -77,9 +73,10 @@ page{
 	}
 }
 .user-box{
-	background-color: #fff;
+	background-color: transparent;
 }
 .u-cell-group {
-	background-color: #fff;
+	background-color: transparent;
 }
 </style>
+

@@ -1,7 +1,7 @@
 <template>
 	<up-popup :show="popupShow" mode="bottom" :popup="false"
 		:mask="true" :closeable="closeable" :safe-area-inset-bottom="true"
-		close-icon-color="#ffffff" :z-index="uZIndex"
+		:close-icon-color="closeIconColor" :z-index="uZIndex"
 		:maskCloseAble="maskCloseAble" @close="close">
 		<view class="up-p-t-30 up-p-l-20 up-m-b-10" v-if="headerDirection ==='column'">
 			<up-steps v-if="popupShow" dot direction="column" v-model:current="tabsIndex">
@@ -21,7 +21,7 @@
 				<template v-for="(levelData, levelIndex) in levelList" :key="levelIndex">
 					<view v-if="optionsCols == 2 || levelIndex == tabsIndex" class="area-item"
 						:style="{ width: optionsCols == 2 ? '33.33333%' : '750rpx'}">
-						<view class="u-padding-10 u-bg-gray" style="height: 100%;">
+						<view class="u-padding-10" :style="[levelPaneStyle, { height: '100%' }]">
 							<scroll-view :scroll-y="true" style="height: 100%">
 								<up-cell-group v-if="levelIndex === 0 || selectedValueIndexs[levelIndex - 1] !== undefined">
 									<up-cell v-for="(item,index) in levelData"
@@ -199,6 +199,14 @@
 			uZIndex() {
 				// 如果用户有传递z-index值，优先使用
 				return this.zIndex ? this.zIndex : this.$u.zIndex.popup;
+			},
+			closeIconColor() {
+				return 'var(--up-main-color, #303133)';
+			},
+			levelPaneStyle() {
+				return {
+					backgroundColor: 'var(--up-bg-color, #f7f7f7)'
+				};
 			}
 		},
 		// 新增confirm事件
@@ -346,6 +354,6 @@
 
 	// 添加按钮区域样式
 	.u-cascader-action {
-		border-top: 1px solid #eee;
+		border-top: 1px solid var(--up-border-color, #eee);
 	}
 </style>

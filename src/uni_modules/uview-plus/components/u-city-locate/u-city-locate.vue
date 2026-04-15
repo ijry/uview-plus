@@ -144,8 +144,12 @@
 		padding: 8px 1px;
 	}
 	.u-current-city-title {
-		color: grey;
+		color: var(--up-tips-color, #909399);
 		margin-bottom: 5px;
+	}
+	.u-location-city,
+	.list__item__city-name {
+		color: var(--up-main-color, #303133);
 	}
 	.u-current-city-item {
 		height: 30px;
@@ -157,7 +161,9 @@
 		.hot-city-item {
 			padding: 6px 12px;
 			margin: 5px;
-			border: 1px solid #ededed;
+			color: var(--up-main-color, #303133);
+			border: 1px solid var(--up-border-color, #ededed);
+			background-color: var(--up-card-bg-color, #ffffff);
 		}
 	}
 </style>

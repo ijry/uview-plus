@@ -23,7 +23,7 @@ export default {
         bold: false,
         block: false,
         lines: '',
-        color: '#303133',
+        color: '',
         size: 15,
         iconStyle: {
             fontSize: '15px'

@@ -518,7 +518,7 @@
 				flex-direction: column;
 				justify-content: center;
 				border-radius: 4px;
-				border: 1px solid #eee;
+				border: 1px solid var(--up-border-color, #eee);
 				padding: 0 10px;
 			}
         }

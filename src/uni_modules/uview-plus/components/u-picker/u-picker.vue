@@ -44,7 +44,7 @@
 				<picker-view
 					class="u-picker__view"
 					:mask-class="maskClass"
-					:mask-style="maskStyle"
+					:mask-style="maskStyleInner"
 					:indicatorStyle="`height: ${addUnit(itemHeight, 'px')}`"
 					:value="innerIndex"
 					:immediateChange="immediateChange"
@@ -238,6 +238,18 @@ export default {
 				});
 			}
 			return res
+		},
+		maskStyleInner() {
+			// 显式传入时，始终以外部传参为准（即使传空字符串）
+			if (this.upHasProp('maskStyle')) {
+				return this.maskStyle || ''
+			}
+			if (this.upThemeIsDark) {
+				const topBottomStrong = 'rgba(28, 28, 30, 0.95)'
+				const topBottomWeak = 'rgba(28, 28, 30, 0.6)'
+				return `background-image: linear-gradient(180deg, ${topBottomStrong}, ${topBottomWeak}), linear-gradient(0deg, ${topBottomStrong}, ${topBottomWeak});`
+			}
+			return ''
 		}
     },
 	methods: {
@@ -471,7 +483,7 @@ export default {
 			@include flex;
 			justify-content: center;
 			align-items: center;
-			background-color: rgba(255, 255, 255, 0.87);
+			background-color: var(--up-card-bg-color, #ffffff);
 			z-index: 1000;
 		}
 	}

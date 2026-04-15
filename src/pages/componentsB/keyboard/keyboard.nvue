@@ -7,7 +7,7 @@
 			fixed
 			placeholder
 		></up-navbar>
-		<up-gap height="20" bgColor="#fff"></up-gap>
+		<up-gap height="20"></up-gap>
 		<up-cell-group>
 			<up-cell
 			    :titleStyle="{fontWeight: 500}"
@@ -132,3 +132,5 @@ const backspace = () => {
 		padding: 0;
 	}
 </style>
+
+

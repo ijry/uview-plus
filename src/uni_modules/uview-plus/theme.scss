@@ -2,38 +2,38 @@
 // uni.scss中引入的样式会同时混入到全局样式文件和单独每一个页面的样式中，造成微信程序包太大，
 // 故uni.scss只建议放scss变量名相关样式，其他的样式可以通过main.js或者App.vue引入
 
-$u-main-color: #303133;
-$u-content-color: #606266;
-$u-tips-color: #909193;
-$u-light-color: #c0c4cc;
-$u-border-color: #dadbde;
-$u-bg-color: #f3f4f6;
-$u-disabled-color: #c8c9cc;
+$u-main-color: var(--up-main-color, var(--u-main-color, #303133));
+$u-content-color: var(--up-content-color, var(--u-content-color, #606266));
+$u-tips-color: var(--up-tips-color, var(--u-tips-color, #909193));
+$u-light-color: var(--up-light-color, var(--u-light-color, #c0c4cc));
+$u-border-color: var(--up-border-color, var(--u-border-color, #dadbde));
+$u-bg-color: var(--up-bg-color, var(--u-bg-color, #f3f4f6));
+$u-disabled-color: var(--up-disabled-color, var(--u-disabled-color, #c8c9cc));
 
-$u-primary: #3c9cff;
-$u-primary-dark: #398ade;
-$u-primary-disabled: #9acafc;
-$u-primary-light: #ecf5ff;
+$u-primary: var(--up-primary, var(--u-primary, #3c9cff));
+$u-primary-dark: var(--up-primary-dark, var(--u-primary-dark, #398ade));
+$u-primary-disabled: var(--up-primary-disabled, var(--u-primary-disabled, #9acafc));
+$u-primary-light: var(--up-primary-light, var(--u-primary-light, #ecf5ff));
 
-$u-warning: #f9ae3d;
-$u-warning-dark: #f1a532;
-$u-warning-disabled: #f9d39b;
-$u-warning-light: #fdf6ec;
+$u-warning: var(--up-warning, var(--u-warning, #f9ae3d));
+$u-warning-dark: var(--up-warning-dark, var(--u-warning-dark, #f1a532));
+$u-warning-disabled: var(--up-warning-disabled, var(--u-warning-disabled, #f9d39b));
+$u-warning-light: var(--up-warning-light, var(--u-warning-light, #fdf6ec));
 
-$u-success: #5ac725;
-$u-success-dark: #53c21d;
-$u-success-disabled: #a9e08f;
-$u-success-light: #f5fff0;
+$u-success: var(--up-success, var(--u-success, #5ac725));
+$u-success-dark: var(--up-success-dark, var(--u-success-dark, #53c21d));
+$u-success-disabled: var(--up-success-disabled, var(--u-success-disabled, #a9e08f));
+$u-success-light: var(--up-success-light, var(--u-success-light, #f5fff0));
 
-$u-error: #f56c6c;
-$u-error-dark: #e45656;
-$u-error-disabled: #f7b2b2;
-$u-error-light: #fef0f0;
+$u-error: var(--up-error, var(--u-error, #f56c6c));
+$u-error-dark: var(--up-error-dark, var(--u-error-dark, #e45656));
+$u-error-disabled: var(--up-error-disabled, var(--u-error-disabled, #f7b2b2));
+$u-error-light: var(--up-error-light, var(--u-error-light, #fef0f0));
 
-$u-info: #909399;
-$u-info-dark: #767a82;
-$u-info-disabled: #c4c6c9;
-$u-info-light: #f4f4f5;
+$u-info: var(--up-info, var(--u-info, #909399));
+$u-info-dark: var(--up-info-dark, var(--u-info-dark, #767a82));
+$u-info-disabled: var(--up-info-disabled, var(--u-info-disabled, #c4c6c9));
+$u-info-light: var(--up-info-light, var(--u-info-light, #f4f4f5));
 
 // scss混入，为了少写几行#ifndef
 @mixin flex($direction: row) {

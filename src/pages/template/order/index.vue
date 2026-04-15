@@ -46,7 +46,7 @@
 									<view class="evaluate btn">评价</view>
 								</view>
 							</view>
-							<up-loadmore :status="loadStatus[0]" bgColor="#f2f2f2"></up-loadmore>
+							<up-loadmore :status="loadStatus[0]"></up-loadmore>
 						</view>
 					</scroll-view>
 				</swiper-item>
@@ -91,7 +91,7 @@
 									<view class="evaluate btn">评价</view>
 								</view>
 							</view>
-							<up-loadmore :status="loadStatus[1]" bgColor="#f2f2f2"></up-loadmore>
+							<up-loadmore :status="loadStatus[1]"></up-loadmore>
 						</view>
 					</scroll-view>
 				</swiper-item>
@@ -152,7 +152,7 @@
 									<view class="evaluate btn">评价</view>
 								</view>
 							</view>
-							<up-loadmore :status="loadStatus[3]" bgColor="#f2f2f2"></up-loadmore>
+							<up-loadmore :status="loadStatus[3]"></up-loadmore>
 						</view>
 					</scroll-view>
 				</swiper-item>
@@ -366,7 +366,7 @@ export default {
 /* #ifndef H5 */
 page {
 	height: 100%;
-	background-color: #f2f2f2;
+	background-color: transparent;
 }
 /* #endif */
 </style>
@@ -374,7 +374,7 @@ page {
 <style lang="scss" scoped>
 .order {
 	width: 710rpx;
-	background-color: #ffffff;
+	background-color: $u-info-light;
 	margin: 20rpx auto;
 	border-radius: 20rpx;
 	box-sizing: border-box;
@@ -503,3 +503,5 @@ page {
 	height: 100%;
 }
 </style>
+
+

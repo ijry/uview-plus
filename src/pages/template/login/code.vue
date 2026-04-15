@@ -89,12 +89,12 @@ export default {
 
 .title {
 	font-size: 50rpx;
-	color: #333;
+	color: $u-main-color;
 }
 
 .key-input .tips {
 	font-size: 30rpx;
-	color: #333;
+	color: $u-content-color;
 	margin-top: 20rpx;
 	margin-bottom: 60rpx;
 }
@@ -110,3 +110,4 @@ export default {
 	}
 }
 </style>
+

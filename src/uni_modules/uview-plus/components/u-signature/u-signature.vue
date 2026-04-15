@@ -1,12 +1,12 @@
 <template>
 	<view class="u-signature">
-		<view class="u-signature__canvas-wrap" :style="{background: bgColor}">
+		<view class="u-signature__canvas-wrap" :style="{background: resolvedBgColor}">
 			<up-canvas 
 				ref="signatureCanvas"
 				:canvas-id="canvasId"
 				:width="canvasWidth"
 				:height="canvasHeight"
-				:bg-color="bgColor"
+				:bg-color="resolvedBgColor"
 				@touchstart="touchStart" 
 				@touchmove="touchMove" 
 				@touchend="touchEnd"
@@ -22,19 +22,19 @@
 		<view v-if="showToolbar" class="u-signature__toolbar">
 			<view class="u-signature__toolbar-icons u-flex u-flex-x">
 				<view class="u-signature__toolbar-icon" @click="undo">
-					<up-icon name="arrow-left" size="22" :color="pathStack.length === 0 ? '#ccc' : '#999'"></up-icon>
+					<up-icon name="arrow-left" size="22" :color="pathStack.length === 0 ? iconDisabledColor : iconDefaultColor"></up-icon>
 				</view>
 				<view class="u-signature__toolbar-icon" @click="clear">
-					<up-icon name="trash" size="25" color="#999"></up-icon>
+					<up-icon name="trash" size="25" :color="iconDefaultColor"></up-icon>
 				</view>
 				<view class="u-signature__toolbar-icon" @click="toggleBrushSettings">
-					<up-icon name="edit-pen" size="25" color="#999"></up-icon>
+					<up-icon name="edit-pen" size="25" :color="iconDefaultColor"></up-icon>
 				</view>
 				<view class="u-signature__toolbar-icon" @click="toggleColorSettings">
-					<up-icon name="grid" size="24" color="#999"></up-icon>
+					<up-icon name="grid" size="24" :color="iconDefaultColor"></up-icon>
 				</view>
 				<view class="u-signature__toolbar-icon" @click="exportSignature">
-					<up-icon name="checkmark" size="25" :color="isEmpty ? '#ccc' : '#999'"></up-icon>
+					<up-icon name="checkmark" size="25" :color="isEmpty ? iconDisabledColor : iconDefaultColor"></up-icon>
 				</view>
 			</view>
 			
@@ -114,7 +114,7 @@
 				canvasId: 'u-signature-' + Math.random().toString(36).substr(2, 9),
 				canvasWidth: 300,
 				canvasHeight: 200,
-				lineColor: '#000000',
+				lineColor: '',
 				lineWidth: 3,
 				isDrawing: false,
 				pathStack: [], // 存储绘制路径用于回退
@@ -134,6 +134,19 @@
 				showColorSettings: false,
 				lastPoint: null, // 保存上一个点的坐标
 				canvasInstance: null // 缓存canvas实例
+			}
+		},
+		computed: {
+			resolvedBgColor() {
+				return this.bgColor === '#ffffff'
+					? (this.upThemeIsDark ? '#1c1c1e' : '#ffffff')
+					: this.bgColor
+			},
+			iconDefaultColor() {
+				return this.upThemeVar('--up-content-color', '#999999')
+			},
+			iconDisabledColor() {
+				return this.upThemeVar('--up-disabled-color', '#c8c9cc')
 			}
 		},
 		mounted() {
@@ -158,7 +171,7 @@
 			},
 			color: {
 				handler(newVal) {
-					this.lineColor = newVal
+					this.lineColor = this.resolveStrokeColor(newVal)
 				},
 				immediate: true
 			},
@@ -171,6 +184,12 @@
 		},
 		methods: {
 			t,
+			resolveStrokeColor(color) {
+				if (color === '#000000') {
+					return this.upThemeIsDark ? '#f5f5f5' : '#000000'
+				}
+				return color
+			},
 			
 			// 获取签名画布实例
 			getCanvasInstance() {
@@ -400,7 +419,7 @@
 		flex-direction: column;
 		
 		&__canvas-wrap {
-			border: 1px solid #e0e0e0;
+			border: 1px solid var(--up-border-color, #e0e0e0);
 			border-radius: 4px;
 			overflow: hidden;
 		}
@@ -412,7 +431,7 @@
 		
 		&__toolbar {
 			margin-top: 5px;
-            background-color: #fff;
+            background-color: var(--up-card-bg-color, #fff);
 		}
 		
 		&__toolbar-icons {
@@ -441,7 +460,7 @@
 				display: block;
 				margin-bottom: 10px;
 				font-size: 14px;
-				color: #999;
+				color: var(--up-tips-color, #999);
 			}
 		}
 		
@@ -453,7 +472,7 @@
 			display: block;
 			margin-bottom: 10px;
 			font-size: 14px;
-			color: #999;
+			color: var(--up-tips-color, #999);
 		}
 		
 		&__colors {
@@ -467,11 +486,11 @@
 			width: 30px;
 			height: 30px;
 			border-radius: 50%;
-			border: 2px solid #f0f0f0;
+			border: 2px solid var(--up-border-color, #f0f0f0);
 			cursor: pointer;
 			
 			&--active {
-				border-color: #2979ff;
+				border-color: var(--up-primary, #2979ff);
 				transform: scale(1.1);
 			}
 		}

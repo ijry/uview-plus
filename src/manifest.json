@@ -6,6 +6,7 @@
     "versionCode" : 1,
     "transformPx" : false,
     "app-plus" : {
+        "darkmode" : true,
         // APP-VUE分包，可提升APP启动速度，2.7.12开始支持，兼容微信小程序分包方案，默认关闭
         "optimization" : {
             "subPackages" : true
@@ -99,6 +100,7 @@
     },
     "quickapp" : {},
     "mp-weixin" : {
+        "darkmode" : true,
         "appid" : "wx546bb258086e3454",
         "setting" : {
             "urlCheck" : false,
@@ -137,6 +139,7 @@
         "appid" : ""
     },
     "h5" : {
+        "darkmode" : true,
         "template" : "",
         "router" : {
             "mode" : "hash",
@@ -164,6 +167,7 @@
     "vueVersion" : "3",
     "locale" : "zh-Hans",
     "app-harmony" : {
+        "darkmode" : true,
         "distribute" : {
             "bundleName" : "com.jiangruyi.uviewplus.hos",
             "splashScreens" : {

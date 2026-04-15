@@ -10,14 +10,14 @@
 		<view :class="[fixed && 'u-navbar--fixed']">
 			<u-status-bar
 				v-if="safeAreaInsetTop"
-				:bgColor="statusBarBgColor ? statusBarBgColor : bgColor"
+				:bgColor="statusBarBgColor ? statusBarBgColor : navbarBgColor"
 			></u-status-bar>
 			<view
 				class="u-navbar__content"
 				:class="[border && 'u-border-bottom']"
 				:style="{
 					height: addUnit(height),
-					backgroundColor: bgColor,
+					backgroundColor: navbarBgColor,
 				}"
 			>
 				<view
@@ -31,12 +31,12 @@
 							v-if="leftIcon"
 							:name="leftIcon"
 							:size="leftIconSize"
-							:color="leftIconColor"
+							:color="navbarLeftIconColor"
 						></up-icon>
 						<text
 							v-if="leftText"
 							:style="{
-								color: leftIconColor
+								color: navbarLeftIconColor
 							}"
 							class="u-navbar__content__left__text"
 						>{{ leftText }}</text>
@@ -47,7 +47,7 @@
 						class="u-line-1 u-navbar__content__title"
 						:style="[{
 							width: addUnit(titleWidth),
-							color: titleColor,
+							color: navbarTitleColor,
 						}, addStyle(titleStyle)]"
 					>{{ title }}</text>
 				</slot>
@@ -61,10 +61,12 @@
 							v-if="rightIcon"
 							:name="rightIcon"
 							size="20"
+							:color="navbarRightColor"
 						></up-icon>
 						<text
 							v-if="rightText"
 							class="u-navbar__content__right__text"
+							:style="{ color: navbarRightColor }"
 						>{{ rightText }}</text>
 					</slot>
 				</view>
@@ -112,6 +114,23 @@
 			return {
 			}
 		},
+		computed: {
+			navbarBgColor() {
+				if (this.bgColor) return this.bgColor
+				return this.upThemeVar('--up-navbar-bg-color', this.upThemeIsDark ? '#1c1c1e' : '#ffffff')
+			},
+			navbarTitleColor() {
+				if (this.titleColor) return this.titleColor
+				return this.upThemeVar('--up-main-color', this.$u.color.mainColor)
+			},
+			navbarLeftIconColor() {
+				if (this.leftIconColor) return this.leftIconColor
+				return this.upThemeVar('--up-main-color', this.$u.color.mainColor)
+			},
+			navbarRightColor() {
+				return this.upThemeVar('--up-main-color', this.$u.color.mainColor)
+			}
+		},
 		emits: ["leftClick", "rightClick"],
 		methods: {
 			addStyle,
@@ -138,6 +157,10 @@
 	}
 </script>
 
+<style lang="scss">
+	@import "./theme-vars.scss";
+</style>
+
 <style lang="scss" scoped>
 
 	.u-navbar {
@@ -154,7 +177,7 @@
 			@include flex(row);
 			align-items: center;
 			height: 44px;
-			background-color: #9acafc;
+			background-color: $u-bg-color;
 			position: relative;
 			justify-content: center;
 
@@ -178,6 +201,7 @@
 				&__text {
 					font-size: 15px;
 					margin-left: 3px;
+					color: $u-main-color;
 				}
 			}
 

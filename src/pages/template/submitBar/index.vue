@@ -1,5 +1,5 @@
 <template>
-	<view class="navigation">
+	<view class="navigation" :style="[upThemeCardStyle, { borderColor: upThemeVar('--up-border-color') }]">
 		<view class="left">
 			<view class="item">
 				<up-icon name="server-fill" :size="20" :color="$u.color['contentColor']"></up-icon>
@@ -32,8 +32,7 @@ export default {
 .navigation {
 	display: flex;
 	margin-top: 100rpx;
-	border: solid 2rpx #f2f2f2;
-	background-color: #ffffff;
+	border: solid 2rpx;
 	padding: 16rpx 0;
 	.left {
 		display: flex;

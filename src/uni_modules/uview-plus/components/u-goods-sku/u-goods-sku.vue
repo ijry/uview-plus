@@ -312,7 +312,7 @@
 
 <style lang="scss" scoped>
 	.up-goods-sku {
-		background-color: #fff;
+		background-color: var(--up-card-bg-color, #fff);
 		overflow: hidden;
 
         .up-goods-sku-container {
@@ -349,26 +349,26 @@
 					
 					&__symbol {
 						font-size: 24rpx;
-						color: #fa3534;
+						color: var(--up-error, #fa3534);
 						margin-right: 4rpx;
 					}
 					
 					&__value {
 						font-size: 36rpx;
-						color: #fa3534;
+						color: var(--up-error, #fa3534);
 						font-weight: bold;
 					}
 				}
 				
 				&__stock {
 					font-size: 26rpx;
-					color: #999;
+					color: var(--up-tips-color, #999);
 					margin-bottom: 20rpx;
 				}
 				
 				&__selected {
 					font-size: 26rpx;
-					color: #333;
+					color: var(--up-main-color, #333);
 				}
 			}
 		}
@@ -382,7 +382,7 @@
 				
 				&__title {
 					font-size: 28rpx;
-					color: #333;
+					color: var(--up-main-color, #333);
 					margin-bottom: 20rpx;
 				}
 				
@@ -393,21 +393,22 @@
 					
 					&__item {
 						padding: 10rpx 20rpx;
-						border: 2rpx solid #eee;
+						border: 2rpx solid var(--up-border-color, #eee);
 						border-radius: 10rpx;
 						margin-right: 20rpx;
 						margin-bottom: 20rpx;
 						font-size: 26rpx;
-						color: #333;
+						color: var(--up-main-color, #333);
+						background-color: var(--up-card-bg-color, #fff);
 						
 						&--active {
-							border-color: #fa3534;
-							color: #fa3534;
+							border-color: var(--up-error, #fa3534);
+							color: var(--up-error, #fa3534);
 						}
 						
 						&--disabled {
-							color: #ccc;
-							border-color: #eee;
+							color: var(--up-disabled-color, #ccc);
+							border-color: var(--up-border-color, #eee);
 						}
 					}
 				}
@@ -422,7 +423,7 @@
 				
 				&__title {
 					font-size: 28rpx;
-					color: #333;
+					color: var(--up-main-color, #333);
 				}
 			}
 		}

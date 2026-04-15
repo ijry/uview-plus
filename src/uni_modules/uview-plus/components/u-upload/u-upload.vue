@@ -8,20 +8,28 @@
 				    :key="index"
 				>
 					<image
-					    v-if="item.isImage || (item.type && item.type === 'image')"
+					    v-if="(item.isImage || (item.type && item.type === 'image')) && (item.thumb || item.url)"
 					    :src="item.thumb || item.url"
 					    :mode="imageMode"
 					    class="u-upload__wrap__preview__image"
 					    @tap="onClickPreview(item, index)"
 						:style="[{
 							width: addUnit(width),
-							height: addUnit(height)
+							height: addUnit(height),
+							backgroundColor: upThemeVar('--up-card-bg-color', 'rgb(242, 242, 242)'),
+							borderColor: upThemeVar('--up-border-color', '#e5e7eb'),
+							borderWidth: '1px',
+							borderStyle: 'solid'
 						}]"
 					/>
 					<view class="u-upload__wrap__preview__video"
 						:style="{
 							width: addUnit(width),
-							height: addUnit(height)
+							height: addUnit(height),
+							backgroundColor: upThemeVar('--up-card-bg-color', 'rgb(242, 242, 242)'),
+							borderColor: upThemeVar('--up-border-color', '#e5e7eb'),
+							borderWidth: '1px',
+							borderStyle: 'solid'
 						}"
 						v-else-if="(item.isVideo || (item.type && item.type === 'video')) && getVideoThumb">
 						<image
@@ -56,7 +64,11 @@
 						@tap="onClickPreview(item, index)"
 						:style="[{
 							width: addUnit(width),
-							height: addUnit(height)
+							height: addUnit(height),
+							backgroundColor: upThemeVar('--up-card-bg-color', 'rgb(242, 242, 242)'),
+							borderColor: upThemeVar('--up-border-color', '#e5e7eb'),
+							borderWidth: '1px',
+							borderStyle: 'solid'
 						}]"
 					>
 						<up-icon
@@ -153,17 +165,22 @@
 				    :class="[disabled && 'u-upload__button--disabled']"
 					:style="[{
 						width: addUnit(width),
-						height: addUnit(height)
+						height: addUnit(height),
+						backgroundColor: upThemeVar('--up-card-bg-color', 'rgb(244, 245, 247)'),
+						borderColor: upThemeVar('--up-border-color', '#e5e7eb'),
+						borderWidth: '1px',
+						borderStyle: 'solid'
 					}]"
 				>
 					<up-icon
 					    :name="uploadIcon"
 					    size="26"
-					    :color="uploadIconColor"
+					    :color="resolvedUploadIconColor"
 					></up-icon>
 					<text
 					    v-if="uploadText"
 					    class="u-upload__button__text"
+						:style="{ color: resolvedUploadTextColor }"
 					>{{ uploadText }}</text>
 				</view>
 			</template>
@@ -265,6 +282,17 @@
 				if (!newVal) {
 					this.currentItemIndex = -1;
 				}
+			}
+		},
+		computed: {
+			resolvedUploadIconColor() {
+				if (this.upHasProp('uploadIconColor') || this.uploadIconColor !== '#D3D4D6') {
+					return this.uploadIconColor
+				}
+				return this.upThemeVar('--up-content-color', '#909399')
+			},
+			resolvedUploadTextColor() {
+				return this.upThemeVar('--up-tips-color', '#909399')
 			}
 		},
 		// #ifdef VUE3

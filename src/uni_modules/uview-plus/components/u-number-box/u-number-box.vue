@@ -22,7 +22,7 @@
 		>
 			<up-icon
 			    name="minus"
-			    :color="isDisabled('minus') ? '#c8c9cc' : '#323233'"
+			    :color="isDisabled('minus') ? resolvedDisabledIconColor : resolvedColor"
 			    size="15"
 			    bold
 				:customStyle="iconStyle"
@@ -83,7 +83,7 @@
 		>
 			<up-icon
 			    name="plus"
-			    :color="isDisabled('plus') ? '#c8c9cc' : '#323233'"
+			    :color="isDisabled('plus') ? resolvedDisabledIconColor : resolvedColor"
 			    size="15"
 			    bold
 				:customStyle="iconStyle"
@@ -166,6 +166,21 @@
 			// #endif
 		},
 		computed: {
+			resolvedColor() {
+				return this.color || this.upThemeVar('--up-main-color', '#303133')
+			},
+			resolvedDisabledIconColor() {
+				return this.upThemeVar('--up-disabled-color', '#c8c9cc')
+			},
+			resolvedBgColor() {
+				return this.bgColor || this.upThemeVar('--up-bg-color', '#EBECEE')
+			},
+			resolvedDisabledBgColor() {
+				return this.disabledBgColor || this.upThemeVar('--up-card-bg-color', '#f7f8fa')
+			},
+			resolvedInputBgColor() {
+				return this.inputBgColor || this.resolvedBgColor
+			},
 			hideMinus() {
 				return this.currentValue == 0 && this.miniMode == true
 			},
@@ -177,24 +192,23 @@
 			buttonStyle() {
 				return (type) => {
 					const style = {
-						backgroundColor: this.bgColor,
+						backgroundColor: this.resolvedBgColor,
 						width: addUnit(this.buttonWidth),
 						height: addUnit(this.buttonSize),
-						color: this.color,
+						color: this.resolvedColor,
 						borderRadius: this.buttonRadius
 					}
 					if (this.isDisabled(type)) {
-						style.backgroundColor = this.disabledBgColor
+						style.backgroundColor = this.resolvedDisabledBgColor
 					}
 					return style
 				}
 			},
 			// 输入框的样式
 			inputStyle() {
-				const disabled = this.disabled || this.disabledInput
 				const style = {
-					color: this.color,
-					backgroundColor: this.inputBgColor || this.bgColor,
+					color: this.resolvedColor,
+					backgroundColor: this.resolvedInputBgColor,
 					height: addUnit(this.buttonSize),
 					width: addUnit(this.inputWidth)
 				}
@@ -407,17 +421,17 @@
 </script>
 
 <style lang="scss" scoped>
-	$u-numberBox-hover-bgColor: #E6E6E6 !default;
-	$u-numberBox-disabled-color: #c8c9cc !default;
-	$u-numberBox-disabled-bgColor: #f7f8fa !default;
+	$u-numberBox-hover-bgColor: var(--up-border-color, #E6E6E6) !default;
+	$u-numberBox-disabled-color: var(--up-disabled-color, #c8c9cc) !default;
+	$u-numberBox-disabled-bgColor: var(--up-card-bg-color, #f7f8fa) !default;
 	$u-numberBox-plus-radius: 4px !default;
 	$u-numberBox-minus-radius: 4px !default;
 	$u-numberBox-input-text-align: center !default;
 	$u-numberBox-input-font-size: 15px !default;
 	$u-numberBox-input-padding: 0 !default;
 	$u-numberBox-input-margin: 0 2px !default;
-	$u-numberBox-input-disabled-color: #c8c9cc !default;
-	$u-numberBox-input-disabled-bgColor: #f2f3f5 !default;
+	$u-numberBox-input-disabled-color: var(--up-disabled-color, #c8c9cc) !default;
+	$u-numberBox-input-disabled-bgColor: var(--up-bg-color, #f2f3f5) !default;
 
 	.u-number-box {
 		@include flex(row);

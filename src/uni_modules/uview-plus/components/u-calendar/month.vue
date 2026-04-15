@@ -217,7 +217,8 @@
 							// 处于第一和最后一个之间的日期，背景色设置为浅色，通过将对应颜色进行等分，再取其尾部的颜色值
 							if (dayjs(date).isAfter(dayjs(this.selected[0])) && dayjs(date).isBefore(dayjs(this
 									.selected[len]))) {
-								style.backgroundColor = colorGradient(this.color, '#ffffff', 100)[90]
+								const rangeEndColor = this.upThemeIsDark ? '#1c1c1e' : '#ffffff'
+								style.backgroundColor = colorGradient(this.color, rangeEndColor, 100)[90]
 								// 增加一个透明度，让范围区间的背景色也能看到底部的mark水印字符
 								style.opacity = 0.7
 							}

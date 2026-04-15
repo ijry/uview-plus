@@ -41,9 +41,9 @@
 	// 如果使用这些图片，请勿直接引入uview-plus.jiangruyi.com的资源，因为此资源路径随时会有变动
 	// 变动后，您将会访问图片失败，如有需要，您可以将这些图片上传到自己的oss或者服务器再使用
 	const baseUrl = 'https://uview-plus.jiangruyi.com/uview/empty/'
-	
+
 	const mode = ref('car')
-	
+
 	const imgList = ref({
 		car: baseUrl + 'car.png',
 		address: baseUrl + 'address.png',
@@ -60,7 +60,7 @@
 		search: baseUrl + 'search.png',
 		wifi: baseUrl + 'wifi.png',
 	})
-	
+
 	const list = ref([{
 			imgName: 'car',
 			title: '购物车为空(同时传入slot)',
@@ -116,7 +116,7 @@
 			iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/empty/wifi.png'
 		},
 	])
-	
+
 	//点击改变图片
 	const openImg = (imgName) => {
 		// this.mode = this.imgList[imgName]

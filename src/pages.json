@@ -1,4 +1,5 @@
 {
+    "themeLocation" : "theme.json",
     "condition" : {
         //模式配置，仅开发期间生效
         "current" : 0, //当前激活的模式(list 的索引项)
@@ -38,6 +39,12 @@
             "path" : "pages/example/template",
             "style" : {
                 "navigationBarTitleText" : "模板"
+            }
+        },
+        {
+            "path" : "pages/example/mine",
+            "style" : {
+                "navigationBarTitleText" : "我的"
             }
         },
         {
@@ -829,16 +836,16 @@
         }
     },
     "globalStyle" : {
-        "navigationBarTextStyle" : "black",
+        "navigationBarTextStyle" : "@navTextColor",
         "navigationBarTitleText" : "uview-plus",
-        "navigationBarBackgroundColor" : "#FFFFFF",
-        "backgroundColor" : "#FFFFFF"
+        "navigationBarBackgroundColor" : "@navBgColor",
+        "backgroundColor" : "@pageBgColor"
     },
     "tabBar" : {
-        "color" : "#909399",
-        "selectedColor" : "#303133",
-        "backgroundColor" : "#FFFFFF",
-        "borderStyle" : "black",
+        "color" : "@tabBarColor",
+        "selectedColor" : "@tabBarSelectedColor",
+        "backgroundColor" : "@tabBarBgColor",
+        "borderStyle" : "@tabBarBorderStyle",
         "list" : [
             {
                 "pagePath" : "pages/example/components",
@@ -857,6 +864,12 @@
                 "iconPath" : "static/uview/example/template.png",
                 "selectedIconPath" : "static/uview/example/template_select.png",
                 "text" : "模板"
+            },
+            {
+                "pagePath" : "pages/example/mine",
+                "iconPath" : "static/uview/example/js.png",
+                "selectedIconPath" : "static/uview/example/js_select.png",
+                "text" : "我的"
             }
         ]
     }

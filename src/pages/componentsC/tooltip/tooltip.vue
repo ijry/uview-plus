@@ -114,9 +114,9 @@ const click = (index) => {
 
 <style lang="scss">
 	.u-page {
-		
+
 	}
-	
+
 	.u-demo-block__content {
 		padding-top: 10px;
 	}

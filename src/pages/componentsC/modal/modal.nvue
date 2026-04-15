@@ -9,7 +9,6 @@
 		></up-navbar>
 		<up-gap
 			height="20"
-			bgColor="#fff"
 		></up-gap>
 		<up-cell-group>
 			<up-cell
@@ -219,3 +218,5 @@ const close = () => {
 		padding: 0;
 	}
 </style>
+
+

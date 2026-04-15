@@ -1,0 +1,21 @@
+:root,
+page,
+body {
+	--up-navbar-bg-color: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root,
+	page,
+	body {
+		--up-navbar-bg-color: #1c1c1e;
+	}
+}
+
+[data-up-theme='light'] {
+	--up-navbar-bg-color: #ffffff;
+}
+
+[data-up-theme='dark'] {
+	--up-navbar-bg-color: #1c1c1e;
+}

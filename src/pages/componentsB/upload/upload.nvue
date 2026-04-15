@@ -150,7 +150,7 @@ const afterRead = async (event) => {
   let lists = [].concat(event.file);
   const targetList = fileLists[`fileList${event.name}`];
   if (!targetList) return;
-  
+
   let fileListLen = targetList.value.length;
   lists.map((item) => {
     targetList.value.push({

@@ -61,7 +61,7 @@
 				:class="[`u-tag__close--${size}`]"
 				v-if="closable"
 				@tap.stop="closeHandler"
-				:style="{backgroundColor: closeColor}"
+				:style="{backgroundColor: resolvedCloseColor}"
 			>
 				<up-icon
 					name="close"
@@ -168,6 +168,12 @@
 			// 图标颜色
 			elIconColor() {
 				return this.iconColor ? this.iconColor : this.plain ? this.type : '#ffffff'
+			},
+			resolvedCloseColor() {
+				if (this.upHasProp('closeColor') || this.closeColor !== '#C6C7CB') {
+					return this.closeColor
+				}
+				return this.upThemeVar('--up-tag-close-bg-color', this.$u.color.disabledColor || '#c8c9cc')
 			}
 		},
 		emits: ["click", "close"],
@@ -188,6 +194,10 @@
 		}
 	}
 </script>
+
+<style lang="scss">
+	@import "./theme-vars.scss";
+</style>
 
 <style
 	lang="scss"
@@ -262,7 +272,7 @@
 		}
 
 		&--primary--plain--fill {
-			background-color: #ecf5ff;
+			background-color: $u-primary-light;
 		}
 
 		&__text--primary {
@@ -285,7 +295,7 @@
 		}
 
 		&--error--plain--fill {
-			background-color: #fef0f0;
+			background-color: $u-error-light;
 		}
 
 		&__text--error {
@@ -308,7 +318,7 @@
 		}
 
 		&--warning--plain--fill {
-			background-color: #fdf6ec;
+			background-color: $u-warning-light;
 		}
 
 		&__text--warning {
@@ -331,7 +341,7 @@
 		}
 
 		&--success--plain--fill {
-			background-color: #f5fff0;
+			background-color: $u-success-light;
 		}
 
 		&__text--success {
@@ -354,7 +364,7 @@
 		}
 
 		&--info--plain--fill {
-			background-color: #f4f4f5;
+			background-color: $u-info-light;
 		}
 
 		&__text--info {
@@ -371,7 +381,7 @@
 			top: 10px;
 			right: 10px;
 			border-radius: 100px;
-			background-color: #C6C7CB;
+			background-color: $u-disabled-color;
 			@include flex(row);
 			align-items: center;
 			justify-content: center;

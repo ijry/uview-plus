@@ -29,7 +29,7 @@
             	    :disabled="disabled || readonly"
             	    :maxlength="maxlength"
             	    :placeholder="placeholder"
-            	    :placeholder-style="placeholderStyle"
+            	    :placeholder-style="placeholderStyleInner"
             	    :placeholder-class="placeholderClass"
             	    :confirm-type="confirmType"
             	    :confirm-hold="confirmHold"
@@ -188,6 +188,12 @@ export default {
         }
     },
     computed: {
+        placeholderStyleInner() {
+            if (this.placeholderStyle) {
+                return this.placeholderStyle;
+            }
+            return `color: ${this.upThemeVar('--up-tips-color', this.$u?.color?.tipsColor || '#909399')}`;
+        },
         // 是否密码
         isPassword() {
             let ret = false;
@@ -234,7 +240,7 @@ export default {
             const style = {};
             // 禁用状态下，被背景色加上对应的样式
             if (this.disabled) {
-                style.backgroundColor = this.disabledColor;
+                style.backgroundColor = this.disabledColor || this.upThemeVar('--up-bg-color', this.$u?.color?.bgColor || '#f3f4f6');
             }
             // 无边框时，去除内边距
             if (this.border === "none") {
@@ -251,7 +257,7 @@ export default {
         // 输入框的样式
         inputStyle() {
             const style = {
-                color: this.color,
+                color: this.color || this.upThemeVar('--up-main-color', this.$u?.color?.mainColor || '#303133'),
                 fontSize: addUnit(this.fontSize),
 				textAlign: this.inputAlign
             };

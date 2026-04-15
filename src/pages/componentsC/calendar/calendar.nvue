@@ -242,3 +242,4 @@ const formatter = (day) => {
 		padding: 0;
 	}
 </style>
+

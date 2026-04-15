@@ -1,5 +1,6 @@
 <style scoped lang="scss">
     .u-title {
+		color: var(--up-main-color, #303133);
 		.u-title-prefix {
 		    width: 4px;
 		    height: 18px;

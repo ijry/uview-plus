@@ -3,15 +3,15 @@
 		<view :class="['u-select__content', disabled && 'disabled']">
 			<view class="u-select__label" @click="openSelect">
 				<slot name="text" :currentLabel="currentLabel">
-					<text class="u-select__text" v-if="showOptionsLabel">
+					<text class="u-select__text" :style="{ color: resolvedTextColor }" v-if="showOptionsLabel">
 						{{ currentLabel }}
 					</text>
-					<text class="u-select__text" v-else>
+					<text class="u-select__text" :style="{ color: resolvedTextColor }" v-else>
 						{{ label }}
 					</text>
 				</slot>
 				<slot name="icon">
-					<up-icon name="arrow-down" :size="iconSize" :color="iconColor"></up-icon>
+					<up-icon name="arrow-down" :size="iconSize" :color="resolvedIconColor"></up-icon>
 				</slot>
 			</view>
 			<u-overlay :show="isOpen" @click="overlayClick" v-if="overlay" :zIndex="zIndex" :duration="duration + 50"
@@ -21,9 +21,10 @@
 				<view class="u-select__options" v-if="isOpen">
 					<slot name="options">
 						<view class="u-select__options_item" :class="current == item[keyName] ? 'active': ''"
+							:style="{ color: resolvedItemColor }"
 							:key="index" v-for="(item, index) in options" @click="selectItem(item)">
 							<slot name="optionItem" :item="item">
-								<text class="u-select__item_text" :style="{color: itemColor}">
+								<text class="u-select__item_text" :style="{color: resolvedItemColor}">
 									{{item[labelName]}}
 								</text>
 							</slot>
@@ -104,7 +105,7 @@
 			},
 			itemColor: {
 				type: String,
-				default: '#333333'
+				default: ''
 			},
 			iconColor: {
 				type: String,
@@ -128,6 +129,15 @@
 			}
 		},
 		computed: {
+			resolvedItemColor() {
+				return this.itemColor || this.upThemeVar('--up-main-color', '#303133');
+			},
+			resolvedTextColor() {
+				return this.upThemeVar('--up-main-color', '#303133');
+			},
+			resolvedIconColor() {
+				return this.iconColor || this.upThemeVar('--up-content-color', '#606266');
+			},
 			currentLabel() {
 				let name = '';
 				this.options.forEach((ele) => {
@@ -210,8 +220,8 @@
 			min-width: 100px;
 			box-sizing: border-box;
 			border-radius: 4px;
-			border: 1px solid #f1f1f1;
-			background-color: #fff;
+			border: 1px solid var(--up-border-color, #f1f1f1);
+			background-color: var(--up-card-bg-color, #fff);
 
 			.u-select__options_item {
 				padding: 10px 12px;
@@ -220,7 +230,7 @@
 				height: 100%;
 
 				&:hover {
-					background-color: #f7f7f7;
+					background-color: var(--up-bg-color, #f7f7f7);
 				}
 
 				/* #ifdef H5 */

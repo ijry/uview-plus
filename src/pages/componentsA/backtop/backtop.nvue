@@ -1,6 +1,7 @@
 <template>
 	<view
 	    class="u-page"
+	
 	    ref="u-back-top"
 	>
 	<view class="u-demo-block">
@@ -139,3 +140,4 @@
 		}
 	}
 </style>
+

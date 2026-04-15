@@ -30,7 +30,7 @@
 			>
 				<up-icon
 					name="backspace"
-					color="#303133"
+					:color="upThemeVar('--up-main-color', '#303133')"
 					size="28"
 				></up-icon>
 			</view>
@@ -134,7 +134,7 @@
 </script>
 
 <style lang="scss" scoped>
-	$u-number-keyboard-background-color:rgb(224, 228, 230) !default;
+	$u-number-keyboard-background-color:var(--up-bg-color, rgb(224, 228, 230)) !default;
 	$u-number-keyboard-padding:8px 10rpx 8px 10rpx !default;
 	$u-number-keyboard-button-width:222rpx !default;
 	$u-number-keyboard-button-margin:4px 6rpx !default;
@@ -143,13 +143,13 @@
 	$u-number-keyboard-button-border-bottom-left-radius:4px !default;
 	$u-number-keyboard-button-border-bottom-right-radius:4px !default;
 	$u-number-keyboard-button-height: 90rpx!default;
-	$u-number-keyboard-button-background-color:#FFFFFF !default;
+	$u-number-keyboard-button-background-color:var(--up-card-bg-color, #ffffff) !default;
 	$u-number-keyboard-button-box-shadow:0 2px 0px #BBBCBE !default;
 	$u-number-keyboard-text-font-size:20px !default;
 	$u-number-keyboard-text-font-weight:500 !default;
-	$u-number-keyboard-text-color:$u-main-color !default;
-	$u-number-keyboard-gray-background-color:rgb(200, 202, 210) !default;
-	$u-number-keyboard-u-hover-class-background-color: #BBBCC6 !default;
+	$u-number-keyboard-text-color:var(--up-main-color, #303133) !default;
+	$u-number-keyboard-gray-background-color:var(--up-border-color, rgb(200, 202, 210)) !default;
+	$u-number-keyboard-u-hover-class-background-color: var(--up-border-color, #BBBCC6) !default;
 
 	.u-keyboard {
 		@include flex;

@@ -195,7 +195,7 @@
 		}
 
 		&--primary--light {
-			background-color: #ecf5ff;
+			background-color: var(--up-primary-light, #ecf5ff);
 		}
 
 		&--error--dark {
@@ -203,7 +203,7 @@
 		}
 
 		&--error--light {
-			background-color: #FEF0F0;
+			background-color: var(--up-error-light, #FEF0F0);
 		}
 
 		&--success--dark {
@@ -211,7 +211,7 @@
 		}
 
 		&--success--light {
-			background-color: #f5fff0;
+			background-color: var(--up-success-light, #f5fff0);
 		}
 
 		&--warning--dark {
@@ -219,7 +219,7 @@
 		}
 
 		&--warning--light {
-			background-color: #FDF6EC;
+			background-color: var(--up-warning-light, #FDF6EC);
 		}
 
 		&--info--dark {
@@ -227,7 +227,7 @@
 		}
 
 		&--info--light {
-			background-color: #f4f4f5;
+			background-color: var(--up-info-light, #f4f4f5);
 		}
 
 		&__icon {
@@ -239,24 +239,22 @@
 			flex: 1;
 
 			&__title {
-				color: $u-main-color;
+				color: var(--up-main-color, $u-main-color);
 				font-size: 14px;
 				font-weight: bold;
-				color: #fff;
 				margin-bottom: 2px;
 			}
 
 			&__desc {
-				color: $u-main-color;
+				color: var(--up-main-color, $u-main-color);
 				font-size: 14px;
 				flex-wrap: wrap;
-				color: #fff;
 			}
 		}
 
 		&__title--dark,
 		&__desc--dark {
-			color: #FFFFFF;
+			color: var(--up-white, #FFFFFF);
 		}
 
 		&__text--primary--light,

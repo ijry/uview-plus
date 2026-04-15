@@ -2,7 +2,7 @@
     <view class="wrap">
         <up-waterfall v-model="flowList" columns="auto" ref="uWaterfallRef">
             <template v-slot:column="{ colList, colIndex }">
-                <view class="demo-warter" v-for="(item, index) in colList" :key="index">
+                <view class="demo-warter" v-for="(item, index) in colList" :key="index" :style="{ backgroundColor: upThemeVar('--up-card-bg-color') }">
                     <!-- 微信小程序需要hx2.8.11版本才支持在template中引入其他组件，比如下方的u-lazy-load组件 -->
                     <!-- <up-lazy-load threshold="-450" height="120" border-radius="10" :image="item.image"
                         :index="index"></up-lazy-load> -->
@@ -24,7 +24,7 @@
                 </view>
             </template>
         </up-waterfall>
-        <up-loadmore bg-color="rgb(240, 240, 240)" :status="loadStatus" @loadmore="addRandomData"></up-loadmore>
+        <up-loadmore :status="loadStatus" @loadmore="addRandomData"></up-loadmore>
     </view>
 </template>
 
@@ -148,7 +148,7 @@
     /* page不能写带scope的style标签中，否则无效 */
 	/* #ifndef APP-NVUE */
 	page {
-	    background-color: rgb(240, 240, 240);
+	    background-color: transparent;
 	}
 	/* #endif */
 </style>
@@ -157,7 +157,6 @@
     .demo-warter {
         border-radius: 8px;
         margin: 5px;
-        background-color: #ffffff;
         padding: 8px;
         position: relative;
         /* #ifdef H5 */
@@ -242,3 +241,5 @@
         margin-top: 5px;
     }
 </style>
+
+

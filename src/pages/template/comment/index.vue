@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="comment" v-for="(res, index) in commentList" :key="res.id">
+		<view class="comment" v-for="(res, index) in commentList" :key="res.id" :style="[upThemeCardStyle, { color: upThemeVar('--up-main-color') }]">
 			<view class="left"><image :src="res.url" mode="aspectFill"></image></view>
 			<view class="right">
 				<view class="top">
@@ -12,7 +12,7 @@
 					</view>
 				</view>
 				<view class="content">{{ res.contentText }}</view>
-				<view class="reply-box">
+				<view class="reply-box" :style="{ backgroundColor: upThemeVar('--up-bg-color') }">
 					<view class="item" v-for="(item, index) in res.replyList" :key="item.index">
 						<view class="username">{{ item.name }}</view>
 						<view class="text">{{ item.contentStr }}</view>
@@ -205,3 +205,4 @@ export default {
 	}
 }
 </style>
+

@@ -1,8 +1,8 @@
 <template>
 	<view class="content">		
 		<view class="main">
-			<view class="card">
-				<text class="title">颜色选择器示例</text>
+			<view class="card" :style="[upThemeCardStyle]">
+        <text class="title" :style="{ color: upThemeVar('--up-main-color') }">颜色选择器示例</text>
 				
                 <up-color-picker
                     v-model="selectedColor"
@@ -10,18 +10,18 @@
                     @confirm="confirmColor"
                     @close="showColorPicker = false"
                 >
-                    <view class="color-preview">
-                        <view class="color-block" :style="{ backgroundColor: selectedColor }"></view>
-                        <text class="color-text">{{ selectedColor }}</text>
+            <view class="color-preview" :style="{ backgroundColor: upThemeVar('--up-bg-color') }">
+                <view class="color-block" :style="{ backgroundColor: selectedColor, borderColor: upThemeVar('--up-border-color') }"></view>
+                <text class="color-text" :style="{ color: upThemeVar('--up-content-color') }">{{ selectedColor }}</text>
                     </view>
                 </up-color-picker>
 				
 				
-				<text class="desc">点击上方色块选择颜色</text>
+            <text class="desc" :style="{ color: upThemeVar('--up-tips-color') }">点击上方色块选择颜色</text>
 			</view>
 			
-			<view class="card">
-				<text class="title">带常用颜色的示例</text>
+			<view class="card" :style="[upThemeCardStyle]">
+        <text class="title" :style="{ color: upThemeVar('--up-main-color') }">带常用颜色的示例</text>
 				<up-color-picker
                     v-model="selectedColor2"
                     :show="showColorPickerWithCommon"
@@ -29,12 +29,12 @@
                     @confirm="confirmColor2"
                     @close="showColorPickerWithCommon = false"
                 >
-                    <view class="color-preview">
-                        <view class="color-block" :style="{ backgroundColor: selectedColor2 }"></view>
-                        <text class="color-text">{{ selectedColor2 }}</text>
+            <view class="color-preview" :style="{ backgroundColor: upThemeVar('--up-bg-color') }">
+                <view class="color-block" :style="{ backgroundColor: selectedColor2, borderColor: upThemeVar('--up-border-color') }"></view>
+                <text class="color-text" :style="{ color: upThemeVar('--up-content-color') }">{{ selectedColor2 }}</text>
                     </view>
                     </up-color-picker>
-				<text class="desc">包含常用颜色选项</text>
+            <text class="desc" :style="{ color: upThemeVar('--up-tips-color') }">包含常用颜色选项</text>
 			</view>
 		</view>
 	</view>
@@ -72,7 +72,6 @@ const confirmColor2 = (color) => {
 <style>
 	.content {
 		flex: 1;
-		background-color: #f5f5f5;
 	}
 	
 	.main {
@@ -80,7 +79,6 @@ const confirmColor2 = (color) => {
 	}
 	
 	.card {
-		background-color: #ffffff;
 		border-radius: 16rpx;
 		padding: 30rpx;
 		margin-bottom: 20rpx;
@@ -89,7 +87,7 @@ const confirmColor2 = (color) => {
 	.title {
 		font-size: 32rpx;
 		font-weight: bold;
-		color: #333;
+		color: var(--up-main-color, #333);
 		display: block;
 		margin-bottom: 30rpx;
 	}
@@ -98,7 +96,6 @@ const confirmColor2 = (color) => {
 		display: flex;
 		align-items: center;
 		padding: 30rpx;
-		background-color: #f8f8f8;
 		border-radius: 12rpx;
 		cursor: pointer;
 	}
@@ -108,12 +105,12 @@ const confirmColor2 = (color) => {
 		height: 80rpx;
 		border-radius: 12rpx;
 		margin-right: 30rpx;
-		border: 1px solid #eee;
+		border: 1px solid var(--up-border-color, #eee);
 	}
 	
 	.color-text {
 		font-size: 28rpx;
-		color: #666;
+		color: var(--up-content-color, #666);
 		flex: 1;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -123,7 +120,7 @@ const confirmColor2 = (color) => {
 	.desc {
 		display: block;
 		font-size: 24rpx;
-		color: #999;
+		color: var(--up-tips-color, #999);
 		margin-top: 20rpx;
 	}
 </style>

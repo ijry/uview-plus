@@ -3,13 +3,13 @@
 		class="u-notice-bar"
 		v-if="show"
 		:style="[{
-			backgroundColor: bgColor
+			backgroundColor: resolvedBgColor
 		}, addStyle(customStyle)]"
 	>
 		<template v-if="direction === 'column' || (direction === 'row' && step)">
 			<u-column-notice
-				:color="color"
-				:bgColor="bgColor"
+				:color="resolvedColor"
+				:bgColor="resolvedBgColor"
 				:text="text"
 				:mode="mode"
 				:step="step"
@@ -24,8 +24,8 @@
 		</template>
 		<template v-else>
 			<u-row-notice
-				:color="color"
-				:bgColor="bgColor"
+				:color="resolvedColor"
+				:bgColor="resolvedBgColor"
 				:text="text"
 				:mode="mode"
 				:fontSize="fontSize"
@@ -43,6 +43,7 @@
 	import { props } from './props';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
+	import defProps from '../../libs/config/props.js';
 	import { addStyle } from '../../libs/function/index';
 	/**
 	 * noticeBar 滚动通知
@@ -75,6 +76,20 @@
 				show: true
 			}
 		},
+		computed: {
+			resolvedColor() {
+				if (this.upHasProp('color') || this.color !== defProps.noticeBar.color) {
+					return this.color
+				}
+				return this.upThemeVar('--up-notice-bar-color', this.$u.color.warning || '#f9ae3d')
+			},
+			resolvedBgColor() {
+				if (this.upHasProp('bgColor') || this.bgColor !== defProps.noticeBar.bgColor) {
+					return this.bgColor
+				}
+				return this.upThemeVar('--up-notice-bar-bg-color', this.$u.color.warningLight || '#fdf6ec')
+			}
+		},
 		emits: ["click", "close"],
 		methods: {
 			addStyle,
@@ -94,6 +109,10 @@
 		}
 	};
 </script>
+
+<style lang="scss">
+	@import "./theme-vars.scss";
+</style>
 
 <style lang="scss" scoped>
 

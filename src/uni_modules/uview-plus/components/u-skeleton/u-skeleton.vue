@@ -190,10 +190,15 @@
 
 	@mixin background {
 		/* #ifdef APP-NVUE */
-		background-color: #F1F2F4;
+		background-color: var(--up-skeleton-bg-color, var(--up-fill-color, #2f3135));
 		/* #endif */
 		/* #ifndef APP-NVUE */
-		background: linear-gradient(90deg, #F1F2F4 25%, #e6e6e6 37%, #F1F2F4 50%);
+		background: linear-gradient(
+			90deg,
+			var(--up-skeleton-bg-color, var(--up-fill-color, #2f3135)) 25%,
+			var(--up-skeleton-shimmer-color, rgba(255, 255, 255, 0.12)) 37%,
+			var(--up-skeleton-bg-color, var(--up-fill-color, #2f3135)) 50%
+		);
 		background-size: 400% 100%;
 		/* #endif */
 	}

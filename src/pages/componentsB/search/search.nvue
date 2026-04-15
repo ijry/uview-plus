@@ -139,7 +139,6 @@
 						v-model="value10"
 						:show-action="false"
 						borderColor="rgb(230, 230, 230)"
-						bgColor="#fff"
 					></up-search>
 				</view>
 			</view>
@@ -240,3 +239,5 @@ const clickIcon = () => {
 		margin-top: 10px;
 	}
 </style>
+
+

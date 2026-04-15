@@ -24,8 +24,12 @@
 		mixins: [mpMixin, mixin, props],
 		computed: {
 			gapStyle() {
+				const defaultBg = this.upThemeIsDark ? '#111111' : 'transparent'
+				const resolvedBg = (this.bgColor && this.bgColor !== 'transparent')
+					? this.bgColor
+					: this.upThemeVar('--up-gap-bg-color', defaultBg)
 				const style = {
-					backgroundColor: this.bgColor,
+					backgroundColor: resolvedBg,
 					height: addUnit(this.height),
 					marginTop: addUnit(this.marginTop),
 					marginBottom: addUnit(this.marginBottom),

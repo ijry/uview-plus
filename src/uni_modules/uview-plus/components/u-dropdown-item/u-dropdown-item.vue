@@ -76,8 +76,8 @@
 				if (parent) {
 					this.parent = parent;
 					// 将子组件的激活颜色配置为父组件设置的激活和未激活时的颜色
-					this.activeColor = parent.activeColor;
-					this.inactiveColor = parent.inactiveColor;
+					this.activeColor = parent.resolvedActiveColor || parent.activeColor;
+					this.inactiveColor = parent.resolvedInactiveColor || parent.inactiveColor;
 					// 将本组件的this，放入到父组件的children数组中，让父组件可以操作本(子)组件的方法和属性
 					// push进去前，显判断是否已经存在了本实例，因为在子组件内部数据变化时，会通过父组件重新初始化子组件
 					let exist = parent.children.find(val => {
@@ -115,6 +115,6 @@
 
 <style scoped lang="scss">
     .u-dropdown-item__scroll {
-        background: #ffffff;
+        background: var(--up-card-bg-color, #ffffff);
     }
 </style>

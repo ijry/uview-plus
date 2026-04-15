@@ -7,7 +7,6 @@
  * @lastTime     : 2025-12-19 08:55:21
  * @FilePath     : /uview-plus/libs/config/props/navbar.js
  */
-import color from '../../libs/config/color'
 export default {
     // navbar 组件
     navbar: {
@@ -21,11 +20,11 @@ export default {
         rightIcon: '',
         title: '',
         titleColor: '',
-        bgColor: '#ffffff',
+        bgColor: '',
         titleWidth: '400rpx',
         height: '44px',
 		leftIconSize: 20,
-		leftIconColor: color.mainColor,
+		leftIconColor: '',
 		autoBack: false,
 		titleStyle: ''
     }

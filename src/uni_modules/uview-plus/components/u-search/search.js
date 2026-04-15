@@ -12,7 +12,7 @@ export default {
     // search
     search: {
         shape: 'round',
-        bgColor: '#f2f2f2',
+        bgColor: '',
         placeholder: t("up.search.placeholder"),
         clearabled: true,
         focus: false,
@@ -25,8 +25,8 @@ export default {
         borderColor: 'transparent',
         searchIconColor: '#909399',
         searchIconSize: 22,
-        color: '#606266',
-        placeholderColor: '#909399',
+        color: '',
+        placeholderColor: '',
         searchIcon: 'search',
         iconPosition: 'left',
         margin: '0',

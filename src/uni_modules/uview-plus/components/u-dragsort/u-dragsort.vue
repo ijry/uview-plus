@@ -371,6 +371,9 @@ export default {
             position: relative;
             padding: 0;
             box-sizing: border-box;
+            border: 1px solid var(--up-border-color, rgba(125, 126, 128, 0.35));
+            border-radius: 8px;
+            background-color: var(--up-card-bg-color, #ffffff);
         }
     }
 

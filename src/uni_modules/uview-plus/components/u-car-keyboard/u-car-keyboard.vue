@@ -59,7 +59,7 @@
 					<up-icon
 						size="28"
 						name="backspace"
-						color="#303133"
+						:color="upThemeVar('--up-main-color', '#303133')"
 					></up-icon>
 				</view>
 			</view>
@@ -222,25 +222,25 @@
 </script>
 
 <style lang="scss" scoped>
-	$u-car-keyboard-background-color: rgb(224, 228, 230) !default;
+	$u-car-keyboard-background-color: var(--up-bg-color, rgb(224, 228, 230)) !default;
 	$u-car-keyboard-padding:6px 0 6px !default;
 	$u-car-keyboard-button-inner-width:64rpx !default;
-	$u-car-keyboard-button-inner-background-color:#FFFFFF !default;
+	$u-car-keyboard-button-inner-background-color:var(--up-card-bg-color, #ffffff) !default;
 	$u-car-keyboard-button-height:80rpx !default;
 	$u-car-keyboard-button-inner-box-shadow:0 1px 0px #999992 !default;
 	$u-car-keyboard-button-border-radius:4px !default;
 	$u-car-keyboard-button-inner-margin:8rpx 5rpx !default;
 	$u-car-keyboard-button-text-font-size:16px !default;
-	$u-car-keyboard-button-text-color:$u-main-color !default;
+	$u-car-keyboard-button-text-color:var(--up-main-color, #303133) !default;
 	$u-car-keyboard-center-inner-margin: 0 4rpx !default;
 	$u-car-keyboard-special-button-width:134rpx !default;
 	$u-car-keyboard-lang-font-size:16px !default;
-	$u-car-keyboard-lang-color:$u-main-color !default;
+	$u-car-keyboard-lang-color:var(--up-main-color, #303133) !default;
 	$u-car-keyboard-active-color:$u-primary !default;
 	$u-car-keyboard-line-font-size:15px !default;
-	$u-car-keyboard-line-color:$u-main-color !default;
+	$u-car-keyboard-line-color:var(--up-main-color, #303133) !default;
 	$u-car-keyboard-line-margin:0 1px !default;
-	$u-car-keyboard-u-hover-class-background-color:#BBBCC6 !default;
+	$u-car-keyboard-u-hover-class-background-color:var(--up-border-color, #BBBCC6) !default;
 
 	.u-keyboard {
 		@include flex(column);

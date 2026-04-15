@@ -286,7 +286,7 @@
 	}
 
 	.u-search-inner {
-		background-color: rgb(234, 234, 234);
+		background-color: var(--up-bg-color, rgb(234, 234, 234));
 		border-radius: 100rpx;
 		display: flex;
 		align-items: center;
@@ -306,23 +306,23 @@
 
 	.u-cate-tab__item {
 		height: 110rpx;
-		background: #f6f6f6;
+		background: var(--up-bg-color, #f6f6f6);
 		box-sizing: border-box;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		font-size: 26rpx;
-		color: #444;
+		color: var(--up-content-color, #444);
 		font-weight: 400;
 		line-height: 1;
 	}
 
 	.u-cate-tab__item-active {
 		position: relative;
-		color: #000;
+		color: var(--up-main-color, #000);
 		font-size: 30rpx;
 		font-weight: 600;
-		background: #fff;
+		background: var(--up-card-bg-color, #fff);
 	}
 
 	.u-cate-tab__item-active::before {
@@ -340,7 +340,7 @@
 
 	.u-cate-tab__right-box {
 		flex: 1;
-		background-color: rgb(250, 250, 250);
+		background-color: var(--up-page-bg-color, var(--up-bg-color, rgb(250, 250, 250)));
 	}
 
 	.u-cate-tab__page-view {
@@ -349,7 +349,8 @@
 
 	.u-cate-tab__page-item {
 		margin-bottom: 30rpx;
-		background-color: #fff;
+		background-color: var(--up-card-bg-color, #fff);
+		border: 1px solid var(--up-border-color, #e5e7eb);
 		padding: 16rpx;
 		border-radius: 8rpx;
 	}
@@ -360,14 +361,14 @@
 
 	.item-title {
 		font-size: 26rpx;
-		color: $u-main-color;
+		color: var(--up-main-color, $u-main-color);
 		font-weight: bold;
 	}
 
 	.item-menu-name {
 		font-weight: normal;
 		font-size: 24rpx;
-		color: $u-main-color;
+		color: var(--up-main-color, $u-main-color);
 	}
 
 	.item-container {

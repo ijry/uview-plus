@@ -140,7 +140,7 @@
 	position: relative;
 	overflow: hidden;
 	font-size: 28rpx;
-	background-color: #ffffff;
+	background-color: var(--up-card-bg-color, #ffffff);
 	box-sizing: border-box;
 	
 	&-full {

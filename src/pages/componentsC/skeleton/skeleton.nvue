@@ -48,11 +48,10 @@
 			<up-switch
 				v-model="switch1"
 				space="2"
-				inactiveColor="#e6e6e6"
+				:inactiveColor="upThemeVar('--up-border-color', '#e6e6e6')"
 			></up-switch>
 			<up-gap
 				height="15"
-				bgColor="#fff"
 			></up-gap>
 			<view class="u-demo-block__content">
 				<up-skeleton
@@ -67,7 +66,6 @@
 			<text class="u-demo-block__title">展示头像</text>
 			<up-gap
 				height="15"
-				bgColor="#fff"
 			></up-gap>
 			<view class="u-demo-block__content">
 				<up-skeleton
@@ -84,11 +82,10 @@
 			<up-switch
 				v-model="switch2"
 				space="2"
-				inactiveColor="#e6e6e6"
+				:inactiveColor="upThemeVar('--up-border-color', '#e6e6e6')"
 			></up-switch>
 			<up-gap
 				height="15"
-				bgColor="#fff"
 			></up-gap>
 			<view class="u-demo-block__content">
 				<up-skeleton
@@ -152,3 +149,5 @@ const switch2 = ref(false)
 		}
 	}
 </style>
+
+

@@ -29,10 +29,10 @@
                         "
                         :color="
                             disabled
-                                ? '#c8c9cc'
+                                ? disabledColorInner
                                 : Math.floor(activeIndex) > index
-                                ? activeColor
-                                : inactiveColor
+                                ? activeColorInner
+                                : inactiveColorInner
                         "
                         :custom-style="{
                             padding: `0 ${addUnit(gutter / 2)}`,
@@ -57,10 +57,10 @@
                         "
                         :color="
                             disabled
-                                ? '#c8c9cc'
+                                ? disabledColorInner
                                 : Math.ceil(activeIndex) > index
-                                ? activeColor
-                                : inactiveColor
+                                ? activeColorInner
+                                : inactiveColorInner
                         "
                         :custom-style="{
                             padding: `0 ${addUnit(gutter / 2)}`
@@ -134,6 +134,17 @@
 			},
 			// #endif
 			activeIndex: 'emitEvent'
+		},
+		computed: {
+			disabledColorInner() {
+				return this.upThemeVar('--up-disabled-color', '#c8c9cc')
+			},
+			activeColorInner() {
+				return this.activeColor || this.upThemeVar('--up-primary', '#FA3534')
+			},
+			inactiveColorInner() {
+				return this.inactiveColor || this.upThemeVar('--up-tips-color', '#b2b2b2')
+			}
 		},
 		// #ifdef VUE3
 		emits: ['update:modelValue', 'change'],

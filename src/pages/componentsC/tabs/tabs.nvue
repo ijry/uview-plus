@@ -13,7 +13,7 @@
 		>
 			<text class="u-demo-block__title">粘性布局</text>
 		</view>
-		<up-sticky bgColor="#fff">
+		<up-sticky>
 			<up-tabs
 				:list="list1"
 			>
@@ -21,7 +21,6 @@
 		</up-sticky>
 		<up-gap
 			height="23"
-			bgColor="#fff"
 		></up-gap>
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">显示徽标</text>
@@ -138,19 +137,19 @@
 				  </swiper-item>
 				  <swiper-item item-id="A">
 				  <up-tabs
-				  	:list="list4"
-				  	lineWidth="30"
-				  	lineColor="#f56c6c"
-				  	:activeStyle="{
-				  		color: '#303133',
-				  		fontWeight: 'bold',
-				  		transform: 'scale(1.05)'
-				  	}"
-				  	:inactiveStyle="{
-				  		color: '#606266',
-				  		transform: 'scale(1)'
-				  	}"
-				  	itemStyle="padding-left: 15px; padding-right: 15px; height: 34px;"
+					:list="list4"
+					lineWidth="30"
+					lineColor="#f56c6c"
+					:activeStyle="{
+						color: '#303133',
+						fontWeight: 'bold',
+						transform: 'scale(1.05)'
+					}"
+					:inactiveStyle="{
+						color: '#606266',
+						transform: 'scale(1)'
+					}"
+					itemStyle="padding-left: 15px; padding-right: 15px; height: 34px;"
 				  >
 				  </up-tabs>
 				  </swiper-item>
@@ -290,3 +289,5 @@ const nextTab = () => {
 		padding-bottom: 500px;
 	}
 </style>
+
+
