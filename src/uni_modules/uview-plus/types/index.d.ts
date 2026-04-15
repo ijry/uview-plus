@@ -45,7 +45,8 @@ declare module 'uview-plus' {
 		 */
 		customIcons: {
 			[key: string]: string
-		}
+		},
+		themeMode?: 'light' | 'dark'
 	}
 	interface Color {
 		primary: string,
@@ -58,7 +59,9 @@ declare module 'uview-plus' {
 		contentColor: string,
 		tipsColor: string,
 		lightColor: string,
-		borderColor: string
+		borderColor: string,
+		bgColor?: string,
+		disabledColor?: string
 	}
 	interface GlobalConfig {
 		config: Partial<Config>;
@@ -85,6 +88,42 @@ declare module 'uview-plus' {
 		props: {},
 		color: Color;
 		platform: string;
+		theme: {
+			preference: 'system' | 'light' | 'dark';
+			mode: 'light' | 'dark';
+			version: number;
+			vars: Record<string, string>;
+		};
+		setTheme: (mode?: 'light' | 'dark') => void;
+		setThemePreference: (mode?: 'system' | 'light' | 'dark') => void;
+		getThemePreference: () => 'system' | 'light' | 'dark';
+		getSystemTheme: () => 'light' | 'dark';
+		getThemeVars: (mode?: 'light' | 'dark') => Record<string, string>;
+		/**
+		 * 调用Root根组件中的全局Toast（内部封装了up-toast）
+		 * - 传字符串时等价于 { message: 'xxx' }
+		 */
+		rootToast: (options: string | {
+			message?: string;
+			title?: string;
+			duration?: number;
+			[key: string]: any;
+		}) => void;
+		/** @internal Root根组件用于注册全局Toast引用 */
+		setRootToastRef: (ref?: any) => void;
+		/**
+		 * 调用Root根组件中的全局Notify（内部封装了up-notify）
+		 * - 传字符串时等价于 { message: 'xxx' }
+		 */
+		rootNotify: (options: string | {
+			message?: string;
+			title?: string;
+			duration?: number;
+			type?: 'primary' | 'success' | 'warning' | 'error';
+			[key: string]: any;
+		}) => void;
+		/** @internal Root根组件用于注册全局Notify引用 */
+		setRootNotifyRef: (ref?: any) => void;
 	}
 
 	export function setConfig(config: Partial<GlobalConfig>): void;
