@@ -23,10 +23,14 @@ declare interface StepsItemProps {
 }
 
 declare interface StepsItemSlots {
-  /**
-   * 自定步骤状态内容
-   */
-  ['default']?: () => any
+  // 自定步骤整体内容
+  ['content']?: () => any,
+  // 自定步骤图标
+  ['icon']?: () => any,
+  // 自定步骤标题
+  ['title']?: () => any,
+  // 自定步骤描述
+  ['desc']?: () => any,
 }
 
 declare interface _StepsItem {
