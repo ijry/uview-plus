@@ -1,12 +1,16 @@
 import { defineConfig } from "vite";
 import uni from "@dcloudio/vite-plugin-uni";
 import { visualizer } from "rollup-plugin-visualizer";
+import UniUpRoot from "./src/uni_modules/uview-plus/libs/root/index.js";
 // import commonjs from '@rollup/plugin-commonjs';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     // commonjs(),
+    UniUpRoot({
+      rootFileName: "App.up",
+    }),
     uni(),
 	visualizer()
   ],
