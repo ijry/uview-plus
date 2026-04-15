@@ -1,3 +1,6 @@
+## 3.7.36（2026-04-15）
+fix: stepsItem.d.ts ts插槽name更新 #940
+
 ## 3.7.35（2026-04-14）
 fix: timeFormat方法支持多种ISO格式
 
