@@ -4,11 +4,12 @@ import { ref } from 'vue'
 const upRootMessage = ref('UpRoot ready')
 
 const showGlobalMessage = (message = 'UpRoot bridge ok') => {
+	if (typeof uni !== 'undefined' && uni.$u && typeof uni.$u.rootToast === 'function') {
+		uni.$u.rootToast({ message })
+		return
+	}
 	if (typeof uni !== 'undefined' && typeof uni.showToast === 'function') {
-		uni.showToast({
-			title: message,
-			icon: 'none'
-		})
+		uni.showToast({ title: message, icon: 'none' })
 	}
 }
 

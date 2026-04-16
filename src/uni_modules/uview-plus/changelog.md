@@ -1,3 +1,22 @@
+## 3.7.38（2026-04-16）
+feat(root): 支持全局Toast/Notify注入与调用及新增 root 模块构建缓存兼容垫片
+
+- Root 注入宿主统一承载 up-toast 与 up-notify，并注册 upGlobalToastRef/upGlobalNotifyRef
+- 新增 uni..rootNotify / setRootNotifyRef，并完善 rootToast 全局调用链路
+- Root 模板注入改为 -root-toast-host，避免 easycom 干扰
+- 补充 TypeScript 声明与 App.up.vue 全局调用示例
+- 提供透传函数 createGlobalUpRoot 以兼容旧版缓存引用
+- 防止增量构建缓存残留导致模块加载异常
+- 明确新架构已不再依赖该文件，仅作为过渡期保留
+
+## 3.7.37（2026-04-16）
+feat：新增全局root-view组件接入全局根容器注入并完善页面匹配
+
+ - 新增 App.up 根容器与 libs/root 插件链路，自动注册 global-up-root 并包裹页面模板。
+ - 支持 pages.json 页面按真实文件扩展名匹配（.vue/.nvue/.uvue），避免 nvue 页面漏注入。
+ - 修复模板起始偏移为 0 时的注入边界判断，确保首行 template 也能正确注入。
+ - 在 vite.config.ts 接入 UniUpRoot 插件默认配置。
+
 ## 3.7.36（2026-04-15）
 fix: stepsItem.d.ts ts插槽name更新 #940
 
