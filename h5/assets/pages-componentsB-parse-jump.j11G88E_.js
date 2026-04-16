@@ -1,0 +1,1 @@
+import{_ as a,c as s,w as o,r as t,o as l,h as n,i as r,q as e}from"./index-DVsH6h5a.js";const u=a({},[["render",function(a,u,d,f,c,i){const p=r,_=t("global-up-root");return l(),s(_,null,{default:o(()=>[n(p,null,{default:o(()=>[e(" 跳转测试页面 ")]),_:1})]),_:1})}]]);export{u as default};
