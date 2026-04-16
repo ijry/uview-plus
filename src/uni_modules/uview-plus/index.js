@@ -43,6 +43,85 @@ import fontUtil from './components/u-icon/util.js';
 
 // i18n
 import i18n, { t } from './libs/i18n/index.js'
+import {
+    themeState,
+    setTheme,
+    setThemePreference,
+    getThemePreference,
+    getSystemTheme,
+    getThemeVars,
+    initThemeSystem,
+    refreshThemeFromConfig
+} from './libs/theme/theme.js'
+
+const rootToastState = {
+    ref: null
+}
+const rootNotifyState = {
+    ref: null
+}
+
+function normalizeRootToastOptions(options = {}) {
+    const toastOptions = typeof options === 'string'
+        ? { message: options }
+        : (options && typeof options === 'object' ? { ...options } : {})
+    if (!toastOptions.message && toastOptions.title) {
+        toastOptions.message = toastOptions.title
+    }
+    return toastOptions
+}
+
+function setRootToastRef(ref = null) {
+    rootToastState.ref = ref || null
+}
+
+function rootToast(options = {}) {
+    const toastOptions = normalizeRootToastOptions(options)
+    const toastRef = rootToastState.ref
+    if (toastRef && typeof toastRef.show === 'function') {
+        toastRef.show(toastOptions)
+        return
+    }
+    if (!toastOptions.message) return
+    if (typeof uni !== 'undefined' && typeof uni.showToast === 'function') {
+        uni.showToast({
+            title: toastOptions.message,
+            icon: 'none',
+            duration: Number(toastOptions.duration) || 2000,
+        })
+    }
+}
+
+function normalizeRootNotifyOptions(options = {}) {
+    const notifyOptions = typeof options === 'string'
+        ? { message: options }
+        : (options && typeof options === 'object' ? { ...options } : {})
+    if (!notifyOptions.message && notifyOptions.title) {
+        notifyOptions.message = notifyOptions.title
+    }
+    return notifyOptions
+}
+
+function setRootNotifyRef(ref = null) {
+    rootNotifyState.ref = ref || null
+}
+
+function rootNotify(options = {}) {
+    const notifyOptions = normalizeRootNotifyOptions(options)
+    const notifyRef = rootNotifyState.ref
+    if (notifyRef && typeof notifyRef.show === 'function') {
+        notifyRef.show(notifyOptions)
+        return
+    }
+    if (!notifyOptions.message) return
+    if (typeof uni !== 'undefined' && typeof uni.showToast === 'function') {
+        uni.showToast({
+            title: notifyOptions.message,
+            icon: 'none',
+            duration: Number(notifyOptions.duration) || 3000,
+        })
+    }
+}
 
 // 导出
 let themeType = ['primary', 'success', 'error', 'warning', 'info'];
@@ -58,10 +137,17 @@ export * from './libs/function/colorGradient.js'
  * @param {object} zIndex 修改内置zIndex属性
  */
 export function setConfig(configs) {
-	index.shallowMerge(config, configs.config || {})
-	index.shallowMerge(props, configs.props || {})
-	index.shallowMerge(color, configs.color || {})
-	index.shallowMerge(zIndex, configs.zIndex || {})
+    const settings = configs || {}
+	index.shallowMerge(config, settings.config || {})
+	index.shallowMerge(props, settings.props || {})
+	index.shallowMerge(color, settings.color || {})
+	index.shallowMerge(zIndex, settings.zIndex || {})
+    const shouldRefreshTheme = !!settings.color
+        || !!settings?.config?.color
+        || themeState.version > 0
+    if (shouldRefreshTheme) {
+        refreshThemeFromConfig()
+    }
 }
 index.setConfig = setConfig
 
@@ -85,11 +171,22 @@ const $u = {
     // props,
     ...index,
     color,
-    platform
+    platform,
+    theme: themeState,
+    setTheme,
+    setThemePreference,
+    getThemePreference,
+    getSystemTheme,
+    getThemeVars,
+    rootToast,
+    setRootToastRef,
+    rootNotify,
+    setRootNotifyRef
 }
 
 export const mount$u = function() {
     uni.$u = $u
+    initThemeSystem()
 }
 
 function toCamelCase(str) {
@@ -100,27 +197,27 @@ function toCamelCase(str) {
     });
 }
 
-// #ifdef APP || H5
-const importFn = import.meta.glob('./components/u-*/u-*.vue', { eager: true })
-let components = [];
+let components = []
 
-// 批量注册全局组件
-for (const key in importFn) {
-    let component = importFn[key].default;
-    if (component.name && component.name.indexOf('u--') !== 0) {
-        component.install = function (Vue) {
-            Vue.component(name, component);
-        };
-        
-        // 导入组件
-        components.push(component);
+function resolveComponents() {
+    if (components.length) return components
+    // #ifdef APP || H5
+    const canUseGlob = typeof import.meta !== 'undefined' && typeof import.meta.glob === 'function'
+    if (!canUseGlob) return components
+    const importFn = import.meta.glob('./components/u-*/u-*.vue', { eager: true })
+    for (const key in importFn) {
+        const component = importFn[key]?.default
+        if (component?.name && component.name.indexOf('u--') !== 0) {
+            components.push(component)
+        }
     }
+    // #endif
+    return components
 }
-// #endif
 
 const install = (Vue, upuiParams = '') => {
     // #ifdef APP || H5
-    components.forEach(function(component) {
+    resolveComponents().forEach(function(component) {
         const name = component.name.replace(/u-([a-zA-Z0-9-_]+)/g, 'up-$1');
 		if (name != component.name) {
 			Vue.component(component.name, component); 
@@ -144,12 +241,14 @@ const install = (Vue, upuiParams = '') => {
     // 同时挂载到uni和Vue.prototype中
     // $u挂载到uni对象上
     uni.$u = $u
+    initThemeSystem()
 
-    // #ifndef APP-NVUE
-    // 只有vue，挂载到Vue.prototype才有意义，因为nvue中全局Vue.prototype和Vue.mixin是无效的
-    Vue.config.globalProperties.$u = $u
-    Vue.mixin(mixin)
-    // #endif
+    if (Vue && Vue.config && Vue.config.globalProperties) {
+        Vue.config.globalProperties.$u = $u
+    }
+    if (Vue && typeof Vue.mixin === 'function') {
+        Vue.mixin(mixin)
+    }
 }
 
 export default {
