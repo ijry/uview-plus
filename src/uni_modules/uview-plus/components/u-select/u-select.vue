@@ -1,7 +1,7 @@
 <template>
 	<view class="u-select">
 		<view :class="['u-select__content', disabled && 'disabled']">
-			<view class="u-select__label" @click="openSelect">
+			<view :class="['u-select__label', border && 'u-select__label--border']" :style="selectLabelStyle" @click="openSelect">
 				<slot name="text" :currentLabel="currentLabel">
 					<text class="u-select__text" :style="{ color: resolvedTextColor }" v-if="showOptionsLabel">
 						{{ currentLabel }}
@@ -16,9 +16,8 @@
 			</view>
 			<u-overlay :show="isOpen" @click="overlayClick" v-if="overlay" :zIndex="zIndex" :duration="duration + 50"
 				:customStyle="overlayStyle" :opacity="overlayOpacity" @touchmove.stop.prevent="noop"></u-overlay>
-			<view class="u-select__options__wrap"
-				:style="{ overflowY: 'auto', zIndex: zIndex + 1, left: optionsWrapLeft, right: optionsWrapRight, maxHeight: maxHeight}">
-				<view class="u-select__options" v-if="isOpen">
+			<view class="u-select__options__wrap" :style="optionsWrapStyle">
+				<view class="u-select__options" :style="optionsStyle" v-if="isOpen">
 					<slot name="options">
 						<view class="u-select__options_item" :class="current == item[keyName] ? 'active': ''"
 							:style="{ color: resolvedItemColor }"
@@ -119,6 +118,16 @@
 			disabled: {
 				type: Boolean,
 				default: false
+			},
+			// 是否显示触发区边框
+			border: {
+				type: Boolean,
+				default: false
+			},
+			// 下拉面板宽度，支持 px/rpx/% 等，如 240px 或 300rpx
+			optionsWidth: {
+				type: [String, Number],
+				default: ''
 			}
 		},
 		data() {
@@ -137,6 +146,43 @@
 			},
 			resolvedIconColor() {
 				return this.iconColor || this.upThemeVar('--up-content-color', '#606266');
+			},
+			normalizedOptionsWidth() {
+				if (this.optionsWidth === '' || this.optionsWidth === null || typeof this.optionsWidth === 'undefined') {
+					return '';
+				}
+				if (typeof this.optionsWidth === 'number') {
+					return `${this.optionsWidth}px`;
+				}
+				return this.optionsWidth;
+			},
+			selectLabelStyle() {
+				if (!this.border) return {};
+				return {
+					borderColor: this.upThemeVar('--up-border-color', '#dadbde'),
+					backgroundColor: this.upThemeVar('--up-card-bg-color', '#ffffff')
+				};
+			},
+			optionsWrapStyle() {
+				const style = {
+					overflowY: 'auto',
+					zIndex: this.zIndex + 1,
+					left: this.optionsWrapLeft,
+					right: this.optionsWrapRight,
+					maxHeight: this.maxHeight
+				};
+				if (this.normalizedOptionsWidth) {
+					style.width = this.normalizedOptionsWidth;
+				}
+				return style;
+			},
+			optionsStyle() {
+				const style = {};
+				if (this.normalizedOptionsWidth) {
+					style.width = this.normalizedOptionsWidth;
+					style.minWidth = this.normalizedOptionsWidth;
+				}
+				return style;
 			},
 			currentLabel() {
 				let name = '';
@@ -170,6 +216,8 @@
 				this.$emit('select', item);
 			},
 			adjustOptionsWrapPosition() {
+				this.optionsWrapLeft = '0px';
+				this.optionsWrapRight = 'auto';
 				let wi = getWindowInfo();
 				let windowWidth = wi.windowWidth;
 				this.$uGetRect('.u-select__options__wrap').then(rect => {
@@ -191,6 +239,16 @@
 		.u-select__label {
 			display: flex;
 			justify-content: space-between;
+			align-items: center;
+
+			&--border {
+				padding: 8px 10px;
+				border-width: 1px;
+				border-style: solid;
+				border-radius: 4px;
+				min-height: 36px;
+				box-sizing: border-box;
+			}
 
 			/* #ifdef H5 */
 			&:hover {
@@ -212,7 +270,7 @@
 		.u-select__options__wrap {
 			margin-bottom: 46px;
 			position: absolute;
-			top: 20px;
+			top: calc(100% + 4px);
 			left: 0;
 		}
 

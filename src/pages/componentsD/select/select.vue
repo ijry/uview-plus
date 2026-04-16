@@ -1,5 +1,5 @@
 <template>
-    <view class="u-page">
+  <view class="u-page">
       <view class="u-page__item">
           <text class="u-page__item__title" style="margin-top: 0;">默认</text>
           <view class="u-page__item__content">
@@ -20,14 +20,27 @@
             </up-select>
           </view>
       </view>
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">边框与下拉宽度</text>
+          <view class="u-page__item__content u-page__item__content--pc">
+            <up-select
+                v-model:current="pcSelectId"
+                label="请选择分类"
+                :showOptionsLabel="true"
+                :options="scenesList"
+                :border="true"
+                optionsWidth="100%">
+            </up-select>
+          </view>
+      </view>
   </view>
 </template>
 
 <script setup>
-import logo from '@/static/uview/common/logo.png';
 import { ref } from 'vue';
 
 const cateId = ref('')
+const pcSelectId = ref('')
 const scenesList = ref([
     {
         id: '1',
@@ -50,6 +63,9 @@ const scenesList = ref([
   }
   .u-page__item__title {
       margin-bottom: 10px;
+  }
+  .u-page__item__content--pc {
+      width: 100%;
   }
 </style>
 
