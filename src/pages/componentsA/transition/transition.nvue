@@ -1,6 +1,6 @@
 <template>
     <view class="u-page">
-        <up-gap height="20" bgColor="#fff"></up-gap>
+        <up-gap height="20"></up-gap>
         <up-cell-group border>
             <up-cell
                 :titleStyle="{ fontWeight: 500 }"
@@ -168,3 +168,5 @@ const afterLeave = () => {
     background-color: $u-primary;
 }
 </style>
+
+

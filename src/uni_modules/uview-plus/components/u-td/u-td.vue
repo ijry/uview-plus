@@ -58,13 +58,15 @@
 			if (this.parent) {
 				// 将父组件的相关参数，合并到本组件
 				let style = {};
+				const borderColor = this.parent.resolvedBorderColor || this.parent.borderColor;
+				const textColor = this.parent.resolvedColor || this.parent.color;
 				if (this.width != "auto") style.flex = `0 0 ${this.width}`;
 				style.textAlign = this.parent.align;
 				style.fontSize = addUnit(this.parent.fontSize);
 				style.padding = this.parent.padding;
-				style.borderBottom = `solid 1px ${this.parent.borderColor}`;
-				style.borderRight = `solid 1px ${this.parent.borderColor}`;
-				style.color = this.parent.color;
+				style.borderBottom = `solid 1px ${borderColor}`;
+				style.borderRight = `solid 1px ${borderColor}`;
+				style.color = textColor;
 				if (this.textAlign != '') {
 					style.textAlign = this.textAlign;
 				}

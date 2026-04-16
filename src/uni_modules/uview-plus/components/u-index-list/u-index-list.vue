@@ -60,12 +60,12 @@
 				v-for="(item, index) in uIndexList"
 				:key="index"
 				:style="{
-					backgroundColor: activeIndex === index ? activeColor : 'transparent'
+					backgroundColor: activeIndex === index ? resolvedActiveColor : 'transparent'
 				}"
 			>
 				<text
 					class="u-index-list__letter__item__index"
-					:style="{color: activeIndex === index ? '#fff' : inactiveColor}"
+					:style="{color: activeIndex === index ? activeLetterTextColor : resolvedInactiveColor}"
 				>{{ item.key || item }}</text>
 			</view>
 		</view>
@@ -172,6 +172,19 @@
 					itemHeight
 				} = this.letterInfo
 				return Math.floor(top - (height / 2) + itemHeight * this.activeIndex + itemHeight - 70 / 2)
+			},
+			resolvedInactiveColor() {
+				return this.inactiveColor === '#606266'
+					? this.upThemeVar('--up-content-color', '#606266')
+					: this.inactiveColor
+			},
+			resolvedActiveColor() {
+				return this.activeColor === '#5677fc'
+					? this.upThemeVar('--up-primary', '#5677fc')
+					: this.activeColor
+			},
+			activeLetterTextColor() {
+				return this.upThemeVar('--up-white', '#ffffff')
 			}
 		},
 		watch: {
@@ -577,8 +590,8 @@
 			height: 50px;
 			border-radius: 100px 100px 0 100px;
 			text-align: center;
-			color: #ffffff;
-			background-color: #c9c9c9;
+			color: var(--up-white, #ffffff);
+			background-color: var(--up-index-list-indicator-bg-color, var(--up-content-color, #c9c9c9));
 			transform: rotate(-45deg);
 			@include flex;
 			justify-content: center;
@@ -588,7 +601,7 @@
 				font-size: 28px;
 				line-height: 28px;
 				font-weight: bold;
-				color: #fff;
+				color: var(--up-white, #fff);
 				transform: rotate(45deg);
 				text-align: center;
 			}

@@ -158,9 +158,22 @@
 					const customeStyle = (index == this.innerCurrent) ?
 						addStyle(this.activeStyle) :
 						addStyle(this.inactiveStyle)
+					const isActive = index == this.innerCurrent
+					const defaultActiveColor = defProps.tabs?.activeStyle?.color || '#303133'
+					const defaultInactiveColor = defProps.tabs?.inactiveStyle?.color || '#606266'
+					const isActiveStyleOverridden = this.upHasProp('activeStyle')
+						|| (customeStyle && customeStyle.color && customeStyle.color !== defaultActiveColor)
+					const isInactiveStyleOverridden = this.upHasProp('inactiveStyle')
+						|| (customeStyle && customeStyle.color && customeStyle.color !== defaultInactiveColor)
+					if (isActive && !isActiveStyleOverridden) {
+						style.color = this.upThemeVar('--up-main-color', this.$u.color.mainColor || defaultActiveColor)
+					}
+					if (!isActive && !isInactiveStyleOverridden) {
+						style.color = this.upThemeVar('--up-content-color', this.$u.color.contentColor || defaultInactiveColor)
+					}
 					// 如果当前菜单被禁用，则加上对应颜色，需要在此做处理，是因为nvue下，无法在style样式中通过!import覆盖标签的内联样式
 					if (this.tabList[index].disabled) {
-						style.color = '#c8c9cc'
+						style.color = this.upThemeVar('--up-disabled-color', this.$u.color.disabledColor || '#c8c9cc')
 					}
 					return deepMerge(customeStyle, style)
 				}

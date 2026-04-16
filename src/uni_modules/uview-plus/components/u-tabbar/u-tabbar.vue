@@ -58,13 +58,13 @@
 		computed: {
 			tabbarStyle() {
 				const style = {
-					zIndex: this.zIndex
+					zIndex: this.zIndex,
+					backgroundColor: this.backgroundColor || this.upThemeVar('--up-card-bg-color', this.upThemeIsDark ? '#1c1c1e' : '#ffffff')
 				}
 				if (this.borderColor) {
 					style.borderColor = this.borderColor + ' !important'
-				}
-				if (this.backgroundColor) {
-					style.backgroundColor = this.backgroundColor
+				} else {
+					style.borderColor = this.upThemeVar('--up-border-color', '#dadbde')
 				}
 				// 合并来自父组件的customStyle样式
 				return deepMerge(style, addStyle(this.customStyle))
@@ -132,7 +132,7 @@
 		
 		&__content {
 			@include flex(column);
-			background-color: #fff;
+			background-color: var(--up-card-bg-color, #fff);
 			
 			&__item-wrapper {
 				height: 50px;

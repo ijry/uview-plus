@@ -27,7 +27,6 @@
 			></up-button>
 		</up-sticky>
 		<up-gap
-			bgColor="#fff"
 			height="1500px"
 		></up-gap>
 		<up-divider text="已到底部"></up-divider>
@@ -48,6 +47,9 @@ const navigateBack = () => {
 
 <style lang="scss">
 	.u-page {
-		
+
 	}
 </style>
+
+
+

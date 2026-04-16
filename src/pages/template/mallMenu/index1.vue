@@ -9,14 +9,15 @@
 		<view class="u-menu-wrap">
 			<scroll-view scroll-y scroll-with-animation class="u-tab-view menu-scroll-view" :scroll-top="scrollTop">
 				<view v-for="(item,index) in tabbar" :key="index" class="u-tab-item" :class="[current==index ? 'u-tab-item-active' : '']"
+				 :style="{ backgroundColor: current==index ? upThemeVar('--up-card-bg-color') : upThemeVar('--up-bg-color'), color: upThemeVar('--up-content-color') }"
 				 :data-current="index" @tap.stop="swichMenu(index)">
 					<text class="u-line-1">{{item.name}}</text>
 				</view>
 			</scroll-view>
 			<block v-for="(item,index) in tabbar" :key="index">
-				<scroll-view scroll-y class="right-box" v-if="current==index">
+				<scroll-view scroll-y class="right-box" v-if="current==index" :style="{ backgroundColor: upThemeVar('--up-bg-color') }">
 					<view class="page-view">
-						<view class="class-item">
+						<view class="class-item" :style="[upThemeCardStyle]">
 							<view class="item-title">
 								<text>{{item.name}}</text>
 							</view>
@@ -204,3 +205,4 @@
 		height: 120rpx;
 	}
 </style>
+

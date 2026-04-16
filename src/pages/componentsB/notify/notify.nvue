@@ -2,7 +2,6 @@
 	<view class="u-page">
 		<up-gap
 			height="30"
-			bgColor="#fff"
 		></up-gap>
 		<up-cell-group>
 			<up-cell
@@ -144,3 +143,5 @@ const openNotify = (params) => {
 		padding: 0;
 	}
 </style>
+
+

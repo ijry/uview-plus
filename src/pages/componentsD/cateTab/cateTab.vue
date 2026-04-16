@@ -35,7 +35,7 @@
 								</view>
                             </template>
                             <template v-slot:value>
-                                
+
                             </template>
                         </up-cell>
                     </up-cell-group>
@@ -44,13 +44,13 @@
         </up-cate-tab>
     </view>
  </template>
- 
+
  <script setup>
  import { ref, onMounted } from 'vue';
 
  const height = ref('calc(100vh - 150px)');
-   
- // 响应式数据  
+
+ // 响应式数据
  const tabList = ref([]);
 
  setTimeout(() => {
@@ -59,7 +59,7 @@
         { title: '选项一',  children: [
             {title: '水煮肉片', cover: 'https://uview-plus.jiangruyi.com/uview/ext/59c256f85a8c3757.jpg', price: 88}
             ]
-        },  
+        },
         { title: '选项二',  children: [
             {title: '酸菜鱼', cover: 'https://uview-plus.jiangruyi.com/uview/ext/59c256f85a8c3757.jpg', price: 99}
             ]
@@ -67,36 +67,36 @@
         { title: '选项三',  children: [
             {title: '水煮肉片', cover: 'https://uview-plus.jiangruyi.com/uview/ext/59c256f85a8c3757.jpg', price: 88}
             ]
-        },  
+        },
         { title: '选项四',  children: [
             {title: '酸菜鱼', cover: 'https://uview-plus.jiangruyi.com/uview/ext/59c256f85a8c3757.jpg', price: 99}
             ]
         }
     ]
 //    height.value = 'calc(100vh - 150px)';
- }, 1000);   
+ }, 1000);
  </script>
- 
+
  <style lang="scss">
     /* #ifndef APP-NVUE */
     page {
        background-color: $u-bg-color;
     }
     /* #endif */
-    
+
     .u-page {
        padding: 0;
        flex: 1;
        background-color: $u-bg-color;
- 
+
        &__item {
- 
+
           &__title {
              color: $u-tips-color;
              background-color: $u-bg-color;
              padding: 15px;
              font-size: 15px;
- 
+
              &__slot-title {
                 color: $u-primary;
                 font-size: 14px;

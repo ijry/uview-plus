@@ -14,7 +14,7 @@
 			<up-icon
 			    v-if="icon"
 			    :name="icon"
-			    :color="isActive? parentData.activeColor : parentData.inactiveColor"
+			    :color="isActive ? resolvedActiveColor : resolvedInactiveColor"
 			    :size="isMidButton ? 26 : 20"
 			></up-icon>
 			<template v-else>
@@ -41,7 +41,7 @@
 			<text
 			    class="u-tabbar-item__text"
 			    :style="{
-					color: isActive? parentData.activeColor : parentData.inactiveColor
+					color: isActive ? resolvedActiveColor : resolvedInactiveColor
 				}"
 			>{{ text }}</text>
 		</slot>
@@ -88,6 +88,16 @@
 			// 计算是否为中间按钮
 			isMidButton() {
 				return this.mode === 'midButton';
+			},
+			resolvedActiveColor() {
+				return !this.parentData.activeColor || this.parentData.activeColor === '#1989fa'
+					? this.upThemeVar('--up-primary', '#1989fa')
+					: this.parentData.activeColor
+			},
+			resolvedInactiveColor() {
+				return !this.parentData.inactiveColor || this.parentData.inactiveColor === '#7d7e80'
+					? this.upThemeVar('--up-content-color', '#7d7e80')
+					: this.parentData.inactiveColor
 			}
 		},
 		created() {
@@ -167,7 +177,7 @@
 	}
 	
 	.u-tabbar-item--mid-button-cover {
-		background-color: #fff;
+		background-color: var(--up-card-bg-color, #fff);
 		position: absolute;
 		top: 22px;
 		left: -10px;
@@ -180,8 +190,9 @@
 		width: 70px;
 		height: 70px;
 		border-radius: 100px;
-		background-color: #ffffff;
+		background-color: var(--up-card-bg-color, #ffffff);
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		border: 1px solid var(--up-border-color, rgba(0, 0, 0, 0.08));
 		display: flex;
 		align-items: center;
 		justify-content: center;

@@ -1,17 +1,7 @@
 <template>
     <u-transition
         :show="loading"
-        :custom-style="{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: bgColor,
-            display: 'flex',
-            zIndex: zIndex,
-            ...customStyle
-        }"
+        :custom-style="overlayStyle"
     >
         <view class="u-loading-page">
             <view class="u-loading-page__warpper">
@@ -61,7 +51,7 @@ import { addUnit } from '../../libs/function/index';
  * @property {String}			image			文字上方用于替换loading动画的图片
  * @property {String}			loadingMode		加载动画的模式，circle-圆形，spinner-花朵形，semicircle-半圆形 （默认 'circle' ）
  * @property {Boolean}			loading			是否加载中 （默认 false ）
- * @property {String}			bgColor			背景色 （默认 '#ffffff' ）
+ * @property {String}			bgColor			背景色，留空时跟随主题页面背景
  * @property {String}			color			文字颜色 （默认 '#C8C8C8' ）
  * @property {String | Number}	fontSize		文字大小 （默认 19 ）
  * @property {String | Number}	iconSize		图标大小 （默认 28 ）
@@ -73,6 +63,22 @@ import { addUnit } from '../../libs/function/index';
 export default {
     name: "u-loading-page",
     mixins: [mpMixin, mixin, props],
+    computed: {
+        overlayStyle() {
+            const fallbackBg = this.$u?.color?.bgColor || (this.upThemeIsDark ? '#1f1f1f' : '#f3f4f6')
+            return {
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundColor: this.bgColor || this.upThemeVar('--up-page-bg-color', fallbackBg),
+                display: 'flex',
+                zIndex: this.zIndex,
+                ...this.customStyle
+            }
+        }
+    },
     data() {
         return {};
     },

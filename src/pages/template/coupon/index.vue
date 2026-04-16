@@ -1,6 +1,6 @@
 <template>
 	<view class="u-wrap">
-		<view class="meituan">
+		<view class="meituan" :style="[upThemeCardStyle]">
 			<view class="content">
 				<view class="left">
 					<view class="sum">
@@ -27,7 +27,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="jingdong">
+		<view class="jingdong" :style="[upThemeCardStyle]">
 			<view class="left">
 				<view class="sum">
 					￥
@@ -54,7 +54,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="taobao">
+		<view class="taobao" :style="[upThemeCardStyle]">
 			<view class="title">
 				<view class="left">
 					<image class="buddha" src="" mode="aspectFill"></image>
@@ -95,17 +95,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-page {
-	height: 100%;
-	background-color: rgb(244, 244, 244);
-}
 .u-wrap {
 	padding: 24rpx;
 }
 
 .meituan {
 	margin: 30rpx auto;
-	background-color: #ffffff;
 	width: 700rpx;
 	// border: 10rpx;
 	color: $u-warning;
@@ -194,7 +189,6 @@ page {
 	margin-top: 40rpx;
 	width: 700rpx;
 	height: auto;
-	background-color: #ffffff;
 	display: flex;
 	.left {
 		padding: 0 30rpx;
@@ -284,7 +278,6 @@ page {
 .taobao {
 	margin-top: 40rpx;
 	width: 700rpx;
-	background-color: white;
 	padding: 30rpx 20rpx 20rpx;
 	border-radius: 20rpx;
 	.title {
@@ -373,3 +366,4 @@ page {
 	}
 }
 </style>
+

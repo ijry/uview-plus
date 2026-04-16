@@ -295,7 +295,7 @@ const arraySpanMethod = ({ row, column, rowIndex, columnIndex }) => {
 		// 对于被合并的单元格，返回 [0, 0]
 		return [0, 0];
 	}
-	
+
 	// 合并第4列的第0行和第1行单元格
 	if (rowIndex === 0 && columnIndex === 4) {
 		return [2, 1]; // 合并两行，一列
@@ -303,7 +303,7 @@ const arraySpanMethod = ({ row, column, rowIndex, columnIndex }) => {
 		// 对于被合并的单元格，返回 [0, 0]
 		return [0, 0];
 	}
-	
+
 	// 默认不合并
 	return [1, 1];
 }

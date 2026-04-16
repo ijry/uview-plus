@@ -134,7 +134,9 @@ export default {
                 wordWrap: this.wordWrap,
                 fontSize: addUnit(this.size)
             }
-            !this.type && (style.color = this.color)
+            if (!this.type) {
+                style.color = this.color || this.upThemeVar('--up-content-color', this.$u?.color?.contentColor || '#606266')
+            }
             this.isNvue && this.lines && (style.lines = this.lines)
             this.lineHeight &&
                 (style.lineHeight = addUnit(this.lineHeight))

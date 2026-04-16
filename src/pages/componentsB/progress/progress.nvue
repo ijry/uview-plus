@@ -143,11 +143,11 @@ const computedWidth = (type) => {
 		flex-wrap: nowrap;
 		align-items: stretch;
 	}
-	
+
 	.button-group {
 		@include flex;
 		justify-content: center;
-		
+
 		&__circle {
 			width: 50px;
 			height: 50px;
@@ -156,7 +156,7 @@ const computedWidth = (type) => {
 			justify-content: center;
 			align-items: center;
 			margin: 30px 30px;
-		
+
 			&__text {
 				color: rgb(25, 190, 107);
 				font-size: 13px;
@@ -164,3 +164,4 @@ const computedWidth = (type) => {
 		}
 	}
 </style>
+

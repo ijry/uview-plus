@@ -195,8 +195,8 @@
 				if (this.mode !== 'center') {
 					style.flex = 1
 				}
-				// 背景色，一般用于设置为transparent，去除默认的白色背景
-				style.backgroundColor = this.bgColor
+				// 背景色，留空时跟随主题卡片背景
+				style.backgroundColor = this.bgColor || this.upThemeVar('--up-card-bg-color', this.upThemeIsDark ? '#1c1c1e' : '#ffffff')
 				if(this.round) {
 					const value = addUnit(this.round)
 					if(this.mode === 'top') {

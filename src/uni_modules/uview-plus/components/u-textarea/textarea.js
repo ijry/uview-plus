@@ -13,7 +13,7 @@ export default {
 		value: '',
 		placeholder: '',
 		placeholderClass: 'textarea-placeholder',
-		placeholderStyle: 'color: #c0c4cc',
+		placeholderStyle: '',
 		height: 70,
 		confirmType: 'done',
 		disabled: false,

@@ -107,16 +107,16 @@
 			},
 			// 组件选中激活时的颜色
 			elActiveColor() {
-				return this.activeColor ? this.activeColor : (this.parentData.activeColor ? this.parentData.activeColor : '#2979ff');
+				return this.activeColor ? this.activeColor : (this.parentData.activeColor ? this.parentData.activeColor : this.upThemeVar('--up-primary', '#2979ff'));
 			},
 			// 组件选未中激活时的颜色
 			elInactiveColor() {
 				return this.inactiveColor ? this.inactiveColor : (this.parentData.inactiveColor ? this.parentData.inactiveColor :
-					'#c8c9cc');
+					this.upThemeVar('--up-border-color', '#c8c9cc'));
 			},
 			// label的颜色
 			elLabelColor() {
-				return this.labelColor ? this.labelColor : (this.parentData.labelColor ? this.parentData.labelColor : '#606266')
+				return this.labelColor ? this.labelColor : (this.parentData.labelColor ? this.parentData.labelColor : this.upThemeVar('--up-content-color', '#606266'))
 			},
 			// 组件的形状
 			elShape() {
@@ -129,7 +129,7 @@
 			},
 			elIconColor() {
 				const iconColor = this.iconColor ? this.iconColor : (this.parentData.iconColor ? this.parentData.iconColor :
-					'#ffffff');
+					this.upThemeVar('--up-card-bg-color', '#ffffff'));
 				// 图标的颜色
 				if (this.elDisabled) {
 					// disabled状态下，已勾选的radio图标改为elInactiveColor
@@ -157,7 +157,7 @@
 			iconWrapStyle() {
 				// radio的整体样式
 				const style = {}
-				style.backgroundColor = this.checked && !this.elDisabled ? this.elActiveColor : '#ffffff'
+				style.backgroundColor = this.checked && !this.elDisabled ? this.elActiveColor : this.upThemeVar('--up-card-bg-color', '#ffffff')
 				style.borderColor = this.checked && !this.elDisabled ? this.elActiveColor : this.elInactiveColor
 				style.width = addUnit(this.elSize)
 				style.height = addUnit(this.elSize)
@@ -256,7 +256,7 @@
 	$u-radio-checked-color:#fff !default;
 	$u-radio-checked-background-color:red !default;
 	$u-radio-checked-border-color: #2979ff !default;
-	$u-radio-disabled-background-color:#ebedf0 !default;
+	$u-radio-disabled-background-color:var(--up-bg-color, #ebedf0) !default;
 	$u-radio-disabled--checked-color:#c8c9cc !default;
 	$u-radio-label-margin-left: 5px !default;
 	$u-radio-label-margin-right:12px !default;

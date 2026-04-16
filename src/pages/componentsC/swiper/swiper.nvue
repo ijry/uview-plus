@@ -106,7 +106,6 @@
 				circular
 				:autoplay="false"
 				radius="5"
-				bgColor="#ffffff"
 			></up-swiper>
 		</view>
 		<!-- #endif -->
@@ -233,3 +232,5 @@ const click = (e) => {
 		}
 	}
 </style>
+
+

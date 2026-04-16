@@ -10,19 +10,19 @@
 						alignItems: item.style && item.style.borderRadius ? 'center' : 'stretch'
 					}]" @tap="buttonClickHandler(item, index)">
 					<view class="u-swipe-action-item__right__button__wrapper" :style="[{
-							backgroundColor: item.style && item.style.backgroundColor ? item.style.backgroundColor : '#C7C6CD',
+							backgroundColor: item.style && item.style.backgroundColor ? item.style.backgroundColor : defaultButtonBgColor,
 							borderRadius: item.style && item.style.borderRadius ? item.style.borderRadius : '0',
 							padding: item.style && item.style.borderRadius ? '0' : '0 15px',
 						}, item.style]">
 						<up-icon v-if="item.icon" :name="item.icon"
-							:color="item.style && item.style.color ? item.style.color : '#ffffff'"
+							:color="item.style && item.style.color ? item.style.color : defaultButtonColor"
 							:size="item.iconSize ? addUnit(item.iconSize) : item.style && item.style.fontSize ? getPx(item.style.fontSize) * 1.2 : 17"
 							:customStyle="{
 								marginRight: item.text ? '2px' : 0
 							}"></up-icon>
 						<text v-if="item.text" class="u-swipe-action-item__right__button__wrapper__text u-line-1"
 							:style="[{
-								color: item.style && item.style.color ? item.style.color : '#ffffff',
+								color: item.style && item.style.color ? item.style.color : defaultButtonColor,
 								fontSize: item.style && item.style.fontSize ? item.style.fontSize : '16px',
 								lineHeight: item.style && item.style.fontSize ? item.style.fontSize : '16px',
 							}]">{{ item.text }}</text>
@@ -147,6 +147,12 @@
 		computed: {
 			wxsInit() {
 				return [this.disabled, this.autoClose, this.threshold, this.options, this.duration]
+			},
+			defaultButtonBgColor() {
+				return this.upThemeVar('--up-swipe-action-button-bg-color', this.upThemeIsDark ? '#4b5563' : '#C7C6CD')
+			},
+			defaultButtonColor() {
+				return this.upThemeVar('--up-swipe-action-button-color', '#ffffff')
 			}
 		},
 		mounted() {
@@ -211,7 +217,7 @@
 
 		&__content {
             transform: translateX(0px); // 修复某些情况下默认右侧按钮是展开的问题
-			background-color: #FFFFFF;
+			background-color: var(--up-card-bg-color, #FFFFFF);
 			z-index: 10;
 		}
 
@@ -237,7 +243,7 @@
 					&__text {
 						@include flex;
 						align-items: center;
-						color: #FFFFFF;
+						color: var(--up-swipe-action-button-color, #FFFFFF);
 						font-size: 15px;
 						text-align: center;
 						justify-content: center;

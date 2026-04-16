@@ -15,7 +15,7 @@ export default {
         image: '',
         loadingMode: 'circle',
         loading: false,
-        bgColor: '#ffffff',
+        bgColor: '',
         color: '#C8C8C8',
         fontSize: 19,
         iconSize: 28,

@@ -39,7 +39,6 @@
 							<up-input
 								v-model="model1.userInfo.sex"
 								disabled
-								disabledColor="#ffffff"
 								placeholder="请选择性别"
 								border="none"
 							></up-input>
@@ -131,7 +130,6 @@
 						<up-input
 							v-model="model1.hotel"
 							disabled
-							disabledColor="#ffffff"
 							placeholder="请选择住店和离店时间"
 							border="none"
 						></up-input>
@@ -172,7 +170,6 @@
 						<up-input
 							v-model="model1.userInfo.birthday"
 							disabled
-							disabledColor="#ffffff"
 							placeholder="请选择生日"
 							border="none"
 						></up-input>

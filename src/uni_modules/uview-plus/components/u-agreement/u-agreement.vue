@@ -5,7 +5,7 @@
         flex-direction: column;
         .agreement-url {
             display: inline-block;
-            color: blue;
+            color: var(--up-primary, #2979ff);
             // #ifdef H5
             cursor: pointer;
             // #endif

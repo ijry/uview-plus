@@ -25,12 +25,13 @@
 
 .u-page {
 	padding: 15px 15px 40px 15px;
+	background-color: transparent;
 	&__item {
 		flex: 1;
 		margin-bottom: 15px;
 		&__title {
 			font-size: 14px;
-			color: rgb(143, 156, 162);
+			color: $u-tips-color;
 			margin-bottom: 10px;
 			@include flex;
 		}
@@ -47,7 +48,7 @@
 	
 	&__title {
 		font-size: 14px;
-		color: rgb(143, 156, 162);
+		color: $u-tips-color;
 		margin-bottom: 8px;
 		@include flex;
 	}

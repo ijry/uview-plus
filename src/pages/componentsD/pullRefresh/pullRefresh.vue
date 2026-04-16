@@ -11,8 +11,8 @@
 		        >
 		          <!-- 列表内容 -->
 		          <view class="list-content">
-						<view 
-						  v-for="item in listData" 
+						<view
+						  v-for="item in listData"
 						  :key="item.id"
 						  class="list-item"
 						>
@@ -39,7 +39,7 @@
 				  <text class="refresh-text">下拉刷新 ({{ Math.round(distance) }}px)</text>
 				</view>
 			  </template>
-			  
+
 			  <!-- 自定义释放状态 -->
 			  <template #release="{ distance, threshold }">
 				<view class="custom-refresh-content u-flex-y u-flex-items-center">
@@ -49,21 +49,21 @@
 				  <text class="refresh-text">释放刷新</text>
 				</view>
 			  </template>
-			  
+
 			  <!-- 自定义刷新中状态 -->
 			  <template #refreshing>
-				<view class="custom-refresh-content u-flex-y u-flex-items-center" style="background-color: gray;">
+				<view class="custom-refresh-content u-flex-y u-flex-items-center" :style="{ backgroundColor: upThemeVar('--up-bg-color', 'gray') }">
 				  <view class="refreshing-animation" style="margin-bottom: -32px;">
 					<up-icon size="100px" name="https://uview-plus.jiangruyi.com/uview/ext/772bb6ae58cbd2c1.gif"></up-icon>
 				  </view>
 				  <!-- <text class="refresh-text">正在刷新...</text> -->
 				</view>
 			  </template>
-			  
+
 			  <!-- 列表内容 -->
 			  <view class="list-content">
-				<view 
-				  v-for="item in listData" 
+				<view
+				  v-for="item in listData"
 				  :key="item.id"
 				  class="list-item"
 				>
@@ -99,30 +99,30 @@
 	      <text class="u-page__item__title" style="margin-top: 0;">上拉加载</text>
 	      <view class="u-page__item__content">
 	        <up-pull-refresh
-	  			  :refreshing="refreshing2"
-	  			  :showLoadmore="true"
-	  			  :loadmoreProps="loadmoreConfig"
-	  			  @refresh="onRefresh2"
-	  			  @loadmore="onLoadmore"
-	  			>
-	  				<!-- 使用外部 scroll-view 或其他可滚动组件 -->
-	  				<scroll-view
-	  				  class="scroll-area"
-	  				  style="height: 100px;"
-	  				  :scroll-y="true"
-	  				  @scrolltolower="onScrollToLower"
-	  				>
-	  				  <view class="list-content">
-	  					<view 
-	  					  v-for="item in listData2" 
-	  					  :key="item.id"
-	  					  class="list-item"
-	  					>
-	  					  <text>{{ item.name }}</text>
-	  					</view>
-	  				  </view>
-	  				</scroll-view>
-	  			</up-pull-refresh>
+				  :refreshing="refreshing2"
+				  :showLoadmore="true"
+				  :loadmoreProps="loadmoreConfig"
+				  @refresh="onRefresh2"
+				  @loadmore="onLoadmore"
+				>
+					<!-- 使用外部 scroll-view 或其他可滚动组件 -->
+					<scroll-view
+					  class="scroll-area"
+					  style="height: 100px;"
+					  :scroll-y="true"
+					  @scrolltolower="onScrollToLower"
+					>
+					  <view class="list-content">
+						<view
+						  v-for="item in listData2"
+						  :key="item.id"
+						  class="list-item"
+						>
+						  <text>{{ item.name }}</text>
+						</view>
+					  </view>
+					</scroll-view>
+				</up-pull-refresh>
 	      </view>
 	  </view>
   </view>
@@ -164,7 +164,7 @@ export default {
 		this.listData2 = [...data]
 		this.listData3 = [...data]
 	  },
-	  
+
 	  onRefresh() {
 		this.refreshing = true
 		// 模拟网络请求
@@ -174,28 +174,28 @@ export default {
 		}, 2000)
 	  },
 	  onRefresh1() {
-	  		this.refreshing1 = true
-	  		// 模拟网络请求
-	  		setTimeout(() => {
-	  		  this.loadData()
-	  		  this.refreshing1 = false
-	  		}, 2000)
+			this.refreshing1 = true
+			// 模拟网络请求
+			setTimeout(() => {
+			  this.loadData()
+			  this.refreshing1 = false
+			}, 2000)
 	  },
 	  onRefresh2() {
-	  		this.refreshing2 = true
-	  		// 模拟网络请求
-	  		setTimeout(() => {
-	  		  this.loadData()
-	  		  this.refreshing2 = false
-	  		}, 2000)
+			this.refreshing2 = true
+			// 模拟网络请求
+			setTimeout(() => {
+			  this.loadData()
+			  this.refreshing2 = false
+			}, 2000)
 	  },
 	  onRefresh3() {
-	  		this.refreshing3 = true
-	  		// 模拟网络请求
-	  		setTimeout(() => {
-	  		  this.loadData()
-	  		  this.refreshing3 = false
-	  		}, 2000)
+			this.refreshing3 = true
+			// 模拟网络请求
+			setTimeout(() => {
+			  this.loadData()
+			  this.refreshing3 = false
+			}, 2000)
 	  },
 	  onScroll3() {},
 	  onScrollToLower() {
@@ -207,7 +207,7 @@ export default {
 		    })
 		    this.loadmoreConfig.status = 'loadmore'
 		  }, 2000)
-		  
+
 	  }
   }
 };

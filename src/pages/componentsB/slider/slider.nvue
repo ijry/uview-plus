@@ -161,6 +161,6 @@ const start = (value) => {
 
 <style lang="scss">
 	.u-page {
-		
+
 	}
 </style>

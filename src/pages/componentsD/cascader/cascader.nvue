@@ -1,6 +1,6 @@
 <template>
     <view class="u-page">
-      <view class="u-page__item">
+      <view class="u-page__item" :style="[upThemeCardStyle, { color: upThemeVar('--up-main-color') }]">
           <text class="u-page__item__title" style="margin-top: 0;">基础用法</text>
           <view class="u-page__item__content">
             <up-button @click="openCascader1">选择地区</up-button>
@@ -16,7 +16,7 @@
           </view>
       </view>
       
-      <view class="u-page__item">
+      <view class="u-page__item" :style="[upThemeCardStyle, { color: upThemeVar('--up-main-color') }]">
           <text class="u-page__item__title">带默认值</text>
           <view class="u-page__item__content">
             <up-button @click="openCascader2">选择商品分类</up-button>
@@ -33,7 +33,7 @@
           </view>
       </view>
       
-      <view class="u-page__item">
+      <view class="u-page__item" :style="[upThemeCardStyle, { color: upThemeVar('--up-main-color') }]">
           <text class="u-page__item__title">自定义字段名</text>
           <view class="u-page__item__content">
             <up-button @click="openCascader3">选择组织架构</up-button>
@@ -51,7 +51,7 @@
           </view>
       </view>
 
-      <view class="u-page__item">
+      <view class="u-page__item" :style="[upThemeCardStyle, { color: upThemeVar('--up-main-color') }]">
           <text class="u-page__item__title">垂直头部及单列选项</text>
           <view class="u-page__item__content">
             <up-button @click="openCascader2">选择商品分类</up-button>
@@ -224,7 +224,6 @@ const formatResult = (result) => {
   .u-page__item {
       margin-bottom: 15px;
       padding: 15px;
-      background-color: #fff;
   }
   .u-page__item__title {
       margin-bottom: 10px;
@@ -232,3 +231,4 @@ const formatResult = (result) => {
       font-weight: bold;
   }
 </style>
+

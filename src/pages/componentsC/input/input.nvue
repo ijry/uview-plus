@@ -184,7 +184,6 @@
 			</view>
 		</view>
 		<up-gap
-			bgColor="#fff"
 			height="50"
 		></up-gap>
 	</view>
@@ -248,3 +247,5 @@ const handleSearch = (e) => {
 <style lang="scss">
 
 </style>
+
+

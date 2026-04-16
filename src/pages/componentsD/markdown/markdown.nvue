@@ -6,38 +6,38 @@
                 <up-markdown :content="basicContent"></up-markdown>
             </view>
         </view>
-        
+
         <view class="u-page__item">
             <text class="u-page__item__title">带代码块行号</text>
             <view class="u-page__item__content">
                 <up-markdown :content="codeContent" :show-line-number="true"></up-markdown>
             </view>
         </view>
-        
+
         <view class="u-page__item">
             <text class="u-page__item__title">深色主题</text>
             <view class="u-page__item__content">
                 <up-markdown :content="basicContent" theme="dark"></up-markdown>
             </view>
         </view>
-        
+
         <!-- 新增流式显示示例 -->
         <view class="u-page__item">
             <text class="u-page__item__title">AI流式内容显示</text>
             <view class="u-page__item__content">
                 <up-markdown :content="streamingContent"  :show-line-number="true"></up-markdown>
                 <view style="flex-direction: row; margin-top: 10px;">
-                    <up-button 
-                        type="primary" 
-                        size="mini" 
-                        :text="isStreaming ? '停止' : '开始'" 
+                    <up-button
+                        type="primary"
+                        size="mini"
+                        :text="isStreaming ? '停止' : '开始'"
                         @click="toggleStreaming"
                         style="margin-right: 10px;"
                     ></up-button>
-                    <up-button 
-                        type="default" 
-                        size="mini" 
-                        text="重置" 
+                    <up-button
+                        type="default"
+                        size="mini"
+                        text="重置"
                         @click="resetStreaming"
                     ></up-button>
                 </view>
@@ -66,7 +66,7 @@ export default {
 ---
 
 段落中的行内代码： \`console.log('Hello World')\``,
-            
+
             codeContent: `# 代码示例
 
 以下是一个JavaScript函数：
@@ -87,7 +87,7 @@ def hello(name):
 
 hello("World")
 \`\`\``,
-            
+
             // 流式内容相关数据
             fullAIContent: `# AI助手回答
 
@@ -149,17 +149,17 @@ methods: {
                 this.startStreaming();
             }
         },
-        
+
         // 开始流式显示
         startStreaming() {
             if (this.isStreaming) return;
-            
+
             // 如果是重新开始，重置索引
             if (this.streamIndex >= this.fullAIContent.length) {
                 this.streamIndex = 0;
                 this.streamingContent = '';
             }
-            
+
             this.isStreaming = true;
             this.streamTimer = setInterval(() => {
                 if (this.streamIndex < this.fullAIContent.length) {
@@ -170,7 +170,7 @@ methods: {
                 }
             }, 50); // 50ms间隔，模拟AI逐步输出
         },
-        
+
         // 停止流式显示
         stopStreaming() {
             if (this.streamTimer) {
@@ -179,7 +179,7 @@ methods: {
             }
             this.isStreaming = false;
         },
-        
+
         // 重置流式显示
         resetStreaming() {
             this.stopStreaming();
@@ -187,7 +187,7 @@ methods: {
             this.streamIndex = 0;
         }
     },
-    
+
     // 组件销毁前清理定时器
     beforeDestroy() {
         this.stopStreaming();

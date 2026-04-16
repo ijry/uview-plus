@@ -4,9 +4,9 @@
 			<text class="u-demo-block__title">右侧弹出</text>
 			<view class="u-demo-block__content">
 				<up-popover
-					color="#333"
-					bgColor="#e3e4e6"
-					popupBgColor="#f7f7f7"
+					:color="upThemeVar('--up-main-color', '#333')"
+					:bgColor="upThemeVar('--up-bg-color', '#e3e4e6')"
+					:popupBgColor="upThemeVar('--up-card-bg-color', '#f7f7f7')"
 					direction="right"
 				>
 					<template #trigger>
@@ -22,9 +22,9 @@
 			<text class="u-demo-block__title">左侧弹出及强制定位</text>
 			<view class="u-demo-block__content u-flex-x u-flex-end">
 				<up-popover
-					color="#fff"
-					bgColor="#333"
-					popupBgColor="#333"
+					:color="upThemeVar('--up-white', '#fff')"
+					:bgColor="upThemeVar('--up-main-color', '#333')"
+					:popupBgColor="upThemeVar('--up-main-color', '#333')"
 					:forcePosition="{right: '108px', top: '0px'}"
 					direction="left"
 				>
@@ -60,9 +60,9 @@ const click = (index) => {
 
 <style lang="scss">
 	.u-page {
-		
+
 	}
-	
+
 	.u-demo-block__content {
 		padding-top: 10px;
 	}

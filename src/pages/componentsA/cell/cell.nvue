@@ -141,7 +141,6 @@
 <style lang="scss">
 	.cell-page {
 		padding-bottom: 20px;
-		background-color: #f3f4f6;
 	}
 
 	.cell-box {
@@ -175,7 +174,7 @@
 			}
 
 			:deep(.u-cell-group) {
-				background-color: #fff;
+				background-color: transparent;
 			}
 		}
 	}
@@ -189,8 +188,8 @@
 	.u-cell-text {
 		font-size: 15px;
 		line-height: 22px;
-		color: #303133;
 		margin-right: 5px;
+		color: var(--up-main-color, #303133);
 	}
 
 	.u-slot-value {
@@ -204,3 +203,5 @@
 		background-color: #f56c6c;		/* #ifndef APP-NVUE */		margin-left: auto;		/* #endif */
 	}
 </style>
+
+

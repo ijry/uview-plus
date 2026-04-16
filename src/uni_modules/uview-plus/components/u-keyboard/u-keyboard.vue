@@ -8,9 +8,7 @@
 	    :safeAreaInsetBottom="safeAreaInsetBottom"
 	    @close="popupClose"
 	    :zIndex="zIndex"
-	    :customStyle="{
-			backgroundColor: 'rgb(214, 218, 220)'
-		}"
+	    :customStyle="popupStyle"
 	>
 		<view class="u-keyboard">
 			<slot />
@@ -106,6 +104,13 @@
 			}
 		},
 		mixins: [mpMixin, mixin, props],
+		computed: {
+			popupStyle() {
+				return {
+					backgroundColor: this.upThemeVar('--up-bg-color', this.upThemeIsDark ? '#2c2c2e' : 'rgb(214, 218, 220)')
+				}
+			}
+		},
 		emits: ["change", "close", "confirm", "cancel", "backspace"],
 		methods: {
 			change(e) {
@@ -138,11 +143,11 @@
 		&__tooltip {
 			@include flex;
 			justify-content: space-between;
-			background-color: #FFFFFF;
+			background-color: var(--up-card-bg-color, #ffffff);
 			padding: 14px 12px;
 
 			&__item {
-				color: #333333;
+				color: var(--up-main-color, #303133);
 				flex: 1;
 				text-align: center;
 				font-size: 15px;
@@ -155,7 +160,7 @@
 
 			&__cancel {
 				text-align: left;
-				color: #888888;
+				color: var(--up-tips-color, #909399);
 			}
 
 			&__tips {

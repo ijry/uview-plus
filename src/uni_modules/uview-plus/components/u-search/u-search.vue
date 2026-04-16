@@ -10,9 +10,9 @@
 		<view
 		    class="u-search__content"
 		    :style="{
-				backgroundColor: bgColor,
+				backgroundColor: resolvedBgColor,
 				borderRadius: shape == 'round' ? '100px' : '4px',
-				borderColor: borderColor,
+				borderColor: resolvedBorderColor,
 			}"
 		>
 			<template v-if="$slots.label || label !== null">
@@ -25,7 +25,7 @@
 					@tap="clickIcon"
 				    :size="searchIconSize"
 				    :name="searchIcon"
-				    :color="searchIconColor ? searchIconColor : color"
+				    :color="searchIconColor ? searchIconColor : resolvedColor"
 				></up-icon>
 			</view>
 			<input
@@ -42,14 +42,14 @@
 				:auto-blur="autoBlur"
 			    placeholder-class="u-search__content__input--placeholder"
 			    :placeholder="placeholder"
-			    :placeholder-style="`color: ${placeholderColor}`"
+			    :placeholder-style="`color: ${resolvedPlaceholderColor}`"
 			    class="u-search__content__input"
 			    type="text"
 			    :style="[{
 					pointerEvents: disabled ? 'none' : 'auto',
 					textAlign: inputAlign,
-					color: color,
-					backgroundColor: bgColor,
+					color: resolvedColor,
+					backgroundColor: resolvedBgColor,
 					height: addUnit(height)
 				}, inputStyle]"
 			/>
@@ -163,6 +163,29 @@
 			// #endif
 		},
 		computed: {
+			resolvedBgColor() {
+				if (this.bgColor) {
+					return this.bgColor
+				}
+				return this.upThemeVar('--up-card-bg-color', this.$u?.color?.bgColor || '#f2f2f2')
+			},
+			resolvedBorderColor() {
+				// 外部显式传参时保持原行为
+				if (this.upHasProp('borderColor') || (this.borderColor && this.borderColor !== 'transparent')) {
+					return this.borderColor
+				}
+				// 暗黑模式默认给弱边框，避免背景同色时轮廓不明显
+				if (this.upThemeIsDark) {
+					return this.upThemeVar('--up-border-color', 'rgba(255, 255, 255, 0.12)')
+				}
+				return 'transparent'
+			},
+			resolvedColor() {
+				return this.color || this.upThemeVar('--up-content-color', this.$u?.color?.contentColor || '#606266')
+			},
+			resolvedPlaceholderColor() {
+				return this.placeholderColor || this.upThemeVar('--up-tips-color', this.$u?.color?.tipsColor || '#909399')
+			},
 			showActionBtn() {
 				return !this.animation && this.showAction
 			},

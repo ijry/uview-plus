@@ -7,7 +7,7 @@
 					<up-steps-item
 					    title="已下单"
 					    desc="10:30"
-						:itemStyle="{backgroundColor: '#eee'}"
+						:itemStyle="{backgroundColor: upThemeVar('--up-bg-color', '#eee')}"
 					>
 					</up-steps-item>
 					<up-steps-item
@@ -223,10 +223,10 @@ console.log(timeFormat('2024-12-18T02:25:31.432Z', 'yyyy年mm月dd日'))
 	.slot-icon {
 		width: 21px;
 		height: 21px;
-		background-color: $u-warning;
+		background-color: var(--up-warning, #f9ae3d);
 		border-radius: 100px;
 		font-size: 12px;
-		color: #fff;
+		color: var(--up-white, #fff);
 		line-height: 21px;
 		text-align: center;
 	}

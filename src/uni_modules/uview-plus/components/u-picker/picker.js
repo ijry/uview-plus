@@ -34,7 +34,7 @@ export default {
         disabledColor: '',
         placeholder: t('up.common.pleaseChoose'),
         inputProps: {},
-        bgColor: '#FFFFFF',
+        bgColor: '',
         round: 0,
         duration: 300,
         overlayOpacity: 0.5,

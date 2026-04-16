@@ -306,21 +306,15 @@
 
 <script setup>
 	import { ref } from 'vue'
-	import { onLoad } from '@dcloudio/uni-app'
 	import { http } from '@/uni_modules/uview-plus'
 	
 	const show = ref(false)
 	// const type = ref('default')
 	// const disabled = ref(false)
 	
-	// onLoad 生命周期
-	onLoad(() => {
-		// type.value = 'primary'
-		// disabled.value = true
-	})
-	
 	const click = () => {
 		show.value = true
+		uni.$u.rootToast({ type: 'error', message: 'asadfsadd' })
 		console.log('click')
 		http.post('/api/v1/core/user/login', {params: {account: 'name', password: '123456'}}).then(res => {
 			console.log(res)

@@ -23,7 +23,7 @@
 					}" class="u-steps-item__wrapper__circle">
 					<text v-if="statusClass === 'process' || statusClass === 'wait'"
 						class="u-steps-item__wrapper__circle__text" :style="{
-							color: index == parentData.current ? '#ffffff' : parentData.inactiveColor
+							color: index == parentData.current ? activeStepTextColor : parentData.inactiveColor
 						}">{{ index + 1}}</text>
 					<up-icon v-else :color="statusClass === 'error' ? 'error' : parentData.activeColor" size="12"
 						:name="statusClass === 'error' ? 'close' : 'checkmark'"></up-icon>
@@ -181,6 +181,9 @@
 				}
 
 				return style
+			},
+			activeStepTextColor() {
+				return this.upThemeVar('--up-white', '#ffffff')
 			}
 		},
 		mounted() {
@@ -252,7 +255,7 @@
 			justify-content: center;
 			align-items: center;
 			position: relative;
-			background-color: #fff;
+			background-color: var(--up-card-bg-color, #fff);
 			border-radius: 50px;
 
 			&--column {

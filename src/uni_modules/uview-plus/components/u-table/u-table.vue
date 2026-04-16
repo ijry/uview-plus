@@ -79,11 +79,26 @@
 			}
 		},
 		computed: {
+			resolvedBorderColor() {
+				return this.borderColor === '#e4e7ed'
+					? this.upThemeVar('--up-border-color', '#e4e7ed')
+					: this.borderColor
+			},
+			resolvedColor() {
+				return this.color === '#606266'
+					? this.upThemeVar('--up-content-color', '#606266')
+					: this.color
+			},
+			resolvedBgColor() {
+				return this.bgColor === '#ffffff'
+					? this.upThemeVar('--up-card-bg-color', '#ffffff')
+					: this.bgColor
+			},
 			tableStyle() {
 				let style = {};
-				style.borderLeft = `solid 1px ${this.borderColor}`;
-				style.borderTop = `solid 1px ${this.borderColor}`;
-				style.backgroundColor = this.bgColor;;
+				style.borderLeft = `solid 1px ${this.resolvedBorderColor}`;
+				style.borderTop = `solid 1px ${this.resolvedBorderColor}`;
+				style.backgroundColor = this.resolvedBgColor;
 				return style;
 			}
 		},

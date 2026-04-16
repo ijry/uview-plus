@@ -4,7 +4,9 @@ import test from '../function/test'
 import route from '../util/route'
 // #ifdef APP-NVUE
 // 由于weex为阿里的KPI业绩考核的产物，所以不支持百分比单位，这里需要通过dom查询组件的宽度
-const dom = uni.requireNativePlugin('dom')
+const dom = (typeof uni !== 'undefined' && uni && typeof uni.requireNativePlugin === 'function')
+    ? uni.requireNativePlugin('dom')
+    : null
 // #endif
 
 export const mixin = defineMixin({
@@ -31,15 +33,40 @@ export const mixin = defineMixin({
         }
     },
     data() {
-        return {}
+        return {
+            __upPageThemeChangeHandler: null
+        }
     },
     onLoad() {
         // getRect挂载到$u上，因为这方法需要使用in(this)，所以无法把它独立成一个单独的文件导出
         this.$u.getRect = this.$uGetRect
+        if (this.upIsPageScope()) {
+            this.upApplyNativeThemeUI()
+            if (typeof uni !== 'undefined' && typeof uni.$on === 'function' && !this.__upPageThemeChangeHandler) {
+                this.__upPageThemeChangeHandler = () => {
+                    this.upApplyNativeThemeUI()
+                }
+                uni.$on('uThemeChange', this.__upPageThemeChangeHandler)
+            }
+        }
+    },
+    onShow() {
+        if (this.upIsPageScope()) {
+            this.upApplyNativeThemeUI()
+        }
     },
     created() {
         // 组件当中，只有created声明周期，为了能在组件使用，故也在created中将方法挂载到$u
         this.$u.getRect = this.$uGetRect
+        if (typeof uni !== 'undefined' && typeof uni.$on === 'function') {
+            this.__uThemeChangeHandler = () => {
+                this.chacheU = null
+                if (typeof this.$forceUpdate === 'function') {
+                    this.$forceUpdate()
+                }
+            }
+            uni.$on('uThemeChange', this.__uThemeChangeHandler)
+        }
     },
     computed: {
         // 在2.x版本中，将会把$u挂载到uni对象下，导致在模板中无法使用uni.$u.xxx形式
@@ -61,6 +88,51 @@ export const mixin = defineMixin({
             // #endif
             // #ifdef APP-NVUE
             return uni.$u
+            // #endif
+        },
+        upThemeIsDark() {
+            return this.$u?.theme?.mode === 'dark'
+        },
+        upThemeVars() {
+            // #ifdef APP-NVUE
+            return {}
+            // #endif
+            // #ifndef APP-NVUE
+            if (this.$u && typeof this.$u.getThemeVars === 'function') {
+                return this.$u.getThemeVars()
+            }
+            return {}
+            // #endif
+        },
+        upThemePageStyle() {
+            // #ifdef APP-NVUE
+            return {
+                backgroundColor: (this.$u?.color?.bgColor) || '#f3f4f6'
+            }
+            // #endif
+            // #ifndef APP-NVUE
+            const fallbackBg = (this.$u?.color?.bgColor) || '#f3f4f6'
+            return {
+                ...this.upThemeVars,
+                minHeight: '100vh',
+                backgroundColor: `var(--up-page-bg-color, var(--up-bg-color, ${fallbackBg}))`
+            }
+            // #endif
+        },
+        upThemeCardStyle() {
+            const fallbackCard = this.upThemeIsDark ? '#1c1c1e' : '#ffffff'
+            const fallbackBorder = (this.$u?.color?.borderColor) || '#dadbde'
+            // #ifdef APP-NVUE
+            return {
+                backgroundColor: fallbackCard,
+                borderColor: fallbackBorder
+            }
+            // #endif
+            // #ifndef APP-NVUE
+            return {
+                backgroundColor: `var(--up-card-bg-color, ${fallbackCard})`,
+                borderColor: `var(--up-border-color, ${fallbackBorder})`
+            }
             // #endif
         },
         /**
@@ -98,6 +170,77 @@ export const mixin = defineMixin({
         }
     },
     methods: {
+        upIsPageScope() {
+            return !!(this.$page || this.route || this.$options?.mpType === 'page')
+        },
+        upHasProp(propName) {
+            const vnodeProps = this.$?.vnode?.props || {}
+            const kebabName = propName.replace(/[A-Z]/g, (s) => `-${s.toLowerCase()}`)
+            return Object.prototype.hasOwnProperty.call(vnodeProps, propName)
+                || Object.prototype.hasOwnProperty.call(vnodeProps, kebabName)
+        },
+        upThemeVar(varName, fallbackColor) {
+            // #ifdef APP-NVUE
+            const themeVars = this.$u?.theme?.vars
+            if (themeVars && Object.prototype.hasOwnProperty.call(themeVars, varName)) {
+                return themeVars[varName]
+            }
+            if (typeof varName === 'string') {
+                const aliasVarName = varName.indexOf('--up-') === 0
+                    ? varName.replace('--up-', '--u-')
+                    : (varName.indexOf('--u-') === 0 ? varName.replace('--u-', '--up-') : '')
+                if (aliasVarName && themeVars && Object.prototype.hasOwnProperty.call(themeVars, aliasVarName)) {
+                    return themeVars[aliasVarName]
+                }
+                const runtimeColorMap = this.$u?.config?.color || {}
+                const colorTokenKey = varName.indexOf('--') === 0 ? varName.slice(2) : varName
+                if (Object.prototype.hasOwnProperty.call(runtimeColorMap, colorTokenKey)) {
+                    return runtimeColorMap[colorTokenKey]
+                }
+                const aliasColorTokenKey = colorTokenKey.indexOf('up-') === 0
+                    ? colorTokenKey.replace('up-', 'u-')
+                    : (colorTokenKey.indexOf('u-') === 0 ? colorTokenKey.replace('u-', 'up-') : '')
+                if (aliasColorTokenKey && Object.prototype.hasOwnProperty.call(runtimeColorMap, aliasColorTokenKey)) {
+                    return runtimeColorMap[aliasColorTokenKey]
+                }
+            }
+            if (this.$u && typeof this.$u.getThemeVars === 'function') {
+                const vars = this.$u.getThemeVars()
+                if (vars && Object.prototype.hasOwnProperty.call(vars, varName)) {
+                    return vars[varName]
+                }
+            }
+            return typeof fallbackColor !== 'undefined' ? fallbackColor : ''
+            // #endif
+            // #ifndef APP-NVUE
+            if (typeof fallbackColor === 'undefined') {
+                return `var(${varName})`
+            }
+            return `var(${varName}, ${fallbackColor})`
+            // #endif
+        },
+        upApplyNativeThemeUI() {
+            if (typeof uni === 'undefined') return
+            const isDark = this.upThemeIsDark
+            const pageBg = this.$u?.color?.bgColor || (isDark ? '#1f1f1f' : '#f3f4f6')
+            if (typeof uni.setNavigationBarColor === 'function') {
+                uni.setNavigationBarColor({
+                    frontColor: isDark ? '#ffffff' : '#000000',
+                    backgroundColor: pageBg,
+                    animation: {
+                        duration: 0,
+                        timingFunc: 'linear'
+                    }
+                })
+            }
+            if (typeof uni.setBackgroundColor === 'function') {
+                uni.setBackgroundColor({
+                    backgroundColor: pageBg,
+                    backgroundColorTop: pageBg,
+                    backgroundColorBottom: pageBg
+                })
+            }
+        },
         // 跳转某一个页面
         openPage(urlKey = 'url') {
             const url = this[urlKey]
@@ -199,6 +342,14 @@ export const mixin = defineMixin({
                     childrenList.splice(index, 1)
                 }
             })
+        }
+        if (typeof uni !== 'undefined' && typeof uni.$off === 'function' && this.__uThemeChangeHandler) {
+            uni.$off('uThemeChange', this.__uThemeChangeHandler)
+            this.__uThemeChangeHandler = null
+        }
+        if (typeof uni !== 'undefined' && typeof uni.$off === 'function' && this.__upPageThemeChangeHandler) {
+            uni.$off('uThemeChange', this.__upPageThemeChangeHandler)
+            this.__upPageThemeChangeHandler = null
         }
     }
 })

@@ -202,7 +202,7 @@ function setConfig(configs) {
 }
 
 // 初始化自定义配置
-if (uni && uni.upuiParams) {
+if (typeof uni !== 'undefined' && uni && uni.upuiParams) {
 	console.log('setting uview-plus')
 	let temp = uni.upuiParams()
 	if (temp.httpIns) {

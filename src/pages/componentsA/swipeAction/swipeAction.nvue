@@ -224,7 +224,7 @@ const click = (index, cb) => {
 
 			&__text {
 				font-size: 15px;
-				color: $u-main-color;
+				color: var(--up-main-color, #303133);
 				padding-left: 30rpx;
 			}
 		}

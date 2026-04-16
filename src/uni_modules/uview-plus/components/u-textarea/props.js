@@ -21,12 +21,12 @@ export const props = defineMixin({
 		// 指定placeholder的样式类，注意页面或组件的style中写了scoped时，需要在类名前写/deep/
 		placeholderClass: {
 			type: String,
-			default: () => defProps.input.placeholderClass
+			default: () => defProps.textarea.placeholderClass
 		},
 		// 指定placeholder的样式
 		placeholderStyle: {
 			type: [String, Object],
-			default: () => defProps.input.placeholderStyle
+			default: () => defProps.textarea.placeholderStyle
 		},
 		// 输入框高度
 		height: {

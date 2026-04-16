@@ -5,7 +5,7 @@
             :value="innerValue"
             :style="fieldStyle"
             :placeholder="placeholder"
-            :placeholder-style="addStyle(placeholderStyle, typeof placeholderStyle === 'string' ? 'string' : 'object')"
+            :placeholder-style="placeholderStyleInner"
             :placeholder-class="placeholderClass"
             :disabled="disabled"
             :focus="focus"
@@ -32,9 +32,7 @@
 		<!-- #ifndef MP-ALIPAY -->
         <text
             class="u-textarea__count"
-            :style="{
-                'background-color': disabled ? 'transparent' : '#fff',
-            }"
+            :style="countStyle"
             v-if="count"
             >{{ innerValue.length }}/{{ maxlength }}</text
         >
@@ -146,6 +144,16 @@ export default {
         // #endif
 	},
     computed: {
+        placeholderStyleInner() {
+            if (this.placeholderStyle) {
+                return addStyle(this.placeholderStyle, typeof this.placeholderStyle === 'string' ? 'string' : 'object')
+            }
+            return `color: ${this.upThemeVar('--up-tips-color', this.$u?.color?.tipsColor || '#909399')}`
+        },
+        countStyle() {
+            if (this.disabled) return { backgroundColor: 'transparent' }
+            return { backgroundColor: this.upThemeVar('--up-card-bg-color', '#ffffff') }
+        },
 		fieldStyle() {
 			let style = {};
 			style['height'] = addUnit(this.height);
@@ -247,7 +255,7 @@ export default {
 <style lang="scss" scoped>
 .u-textarea {
     border-radius: 4px;
-    background-color: #fff;
+    background-color: var(--up-card-bg-color, #fff);
     position: relative;
     @include flex;
     flex: 1;
@@ -262,7 +270,7 @@ export default {
     }
 
     &--disabled {
-        background-color: #f5f7fa;
+        background-color: var(--up-bg-color, #f5f7fa);
     }
 
     &__field {
@@ -278,7 +286,7 @@ export default {
         bottom: 2px;
         font-size: 12px;
         color: $u-tips-color;
-        background-color: #ffffff;
+        background-color: var(--up-card-bg-color, #ffffff);
         padding: 1px 4px;
     }
 }

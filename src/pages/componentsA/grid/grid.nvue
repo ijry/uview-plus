@@ -30,7 +30,7 @@
 					<up-grid-item
 						v-for="(listItem,listIndex) in list"
 						:key="listIndex"
-						customStyle="padding-top: 10px; padding-bottom: 10px" 
+						customStyle="padding-top: 10px; padding-bottom: 10px"
 					>
 						<up-icon
 							:customStyle="{paddingTop:20+'rpx'}"
@@ -199,3 +199,4 @@ const click = (name) => {
 		/* #endif */
 	}
 </style>
+

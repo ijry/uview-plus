@@ -23,7 +23,7 @@ export default {
         closeIconPos: 'top-right',
         round: '20px',
         zoom: true,
-        bgColor: '#fff',
+        bgColor: '',
         overlayOpacity: 0.5,
         pageInline: false,
         touchable: false,

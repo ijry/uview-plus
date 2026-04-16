@@ -151,7 +151,7 @@ const getCode2 = () => {
 			font-size: 15px;
 		}
 	}
-	
+
 	.u-demo-block__content {
 		@include flex;
 	}
