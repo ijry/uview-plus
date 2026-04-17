@@ -213,6 +213,16 @@
 		emits: ['update:modelValue', 'update:show', 'change', 'confirm', 'cancel'],
 		methods: {
 			t,
+			getSelectedValues() {
+				const result = [];
+				for (let i = 0; i < this.selectedValueIndexs.length; i++) {
+					const selectedIndex = this.selectedValueIndexs[i];
+					if (selectedIndex === undefined) continue;
+					if (!this.levelList[i] || !this.levelList[i][selectedIndex]) continue;
+					result.push(this.levelList[i][selectedIndex][this.valueKey]);
+				}
+				return result;
+			},
 			initLevelList() {
 				// 初始化第一级数据
 				if (this.data && this.data.length > 0) {
@@ -224,7 +234,10 @@
 				// 检查data是否为空
 				if (!this.data || this.data.length == 0) return;
 				// 检查modelValue是否为空
-				if (!this.modelValue || this.modelValue.length == 0) return;
+				if (!this.modelValue || this.modelValue.length == 0) {
+					this.confirmValues = [];
+					return;
+				}
 				// 根据默认值设置选中项
 				// 根据modelValue获取indexs给selectedValueIndexs
 				this.selectedValueIndexs = [];
@@ -250,6 +263,8 @@
 						break;
 					}
 				}
+				// 同步确认值，避免“仅回显未改动时确认返回空数组”
+				this.confirmValues = this.getSelectedValues();
 			},
 			close() {
 				this.$emit('cancel');
@@ -296,12 +311,7 @@
 			// 修改emitChange方法，增加closePopup参数
 			emitChange(closePopup = true) {
 				// 构造选中结果
-				const result = [];
-				for (let i = 0; i < this.selectedValueIndexs.length; i++) {
-					if (this.selectedValueIndexs[i] !== undefined && this.levelList[i]) {
-						result.push(this.levelList[i][this.selectedValueIndexs[i]][this.valueKey]);
-					}
-				}
+				const result = this.getSelectedValues();
 
 				// 更新confirmValues
 				this.confirmValues = [...result];
@@ -318,9 +328,11 @@
 				this.close();
 			},
 			handleConfirm() {
+				const values = this.confirmValues.length ? this.confirmValues : this.getSelectedValues();
+				this.confirmValues = [...values];
 				// 确认时触发confirm事件
-				this.$emit('update:modelValue', this.confirmValues);
-				this.$emit('confirm', this.confirmValues);
+				this.$emit('update:modelValue', values);
+				this.$emit('confirm', values);
 				this.close();
 			},
             // 跳转父节点
