@@ -111,6 +111,9 @@
 		},
 		watch: {
 			show(newValue, oldValue) {
+				if (!newValue && this.hasInput) {
+					this.showByClickInput = false
+				}
 				if (newValue) {
 					// #ifdef VUE3
 					this.innerValue = this.correctValue(this.modelValue)
@@ -160,6 +163,20 @@
 		emits: ['close', 'cancel', 'confirm', 'change', 'update:modelValue'],
 		// #endif
 		methods: {
+			toInt(value, fallback = 0) {
+				const num = parseInt(value, 10)
+				return Number.isFinite(num) ? num : fallback
+			},
+			// 按列安全读取 picker 值，避免快速滚动时出现越界/空值
+			safeColumnValue(values, columnIndex, optionIndex, fallback = '') {
+				const column = Array.isArray(values[columnIndex]) ? values[columnIndex] : []
+				if (!column.length) return fallback
+				let index = Number(optionIndex)
+				if (!Number.isFinite(index)) index = 0
+				index = range(0, column.length - 1, index)
+				const value = column[index]
+				return value == null ? fallback : value
+			},
 			getInputValue(newValue) {
 				if (newValue == '' || !newValue || newValue == undefined) {
 					this.inputValue = ''
@@ -214,6 +231,9 @@
 			// 关闭选择器
 			close() {
 				if (this.closeOnClickOverlay) {
+					if (this.hasInput) {
+						this.showByClickInput = false
+					}
 					this.$emit('close')
 				}
 			},
@@ -243,7 +263,13 @@
 			},
 			//用正则截取输出值,当出现多组数字时,抛出错误
 			intercept(e,type){
-				let judge = e.match(/\d+/g)
+				if (e === undefined || e === null) {
+					return type ? '0000' : '00'
+				}
+				let judge = String(e).match(/\d+/g)
+				if (!judge || judge.length === 0) {
+					return type ? '0000' : '00'
+				}
 				//判断是否掺杂数字
 				if(judge.length>1){
 					error("请勿在过滤或格式化函数时添加数字")
@@ -260,30 +286,53 @@
 			// 列发生变化时触发
 			change(e) {
 				const { indexs, values } = e
+				const safeValues = Array.isArray(values) ? values : []
 				let selectValue = ''
 				if(this.mode === 'time') {
 					// 根据value各列索引，从各列数组中，取出当前时间的选中值
-					selectValue = `${this.intercept(values[0][indexs[0]])}:${this.intercept(values[1][indexs[1]])}`
+					const hourText = this.safeColumnValue(safeValues, 0, indexs[0], padZero(this.minHour))
+					const minuteText = this.safeColumnValue(safeValues, 1, indexs[1], padZero(this.minMinute))
+					let hour = this.toInt(this.intercept(hourText), this.minHour)
+					let minute = this.toInt(this.intercept(minuteText), this.minMinute)
+					hour = range(this.minHour, this.maxHour, hour)
+					minute = range(this.minMinute, this.maxMinute, minute)
+					selectValue = `${padZero(hour)}:${padZero(minute)}`
 				} else {
+					const validCurrent = dayjs(this.innerValue).isValid() ? dayjs(this.innerValue) : dayjs(this.minDate)
+					const currentYear = validCurrent.year()
+					const currentMonth = validCurrent.month() + 1
+					const currentDate = validCurrent.date()
+					const currentHour = validCurrent.hour()
+					const currentMinute = validCurrent.minute()
+
+					const yearText = this.safeColumnValue(safeValues, 0, indexs[0], `${currentYear}`)
+					const monthText = this.safeColumnValue(safeValues, 1, indexs[1], padZero(currentMonth))
 					// 将选择的值转为数值，比如'03'转为数值的3，'2019'转为数值的2019
-					const year = parseInt(this.intercept(values[0][indexs[0]],'year'))
-					const month = parseInt(this.intercept(values[1][indexs[1]]))
-					let date = parseInt(values[2] ? this.intercept(values[2][indexs[2]]) : 1)
+					let year = this.toInt(this.intercept(yearText, 'year'), currentYear)
+					let month = this.toInt(this.intercept(monthText), currentMonth)
 					let hour = 0, minute = 0
+					month = range(1, 12, month)
 					// 此月份的最大天数
 					const maxDate = dayjs(`${year}-${month}`).daysInMonth()
+					const dayText = this.safeColumnValue(safeValues, 2, indexs[2], padZero(Math.min(currentDate, maxDate)))
+					let date = this.toInt(this.intercept(dayText), Math.min(currentDate, maxDate))
 					// year-month模式下，date不会出现在列中，设置为1，为了符合后边需要减1的需求
 					if (this.mode === 'year-month') {
 					    date = 1
 					}
 					// 不允许超过maxDate值
-					date = Math.min(maxDate, date)
+					date = range(1, maxDate, date)
 					if (this.mode === 'datetime') {
-					    hour = parseInt(this.intercept(values[3][indexs[3]]))
-					    minute = parseInt(this.intercept(values[4][indexs[4]]))
+						const hourText = this.safeColumnValue(safeValues, 3, indexs[3], padZero(currentHour))
+						const minuteText = this.safeColumnValue(safeValues, 4, indexs[4], padZero(currentMinute))
+					    hour = range(0, 23, this.toInt(this.intercept(hourText), currentHour))
+					    minute = range(0, 59, this.toInt(this.intercept(minuteText), currentMinute))
 					}
 					// 转为时间模式
 					selectValue = Number(new Date(year, month - 1, date, hour, minute))
+					if (!Number.isFinite(selectValue)) {
+						selectValue = this.correctValue(this.innerValue)
+					}
 				}
 				// 取出准确的合法值，防止超越边界的情况
 				selectValue = this.correctValue(selectValue)
@@ -440,6 +489,15 @@
 			            range: [minMinute, maxMinute],
 			        },
 			    ];
+				// 兜底：防止边界计算异常导致日列出现空范围（快速滚动场景）
+				if (result[2] && result[2].type === 'day') {
+					const start = Number(result[2].range[0])
+					const end = Number(result[2].range[1])
+					if (!Number.isFinite(start) || !Number.isFinite(end) || start > end) {
+						const fallbackDays = dayjs(this.innerValue).isValid() ? dayjs(this.innerValue).daysInMonth() : 31
+						result[2].range = [1, fallbackDays]
+					}
+				}
 			    if (this.mode === 'date')
 			        result.splice(3, 2);
 			    if (this.mode === 'year-month')
