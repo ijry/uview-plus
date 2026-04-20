@@ -1,3 +1,12 @@
+## 3.8.4（2026-04-20）
+fix(u-rate): 增强数值校验与边界处理，修复计算异常
+
+- 新增 normalizeActiveIndex 等辅助方法，统一处理评分值的类型转换与 minCount/count 边界限制
+- 对 DOM 节点获取的 left 和 width 增加 Number.isFinite 校验，避免 NaN 导致布局计算崩溃
+- 优化 emitEvent 逻辑，在触发 change 及双向绑定更新前进行值归一化，防止无效值传播
+- 在触摸与点击事件处理前调用 ensureRateMetrics，确保尺寸数据有效后再执行坐标计算
+- 移除直接读取 prop 的硬编码逻辑，提升组件在异常传参或异步渲染场景下的稳定性
+
 ## 3.8.3（2026-04-19）
 fix: 修复日期时间选择器快速滚动越界与空值异常
 

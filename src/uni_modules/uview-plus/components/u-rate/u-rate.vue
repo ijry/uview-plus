@@ -106,16 +106,20 @@
 		name: "u-rate",
 		mixins: [mpMixin, mixin, props],
 		data() {
+			const modelVal = Number(this.modelValue)
+			const valueVal = Number(this.value)
+			const minCount = Number(this.minCount)
+			const defaultActive = Number.isFinite(minCount) ? minCount : 0
 			return {
 				// 生成一个唯一id，否则一个页面多个评分组件，会造成冲突
 				elId: guid(),
 				elClass: guid(),
 				rateBoxLeft: 0, // 评分盒子左边到屏幕左边的距离，用于滑动选择时计算距离
 				// #ifdef VUE3
-				activeIndex: this.modelValue,
+				activeIndex: Number.isFinite(modelVal) ? modelVal : defaultActive,
 				// #endif
 				// #ifdef VUE2
-				activeIndex: this.value,
+				activeIndex: Number.isFinite(valueVal) ? valueVal : defaultActive,
 				// #endif
 				rateWidth: 0, // 每个星星的宽度
 				// 标识是否正在滑动，由于iOS事件上touch比click先触发，导致快速滑动结束后，接着触发click，导致事件混乱而出错
@@ -125,12 +129,12 @@
 		watch: {
 			// #ifdef VUE3
 			modelValue(val) {
-				this.activeIndex = val;
+				this.activeIndex = this.normalizeActiveIndex(val);
 			},
 			// #endif
         	// #ifdef VUE2
 			value(val) {
-				this.activeIndex = val;
+				this.activeIndex = this.normalizeActiveIndex(val);
 			},
 			// #endif
 			activeIndex: 'emitEvent'
@@ -152,6 +156,40 @@
 		methods: {
 			addStyle,
 			addUnit,
+			toNumber(value, fallback = 0) {
+				const num = Number(value)
+				return Number.isFinite(num) ? num : fallback
+			},
+			getMinCountValue() {
+				return this.toNumber(this.minCount, 0)
+			},
+			getCountValue() {
+				return this.toNumber(this.count, 0)
+			},
+			normalizeActiveIndex(value) {
+				let normalized = this.toNumber(value, this.getMinCountValue())
+				const minCount = this.getMinCountValue()
+				const count = this.getCountValue()
+				if (normalized < minCount) normalized = minCount
+				if (count > 0 && normalized > count) normalized = count
+				return normalized
+			},
+			getFallbackRateWidth() {
+				const size = parseFloat(this.size) || 18
+				const gutter = parseFloat(this.gutter) || 0
+				const width = size + gutter
+				return width > 0 ? width : 18
+			},
+			ensureRateMetrics() {
+				if (!Number.isFinite(this.rateBoxLeft)) {
+					this.rateBoxLeft = 0
+				}
+				if (!Number.isFinite(this.rateWidth) || this.rateWidth <= 0) {
+					this.rateWidth = this.getFallbackRateWidth()
+					this.getRateIconWrapRect()
+				}
+				return Number.isFinite(this.rateWidth) && this.rateWidth > 0
+			},
 			init() {
 				sleep().then(() => {
 					this.getRateItemRect();
@@ -164,12 +202,17 @@
 				// uView封装的获取节点的方法，详见文档
 				// #ifndef APP-NVUE
 				this.$uGetRect("#" + this.elId).then((res) => {
-					this.rateBoxLeft = res.left;
+					if (res && Number.isFinite(res.left)) {
+						this.rateBoxLeft = res.left;
+					}
 				});
 				// #endif
 				// #ifdef APP-NVUE
 				dom.getComponentRect(this.$refs["u-rate"], (res) => {
-					this.rateBoxLeft = res.size.left;
+					const left = res && res.size ? res.size.left : NaN
+					if (Number.isFinite(left)) {
+						this.rateBoxLeft = left;
+					}
 				});
 				// #endif
 			},
@@ -178,14 +221,19 @@
 				// uView封装的获取节点的方法，详见文档
 				// #ifndef APP-NVUE
 				this.$uGetRect("." + this.elClass).then((res) => {
-					this.rateWidth = res.width;
+					if (res && Number.isFinite(res.width) && res.width > 0) {
+						this.rateWidth = res.width;
+					}
 				});
 				// #endif
 				// #ifdef APP-NVUE
 				dom.getComponentRect(
 					this.$refs["u-rate__content__item__icon-wrap"][0],
 					(res) => {
-						this.rateWidth = res.size.width;
+						const width = res && res.size ? res.size.width : NaN
+						if (Number.isFinite(width) && width > 0) {
+							this.rateWidth = width;
+						}
 					}
 				);
 				// #endif
@@ -197,6 +245,7 @@
 					return;
 				}
 				this.preventEvent(e);
+				this.ensureRateMetrics();
 				const x = e.changedTouches[0].pageX;
 				this.getActiveIndex(x);
 			},
@@ -207,6 +256,7 @@
 					return;
 				}
 				this.preventEvent(e);
+				this.ensureRateMetrics();
 				const x = e.changedTouches[0].pageX;
 				this.getActiveIndex(x);
 			},
@@ -217,6 +267,7 @@
 					return;
 				}
 				this.preventEvent(e);
+				this.ensureRateMetrics();
 				let x = 0;
 				// 点击时，在nvue上，无法获得点击的坐标，所以无法实现点击半星选择
 				// #ifndef APP-NVUE
@@ -230,14 +281,19 @@
 			},
 			// 发出事件
 			emitEvent() {
+				const normalizedValue = this.normalizeActiveIndex(this.activeIndex)
+				if (!Number.isFinite(this.activeIndex) || normalizedValue !== this.activeIndex) {
+					this.activeIndex = normalizedValue
+					return
+				}
 				// 发出change事件
-				this.$emit("change", this.activeIndex);
+				this.$emit("change", normalizedValue);
 				// 同时修改双向绑定的值
 				// #ifdef VUE3
-                this.$emit("update:modelValue", this.activeIndex);
+                this.$emit("update:modelValue", normalizedValue);
                 // #endif
                 // #ifdef VUE2
-				this.$emit("input", this.activeIndex);
+				this.$emit("input", normalizedValue);
 				// #endif
 			},
 			// 获取当前激活的评分图标
@@ -245,8 +301,18 @@
 				if (this.disabled || this.readonly) {
 					return;
 				}
+				if (!this.ensureRateMetrics()) {
+					return;
+				}
+				const count = this.getCountValue()
+				if (count <= 0) {
+					return;
+				}
+				if (!Number.isFinite(x)) {
+					return;
+				}
 				// 判断当前操作的点的x坐标值，是否在允许的边界范围内
-				const allRateWidth = this.rateWidth * this.count + this.rateBoxLeft;
+				const allRateWidth = this.rateWidth * count + this.rateBoxLeft;
 				// 如果小于第一个图标的左边界，设置为最小值，如果大于所有图标的宽度，则设置为最大值
 				x = range(this.rateBoxLeft, allRateWidth, x) - this.rateBoxLeft
 				// 滑动点相对于评分盒子左边的距离
@@ -275,10 +341,10 @@
 					}
 
 				}
-				this.activeIndex = Math.min(index, this.count);
+				this.activeIndex = this.normalizeActiveIndex(Math.min(index, count));
 				// 对最少颗星星的限制
-				if (this.activeIndex < this.minCount) {
-					this.activeIndex = this.minCount;
+				if (this.activeIndex < this.getMinCountValue()) {
+					this.activeIndex = this.getMinCountValue();
 				}
 
 				// 设置延时为了让click事件在touchmove之前触发
