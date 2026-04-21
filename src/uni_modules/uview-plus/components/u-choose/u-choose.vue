@@ -91,9 +91,14 @@
 				currentIndex: ''
 	        }
 	    },
-	    created: function () {
-			this.currentIndex = this.modelValue;
-	    },
+		watch: {
+			modelValue: {
+				immediate: true,
+				handler(newVal) {
+					this.currentIndex = newVal
+				}
+			}
+		},
         emits: ['update:modelValue', 'custom-click'],
 	    methods: {
 	        change(index){

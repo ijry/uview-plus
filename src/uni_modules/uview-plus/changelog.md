@@ -1,3 +1,11 @@
+## 3.8.5（2026-04-21）
+fix: 修复 up-choose 组件 modelValue 更新不同步问题
+
+- 移除 created 生命周期中的初始赋值逻辑
+- 新增 watch 监听 modelValue 并设置 immediate: true
+- 确保外部传入的 modelValue 变化时能实时同步至 currentIndex
+- 补充文件末尾换行符以符合规范
+
 ## 3.8.4（2026-04-20）
 fix(u-rate): 增强数值校验与边界处理，修复计算异常
 
