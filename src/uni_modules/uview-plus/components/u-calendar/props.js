@@ -143,6 +143,11 @@ export const props = defineMixin({
 			type: [Number, String],
 			default: 3
 		},
+		// 是否启用非滚动的单月切换模式
+		monthSwitch: {
+			type: Boolean,
+			default: () => defProps.calendar.monthSwitch
+		},
         // 星期文案
         weekText: {
 			type: Array,

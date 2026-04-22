@@ -217,10 +217,10 @@
 							// 处于第一和最后一个之间的日期，背景色设置为浅色，通过将对应颜色进行等分，再取其尾部的颜色值
 							if (dayjs(date).isAfter(dayjs(this.selected[0])) && dayjs(date).isBefore(dayjs(this
 									.selected[len]))) {
-								const rangeEndColor = this.upThemeIsDark ? '#1c1c1e' : '#ffffff'
+								const rangeEndColor = this.upThemeVar('--up-card-bg-color', this.upThemeIsDark ? '#1c1c1e' : '#ffffff')
 								style.backgroundColor = colorGradient(this.color, rangeEndColor, 100)[90]
 								// 增加一个透明度，让范围区间的背景色也能看到底部的mark水印字符
-								style.opacity = 0.7
+								style.opacity = this.upThemeIsDark ? 0.85 : 0.7
 							}
 						} else if (this.selected.length === 1) {
 							// 之所以需要这么写，是因为uni-app的iOS客户端的bug
@@ -503,7 +503,7 @@
 			font-size: 14px;
 			line-height: 42px;
 			height: 42px;
-			color: $u-main-color;
+			color: var(--up-main-color, $u-main-color);
 			text-align: center;
 			font-weight: bold;
 		}
@@ -525,7 +525,7 @@
 
 				&__text {
 					font-size: 155px;
-					color: rgba(231, 232, 234, 0.83);
+					color: var(--up-calendar-month-mark-color, rgba(231, 232, 234, 0.83));
 				}
 			}
 
@@ -556,7 +556,7 @@
 					}
 
 					&__buttom-info {
-						color: $u-content-color;
+						color: var(--up-content-color, $u-content-color);
 						text-align: center;
 						position: absolute;
 						bottom: 5px;
@@ -570,20 +570,21 @@
 						}
 
 						&--disabled {
-							color: #cacbcd;
+							color: var(--up-disabled-color, #cacbcd);
 						}
 					}
 
 					&__info {
 						text-align: center;
 						font-size: 16px;
+						color: var(--up-main-color, $u-main-color);
 
 						&--selected {
 							color: #ffffff;
 						}
 
 						&--disabled {
-							color: #cacbcd;
+							color: var(--up-disabled-color, #cacbcd);
 						}
 					}
 
@@ -614,4 +615,5 @@
 			}
 		}
 	}
+
 </style>
