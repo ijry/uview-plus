@@ -149,7 +149,7 @@
 			},
 			// 是否可以购买
 			canBuy() {
-				const selectedSkuCount = Object.keys(this.selectedSku).length
+				const selectedSkuCount = Object.keys(this.selectedSku).filter((key) => this.selectedSku[key] !== '').length
 				const skuTreeCount = this.skuTree.length
 				return selectedSkuCount === skuTreeCount && this.buyNum > 0 && this.stock > 0
 			},
