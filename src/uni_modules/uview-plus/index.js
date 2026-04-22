@@ -201,7 +201,7 @@ let components = []
 
 function resolveComponents() {
     if (components.length) return components
-    // #ifdef APP || H5
+    // #ifdef H5
     const canUseGlob = typeof import.meta !== 'undefined' && typeof import.meta.glob === 'function'
     if (!canUseGlob) return components
     const importFn = import.meta.glob('./components/u-*/u-*.vue', { eager: true })
@@ -216,7 +216,7 @@ function resolveComponents() {
 }
 
 const install = (Vue, upuiParams = '') => {
-    // #ifdef APP || H5
+    // #ifdef H5
     resolveComponents().forEach(function(component) {
         const name = component.name.replace(/u-([a-zA-Z0-9-_]+)/g, 'up-$1');
 		if (name != component.name) {

@@ -39,7 +39,7 @@ export const mixin = defineMixin({
     },
     onLoad() {
         // getRect挂载到$u上，因为这方法需要使用in(this)，所以无法把它独立成一个单独的文件导出
-        this.$u.getRect = this.$uGetRect
+        this.upBindGetRect()
         if (this.upIsPageScope()) {
             this.upApplyNativeThemeUI()
             if (typeof uni !== 'undefined' && typeof uni.$on === 'function' && !this.__upPageThemeChangeHandler) {
@@ -57,7 +57,7 @@ export const mixin = defineMixin({
     },
     created() {
         // 组件当中，只有created声明周期，为了能在组件使用，故也在created中将方法挂载到$u
-        this.$u.getRect = this.$uGetRect
+        this.upBindGetRect()
         if (typeof uni !== 'undefined' && typeof uni.$on === 'function') {
             this.__uThemeChangeHandler = () => {
                 this.chacheU = null
@@ -170,6 +170,16 @@ export const mixin = defineMixin({
         }
     },
     methods: {
+        upBindGetRect() {
+            const upU = this.$u || (typeof uni !== 'undefined' ? uni.$u : null)
+            if (upU) {
+                upU.getRect = this.$uGetRect
+            } else if (typeof uni !== 'undefined') {
+                uni.$u = {
+                    getRect: this.$uGetRect
+                }
+            }
+        },
         upIsPageScope() {
             return !!(this.$page || this.route || this.$options?.mpType === 'page')
         },

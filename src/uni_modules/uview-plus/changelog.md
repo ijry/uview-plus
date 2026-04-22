@@ -1,3 +1,6 @@
+## 3.8.8（2026-04-23）
+fix: 修复nvue下白屏报错URL is not defined和 Cannot set property 'getRect' of undefined
+
 ## 3.8.7（2026-04-22）
 feat: 日历组件新增单月切换模式并适配主题变量
 
