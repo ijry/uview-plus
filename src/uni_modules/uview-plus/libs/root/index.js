@@ -1,10 +1,10 @@
-import { dirname, resolve } from 'node:path'
+import { dirname, relative, resolve } from 'node:path'
 import process from 'node:process'
 import { existsSync, mkdirSync, statSync, writeFileSync } from 'node:fs'
 
 import { createFilter, normalizePath } from 'vite'
 
-import { transformPage } from './page.js'
+import { transformNvuePage, transformPage } from './page.js'
 import { rebuildUpApp, registerUpApp } from './root.js'
 import { loadPagesJson, normalizePlatformPath, toArray } from './utils.js'
 
@@ -50,6 +50,8 @@ export default function UniUpRoot(options = {}) {
   const projectInfo = detectProjectRoot()
   const rootPath = normalizePath(projectInfo.rootPath)
   const appUpPath = normalizePath(resolve(rootPath, `${rootFileName}.vue`))
+  const nvueRootPath = normalizePath(resolve(rootPath, 'uni_modules/uview-plus/libs/root/nvue-root.vue'))
+  const themeRuntimePath = normalizePath(resolve(rootPath, 'uni_modules/uview-plus/libs/theme/runtime.js'))
   const pagesPath = normalizePath(resolve(rootPath, 'pages.json'))
   const projectBasePath = normalizePath(
     projectInfo.projectType === 'cli' ? resolve(rootPath, '..') : rootPath
@@ -64,6 +66,14 @@ export default function UniUpRoot(options = {}) {
     normalizePath(resolve(rootPath, 'main.ts')),
     normalizePath(resolve(rootPath, 'main.js')),
   ]
+
+  const getRelativeImportPath = (fromFile, toFile) => {
+    let importPath = normalizePath(relative(dirname(fromFile), toFile))
+    if (!importPath.startsWith('.')) {
+      importPath = `./${importPath}`
+    }
+    return importPath
+  }
 
   let pagesJson = []
   let pagesJsonMtimeMs = 0
@@ -124,6 +134,7 @@ export default defineConfig({
     },
     async transform(code, id) {
       let ms = null
+      const isSfcBlock = id.includes('?')
       const cleanId = normalizePath(id.split('?')[0])
 
       const filterMain = createFilter(mainFiles)
@@ -139,8 +150,17 @@ export default defineConfig({
       refreshPagesJson()
       const pageId = hasPlatformPlugin ? normalizePlatformPath(cleanId) : cleanId
       const filterPage = createFilter(pagesJson, excludedPaths)
-      if (filterPage(pageId)) {
-        ms = await transformPage(code, rootOptions.enabledGlobalRef)
+      if (!isSfcBlock && filterPage(pageId)) {
+        if (cleanId.endsWith('.nvue')) {
+          ms = await transformNvuePage(
+            code,
+            getRelativeImportPath(cleanId, nvueRootPath),
+            getRelativeImportPath(cleanId, themeRuntimePath),
+            rootOptions.enabledGlobalRef
+          )
+        } else {
+          ms = await transformPage(code, rootOptions.enabledGlobalRef)
+        }
       }
 
       if (ms) {

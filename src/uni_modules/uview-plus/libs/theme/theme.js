@@ -196,7 +196,11 @@ function buildConfigColorMap(themeColors) {
 function buildThemeCssVars(themeColors, mode = 'light') {
     const themeMode = normalizeThemeMode(mode)
     const isDark = themeMode === 'dark'
+    const runtimeColorMap = config.color || {}
     const pageBgColor = themeColors.bgColor || (isDark ? '#1f1f1f' : '#f3f4f6')
+    const navbarBgColor = runtimeColorMap['up-navbar-bg-color']
+        || runtimeColorMap['u-navbar-bg-color']
+        || (isDark ? '#1c1c1e' : '#ffffff')
     const coreVars = {
         '--u-main-color': themeColors.mainColor,
         '--u-content-color': themeColors.contentColor,
@@ -253,10 +257,10 @@ function buildThemeCssVars(themeColors, mode = 'light') {
         '--up-info-disabled': themeColors.infoDisabled,
         '--up-info-light': themeColors.infoLight,
         '--up-page-bg-color': pageBgColor,
-        '--up-card-bg-color': isDark ? '#1c1c1e' : '#ffffff'
+        '--up-card-bg-color': isDark ? '#1c1c1e' : '#ffffff',
+        '--up-navbar-bg-color': navbarBgColor
     }
     const extraVars = {}
-    const runtimeColorMap = config.color || {}
     Object.keys(runtimeColorMap).forEach((key) => {
         if (typeof key !== 'string') return
         const isThemeToken = key.indexOf('up-') === 0 || key.indexOf('u-') === 0
@@ -301,10 +305,13 @@ function applyNativeThemeUI(mode, themeColors) {
     if (typeof uni === 'undefined') return
     const isDark = normalizeThemeMode(mode) === 'dark'
     const pageBg = themeColors?.bgColor || (isDark ? '#1f1f1f' : '#f3f4f6')
+    const navBg = config.color?.['up-navbar-bg-color']
+        || config.color?.['u-navbar-bg-color']
+        || (isDark ? '#1c1c1e' : '#ffffff')
     if (typeof uni.setNavigationBarColor === 'function') {
         uni.setNavigationBarColor({
             frontColor: isDark ? '#ffffff' : '#000000',
-            backgroundColor: pageBg,
+            backgroundColor: navBg,
             animation: {
                 duration: 0,
                 timingFunc: 'linear'
@@ -316,6 +323,14 @@ function applyNativeThemeUI(mode, themeColors) {
             backgroundColor: pageBg,
             backgroundColorTop: pageBg,
             backgroundColorBottom: pageBg
+        })
+    }
+    if (typeof uni.setTabBarStyle === 'function') {
+        uni.setTabBarStyle({
+            color: isDark ? '#8e8e93' : '#909399',
+            selectedColor: isDark ? '#f2f2f7' : '#303133',
+            backgroundColor: isDark ? '#111111' : '#ffffff',
+            borderStyle: isDark ? 'white' : 'black'
         })
     }
 }

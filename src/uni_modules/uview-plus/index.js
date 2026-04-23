@@ -53,6 +53,15 @@ import {
     initThemeSystem,
     refreshThemeFromConfig
 } from './libs/theme/theme.js'
+import {
+    applyNativeThemeUI,
+    getThemeCardStyle,
+    getThemeIsDark,
+    getThemePageStyle,
+    getThemeTabBarStyle,
+    getThemeVar,
+    getThemeVarsForStyle
+} from './libs/theme/runtime.js'
 
 const rootToastState = {
     ref: null
@@ -178,6 +187,8 @@ const $u = {
     getThemePreference,
     getSystemTheme,
     getThemeVars,
+    getThemeTabBarStyle,
+    applyNativeThemeUI,
     rootToast,
     setRootToastRef,
     rootNotify,
@@ -187,6 +198,41 @@ const $u = {
 export const mount$u = function() {
     uni.$u = $u
     initThemeSystem()
+}
+
+function defineGlobalThemeHelpers(Vue) {
+    const globalProperties = Vue?.config?.globalProperties
+    if (!globalProperties) return
+    Object.defineProperty(globalProperties, 'upThemeIsDark', {
+        configurable: true,
+        get() {
+            return getThemeIsDark()
+        }
+    })
+    Object.defineProperty(globalProperties, 'upThemeVars', {
+        configurable: true,
+        get() {
+            return getThemeVarsForStyle()
+        }
+    })
+    Object.defineProperty(globalProperties, 'upThemePageStyle', {
+        configurable: true,
+        get() {
+            return getThemePageStyle()
+        }
+    })
+    Object.defineProperty(globalProperties, 'upThemeCardStyle', {
+        configurable: true,
+        get() {
+            return getThemeCardStyle()
+        }
+    })
+    globalProperties.upThemeVar = function(varName, fallbackColor) {
+        return getThemeVar(varName, fallbackColor)
+    }
+    globalProperties.upApplyNativeThemeUI = function() {
+        return applyNativeThemeUI()
+    }
 }
 
 function toCamelCase(str) {
@@ -245,6 +291,7 @@ const install = (Vue, upuiParams = '') => {
 
     if (Vue && Vue.config && Vue.config.globalProperties) {
         Vue.config.globalProperties.$u = $u
+        defineGlobalThemeHelpers(Vue)
     }
     if (Vue && typeof Vue.mixin === 'function') {
         Vue.mixin(mixin)

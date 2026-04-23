@@ -1,3 +1,12 @@
+## 3.8.9（2026-04-23）
+feat: 新增 nvue 运行时主题支持与全局主题 API
+
+- 新增 runtime.js 模块，提供主题变量动态解析、本地存储同步及原生 UI 样式应用逻辑
+- 重构 Vite 插件转换逻辑，为 nvue 页面自动注入主题根组件及响应式 Mixin/Composables
+- 在 Vue 全局属性中注册 upThemeIsDark、upThemeVar 等辅助方法，简化组件内主题调用
+- 优化主题构建逻辑，新增导航栏背景色变量支持及 TabBar 样式动态适配
+- 新增 nvue-root.vue 根组件，统一处理 nvue 页面主题刷新与系统主题变更事件监听
+
 ## 3.8.8（2026-04-23）
 fix: 修复nvue下白屏报错URL is not defined和 Cannot set property 'getRect' of undefined
 
