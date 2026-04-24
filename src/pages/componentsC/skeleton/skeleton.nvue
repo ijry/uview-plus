@@ -133,6 +133,10 @@ const switch2 = ref(false)
 </script>
 
 <style lang="scss">
+	.u-demo-block__title {
+		color: var(--up-main-color, #303133);
+	}
+
 	.u-skeleton-slot {
 		@include flex;
 		align-items: flex-start;
