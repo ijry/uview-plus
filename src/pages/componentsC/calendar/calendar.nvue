@@ -98,6 +98,38 @@
 			maxDate="2023-07-05"
 			defaultDate="2022-09-09"
 		></up-calendar>
+		<up-calendar
+			:show="show10"
+			@confirm="confirm"
+			@close="close"
+			:minDate="switchMinDate"
+			:maxDate="switchMaxDate"
+			defaultDate="2023-06-15"
+			:monthNum="36"
+			monthSwitch
+		></up-calendar>
+		<up-calendar
+			:show="show11"
+			@confirm="confirm"
+			@close="close"
+			mode="range"
+			:minDate="switchMinDate"
+			:maxDate="switchMaxDate"
+			:defaultDate="switchRangeDefaultDate"
+			:monthNum="36"
+			monthSwitch
+		></up-calendar>
+		<up-calendar
+			:show="show12"
+			@confirm="confirm"
+			@close="close"
+			mode="multiple"
+			:minDate="switchMinDate"
+			:maxDate="switchMaxDate"
+			:defaultDate="switchMultipleDefaultDate"
+			:monthNum="36"
+			monthSwitch
+		></up-calendar>
 	</view>
 </template>
 
@@ -123,12 +155,19 @@ const show6 = ref(false)
 const show7 = ref(false)
 const show8 = ref(false)
 const show9 = ref(false)
-const values = ref(['','','','','','','',''])
+const show10 = ref(false)
+const show11 = ref(false)
+const show12 = ref(false)
+const values = ref(['','','','','','','','','','','',''])
 const customThemeDefaultDate = ref([`${year}-${month}-${date}`, `${year}-${month}-${date + 5}`])
 const customTextDefaultDate = ref([`${year}-${month}-${date}`])
 const minDate = ref(`2022-08-09`)
 const maxDate = ref(`${year}-${month}-${date + 10}`)
 const defaultDateMultiple = ref([`${year}-${month}-${date}`, `${year}-${month}-${date + 1}`, `${year}-${month}-${date + 2}`])
+const switchMinDate = ref('2022-01-01')
+const switchMaxDate = ref('2024-12-31')
+const switchRangeDefaultDate = ref(['2023-06-15', '2023-06-20'])
+const switchMultipleDefaultDate = ref(['2023-06-15', '2023-07-15', '2024-06-15'])
 
 const list = ref([{
 		title: '单个日期',
@@ -160,6 +199,15 @@ const list = ref([{
 	},{
 		title: '日期最小范围',
 		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/calendar/10.png'
+	},{
+		title: '单月切换-单选',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/calendar/7.png'
+	},{
+		title: '单月切换-日期区间',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/calendar/9.png'
+	},{
+		title: '单月切换-多选',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/calendar/8.png'
 	}
 ])
 
@@ -175,6 +223,9 @@ const showCalendar = (indexVal) => {
 	show7.value = false;
 	show8.value = false;
 	show9.value = false;
+	show10.value = false;
+	show11.value = false;
+	show12.value = false;
 	const showRef = `show${indexVal + 1}`;
 	eval(`${showRef}.value = true`);
 }
@@ -212,6 +263,18 @@ const confirm = (e) => {
 			values.value[index.value - 1] = e[0];
 			break;
 		case 7:
+			e.forEach((value, indexItem) => {
+				indexItem === 0 ? values.value[index.value - 1] = value : values.value[index.value - 1] += ';' + value
+			})
+			break;
+		case 8:
+		case 9:
+			values.value[index.value - 1] = e[0];
+			break;
+		case 10:
+			values.value[index.value - 1] = e[0] + '~' + e[e.length - 1];
+			break;
+		case 11:
 			e.forEach((value, indexItem) => {
 				indexItem === 0 ? values.value[index.value - 1] = value : values.value[index.value - 1] += ';' + value
 			})

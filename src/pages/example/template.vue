@@ -1,5 +1,5 @@
 <template>
-	<view class="wrap" :style="[themeVars, { backgroundColor: pageBg }]">
+	<view class="wrap" :style="[upThemeVars, { backgroundColor: pageBg }]">
 		<page-nav :desc="desc" title="nav.template"></page-nav>
 		<view class="list-wrap">
 			<up-cell-group :title-bg-color="groupTitleBg"
@@ -26,8 +26,6 @@
 	data() {
 			return {
 				list: list,
-				activeTheme: 'light',
-				uThemeChangeHandler: null,
 				// desc: '收集众多的常用页面和布局，减少开发者的重复工作，让你专注逻辑，事半功倍'
 			}
 		},
@@ -36,38 +34,20 @@
 				return this.$t('template.desc');
 			},
 			pageBg() {
-				return this.activeTheme === 'dark' ? '#111111' : '#ffffff'
+				return this.upThemeVar('--up-page-bg-color', this.upThemeIsDark ? '#111111' : '#ffffff')
 			},
 			groupTitleBg() {
-				return this.activeTheme === 'dark' ? '#1f1f1f' : 'rgb(243, 244, 246)'
-			},
-			themeVars() {
-				if (uni.$u && uni.$u.getThemeVars) return uni.$u.getThemeVars()
-				return {}
+				return this.upThemeVar('--up-bg-color', this.upThemeIsDark ? '#1f1f1f' : 'rgb(243, 244, 246)')
 			}
-		},
-		onLoad() {
-			this.activeTheme = (uni.$u && uni.$u.theme && uni.$u.theme.mode) || 'light'
-			this.uThemeChangeHandler = (payload = {}) => {
-				this.activeTheme = payload.mode || this.activeTheme
-			}
-			uni.$on('uThemeChange', this.uThemeChangeHandler)
 		},
 		onShow() {
-			this.activeTheme = (uni.$u && uni.$u.theme && uni.$u.theme.mode) || 'light'
 			uni.setNavigationBarTitle({
 				title: this.$t('nav.template')
 			});
 		},
-		onUnload() {
-			if (this.uThemeChangeHandler) {
-				uni.$off('uThemeChange', this.uThemeChangeHandler)
-				this.uThemeChangeHandler = null
-			}
-		},
 		methods: {
 			getIcon(path) {
-				return 'https://uview-plus.jiangruyi.com/h5/static/uview/demo/' + path + '.png';
+				return '/static/uview/demo/' + path + '.png';
 			},
 			openPage(path) {
 				const route = (uni.$u && uni.$u.route) || (this.$u && this.$u.route)

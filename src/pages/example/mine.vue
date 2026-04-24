@@ -131,6 +131,10 @@ export default {
 			this.applyNativeThemeUI(this.activeTheme)
 		},
 		applyNativeThemeUI(mode) {
+			if (this.$u && typeof this.$u.applyNativeThemeUI === 'function') {
+				this.$u.applyNativeThemeUI()
+				return
+			}
 			const isDark = mode === 'dark'
 			const navBg = isDark ? '#1c1c1e' : '#ffffff'
 			const tabBg = isDark ? '#111111' : '#ffffff'

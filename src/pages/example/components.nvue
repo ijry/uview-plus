@@ -1,9 +1,15 @@
 <template>
-	<view class="wrap" :style="[{ backgroundColor: pageBg }]">
+	<page-meta>
+		<navigation-bar
+			:front-color="upThemeIsDark ? '#ffffff' : '#000000'"
+			:background-color="pageBg"
+		/>
+	</page-meta>
+	<view class="wrap" :style="[upThemePageStyle]">
 		<page-nav :desc="desc"></page-nav>
 		<view class="list-wrap">
 			<up-cell-group :title-bg-color="groupTitleBg" :title="item.groupName" v-for="(item, index) in list" :key="index">
-				<up-cell :titleStyle="{fontWeight: 500}" :title="item1.title"
+				<up-cell :titleStyle="{ fontWeight: 500 }" :title="item1.title"
 				 v-for="(item1, index1) in item.list" :key="index1" isLink @click="openPage" :name="item1.path">
 					<template v-slot:icon>
 						<image
@@ -28,38 +34,20 @@
 		data() {
 		return {
 				list: list,
-				desc: 'uview-plus 是uview2.0的vue3版本，是全面兼容nvue/鸿蒙/uni-app-x(已发布)的uni-app生态框架，全面的组件和便捷的工具会让您信手拈来，如鱼得水。',
-				activeTheme: 'light',
-				uThemeChangeHandler: null,
+				desc: 'uview-plus 是uview2.0的vue3版本，是全面兼容nvue/鸿蒙/uni-app-x(已发布)的uni-app生态框架，全面的组件和便捷的工具会让您信手拈来，如鱼得水。'
 			}
 		},
 		computed: {
 			pageBg() {
-				return this.activeTheme === 'dark' ? '#111111' : '#ffffff'
+				return this.upThemeVar('--up-page-bg-color', this.upThemeIsDark ? '#111111' : '#ffffff')
 			},
 			groupTitleBg() {
-				return this.activeTheme === 'dark' ? '#1f1f1f' : 'rgb(243, 244, 246)'
+				return this.upThemeVar('--up-bg-color', this.upThemeIsDark ? '#1f1f1f' : 'rgb(243, 244, 246)')
 			}
 		},
-        onLoad() {
-			this.activeTheme = (uni.$u && uni.$u.theme && uni.$u.theme.mode) || 'light'
-			this.uThemeChangeHandler = (payload = {}) => {
-				this.activeTheme = payload.mode || this.activeTheme
-			}
-			uni.$on('uThemeChange', this.uThemeChangeHandler)
-        },
-		onShow() {
-			this.activeTheme = (uni.$u && uni.$u.theme && uni.$u.theme.mode) || 'light'
-		},
-		onUnload() {
-			if (this.uThemeChangeHandler) {
-				uni.$off('uThemeChange', this.uThemeChangeHandler)
-				this.uThemeChangeHandler = null
-			}
-        },
 		methods: {
 			getIcon(path: string) {
-				return 'https://uview-plus.jiangruyi.com/h5/static/uview/demo/' + path + '.png';
+				return '/static/uview/demo/' + path + '.png';
 			},
 			openPage(detail: { name: string }) {
 				const path = detail.name
