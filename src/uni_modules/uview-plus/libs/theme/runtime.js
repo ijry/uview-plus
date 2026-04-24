@@ -8,15 +8,40 @@ const FALLBACK_THEME_VARS = {
         '--up-light-color': '#c0c4cc',
         '--up-border-color': '#dadbde',
         '--up-bg-color': '#f3f4f6',
+        '--up-hover-bg-color': '#e7ebf0',
         '--up-page-bg-color': '#f3f4f6',
         '--up-card-bg-color': '#ffffff',
         '--up-navbar-bg-color': '#ffffff',
+        '--up-table2-header-bg-color': '#f5f7fa',
+        '--up-table2-zebra-bg-color': '#fafafa',
+        '--up-table2-highlight-bg-color': '#f5f7fa',
+        '--up-gap-bg-color': '#f3f4f6',
+        '--up-skeleton-bg-color': '#f1f2f4',
+        '--up-skeleton-shimmer-color': '#e6e6e6',
+        '--up-swipe-action-button-bg-color': '#c7c6cd',
+        '--up-index-list-indicator-bg-color': '#c9c9c9',
+        '--up-calendar-month-mark-color': 'rgba(231, 232, 234, 0.83)',
         '--up-disabled-color': '#c8c9cc',
         '--up-primary': '#3c9cff',
+        '--up-primary-dark': '#398ade',
+        '--up-primary-disabled': '#9acafc',
+        '--up-primary-light': '#ecf5ff',
         '--up-warning': '#f9ae3d',
+        '--up-warning-dark': '#f1a532',
+        '--up-warning-disabled': '#f9d39b',
+        '--up-warning-light': '#fdf6ec',
         '--up-success': '#5ac725',
+        '--up-success-dark': '#53c21d',
+        '--up-success-disabled': '#a9e08f',
+        '--up-success-light': '#f5fff0',
         '--up-error': '#f56c6c',
-        '--up-info': '#909399'
+        '--up-error-dark': '#e45656',
+        '--up-error-disabled': '#f7b2b2',
+        '--up-error-light': '#fef0f0',
+        '--up-info': '#909399',
+        '--up-info-dark': '#767a82',
+        '--up-info-disabled': '#c4c6c9',
+        '--up-info-light': '#f4f4f5'
     },
     dark: {
         '--up-main-color': '#f5f5f5',
@@ -25,16 +50,81 @@ const FALLBACK_THEME_VARS = {
         '--up-light-color': '#6b7280',
         '--up-border-color': '#3a3a3c',
         '--up-bg-color': '#1f1f1f',
+        '--up-hover-bg-color': '#343741',
         '--up-page-bg-color': '#1f1f1f',
         '--up-card-bg-color': '#1c1c1e',
         '--up-navbar-bg-color': '#1c1c1e',
+        '--up-table2-header-bg-color': '#2a2d33',
+        '--up-table2-zebra-bg-color': '#23262b',
+        '--up-table2-highlight-bg-color': '#2f3440',
+        '--up-gap-bg-color': '#111111',
+        '--up-skeleton-bg-color': '#2f3135',
+        '--up-skeleton-shimmer-color': 'rgba(255, 255, 255, 0.12)',
+        '--up-swipe-action-button-bg-color': '#4b5563',
+        '--up-index-list-indicator-bg-color': '#4b5563',
+        '--up-calendar-month-mark-color': 'rgba(255, 255, 255, 0.04)',
         '--up-disabled-color': '#4b5563',
         '--up-primary': '#3c9cff',
+        '--up-primary-dark': '#5aa8ff',
+        '--up-primary-disabled': '#4c6f92',
+        '--up-primary-light': '#10243a',
         '--up-warning': '#f9ae3d',
+        '--up-warning-dark': '#ffbf66',
+        '--up-warning-disabled': '#8a6a3a',
+        '--up-warning-light': '#3d2f1b',
         '--up-success': '#5ac725',
+        '--up-success-dark': '#7ad94b',
+        '--up-success-disabled': '#5f7f4f',
+        '--up-success-light': '#1f3316',
         '--up-error': '#f56c6c',
-        '--up-info': '#909399'
+        '--up-error-dark': '#ff8a8a',
+        '--up-error-disabled': '#8d5858',
+        '--up-error-light': '#3a2222',
+        '--up-info': '#909399',
+        '--up-info-dark': '#b0b3b8',
+        '--up-info-disabled': '#5f6368',
+        '--up-info-light': '#2f3238'
     }
+}
+
+const THEME_COLOR_SYNC_MAP = {
+    '--up-main-color': 'mainColor',
+    '--up-content-color': 'contentColor',
+    '--up-tips-color': 'tipsColor',
+    '--up-light-color': 'lightColor',
+    '--up-border-color': 'borderColor',
+    '--up-bg-color': 'bgColor',
+    '--up-disabled-color': 'disabledColor',
+    '--up-primary': 'primary',
+    '--up-primary-dark': 'primaryDark',
+    '--up-primary-disabled': 'primaryDisabled',
+    '--up-primary-light': 'primaryLight',
+    '--up-warning': 'warning',
+    '--up-warning-dark': 'warningDark',
+    '--up-warning-disabled': 'warningDisabled',
+    '--up-warning-light': 'warningLight',
+    '--up-success': 'success',
+    '--up-success-dark': 'successDark',
+    '--up-success-disabled': 'successDisabled',
+    '--up-success-light': 'successLight',
+    '--up-error': 'error',
+    '--up-error-dark': 'errorDark',
+    '--up-error-disabled': 'errorDisabled',
+    '--up-error-light': 'errorLight',
+    '--up-info': 'info',
+    '--up-info-dark': 'infoDark',
+    '--up-info-disabled': 'infoDisabled',
+    '--up-info-light': 'infoLight'
+}
+
+function buildFallbackAliasVars(vars) {
+    const aliasVars = {}
+    Object.keys(vars).forEach((key) => {
+        if (typeof key === 'string' && key.indexOf('--up-') === 0) {
+            aliasVars[key.replace('--up-', '--u-')] = vars[key]
+        }
+    })
+    return aliasVars
 }
 
 function getRuntimeU(upU) {
@@ -88,21 +178,7 @@ function getFallbackThemeVarsByMode(mode) {
     const vars = FALLBACK_THEME_VARS[normalizeThemeMode(mode)] || FALLBACK_THEME_VARS.light
     return {
         ...vars,
-        '--u-main-color': vars['--up-main-color'],
-        '--u-content-color': vars['--up-content-color'],
-        '--u-tips-color': vars['--up-tips-color'],
-        '--u-light-color': vars['--up-light-color'],
-        '--u-border-color': vars['--up-border-color'],
-        '--u-bg-color': vars['--up-bg-color'],
-        '--u-page-bg-color': vars['--up-page-bg-color'],
-        '--u-card-bg-color': vars['--up-card-bg-color'],
-        '--u-navbar-bg-color': vars['--up-navbar-bg-color'],
-        '--u-disabled-color': vars['--up-disabled-color'],
-        '--u-primary': vars['--up-primary'],
-        '--u-warning': vars['--up-warning'],
-        '--u-success': vars['--up-success'],
-        '--u-error': vars['--up-error'],
-        '--u-info': vars['--up-info']
+        ...buildFallbackAliasVars(vars)
     }
 }
 
@@ -113,18 +189,10 @@ function getFallbackThemeVars(upU) {
 
 function syncRuntimeColor(runtimeU, vars) {
     if (!runtimeU || !runtimeU.color) return
-    runtimeU.color.mainColor = vars['--up-main-color']
-    runtimeU.color.contentColor = vars['--up-content-color']
-    runtimeU.color.tipsColor = vars['--up-tips-color']
-    runtimeU.color.lightColor = vars['--up-light-color']
-    runtimeU.color.borderColor = vars['--up-border-color']
-    runtimeU.color.bgColor = vars['--up-bg-color']
-    runtimeU.color.disabledColor = vars['--up-disabled-color']
-    runtimeU.color.primary = vars['--up-primary']
-    runtimeU.color.warning = vars['--up-warning']
-    runtimeU.color.success = vars['--up-success']
-    runtimeU.color.error = vars['--up-error']
-    runtimeU.color.info = vars['--up-info']
+    Object.keys(THEME_COLOR_SYNC_MAP).forEach((token) => {
+        const field = THEME_COLOR_SYNC_MAP[token]
+        runtimeU.color[field] = vars[token]
+    })
 }
 
 export function syncThemeRuntimeFromStorage(upU) {

@@ -27,6 +27,10 @@ export default {
             return (uni.$u && uni.$u.theme && uni.$u.theme.mode) === 'dark'
         },
         __applyNativeThemeUI() {
+            if (uni.$u && typeof uni.$u.applyNativeThemeUI === 'function') {
+                uni.$u.applyNativeThemeUI()
+                return
+            }
             const isDark = this.__isDarkMode()
             const pageBg = (uni.$u && uni.$u.color && uni.$u.color.bgColor) || (isDark ? '#1f1f1f' : '#f3f4f6')
             const navBg = pageBg
@@ -45,6 +49,14 @@ export default {
                     backgroundColor: pageBg,
                     backgroundColorTop: pageBg,
                     backgroundColorBottom: pageBg
+                })
+            }
+            if (typeof uni.setTabBarStyle === 'function') {
+                uni.setTabBarStyle({
+                    color: isDark ? '#8e8e93' : '#909399',
+                    selectedColor: isDark ? '#f2f2f7' : '#303133',
+                    backgroundColor: isDark ? '#111111' : '#ffffff',
+                    borderStyle: isDark ? 'white' : 'black'
                 })
             }
         }

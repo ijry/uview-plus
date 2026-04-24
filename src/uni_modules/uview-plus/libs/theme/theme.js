@@ -62,6 +62,31 @@ const DEFAULT_DARK_THEME_COLORS = Object.freeze({
     infoLight: '#2f3238'
 })
 
+const DEFAULT_THEME_EXTRA_VARS = Object.freeze({
+    light: Object.freeze({
+        '--up-table2-header-bg-color': '#f5f7fa',
+        '--up-table2-zebra-bg-color': '#fafafa',
+        '--up-table2-highlight-bg-color': '#f5f7fa',
+        '--up-gap-bg-color': '#f3f4f6',
+        '--up-skeleton-bg-color': '#f1f2f4',
+        '--up-skeleton-shimmer-color': '#e6e6e6',
+        '--up-swipe-action-button-bg-color': '#c7c6cd',
+        '--up-index-list-indicator-bg-color': '#c9c9c9',
+        '--up-calendar-month-mark-color': 'rgba(231, 232, 234, 0.83)'
+    }),
+    dark: Object.freeze({
+        '--up-table2-header-bg-color': '#2a2d33',
+        '--up-table2-zebra-bg-color': '#23262b',
+        '--up-table2-highlight-bg-color': '#2f3440',
+        '--up-gap-bg-color': '#111111',
+        '--up-skeleton-bg-color': '#2f3135',
+        '--up-skeleton-shimmer-color': 'rgba(255, 255, 255, 0.12)',
+        '--up-swipe-action-button-bg-color': '#4b5563',
+        '--up-index-list-indicator-bg-color': '#4b5563',
+        '--up-calendar-month-mark-color': 'rgba(255, 255, 255, 0.04)'
+    })
+})
+
 export const themeState = {
     preference: 'system',
     mode: 'light',
@@ -129,18 +154,33 @@ function getCurrentLightThemeColors() {
     const safeConfigColor = config.color || {}
     return {
         ...DEFAULT_LIGHT_THEME_COLORS,
-        primary: color.primary || DEFAULT_LIGHT_THEME_COLORS.primary,
-        info: color.info || DEFAULT_LIGHT_THEME_COLORS.info,
-        warning: color.warning || DEFAULT_LIGHT_THEME_COLORS.warning,
-        error: color.error || DEFAULT_LIGHT_THEME_COLORS.error,
-        success: color.success || DEFAULT_LIGHT_THEME_COLORS.success,
-        mainColor: color.mainColor || DEFAULT_LIGHT_THEME_COLORS.mainColor,
-        contentColor: color.contentColor || DEFAULT_LIGHT_THEME_COLORS.contentColor,
-        tipsColor: color.tipsColor || DEFAULT_LIGHT_THEME_COLORS.tipsColor,
-        lightColor: color.lightColor || DEFAULT_LIGHT_THEME_COLORS.lightColor,
-        borderColor: color.borderColor || DEFAULT_LIGHT_THEME_COLORS.borderColor,
-        bgColor: safeConfigColor['u-bg-color'] || DEFAULT_LIGHT_THEME_COLORS.bgColor,
-        disabledColor: safeConfigColor['u-disabled-color'] || DEFAULT_LIGHT_THEME_COLORS.disabledColor
+        primary: color.primary || safeConfigColor['u-primary'] || safeConfigColor['up-primary'] || DEFAULT_LIGHT_THEME_COLORS.primary,
+        info: color.info || safeConfigColor['u-info'] || safeConfigColor['up-info'] || DEFAULT_LIGHT_THEME_COLORS.info,
+        warning: color.warning || safeConfigColor['u-warning'] || safeConfigColor['up-warning'] || DEFAULT_LIGHT_THEME_COLORS.warning,
+        error: color.error || safeConfigColor['u-error'] || safeConfigColor['up-error'] || DEFAULT_LIGHT_THEME_COLORS.error,
+        success: color.success || safeConfigColor['u-success'] || safeConfigColor['up-success'] || DEFAULT_LIGHT_THEME_COLORS.success,
+        mainColor: color.mainColor || safeConfigColor['u-main-color'] || safeConfigColor['up-main-color'] || DEFAULT_LIGHT_THEME_COLORS.mainColor,
+        contentColor: color.contentColor || safeConfigColor['u-content-color'] || safeConfigColor['up-content-color'] || DEFAULT_LIGHT_THEME_COLORS.contentColor,
+        tipsColor: color.tipsColor || safeConfigColor['u-tips-color'] || safeConfigColor['up-tips-color'] || DEFAULT_LIGHT_THEME_COLORS.tipsColor,
+        lightColor: color.lightColor || safeConfigColor['u-light-color'] || safeConfigColor['up-light-color'] || DEFAULT_LIGHT_THEME_COLORS.lightColor,
+        borderColor: color.borderColor || safeConfigColor['u-border-color'] || safeConfigColor['up-border-color'] || DEFAULT_LIGHT_THEME_COLORS.borderColor,
+        bgColor: safeConfigColor['u-bg-color'] || safeConfigColor['up-bg-color'] || DEFAULT_LIGHT_THEME_COLORS.bgColor,
+        disabledColor: safeConfigColor['u-disabled-color'] || safeConfigColor['up-disabled-color'] || DEFAULT_LIGHT_THEME_COLORS.disabledColor,
+        primaryDark: safeConfigColor['u-primary-dark'] || safeConfigColor['up-primary-dark'] || DEFAULT_LIGHT_THEME_COLORS.primaryDark,
+        primaryDisabled: safeConfigColor['u-primary-disabled'] || safeConfigColor['up-primary-disabled'] || DEFAULT_LIGHT_THEME_COLORS.primaryDisabled,
+        primaryLight: safeConfigColor['u-primary-light'] || safeConfigColor['up-primary-light'] || DEFAULT_LIGHT_THEME_COLORS.primaryLight,
+        warningDark: safeConfigColor['u-warning-dark'] || safeConfigColor['up-warning-dark'] || DEFAULT_LIGHT_THEME_COLORS.warningDark,
+        warningDisabled: safeConfigColor['u-warning-disabled'] || safeConfigColor['up-warning-disabled'] || DEFAULT_LIGHT_THEME_COLORS.warningDisabled,
+        warningLight: safeConfigColor['u-warning-light'] || safeConfigColor['up-warning-light'] || DEFAULT_LIGHT_THEME_COLORS.warningLight,
+        successDark: safeConfigColor['u-success-dark'] || safeConfigColor['up-success-dark'] || DEFAULT_LIGHT_THEME_COLORS.successDark,
+        successDisabled: safeConfigColor['u-success-disabled'] || safeConfigColor['up-success-disabled'] || DEFAULT_LIGHT_THEME_COLORS.successDisabled,
+        successLight: safeConfigColor['u-success-light'] || safeConfigColor['up-success-light'] || DEFAULT_LIGHT_THEME_COLORS.successLight,
+        errorDark: safeConfigColor['u-error-dark'] || safeConfigColor['up-error-dark'] || DEFAULT_LIGHT_THEME_COLORS.errorDark,
+        errorDisabled: safeConfigColor['u-error-disabled'] || safeConfigColor['up-error-disabled'] || DEFAULT_LIGHT_THEME_COLORS.errorDisabled,
+        errorLight: safeConfigColor['u-error-light'] || safeConfigColor['up-error-light'] || DEFAULT_LIGHT_THEME_COLORS.errorLight,
+        infoDark: safeConfigColor['u-info-dark'] || safeConfigColor['up-info-dark'] || DEFAULT_LIGHT_THEME_COLORS.infoDark,
+        infoDisabled: safeConfigColor['u-info-disabled'] || safeConfigColor['up-info-disabled'] || DEFAULT_LIGHT_THEME_COLORS.infoDisabled,
+        infoLight: safeConfigColor['u-info-light'] || safeConfigColor['up-info-light'] || DEFAULT_LIGHT_THEME_COLORS.infoLight
     }
 }
 
@@ -167,10 +207,25 @@ function getThemeColorsByMode(mode) {
 function buildConfigColorMap(themeColors) {
     return {
         'u-primary': themeColors.primary,
+        'u-primary-dark': themeColors.primaryDark,
+        'u-primary-disabled': themeColors.primaryDisabled,
+        'u-primary-light': themeColors.primaryLight,
         'u-warning': themeColors.warning,
+        'u-warning-dark': themeColors.warningDark,
+        'u-warning-disabled': themeColors.warningDisabled,
+        'u-warning-light': themeColors.warningLight,
         'u-success': themeColors.success,
+        'u-success-dark': themeColors.successDark,
+        'u-success-disabled': themeColors.successDisabled,
+        'u-success-light': themeColors.successLight,
         'u-error': themeColors.error,
+        'u-error-dark': themeColors.errorDark,
+        'u-error-disabled': themeColors.errorDisabled,
+        'u-error-light': themeColors.errorLight,
         'u-info': themeColors.info,
+        'u-info-dark': themeColors.infoDark,
+        'u-info-disabled': themeColors.infoDisabled,
+        'u-info-light': themeColors.infoLight,
         'u-main-color': themeColors.mainColor,
         'u-content-color': themeColors.contentColor,
         'u-tips-color': themeColors.tipsColor,
@@ -179,10 +234,25 @@ function buildConfigColorMap(themeColors) {
         'u-bg-color': themeColors.bgColor,
         'u-disabled-color': themeColors.disabledColor,
         'up-primary': themeColors.primary,
+        'up-primary-dark': themeColors.primaryDark,
+        'up-primary-disabled': themeColors.primaryDisabled,
+        'up-primary-light': themeColors.primaryLight,
         'up-warning': themeColors.warning,
+        'up-warning-dark': themeColors.warningDark,
+        'up-warning-disabled': themeColors.warningDisabled,
+        'up-warning-light': themeColors.warningLight,
         'up-success': themeColors.success,
+        'up-success-dark': themeColors.successDark,
+        'up-success-disabled': themeColors.successDisabled,
+        'up-success-light': themeColors.successLight,
         'up-error': themeColors.error,
+        'up-error-dark': themeColors.errorDark,
+        'up-error-disabled': themeColors.errorDisabled,
+        'up-error-light': themeColors.errorLight,
         'up-info': themeColors.info,
+        'up-info-dark': themeColors.infoDark,
+        'up-info-disabled': themeColors.infoDisabled,
+        'up-info-light': themeColors.infoLight,
         'up-main-color': themeColors.mainColor,
         'up-content-color': themeColors.contentColor,
         'up-tips-color': themeColors.tipsColor,
@@ -193,11 +263,30 @@ function buildConfigColorMap(themeColors) {
     }
 }
 
+function buildAliasCssVars(vars = {}) {
+    const aliasVars = {}
+    Object.keys(vars).forEach((key) => {
+        if (typeof key !== 'string') return
+        if (key.indexOf('--up-') === 0) {
+            aliasVars[key.replace('--up-', '--u-')] = vars[key]
+            return
+        }
+        if (key.indexOf('--u-') === 0) {
+            aliasVars[key.replace('--u-', '--up-')] = vars[key]
+        }
+    })
+    return aliasVars
+}
+
 function buildThemeCssVars(themeColors, mode = 'light') {
     const themeMode = normalizeThemeMode(mode)
     const isDark = themeMode === 'dark'
     const runtimeColorMap = config.color || {}
+    const defaultExtraVars = DEFAULT_THEME_EXTRA_VARS[themeMode] || DEFAULT_THEME_EXTRA_VARS.light
     const pageBgColor = themeColors.bgColor || (isDark ? '#1f1f1f' : '#f3f4f6')
+    const hoverBgColor = runtimeColorMap['up-hover-bg-color']
+        || runtimeColorMap['u-hover-bg-color']
+        || (isDark ? '#343741' : '#e7ebf0')
     const navbarBgColor = runtimeColorMap['up-navbar-bg-color']
         || runtimeColorMap['u-navbar-bg-color']
         || (isDark ? '#1c1c1e' : '#ffffff')
@@ -208,6 +297,7 @@ function buildThemeCssVars(themeColors, mode = 'light') {
         '--u-light-color': themeColors.lightColor,
         '--u-border-color': themeColors.borderColor,
         '--u-bg-color': themeColors.bgColor,
+        '--u-hover-bg-color': hoverBgColor,
         '--u-disabled-color': themeColors.disabledColor,
         '--u-primary': themeColors.primary,
         '--u-primary-dark': themeColors.primaryDark,
@@ -235,6 +325,7 @@ function buildThemeCssVars(themeColors, mode = 'light') {
         '--up-light-color': themeColors.lightColor,
         '--up-border-color': themeColors.borderColor,
         '--up-bg-color': themeColors.bgColor,
+        '--up-hover-bg-color': hoverBgColor,
         '--up-disabled-color': themeColors.disabledColor,
         '--up-primary': themeColors.primary,
         '--up-primary-dark': themeColors.primaryDark,
@@ -274,7 +365,10 @@ function buildThemeCssVars(themeColors, mode = 'light') {
     })
     return {
         ...coreVars,
-        ...extraVars
+        ...defaultExtraVars,
+        ...buildAliasCssVars(defaultExtraVars),
+        ...extraVars,
+        ...buildAliasCssVars(extraVars)
     }
 }
 
@@ -341,11 +435,26 @@ function applyTheme(mode = 'light') {
     const themeVars = buildThemeCssVars(themeColors, themeMode)
     index.shallowMerge(color, {
         primary: themeColors.primary,
+        primaryDark: themeColors.primaryDark,
+        primaryDisabled: themeColors.primaryDisabled,
+        primaryLight: themeColors.primaryLight,
         info: themeColors.info,
+        infoDark: themeColors.infoDark,
+        infoDisabled: themeColors.infoDisabled,
+        infoLight: themeColors.infoLight,
         default: themeColors.info,
         warning: themeColors.warning,
+        warningDark: themeColors.warningDark,
+        warningDisabled: themeColors.warningDisabled,
+        warningLight: themeColors.warningLight,
         error: themeColors.error,
+        errorDark: themeColors.errorDark,
+        errorDisabled: themeColors.errorDisabled,
+        errorLight: themeColors.errorLight,
         success: themeColors.success,
+        successDark: themeColors.successDark,
+        successDisabled: themeColors.successDisabled,
+        successLight: themeColors.successLight,
         mainColor: themeColors.mainColor,
         contentColor: themeColors.contentColor,
         tipsColor: themeColors.tipsColor,

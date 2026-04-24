@@ -23,6 +23,8 @@
 </template>
 
 <script>
+	import { getThemeIsDark, getThemeVar, syncThemeRuntimeFromStorage } from '@/uni_modules/uview-plus/libs/theme/runtime.js'
+
 	export default {
 		props: {
 			desc: String,
@@ -33,20 +35,35 @@
 				// version: uni.$u.config.v,
 				version: '3.x',
 				themeVersion: 0,
-				uThemeChangeHandler: null
+				themeChangeHandler: null
 			}
+		},
+		created() {
+			this.syncTheme()
+			if (typeof uni !== 'undefined' && typeof uni.$on === 'function') {
+				this.themeChangeHandler = (payload = {}) => {
+					this.syncTheme(payload)
+				}
+				uni.$on('uThemeChange', this.themeChangeHandler)
+			}
+		},
+		beforeUnmount() {
+			if (this.themeChangeHandler && typeof uni !== 'undefined' && typeof uni.$off === 'function') {
+				uni.$off('uThemeChange', this.themeChangeHandler)
+			}
+			this.themeChangeHandler = null
 		},
 		computed: {
 			themeColors() {
-				// 引入版本依赖，确保切换主题后触发重新计算
 				this.themeVersion
-				const fallback = {
-					mainColor: '#303133',
-					tipsColor: '#909193',
-					contentColor: '#606266',
-					primary: '#3c9cff'
+				const runtimeU = typeof uni !== 'undefined' ? uni.$u : null
+				const isDark = getThemeIsDark(runtimeU)
+				return {
+					mainColor: getThemeVar('--up-main-color', isDark ? '#f5f5f5' : '#303133', runtimeU),
+					tipsColor: getThemeVar('--up-tips-color', isDark ? '#9ca3af' : '#909193', runtimeU),
+					contentColor: getThemeVar('--up-content-color', isDark ? '#d1d5db' : '#606266', runtimeU),
+					primary: getThemeVar('--up-primary', '#3c9cff', runtimeU)
 				}
-				return (uni.$u && uni.$u.color) || fallback
 			},
 			titleStyle() {
 				return {
@@ -69,23 +86,12 @@
 				}
 			}
 		},
-		created() {
-			this.themeVersion = (uni.$u && uni.$u.theme && uni.$u.theme.version) || 0
-			this.uThemeChangeHandler = (payload = {}) => {
-				this.themeVersion = payload.version || this.themeVersion + 1
-			}
-			uni.$on('uThemeChange', this.uThemeChangeHandler)
-		},
-		mounted() {
-			this.themeVersion = (uni.$u && uni.$u.theme && uni.$u.theme.version) || this.themeVersion
-		},
-		beforeUnmount() {
-			if (this.uThemeChangeHandler) {
-				uni.$off('uThemeChange', this.uThemeChangeHandler)
-				this.uThemeChangeHandler = null
-			}
-		},
 		methods: {
+			syncTheme(payload = {}) {
+				syncThemeRuntimeFromStorage(typeof uni !== 'undefined' ? uni.$u : null)
+				const runtimeVersion = Number((uni.$u && uni.$u.theme && uni.$u.theme.version) || 0)
+				this.themeVersion = Number(payload.version || runtimeVersion || this.themeVersion + 1)
+			},
 			jumpToWx() {
 				// #ifdef MP-WEIXIN
 				// uni.navigateToMiniProgram({

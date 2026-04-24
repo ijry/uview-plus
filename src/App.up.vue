@@ -14,11 +14,17 @@ const getThemeBgColor = () => {
 	return uni.$u.color.bgColor || '#f3f4f6'
 }
 
+const getThemePageBgColor = () => {
+	const themeVars = getThemeVars()
+	return themeVars['--up-page-bg-color'] || themeVars['--up-bg-color'] || getThemeBgColor()
+}
+
 const buildRootStyle = () => {
 	// #ifdef APP-NVUE
 	return {
+		...getThemeVars(),
 		minHeight: '100vh',
-		backgroundColor: getThemeBgColor()
+		backgroundColor: getThemePageBgColor()
 	}
 	// #endif
 	// #ifndef APP-NVUE
@@ -33,6 +39,9 @@ const buildRootStyle = () => {
 
 const refreshRootStyle = () => {
 	upRootStyle.value = buildRootStyle()
+	if (typeof uni !== 'undefined' && uni.$u && typeof uni.$u.applyNativeThemeUI === 'function') {
+		uni.$u.applyNativeThemeUI()
+	}
 }
 
 const showGlobalMessage = (message = 'UpRoot bridge ok') => {

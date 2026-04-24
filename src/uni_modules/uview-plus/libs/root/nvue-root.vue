@@ -5,16 +5,21 @@
 </template>
 
 <script>
-import { applyNativeThemeUI, getThemePageStyle, syncThemeRuntimeFromStorage } from '../theme/runtime.js'
+import { applyNativeThemeUI, getThemePageStyle, getThemeVarsForStyle, syncThemeRuntimeFromStorage } from '../theme/runtime.js'
 
 export default {
   name: 'UpNvueRoot',
   data() {
     return {
-      rootStyle: getThemePageStyle()
+      rootStyle: {
+        ...getThemeVarsForStyle(),
+        ...getThemePageStyle()
+      },
+      minPageHeight: '0px'
     }
   },
   created() {
+    this.syncPageHeight()
     this.refreshRootStyle()
     this.themeChangeHandler = () => {
       this.refreshRootStyle()
@@ -33,14 +38,26 @@ export default {
     this.themeChangeHandler = null
   },
   methods: {
+    syncPageHeight() {
+      let windowHeight = 0
+      try {
+        if (typeof uni !== 'undefined' && typeof uni.getWindowInfo === 'function') {
+          windowHeight = Number((uni.getWindowInfo() || {}).windowHeight || 0)
+        } else if (typeof uni !== 'undefined' && typeof uni.getSystemInfoSync === 'function') {
+          windowHeight = Number((uni.getSystemInfoSync() || {}).windowHeight || 0)
+        }
+      } catch (e) {
+        windowHeight = 0
+      }
+      this.minPageHeight = `${windowHeight || 0}px`
+    },
     refreshRootStyle() {
       syncThemeRuntimeFromStorage()
       this.rootStyle = {
+        ...getThemeVarsForStyle(),
         ...getThemePageStyle(),
-        flex: 1,
-        width: '750rpx',
-        height: '100%',
-        minHeight: '100%'
+        minHeight: this.minPageHeight,
+        width: '750rpx'
       }
       applyNativeThemeUI()
     }
@@ -50,7 +67,6 @@ export default {
 
 <style>
 .up-nvue-root {
-    flex: 1;
     width: 750rpx;
 }
 </style>

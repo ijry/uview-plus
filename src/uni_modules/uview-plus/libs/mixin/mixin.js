@@ -2,6 +2,16 @@ import { defineMixin } from '../vue'
 import { deepMerge, $parent, sleep } from '../function/index'
 import test from '../function/test'
 import route from '../util/route'
+import {
+    applyNativeThemeUI,
+    applyNativeThemeUIDeferred,
+    getThemeCardStyle,
+    getThemeIsDark,
+    getThemePageStyle,
+    getThemeVar,
+    getThemeVarsForStyle,
+    syncThemeRuntimeFromStorage
+} from '../theme/runtime'
 // #ifdef APP-NVUE
 // 由于weex为阿里的KPI业绩考核的产物，所以不支持百分比单位，这里需要通过dom查询组件的宽度
 const dom = (typeof uni !== 'undefined' && uni && typeof uni.requireNativePlugin === 'function')
@@ -34,12 +44,14 @@ export const mixin = defineMixin({
     },
     data() {
         return {
-            __upPageThemeChangeHandler: null
+            __upPageThemeChangeHandler: null,
+            upThemeVersion: 0
         }
     },
     onLoad() {
         // getRect挂载到$u上，因为这方法需要使用in(this)，所以无法把它独立成一个单独的文件导出
         this.upBindGetRect()
+        this.upInitThemeVersion()
         if (this.upIsPageScope()) {
             this.upApplyNativeThemeUI()
             if (typeof uni !== 'undefined' && typeof uni.$on === 'function' && !this.__upPageThemeChangeHandler) {
@@ -58,8 +70,10 @@ export const mixin = defineMixin({
     created() {
         // 组件当中，只有created声明周期，为了能在组件使用，故也在created中将方法挂载到$u
         this.upBindGetRect()
+        this.upInitThemeVersion()
         if (typeof uni !== 'undefined' && typeof uni.$on === 'function') {
-            this.__uThemeChangeHandler = () => {
+            this.__uThemeChangeHandler = (payload = {}) => {
+                this.upSyncThemeVersion(payload)
                 this.chacheU = null
                 if (typeof this.$forceUpdate === 'function') {
                     this.$forceUpdate()
@@ -73,6 +87,7 @@ export const mixin = defineMixin({
         // 所以这里通过computed计算属性将其附加到this.$u上，就可以在模板或者js中使用uni.$u.xxx
         // 只在nvue环境通过此方式引入完整的$u，其他平台会出现性能问题，非nvue则按需引入（主要原因是props过大）
         $u() {
+            this.upThemeVersion
             // #ifndef APP-NVUE
             // 在非nvue端，移除props，http，mixin等对象，避免在小程序setData时数据过大影响性能
             let mergeU = deepMerge(uni.$u, {
@@ -91,49 +106,20 @@ export const mixin = defineMixin({
             // #endif
         },
         upThemeIsDark() {
-            return this.$u?.theme?.mode === 'dark'
+            this.upThemeVersion
+            return getThemeIsDark(this.$u)
         },
         upThemeVars() {
-            // #ifdef APP-NVUE
-            return {}
-            // #endif
-            // #ifndef APP-NVUE
-            if (this.$u && typeof this.$u.getThemeVars === 'function') {
-                return this.$u.getThemeVars()
-            }
-            return {}
-            // #endif
+            this.upThemeVersion
+            return getThemeVarsForStyle(this.$u)
         },
         upThemePageStyle() {
-            // #ifdef APP-NVUE
-            return {
-                backgroundColor: (this.$u?.color?.bgColor) || '#f3f4f6'
-            }
-            // #endif
-            // #ifndef APP-NVUE
-            const fallbackBg = (this.$u?.color?.bgColor) || '#f3f4f6'
-            return {
-                ...this.upThemeVars,
-                minHeight: '100vh',
-                backgroundColor: `var(--up-page-bg-color, var(--up-bg-color, ${fallbackBg}))`
-            }
-            // #endif
+            this.upThemeVersion
+            return getThemePageStyle(this.$u)
         },
         upThemeCardStyle() {
-            const fallbackCard = this.upThemeIsDark ? '#1c1c1e' : '#ffffff'
-            const fallbackBorder = (this.$u?.color?.borderColor) || '#dadbde'
-            // #ifdef APP-NVUE
-            return {
-                backgroundColor: fallbackCard,
-                borderColor: fallbackBorder
-            }
-            // #endif
-            // #ifndef APP-NVUE
-            return {
-                backgroundColor: `var(--up-card-bg-color, ${fallbackCard})`,
-                borderColor: `var(--up-border-color, ${fallbackBorder})`
-            }
-            // #endif
+            this.upThemeVersion
+            return getThemeCardStyle(this.$u)
         },
         /**
          * 生成bem规则类名
@@ -180,6 +166,19 @@ export const mixin = defineMixin({
                 }
             }
         },
+        upReadThemeVersion() {
+            return Number((typeof uni !== 'undefined' && uni.$u && uni.$u.theme && uni.$u.theme.version) || 0)
+        },
+        upInitThemeVersion() {
+            const version = this.upReadThemeVersion()
+            if (version) {
+                this.upThemeVersion = version
+            }
+        },
+        upSyncThemeVersion(payload = {}) {
+            const version = Number(payload.version || this.upReadThemeVersion() || 0)
+            this.upThemeVersion = version || Number(this.upThemeVersion || 0) + 1
+        },
         upIsPageScope() {
             return !!(this.$page || this.route || this.$options?.mpType === 'page')
         },
@@ -190,66 +189,13 @@ export const mixin = defineMixin({
                 || Object.prototype.hasOwnProperty.call(vnodeProps, kebabName)
         },
         upThemeVar(varName, fallbackColor) {
-            // #ifdef APP-NVUE
-            const themeVars = this.$u?.theme?.vars
-            if (themeVars && Object.prototype.hasOwnProperty.call(themeVars, varName)) {
-                return themeVars[varName]
-            }
-            if (typeof varName === 'string') {
-                const aliasVarName = varName.indexOf('--up-') === 0
-                    ? varName.replace('--up-', '--u-')
-                    : (varName.indexOf('--u-') === 0 ? varName.replace('--u-', '--up-') : '')
-                if (aliasVarName && themeVars && Object.prototype.hasOwnProperty.call(themeVars, aliasVarName)) {
-                    return themeVars[aliasVarName]
-                }
-                const runtimeColorMap = this.$u?.config?.color || {}
-                const colorTokenKey = varName.indexOf('--') === 0 ? varName.slice(2) : varName
-                if (Object.prototype.hasOwnProperty.call(runtimeColorMap, colorTokenKey)) {
-                    return runtimeColorMap[colorTokenKey]
-                }
-                const aliasColorTokenKey = colorTokenKey.indexOf('up-') === 0
-                    ? colorTokenKey.replace('up-', 'u-')
-                    : (colorTokenKey.indexOf('u-') === 0 ? colorTokenKey.replace('u-', 'up-') : '')
-                if (aliasColorTokenKey && Object.prototype.hasOwnProperty.call(runtimeColorMap, aliasColorTokenKey)) {
-                    return runtimeColorMap[aliasColorTokenKey]
-                }
-            }
-            if (this.$u && typeof this.$u.getThemeVars === 'function') {
-                const vars = this.$u.getThemeVars()
-                if (vars && Object.prototype.hasOwnProperty.call(vars, varName)) {
-                    return vars[varName]
-                }
-            }
-            return typeof fallbackColor !== 'undefined' ? fallbackColor : ''
-            // #endif
-            // #ifndef APP-NVUE
-            if (typeof fallbackColor === 'undefined') {
-                return `var(${varName})`
-            }
-            return `var(${varName}, ${fallbackColor})`
-            // #endif
+            this.upThemeVersion
+            return getThemeVar(varName, fallbackColor, this.$u)
         },
         upApplyNativeThemeUI() {
-            if (typeof uni === 'undefined') return
-            const isDark = this.upThemeIsDark
-            const pageBg = this.$u?.color?.bgColor || (isDark ? '#1f1f1f' : '#f3f4f6')
-            if (typeof uni.setNavigationBarColor === 'function') {
-                uni.setNavigationBarColor({
-                    frontColor: isDark ? '#ffffff' : '#000000',
-                    backgroundColor: pageBg,
-                    animation: {
-                        duration: 0,
-                        timingFunc: 'linear'
-                    }
-                })
-            }
-            if (typeof uni.setBackgroundColor === 'function') {
-                uni.setBackgroundColor({
-                    backgroundColor: pageBg,
-                    backgroundColorTop: pageBg,
-                    backgroundColorBottom: pageBg
-                })
-            }
+            syncThemeRuntimeFromStorage(this.$u)
+            this.upSyncThemeVersion()
+            applyNativeThemeUIDeferred(this.$u)
         },
         // 跳转某一个页面
         openPage(urlKey = 'url') {

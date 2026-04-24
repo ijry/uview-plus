@@ -7,6 +7,7 @@ body {
 	--up-light-color: #c0c4cc;
 	--up-border-color: #dadbde;
 	--up-bg-color: #f3f4f6;
+	--up-hover-bg-color: #e7ebf0;
 	--up-page-bg-color: #f3f4f6;
 	--up-card-bg-color: #ffffff;
 	--up-disabled-color: #c8c9cc;
@@ -44,6 +45,7 @@ body {
 	--up-skeleton-shimmer-color: #e6e6e6;
 	--up-swipe-action-button-bg-color: #c7c6cd;
 	--up-index-list-indicator-bg-color: #c9c9c9;
+	--up-calendar-month-mark-color: rgba(231, 232, 234, 0.83);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -56,6 +58,7 @@ body {
 		--up-light-color: #6b7280;
 		--up-border-color: #3a3a3c;
 		--up-bg-color: #1f1f1f;
+		--up-hover-bg-color: #343741;
 		--up-page-bg-color: #1f1f1f;
 		--up-card-bg-color: #1c1c1e;
 		--up-disabled-color: #4b5563;
@@ -93,6 +96,7 @@ body {
 		--up-skeleton-shimmer-color: rgba(255, 255, 255, 0.12);
 		--up-swipe-action-button-bg-color: #4b5563;
 		--up-index-list-indicator-bg-color: #4b5563;
+		--up-calendar-month-mark-color: rgba(255, 255, 255, 0.04);
 	}
 }
 
@@ -103,6 +107,7 @@ body {
 	--up-light-color: #c0c4cc;
 	--up-border-color: #dadbde;
 	--up-bg-color: #f3f4f6;
+	--up-hover-bg-color: #e7ebf0;
 	--up-page-bg-color: #f3f4f6;
 	--up-card-bg-color: #ffffff;
 	--up-disabled-color: #c8c9cc;
@@ -140,6 +145,7 @@ body {
 	--up-skeleton-shimmer-color: #e6e6e6;
 	--up-swipe-action-button-bg-color: #c7c6cd;
 	--up-index-list-indicator-bg-color: #c9c9c9;
+	--up-calendar-month-mark-color: rgba(231, 232, 234, 0.83);
 }
 
 [data-up-theme='dark'] {
@@ -149,6 +155,7 @@ body {
 	--up-light-color: #6b7280;
 	--up-border-color: #3a3a3c;
 	--up-bg-color: #1f1f1f;
+	--up-hover-bg-color: #343741;
 	--up-page-bg-color: #1f1f1f;
 	--up-card-bg-color: #1c1c1e;
 	--up-disabled-color: #4b5563;
@@ -186,4 +193,5 @@ body {
 	--up-skeleton-shimmer-color: rgba(255, 255, 255, 0.12);
 	--up-swipe-action-button-bg-color: #4b5563;
 	--up-index-list-indicator-bg-color: #4b5563;
+	--up-calendar-month-mark-color: rgba(255, 255, 255, 0.04);
 }
