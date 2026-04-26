@@ -1,34 +1,81 @@
 <template>
-    <view class="u-page">
-      <view class="u-page__item">
-          <text class="u-page__item__title" style="margin-top: 0;">默认</text>
-          <view class="u-page__item__content">
-            <up-tree
-                :data="treeData"
-                :props="defaultProps"
-                @node-click="handleNodeClick"
-                @check-change="handleCheckChange"
-            />
-          </view>
+  <view class="u-page">
+    <view class="u-page__item">
+      <text class="u-page__item__title">基础用法</text>
+      <view class="u-page__item__content">
+        <up-tree
+          :data="treeData"
+          :props="defaultProps"
+          :default-expanded-keys="['1']"
+          highlight-current
+          current-node-key="1"
+          @node-click="handleNodeClick"
+          @node-expand="handleNodeExpand"
+        />
       </view>
-      <view class="u-page__item">
-          <text class="u-page__item__title" style="margin-top: 0;">复选框</text>
-          <view class="u-page__item__content">
-            <up-tree
-                :data="treeData1"
-                :props="defaultProps"
-                show-checkbox
-                default-expand-all
-                @node-click="handleNodeClick"
-                @check-change="handleCheckChange">
-                <template #default="{ node, level }">
-                    <view class="custom-tree-node">
-                        <text style="color: red">{{ node.label }}*{{level}}</text>
-                    </view>
-                </template>
-            </up-tree>
-          </view>
+    </view>
+
+    <view class="u-page__item">
+      <text class="u-page__item__title">自定义节点</text>
+      <view class="u-page__item__content">
+        <up-tree
+          :data="customTreeData"
+          :props="defaultProps"
+          default-expand-all
+          :indent="40"
+          @node-click="handleNodeClick"
+        >
+          <template #default="{ node, level, expanded }">
+            <view class="custom-tree-node">
+              <text class="custom-tree-node__label">{{ node.label }}</text>
+              <text v-if="node.tag" class="custom-tree-node__tag">{{ node.tag }}</text>
+              <text v-if="node.children && node.children.length" class="custom-tree-node__state">
+                {{ expanded ? '已展开' : '已收起' }} · {{ level }}级
+              </text>
+            </view>
+          </template>
+        </up-tree>
       </view>
+    </view>
+
+    <view class="u-page__item">
+      <text class="u-page__item__title">复选框</text>
+      <view class="u-page__item__content">
+        <up-tree
+          ref="checkTree"
+          :data="checkTreeData"
+          :props="defaultProps"
+          show-checkbox
+          default-expand-all
+          check-on-click-node
+          :default-checked-keys="['2-1-1']"
+          @check-change="handleCheckChange"
+          @check="handleCheck"
+        />
+        <view class="tree-actions">
+          <view class="tree-action-button">
+            <up-button size="mini" type="primary" text="设置选中" @click="setCheckedKeys" />
+          </view>
+          <view class="tree-action-button">
+            <up-button size="mini" text="读取选中" @click="getCheckedKeys" />
+          </view>
+        </view>
+        <text class="tree-result">当前选中：{{ checkedKeysText }}</text>
+      </view>
+    </view>
+
+    <view class="u-page__item">
+      <text class="u-page__item__title">手风琴模式</text>
+      <view class="u-page__item__content">
+        <up-tree
+          :data="accordionTreeData"
+          :props="defaultProps"
+          accordion
+          expand-on-click-node
+          @node-click="handleNodeClick"
+        />
+      </view>
+    </view>
   </view>
 </template>
 
@@ -36,42 +83,90 @@
 export default {
   data() {
     return {
+      checkedKeysText: '2-1-1',
       defaultProps: {
         label: 'label',
         children: 'children',
-        nodeKey: 'id'
+        nodeKey: 'id',
+        disabled: 'disabled'
       },
       treeData: [
         {
-          id: 1,
+          id: '1',
           label: '一级 1',
           children: [
             {
-              id: 4,
+              id: '1-1',
               label: '二级 1-1',
               children: [
-                { id: 9, label: '三级 1-1-1' },
-                { id: 10, label: '三级 1-1-2' }
+                { id: '1-1-1', label: '三级 1-1-1' },
+                { id: '1-1-2', label: '三级 1-1-2' }
               ]
-            }
+            },
+            { id: '1-2', label: '二级 1-2' }
           ]
         },
-      ],
-      treeData1: [
         {
-          id: 1,
-          label: '一级 1',
+          id: '2',
+          label: '一级 2',
+          children: [
+            { id: '2-1', label: '二级 2-1' },
+            { id: '2-2', label: '二级 2-2' }
+          ]
+        }
+      ],
+      customTreeData: [
+        {
+          id: 'custom-1',
+          label: '设计资源',
+          tag: '目录',
+          children: [
+            { id: 'custom-1-1', label: '组件规范', tag: '文档' },
+            { id: 'custom-1-2', label: '图标资产', tag: '资源' }
+          ]
+        }
+      ],
+      checkTreeData: [
+        {
+          id: '2',
+          label: '表单组件',
           children: [
             {
-              id: 4,
-              label: '二级 1-1',
+              id: '2-1',
+              label: '输入组件',
               children: [
-                { id: 9, label: '三级 1-1-1' },
-                { id: 10, label: '三级 1-1-2' }
+                { id: '2-1-1', label: 'Input 输入框' },
+                { id: '2-1-2', label: 'Textarea 文本域' }
+              ]
+            },
+            {
+              id: '2-2',
+              label: '选择组件',
+              children: [
+                { id: '2-2-1', label: 'Select 选择器' },
+                { id: '2-2-2', label: 'Picker 选择器', disabled: true }
               ]
             }
           ]
+        }
+      ],
+      accordionTreeData: [
+        {
+          id: 'a',
+          label: '导航组件',
+          children: [
+            { id: 'a-1', label: 'Navbar 导航栏' },
+            { id: 'a-2', label: 'Tabbar 底部导航栏' }
+          ]
         },
+        {
+          id: 'b',
+          label: '反馈组件',
+          children: [
+            { id: 'b-1', label: 'Toast 消息提示' },
+            { id: 'b-2', label: 'Notify 通知' }
+          ]
+        }
       ]
     };
   },
@@ -79,19 +174,83 @@ export default {
     handleNodeClick(node) {
       console.log('点击节点:', node);
     },
-    handleCheckChange(node) {
-      console.log('勾选状态变化:', node);
+    handleNodeExpand(node) {
+      console.log('展开节点:', node);
+    },
+    handleCheckChange(node, checked) {
+      console.log('勾选状态变化:', node, checked);
+    },
+    handleCheck(node, state) {
+      this.checkedKeysText = state.checkedKeys.join('、');
+    },
+    setCheckedKeys() {
+      this.$refs.checkTree.setCheckedKeys(['2-1-2', '2-2-1']);
+      this.checkedKeysText = this.$refs.checkTree.getCheckedKeys().join('、');
+    },
+    getCheckedKeys() {
+      this.checkedKeysText = this.$refs.checkTree.getCheckedKeys().join('、');
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-  .u-page__item {
-      margin-bottom: 15px;
-  }
-  .u-page__item__title {
-      margin-bottom: 10px;
-  }
-</style>
+.u-page__item {
+  margin-bottom: 15px;
+}
 
+.u-page__item__title {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--up-main-color, #303133);
+}
+
+.u-page__item__content {
+  padding: 8px 0;
+}
+
+.custom-tree-node {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-width: 0;
+}
+
+.custom-tree-node__label {
+  color: var(--up-main-color, #303133);
+  font-size: 28rpx;
+}
+
+.custom-tree-node__tag {
+  margin-left: 12rpx;
+  padding: 2rpx 10rpx;
+  border-radius: 999px;
+  color: var(--up-primary, #3c9cff);
+  background-color: var(--up-primary-light, #ecf5ff);
+  font-size: 22rpx;
+}
+
+.custom-tree-node__state {
+  margin-left: 12rpx;
+  color: var(--up-tips-color, #909193);
+  font-size: 22rpx;
+}
+
+.tree-actions {
+  display: flex;
+  flex-direction: row;
+  margin-top: 16rpx;
+}
+
+.tree-action-button {
+  width: 150rpx;
+  margin-right: 16rpx;
+}
+
+.tree-result {
+  display: block;
+  margin-top: 12rpx;
+  color: var(--up-content-color, #606266);
+  font-size: 26rpx;
+}
+</style>
