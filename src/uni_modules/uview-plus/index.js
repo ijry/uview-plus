@@ -51,7 +51,8 @@ import {
     getSystemTheme,
     getThemeVars,
     initThemeSystem,
-    refreshThemeFromConfig
+    refreshThemeFromConfig,
+    syncThemeColorOverrideState
 } from './libs/theme/theme.js'
 import {
     applyNativeThemeUI,
@@ -151,6 +152,10 @@ export function setConfig(configs) {
 	index.shallowMerge(props, settings.props || {})
 	index.shallowMerge(color, settings.color || {})
 	index.shallowMerge(zIndex, settings.zIndex || {})
+    syncThemeColorOverrideState({
+        color: settings.color,
+        configColor: settings?.config?.color
+    })
     const shouldRefreshTheme = !!settings.color
         || !!settings?.config?.color
         || themeState.version > 0

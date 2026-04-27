@@ -10,7 +10,7 @@ const DEFAULT_LIGHT_THEME_COLORS = Object.freeze({
     success: '#5ac725',
     mainColor: '#303133',
     contentColor: '#606266',
-    tipsColor: '#909399',
+    tipsColor: '#909193',
     lightColor: '#c0c4cc',
     borderColor: '#dadbde',
     bgColor: '#f3f4f6',
@@ -97,6 +97,45 @@ export const themeState = {
 const THEME_MODE_STORAGE_KEY = 'u-theme-mode'
 const THEME_MODE_SYSTEM = 'system'
 const THEME_MODE_MANUAL = ['light', 'dark']
+const LIGHT_THEME_TOKEN_FIELD_MAP = Object.freeze({
+    'primary': 'primary',
+    'primary-dark': 'primaryDark',
+    'primary-disabled': 'primaryDisabled',
+    'primary-light': 'primaryLight',
+    'warning': 'warning',
+    'warning-dark': 'warningDark',
+    'warning-disabled': 'warningDisabled',
+    'warning-light': 'warningLight',
+    'success': 'success',
+    'success-dark': 'successDark',
+    'success-disabled': 'successDisabled',
+    'success-light': 'successLight',
+    'error': 'error',
+    'error-dark': 'errorDark',
+    'error-disabled': 'errorDisabled',
+    'error-light': 'errorLight',
+    'info': 'info',
+    'info-dark': 'infoDark',
+    'info-disabled': 'infoDisabled',
+    'info-light': 'infoLight',
+    'main-color': 'mainColor',
+    'content-color': 'contentColor',
+    'tips-color': 'tipsColor',
+    'light-color': 'lightColor',
+    'border-color': 'borderColor',
+    'bg-color': 'bgColor',
+    'disabled-color': 'disabledColor'
+})
+const LIGHT_THEME_FIELD_TOKEN_MAP = Object.freeze(
+    Object.fromEntries(
+        Object.entries(LIGHT_THEME_TOKEN_FIELD_MAP).map(([token, field]) => [field, token])
+    )
+)
+
+const runtimeThemeOverrideState = {
+    color: Object.create(null),
+    configColor: Object.create(null)
+}
 
 let cachedLightThemeColors = null
 let hasRegisterThemeListener = false
@@ -109,6 +148,81 @@ function normalizeThemeMode(theme = 'light') {
 function normalizeThemePreference(mode = THEME_MODE_SYSTEM) {
     if (THEME_MODE_MANUAL.includes(mode)) return mode
     return THEME_MODE_SYSTEM
+}
+
+function getLightBridgeVar(token, fallback) {
+    return `var(--up-light-${token}, ${fallback})`
+}
+
+function clearOverrideBucket(bucket) {
+    Object.keys(bucket).forEach((key) => {
+        delete bucket[key]
+    })
+}
+
+function normalizeLightThemeToken(token = '') {
+    if (typeof token !== 'string') return ''
+    if (token.indexOf('up-') === 0) return token.slice(3)
+    if (token.indexOf('u-') === 0) return token.slice(2)
+    return token
+}
+
+function isLightThemeConfigColorKey(token = '') {
+    return token.indexOf('up-') === 0 || token.indexOf('u-') === 0
+}
+
+export function syncThemeColorOverrideState({
+    color: colorOverrides,
+    configColor: configColorOverrides,
+    reset = false
+} = {}) {
+    if (reset) {
+        clearOverrideBucket(runtimeThemeOverrideState.color)
+        clearOverrideBucket(runtimeThemeOverrideState.configColor)
+    }
+    if (colorOverrides && typeof colorOverrides === 'object') {
+        Object.keys(LIGHT_THEME_FIELD_TOKEN_MAP).forEach((field) => {
+            if (!Object.prototype.hasOwnProperty.call(colorOverrides, field)) return
+            const value = colorOverrides[field]
+            if (typeof value === 'string' && value) {
+                runtimeThemeOverrideState.color[field] = true
+                return
+            }
+            delete runtimeThemeOverrideState.color[field]
+        })
+    }
+    if (configColorOverrides && typeof configColorOverrides === 'object') {
+        Object.keys(configColorOverrides).forEach((key) => {
+            const token = normalizeLightThemeToken(key)
+            if (!Object.prototype.hasOwnProperty.call(LIGHT_THEME_TOKEN_FIELD_MAP, token)) return
+            const value = configColorOverrides[key]
+            if (typeof value === 'string' && value) {
+                const overrideKey = isLightThemeConfigColorKey(key) ? key : `up-${token}`
+                runtimeThemeOverrideState.configColor[overrideKey] = true
+                return
+            }
+            delete runtimeThemeOverrideState.configColor[key]
+            delete runtimeThemeOverrideState.configColor[`u-${token}`]
+            delete runtimeThemeOverrideState.configColor[`up-${token}`]
+        })
+    }
+}
+
+function getExplicitRuntimeColorValue(token, runtimeColorMap = {}) {
+    const field = LIGHT_THEME_TOKEN_FIELD_MAP[token]
+    if (!field) return ''
+    if (runtimeThemeOverrideState.color[field]) {
+        const value = color[field]
+        if (typeof value === 'string' && value) return value
+    }
+    const upKey = `up-${token}`
+    const uKey = `u-${token}`
+    if (!runtimeThemeOverrideState.configColor[upKey] && !runtimeThemeOverrideState.configColor[uKey]) return ''
+    const upValue = runtimeColorMap[upKey]
+    const uValue = runtimeColorMap[uKey]
+    if (runtimeThemeOverrideState.configColor[upKey] && typeof upValue === 'string' && upValue) return upValue
+    if (runtimeThemeOverrideState.configColor[uKey] && typeof uValue === 'string' && uValue) return uValue
+    return ''
 }
 
 function readThemePreferenceFromStorage() {
@@ -151,37 +265,16 @@ export function getSystemTheme() {
 }
 
 function getCurrentLightThemeColors() {
-    const safeConfigColor = config.color || {}
-    return {
-        ...DEFAULT_LIGHT_THEME_COLORS,
-        primary: color.primary || safeConfigColor['u-primary'] || safeConfigColor['up-primary'] || DEFAULT_LIGHT_THEME_COLORS.primary,
-        info: color.info || safeConfigColor['u-info'] || safeConfigColor['up-info'] || DEFAULT_LIGHT_THEME_COLORS.info,
-        warning: color.warning || safeConfigColor['u-warning'] || safeConfigColor['up-warning'] || DEFAULT_LIGHT_THEME_COLORS.warning,
-        error: color.error || safeConfigColor['u-error'] || safeConfigColor['up-error'] || DEFAULT_LIGHT_THEME_COLORS.error,
-        success: color.success || safeConfigColor['u-success'] || safeConfigColor['up-success'] || DEFAULT_LIGHT_THEME_COLORS.success,
-        mainColor: color.mainColor || safeConfigColor['u-main-color'] || safeConfigColor['up-main-color'] || DEFAULT_LIGHT_THEME_COLORS.mainColor,
-        contentColor: color.contentColor || safeConfigColor['u-content-color'] || safeConfigColor['up-content-color'] || DEFAULT_LIGHT_THEME_COLORS.contentColor,
-        tipsColor: color.tipsColor || safeConfigColor['u-tips-color'] || safeConfigColor['up-tips-color'] || DEFAULT_LIGHT_THEME_COLORS.tipsColor,
-        lightColor: color.lightColor || safeConfigColor['u-light-color'] || safeConfigColor['up-light-color'] || DEFAULT_LIGHT_THEME_COLORS.lightColor,
-        borderColor: color.borderColor || safeConfigColor['u-border-color'] || safeConfigColor['up-border-color'] || DEFAULT_LIGHT_THEME_COLORS.borderColor,
-        bgColor: safeConfigColor['u-bg-color'] || safeConfigColor['up-bg-color'] || DEFAULT_LIGHT_THEME_COLORS.bgColor,
-        disabledColor: safeConfigColor['u-disabled-color'] || safeConfigColor['up-disabled-color'] || DEFAULT_LIGHT_THEME_COLORS.disabledColor,
-        primaryDark: safeConfigColor['u-primary-dark'] || safeConfigColor['up-primary-dark'] || DEFAULT_LIGHT_THEME_COLORS.primaryDark,
-        primaryDisabled: safeConfigColor['u-primary-disabled'] || safeConfigColor['up-primary-disabled'] || DEFAULT_LIGHT_THEME_COLORS.primaryDisabled,
-        primaryLight: safeConfigColor['u-primary-light'] || safeConfigColor['up-primary-light'] || DEFAULT_LIGHT_THEME_COLORS.primaryLight,
-        warningDark: safeConfigColor['u-warning-dark'] || safeConfigColor['up-warning-dark'] || DEFAULT_LIGHT_THEME_COLORS.warningDark,
-        warningDisabled: safeConfigColor['u-warning-disabled'] || safeConfigColor['up-warning-disabled'] || DEFAULT_LIGHT_THEME_COLORS.warningDisabled,
-        warningLight: safeConfigColor['u-warning-light'] || safeConfigColor['up-warning-light'] || DEFAULT_LIGHT_THEME_COLORS.warningLight,
-        successDark: safeConfigColor['u-success-dark'] || safeConfigColor['up-success-dark'] || DEFAULT_LIGHT_THEME_COLORS.successDark,
-        successDisabled: safeConfigColor['u-success-disabled'] || safeConfigColor['up-success-disabled'] || DEFAULT_LIGHT_THEME_COLORS.successDisabled,
-        successLight: safeConfigColor['u-success-light'] || safeConfigColor['up-success-light'] || DEFAULT_LIGHT_THEME_COLORS.successLight,
-        errorDark: safeConfigColor['u-error-dark'] || safeConfigColor['up-error-dark'] || DEFAULT_LIGHT_THEME_COLORS.errorDark,
-        errorDisabled: safeConfigColor['u-error-disabled'] || safeConfigColor['up-error-disabled'] || DEFAULT_LIGHT_THEME_COLORS.errorDisabled,
-        errorLight: safeConfigColor['u-error-light'] || safeConfigColor['up-error-light'] || DEFAULT_LIGHT_THEME_COLORS.errorLight,
-        infoDark: safeConfigColor['u-info-dark'] || safeConfigColor['up-info-dark'] || DEFAULT_LIGHT_THEME_COLORS.infoDark,
-        infoDisabled: safeConfigColor['u-info-disabled'] || safeConfigColor['up-info-disabled'] || DEFAULT_LIGHT_THEME_COLORS.infoDisabled,
-        infoLight: safeConfigColor['u-info-light'] || safeConfigColor['up-info-light'] || DEFAULT_LIGHT_THEME_COLORS.infoLight
+    const runtimeColorMap = config.color || {}
+    const lightThemeColors = {
+        ...DEFAULT_LIGHT_THEME_COLORS
     }
+    Object.keys(LIGHT_THEME_TOKEN_FIELD_MAP).forEach((token) => {
+        const explicitValue = getExplicitRuntimeColorValue(token, runtimeColorMap)
+        if (!explicitValue) return
+        lightThemeColors[LIGHT_THEME_TOKEN_FIELD_MAP[token]] = explicitValue
+    })
+    return lightThemeColors
 }
 
 function getThemeColorsByMode(mode) {
@@ -281,6 +374,7 @@ function buildAliasCssVars(vars = {}) {
 function buildThemeCssVars(themeColors, mode = 'light') {
     const themeMode = normalizeThemeMode(mode)
     const isDark = themeMode === 'dark'
+    const useBridge = !isDark
     const runtimeColorMap = config.color || {}
     const defaultExtraVars = DEFAULT_THEME_EXTRA_VARS[themeMode] || DEFAULT_THEME_EXTRA_VARS.light
     const pageBgColor = themeColors.bgColor || (isDark ? '#1f1f1f' : '#f3f4f6')
@@ -290,63 +384,95 @@ function buildThemeCssVars(themeColors, mode = 'light') {
     const navbarBgColor = runtimeColorMap['up-navbar-bg-color']
         || runtimeColorMap['u-navbar-bg-color']
         || (isDark ? '#1c1c1e' : '#ffffff')
+    const resolveLightTokenValue = (token, fallback) => {
+        if (!useBridge) return fallback
+        const explicitValue = getExplicitRuntimeColorValue(token, runtimeColorMap)
+        return explicitValue || getLightBridgeVar(token, fallback)
+    }
+    const resolvedMainColor = resolveLightTokenValue('main-color', themeColors.mainColor)
+    const resolvedContentColor = resolveLightTokenValue('content-color', themeColors.contentColor)
+    const resolvedTipsColor = resolveLightTokenValue('tips-color', themeColors.tipsColor)
+    const resolvedLightColor = resolveLightTokenValue('light-color', themeColors.lightColor)
+    const resolvedBorderColor = resolveLightTokenValue('border-color', themeColors.borderColor)
+    const resolvedBgColor = resolveLightTokenValue('bg-color', themeColors.bgColor)
+    const resolvedDisabledColor = resolveLightTokenValue('disabled-color', themeColors.disabledColor)
+    const resolvedPrimary = resolveLightTokenValue('primary', themeColors.primary)
+    const resolvedPrimaryDark = resolveLightTokenValue('primary-dark', themeColors.primaryDark)
+    const resolvedPrimaryDisabled = resolveLightTokenValue('primary-disabled', themeColors.primaryDisabled)
+    const resolvedPrimaryLight = resolveLightTokenValue('primary-light', themeColors.primaryLight)
+    const resolvedWarning = resolveLightTokenValue('warning', themeColors.warning)
+    const resolvedWarningDark = resolveLightTokenValue('warning-dark', themeColors.warningDark)
+    const resolvedWarningDisabled = resolveLightTokenValue('warning-disabled', themeColors.warningDisabled)
+    const resolvedWarningLight = resolveLightTokenValue('warning-light', themeColors.warningLight)
+    const resolvedSuccess = resolveLightTokenValue('success', themeColors.success)
+    const resolvedSuccessDark = resolveLightTokenValue('success-dark', themeColors.successDark)
+    const resolvedSuccessDisabled = resolveLightTokenValue('success-disabled', themeColors.successDisabled)
+    const resolvedSuccessLight = resolveLightTokenValue('success-light', themeColors.successLight)
+    const resolvedError = resolveLightTokenValue('error', themeColors.error)
+    const resolvedErrorDark = resolveLightTokenValue('error-dark', themeColors.errorDark)
+    const resolvedErrorDisabled = resolveLightTokenValue('error-disabled', themeColors.errorDisabled)
+    const resolvedErrorLight = resolveLightTokenValue('error-light', themeColors.errorLight)
+    const resolvedInfo = resolveLightTokenValue('info', themeColors.info)
+    const resolvedInfoDark = resolveLightTokenValue('info-dark', themeColors.infoDark)
+    const resolvedInfoDisabled = resolveLightTokenValue('info-disabled', themeColors.infoDisabled)
+    const resolvedInfoLight = resolveLightTokenValue('info-light', themeColors.infoLight)
     const coreVars = {
-        '--u-main-color': themeColors.mainColor,
-        '--u-content-color': themeColors.contentColor,
-        '--u-tips-color': themeColors.tipsColor,
-        '--u-light-color': themeColors.lightColor,
-        '--u-border-color': themeColors.borderColor,
-        '--u-bg-color': themeColors.bgColor,
+        '--u-main-color': resolvedMainColor,
+        '--u-content-color': resolvedContentColor,
+        '--u-tips-color': resolvedTipsColor,
+        '--u-light-color': resolvedLightColor,
+        '--u-border-color': resolvedBorderColor,
+        '--u-bg-color': resolvedBgColor,
         '--u-hover-bg-color': hoverBgColor,
-        '--u-disabled-color': themeColors.disabledColor,
-        '--u-primary': themeColors.primary,
-        '--u-primary-dark': themeColors.primaryDark,
-        '--u-primary-disabled': themeColors.primaryDisabled,
-        '--u-primary-light': themeColors.primaryLight,
-        '--u-warning': themeColors.warning,
-        '--u-warning-dark': themeColors.warningDark,
-        '--u-warning-disabled': themeColors.warningDisabled,
-        '--u-warning-light': themeColors.warningLight,
-        '--u-success': themeColors.success,
-        '--u-success-dark': themeColors.successDark,
-        '--u-success-disabled': themeColors.successDisabled,
-        '--u-success-light': themeColors.successLight,
-        '--u-error': themeColors.error,
-        '--u-error-dark': themeColors.errorDark,
-        '--u-error-disabled': themeColors.errorDisabled,
-        '--u-error-light': themeColors.errorLight,
-        '--u-info': themeColors.info,
-        '--u-info-dark': themeColors.infoDark,
-        '--u-info-disabled': themeColors.infoDisabled,
-        '--u-info-light': themeColors.infoLight,
-        '--up-main-color': themeColors.mainColor,
-        '--up-content-color': themeColors.contentColor,
-        '--up-tips-color': themeColors.tipsColor,
-        '--up-light-color': themeColors.lightColor,
-        '--up-border-color': themeColors.borderColor,
-        '--up-bg-color': themeColors.bgColor,
+        '--u-disabled-color': resolvedDisabledColor,
+        '--u-primary': resolvedPrimary,
+        '--u-primary-dark': resolvedPrimaryDark,
+        '--u-primary-disabled': resolvedPrimaryDisabled,
+        '--u-primary-light': resolvedPrimaryLight,
+        '--u-warning': resolvedWarning,
+        '--u-warning-dark': resolvedWarningDark,
+        '--u-warning-disabled': resolvedWarningDisabled,
+        '--u-warning-light': resolvedWarningLight,
+        '--u-success': resolvedSuccess,
+        '--u-success-dark': resolvedSuccessDark,
+        '--u-success-disabled': resolvedSuccessDisabled,
+        '--u-success-light': resolvedSuccessLight,
+        '--u-error': resolvedError,
+        '--u-error-dark': resolvedErrorDark,
+        '--u-error-disabled': resolvedErrorDisabled,
+        '--u-error-light': resolvedErrorLight,
+        '--u-info': resolvedInfo,
+        '--u-info-dark': resolvedInfoDark,
+        '--u-info-disabled': resolvedInfoDisabled,
+        '--u-info-light': resolvedInfoLight,
+        '--up-main-color': resolvedMainColor,
+        '--up-content-color': resolvedContentColor,
+        '--up-tips-color': resolvedTipsColor,
+        '--up-light-color': resolvedLightColor,
+        '--up-border-color': resolvedBorderColor,
+        '--up-bg-color': resolvedBgColor,
         '--up-hover-bg-color': hoverBgColor,
-        '--up-disabled-color': themeColors.disabledColor,
-        '--up-primary': themeColors.primary,
-        '--up-primary-dark': themeColors.primaryDark,
-        '--up-primary-disabled': themeColors.primaryDisabled,
-        '--up-primary-light': themeColors.primaryLight,
-        '--up-warning': themeColors.warning,
-        '--up-warning-dark': themeColors.warningDark,
-        '--up-warning-disabled': themeColors.warningDisabled,
-        '--up-warning-light': themeColors.warningLight,
-        '--up-success': themeColors.success,
-        '--up-success-dark': themeColors.successDark,
-        '--up-success-disabled': themeColors.successDisabled,
-        '--up-success-light': themeColors.successLight,
-        '--up-error': themeColors.error,
-        '--up-error-dark': themeColors.errorDark,
-        '--up-error-disabled': themeColors.errorDisabled,
-        '--up-error-light': themeColors.errorLight,
-        '--up-info': themeColors.info,
-        '--up-info-dark': themeColors.infoDark,
-        '--up-info-disabled': themeColors.infoDisabled,
-        '--up-info-light': themeColors.infoLight,
+        '--up-disabled-color': resolvedDisabledColor,
+        '--up-primary': resolvedPrimary,
+        '--up-primary-dark': resolvedPrimaryDark,
+        '--up-primary-disabled': resolvedPrimaryDisabled,
+        '--up-primary-light': resolvedPrimaryLight,
+        '--up-warning': resolvedWarning,
+        '--up-warning-dark': resolvedWarningDark,
+        '--up-warning-disabled': resolvedWarningDisabled,
+        '--up-warning-light': resolvedWarningLight,
+        '--up-success': resolvedSuccess,
+        '--up-success-dark': resolvedSuccessDark,
+        '--up-success-disabled': resolvedSuccessDisabled,
+        '--up-success-light': resolvedSuccessLight,
+        '--up-error': resolvedError,
+        '--up-error-dark': resolvedErrorDark,
+        '--up-error-disabled': resolvedErrorDisabled,
+        '--up-error-light': resolvedErrorLight,
+        '--up-info': resolvedInfo,
+        '--up-info-dark': resolvedInfoDark,
+        '--up-info-disabled': resolvedInfoDisabled,
+        '--up-info-light': resolvedInfoLight,
         '--up-page-bg-color': pageBgColor,
         '--up-card-bg-color': isDark ? '#1c1c1e' : '#ffffff',
         '--up-navbar-bg-color': navbarBgColor
