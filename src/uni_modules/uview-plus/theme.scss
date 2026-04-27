@@ -3,74 +3,118 @@
 // 故uni.scss只建议放scss变量名相关样式，其他的样式可以通过main.js或者App.vue引入
 
 /* #ifdef APP-NVUE */
-$u-main-color: var(--up-main-color, var(--u-main-color, #303133));
-$u-content-color: var(--up-content-color, var(--u-content-color, #606266));
-$u-tips-color: var(--up-tips-color, var(--u-tips-color, #909193));
-$u-light-color: var(--up-light-color, var(--u-light-color, #c0c4cc));
-$u-border-color: var(--up-border-color, var(--u-border-color, #dadbde));
-$u-bg-color: var(--up-bg-color, var(--u-bg-color, #f3f4f6));
-$u-disabled-color: var(--up-disabled-color, var(--u-disabled-color, #c8c9cc));
+$u-main-color: var(--up-main-color, var(--u-main-color, #303133)) !default;
+$u-content-color: var(--up-content-color, var(--u-content-color, #606266)) !default;
+$u-tips-color: var(--up-tips-color, var(--u-tips-color, #909193)) !default;
+$u-light-color: var(--up-light-color, var(--u-light-color, #c0c4cc)) !default;
+$u-border-color: var(--up-border-color, var(--u-border-color, #dadbde)) !default;
+$u-bg-color: var(--up-bg-color, var(--u-bg-color, #f3f4f6)) !default;
+$u-disabled-color: var(--up-disabled-color, var(--u-disabled-color, #c8c9cc)) !default;
 
-$u-primary: var(--up-primary, var(--u-primary, #3c9cff));
-$u-primary-dark: var(--up-primary-dark, var(--u-primary-dark, #398ade));
-$u-primary-disabled: var(--up-primary-disabled, var(--u-primary-disabled, #9acafc));
-$u-primary-light: var(--up-primary-light, var(--u-primary-light, #ecf5ff));
+$u-primary: var(--up-primary, var(--u-primary, #3c9cff)) !default;
+$u-primary-dark: var(--up-primary-dark, var(--u-primary-dark, #398ade)) !default;
+$u-primary-disabled: var(--up-primary-disabled, var(--u-primary-disabled, #9acafc)) !default;
+$u-primary-light: var(--up-primary-light, var(--u-primary-light, #ecf5ff)) !default;
 
-$u-warning: var(--up-warning, var(--u-warning, #f9ae3d));
-$u-warning-dark: var(--up-warning-dark, var(--u-warning-dark, #f1a532));
-$u-warning-disabled: var(--up-warning-disabled, var(--u-warning-disabled, #f9d39b));
-$u-warning-light: var(--up-warning-light, var(--u-warning-light, #fdf6ec));
+$u-warning: var(--up-warning, var(--u-warning, #f9ae3d)) !default;
+$u-warning-dark: var(--up-warning-dark, var(--u-warning-dark, #f1a532)) !default;
+$u-warning-disabled: var(--up-warning-disabled, var(--u-warning-disabled, #f9d39b)) !default;
+$u-warning-light: var(--up-warning-light, var(--u-warning-light, #fdf6ec)) !default;
 
-$u-success: var(--up-success, var(--u-success, #5ac725));
-$u-success-dark: var(--up-success-dark, var(--u-success-dark, #53c21d));
-$u-success-disabled: var(--up-success-disabled, var(--u-success-disabled, #a9e08f));
-$u-success-light: var(--up-success-light, var(--u-success-light, #f5fff0));
+$u-success: var(--up-success, var(--u-success, #5ac725)) !default;
+$u-success-dark: var(--up-success-dark, var(--u-success-dark, #53c21d)) !default;
+$u-success-disabled: var(--up-success-disabled, var(--u-success-disabled, #a9e08f)) !default;
+$u-success-light: var(--up-success-light, var(--u-success-light, #f5fff0)) !default;
 
-$u-error: var(--up-error, var(--u-error, #f56c6c));
-$u-error-dark: var(--up-error-dark, var(--u-error-dark, #e45656));
-$u-error-disabled: var(--up-error-disabled, var(--u-error-disabled, #f7b2b2));
-$u-error-light: var(--up-error-light, var(--u-error-light, #fef0f0));
+$u-error: var(--up-error, var(--u-error, #f56c6c)) !default;
+$u-error-dark: var(--up-error-dark, var(--u-error-dark, #e45656)) !default;
+$u-error-disabled: var(--up-error-disabled, var(--u-error-disabled, #f7b2b2)) !default;
+$u-error-light: var(--up-error-light, var(--u-error-light, #fef0f0)) !default;
 
-$u-info: var(--up-info, var(--u-info, #909399));
-$u-info-dark: var(--up-info-dark, var(--u-info-dark, #767a82));
-$u-info-disabled: var(--up-info-disabled, var(--u-info-disabled, #c4c6c9));
-$u-info-light: var(--up-info-light, var(--u-info-light, #f4f4f5));
+$u-info: var(--up-info, var(--u-info, #909399)) !default;
+$u-info-dark: var(--up-info-dark, var(--u-info-dark, #767a82)) !default;
+$u-info-disabled: var(--up-info-disabled, var(--u-info-disabled, #c4c6c9)) !default;
+$u-info-light: var(--up-info-light, var(--u-info-light, #f4f4f5)) !default;
 /* #endif */
 
 /* #ifndef APP-NVUE */
-$u-main-color: var(--up-main-color, var(--u-main-color, #303133));
-$u-content-color: var(--up-content-color, var(--u-content-color, #606266));
-$u-tips-color: var(--up-tips-color, var(--u-tips-color, #909193));
-$u-light-color: var(--up-light-color, var(--u-light-color, #c0c4cc));
-$u-border-color: var(--up-border-color, var(--u-border-color, #dadbde));
-$u-bg-color: var(--up-bg-color, var(--u-bg-color, #f3f4f6));
-$u-disabled-color: var(--up-disabled-color, var(--u-disabled-color, #c8c9cc));
+$u-main-color: var(--up-main-color, var(--u-main-color, #303133)) !default;
+$u-content-color: var(--up-content-color, var(--u-content-color, #606266)) !default;
+$u-tips-color: var(--up-tips-color, var(--u-tips-color, #909193)) !default;
+$u-light-color: var(--up-light-color, var(--u-light-color, #c0c4cc)) !default;
+$u-border-color: var(--up-border-color, var(--u-border-color, #dadbde)) !default;
+$u-bg-color: var(--up-bg-color, var(--u-bg-color, #f3f4f6)) !default;
+$u-disabled-color: var(--up-disabled-color, var(--u-disabled-color, #c8c9cc)) !default;
 
-$u-primary: var(--up-primary, var(--u-primary, #3c9cff));
-$u-primary-dark: var(--up-primary-dark, var(--u-primary-dark, #398ade));
-$u-primary-disabled: var(--up-primary-disabled, var(--u-primary-disabled, #9acafc));
-$u-primary-light: var(--up-primary-light, var(--u-primary-light, #ecf5ff));
+$u-primary: var(--up-primary, var(--u-primary, #3c9cff)) !default;
+$u-primary-dark: var(--up-primary-dark, var(--u-primary-dark, #398ade)) !default;
+$u-primary-disabled: var(--up-primary-disabled, var(--u-primary-disabled, #9acafc)) !default;
+$u-primary-light: var(--up-primary-light, var(--u-primary-light, #ecf5ff)) !default;
 
-$u-warning: var(--up-warning, var(--u-warning, #f9ae3d));
-$u-warning-dark: var(--up-warning-dark, var(--u-warning-dark, #f1a532));
-$u-warning-disabled: var(--up-warning-disabled, var(--u-warning-disabled, #f9d39b));
-$u-warning-light: var(--up-warning-light, var(--u-warning-light, #fdf6ec));
+$u-warning: var(--up-warning, var(--u-warning, #f9ae3d)) !default;
+$u-warning-dark: var(--up-warning-dark, var(--u-warning-dark, #f1a532)) !default;
+$u-warning-disabled: var(--up-warning-disabled, var(--u-warning-disabled, #f9d39b)) !default;
+$u-warning-light: var(--up-warning-light, var(--u-warning-light, #fdf6ec)) !default;
 
-$u-success: var(--up-success, var(--u-success, #5ac725));
-$u-success-dark: var(--up-success-dark, var(--u-success-dark, #53c21d));
-$u-success-disabled: var(--up-success-disabled, var(--u-success-disabled, #a9e08f));
-$u-success-light: var(--up-success-light, var(--u-success-light, #f5fff0));
+$u-success: var(--up-success, var(--u-success, #5ac725)) !default;
+$u-success-dark: var(--up-success-dark, var(--u-success-dark, #53c21d)) !default;
+$u-success-disabled: var(--up-success-disabled, var(--u-success-disabled, #a9e08f)) !default;
+$u-success-light: var(--up-success-light, var(--u-success-light, #f5fff0)) !default;
 
-$u-error: var(--up-error, var(--u-error, #f56c6c));
-$u-error-dark: var(--up-error-dark, var(--u-error-dark, #e45656));
-$u-error-disabled: var(--up-error-disabled, var(--u-error-disabled, #f7b2b2));
-$u-error-light: var(--up-error-light, var(--u-error-light, #fef0f0));
+$u-error: var(--up-error, var(--u-error, #f56c6c)) !default;
+$u-error-dark: var(--up-error-dark, var(--u-error-dark, #e45656)) !default;
+$u-error-disabled: var(--up-error-disabled, var(--u-error-disabled, #f7b2b2)) !default;
+$u-error-light: var(--up-error-light, var(--u-error-light, #fef0f0)) !default;
 
-$u-info: var(--up-info, var(--u-info, #909399));
-$u-info-dark: var(--up-info-dark, var(--u-info-dark, #767a82));
-$u-info-disabled: var(--up-info-disabled, var(--u-info-disabled, #c4c6c9));
-$u-info-light: var(--up-info-light, var(--u-info-light, #f4f4f5));
+$u-info: var(--up-info, var(--u-info, #909399)) !default;
+$u-info-dark: var(--up-info-dark, var(--u-info-dark, #767a82)) !default;
+$u-info-disabled: var(--up-info-disabled, var(--u-info-disabled, #c4c6c9)) !default;
+$u-info-light: var(--up-info-light, var(--u-info-light, #f4f4f5)) !default;
 /* #endif */
+
+$up-legacy-light-theme-map: (
+	'main-color': $u-main-color,
+	'content-color': $u-content-color,
+	'tips-color': $u-tips-color,
+	'light-color': $u-light-color,
+	'border-color': $u-border-color,
+	'bg-color': $u-bg-color,
+	'disabled-color': $u-disabled-color,
+	'primary': $u-primary,
+	'primary-dark': $u-primary-dark,
+	'primary-disabled': $u-primary-disabled,
+	'primary-light': $u-primary-light,
+	'warning': $u-warning,
+	'warning-dark': $u-warning-dark,
+	'warning-disabled': $u-warning-disabled,
+	'warning-light': $u-warning-light,
+	'success': $u-success,
+	'success-dark': $u-success-dark,
+	'success-disabled': $u-success-disabled,
+	'success-light': $u-success-light,
+	'error': $u-error,
+	'error-dark': $u-error-dark,
+	'error-disabled': $u-error-disabled,
+	'error-light': $u-error-light,
+	'info': $u-info,
+	'info-dark': $u-info-dark,
+	'info-disabled': $u-info-disabled,
+	'info-light': $u-info-light
+);
+
+@mixin up-export-legacy-light-vars($selector) {
+	#{$selector} {
+		@each $name, $value in $up-legacy-light-theme-map {
+			--up-light-#{$name}: #{$value};
+			--u-light-#{$name}: #{$value};
+		}
+	}
+}
+
+@include up-export-legacy-light-vars(':root');
+@include up-export-legacy-light-vars('page');
+@include up-export-legacy-light-vars('body');
+@include up-export-legacy-light-vars("[data-up-theme='light']");
 
 // scss混入，为了少写几行#ifndef
 @mixin flex($direction: row) {

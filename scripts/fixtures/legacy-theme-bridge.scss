@@ -1,0 +1,12 @@
+$u-primary: #123456;
+$u-main-color: #112233;
+$u-border-color: #445566;
+
+@import "../../src/uni_modules/uview-plus/theme.scss";
+@import "../../src/uni_modules/uview-plus/index.scss";
+
+.legacy-bridge-probe {
+  color: var(--up-primary, #000000);
+  border-color: var(--up-border-color, #000000);
+  background-color: var(--up-bg-color, #ffffff);
+}
