@@ -3,17 +3,18 @@
     display: flex;
     flex-direction: row;
     position: relative;
+    color: var(--up-content-color, #606266);
 }
 
 // 添加border样式支持
 .u-table-border {
-    border-top: 1px solid #ebeef5;
-    border-left: 1px solid #ebeef5;
-    border-right: 1px solid #ebeef5;
+    border-top: 1px solid var(--up-border-color, #ebeef5);
+    border-left: 1px solid var(--up-border-color, #ebeef5);
+    border-right: 1px solid var(--up-border-color, #ebeef5);
     .u-table-cell {
-        border-right: 1px solid #ebeef5;
+        border-right: 1px solid var(--up-border-color, #ebeef5);
     }
-    
+
     .u-table-cell:last-child {
         border-right: none;
     }
@@ -30,7 +31,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
     line-height: 1.1;
-    border-bottom: 1px solid #ebeef5;
+    color: var(--up-content-color, #606266);
+    border-bottom: 1px solid var(--up-border-color, #ebeef5);
     &.u-text-left {
         justify-content: flex-start;
         text-align: left;
@@ -46,17 +48,17 @@
 }
 
 .u-table-row-zebra {
-    background-color: #fafafa;
+    background-color: var(--up-table2-zebra-bg-color, #fafafa);
 }
 
 .u-table-row-highlight {
-    background-color: #f5f7fa;
+    background-color: var(--up-table2-highlight-bg-color, #f5f7fa);
 }
 
 .u-table-empty {
     text-align: center;
     padding: 20px;
-    color: #999;
+    color: var(--up-tips-color, #999);
 }
 
 // 隐藏被合并的单元格

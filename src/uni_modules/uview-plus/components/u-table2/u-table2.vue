@@ -789,17 +789,21 @@ export default {
     overflow: auto;
     white-space: nowrap;
     position: relative;
+    color: var(--up-content-color, #606266);
+    background-color: var(--up-card-bg-color, #ffffff);
 
     .u-table-header {
         min-width: 100% !important;
         width: fit-content;
         background-color: var(--up-table2-header-bg-color, var(--up-bg-color, #f5f7fa));
+        color: var(--up-main-color, #303133);
     }
 
     .u-table-body {
         min-width: 100% !important;
         width: fit-content;
         position: relative;
+        background-color: var(--up-card-bg-color, #ffffff);
     }
 
     .u-table-sticky {
@@ -841,6 +845,7 @@ export default {
         overflow: hidden;
         text-overflow: ellipsis;
         line-height: 1.1;
+        color: var(--up-content-color, #606266);
         border-bottom: 1px solid var(--up-border-color, #ebeef5);
         &.u-text-left {
             justify-content: flex-start;
@@ -889,6 +894,7 @@ export default {
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.15);
     overflow: hidden;
     background-color: var(--up-card-bg-color, #ffffff);
+    color: var(--up-content-color, #606266);
 }
 
 // .u-table-fixed-row {
