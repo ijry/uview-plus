@@ -16,7 +16,7 @@
 						  :key="item.id"
 						  class="list-item"
 						>
-						  <text>{{ item.name }}</text>
+						  <text class="list-item__text">{{ item.name }}</text>
 						</view>
 					</view>
 		        </up-pull-refresh>
@@ -34,7 +34,7 @@
 			  <template #pull="{ distance, threshold }">
 				<view class="custom-refresh-content u-flex-y u-flex-items-center">
 				  <view class="pull-animation">
-					<text>👇</text>
+					<text class="refresh-emoji">👇</text>
 				  </view>
 				  <text class="refresh-text">下拉刷新 ({{ Math.round(distance) }}px)</text>
 				</view>
@@ -44,7 +44,7 @@
 			  <template #release="{ distance, threshold }">
 				<view class="custom-refresh-content u-flex-y u-flex-items-center">
 				  <view class="release-animation">
-					<text>👆</text>
+					<text class="refresh-emoji">👆</text>
 				  </view>
 				  <text class="refresh-text">释放刷新</text>
 				</view>
@@ -67,7 +67,7 @@
 				  :key="item.id"
 				  class="list-item"
 				>
-				  <text>{{ item.name }}</text>
+				  <text class="list-item__text">{{ item.name }}</text>
 				</view>
 			  </view>
 			</up-pull-refresh>
@@ -88,7 +88,7 @@
 			  >
 				<template #default="{ item, index }">
 				  <view class="list-item">
-					<text>Item {{ item.id }}: {{ item.name }}</text>
+					<text class="list-item__text">Item {{ item.id }}: {{ item.name }}</text>
 				  </view>
 				</template>
 			  </up-virtual-list>
@@ -118,7 +118,7 @@
 						  :key="item.id"
 						  class="list-item"
 						>
-						  <text>{{ item.name }}</text>
+						  <text class="list-item__text">{{ item.name }}</text>
 						</view>
 					  </view>
 					</scroll-view>
@@ -219,6 +219,16 @@ export default {
   }
   .u-page__item__title {
       margin-bottom: 10px;
+      color: var(--up-main-color, #303133);
+  }
+  .list-item__text {
+      color: var(--up-main-color, #303133);
+  }
+  .refresh-text {
+      color: var(--up-main-color, #303133);
+  }
+  .refresh-emoji {
+      color: var(--up-content-color, #606266);
   }
 </style>
 

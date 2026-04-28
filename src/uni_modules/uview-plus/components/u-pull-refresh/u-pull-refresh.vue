@@ -22,7 +22,7 @@
         <!-- 默认下拉状态 -->
         <view class="refresh-content">
           <view class="refresh-indicator">
-            <up-icon name="arrow-downward" size="26px"></up-icon>
+            <up-icon name="arrow-downward" size="26px" color="var(--up-content-color, #606266)"></up-icon>
           </view>
           <text class="refresh-text">{{ t("up.pullRefresh.pull") }}</text>
         </view>
@@ -37,7 +37,7 @@
         <!-- 默认释放状态 -->
         <view class="refresh-content">
           <view class="refresh-indicator">
-            <up-icon name="arrow-upward" size="26px"></up-icon>
+            <up-icon name="arrow-upward" size="26px" color="var(--up-content-color, #606266)"></up-icon>
           </view>
           <text class="refresh-text">{{ t("up.pullRefresh.release") }}</text>
         </view>
@@ -329,6 +329,6 @@ export default {
 
 .refresh-text {
   font-size: 14px;
-  color: var(--up-content-color, #666);
+  color: var(--up-main-color, #303133);
 }
 </style>
