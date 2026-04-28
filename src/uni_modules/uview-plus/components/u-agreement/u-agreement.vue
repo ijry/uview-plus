@@ -3,6 +3,7 @@
         width: 100%;;
         display: inline-block;
         flex-direction: column;
+        color: var(--up-main-color, #303133);
         .agreement-url {
             display: inline-block;
             color: var(--up-primary, #2979ff);

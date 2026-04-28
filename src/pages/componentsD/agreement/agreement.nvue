@@ -91,9 +91,22 @@ const showAgreement3 = () => {
 }
 .u-page__item__title {
     margin-bottom: 10px;
+    color: var(--up-main-color, #303133);
+}
+.custom-content {
+    color: var(--up-main-color, #303133);
+}
+.title {
+    color: var(--up-main-color, #303133);
 }
 .agreement-item,
 .inline-link {
     display: inline-block;
+}
+.agreement-item {
+    color: var(--up-main-color, #303133);
+}
+.inline-link {
+    color: var(--up-primary, #2979ff);
 }
 </style>
