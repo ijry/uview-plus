@@ -2,7 +2,7 @@
     <view :style="[groupStyle, addStyle(customStyle)]" :class="[customClass]" class="u-cell-group">
         <view v-if="title" class="u-cell-group__title">
             <slot name="title">
-				<text class="u-cell-group__title__text" :style="{ color: $u.color.mainColor }">{{ title }}</text>
+				<text class="u-cell-group__title__text" :style="{ color: upThemeVar('--up-main-color', '#303133') }">{{ title }}</text>
 			</slot>
         </view>
         <view class="u-cell-group__wrapper">
