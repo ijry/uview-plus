@@ -521,6 +521,27 @@ function syncThemeToH5(mode) {
     // #endif
 }
 
+function hasActiveRuntimePage() {
+    try {
+        if (typeof getCurrentPages === 'function') {
+            const pages = getCurrentPages()
+            return Array.isArray(pages) && pages.length > 0
+        }
+    } catch (e) {}
+    return false
+}
+
+function trySetNavigationBarColor(options) {
+    if (typeof uni === 'undefined' || typeof uni.setNavigationBarColor !== 'function') return
+    if (!hasActiveRuntimePage()) return
+    try {
+        const result = uni.setNavigationBarColor(options)
+        if (result && typeof result.catch === 'function') {
+            result.catch(() => {})
+        }
+    } catch (e) {}
+}
+
 function applyNativeThemeUI(mode, themeColors) {
     if (typeof uni === 'undefined') return
     const isDark = normalizeThemeMode(mode) === 'dark'
@@ -528,16 +549,14 @@ function applyNativeThemeUI(mode, themeColors) {
     const navBg = config.color?.['up-navbar-bg-color']
         || config.color?.['u-navbar-bg-color']
         || (isDark ? '#1c1c1e' : '#ffffff')
-    if (typeof uni.setNavigationBarColor === 'function') {
-        uni.setNavigationBarColor({
-            frontColor: isDark ? '#ffffff' : '#000000',
-            backgroundColor: navBg,
-            animation: {
-                duration: 0,
-                timingFunc: 'linear'
-            }
-        })
-    }
+    trySetNavigationBarColor({
+        frontColor: isDark ? '#ffffff' : '#000000',
+        backgroundColor: navBg,
+        animation: {
+            duration: 0,
+            timingFunc: 'linear'
+        }
+    })
     if (typeof uni.setBackgroundColor === 'function') {
         uni.setBackgroundColor({
             backgroundColor: pageBg,
