@@ -31,7 +31,7 @@
             :toolbarRightSlot="toolbarRightSlot"
 			:pageInline="pageInline"
 			:maskClass="maskClass"
-			:maskStyle="maskStyle"
+			:maskStyle="resolvedMaskStyle"
             @close="close"
             @cancel="cancel"
             @confirm="confirm"
@@ -144,6 +144,17 @@
 			// 如果以下这些变量发生了变化，意味着需要重新初始化各列的值
 			propsChange() {
 				return [this.mode, this.maxDate, this.minDate, this.minHour, this.maxHour, this.minMinute, this.maxMinute, this.filter, this.modelValue]
+			},
+			resolvedMaskStyle() {
+				if (this.upHasProp('maskStyle')) {
+					return this.maskStyle || ''
+				}
+				if (this.upThemeIsDark) {
+					const topBottomStrong = 'rgba(28, 28, 30, 0.95)'
+					const topBottomWeak = 'rgba(28, 28, 30, 0.6)'
+					return `background-image: linear-gradient(180deg, ${topBottomStrong}, ${topBottomWeak}), linear-gradient(0deg, ${topBottomStrong}, ${topBottomWeak});`
+				}
+				return ''
 			},
 			// input的props
 			inputPropsInner() {
