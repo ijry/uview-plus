@@ -542,11 +542,13 @@ function trySetNavigationBarColor(options) {
     } catch (e) {}
 }
 
-function applyNativeThemeUI(mode, themeColors) {
+function applyNativeThemeUI(mode, themeColors, themeVars = {}) {
     if (typeof uni === 'undefined') return
     const isDark = normalizeThemeMode(mode) === 'dark'
     const pageBg = themeColors?.bgColor || (isDark ? '#1f1f1f' : '#f3f4f6')
-    const navBg = config.color?.['up-navbar-bg-color']
+    const navBg = themeVars?.['--up-navbar-bg-color']
+        || themeVars?.['--u-navbar-bg-color']
+        || config.color?.['up-navbar-bg-color']
         || config.color?.['u-navbar-bg-color']
         || (isDark ? '#1c1c1e' : '#ffffff')
     trySetNavigationBarColor({
@@ -615,7 +617,7 @@ function applyTheme(mode = 'light') {
     themeState.vars = { ...themeVars }
     themeState.version = Number(themeState.version || 0) + 1
     syncThemeToH5(themeMode)
-    applyNativeThemeUI(themeMode, themeColors)
+    applyNativeThemeUI(themeMode, themeColors, themeVars)
 
     if (typeof uni !== 'undefined' && uni.$u && uni.$u.theme) {
         uni.$u.theme.mode = themeState.mode
