@@ -36,7 +36,7 @@
 						</view>
 						<text
 							class="u-form-item__body__left__content__label"
-							:style="[parentData.labelStyle, {
+							:style="[labelDynamicStyle, parentData.labelStyle, {
 								justifyContent: parentData['labelAlign'] === 'left' ? 'flex-start' : parentData['labelAlign'] === 'center' ? 'center' : 'flex-end'
 							}]"
 						>{{ label }}</text>
@@ -122,6 +122,11 @@
 		},
 		// 组件创建完成时，将当前实例保存到u-form中
 		computed: {
+			labelDynamicStyle() {
+				return {
+					color: this.upThemeVar('--up-main-color', '#303133')
+				}
+			},
 			propsLine() {
 				return defProps.line
 			}
