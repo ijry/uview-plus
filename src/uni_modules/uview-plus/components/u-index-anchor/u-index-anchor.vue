@@ -85,8 +85,9 @@
 					: this.color
 			},
 			resolvedBgColor() {
-				return this.bgColor === '#dedede'
-					? this.upThemeVar('--up-bg-color', '#dedede')
+				const isDefaultBgColor = this.bgColor === '#f1f1f1' || this.bgColor === '#dedede'
+				return isDefaultBgColor
+					? this.upThemeVar('--up-bg-color', '#f1f1f1')
 					: this.bgColor
 			},
         parentSticky() {
