@@ -226,14 +226,20 @@ export default {
             let classes = [],
                 { border, disabled, shape } = this;
             border === "surround" &&
-                (classes = classes.concat(["u-border", "u-input--radius"]));
+                (classes = classes.concat(["u-input--radius"]));
             classes.push(`u-input--${shape}`);
             border === "bottom" &&
                 (classes = classes.concat([
-                    "u-border-bottom",
                     "u-input--no-radius",
                 ]));
             return classes.join(" ");
+        },
+        inputBorderColor() {
+            const lightBorder = this.upThemeVar('--up-border-color', '#dadbde');
+            return this.upThemeVar(
+                '--up-input-border-color',
+                this.upThemeIsDark ? 'rgba(255, 255, 255, 0.08)' : lightBorder
+            );
         },
         // 组件的样式
         wrapperStyle() {
@@ -241,6 +247,16 @@ export default {
             // 禁用状态下，被背景色加上对应的样式
             if (this.disabled) {
                 style.backgroundColor = this.disabledColor || this.upThemeVar('--up-bg-color', this.$u?.color?.bgColor || '#f3f4f6');
+            }
+            if (this.border === "surround") {
+                style.borderWidth = "0.5px";
+                style.borderStyle = "solid";
+                style.borderColor = this.inputBorderColor;
+            }
+            if (this.border === "bottom") {
+                style.borderBottomWidth = "0.5px";
+                style.borderBottomStyle = "solid";
+                style.borderBottomColor = this.inputBorderColor;
             }
             // 无边框时，去除内边距
             if (this.border === "none") {
