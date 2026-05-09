@@ -177,11 +177,40 @@
             	deep:true
         	}
 		},
-		mounted() {
+		async mounted() {
 			if (this.height != '') {
 				this.sizeLocal = val
 			} else {
 				this.sizeLocal = this.size
+			}
+			
+			// 获取滑块条的尺寸信息
+			if (!this.useNative) {
+				// #ifndef APP-NVUE
+				this.$uGetRect('.u-slider__base').then(rect => {
+					this.sliderRect = rect;
+					// console.log('sliderRect', this.sliderRect)
+					if (this.sliderRect.width == 0) {
+						console.info('如在弹窗等元素中使用，请使用v-if来显示滑块，否则无法计算长度。')
+					}
+					this.init()
+				});
+				// #endif
+				// #ifdef APP-NVUE
+				await sleep(30) // 不延迟会出现size获取都为0的问题
+				const ref = this.$refs['u-slider__base']
+				ref &&
+					dom.getComponentRect(ref, (res) => {
+						// console.log(res)
+						this.sliderRect = {
+							top: res.size.top,
+							left: res.size.left,
+							width: res.size.width,
+							height: res.size.height
+						};
+						this.init()
+					})
+				// #endif
 			}
 		},
 		computed: {
@@ -213,36 +242,6 @@
 					style.height = (this.isRange && this.showValue) ? (getPx(this.blockSize) + 24) + 'px' : (getPx(this.blockSize)) + 'px';
 				}
 				return style;
-			}
-		},
-		async mounted() {
-			// 获取滑块条的尺寸信息
-			if (!this.useNative) {
-				// #ifndef APP-NVUE
-				this.$uGetRect('.u-slider__base').then(rect => {
-					this.sliderRect = rect;
-					// console.log('sliderRect', this.sliderRect)
-					if (this.sliderRect.width == 0) {
-						console.info('如在弹窗等元素中使用，请使用v-if来显示滑块，否则无法计算长度。')
-					}
-					this.init()
-				});
-				// #endif
-				// #ifdef APP-NVUE
-				await sleep(30) // 不延迟会出现size获取都为0的问题
-				const ref = this.$refs['u-slider__base']
-				ref &&
-					dom.getComponentRect(ref, (res) => {
-						// console.log(res)
-						this.sliderRect = {
-							top: res.size.top,
-							left: res.size.left,
-							width: res.size.width,
-							height: res.size.height
-						};
-						this.init()
-					})
-				// #endif
 			}
 		},
 		methods: {
