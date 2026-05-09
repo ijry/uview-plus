@@ -45,7 +45,7 @@
 					@touchcancel="onTouchEnd"
 				>
 					<!-- iOS风格的横条指示器 -->
-					<view class="u-popup__content__indicator"></view>
+					<view class="u-popup__content__indicator" :style="indicatorStyle"></view>
 				</view>
 				<slot></slot>
 				<view
@@ -58,7 +58,7 @@
 				>
 					<up-icon
 						name="close"
-						color="#909399"
+						:color="closeIconColor"
 						size="18"
 						bold
 					></up-icon>
@@ -211,6 +211,14 @@
 				}
 				
 				return deepMerge(style, addStyle(this.customStyle))
+			},
+			closeIconColor() {
+				return this.upThemeVar('--up-content-color', '#606266')
+			},
+			indicatorStyle() {
+				return {
+					backgroundColor: this.upThemeVar('--up-light-color', '#c0c4cc')
+				}
 			},
 			position() {
 				if (this.mode === 'center') {
@@ -413,7 +421,7 @@
 				width: 100px;
 				height: 5px;
 				border-radius: 100px;
-				background-color: #c0c4cc;
+				background-color: var(--up-light-color, #c0c4cc);
 			}
 
 			&__close {
