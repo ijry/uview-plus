@@ -512,11 +512,6 @@ function syncThemeToH5(mode) {
     // #ifdef H5
     if (typeof document !== 'undefined' && document.documentElement) {
         document.documentElement.setAttribute('data-up-theme', mode)
-        const bg = color.bgColor || (mode === 'dark' ? '#1f1f1f' : '#f3f4f6')
-        document.documentElement.style.backgroundColor = bg
-        if (document.body) document.body.style.backgroundColor = bg
-        const appRoot = document.getElementById('app')
-        if (appRoot) appRoot.style.backgroundColor = bg
     }
     // #endif
 }
