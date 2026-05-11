@@ -1,3 +1,10 @@
+## 3.8.27（2026-05-11）
+feat: 新增 nativeThemeSync 配置控制原生UI主题同步
+
+- 在 config 中新增 nativeThemeSync 选项，默认值为 false
+- 在 theme.js 与 runtime.js 的 applyNativeThemeUI 中增加配置拦截，未开启时跳过原生导航栏、页面背景及 tabBar 的样式同步
+- 补充 TypeScript 类型定义，明确默认关闭以避免升级覆盖项目已有的 pages.json 或 theme.json 全局样式
+- 更新验证脚本，增加对该配置开关行为的断言测试
 ## 3.8.26（2026-05-11）
 fix: 修复海报组件多行文本截断与省略号渲染问题
 

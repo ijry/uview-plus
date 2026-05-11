@@ -539,6 +539,7 @@ function trySetNavigationBarColor(options) {
 
 function applyNativeThemeUI(mode, themeColors, themeVars = {}) {
     if (typeof uni === 'undefined') return
+    if (config.nativeThemeSync !== true) return
     const isDark = normalizeThemeMode(mode) === 'dark'
     const pageBg = themeColors?.bgColor || (isDark ? '#1f1f1f' : '#f3f4f6')
     const navBg = themeVars?.['--up-navbar-bg-color']

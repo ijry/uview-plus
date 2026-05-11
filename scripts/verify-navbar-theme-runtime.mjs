@@ -21,6 +21,11 @@ assert.match(
     /const navBg = themeVars\?\.\['--up-navbar-bg-color'\][\s\S]*config\.color\?\.\['up-navbar-bg-color'\]/,
     'expected theme native UI sync to prefer --up-navbar-bg-color'
 )
+assert.match(
+    themeSource,
+    /config\.nativeThemeSync !== true/,
+    'expected theme native UI sync to be opt-in'
+)
 
 const { css } = sass.compile(
     resolve(__dirname, '../src/uni_modules/uview-plus/libs/css/theme-vars-core.scss'),
@@ -41,6 +46,7 @@ assert.match(
 const originalUni = globalThis.uni
 const originalGetCurrentPages = globalThis.getCurrentPages
 const originalColorMap = { ...config.color }
+const originalNativeThemeSync = config.nativeThemeSync
 
 const navCalls = []
 
@@ -80,6 +86,12 @@ try {
     refreshThemeFromConfig()
     navCalls.length = 0
 
+    config.nativeThemeSync = false
+    setTheme('light')
+    assert.equal(themeState.vars['--up-navbar-bg-color'], '#123456')
+    assert.equal(navCalls.length, 0)
+
+    config.nativeThemeSync = true
     setTheme('light')
 
     assert.equal(themeState.vars['--up-navbar-bg-color'], '#123456')
@@ -89,6 +101,7 @@ try {
         delete config.color[key]
     })
     Object.assign(config.color, originalColorMap)
+    config.nativeThemeSync = originalNativeThemeSync
     if (originalUni === undefined) {
         delete globalThis.uni
     } else {

@@ -23,6 +23,12 @@ declare module 'uview-plus' {
 		 * @default 'px'
 		 */
 		unit: 'px' | 'rpx';
+		/**
+		 * 是否由运行时主题同步原生导航栏、页面背景、tabBar等全局UI。
+		 * 默认关闭，避免升级后覆盖项目已有 pages.json/theme.json 全局样式。
+		 * @default false
+		 */
+		nativeThemeSync: boolean;
 		/** 
 		 * 只加载一次字体图标
 		 * @default false

@@ -47,6 +47,8 @@ export default {
     customIcons: {}, // 自定义图标与unicode对应关系
 	// 默认单位，可以通过配置为rpx，那么在用于传入组件大小参数为数值时，就默认为rpx
 	unit: 'px',
+    // 是否由运行时主题同步原生导航栏、页面背景、tabBar等全局UI
+    nativeThemeSync: false,
 	// 拦截器
 	interceptor: {
 		navbarLeftClick: null

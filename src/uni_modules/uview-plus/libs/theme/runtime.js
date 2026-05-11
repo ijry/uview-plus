@@ -349,6 +349,7 @@ export function getThemeTabBarStyle(upU) {
 export function applyNativeThemeUI(upU) {
     if (typeof uni === 'undefined') return
     const runtimeU = getRuntimeU(upU)
+    if (runtimeU?.config?.nativeThemeSync !== true) return
     const isDark = getThemeIsDark(runtimeU)
     const fallbackBg = isDark ? '#1f1f1f' : (runtimeU?.color?.bgColor || '#f3f4f6')
     const pageBg = getThemeVar(
