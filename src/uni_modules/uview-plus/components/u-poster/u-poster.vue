@@ -359,6 +359,14 @@ export default {
             const lineHeight = css.lineHeight ? this.convertRpxToPx(css.lineHeight) : 20;
             const lines = [];
             let currentLine = '';
+            const ellipsis = '...';
+            const appendEllipsis = (line) => {
+                let fitLine = line;
+                while (ctx.measureText(fitLine + ellipsis).width > maxWidth && fitLine.length > 0) {
+                    fitLine = fitLine.substring(0, fitLine.length - 1);
+                }
+                return fitLine + ellipsis;
+            };
             
             for (let i = 0; i < text.length; i++) {
                 const char = text[i];
@@ -367,20 +375,14 @@ export default {
                 
                 if (metrics.width > maxWidth && currentLine !== '') {
                     lines.push(currentLine);
-                    currentLine = char;
                     
                     // 如果已达最大行数，添加省略号并结束
                     if (lines.length === lineClamp) {
-                        if (metrics.width > maxWidth) {
-                            // 添加省略号
-                            let fitLine = currentLine.substring(0, currentLine.length - 1);
-                            while (ctx.measureText(fitLine + '...').width > maxWidth && fitLine.length > 0) {
-                                fitLine = fitLine.substring(0, fitLine.length - 1);
-                            }
-                            lines[lines.length - 1] = fitLine + '...';
-                        }
+                        lines[lines.length - 1] = appendEllipsis(currentLine);
                         break;
                     }
+                    
+                    currentLine = char;
                 } else {
                     currentLine = testLine;
                 }
