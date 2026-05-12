@@ -152,11 +152,18 @@ export default {
         },
         countStyle() {
             if (this.disabled) return { backgroundColor: 'transparent' }
-            return { backgroundColor: this.upThemeVar('--up-card-bg-color', '#ffffff') }
+            return {
+                backgroundColor: this.upThemeVar('--up-card-bg-color', '#ffffff'),
+                color: this.upThemeVar('--up-tips-color', '#909193')
+            }
         },
 		fieldStyle() {
-			let style = {};
-			style['height'] = addUnit(this.height);
+			const style = {
+                height: addUnit(this.height),
+                backgroundColor: 'transparent',
+                color: this.upThemeVar('--up-content-color', '#606266'),
+                caretColor: this.upThemeVar('--up-main-color', '#303133')
+            };
 			if (this.autoHeight) {
 				style['height'] = 'auto';
 				style['minHeight'] = addUnit(this.height);
@@ -168,18 +175,38 @@ export default {
             let classes = [],
                 { border, disabled } = this;
             border === "surround" &&
-                (classes = classes.concat(["u-border", "u-textarea--radius"]));
+                (classes = classes.concat(["u-textarea--radius"]));
             border === "bottom" &&
                 (classes = classes.concat([
-                    "u-border-bottom",
                     "u-textarea--no-radius",
                 ]));
             disabled && classes.push("u-textarea--disabled");
             return classes.join(" ");
         },
+        textareaBorderColor() {
+            const lightBorder = this.upThemeVar('--up-border-color', '#dadbde');
+            return this.upThemeVar(
+                '--up-input-border-color',
+                this.upThemeIsDark ? 'rgba(255, 255, 255, 0.08)' : lightBorder
+            );
+        },
         // 组件的样式
         textareaStyle() {
             const style = {};
+            style.backgroundColor = this.disabled
+                ? this.upThemeVar('--up-bg-color', '#f5f7fa')
+                : this.upThemeVar('--up-card-bg-color', '#ffffff');
+            style.color = this.upThemeVar('--up-content-color', '#606266');
+            if (this.border === "surround") {
+                style.borderWidth = "0.5px";
+                style.borderStyle = "solid";
+                style.borderColor = this.textareaBorderColor;
+            }
+            if (this.border === "bottom") {
+                style.borderBottomWidth = "0.5px";
+                style.borderBottomStyle = "solid";
+                style.borderBottomColor = this.textareaBorderColor;
+            }
             // #ifdef APP-NVUE
             // 由于textarea在安卓nvue上的差异性，需要额外再调整其内边距
             if (os() === "android") {
@@ -277,7 +304,26 @@ export default {
         flex: 1;
         font-size: 15px;
         color: $u-content-color;
+        background-color: transparent;
+        border: none;
+        outline: none;
 		width: 100%;
+        /* #ifdef H5 */
+        :deep(.uni-textarea-wrapper),
+        :deep(.uni-textarea-textarea) {
+            background-color: transparent;
+        }
+
+        :deep(.uni-textarea-textarea) {
+            color: inherit;
+            border: none;
+            outline: none;
+        }
+
+        :deep(.uni-textarea-placeholder) {
+            color: var(--up-tips-color, #909193);
+        }
+        /* #endif */
     }
 
     &__count {
