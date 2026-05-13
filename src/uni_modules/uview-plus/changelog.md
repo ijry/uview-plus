@@ -1,3 +1,10 @@
+## 3.8.29（2026-05-13）
+style: 将 Toast 组件硬编码颜色替换为主题变量
+
+- 替换 primary、success、error、warning 类型的背景与边框硬编码颜色
+- 统一接入 $u-{type}-light 与 $u-{type}-disabled 主题变量
+- 增强组件在不同主题下的样式一致性与可维护性
+
 ## 3.8.28（2026-05-12）
 style: 优化 up-textarea 组件主题变量与边框样式
 
