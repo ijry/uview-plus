@@ -2,11 +2,15 @@ import { MagicString } from 'vue/compiler-sfc'
 
 import { parseSFC } from './utils.js'
 
-export async function registerUpApp(code, fileName = 'App.up') {
+export async function registerUpApp(
+  code,
+  fileName = 'App.up',
+  rootToastHostPath = './uni_modules/uview-plus/libs/root/root-toast-host.vue'
+) {
   const ms = new MagicString(code)
 
   const importCode = `import GlobalUpRoot from "./${fileName}.vue";
-import UpRootToastHost from "./uni_modules/uview-plus/libs/root/root-toast-host.vue";`
+import UpRootToastHost from "${rootToastHostPath}";`
   const vueUseComponentCode = 'app.component("global-up-root", GlobalUpRoot);\napp.component("ku-root-toast-host", UpRootToastHost);'
 
   ms.prepend(`${importCode}\n`).replace(

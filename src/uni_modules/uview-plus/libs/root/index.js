@@ -1,4 +1,5 @@
 import { dirname, relative, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import process from 'node:process'
 import { existsSync, mkdirSync, statSync, writeFileSync } from 'node:fs'
 
@@ -8,13 +9,14 @@ import { transformNvuePage, transformPage } from './page.js'
 import { rebuildUpApp, registerUpApp } from './root.js'
 import { loadPagesJson, normalizePlatformPath, toArray } from './utils.js'
 
+const rootLibPath = normalizePath(dirname(fileURLToPath(import.meta.url)))
+
 export default function UniUpRoot(options = {}) {
   const rootOptions = {
     enabledVirtualHost: false,
     enabledGlobalRef: false,
     rootFileName: 'App.up',
     autoCreateRootFile: true,
-    autoCreateViteConfig: true,
     excludePages: [],
     ...options,
   }
@@ -50,14 +52,10 @@ export default function UniUpRoot(options = {}) {
   const projectInfo = detectProjectRoot()
   const rootPath = normalizePath(projectInfo.rootPath)
   const appUpPath = normalizePath(resolve(rootPath, `${rootFileName}.vue`))
+  const rootToastHostPath = normalizePath(resolve(rootLibPath, 'root-toast-host.vue'))
   const nvueRootPath = normalizePath(resolve(rootPath, 'uni_modules/uview-plus/libs/root/nvue-root.vue'))
   const themeRuntimePath = normalizePath(resolve(rootPath, 'uni_modules/uview-plus/libs/theme/runtime.js'))
   const pagesPath = normalizePath(resolve(rootPath, 'pages.json'))
-  const projectBasePath = normalizePath(
-    projectInfo.projectType === 'cli' ? resolve(rootPath, '..') : rootPath
-  )
-  const viteConfigTsPath = normalizePath(resolve(projectBasePath, 'vite.config.ts'))
-  const viteConfigJsPath = normalizePath(resolve(projectBasePath, 'vite.config.js'))
   const excludedPaths = toArray(rootOptions.excludePages)
     .filter(Boolean)
     .map(path => normalizePath(resolve(rootPath, path)))
@@ -92,27 +90,6 @@ export default function UniUpRoot(options = {}) {
     writeFileSync(appUpPath, defaultRootSfc, 'utf-8')
   }
 
-  const ensureViteConfigFile = () => {
-    if (!rootOptions.autoCreateViteConfig) return
-    if (existsSync(viteConfigTsPath) || existsSync(viteConfigJsPath)) return
-
-    const template = `import { defineConfig } from "vite";
-import uni from "@dcloudio/vite-plugin-uni";
-import UniUpRoot from "./src/uni_modules/uview-plus/libs/root/index.js";
-
-export default defineConfig({
-  plugins: [
-    UniUpRoot({
-      rootFileName: "${rootFileName}",
-    }),
-    uni(),
-  ],
-});
-`
-
-    writeFileSync(viteConfigTsPath, template, 'utf-8')
-  }
-
   const refreshPagesJson = () => {
     if (!existsSync(pagesPath)) return
     const mtimeMs = statSync(pagesPath).mtimeMs
@@ -128,7 +105,6 @@ export default defineConfig({
       hasPlatformPlugin = plugins.some(v => v.name === 'vite-plugin-uni-platform')
     },
     buildStart() {
-      ensureViteConfigFile()
       ensureRootFile()
       refreshPagesJson()
     },
@@ -139,7 +115,7 @@ export default defineConfig({
 
       const filterMain = createFilter(mainFiles)
       if (filterMain(cleanId)) {
-        ms = await registerUpApp(code, rootFileName)
+        ms = await registerUpApp(code, rootFileName, getRelativeImportPath(cleanId, rootToastHostPath))
       }
 
       const filterUpRoot = createFilter(appUpPath)
