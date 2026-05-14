@@ -2,7 +2,7 @@
 	<view class="u-toast">
 		<u-overlay
 			:show="isShow"
-			:zIndex="tmpConfig.overlay ? tmpConfig.zIndex : -1"
+			:zIndex="tmpConfig.zIndex"
 			:custom-style="overlayStyle"
 		>
 			<view
@@ -112,6 +112,10 @@
 				}
 				// 将遮罩设置为100%透明度，避免出现灰色背景
 				style.backgroundColor = 'rgba(0, 0, 0, 0)'
+				// overlay=false时不阻止点击穿透
+				if (!this.tmpConfig.overlay) {
+					style.pointerEvents = 'none'
+				}
 				return style
 			},
 			iconStyle() {
