@@ -105,6 +105,10 @@ export default {
             type: Number,
             default: 3
         },
+        quietZone: {
+            type: Number,
+            default: 0
+        },
         onval: {
             type: Boolean,
             default: true
@@ -221,6 +225,7 @@ export default {
 						background: that.background, // 背景色
 						foreground: that.foreground, // 前景色
 						pdground: that.pdground, // 定位角点颜色
+						quietZone: that.quietZone, // 静区宽度
 						correctLevel: that.lv, // 容错级别
 						image: that.icon, // 二维码图标
 						imageSize: that.iconSize,// 二维码图标大小

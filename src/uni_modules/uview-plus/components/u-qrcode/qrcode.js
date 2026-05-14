@@ -1026,6 +1026,7 @@ let QRCode = {};
             text: '',
             size: 256,
             correctLevel: 3,
+            quietZone: 0,
             background: '#ffffff',
             foreground: '#000000',
             pdground: '#000000',
@@ -1104,26 +1105,31 @@ let QRCode = {};
 			ctx = options.ctx;
 
             var count = qrCodeAlg.getModuleCount();
+            var quietZone = Math.max(0, Math.floor(options.quietZone || 0));
+            var renderCount = count + quietZone * 2;
             var ratioSize = options.size;
             var ratioImgSize = options.imageSize;
             //计算每个点的长宽
-            var tileW = (ratioSize / count).toPrecision(4);
-            var tileH = (ratioSize / count).toPrecision(4);
+            var tileW = (ratioSize / renderCount).toPrecision(4);
+            var tileH = (ratioSize / renderCount).toPrecision(4);
             //绘制
-            for (var row = 0; row < count; row++) {
-                for (var col = 0; col < count; col++) {
+            for (var row = 0; row < renderCount; row++) {
+                for (var col = 0; col < renderCount; col++) {
                     var w = (Math.ceil((col + 1) * tileW) - Math.floor(col * tileW));
                     var h = (Math.ceil((row + 1) * tileH) - Math.floor(row * tileH));
+                    var qrRow = row - quietZone;
+                    var qrCol = col - quietZone;
+                    var isDark = qrRow >= 0 && qrCol >= 0 && qrRow < count && qrCol < count && qrCodeAlg.modules[qrRow][qrCol];
                     var foreground = getForeGround({
-                        row: row,
-                        col: col,
+                        row: qrRow,
+                        col: qrCol,
                         count: count,
                         options: options
                     });
                     if (options.isNvue) {
-                        ctx.setFillStyle(qrCodeAlg.modules[row][col] ? foreground : options.background);
+                        ctx.setFillStyle(isDark ? foreground : options.background);
                     } else {
-                        ctx.fillStyle = qrCodeAlg.modules[row][col] ? foreground : options.background;
+                        ctx.fillStyle = isDark ? foreground : options.background;
                     }
                     ctx.fillRect(Math.round(col * tileW), Math.round(row * tileH), w, h);
                 }

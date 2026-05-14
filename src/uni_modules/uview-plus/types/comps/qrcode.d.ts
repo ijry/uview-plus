@@ -18,6 +18,12 @@ declare interface QrcodeProps {
     val: string
 
     /**
+     * 二维码静区宽度
+     * @default 0
+     */
+    quietZone?: number
+
+    /**
      * 背景色
      * @default "#ffffff"
      */
