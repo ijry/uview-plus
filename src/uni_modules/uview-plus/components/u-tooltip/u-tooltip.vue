@@ -19,6 +19,7 @@
 					:selectable="false"
 					:style="{
 						color: color,
+						fontSize: $u.addUnit(size),
 						backgroundColor: bgColor && showTooltip && tooltipTop !== -10000 ? bgColor : 'transparent'
 					}"
 				>{{ text }}</text>
