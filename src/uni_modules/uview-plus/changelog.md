@@ -1,3 +1,7 @@
+## 3.8.31（2026-05-14）
+fix: 修复toast组件overlay设置为false时不显示toast的问题 (#1016)
+
+
 ## 3.8.30（2026-05-14）
 fix(tooltip): 修复tooltip组件字体大小(size)属性未生效的问题
 
