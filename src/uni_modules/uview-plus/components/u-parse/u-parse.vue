@@ -131,6 +131,41 @@ export default {
 	},
 	methods: {
 		/**
+		 * @description 规范化链接地址
+		 * @param {any} href
+		 * @return {String}
+		 */
+		normalizeHref(href) {
+			return typeof href === 'string' ? href.trim() : ''
+		},
+
+		/**
+		 * @description 判断是否为外部链接
+		 * @param {String} href
+		 * @return {Boolean}
+		 */
+		isExternalLink(href) {
+			return href.split('?')[0].includes('://')
+		},
+
+		/**
+		 * @description 打开外部链接
+		 * @param {String} href
+		 */
+		openExternalLink(href) {
+			// #ifdef APP-PLUS
+			try {
+				plus.runtime.openWeb(href)
+			} catch (e) { }
+			// #endif
+			// #ifdef APP-HARMONY
+			try {
+				plus.runtime.openURL(href)
+			} catch (e) { }
+			// #endif
+		},
+
+		/**
 		 * @description 将锚点跳转的范围限定在一个 scroll-view 内
 		 * @param {Object} page scroll-view 所在页面的示例
 		 * @param {String} selector scroll-view 的选择器
@@ -420,7 +455,7 @@ export default {
 					break
 				// 链接点击
 				case 'onLinkTap': {
-					const href = message.attrs.href
+					const href = this.normalizeHref(message.attrs.href)
 					this.$emit('linktap', message.attrs)
 					if (href) {
 						// 锚点跳转
@@ -430,15 +465,10 @@ export default {
 									offset: message.offset
 								})
 							}
-						} else if (href.includes('://')) {
+						} else if (this.isExternalLink(href)) {
 							// 打开外链
 							if (this.copyLink) {
-							    // #ifdef APP-PLUS
-                                plus.runtime.openWeb(href)
-                                // #endif
-                                // #ifdef APP-HARMONY
-                                plus.runtime.openURL(href)
-                                // #endif
+								this.openExternalLink(href)
 							}
 						} else {
 							uni.navigateTo({
