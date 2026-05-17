@@ -1,6 +1,7 @@
 import config from '../config/config.js'
 import color from '../config/color.js'
 import index from '../function/index.js'
+import { trySetTabBarStyle } from './runtime.js'
 
 const DEFAULT_LIGHT_THEME_COLORS = Object.freeze({
     primary: '#3c9cff',
@@ -562,14 +563,12 @@ function applyNativeThemeUI(mode, themeColors, themeVars = {}) {
             backgroundColorBottom: pageBg
         })
     }
-    if (typeof uni.setTabBarStyle === 'function') {
-        uni.setTabBarStyle({
-            color: isDark ? '#8e8e93' : '#909399',
-            selectedColor: isDark ? '#f2f2f7' : '#303133',
-            backgroundColor: isDark ? '#111111' : '#ffffff',
-            borderStyle: isDark ? 'white' : 'black'
-        })
-    }
+    trySetTabBarStyle({
+        color: isDark ? '#8e8e93' : '#909399',
+        selectedColor: isDark ? '#f2f2f7' : '#303133',
+        backgroundColor: isDark ? '#111111' : '#ffffff',
+        borderStyle: isDark ? 'white' : 'black'
+    })
 }
 
 function applyTheme(mode = 'light') {

@@ -1,3 +1,5 @@
+import { trySetTabBarStyle } from '@/uni_modules/uview-plus/libs/theme/runtime.js'
+
 export default {
     data() {
         return {
@@ -51,14 +53,12 @@ export default {
                     backgroundColorBottom: pageBg
                 })
             }
-            if (typeof uni.setTabBarStyle === 'function') {
-                uni.setTabBarStyle({
-                    color: isDark ? '#8e8e93' : '#909399',
-                    selectedColor: isDark ? '#f2f2f7' : '#303133',
-                    backgroundColor: isDark ? '#111111' : '#ffffff',
-                    borderStyle: isDark ? 'white' : 'black'
-                })
-            }
+            trySetTabBarStyle({
+                color: isDark ? '#8e8e93' : '#909399',
+                selectedColor: isDark ? '#f2f2f7' : '#303133',
+                backgroundColor: isDark ? '#111111' : '#ffffff',
+                borderStyle: isDark ? 'white' : 'black'
+            })
         }
     }
 }

@@ -133,6 +133,37 @@ function getRuntimeU(upU) {
     return null
 }
 
+function normalizeRuntimeRoute(route) {
+    if (typeof route !== 'string') return ''
+    return route.replace(/^\//, '').split('?')[0]
+}
+
+function getCurrentRuntimeRoute() {
+    try {
+        if (typeof getCurrentPages !== 'function') return ''
+        const pages = getCurrentPages()
+        if (!Array.isArray(pages) || pages.length === 0) return ''
+        const page = pages[pages.length - 1] || {}
+        return normalizeRuntimeRoute(page.route || page.path || '')
+    } catch (e) {}
+    return ''
+}
+
+function getRuntimeTabBarRoutes() {
+    const routes = []
+    try {
+        const runtimeConfig = typeof __uniConfig !== 'undefined' ? __uniConfig : null
+        const tabBarList = runtimeConfig?.tabBar?.list
+        if (Array.isArray(tabBarList)) {
+            tabBarList.forEach((item) => {
+                const route = normalizeRuntimeRoute(item?.pagePath || '')
+                if (route) routes.push(route)
+            })
+        }
+    } catch (e) {}
+    return routes
+}
+
 function hasActiveRuntimePage() {
     try {
         if (typeof getCurrentPages === 'function') {
@@ -148,6 +179,25 @@ function trySetNavigationBarColor(options) {
     if (!hasActiveRuntimePage()) return
     try {
         const result = uni.setNavigationBarColor(options)
+        if (result && typeof result.catch === 'function') {
+            result.catch(() => {})
+        }
+    } catch (e) {}
+}
+
+export function isTabBarPage() {
+    const route = getCurrentRuntimeRoute()
+    if (!route) return false
+    const tabBarRoutes = getRuntimeTabBarRoutes()
+    if (!tabBarRoutes.length) return false
+    return tabBarRoutes.includes(route)
+}
+
+export function trySetTabBarStyle(options) {
+    if (typeof uni === 'undefined' || typeof uni.setTabBarStyle !== 'function') return
+    if (!isTabBarPage()) return
+    try {
+        const result = uni.setTabBarStyle(options)
         if (result && typeof result.catch === 'function') {
             result.catch(() => {})
         }
@@ -377,9 +427,7 @@ export function applyNativeThemeUI(upU) {
             backgroundColorBottom: pageBg
         })
     }
-    if (typeof uni.setTabBarStyle === 'function') {
-        uni.setTabBarStyle(getThemeTabBarStyle(runtimeU))
-    }
+    trySetTabBarStyle(getThemeTabBarStyle(runtimeU))
 }
 
 export function applyNativeThemeUIDeferred(upU, delay = 30) {
