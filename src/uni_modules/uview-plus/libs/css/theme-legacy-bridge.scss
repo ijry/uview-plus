@@ -1,0 +1,6 @@
+@import "../../theme.scss";
+
+@include up-export-legacy-light-vars(':root');
+@include up-export-legacy-light-vars('page');
+@include up-export-legacy-light-vars('body');
+@include up-export-legacy-light-vars("[data-up-theme='light']");

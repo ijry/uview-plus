@@ -16,5 +16,11 @@
 <style lang="scss">
 	/*每个页面公共css */
 	// @import "uview-plus/index.scss";	@import "@/uni_modules/uview-plus/index.scss";
+	:root,
+	page,
+	body,
+	[data-up-theme='light'] {
+	  --up-light-primary: #1abc9c;
+	}
 	@import "common/demo.scss";
 </style>

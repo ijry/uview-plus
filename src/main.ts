@@ -38,6 +38,9 @@ export function createApp() {
 		return {
 			httpIns: initRequest,
 			options: {
+				color: {
+					// 'primary': 'red'
+				},
 				// 修改config对象的属性
 				config: {
 					// 修改默认单位为rpx，相当于执行 uni.$u.config.unit = 'rpx'

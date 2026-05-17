@@ -117,6 +117,7 @@ import { mixin } from '../../libs/mixin/mixin';
 import { props } from "./props";
 import { addStyle } from '../../libs/function/index';
 import { throttle } from '../../libs/function/throttle';
+import { getThemeVar } from '../../libs/theme/runtime.js';
 /**
  * button 按钮
  * @description Button 按钮
@@ -194,8 +195,43 @@ export default {
         isDarkTheme() {
             return this.$u.theme && this.$u.theme.mode === 'dark';
         },
+        nvueMainColor() {
+            return this.resolveNvueColor(this.$u.color.mainColor, this.isDarkTheme ? '#f5f5f5' : '#303133');
+        },
+        nvueBorderColor() {
+            return this.resolveNvueColor(this.$u.color.borderColor, this.isDarkTheme ? '#3a3a3c' : '#dadbde');
+        },
         themeTypeColor() {
-            return this.$u.color[this.type] || this.$u.color.info;
+            const fallbackMap = {
+                primary: '#3c9cff',
+                success: '#5ac725',
+                warning: '#f9ae3d',
+                error: '#f56c6c',
+                info: '#909399',
+            };
+            const type = fallbackMap[this.type] ? this.type : 'info';
+            return this.resolveNvueColor(
+                this.upThemeVar(`--up-${type}`, fallbackMap[type]),
+                fallbackMap[type]
+            );
+        },
+        nvueInfoBackgroundColor() {
+            return this.upThemeVar(
+                '--up-button-info-background-color',
+                this.upThemeVar(
+                    '--up-card-bg-color',
+                    this.isDarkTheme ? '#1c1c1e' : '#ffffff'
+                )
+            );
+        },
+        nvuePlainBackgroundColor() {
+            return this.upThemeVar(
+                '--up-button-plain-background-color',
+                this.upThemeVar(
+                    '--up-card-bg-color',
+                    this.isDarkTheme ? '#1c1c1e' : '#ffffff'
+                )
+            );
         },
         loadingColor() {
             if (this.plain) {
@@ -212,13 +248,11 @@ export default {
         iconColorCom() {
             // 如果是镂空状态，设置了color就用color值，否则使用主题颜色，
             // up-icon的color能接受一个主题颜色的值
-			if (this.iconColor) return this.iconColor;
+            if (this.iconColor) return this.iconColor;
 			if (this.plain) {
                 return this.color ? this.color : this.type;
             } else {
-                return this.type === "info"
-                    ? (this.isDarkTheme ? "#f3f4f6" : "#000000")
-                    : "#ffffff";
+                return this.type === "info" ? this.nvueMainColor : "#ffffff";
             }
         },
         baseColor() {
@@ -249,26 +283,28 @@ export default {
                 }
                 return style;
             }
+            // #ifdef APP-NVUE
             const typeColor = this.themeTypeColor;
             if (this.plain) {
-                style.color = this.type === 'info' ? this.$u.color.mainColor : typeColor;
-                style.backgroundColor = this.isDarkTheme ? '#1c1c1e' : '#ffffff';
-                style.borderColor = this.type === 'info' ? this.$u.color.borderColor : typeColor;
+                style.color = this.type === 'info' ? this.nvueMainColor : typeColor;
+                style.backgroundColor = this.nvuePlainBackgroundColor;
+                style.borderColor = this.type === 'info' ? this.nvueBorderColor : typeColor;
                 style.borderWidth = this.hairline ? '0.5px' : '1px';
                 style.borderStyle = 'solid';
             } else {
                 style.borderWidth = this.hairline ? '0.5px' : '1px';
                 style.borderStyle = 'solid';
                 if (this.type === 'info') {
-                    style.color = this.$u.color.mainColor;
-                    style.backgroundColor = this.isDarkTheme ? '#2c2c2e' : '#ffffff';
-                    style.borderColor = this.$u.color.borderColor;
+                    style.color = this.nvueMainColor;
+                    style.backgroundColor = this.nvueInfoBackgroundColor;
+                    style.borderColor = this.nvueBorderColor;
                 } else {
                     style.color = '#ffffff';
                     style.backgroundColor = typeColor;
                     style.borderColor = typeColor;
                 }
             }
+            // #endif
             return style;
         },
         // nvue版本按钮的字体不会继承父组件的颜色，需要对每一个text组件进行单独的设置
@@ -276,7 +312,7 @@ export default {
             let style = {};
             // 针对自定义了color颜色的情况，镂空状态下，就是用自定义的颜色
             if (this.type === "info") {
-                style.color = this.$u.color.mainColor;
+                style.color = this.nvueMainColor;
             }
             if (this.color) {
                 style.color = this.plain ? this.color : "white";
@@ -301,6 +337,14 @@ export default {
 		'error', 'opensetting', 'launchapp', 'agreeprivacyauthorization'],
     methods: {
         addStyle,
+        resolveNvueColor(colorValue, fallbackColor) {
+            if (typeof colorValue !== 'string') return fallbackColor;
+            if (colorValue.indexOf('var(') > -1) return fallbackColor;
+            return colorValue;
+        },
+        upThemeVar(varName, fallbackColor) {
+            return getThemeVar(varName, fallbackColor, this.$u);
+        },
         clickHandler(e: any) {
             // 非禁止并且非加载中，才能点击
             if (!this.disabled && !this.loading) {
@@ -362,9 +406,9 @@ $u-button-mini-height: 22px !default;
 $u-button-mini-font-size: 10px !default;
 $u-button-mini-min-width: 50px !default;
 $u-button-disabled-opacity: 0.5 !default;
-$u-button-info-color: #323233 !default;
-$u-button-info-background-color: #fff !default;
-$u-button-info-border-color: #ebedf0 !default;
+$u-button-info-color: $u-main-color !default;
+$u-button-info-background-color: var(--up-button-info-background-color, var(--up-card-bg-color, #fff)) !default;
+$u-button-info-border-color: $u-border-color !default;
 $u-button-info-border-width: 1px !default;
 $u-button-info-border-style: solid !default;
 $u-button-success-color: #fff !default;
@@ -397,7 +441,7 @@ $u-button-square-border-top-left-radius: 3px !default;
 $u-button-square-border-bottom-left-radius: 3px !default;
 $u-button-square-border-bottom-right-radius: 3px !default;
 $u-button-icon-min-width: 1em !default;
-$u-button-plain-background-color: #fff !default;
+$u-button-plain-background-color: var(--up-button-plain-background-color, var(--up-card-bg-color, #fff)) !default;
 $u-button-hairline-border-width: 0.5px !default;
 
 .u-button {
