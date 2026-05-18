@@ -1,3 +1,9 @@
+## 3.8.34（2026-05-18）
+fix: 仅在 TabBar 页面同步 TabBar 样式
+
+- 在 libs/theme/runtime.js 新增 isTabBarPage 与 trySetTabBarStyle，统一封装 TabBar 页面判断与安全调用。
+- 在 runtime/theme/common mixin 的原生主题同步路径中，全部改为调用 trySetTabBarStyle，不再直接调用 uni.setTabBarStyle。
+
 ## 3.8.33（2026-05-17）
 fix: 修复主题变量桥接与 nvue 按钮取色问题
 
