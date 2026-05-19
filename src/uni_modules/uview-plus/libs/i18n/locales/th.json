@@ -34,6 +34,7 @@
     "up.calendar.chooseDates": "เลือกวันที่",
     "up.calendar.disabled": "วันที่นี้ถูกปิดการใช้งาน",
     "up.calendar.daysExceed": "จำนวนวันที่เลือกต้องไม่เกิน {days} วัน",
+    "up.calendar.today": "วันนี้",
     "up.cityLocate.locateCity": "ระบุตำแหน่งเมือง",
     "up.cityLocate.fail": "การระบุตำแหน่งล้มเหลว กรุณาคลิกเพื่อลองใหม่",
     "up.cityLocate.locating": "กำลังระบุตำแหน่ง",

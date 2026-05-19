@@ -33,6 +33,12 @@
 				:class="{ 'u-calendar-header__switch--disabled': nextYearDisabled }"
 				@click="nextYear"
 			>»</text>
+			<text
+				v-if="showToday"
+				class="u-calendar-header__today"
+				:class="{ 'u-calendar-header__today--disabled': todayDisabled }"
+				@click="today"
+			>{{ todayText }}</text>
 		</view>
 		<view class="u-calendar-header__weekdays">
 			<text class="u-calendar-header__weekdays__weekday">{{ weekText[0] }}</text>
@@ -104,6 +110,21 @@
 			nextYearDisabled: {
 				type: Boolean,
 				default: false
+			},
+			// 是否显示今天按钮
+			showToday: {
+				type: Boolean,
+				default: true
+			},
+			// 今天按钮文案
+			todayText: {
+				type: String,
+				default: ''
+			},
+			// 今天按钮是否禁用
+			todayDisabled: {
+				type: Boolean,
+				default: false
 			}
 		},
 		data() {
@@ -130,6 +151,11 @@
 			nextYear() {
 				if (!this.nextYearDisabled) {
 					this.$emit('nextYear')
+				}
+			},
+			today() {
+				if (!this.todayDisabled) {
+					this.$emit('today')
 				}
 			}
 		},
@@ -192,6 +218,22 @@
 				line-height: 30px;
 				flex: 1;
 				text-align: center;
+			}
+		}
+
+		&__today {
+			margin-left: 4px;
+			height: 28px;
+			line-height: 28px;
+			padding: 0 10px;
+			border-radius: 14px;
+			font-size: 13px;
+			color: var(--up-primary, $u-primary);
+			border: 1px solid var(--up-primary, $u-primary);
+			flex-shrink: 0;
+
+			&--disabled {
+				opacity: 0.35;
 			}
 		}
 	}

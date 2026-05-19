@@ -34,6 +34,7 @@
     "up.calendar.chooseDates": "Selección de fecha",
     "up.calendar.disabled": "Esta fecha está deshabilitada",
     "up.calendar.daysExceed": "Los días seleccionados no pueden exceder {days} días",
+    "up.calendar.today": "Hoy",
     "up.cityLocate.locateCity": "Localizar ciudad",
     "up.cityLocate.fail": "Error de localización, haga clic para reintentar.",
     "up.cityLocate.locating": "Localizando",

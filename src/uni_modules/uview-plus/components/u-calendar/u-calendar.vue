@@ -16,6 +16,9 @@
 				:showTitle="showTitle"
 				:weekText="weekText"
 				:showSwitch="monthSwitch"
+				:showToday="showToday"
+				:todayText="todayText"
+				:todayDisabled="todayDisabled"
 				:prevDisabled="switchPrevDisabled"
 				:nextDisabled="switchNextDisabled"
 				:prevYearDisabled="switchPrevYearDisabled"
@@ -24,6 +27,7 @@
 				@next="nextMonth"
 				@prevYear="prevYear"
 				@nextYear="nextYear"
+				@today="jumpToToday"
 			></uHeader>
 			<scroll-view
 				v-if="!monthSwitch"
@@ -56,6 +60,7 @@
 					:forbidDays="forbidDays"
 					:forbidDaysToast="forbidDaysToast"
 					:monthFormat="monthFormat"
+					:todayDate="todayDate"
 					ref="month"
 					@monthSelected="monthSelected"
 					@updateMonthTop="onUpdateMonthTop"
@@ -88,6 +93,7 @@
 					:forbidDays="forbidDays"
 					:forbidDaysToast="forbidDaysToast"
 					:monthFormat="monthFormat"
+					:todayDate="todayDate"
 					ref="month"
 					@monthSelected="monthSelected"
 					@updateMonthTop="onUpdateMonthTop"
@@ -121,6 +127,7 @@ import { mpMixin } from '../../libs/mixin/mpMixin.js'
 import { mixin } from '../../libs/mixin/mixin.js'
 import { addUnit, getPx, range, error, padZero } from '../../libs/function/index';
 import test from '../../libs/function/test';
+import { t } from '../../libs/i18n'
 /**
  * Calendar 日历
  * @description  此组件用于单个选择日期，范围选择日期等，日历被包裹在底部弹起的容器中.
@@ -223,6 +230,28 @@ export default {
 			return test.number(this.minDate)
 				? Number(this.minDate)
 				: this.minDate
+		},
+		todayDate() {
+			return dayjs().format('YYYY-MM-DD')
+		},
+		todayText() {
+			return t('up.calendar.today')
+		},
+		todayDisabled() {
+			const today = dayjs(this.todayDate)
+			const minDate = this.innerMinDate
+				? dayjs(this.innerMinDate)
+				: null
+			const maxDate = this.innerMaxDate
+				? dayjs(this.innerMaxDate)
+				: null
+			if (minDate && today.isBefore(minDate, 'day')) {
+				return true
+			}
+			if (maxDate && today.isAfter(maxDate, 'day')) {
+				return true
+			}
+			return false
 		},
 		// 多个条件的变化，会引起选中日期的变化，这里统一管理监听
 		selectedChange() {
@@ -449,6 +478,22 @@ export default {
 				this.monthIndex += 12
 			}
 		},
+		jumpToToday() {
+			if (this.todayDisabled) {
+				return
+			}
+			const targetMonth = dayjs(this.todayDate).format('YYYY-MM')
+			if (this.monthSwitch) {
+				const todayMonthIndex = this.months.findIndex(({ year, month }) => {
+					return `${year}-${padZero(month)}` === targetMonth
+				})
+				if (todayMonthIndex !== -1) {
+					this.monthIndex = todayMonthIndex
+				}
+				return
+			}
+			this.scrollIntoDefaultMonth(targetMonth)
+		},
 		// 滚动到默认设置的月份
 		scrollIntoDefaultMonth(selected) {
 			// 查询默认日期在可选列表的下标
@@ -462,6 +507,7 @@ export default {
 			if (_index !== -1) {
 				// #ifndef MP-WEIXIN
 				this.$nextTick(() => {
+					this.scrollIntoView = ''
 					this.scrollIntoView = `month-${_index}`
 					this.scrollIntoViewScroll = this.scrollIntoView
 				})

@@ -34,6 +34,7 @@
     "up.calendar.chooseDates": "日期選擇",
     "up.calendar.disabled": "該日期已禁用",
     "up.calendar.daysExceed": "選擇天數不能超過{days}天",
+    "up.calendar.today": "今天",
     "up.cityLocate.locateCity": "定位城市",
     "up.cityLocate.fail": "定位失敗，請點擊重試。",
     "up.cityLocate.locating": "定位中",

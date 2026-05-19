@@ -135,6 +135,11 @@ declare interface CalendarProps {
    */
   monthNum?: string | number
   /**
+   * 是否显示今天按钮
+   * @default true
+   */
+  showToday?: boolean
+  /**
    * 日期选择完成后触发，若`show-confirm`为`true`，则点击确认按钮后触发
    */
   onConfirm?: (...args: any) => any
