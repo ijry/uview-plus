@@ -1,3 +1,9 @@
+## 3.8.35（2026-05-19）
+fix: 修复up-input在confirm阶段可能丢失扫码内容
+
+- 问题背景：issue #1011 反馈外接扫码枪场景下，up-input 的 confirm 回调偶发丢码，连续0更明显。
+- 原因分析：组件 onConfirm 直接返回 innerValue，当扫码输入与回车触发节奏接近时，confirm 可能早于最后一次 input 同步，导致取到旧值。
+- 改动说明：onConfirm 优先使用 event.detail.value，若平台未提供该字段再回退到 innerValue，兼容原有行为并降低扫码场景丢码风险。
 ## 3.8.34（2026-05-18）
 fix: 仅在 TabBar 页面同步 TabBar 样式
 
