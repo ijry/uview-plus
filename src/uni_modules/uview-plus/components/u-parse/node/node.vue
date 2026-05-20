@@ -186,6 +186,53 @@ export default {
     toJSON () { return this },
     // #endif
     /**
+     * @description 规范化链接地址
+     * @param {any} href
+     * @return {String}
+     */
+    normalizeHref (href) {
+      return typeof href === 'string' ? href.trim() : ''
+    },
+
+    /**
+     * @description 判断是否为外部链接
+     * @param {String} href
+     * @return {Boolean}
+     */
+    isExternalLink (href) {
+      return href.split('?')[0].includes('://')
+    },
+
+    /**
+     * @description 打开外部链接
+     * @param {String} href
+     */
+    openExternalLink (href) {
+      // #ifdef H5
+      window.open(href)
+      // #endif
+      // #ifdef MP
+      uni.setClipboardData({
+        data: href,
+        success: () =>
+          uni.showToast({
+            title: '链接已复制'
+          })
+      })
+      // #endif
+      // #ifdef APP-PLUS
+      try {
+        plus.runtime.openWeb(href)
+      } catch (e) { }
+      // #endif
+      // #ifdef APP-HARMONY
+      try {
+        plus.runtime.openURL(href)
+      } catch (e) { }
+      // #endif
+    },
+
+    /**
      * @description 播放视频事件
      * @param {Event} e
      */
@@ -341,7 +388,7 @@ export default {
     linkTap (e) {
       const node = e.currentTarget ? this.childs[e.currentTarget.dataset.i] : {}
       const attrs = node.attrs || e
-      const href = attrs.href
+      const href = this.normalizeHref(attrs.href)
       this.root.$emit('linktap', Object.assign({
         innerText: this.root.getText(node.children || []) // 链接内的文本内容
       }, attrs))
@@ -349,27 +396,10 @@ export default {
         if (href[0] === '#') {
           // 跳转锚点
           this.root.navigateTo(href.substring(1)).catch(() => { })
-        } else if (href.split('?')[0].includes('://')) {
+        } else if (this.isExternalLink(href)) {
           // 复制外部链接
           if (this.root.copyLink) {
-            // #ifdef H5
-            window.open(href)
-            // #endif
-            // #ifdef MP
-            uni.setClipboardData({
-              data: href,
-              success: () =>
-                uni.showToast({
-                  title: '链接已复制'
-                })
-            })
-            // #endif
-            // #ifdef APP-PLUS
-            plus.runtime.openWeb(href)
-            // #endif
-            // #ifdef APP-HARMONY
-            plus.runtime.openURL(href)
-            // #endif
+            this.openExternalLink(href)
           }
         } else {
           // 跳转页面
