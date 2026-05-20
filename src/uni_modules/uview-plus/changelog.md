@@ -1,3 +1,9 @@
+## 3.8.36（2026-05-20）
+fix: 修复 u-parse 链接点击在 iOS 端可能闪退的问题
+
+- 在 u-parse 的两个链接点击入口统一增加 href 规范化与外链判断，避免空值或非法值传入 plus.runtime.openWeb/openURL。
+- 同时将原生外链打开封装为受保护调用并添加异常兜底，降低 APP-PLUS 与 APP-HARMONY 下点击链接导致崩溃的风险。
+
 ## 3.8.35（2026-05-19）
 fix: 修复up-input在confirm阶段可能丢失扫码内容
 
