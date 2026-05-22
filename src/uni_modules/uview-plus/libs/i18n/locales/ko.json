@@ -34,6 +34,7 @@
     "up.calendar.chooseDates": "날짜 선택",
     "up.calendar.disabled": "해당 날짜는 사용할 수 없습니다",
     "up.calendar.daysExceed": "선택한 날짜 수가 {days}일을 초과할 수 없습니다",
+    "up.calendar.today": "오늘",
     "up.cityLocate.locateCity": "도시 위치 찾기",
     "up.cityLocate.fail": "위치 찾기 실패, 다시 시도하려면 클릭하세요.",
     "up.cityLocate.locating": "위치 찾는 중",

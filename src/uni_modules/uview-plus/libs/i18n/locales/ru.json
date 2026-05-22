@@ -34,6 +34,7 @@
     "up.calendar.chooseDates": "Выбор даты",
     "up.calendar.disabled": "Эта дата отключена",
     "up.calendar.daysExceed": "Количество выбранных дней не может превышать {days} дней",
+    "up.calendar.today": "Сегодня",
     "up.cityLocate.locateCity": "Определение города",
     "up.cityLocate.fail": "Ошибка определения местоположения, нажмите для повтора.",
     "up.cityLocate.locating": "Определение местоположения",

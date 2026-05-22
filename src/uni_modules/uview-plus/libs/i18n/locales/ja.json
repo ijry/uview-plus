@@ -34,6 +34,7 @@
     "up.calendar.chooseDates": "日付選択",
     "up.calendar.disabled": "この日付は無効です",
     "up.calendar.daysExceed": "選択日数は{days}日を超えることはできません",
+    "up.calendar.today": "今日",
     "up.cityLocate.locateCity": "都市の位置を特定",
     "up.cityLocate.fail": "位置特定に失敗しました。再試行するにはクリックしてください。",
     "up.cityLocate.locating": "位置特定中",
