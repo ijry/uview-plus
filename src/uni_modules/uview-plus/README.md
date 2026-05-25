@@ -86,3 +86,5 @@ uview-plus现已推出免费可视化设计，可以方便的进行页面可视�
 
 ## 版权信息
 uview-plus遵循[MIT](https://en.wikipedia.org/wiki/MIT_License)开源协议，意味着您无需支付任何费用，也无需授权，即可将uview-plus应用到您的产品中。
+
+Root 组件基于上游项目 `uni-ku/root` 二次开发，已按 MIT 要求保留其原始授权文件：`libs/root/LICENSE`。
