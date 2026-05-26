@@ -174,6 +174,10 @@
 					gap: 8rpx;
 				}
 
+				&--pill {
+					height: 50px;
+				}
+
 				&--shape-round {
 					border-radius: 999px;
 				}
@@ -193,12 +197,15 @@
 
 		&--pill,
 		&--glow {
-			border-radius: 32rpx;
+			border-radius: 56rpx;
+			background: #ffffff;
+			margin-left: 24rpx;
+			margin-right: 24rpx;
 		}
 
 		&--card {
 			border-radius: 24rpx;
-			box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.06);
+			box-shadow: 0 10rpx 30rpx rgba(15, 23, 42, 0.06);
 		}
 
 		&--lift {
@@ -207,7 +214,9 @@
 
 		&--convex {
 			overflow: visible;
-			border-radius: 28rpx 28rpx 0 0;
+			border-radius: 32rpx 32rpx 0 0;
+			background: #ffffff;
+			box-shadow: 0 -2rpx 18rpx rgba(148, 163, 184, 0.08);
 		}
 
 		&--fixed {
