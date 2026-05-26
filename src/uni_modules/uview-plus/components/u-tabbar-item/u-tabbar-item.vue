@@ -1,19 +1,19 @@
 <template>
 	<view
 	    class="u-tabbar-item"
-	    :style="[addStyle(customStyle)]"
-	    :class="[isMidButton ? 'u-tabbar-item--mid-button' : '']"
+	    :style="[itemInlineStyle, addStyle(customStyle)]"
+	    :class="itemClassNames"
 	    @tap="clickHandler"
 	>
 		<view 
 			class="u-tabbar-item__icon"
-			:class="[isMidButton ? 'u-tabbar-item__icon--mid-button' : '']"
+			:class="iconClassNames"
 		>
 			<view class="u-tabbar-item--mid-button-cover" v-if="isMidButton">
 			</view>
 			<up-icon
-			    v-if="icon"
-			    :name="icon"
+			    v-if="resolvedIconName"
+			    :name="resolvedIconName"
 			    :color="isActive ? resolvedActiveColor : resolvedInactiveColor"
 			    :size="isMidButton ? 26 : 20"
 			></up-icon>
@@ -40,11 +40,14 @@
 		<slot name="text">
 			<text
 			    class="u-tabbar-item__text"
+				:class="textClassNames"
 			    :style="{
 					color: isActive ? resolvedActiveColor : resolvedInactiveColor
 				}"
 			>{{ text }}</text>
 		</slot>
+		<view v-if="resolvedStyleType === 'underline'" class="u-tabbar-item__underline"></view>
+		<view v-if="resolvedStyleType === 'dot'" class="u-tabbar-item__active-dot"></view>
 	</view>
 </template>
 
@@ -76,7 +79,14 @@
 				parentData: {
 					value: null,
 					activeColor: '',
-					inactiveColor: ''
+					inactiveColor: '',
+					styleType: 'default',
+					animationType: 'none',
+					activeBackgroundColor: '',
+					inactiveBackgroundColor: '',
+					itemShape: 'default',
+					iconScale: 1.1,
+					textMode: 'always'
 				}
 			}
 		},
@@ -98,6 +108,50 @@
 				return !this.parentData.inactiveColor || this.parentData.inactiveColor === '#7d7e80'
 					? this.upThemeVar('--up-content-color', '#7d7e80')
 					: this.parentData.inactiveColor
+			},
+			resolvedStyleType() {
+				return this.parentData.styleType || 'default'
+			},
+			resolvedAnimationType() {
+				return this.parentData.animationType || 'none'
+			},
+			resolvedItemShape() {
+				return this.parentData.itemShape || 'default'
+			},
+			resolvedIconName() {
+				if (this.$slots['active-icon'] || this.$slots['inactive-icon']) return ''
+				if (this.isActive) return this.activeIcon || this.icon
+				return this.inactiveIcon || this.icon
+			},
+			itemClassNames() {
+				return [
+					this.isActive ? 'u-tabbar-item--active' : 'u-tabbar-item--inactive',
+					this.isMidButton ? 'u-tabbar-item--mid-button' : '',
+					`u-tabbar-item--${this.resolvedStyleType}`,
+					this.resolvedAnimationType !== 'none' && this.isActive ? `u-tabbar-item--anim-${this.resolvedAnimationType}` : '',
+					this.resolvedItemShape !== 'default' ? `u-tabbar-item--shape-${this.resolvedItemShape}` : '',
+					this.isActive ? this.activeClass : this.inactiveClass
+				]
+			},
+			iconClassNames() {
+				return [
+					this.isMidButton ? 'u-tabbar-item__icon--mid-button' : '',
+					`u-tabbar-item__icon--${this.resolvedStyleType}`,
+					this.isActive && this.resolvedAnimationType !== 'none' ? `u-tabbar-item__icon--anim-${this.resolvedAnimationType}` : ''
+				]
+			},
+			textClassNames() {
+				return [
+					`u-tabbar-item__text--${this.resolvedStyleType}`,
+					this.parentData.textMode === 'active' && !this.isActive ? 'u-tabbar-item__text--muted' : ''
+				]
+			},
+			itemInlineStyle() {
+				return {
+					backgroundColor: this.isActive
+						? (this.parentData.activeBackgroundColor || 'transparent')
+						: (this.parentData.inactiveBackgroundColor || 'transparent')
+				}
 			}
 		},
 		created() {
@@ -160,13 +214,103 @@
 			position: relative;
 			width: 150rpx;
 			justify-content: center;
+			min-height: 46rpx;
+			transition: transform 0.22s ease, opacity 0.22s ease;
+
+			&--pill,
+			&--card,
+			&--glow,
+			&--convex {
+				width: 100%;
+			}
+
+			&--anim-scale {
+				transform: scale(var(--up-tabbar-icon-scale, 1.1));
+			}
+
+			&--anim-lift {
+				transform: translateY(-6rpx) scale(var(--up-tabbar-icon-scale, 1.08));
+			}
+
+			&--anim-swing {
+				transform: rotate(-10deg) scale(var(--up-tabbar-icon-scale, 1.08));
+			}
+
+			&--anim-pulse {
+				transform: scale(var(--up-tabbar-icon-scale, 1.14));
+			}
 		}
 
 		&__text {
 			margin-top: 2px;
 			font-size: 12px;
 			color: $u-content-color;
+			transition: transform 0.22s ease, opacity 0.22s ease;
+
+			&--muted {
+				opacity: 0.68;
+				transform: scale(0.94);
+			}
 		}
+
+		&__underline {
+			position: absolute;
+			left: 50%;
+			bottom: 2rpx;
+			width: 34rpx;
+			height: 6rpx;
+			border-radius: 999px;
+			background-color: currentColor;
+			transform: translateX(-50%);
+		}
+
+		&__active-dot {
+			position: absolute;
+			left: 50%;
+			bottom: 8rpx;
+			width: 10rpx;
+			height: 10rpx;
+			border-radius: 50%;
+			background-color: currentColor;
+			transform: translateX(-50%);
+		}
+	}
+
+	.u-tabbar-item--active {
+		color: inherit;
+	}
+
+	.u-tabbar-item--pill,
+	.u-tabbar-item--glow,
+	.u-tabbar-item--card {
+		margin: 6rpx 0;
+		border-radius: 999px;
+	}
+
+	.u-tabbar-item--card {
+		border-radius: 24rpx;
+	}
+
+	.u-tabbar-item--active.u-tabbar-item--pill,
+	.u-tabbar-item--active.u-tabbar-item--card {
+		box-shadow: 0 10rpx 24rpx rgba(60, 156, 255, 0.14);
+	}
+
+	.u-tabbar-item--active.u-tabbar-item--glow {
+		box-shadow: 0 0 0 2rpx rgba(60, 156, 255, 0.06), 0 8rpx 28rpx rgba(60, 156, 255, 0.22);
+	}
+
+	.u-tabbar-item--lift.u-tabbar-item--active {
+		transform: translateY(-8rpx);
+	}
+
+	.u-tabbar-item--underline,
+	.u-tabbar-item--dot {
+		padding-bottom: 10rpx;
+	}
+
+	.u-tabbar-item--convex.u-tabbar-item--active:not(.u-tabbar-item--mid-button) {
+		transform: translateY(-4rpx);
 	}
 	
 	// 中间按钮样式
@@ -196,6 +340,19 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+	}
+
+	.u-tabbar-item--anim-pulse .u-tabbar-item__icon {
+		animation: u-tabbar-item-pulse 1.4s ease-in-out infinite;
+	}
+
+	@keyframes u-tabbar-item-pulse {
+		0%, 100% {
+			transform: scale(var(--up-tabbar-icon-scale, 1.1));
+		}
+		50% {
+			transform: scale(calc(var(--up-tabbar-icon-scale, 1.1) + 0.08));
+		}
 	}
 
 	/* #ifdef MP */

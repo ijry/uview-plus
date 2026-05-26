@@ -4,10 +4,21 @@
 		    class="u-tabbar__content"
 		    ref="u-tabbar__content"
 		    @touchmove.stop.prevent="noop"
-		    :class="[border && 'u-border-top', fixed && 'u-tabbar--fixed']"
+		    :class="[
+				border && 'u-border-top',
+				fixed && 'u-tabbar--fixed',
+				`u-tabbar--${styleType}`,
+				textMode === 'active' && 'u-tabbar--text-active'
+			]"
 		    :style="[tabbarStyle]"
 		>
-			<view class="u-tabbar__content__item-wrapper">
+			<view
+				class="u-tabbar__content__item-wrapper"
+				:class="[
+					`u-tabbar__content__item-wrapper--${styleType}`,
+					itemShape !== 'default' && `u-tabbar__content__item-wrapper--shape-${itemShape}`
+				]"
+			>
 				<slot />
 			</view>
 			<u-safe-bottom v-if="safeAreaInsetBottom"></u-safe-bottom>
@@ -59,19 +70,36 @@
 			tabbarStyle() {
 				const style = {
 					zIndex: this.zIndex,
-					backgroundColor: this.backgroundColor || this.upThemeVar('--up-card-bg-color', this.upThemeIsDark ? '#1c1c1e' : '#ffffff')
+					backgroundColor: this.backgroundColor || this.upThemeVar('--up-card-bg-color', this.upThemeIsDark ? '#1c1c1e' : '#ffffff'),
+					'--up-tabbar-active-bg': this.activeBackgroundColor || 'transparent',
+					'--up-tabbar-inactive-bg': this.inactiveBackgroundColor || 'transparent',
+					'--up-tabbar-icon-scale': `${this.iconScale}`
 				}
 				if (this.borderColor) {
 					style.borderColor = this.borderColor + ' !important'
 				} else {
 					style.borderColor = this.upThemeVar('--up-border-color', '#dadbde')
 				}
+				if (['pill', 'card', 'glow', 'convex'].includes(this.styleType)) {
+					style.padding = '8rpx 12rpx 12rpx'
+				}
 				// 合并来自父组件的customStyle样式
 				return deepMerge(style, addStyle(this.customStyle))
 			},
 			// 监听多个参数的变化，通过在computed执行对应的操作
 			updateChild() {
-				return [this.value, this.activeColor, this.inactiveColor]
+				return [
+					this.value,
+					this.activeColor,
+					this.inactiveColor,
+					this.styleType,
+					this.animationType,
+					this.activeBackgroundColor,
+					this.inactiveBackgroundColor,
+					this.itemShape,
+					this.iconScale,
+					this.textMode
+				]
 			},
 			updatePlaceholder() {
 				return [this.fixed, this.placeholder]
@@ -138,7 +166,48 @@
 				height: 50px;
 				@include flex(row);
 				justify-content: space-around;
+
+				&--pill,
+				&--card,
+				&--glow,
+				&--convex {
+					gap: 8rpx;
+				}
+
+				&--shape-round {
+					border-radius: 999px;
+				}
+
+				&--shape-square {
+					border-radius: 16rpx;
+				}
 			}
+		}
+
+		&--default,
+		&--minimal,
+		&--underline,
+		&--dot {
+			padding: 0;
+		}
+
+		&--pill,
+		&--glow {
+			border-radius: 32rpx;
+		}
+
+		&--card {
+			border-radius: 24rpx;
+			box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.06);
+		}
+
+		&--lift {
+			overflow: visible;
+		}
+
+		&--convex {
+			overflow: visible;
+			border-radius: 28rpx 28rpx 0 0;
 		}
 
 		&--fixed {

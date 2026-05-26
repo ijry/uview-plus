@@ -214,6 +214,129 @@
 				></up-tabbar-item>
 			</up-tabbar>
 		</view>
+		<view class="u-page__item">
+			<text class="u-page__item__title">胶囊风格 + 双态图标</text>
+			<up-tabbar
+				:value="value8"
+				@change="name => value8 = name"
+				:fixed="false"
+				:placeholder="false"
+				:safeAreaInsetBottom="false"
+				styleType="pill"
+				animationType="scale"
+				activeBackgroundColor="rgba(60, 156, 255, 0.12)"
+			>
+				<up-tabbar-item text="首页" icon="home" activeIcon="home-fill"></up-tabbar-item>
+				<up-tabbar-item text="分类" icon="grid" activeIcon="grid-fill"></up-tabbar-item>
+				<up-tabbar-item text="消息" icon="chat" activeIcon="chat-fill"></up-tabbar-item>
+				<up-tabbar-item text="我的" icon="account" activeIcon="account-fill"></up-tabbar-item>
+			</up-tabbar>
+		</view>
+		<view class="u-page__item">
+			<text class="u-page__item__title">上浮卡片风格</text>
+			<up-tabbar
+				:value="value9"
+				@change="name => value9 = name"
+				:fixed="false"
+				:placeholder="false"
+				:safeAreaInsetBottom="false"
+				styleType="lift"
+				animationType="lift"
+				textMode="active"
+			>
+				<up-tabbar-item text="首页" icon="home" activeIcon="home-fill"></up-tabbar-item>
+				<up-tabbar-item text="图片" icon="photo" activeIcon="photo-fill"></up-tabbar-item>
+				<up-tabbar-item text="视频" icon="play-right" activeIcon="play-right-fill"></up-tabbar-item>
+				<up-tabbar-item text="我的" icon="account" activeIcon="account-fill"></up-tabbar-item>
+			</up-tabbar>
+		</view>
+		<view class="u-page__item">
+			<text class="u-page__item__title">卡片风格 + 脉冲反馈</text>
+			<up-tabbar
+				:value="value10"
+				@change="name => value10 = name"
+				:fixed="false"
+				:placeholder="false"
+				:safeAreaInsetBottom="false"
+				styleType="card"
+				animationType="pulse"
+				activeBackgroundColor="rgba(255, 107, 107, 0.12)"
+			>
+				<up-tabbar-item text="收藏" icon="star" activeIcon="star-fill"></up-tabbar-item>
+				<up-tabbar-item text="喜欢" icon="heart" activeIcon="heart-fill"></up-tabbar-item>
+				<up-tabbar-item text="消息" icon="chat" activeIcon="chat-fill"></up-tabbar-item>
+				<up-tabbar-item text="地图" icon="map" activeIcon="map-fill"></up-tabbar-item>
+			</up-tabbar>
+		</view>
+		<view class="u-page__item">
+			<text class="u-page__item__title">下划线风格</text>
+			<up-tabbar
+				:value="value11"
+				@change="name => value11 = name"
+				:fixed="false"
+				:placeholder="false"
+				:safeAreaInsetBottom="false"
+				styleType="underline"
+				animationType="swing"
+			>
+				<up-tabbar-item text="首页" icon="home" activeIcon="home-fill"></up-tabbar-item>
+				<up-tabbar-item text="分类" icon="grid" activeIcon="grid-fill"></up-tabbar-item>
+				<up-tabbar-item text="消息" icon="chat" activeIcon="chat-fill"></up-tabbar-item>
+				<up-tabbar-item text="我的" icon="account" activeIcon="account-fill"></up-tabbar-item>
+			</up-tabbar>
+		</view>
+		<view class="u-page__item">
+			<text class="u-page__item__title">圆点风格</text>
+			<up-tabbar
+				:value="value12"
+				@change="name => value12 = name"
+				:fixed="false"
+				:placeholder="false"
+				:safeAreaInsetBottom="false"
+				styleType="dot"
+			>
+				<up-tabbar-item text="首页" icon="home" activeIcon="home-fill"></up-tabbar-item>
+				<up-tabbar-item text="图片" icon="photo" activeIcon="photo-fill"></up-tabbar-item>
+				<up-tabbar-item text="视频" icon="play-right" activeIcon="play-right-fill"></up-tabbar-item>
+				<up-tabbar-item text="我的" icon="account" activeIcon="account-fill"></up-tabbar-item>
+			</up-tabbar>
+		</view>
+		<view class="u-page__item">
+			<text class="u-page__item__title">发光风格</text>
+			<up-tabbar
+				:value="value13"
+				@change="name => value13 = name"
+				:fixed="false"
+				:placeholder="false"
+				:safeAreaInsetBottom="false"
+				styleType="glow"
+				animationType="scale"
+				activeBackgroundColor="rgba(78, 205, 196, 0.14)"
+			>
+				<up-tabbar-item text="首页" icon="home" activeIcon="home-fill"></up-tabbar-item>
+				<up-tabbar-item text="分类" icon="grid" activeIcon="grid-fill"></up-tabbar-item>
+				<up-tabbar-item text="消息" icon="chat" activeIcon="chat-fill"></up-tabbar-item>
+				<up-tabbar-item text="我的" icon="account" activeIcon="account-fill"></up-tabbar-item>
+			</up-tabbar>
+		</view>
+		<view class="u-page__item">
+			<text class="u-page__item__title">凸起风格 + 中间按钮</text>
+			<up-tabbar
+				:value="value14"
+				@change="name => value14 = name"
+				:fixed="false"
+				:placeholder="false"
+				:safeAreaInsetBottom="false"
+				styleType="convex"
+				animationType="scale"
+			>
+				<up-tabbar-item text="首页" icon="home" activeIcon="home-fill"></up-tabbar-item>
+				<up-tabbar-item text="图片" icon="photo" activeIcon="photo-fill"></up-tabbar-item>
+				<up-tabbar-item text="" icon="plus-circle" activeIcon="plus-circle-fill" mode="midButton"></up-tabbar-item>
+				<up-tabbar-item text="视频" icon="play-right" activeIcon="play-right-fill"></up-tabbar-item>
+				<up-tabbar-item text="我的" icon="account" activeIcon="account-fill"></up-tabbar-item>
+			</up-tabbar>
+		</view>
 	</view>
 </template>
 
@@ -229,6 +352,13 @@ const value4 = ref(0)
 const value5 = ref(0)
 const value6 = ref(0)
 const value7 = ref(3)
+const value8 = ref(0)
+const value9 = ref(1)
+const value10 = ref(0)
+const value11 = ref(2)
+const value12 = ref(0)
+const value13 = ref(1)
+const value14 = ref(0)
 
 // 方法
 const change5 = (name) => {

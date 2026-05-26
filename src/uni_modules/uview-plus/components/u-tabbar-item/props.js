@@ -9,8 +9,18 @@ export const props = defineMixin({
         },
         // uview-plus内置图标或者绝对路径的图片
         icon: {
-            icon: String,
+            type: String,
             default: () => defProps.tabbarItem.icon
+        },
+        // 激活态图标
+        activeIcon: {
+            type: String,
+            default: () => defProps.tabbarItem.activeIcon
+        },
+        // 未激活态图标
+        inactiveIcon: {
+            type: String,
+            default: () => defProps.tabbarItem.inactiveIcon
         },
         // 右上角的角标提示信息
         badge: {
@@ -36,6 +46,16 @@ export const props = defineMixin({
         mode: {
             type: String,
             default: () => defProps.tabbarItem.mode
+        },
+        // 激活态附加类名
+        activeClass: {
+            type: String,
+            default: () => defProps.tabbarItem.activeClass
+        },
+        // 未激活态附加类名
+        inactiveClass: {
+            type: String,
+            default: () => defProps.tabbarItem.inactiveClass
         }
     }
 })

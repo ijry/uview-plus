@@ -19,6 +19,13 @@ export default {
         fixed: true,
         placeholder: true,
         borderColor: '',
-        backgroundColor: ''
+        backgroundColor: '',
+        styleType: 'default',
+        animationType: 'none',
+        activeBackgroundColor: '',
+        inactiveBackgroundColor: '',
+        itemShape: 'default',
+        iconScale: 1.1,
+        textMode: 'always'
     }
 }
