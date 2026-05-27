@@ -20,6 +20,12 @@ export default {
         badgeStyle: 'top: 6px;right:2px;',
         mode: '',
         activeClass: '',
-        inactiveClass: ''
+        inactiveClass: '',
+        midButtonBgColor: '',
+        midButtonIconColor: '',
+        midButtonIconSize: 26,
+        midButtonBoxShadow: '',
+        midButtonInnerBoxShadow: '',
+        midButtonOffsetY: -10
     }
 }

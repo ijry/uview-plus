@@ -5,47 +5,55 @@
 	    :class="itemClassNames"
 	    @tap="clickHandler"
 	>
-		<view 
-			class="u-tabbar-item__icon"
-			:class="iconClassNames"
-		>
-			<view class="u-tabbar-item--mid-button-cover" v-if="isMidButton">
+		<view class="u-tabbar-item__content" :class="contentClassNames">
+			<view class="u-tabbar-item__bubble" :class="bubbleClassNames">
+				<view
+					class="u-tabbar-item__icon"
+					:class="iconClassNames"
+				>
+					<view v-if="isMidButton" class="u-tabbar-item__mid-button-arc">
+						<svg viewBox="0 0 72 72" preserveAspectRatio="none">
+							<path d="M 4 36 A 32 32 0 0 1 68 36"></path>
+						</svg>
+					</view>
+					<view v-if="isMidButton" class="u-tabbar-item__mid-button-inner"></view>
+					<up-icon
+						v-if="resolvedIconName"
+						:name="resolvedIconName"
+						:color="isMidButton ? resolvedMidButtonIconColor : (isActive ? resolvedActiveColor : resolvedInactiveColor)"
+						:size="isMidButton ? midButtonIconSize : 24"
+					></up-icon>
+					<template v-else>
+						<slot
+							v-if="isActive"
+							name="active-icon"
+						/>
+						<slot
+							v-else
+							name="inactive-icon"
+						/>
+					</template>
+					<u-badge
+						absolute
+						:offset="[0, dot ? '34rpx' : badge > 9 ? '14rpx' : '20rpx']"
+						:customStyle="badgeStyle"
+						:isDot="dot"
+						:value="badge || (dot ? 1 : null)"
+						:show="dot || badge > 0"
+					></u-badge>
+				</view>
+
+				<slot name="text">
+					<text
+						class="u-tabbar-item__text"
+						:class="textClassNames"
+						:style="{
+							color: isActive ? resolvedActiveColor : resolvedInactiveColor
+						}"
+					>{{ text }}</text>
+				</slot>
 			</view>
-			<up-icon
-			    v-if="resolvedIconName"
-			    :name="resolvedIconName"
-			    :color="isActive ? resolvedActiveColor : resolvedInactiveColor"
-			    :size="isMidButton ? 26 : 20"
-			></up-icon>
-			<template v-else>
-				<slot
-				    v-if="isActive"
-				    name="active-icon"
-				/>
-				<slot
-				    v-else
-				    name="inactive-icon"
-				/>
-			</template>
-			<u-badge
-				absolute
-				:offset="[0, dot ? '34rpx' : badge > 9 ? '14rpx' : '20rpx']"
-			    :customStyle="badgeStyle"
-			    :isDot="dot"
-			    :value="badge || (dot ? 1 : null)"
-			    :show="dot || badge > 0"
-			></u-badge>
 		</view>
-		
-		<slot name="text">
-			<text
-			    class="u-tabbar-item__text"
-				:class="textClassNames"
-			    :style="{
-					color: isActive ? resolvedActiveColor : resolvedInactiveColor
-				}"
-			>{{ text }}</text>
-		</slot>
 		<view v-if="resolvedStyleType === 'underline'" class="u-tabbar-item__underline"></view>
 		<view v-if="resolvedStyleType === 'dot'" class="u-tabbar-item__active-dot"></view>
 	</view>
@@ -123,6 +131,10 @@
 				if (this.isActive) return this.activeIcon || this.icon
 				return this.inactiveIcon || this.icon
 			},
+			resolvedMidButtonIconColor() {
+				if (this.midButtonIconColor) return this.midButtonIconColor
+				return this.isMidButton ? '#3c9cff' : this.resolvedActiveColor
+			},
 			itemClassNames() {
 				return [
 					this.isActive ? 'u-tabbar-item--active' : 'u-tabbar-item--inactive',
@@ -138,6 +150,19 @@
 					this.isMidButton ? 'u-tabbar-item__icon--mid-button' : '',
 					`u-tabbar-item__icon--${this.resolvedStyleType}`,
 					this.isActive && this.resolvedAnimationType !== 'none' ? `u-tabbar-item__icon--anim-${this.resolvedAnimationType}` : ''
+				]
+			},
+			contentClassNames() {
+				return [
+					`u-tabbar-item__content--${this.resolvedStyleType}`,
+					this.isMidButton ? 'u-tabbar-item__content--mid-button' : ''
+				]
+			},
+			bubbleClassNames() {
+				return [
+					`u-tabbar-item__bubble--${this.resolvedStyleType}`,
+					this.isActive ? 'u-tabbar-item__bubble--active' : '',
+					this.isMidButton ? 'u-tabbar-item__bubble--mid-button' : ''
 				]
 			},
 			textClassNames() {
@@ -201,6 +226,7 @@
 		align-items: center;
 		justify-content: center;
 		flex: 1;
+		position: relative;
 		/* #ifndef APP-NVUE */
 		width: 100%;
 		height: 100%;
@@ -238,6 +264,42 @@
 
 			&--anim-pulse {
 				transform: scale(var(--up-tabbar-icon-scale, 1.14));
+			}
+		}
+
+		&__content {
+			@include flex(column);
+			align-items: center;
+			justify-content: center;
+			width: 100%;
+			height: 100%;
+
+			&--mid-button {
+				justify-content: center;
+			}
+		}
+
+		&__bubble {
+			@include flex(column);
+			align-items: center;
+			justify-content: center;
+			min-width: 0;
+			padding: 0;
+			max-width: 100rpx;
+			border-radius: 999px;
+			transition: background-color 0.22s ease, transform 0.22s ease;
+
+			&--pill.u-tabbar-item__bubble--active {
+				background-color: transparent;
+			}
+
+			&--glow.u-tabbar-item__bubble--active {
+				background-color: var(--up-tabbar-active-bg, rgba(125, 211, 252, 0.12));
+			}
+
+			&--mid-button {
+				padding: 0;
+				background-color: transparent !important;
 			}
 		}
 
@@ -283,7 +345,7 @@
 	.u-tabbar-item--pill,
 	.u-tabbar-item--glow,
 	.u-tabbar-item--card {
-		margin: 6rpx 0;
+		margin: 0;
 		border-radius: 999px;
 	}
 
@@ -293,15 +355,19 @@
 
 	.u-tabbar-item--active.u-tabbar-item--pill,
 	.u-tabbar-item--active.u-tabbar-item--card {
-		box-shadow: 0 10rpx 24rpx rgba(60, 156, 255, 0.14);
+		box-shadow: none;
 	}
 
 	.u-tabbar-item--active.u-tabbar-item--glow {
-		box-shadow: 0 0 0 2rpx rgba(60, 156, 255, 0.06), 0 8rpx 28rpx rgba(60, 156, 255, 0.22);
+		box-shadow: none;
 	}
 
 	.u-tabbar-item--lift.u-tabbar-item--active {
-		transform: translateY(-8rpx);
+		transform: none;
+	}
+
+	.u-tabbar-item--lift.u-tabbar-item--active .u-tabbar-item__icon {
+		transform: translateY(-6rpx) scale(1.04);
 	}
 
 	.u-tabbar-item--underline,
@@ -310,36 +376,82 @@
 	}
 
 	.u-tabbar-item--convex.u-tabbar-item--active:not(.u-tabbar-item--mid-button) {
-		transform: translateY(-4rpx);
+		transform: none;
 	}
 	
 	// 中间按钮样式
 	.u-tabbar-item--mid-button {
 		/* #ifndef APP-NVUE */
-		transform: translateY(-10px);
+		transform: translateY(v-bind('`${midButtonOffsetY}px`'));
 		/* #endif */
-	}
-	
-	.u-tabbar-item--mid-button-cover {
-		background-color: var(--up-card-bg-color, #fff);
-		position: absolute;
-		top: 22px;
-		left: -10px;
-		// right: -10px;
-		width: 90px;
-		bottom: 0;
+		z-index: 2;
+		flex: 1;
 	}
 	
 	.u-tabbar-item__icon--mid-button {
-		width: 70px;
-		height: 70px;
-		border-radius: 100px;
-		background-color: var(--up-card-bg-color, #ffffff);
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-		border: 1px solid var(--up-border-color, rgba(0, 0, 0, 0.08));
+		width: 64px;
+		height: 64px;
+		border-radius: 999px;
+		background: #ffffff;
+		box-shadow: v-bind('midButtonBoxShadow || "none"');
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		position: relative;
+		overflow: visible;
+	}
+
+	.u-tabbar-item__mid-button-arc {
+		position: absolute;
+		left: -4px;
+		top: -4px;
+		width: calc(100% + 8px);
+		height: calc(100% + 8px);
+		pointer-events: none;
+		z-index: 0;
+	}
+
+	.u-tabbar-item__mid-button-arc svg {
+		width: 100%;
+		height: 100%;
+	}
+
+	.u-tabbar-item__mid-button-arc path {
+		fill: none;
+		stroke: none;
+		stroke-width: 0;
+		stroke-linecap: round;
+	}
+
+	.u-tabbar-item__mid-button-inner {
+		position: absolute;
+		left: 6px;
+		top: 6px;
+		right: 6px;
+		bottom: 6px;
+		border-radius: 999px;
+		background: v-bind('midButtonBgColor || "#ffffff"');
+		box-shadow: v-bind('midButtonInnerBoxShadow');
+		z-index: 1;
+	}
+
+	.u-tabbar-item__icon--mid-button .u-icon,
+	.u-tabbar-item__icon--mid-button .u-badge {
+		position: relative;
+		z-index: 2;
+	}
+
+	.u-tabbar-item--mid-button .u-tabbar-item__text {
+		margin-top: 0;
+		transform: translateY(-4px);
+	}
+
+	.u-tabbar-item--lift .u-tabbar-item__bubble {
+		background-color: transparent !important;
+	}
+
+	.u-tabbar-item--lift.u-tabbar-item--active .u-tabbar-item__text {
+		transform: translateY(-4rpx);
 	}
 
 	.u-tabbar-item--anim-pulse .u-tabbar-item__icon {

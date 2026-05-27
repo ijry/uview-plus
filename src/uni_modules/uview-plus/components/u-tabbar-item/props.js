@@ -56,6 +56,36 @@ export const props = defineMixin({
         inactiveClass: {
             type: String,
             default: () => defProps.tabbarItem.inactiveClass
+        },
+        // 中间按钮背景色
+        midButtonBgColor: {
+            type: String,
+            default: () => defProps.tabbarItem.midButtonBgColor
+        },
+        // 中间按钮图标颜色
+        midButtonIconColor: {
+            type: String,
+            default: () => defProps.tabbarItem.midButtonIconColor
+        },
+        // 中间按钮图标大小
+        midButtonIconSize: {
+            type: [String, Number],
+            default: () => defProps.tabbarItem.midButtonIconSize
+        },
+        // 中间按钮阴影
+        midButtonBoxShadow: {
+            type: String,
+            default: () => defProps.tabbarItem.midButtonBoxShadow
+        },
+        // 中间按钮内层阴影
+        midButtonInnerBoxShadow: {
+            type: String,
+            default: () => defProps.tabbarItem.midButtonInnerBoxShadow
+        },
+        // 中间按钮垂直偏移（负值为上移）
+        midButtonOffsetY: {
+            type: [String, Number],
+            default: () => defProps.tabbarItem.midButtonOffsetY
         }
     }
 })

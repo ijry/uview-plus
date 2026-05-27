@@ -197,7 +197,7 @@
 
 		&--pill,
 		&--glow {
-			border-radius: 56rpx;
+			border-radius: 72rpx;
 			background: #ffffff;
 			margin-left: 24rpx;
 			margin-right: 24rpx;

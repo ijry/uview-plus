@@ -186,6 +186,92 @@
 			</up-tabbar>
 		</view>
 		<view class="u-page__item">
+			<text class="u-page__item__title">首页导航推荐：胶囊风格</text>
+			<up-tabbar
+				:value="value8"
+				@change="name => value8 = name"
+				:fixed="false"
+				:placeholder="false"
+				:safeAreaInsetBottom="false"
+				styleType="pill"
+				animationType="scale"
+				activeBackgroundColor="rgba(59, 130, 246, 0.10)"
+			>
+				<up-tabbar-item text="首页" icon="/static/uview/tabbar/home.png" activeIcon="/static/uview/tabbar/home-active.png"></up-tabbar-item>
+				<up-tabbar-item text="发现" icon="/static/uview/tabbar/discover.png" activeIcon="/static/uview/tabbar/discover-active.png"></up-tabbar-item>
+				<up-tabbar-item text="消息" icon="/static/uview/tabbar/message.png" activeIcon="/static/uview/tabbar/message-active.png"></up-tabbar-item>
+				<up-tabbar-item text="我的" icon="/static/uview/tabbar/profile.png" activeIcon="/static/uview/tabbar/profile-active.png"></up-tabbar-item>
+			</up-tabbar>
+		</view>
+		<view class="u-page__item">
+			<text class="u-page__item__title">首页导航推荐：上浮风格</text>
+			<up-tabbar
+				:value="value9"
+				@change="name => value9 = name"
+				:fixed="false"
+				:placeholder="false"
+				:safeAreaInsetBottom="false"
+				styleType="lift"
+				animationType="lift"
+				textMode="active"
+			>
+				<up-tabbar-item text="首页" icon="/static/uview/tabbar/home.png" activeIcon="/static/uview/tabbar/home-active.png"></up-tabbar-item>
+				<up-tabbar-item text="发现" icon="/static/uview/tabbar/discover.png" activeIcon="/static/uview/tabbar/discover-active.png"></up-tabbar-item>
+				<up-tabbar-item text="消息" icon="/static/uview/tabbar/message.png" activeIcon="/static/uview/tabbar/message-active.png"></up-tabbar-item>
+				<up-tabbar-item text="我的" icon="/static/uview/tabbar/profile.png" activeIcon="/static/uview/tabbar/profile-active.png"></up-tabbar-item>
+			</up-tabbar>
+		</view>
+		<view class="u-page__item">
+			<text class="u-page__item__title">中间按钮自定义背景色</text>
+			<up-tabbar
+				:value="value11"
+				@change="name => value11 = name"
+				:fixed="false"
+				:placeholder="false"
+				:safeAreaInsetBottom="false"
+			>
+				<up-tabbar-item text="首页" icon="home"></up-tabbar-item>
+				<up-tabbar-item text="发现" icon="search"></up-tabbar-item>
+				<up-tabbar-item text="发布" icon="plus" mode="midButton" midButtonBgColor="#E8FFF7" midButtonIconColor="#10B981" :midButtonOffsetY="-12"></up-tabbar-item>
+				<up-tabbar-item text="消息" icon="chat"></up-tabbar-item>
+				<up-tabbar-item text="我的" icon="account"></up-tabbar-item>
+			</up-tabbar>
+		</view>
+		<view class="u-page__item">
+			<text class="u-page__item__title">中间按钮自定义图标</text>
+			<up-tabbar
+				:value="value12"
+				@change="name => value12 = name"
+				:fixed="false"
+				:placeholder="false"
+				:safeAreaInsetBottom="false"
+			>
+				<up-tabbar-item text="首页" icon="home"></up-tabbar-item>
+				<up-tabbar-item text="发现" icon="search"></up-tabbar-item>
+				<up-tabbar-item text="拍摄" icon="camera-fill" mode="midButton" midButtonBgColor="#EEF4FF" midButtonIconColor="#3B82F6" :midButtonIconSize="30" :midButtonOffsetY="-12"></up-tabbar-item>
+				<up-tabbar-item text="消息" icon="chat"></up-tabbar-item>
+				<up-tabbar-item text="我的" icon="account"></up-tabbar-item>
+			</up-tabbar>
+		</view>
+		<view class="u-page__item">
+			<text class="u-page__item__title">首页导航推荐：发光风格</text>
+			<up-tabbar
+				:value="value10"
+				@change="name => value10 = name"
+				:fixed="false"
+				:placeholder="false"
+				:safeAreaInsetBottom="false"
+				styleType="glow"
+				animationType="scale"
+				activeBackgroundColor="rgba(125, 211, 252, 0.12)"
+			>
+				<up-tabbar-item text="首页" icon="/static/uview/tabbar/home.png" activeIcon="/static/uview/tabbar/home-active.png"></up-tabbar-item>
+				<up-tabbar-item text="发现" icon="/static/uview/tabbar/discover.png" activeIcon="/static/uview/tabbar/discover-active.png"></up-tabbar-item>
+				<up-tabbar-item text="消息" icon="/static/uview/tabbar/message.png" activeIcon="/static/uview/tabbar/message-active.png"></up-tabbar-item>
+				<up-tabbar-item text="我的" icon="/static/uview/tabbar/profile.png" activeIcon="/static/uview/tabbar/profile-active.png"></up-tabbar-item>
+			</up-tabbar>
+		</view>
+		<view class="u-page__item">
 			<text class="u-page__item__title">固定在底部及中间按钮</text>
 			<up-gap height="150"></up-gap>
 			<up-tabbar
@@ -221,78 +307,6 @@
 				></up-tabbar-item>
 			</up-tabbar>
 		</view>
-		<view class="u-page__item">
-			<text class="u-page__item__title">胶囊风格 + 双态图标</text>
-			<up-tabbar
-				:value="value8"
-				@change="name => value8 = name"
-				:fixed="false"
-				:placeholder="false"
-				:safeAreaInsetBottom="false"
-				styleType="pill"
-				animationType="scale"
-				activeBackgroundColor="rgba(60, 156, 255, 0.12)"
-			>
-				<up-tabbar-item text="首页" icon="home" activeIcon="home-fill"></up-tabbar-item>
-				<up-tabbar-item text="分类" icon="grid" activeIcon="grid-fill"></up-tabbar-item>
-				<up-tabbar-item text="消息" icon="chat" activeIcon="chat-fill"></up-tabbar-item>
-				<up-tabbar-item text="我的" icon="account" activeIcon="account-fill"></up-tabbar-item>
-			</up-tabbar>
-		</view>
-		<view class="u-page__item">
-			<text class="u-page__item__title">上浮风格</text>
-			<up-tabbar
-				:value="value9"
-				@change="name => value9 = name"
-				:fixed="false"
-				:placeholder="false"
-				:safeAreaInsetBottom="false"
-				styleType="lift"
-				animationType="lift"
-				textMode="active"
-			>
-				<up-tabbar-item text="首页" icon="home" activeIcon="home-fill"></up-tabbar-item>
-				<up-tabbar-item text="图片" icon="photo" activeIcon="photo-fill"></up-tabbar-item>
-				<up-tabbar-item text="视频" icon="play-right" activeIcon="play-right-fill"></up-tabbar-item>
-				<up-tabbar-item text="我的" icon="account" activeIcon="account-fill"></up-tabbar-item>
-			</up-tabbar>
-		</view>
-		<view class="u-page__item">
-			<text class="u-page__item__title">发光风格</text>
-			<up-tabbar
-				:value="value10"
-				@change="name => value10 = name"
-				:fixed="false"
-				:placeholder="false"
-				:safeAreaInsetBottom="false"
-				styleType="glow"
-				animationType="scale"
-				activeBackgroundColor="rgba(78, 205, 196, 0.14)"
-			>
-				<up-tabbar-item text="首页" icon="home" activeIcon="home-fill"></up-tabbar-item>
-				<up-tabbar-item text="分类" icon="grid" activeIcon="grid-fill"></up-tabbar-item>
-				<up-tabbar-item text="消息" icon="chat" activeIcon="chat-fill"></up-tabbar-item>
-				<up-tabbar-item text="我的" icon="account" activeIcon="account-fill"></up-tabbar-item>
-			</up-tabbar>
-		</view>
-		<view class="u-page__item">
-			<text class="u-page__item__title">凸起风格 + 中间按钮</text>
-			<up-tabbar
-				:value="value11"
-				@change="name => value11 = name"
-				:fixed="false"
-				:placeholder="false"
-				:safeAreaInsetBottom="false"
-				styleType="convex"
-				animationType="scale"
-			>
-				<up-tabbar-item text="首页" icon="home" activeIcon="home-fill"></up-tabbar-item>
-				<up-tabbar-item text="图片" icon="photo" activeIcon="photo-fill"></up-tabbar-item>
-				<up-tabbar-item text="" icon="plus-circle" activeIcon="plus-circle-fill" mode="midButton"></up-tabbar-item>
-				<up-tabbar-item text="视频" icon="play-right" activeIcon="play-right-fill"></up-tabbar-item>
-				<up-tabbar-item text="我的" icon="account" activeIcon="account-fill"></up-tabbar-item>
-			</up-tabbar>
-		</view>
 	</view>
 </template>
 
@@ -312,6 +326,7 @@ const value8 = ref(0)
 const value9 = ref(1)
 const value10 = ref(1)
 const value11 = ref(0)
+const value12 = ref(2)
 
 // 方法
 const change5 = (name) => {
@@ -346,6 +361,7 @@ const clickMidButton = () => {
 <style lang="scss">
 	.u-page {
 		padding: 0;
+		padding-bottom: 180rpx;
 		&__item {
 
 			&__title {
