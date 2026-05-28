@@ -42,6 +42,7 @@ import Empty from '../../components/u-empty/empty'
 import Form from '../../components/u-form/form'
 import FormItem from '../../components/u-form-item/formItem'
 import Gap from '../../components/u-gap/gap'
+import Guide from '../../components/u-guide/guide'
 import Grid from '../../components/u-grid/grid'
 import GridItem from '../../components/u-grid-item/gridItem'
 import Icon from '../../components/u-icon/icon'
@@ -133,6 +134,7 @@ const props = {
     ...Form,
     ...FormItem,
     ...Gap,
+    ...Guide,
     ...Grid,
     ...GridItem,
     ...Icon,

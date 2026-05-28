@@ -45,6 +45,7 @@ declare module 'vue' {
 
     // 反馈组件
     ['up-tooltip']: typeof import('./comps/tooltip')['Tooltip']
+    ['up-guide']: typeof import('./comps/guide')['Guide']
     ['up-action-sheet']: typeof import('./comps/actionSheet')['ActionSheet']
     ['up-alert']: typeof import('./comps/alert')['Alert']
     ['up-toast']: typeof import('./comps/toast')['Toast']
