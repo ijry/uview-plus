@@ -213,6 +213,11 @@ export default [{
         title: 'Tooltip 长按提示',
         title_en: 'ActionSheet'
     }, {
+        path: '/pages/componentsC/guide/guide',
+        icon: 'tooltip',
+        title: 'Guide 首屏引导',
+        title_en: 'Guide'
+    }, {
         path: '/pages/componentsC/popover/popover',
         icon: 'popover',
         title: 'Popover 弹窗提示',

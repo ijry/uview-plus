@@ -477,6 +477,12 @@
                     }
                 },
                 {
+                    "path" : "guide/guide",
+                    "style" : {
+                        "navigationBarTitleText" : "首屏引导"
+                    }
+                },
+                {
                     "path" : "popover/popover",
                     "style" : {
                         "navigationBarTitleText" : "Popover弹窗"
