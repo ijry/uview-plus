@@ -164,6 +164,15 @@
 			async propsChange() {
 				await this.getElRect()
 				// this.getTooltipStyle();
+			},
+			show(val) {
+				if (this.triggerMode === 'manual') {
+					if (val) {
+						this.open()
+					} else {
+						this.close()
+					}
+				}
 			}
 		},
 		computed: {
@@ -231,7 +240,7 @@
 		mounted() {
 			this.init()
 		},
-		emits: ["click"],
+		emits: ["click", "open", "close"],
 		methods: {
 			addStyle,
 			addUnit,
@@ -241,27 +250,34 @@
 			},
 			// 点击触发事件
 			async clickHander() {
-				// this.getTooltipStyle();
 				if (this.triggerMode == 'click') {
-					this.tooltipTop = 0
-					this.showTooltip = true
+					this.open()
 				}
 			},
 			// 长按触发事件
 			async longpressHandler() {
-				// this.getTooltipStyle();
 				if (this.triggerMode == 'longpress') {
-					this.tooltipTop = 0
-					this.showTooltip = true
+					this.open()
 				}
+			},
+			// 打开tooltip
+			open() {
+				this.tooltipTop = 0
+				this.showTooltip = true
+				this.$emit('open')
+			},
+			// 关闭tooltip
+			close() {
+				this.showTooltip = false
+				this.$emit('close')
 			},
 			// 点击透明遮罩
 			overlayClickHandler() {
-				this.showTooltip = false
+				this.close()
 			},
 			// 点击弹出按钮
 			btnClickHandler(index) {
-				this.showTooltip = false
+				this.close()
 				// 如果需要展示复制按钮，此处index需要加1，因为复制按钮在第一个位置
 				this.$emit('click', this.showCopy ? index + 1 : index)
 			},
@@ -308,7 +324,7 @@
 			// 复制文本到粘贴板
 			setClipboardData() {
 				// 关闭组件
-				this.showTooltip = false
+				this.close()
 				this.$emit('click', 0)
 				uni.setClipboardData({
 					// 优先使用copyText字段，如果没有，则默认使用text字段当做复制的内容
@@ -318,9 +334,6 @@
 					},
 					fail: () => {
 						this.showToast && toast('复制失败')
-					},
-					complete: () => {
-						this.showTooltip = false
 					}
 				})
 			}
