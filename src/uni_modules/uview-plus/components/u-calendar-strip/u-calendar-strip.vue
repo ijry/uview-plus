@@ -1,77 +1,89 @@
 <template>
 	<view class="u-calendar-strip">
-		<view class="u-calendar-strip__header u-border-bottom">
-			<text
-				class="u-calendar-strip__header__switch"
-				:class="{ 'u-calendar-strip__header__switch--disabled': switchPrevDisabled }"
-				@tap="prevMonth"
-			>‹</text>
-			<text class="u-calendar-strip__header__title">{{ monthLabel }}</text>
-			<text
-				class="u-calendar-strip__header__switch"
-				:class="{ 'u-calendar-strip__header__switch--disabled': switchNextDisabled }"
-				@tap="nextMonth"
-			>›</text>
-			<text
-				v-if="fullCalendar"
-				class="u-calendar-strip__header__toggle"
-				@tap="toggleFull('button')"
-			>{{ innerShowFull ? '▴' : '▾' }}</text>
+		<view v-if="!fullCalendar || !innerShowFull">
+			<view class="u-calendar-strip__header u-border-bottom">
+				<text
+					class="u-calendar-strip__header__switch"
+					:class="{ 'u-calendar-strip__header__switch--disabled': switchPrevDisabled }"
+					@tap="prevMonth"
+				>‹</text>
+				<text class="u-calendar-strip__header__title">{{ monthLabel }}</text>
+				<text
+					class="u-calendar-strip__header__switch"
+					:class="{ 'u-calendar-strip__header__switch--disabled': switchNextDisabled }"
+					@tap="nextMonth"
+				>›</text>
+				<text
+					v-if="fullCalendar"
+					class="u-calendar-strip__header__toggle"
+					@tap="toggleFull('button')"
+				>▾</text>
+			</view>
+			<view
+				class="u-calendar-strip__scroll-wrap"
+				@touchstart="onTouchStart"
+				@touchend="onTouchEnd"
+			>
+				<scroll-view
+					class="u-calendar-strip__scroll"
+					scroll-x
+					enable-flex
+					:show-scrollbar="false"
+					:scroll-into-view="scrollIntoView"
+				>
+					<view class="u-calendar-strip__scroll__inner">
+						<view
+							v-for="(item, index) in monthDays"
+							:key="index"
+							class="u-calendar-strip__day"
+							:id="getDateId(item.date)"
+							:class="[
+								item.disabled && 'u-calendar-strip__day--disabled',
+								item.selected && 'u-calendar-strip__day--selected',
+								item.today && showToday && !item.selected && 'u-calendar-strip__day--today',
+							]"
+							:style="[dayStyle(item)]"
+							@tap="onDayTap(item)"
+						>
+							<text class="u-calendar-strip__day__date">{{ item.day }}</text>
+							<text class="u-calendar-strip__day__week">{{ getWeekLabel(item.week) }}</text>
+						</view>
+					</view>
+				</scroll-view>
+			</view>
+			<view v-if="fullCalendar" class="u-calendar-strip__hint">
+				<text class="u-calendar-strip__hint__text">{{ pullHintText }}</text>
+			</view>
 		</view>
 		<view
-			class="u-calendar-strip__scroll-wrap"
+			v-if="fullCalendar && innerShowFull"
+			class="u-calendar-strip__panel-wrap"
 			@touchstart="onTouchStart"
 			@touchend="onTouchEnd"
 		>
-			<scroll-view
-				class="u-calendar-strip__scroll"
-				scroll-x
-				enable-flex
-				:show-scrollbar="false"
-				:scroll-into-view="scrollIntoView"
-			>
-				<view class="u-calendar-strip__scroll__inner">
-					<view
-						v-for="(item, index) in monthDays"
-						:key="index"
-						class="u-calendar-strip__day"
-						:id="getDateId(item.date)"
-						:class="[
-							item.disabled && 'u-calendar-strip__day--disabled',
-							item.selected && 'u-calendar-strip__day--selected',
-							item.today && showToday && !item.selected && 'u-calendar-strip__day--today',
-						]"
-						:style="[dayStyle(item)]"
-						@tap="onDayTap(item)"
-					>
-						<text class="u-calendar-strip__day__date">{{ item.day }}</text>
-						<text class="u-calendar-strip__day__week">{{ getWeekLabel(item.week) }}</text>
-					</view>
-				</view>
-			</scroll-view>
-		</view>
-		<view v-if="fullCalendar" class="u-calendar-strip__hint">
-			<text class="u-calendar-strip__hint__text">{{ pullHintText }}</text>
-		</view>
-		<view v-if="fullCalendar && innerShowFull" class="u-calendar-strip__panel">
-			<u-calendar
-				:show="true"
-				:pageInline="true"
-				:showTitle="false"
-				:showConfirm="false"
-				:closeOnClickOverlay="false"
-				:monthSwitch="true"
-				mode="single"
-				:defaultDate="innerSelectedDate"
-				:minDate="panelMinDate"
-				:maxDate="panelMaxDate"
-				:monthNum="panelMonthNum"
-				:readonly="readonly"
-				:showToday="showToday"
-				:color="color"
-				v-bind="fullCalendarProps"
-				@confirm="onPanelConfirm"
-			></u-calendar>
+			<view class="u-calendar-strip__hint u-calendar-strip__hint--panel">
+				<text class="u-calendar-strip__hint__text" @tap="toggleFull('hint')">{{ pullHintText }}</text>
+			</view>
+			<view class="u-calendar-strip__panel">
+				<u-calendar
+					:show="true"
+					:pageInline="true"
+					:showTitle="false"
+					:showConfirm="false"
+					:closeOnClickOverlay="false"
+					:monthSwitch="true"
+					mode="single"
+					:defaultDate="innerSelectedDate"
+					:minDate="panelMinDate"
+					:maxDate="panelMaxDate"
+					:monthNum="panelMonthNum"
+					:readonly="readonly"
+					:showToday="showToday"
+					:color="color"
+					v-bind="fullCalendarProps"
+					@confirm="onPanelConfirm"
+				></u-calendar>
+			</view>
 		</view>
 	</view>
 </template>
@@ -484,6 +496,14 @@ export default {
 
 	&__panel {
 		padding: 0 8px 8px;
+	}
+
+	&__panel-wrap {
+		padding-top: 4px;
+	}
+
+	&__hint--panel {
+		padding: 2px 0 6px;
 	}
 }
 </style>
