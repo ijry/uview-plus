@@ -32,6 +32,13 @@
 				:showConfirm="false"
 				defaultDate="2022-02-15"
 			></up-calendar>
+			<up-alert description="单行日历（支持切月、下拉展开完整月历）"></up-alert>
+			<up-calendar-strip
+				v-model="stripValue"
+				:minDate="switchMinDate"
+				:maxDate="switchMaxDate"
+			></up-calendar-strip>
+			<view class="u-calendar-strip-value">{{ stripValue }}</view>
 		</up-cell-group>
 		<up-calendar
 			:show="show1"
@@ -159,6 +166,7 @@ const show10 = ref(false)
 const show11 = ref(false)
 const show12 = ref(false)
 const values = ref(['','','','','','','','','','','',''])
+const stripValue = ref(`${year}-${month}-${date}`)
 const customThemeDefaultDate = ref([`${year}-${month}-${date}`, `${year}-${month}-${date + 5}`])
 const customTextDefaultDate = ref([`${year}-${month}-${date}`])
 const minDate = ref(`2022-08-09`)
@@ -303,6 +311,13 @@ const formatter = (day) => {
 <style lang="scss">
 	.u-page {
 		padding: 0;
+	}
+
+	.u-calendar-strip-value {
+		font-size: 12px;
+		line-height: 22px;
+		color: #909399;
+		padding: 0 12px 10px;
 	}
 </style>
 

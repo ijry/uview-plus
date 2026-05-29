@@ -21,6 +21,7 @@ import Backtop from '../../components/u-back-top/backtop'
 import Badge from '../../components/u-badge/badge'
 import Button from '../../components/u-button/button'
 import Calendar from '../../components/u-calendar/calendar'
+import CalendarStrip from '../../components/u-calendar-strip/calendarStrip'
 import CarKeyboard from '../../components/u-car-keyboard/carKeyboard'
 import Card from '../../components/u-card/card'
 import Cell from '../../components/u-cell/cell'
@@ -113,6 +114,7 @@ const props = {
     ...Badge,
     ...Button,
     ...Calendar,
+    ...CalendarStrip,
     ...CarKeyboard,
     ...Card,
     ...Cell,
