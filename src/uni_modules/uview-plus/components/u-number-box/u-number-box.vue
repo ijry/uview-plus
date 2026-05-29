@@ -309,8 +309,12 @@
 			},
 			// 输入框失去焦点
 			onBlur(event) {
-				// 对输入值进行格式化
-				const value = this.format(event.detail.value)
+				// 对输入值进行格式化，失焦时强制修正到合法范围（如最小值）
+				const raw = event.detail.value
+				const value = (raw === '' || raw === null || raw === undefined)
+					? this.min
+					: this.format(raw)
+				this.emitChange(value)
 				// 发出blur事件
 				this.$emit(
 					'blur',{
@@ -324,10 +328,9 @@
 				const {
 					value = ''
 				} = e.detail || {}
-				// 为空返回
+				// 为空时不立即修正，等失焦时再处理，允许用户清空后输入新值
 				if (value === '') {
-					// 为空自动设为最小值
-					this.emitChange(this.min)
+					this.currentValue = ''
 					return
 				}
 				let formatted = this.filter(value)
