@@ -16,7 +16,7 @@
 				<text
 					v-if="fullCalendar"
 					class="u-calendar-strip__header__toggle"
-					@tap="toggleFull('button')"
+					@click="toggleFull('button')"
 				>▾</text>
 			</view>
 			<view
@@ -51,9 +51,6 @@
 					</view>
 				</scroll-view>
 			</view>
-			<view v-if="fullCalendar" class="u-calendar-strip__hint">
-				<text class="u-calendar-strip__hint__text">{{ pullHintText }}</text>
-			</view>
 		</view>
 		<view
 			v-if="fullCalendar && innerShowFull"
@@ -61,9 +58,6 @@
 			@touchstart="onTouchStart"
 			@touchend="onTouchEnd"
 		>
-			<view class="u-calendar-strip__hint u-calendar-strip__hint--panel">
-				<text class="u-calendar-strip__hint__text" @tap="toggleFull('hint')">{{ pullHintText }}</text>
-			</view>
 			<view class="u-calendar-strip__panel">
 				<u-calendar
 					:show="true"
@@ -83,6 +77,9 @@
 					v-bind="fullCalendarProps"
 					@confirm="onPanelConfirm"
 				></u-calendar>
+			</view>
+			<view class="u-calendar-strip__hint u-calendar-strip__hint--panel">
+				<text class="u-calendar-strip__hint__text" @click="toggleFull('hint')">{{ collapseHint }}</text>
 			</view>
 		</view>
 	</view>
@@ -396,6 +393,7 @@ export default {
 .u-calendar-strip {
 	background-color: var(--up-card-bg-color, #ffffff);
 	border-radius: 10px;
+	margin: 0 8px;
 
 	&__header {
 		@include flex;
@@ -503,7 +501,7 @@ export default {
 	}
 
 	&__hint--panel {
-		padding: 2px 0 6px;
+		padding: 0 0 8px;
 	}
 }
 </style>
