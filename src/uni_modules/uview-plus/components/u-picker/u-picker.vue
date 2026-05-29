@@ -407,10 +407,25 @@ export default {
 		// 设置整体各列的columns的值
 		setColumns(columns) {
 			// console.log(columns)
+			const prevColumns = this.innerColumns
 			this.innerColumns = deepClone(columns)
 			// 如果在设置各列数据时，没有被设置默认的各列索引defaultIndex，那么用0去填充它，数组长度为列的数量
 			if (this.innerIndex.length === 0) {
 				this.innerIndex = new Array(columns.length).fill(0)
+			} else {
+				// 修复异步columns加载时defaultIndex位置不更新的问题 (issue #841)
+				// 当某列从空数组变为有数据时，picker-view不会因为:value未变化而重新滚动到指定位置
+				// 需要通过先清空再赋值的方式强制触发picker-view的滚动更新
+				const hasColumnsChangedFromEmpty = columns.some(
+					(col, i) => col && col.length > 0 && (!prevColumns[i] || prevColumns[i].length === 0)
+				)
+				if (hasColumnsChangedFromEmpty) {
+					const targetIndex = deepClone(this.innerIndex)
+					this.innerIndex = []
+					this.$nextTick(() => {
+						this.innerIndex = targetIndex
+					})
+				}
 			}
 		},
 		// 获取各列选中值对应的索引
