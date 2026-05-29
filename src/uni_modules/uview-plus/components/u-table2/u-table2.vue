@@ -165,12 +165,10 @@
                                             {{ isExpanded(item.row) ? '▼' : '▶' }}
                                         </view>
                                     </view>
-                                    <slot name="cell" :row="item.row" :column="col" :prow="item.parentRow"
-                                        :rowIndex="item.rowIndex" :columnIndex="colIndex" :level="item.level">
-                                        <view class="u-table-cell_content">
-                                            {{ item.row[col.key] }}
-                                        </view>
-                                    </slot>
+                                    <!-- 固定列浮动视图直接内联渲染，不使用 slot，避免与主表体 slot name="cell" 重名报错（微信小程序限制） -->
+                                    <view class="u-table-cell_content">
+                                        {{ item.row[col.key] }}
+                                    </view>
                                 </template>
                             </view>
                         </view>
