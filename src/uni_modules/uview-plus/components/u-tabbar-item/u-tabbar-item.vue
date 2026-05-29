@@ -435,8 +435,8 @@
 		z-index: 1;
 	}
 
-	.u-tabbar-item__icon--mid-button .u-icon,
-	.u-tabbar-item__icon--mid-button .u-badge {
+	.u-tabbar-item__icon--mid-button :deep(.u-icon),
+	.u-tabbar-item__icon--mid-button :deep(.u-badge) {
 		position: relative;
 		z-index: 2;
 	}
