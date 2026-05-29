@@ -37,6 +37,7 @@ export default {
         rangePrompt: '',
         showRangePrompt: true,
         allowSameDay: false,
+        rangeResultMode: 'all',
 		round: 0,
 		monthNum: 3,
         weekText: [t("up.week.one"), t("up.week.two"), t("up.week.three"), t("up.week.four"), t("up.week.five"), t("up.week.six"), t("up.week.seven")],

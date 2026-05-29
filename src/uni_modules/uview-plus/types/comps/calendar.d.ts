@@ -125,6 +125,11 @@ declare interface CalendarProps {
    */
   allowSameDay?: boolean
   /**
+   * 区间模式下确认返回值格式，`all`返回区间内所有日期，`boundary`仅返回起止日期
+   * @default "all"
+   */
+  rangeResultMode?: 'all' | 'boundary'
+  /**
    * 圆角值，默认无圆角
    * @default 0
    */
