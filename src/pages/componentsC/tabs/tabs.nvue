@@ -13,7 +13,7 @@
 		>
 			<text class="u-demo-block__title">粘性布局</text>
 		</view>
-		<up-sticky>
+		<up-sticky bgColor="#fff" customStyle="margin-left: -15px; margin-right: -15px;">
 			<up-tabs
 				:list="list1"
 			>
@@ -156,6 +156,34 @@
 				</swiper>
 			</view>
 		</view>
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">胶囊模式</text>
+			<view class="u-demo-block__content">
+				<up-tabs :list="listShape" :scrollable="false" shapeMode="capsule">
+				</up-tabs>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">卡片模式</text>
+			<view class="u-demo-block__content">
+				<up-tabs :list="listCard" :scrollable="false" shapeMode="card" lineWidth="26">
+				</up-tabs>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">圆角矩形箭头模式</text>
+			<view class="u-demo-block__content">
+				<up-tabs :list="listPillArrow" :scrollable="false" shapeMode="pill-arrow">
+				</up-tabs>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">Tag模式</text>
+			<view class="u-demo-block__content">
+				<up-tabs :list="listTag" shapeMode="tag">
+				</up-tabs>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -267,6 +295,60 @@ const list6 = ref([
 		name: '电影',
 	}, {
 		name: '科技'
+	}
+]);
+
+const listShape = ref([
+	{
+		name: '关注'
+	},
+	{
+		name: '推荐'
+	},
+	{
+		name: '电影'
+	}
+]);
+
+const listCard = ref([
+	{
+		name: '账号登录'
+	},
+	{
+		name: '免密登录'
+	}
+]);
+
+const listPillArrow = ref([
+	{
+		name: '关注'
+	},
+	{
+		name: '精选'
+	},
+	{
+		name: '热门'
+	}
+]);
+
+const listTag = ref([
+	{
+		name: '全部'
+	},
+	{
+		name: '待付款'
+	},
+	{
+		name: '待发货'
+	},
+	{
+		name: '已发货'
+	},
+	{
+		name: '已完成'
+	},
+	{
+		name: '已关闭'
 	}
 ]);
 

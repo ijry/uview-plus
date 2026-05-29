@@ -61,6 +61,11 @@ declare interface TabsProps {
    */
   keyName?: string
   /**
+   * 标签形态模式，可选值：`capsule`/`card`/`pill-arrow`/`tag`
+   * @default ""
+   */
+  shapeMode?: string
+  /**
    * 点击标签时触发
    * @param item 传入的其他值
    * @param index 标签索引值

@@ -28,6 +28,7 @@ export default {
         scrollable: true,
 		current: 0,
 		keyName: 'name',
-        iconStyle: {}
+        iconStyle: {},
+        shapeMode: ''
     }
 }

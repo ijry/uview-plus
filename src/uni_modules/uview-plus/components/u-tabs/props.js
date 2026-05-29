@@ -66,6 +66,11 @@ export const props = defineMixin({
         iconStyle: {
             type: [String, Object],
             default: () => defProps.tabs.iconStyle
+        },
+        // 形态模式，可选：capsule/card/pill-arrow/tag
+        shapeMode: {
+            type: String,
+            default: () => defProps.tabs.shapeMode
         }
     }
 })

@@ -1,5 +1,5 @@
 <template>
-	<view class="u-tabs" :class="[customClass]">
+	<view class="u-tabs" :class="[customClass, shapeModeClass]">
 		<view class="u-tabs__wrapper">
 			<slot name="left" />
 			<view class="u-tabs__wrapper__scroll-view-wrapper">
@@ -9,7 +9,8 @@
 						<view class="u-tabs__wrapper__nav__item" v-for="(item, index) in tabList" :key="index"
 							@tap="clickHandler(item, index)" @longpress="longPressHandler(item,index)"
 							:ref="`u-tabs__wrapper__nav__item-${index}`"
-							:style="[addStyle(itemStyle), {flex: scrollable ? '' : 1}]" :class="[`u-tabs__wrapper__nav__item-${index}`,
+							:style="[itemComputedStyle, {flex: scrollable ? '' : 1}]" :class="[`u-tabs__wrapper__nav__item-${index}`,
+								shapeMode && `u-tabs__wrapper__nav__item--${shapeMode}`,
 								item.disabled && 'u-tabs__wrapper__nav__item--disabled',
 								innerCurrent == index ? 'u-tabs__wrapper__nav__item-active' : '']">
 							<slot v-if="$slots.icon" name="icon" :item="item" :keyName="keyName" :index="index" />
@@ -36,6 +37,12 @@
 								:numberType="item.badge && item.badge.numberType || propsBadge.numberType"
 								:inverted="item.badge && item.badge.inverted || propsBadge.inverted"
 								customStyle="margin-left: 4px;"></u-badge>
+							<view
+								v-if="shapeMode === 'card' && innerCurrent == index && index < tabList.length - 1"
+								class="u-tabs__wrapper__nav__item__card-corner"></view>
+							<view
+								v-if="shapeMode === 'pill-arrow' && innerCurrent == index"
+								class="u-tabs__wrapper__nav__item__active-arrow"></view>
 						</view>
 						<!-- #ifdef APP-NVUE -->
 						<view class="u-tabs__wrapper__nav__line" ref="u-tabs__wrapper__nav__line" :style="[{
@@ -43,6 +50,7 @@
 								height: addUnit(lineHeight),
 								background: lineColor,
 								backgroundSize: lineBgSize,
+								display: showLine ? 'block' : 'none'
 							}]">
 						</view>
 						<!-- #endif -->
@@ -55,7 +63,7 @@
 								height: addUnit(lineHeight),
 								background: lineColor,
 								backgroundSize: lineBgSize,
-								display: lineShow ? 'block': 'none'
+								display: showLine ? 'block': 'none'
 							}]">
 						</view>
 						<!-- #endif -->
@@ -98,6 +106,7 @@
 	 * @property {String | Number}	duration			滑块移动一次所需的时间，单位秒（默认 200 ）
 	 * @property {String | Number}	swierWidth			swiper的宽度（默认 '750rpx' ）
 	 * @property {String}	keyName	 从`list`元素对象中读取的键名（默认 'name' ）
+	 * @property {String}	shapeMode 标签形态模式，可选capsule/card/pill-arrow/tag（默认 '' ）
 	 * @event {Function(index)} change 标签改变时触发 index: 点击了第几个tab，索引从0开始
 	 * @event {Function(index)} click 点击标签时触发 index: 点击了第几个tab，索引从0开始
 	 * @event {Function(index)} longPress 长按标签时触发 index: 点击了第几个tab，索引从0开始
@@ -151,6 +160,31 @@
 			}
 		},
 		computed: {
+			shapeModeClass() {
+				return this.shapeMode ? `u-tabs--shape-${this.shapeMode}` : ''
+			},
+			showLine() {
+				return this.lineShow && !['capsule', 'pill-arrow', 'tag'].includes(this.shapeMode)
+			},
+			itemComputedStyle() {
+				const style = addStyle(this.itemStyle) || {}
+				if (this.upHasProp('itemStyle')) {
+					return style
+				}
+				const defaultModeHeights = {
+					capsule: '30px',
+					card: '34px',
+					'pill-arrow': '32px',
+					tag: '28px'
+				}
+				const height = defaultModeHeights[this.shapeMode]
+				if (!height) {
+					return style
+				}
+				return deepMerge(style, {
+					height
+				})
+			},
 			textStyle() {
 				return index => {
 					const style = {}
@@ -165,10 +199,14 @@
 						|| (customeStyle && customeStyle.color && customeStyle.color !== defaultActiveColor)
 					const isInactiveStyleOverridden = this.upHasProp('inactiveStyle')
 						|| (customeStyle && customeStyle.color && customeStyle.color !== defaultInactiveColor)
-					if (isActive && !isActiveStyleOverridden) {
+					if (isActive && ['pill-arrow', 'tag'].includes(this.shapeMode) && !isActiveStyleOverridden) {
+						style.color = '#ffffff'
+					} else if (isActive && !isActiveStyleOverridden) {
 						style.color = this.upThemeVar('--up-main-color', this.$u.color.mainColor || defaultActiveColor)
 					}
-					if (!isActive && !isInactiveStyleOverridden) {
+					if (!isActive && ['pill-arrow', 'tag'].includes(this.shapeMode) && !isInactiveStyleOverridden) {
+						style.color = '#606266'
+					} else if (!isActive && !isInactiveStyleOverridden) {
 						style.color = this.upThemeVar('--up-content-color', this.$u.color.contentColor || defaultInactiveColor)
 					}
 					// 如果当前菜单被禁用，则加上对应颜色，需要在此做处理，是因为nvue下，无法在style样式中通过!import覆盖标签的内联样式
@@ -375,6 +413,7 @@
 				&__item {
 					padding: 0 11px;
 					@include flex;
+					position: relative;
 					align-items: center;
 					justify-content: center;
 					/* #ifdef H5 */
@@ -396,6 +435,30 @@
 							color: $u-disabled-color !important;
 						}
 					}
+
+					&__card-corner {
+						position: absolute;
+						top: 0;
+						right: -10px;
+						width: 20px;
+						height: 100%;
+						background-color: inherit;
+						transform: skewX(25deg);
+						border-top-right-radius: 10px;
+						z-index: 1;
+					}
+
+					&__active-arrow {
+						position: absolute;
+						left: 50%;
+						bottom: -6px;
+						width: 0;
+						height: 0;
+						border-left: 6px solid transparent;
+						border-right: 6px solid transparent;
+						border-top: 6px solid #ff3b30;
+						transform: translateX(-50%);
+					}
 				}
 
 				&__line {
@@ -408,6 +471,83 @@
 					transition-property: transform;
 					transition-duration: 300ms;
 				}
+			}
+		}
+
+		&--shape-capsule {
+			.u-tabs__wrapper__scroll-view-wrapper {
+				padding: 3px;
+				border-radius: 999px;
+				background-color: #edf0f5;
+			}
+
+			.u-tabs__wrapper__nav__item {
+				min-height: 30px;
+				padding: 0 14px;
+				border-radius: 999px;
+				transition: background-color 0.2s;
+			}
+
+			.u-tabs__wrapper__nav__item-active {
+				background-color: #ffffff;
+			}
+		}
+
+		&--shape-card {
+			.u-tabs__wrapper__scroll-view-wrapper {
+				padding: 0;
+				border-radius: 10px;
+				background-color: #9ccde5;
+				box-shadow: inset 0 0 0 1px rgba(96, 98, 102, 0.06);
+			}
+
+			.u-tabs__wrapper__nav__item {
+				min-height: 34px;
+				padding: 0;
+				border-radius: 10px 10px 0 0;
+				transition: background-color 0.2s;
+			}
+
+			.u-tabs__wrapper__nav__item-active {
+				background-color: #f6f8fb;
+				box-shadow: inset 0 0 0 1px rgba(96, 98, 102, 0.06);
+				z-index: 2;
+			}
+		}
+
+		&--shape-pill-arrow {
+			.u-tabs__wrapper__nav {
+				padding-bottom: 6px;
+			}
+
+			.u-tabs__wrapper__nav__item {
+				min-height: 32px;
+				padding: 0 12px;
+				border-radius: 8px;
+				background-color: #e8e8e8;
+				margin-right: 8px;
+			}
+
+			.u-tabs__wrapper__nav__item-active {
+				background: linear-gradient(90deg, #ff6c57 0%, #ff3b30 100%);
+			}
+		}
+
+		&--shape-tag {
+			.u-tabs__wrapper__nav {
+				padding: 2px 0;
+			}
+
+			.u-tabs__wrapper__nav__item {
+				min-height: 28px;
+				padding: 0 14px;
+				border-radius: 999px;
+				background-color: #f3f4f6;
+				margin-right: 8px;
+			}
+
+			.u-tabs__wrapper__nav__item-active {
+				background-color: #2a6bf6;
 			}
 		}
 	}
