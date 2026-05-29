@@ -23,7 +23,7 @@ declare interface DatetimePickerProps {
    * 展示格式
    * @default "datetime"
    */
-  mode?: 'datetime' | 'date' | 'time' | 'year-month'
+  mode?: 'datetime' | 'date' | 'time' | 'year-month' | 'datehour' | 'timesecond' | 'datetimesecond'
   /**
    * 可选的最大时间（时间戳毫秒）
    * @default 最大默认值为后10年
@@ -35,25 +35,35 @@ declare interface DatetimePickerProps {
    */
   minDate?: number
   /**
-   * 可选的最小小时，仅mode=time有效
+   * 可选的最小小时，仅mode=time/timesecond有效
    * @default 0
    */
   minHour?: number
   /**
-   * 可选的最大小时，仅mode=time有效
+   * 可选的最大小时，仅mode=time/timesecond有效
    * @default 23
    */
   maxHour?: number
   /**
-   * 可选的最小分钟，仅mode=time有效
+   * 可选的最小分钟，仅mode=time/timesecond有效
    * @default 0
    */
   minMinute?: number
   /**
-   * 可选的最大分钟，仅mode=time有效
+   * 可选的最大分钟，仅mode=time/timesecond有效
    * @default 59
    */
   maxMinute?: number
+  /**
+   * 可选的最小秒，仅mode=timesecond有效
+   * @default 0
+   */
+  minSecond?: number
+  /**
+   * 可选的最大秒，仅mode=timesecond有效
+   * @default 59
+   */
+  maxSecond?: number
   /**
    * 选项过滤函数
    * @default null

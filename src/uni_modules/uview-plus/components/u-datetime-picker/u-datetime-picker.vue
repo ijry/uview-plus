@@ -72,13 +72,15 @@
 	 * @property {Boolean}			showToolbar			是否显示顶部的操作栏  ( 默认 true )
 	 * @property {String | Number}	modelValue		    绑定值
 	 * @property {String}			title				顶部标题
-	 * @property {String}			mode				展示格式 mode=date为日期选择，mode=time为时间选择，mode=year-month为年月选择，mode=datetime为日期时间选择  ( 默认 ‘datetime )
+	 * @property {String}			mode				展示格式 mode=date为日期选择，mode=time为时间选择，mode=year-month为年月选择，mode=datetime为日期时间选择，mode=datehour为日期小时选择，mode=timesecond为时分秒选择，mode=datetimesecond为日期时分秒选择  ( 默认 ‘datetime )
 	 * @property {Number}			maxDate				可选的最大时间  默认值为后10年
 	 * @property {Number}			minDate				可选的最小时间  默认值为前10年
-	 * @property {Number}			minHour				可选的最小小时，仅mode=time有效   ( 默认 0 )
-	 * @property {Number}			maxHour				可选的最大小时，仅mode=time有效	  ( 默认 23 )
-	 * @property {Number}			minMinute			可选的最小分钟，仅mode=time有效	  ( 默认 0 )
-	 * @property {Number}			maxMinute			可选的最大分钟，仅mode=time有效   ( 默认 59 )
+	 * @property {Number}			minHour				可选的最小小时，仅mode=time/timesecond有效   ( 默认 0 )
+	 * @property {Number}			maxHour				可选的最大小时，仅mode=time/timesecond有效	  ( 默认 23 )
+	 * @property {Number}			minMinute			可选的最小分钟，仅mode=time/timesecond有效	  ( 默认 0 )
+	 * @property {Number}			maxMinute			可选的最大分钟，仅mode=time/timesecond有效   ( 默认 59 )
+	 * @property {Number}			minSecond			可选的最小秒，仅mode=timesecond有效   ( 默认 0 )
+	 * @property {Number}			maxSecond			可选的最大秒，仅mode=timesecond有效   ( 默认 59 )
 	 * @property {Function}			filter				选项过滤函数
 	 * @property {Function}			formatter			选项格式化函数
 	 * @property {Boolean}			loading				是否显示加载中状态   ( 默认 false )
@@ -140,7 +142,7 @@
 		computed: {
 			// 如果以下这些变量发生了变化，意味着需要重新初始化各列的值
 			propsChange() {
-				return [this.mode, this.maxDate, this.minDate, this.minHour, this.maxHour, this.minMinute, this.maxMinute, this.filter, this.modelValue]
+				return [this.mode, this.maxDate, this.minDate, this.minHour, this.maxHour, this.minMinute, this.maxMinute, this.minSecond, this.maxSecond, this.filter, this.modelValue]
 			},
 			// input的props
 			inputPropsInner() {
@@ -172,7 +174,7 @@
 					this.inputValue = ''
 					return
 				}
-				if (this.mode == 'time') {
+				if (this.mode === 'time' || this.mode === 'timesecond') {
 					this.inputValue = newValue
 				} else {
 					if (this.format) {
@@ -192,8 +194,14 @@
 							case 'datetime':
 								format = 'YYYY-MM-DD HH:mm'
 								break;
+							case 'datetimesecond':
+								format = 'YYYY-MM-DD HH:mm:ss'
+								break;
 							case 'time':
 								format = 'HH:mm'
+								break;
+							case 'timesecond':
+								format = 'HH:mm:ss'
 								break;
 							default:
 								break;
@@ -268,15 +276,18 @@
 			change(e) {
 				const { indexs, values } = e
 				let selectValue = ''
-				if(this.mode === 'time') {
+				if (this.mode === 'time' || this.mode === 'timesecond') {
 					// 根据value各列索引，从各列数组中，取出当前时间的选中值
 					selectValue = `${this.intercept(values[0][indexs[0]])}:${this.intercept(values[1][indexs[1]])}`
+					if (this.mode === 'timesecond') {
+						selectValue = `${selectValue}:${this.intercept(values[2][indexs[2]])}`
+					}
 				} else {
 					// 将选择的值转为数值，比如'03'转为数值的3，'2019'转为数值的2019
 					const year = parseInt(this.intercept(values[0][indexs[0]],'year'))
 					const month = parseInt(this.intercept(values[1][indexs[1]]))
 					let date = parseInt(values[2] ? this.intercept(values[2][indexs[2]]) : 1)
-					let hour = 0, minute = 0
+					let hour = 0, minute = 0, second = 0
 					// 此月份的最大天数
 					const maxDate = dayjs(`${year}-${month}`).daysInMonth()
 					// year-month模式下，date不会出现在列中，设置为1，为了符合后边需要减1的需求
@@ -285,12 +296,17 @@
 					}
 					// 不允许超过maxDate值
 					date = Math.min(maxDate, date)
-					if (this.mode === 'datetime') {
+					if (this.mode === 'datehour' || this.mode === 'datetime' || this.mode === 'datetimesecond') {
 					    hour = parseInt(this.intercept(values[3][indexs[3]]))
+					}
+					if (this.mode === 'datetime' || this.mode === 'datetimesecond') {
 					    minute = parseInt(this.intercept(values[4][indexs[4]]))
 					}
+					if (this.mode === 'datetimesecond') {
+					    second = parseInt(this.intercept(values[5][indexs[5]]))
+					}
 					// 转为时间模式
-					selectValue = Number(new Date(year, month - 1, date, hour, minute))
+					selectValue = Number(new Date(year, month - 1, date, hour, minute, second))
 				}
 				// 取出准确的合法值，防止超越边界的情况
 				selectValue = this.correctValue(selectValue)
@@ -322,25 +338,33 @@
 			updateIndexs(value) {
 				let values = []
 				const formatter = this.formatter || this.innerFormatter
-				if (this.mode === 'time') {
+				if (this.mode === 'time' || this.mode === 'timesecond') {
 					// 将time模式的时间用:分隔成数组
 				    const timeArr = value.split(':')
 					// 使用formatter格式化方法进行管道处理
 				    values = [formatter('hour', timeArr[0]), formatter('minute', timeArr[1])]
+					if (this.mode === 'timesecond') {
+						values.push(formatter('second', timeArr[2]))
+					}
 				} else {
-				    const date = new Date(value)
 				    values = [
 				        formatter('year', `${dayjs(value).year()}`),
 						// 月份补0
 				        formatter('month', padZero(dayjs(value).month() + 1))
 				    ]
-				    if (this.mode === 'date') {
+				    if (this.mode === 'date' || this.mode === 'datehour' || this.mode === 'datetime' || this.mode === 'datetimesecond') {
 						// date模式，需要添加天列
 				        values.push(formatter('day', padZero(dayjs(value).date())))
 				    }
-				    if (this.mode === 'datetime') {
+				    if (this.mode === 'datehour' || this.mode === 'datetime' || this.mode === 'datetimesecond') {
+				        values.push(formatter('hour', padZero(dayjs(value).hour())))
+				    }
+				    if (this.mode === 'datetime' || this.mode === 'datetimesecond') {
 						// 数组的push方法，可以写入多个参数
-				        values.push(formatter('day', padZero(dayjs(value).date())), formatter('hour', padZero(dayjs(value).hour())), formatter('minute', padZero(dayjs(value).minute())))
+				        values.push(formatter('minute', padZero(dayjs(value).minute())))
+				    }
+				    if (this.mode === 'datetimesecond') {
+				        values.push(formatter('second', padZero(dayjs(value).second())))
 				    }
 				}
 
@@ -388,23 +412,35 @@
 			},
 			// 得出合法的时间
 			correctValue(value) {
-				const isDateMode = this.mode !== 'time'
+				const isDateMode = !['time', 'timesecond'].includes(this.mode)
 				// if (isDateMode && !test.date(value)) {
 				if (isDateMode && !dayjs.unix(value).isValid()) {
 					// 如果是日期类型，但是又没有设置合法的当前时间的话，使用最小时间为当前时间
 					value = this.minDate
 				} else if (!isDateMode && !value) {
 					// 如果是时间类型，而又没有默认值的话，就用最小时间
-					value = `${padZero(this.minHour)}:${padZero(this.minMinute)}`
+					value = this.mode === 'timesecond'
+						? `${padZero(this.minHour)}:${padZero(this.minMinute)}:${padZero(this.minSecond)}`
+						: `${padZero(this.minHour)}:${padZero(this.minMinute)}`
 				}
 				// 时间类型
 				if (!isDateMode) {
 					if (String(value).indexOf(':') === -1) return error('时间错误，请传递如12:24的格式')
-					let [hour, minute] = value.split(':')
+					const timeArr = String(value).split(':')
+					let hour = timeArr[0]
+					let minute = timeArr[1]
+					let second = timeArr[2]
 					// 对时间补零，同时控制在最小值和最大值之间
-					hour = padZero(range(this.minHour, this.maxHour, Number(hour)))
-					minute = padZero(range(this.minMinute, this.maxMinute, Number(minute)))
-					return `${ hour }:${ minute }`
+					const hourNum = Number(hour)
+					const minuteNum = Number(minute)
+					hour = padZero(range(this.minHour, this.maxHour, Number.isNaN(hourNum) ? this.minHour : hourNum))
+					minute = padZero(range(this.minMinute, this.maxMinute, Number.isNaN(minuteNum) ? this.minMinute : minuteNum))
+					if (this.mode === 'timesecond') {
+						const secondNum = Number(second)
+						second = padZero(range(this.minSecond, this.maxSecond, Number.isNaN(secondNum) ? this.minSecond : secondNum))
+						return `${hour}:${minute}:${second}`
+					}
+					return `${hour}:${minute}`
 				} else {
 					// 如果是日期格式，控制在最小日期和最大日期之间
 					value = dayjs(value).isBefore(dayjs(this.minDate)) ? this.minDate : value
@@ -414,20 +450,27 @@
 			},
 			// 获取每列的最大和最小值
 			getRanges() {
-			    if (this.mode === 'time') {
-			        return [
-			            {
-			                type: 'hour',
-			                range: [this.minHour, this.maxHour],
-			            },
-			            {
-			                type: 'minute',
-			                range: [this.minMinute, this.maxMinute],
-			            },
-			        ];
+			    if (this.mode === 'time' || this.mode === 'timesecond') {
+					const timeColumns = [
+						{
+							type: 'hour',
+							range: [this.minHour, this.maxHour],
+						},
+						{
+							type: 'minute',
+							range: [this.minMinute, this.maxMinute],
+						}
+					]
+					if (this.mode === 'timesecond') {
+						timeColumns.push({
+							type: 'second',
+							range: [this.minSecond, this.maxSecond],
+						})
+					}
+			        return timeColumns
 			    }
-			    const { maxYear, maxDate, maxMonth, maxHour, maxMinute, } = this.getBoundary('max', this.innerValue);
-			    const { minYear, minDate, minMonth, minHour, minMinute, } = this.getBoundary('min', this.innerValue);
+			    const { maxYear, maxDate, maxMonth, maxHour, maxMinute, maxSecond } = this.getBoundary('max', this.innerValue);
+			    const { minYear, minDate, minMonth, minHour, minMinute, minSecond } = this.getBoundary('min', this.innerValue);
 			    const result = [
 			        {
 			            type: 'year',
@@ -449,11 +492,19 @@
 			            type: 'minute',
 			            range: [minMinute, maxMinute],
 			        },
+			        {
+			            type: 'second',
+			            range: [minSecond, maxSecond],
+			        },
 			    ];
 			    if (this.mode === 'date')
-			        result.splice(3, 2);
+			        result.splice(3, 3);
+			    if (this.mode === 'datehour')
+			        result.splice(4, 2);
+			    if (this.mode === 'datetime')
+			        result.splice(5, 1);
 			    if (this.mode === 'year-month')
-			        result.splice(2, 3);
+			        result.splice(2, 4);
 			    return result;
 			},
 			// 根据minDate、maxDate、minHour、maxHour等边界值，判断各列的开始和结束边界值
@@ -468,12 +519,14 @@
 			    let date = 1
 			    let hour = 0
 			    let minute = 0
+			    let second = 0
 			    if (type === 'max') {
 			        month = 12
 					// 月份的天数
 			        date = dayjs(value).daysInMonth()
 			        hour = 23
 			        minute = 59
+			        second = 59
 			    }
 				// 获取边界值，逻辑是：当年达到了边界值(最大或最小年)，就检查月允许的最大和最小值，以此类推
 			    if (dayjs(value).year() === year) {
@@ -484,6 +537,9 @@
 			                hour = dayjs(boundary).hour()
 			                if (dayjs(value).hour() === hour) {
 			                    minute = dayjs(boundary).minute()
+			                    if (dayjs(value).minute() === minute) {
+			                        second = dayjs(boundary).second()
+			                    }
 			                }
 			            }
 			        }
@@ -493,7 +549,8 @@
 			        [`${type}Month`]: month,
 			        [`${type}Date`]: date,
 			        [`${type}Hour`]: hour,
-			        [`${type}Minute`]: minute
+			        [`${type}Minute`]: minute,
+			        [`${type}Second`]: second
 			    }
 			},
 			onShowByClickInput(){

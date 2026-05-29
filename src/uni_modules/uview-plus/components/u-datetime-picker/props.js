@@ -72,7 +72,7 @@ export const props = defineMixin({
             type: String,
             default: () => defProps.datetimePicker.title
         },
-        // 展示格式，mode=date为日期选择，mode=time为时间选择，mode=year-month为年月选择，mode=datetime为日期时间选择
+        // 展示格式，支持date、time、year-month、datetime、datehour、timesecond、datetimesecond
         mode: {
             type: String,
             default: () => defProps.datetimePicker.mode
@@ -89,25 +89,35 @@ export const props = defineMixin({
             // 最小默认值为前10年
             default: () => defProps.datetimePicker.minDate
         },
-        // 可选的最小小时，仅mode=time有效
+        // 可选的最小小时，仅mode=time/timesecond有效
         minHour: {
             type: Number,
             default: () => defProps.datetimePicker.minHour
         },
-        // 可选的最大小时，仅mode=time有效
+        // 可选的最大小时，仅mode=time/timesecond有效
         maxHour: {
             type: Number,
             default: () => defProps.datetimePicker.maxHour
         },
-        // 可选的最小分钟，仅mode=time有效
+        // 可选的最小分钟，仅mode=time/timesecond有效
         minMinute: {
             type: Number,
             default: () => defProps.datetimePicker.minMinute
         },
-        // 可选的最大分钟，仅mode=time有效
+        // 可选的最大分钟，仅mode=time/timesecond有效
         maxMinute: {
             type: Number,
             default: () => defProps.datetimePicker.maxMinute
+        },
+        // 可选的最小秒，仅mode=timesecond有效
+        minSecond: {
+            type: Number,
+            default: () => defProps.datetimePicker.minSecond
+        },
+        // 可选的最大秒，仅mode=timesecond有效
+        maxSecond: {
+            type: Number,
+            default: () => defProps.datetimePicker.maxSecond
         },
         // 选项过滤函数
         filter: {
