@@ -364,6 +364,17 @@
 				
 				this.canvasInstance.clearCanvas();
 			},
+
+			// 对外暴露的清空方法（供工具栏与ref调用）
+			clear() {
+				this.pathStack = []
+				this.currentPath = []
+				this.lastPoint = null
+				this.isDrawing = false
+				this.isEmpty = true
+				this.clearCanvas()
+				this.$emit('clear')
+			},
 			
 			// 导出签名图片
 			async exportSignature() {
