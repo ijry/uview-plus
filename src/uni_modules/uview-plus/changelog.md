@@ -1,3 +1,12 @@
+## 3.8.42（2026-05-29）
+feat: 新增单行日历组件并支持下拉展开完整月历及修复签名组件 clear 方法实现
+
+-新增 up-calendar-strip 组件，支持单行横向滚动日期、前后切月、选中态与今天高亮，并受 minDate/maxDate 约束。
+-完整模式复用内嵌 up-calendar（pageInline + monthSwitch），支持下拉展开、上拉收起与完整月历选中回写，降低重复代码与维护复杂度。
+-同步接入全局默认 props 与 TypeScript 类型声明，并在 calendar 示例页增加可直接验证的演示入口。
+- 修复 Signature 组件对外 clear 方法缺失导致 ref 调用报错的问题。
+- 在 u-signature 中新增 clear 公共方法，统一重置路径与绘制状态并清空画布，同时触发 clear 事件，保持工具栏清空与外部调用行为一致。
+
 ## 3.8.41（2026-05-29）
 feat: tabs新增多形态模式并优化示例页吸顶展示
 
