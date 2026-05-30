@@ -130,6 +130,21 @@ declare interface CalendarProps {
    */
   rangeResultMode?: 'all' | 'boundary'
   /**
+   * 是否开启时分秒选择
+   * @default false
+   */
+  enableTime?: boolean
+  /**
+   * 时间精度：`hour`仅时、`minute`时分、`second`时分秒
+   * @default "minute"
+   */
+  timePrecision?: 'hour' | 'minute' | 'second'
+  /**
+   * 默认时间，支持 `HH` / `HH:mm` / `HH:mm:ss`
+   * @default ""
+   */
+  defaultTime?: string
+  /**
    * 圆角值，默认无圆角
    * @default 0
    */
