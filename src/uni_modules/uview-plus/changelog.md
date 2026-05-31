@@ -1,3 +1,12 @@
+## 3.8.44（2026-05-31）
+fix: 修复up-tooltip未暴露open/close方法及manual模式失效问题 #1021
+
+- 新增 show prop，支持 triggerMode="manual" 时通过 :show 控制显示
+- 新增 open() / close() 方法并对外暴露
+- 监听 show prop 变化，manual 模式下自动调用 open/close
+- 新增 open / close emit 事件，u-popover 的 @open @close 监听可正常工作
+- 统一内部显示/隐藏逻辑均走 open()/close() 方法
+
 ## 3.8.43（2026-05-30）
 fix: 修复小程序中 tabbar midButton 模式图标不显示问题
 
