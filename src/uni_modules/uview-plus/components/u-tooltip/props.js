@@ -71,6 +71,11 @@ export const props = defineMixin({
         forcePosition: {
             type: Object,
             default: () => defProps.tooltip.forcePosition
+        },
+        // 是否显示，triggerMode为manual时使用
+        show: {
+            type: Boolean,
+            default: () => defProps.tooltip.show
         }
     }
 })
