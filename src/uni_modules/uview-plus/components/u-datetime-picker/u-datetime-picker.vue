@@ -169,6 +169,13 @@
 		},
 		mounted() {
 			this.init()
+			// pageInline模式下picker-view常驻显示，在原生端(Android/HarmonyOS)需要
+			// 等待原生picker-view组件完成初始化后再重新设置选中值，否则滚动位置可能不生效
+			if (this.pageInline) {
+				setTimeout(() => {
+					this.updateIndexs(this.innerValue)
+				}, 200)
+			}
 		},
 		// #ifdef VUE3
 		emits: ['close', 'cancel', 'confirm', 'change', 'update:modelValue'],
@@ -364,9 +371,12 @@
 				this.innerValue = value
 				this.updateColumns()
 				// 延迟执行,等待u-picker组件列数据更新完后再设置选中值索引
-				setTimeout(() => {
-				this.updateIndexs(value)
-				}, 0);
+				// pageInline模式下picker-view常驻显示，需额外等待原生组件滚动到位
+				this.$nextTick(() => {
+					setTimeout(() => {
+						this.updateIndexs(value)
+					}, this.pageInline ? 100 : 0)
+				})
 			},
 			// 更新索引
 			updateIndexs(value) {
