@@ -1,3 +1,12 @@
+## 3.8.46（2026-06-02）
+fix: 修复DatetimePicker在pageInline模式下无法滚动到默认值问题 #941
+
+pageInline模式下picker-view原生组件常驻显示，Android/HarmonyOS端
+原生组件尚未完成初始化时已渲染为索引0位置，后续更新无法可靠触发滚动。
+
+- updateColumnValue改用$nextTick+条件延时：pageInline时等待100ms
+- mounted新增pageInline兜底：200ms后再次设置索引确保原生组件就绪
+
 ## 3.8.45（2026-06-01）
 fix: 修复NumberBox最小值限制导致无法输入新值问题 #914
 
