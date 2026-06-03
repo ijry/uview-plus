@@ -23,6 +23,8 @@ export default {
         maxHour: 23,
         minMinute: 0,
         maxMinute: 59,
+        minSecond: 0,
+        maxSecond: 59,
         filter: null,
         formatter: null,
         loading: false,

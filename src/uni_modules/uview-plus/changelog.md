@@ -1,3 +1,8 @@
+## 3.8.47（2026-06-03）
+扩展 u-datetime-picker 支持小时与秒级时间选择
+
+- 新增 datehour、timesecond、datetimesecond 三种模式，覆盖年月日时与秒级场景\n- 增加 minSecond/maxSecond 配置，并同步列生成、边界计算、回显与变更事件处理\n- 更新 TypeScript 类型定义，确保新模式和秒级属性在项目中可被正确约束
+
 ## 3.8.46（2026-06-02）
 fix: 修复DatetimePicker在pageInline模式下无法滚动到默认值问题 #941
 
