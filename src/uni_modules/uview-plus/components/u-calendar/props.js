@@ -133,6 +133,11 @@ export const props = defineMixin({
             type: Boolean,
             default: () => defProps.calendar.allowSameDay
         },
+        // 区间模式下确认返回值格式，all-返回区间内所有日期，boundary-仅返回起止日期
+        rangeResultMode: {
+            type: String,
+            default: () => defProps.calendar.rangeResultMode
+        },
 		// 圆角值
 		round: {
 		    type: [Boolean, String, Number],

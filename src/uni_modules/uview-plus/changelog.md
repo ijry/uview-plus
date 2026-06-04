@@ -1,3 +1,9 @@
+## 3.8.48（2026-06-04）
+feat(calendar): 新增区间模式返回值格式配置
+
+- 新增 rangeResultMode 配置项，支持 range 模式在 confirm 时返回全部区间日期或仅返回起止日期。
+- 本次改动覆盖默认配置、组件 props、确认回调返回逻辑与 TypeScript 类型声明，默认值为 all 以保持现有行为兼容。
+
 ## 3.8.47（2026-06-03）
 扩展 u-datetime-picker 支持小时与秒级时间选择
 

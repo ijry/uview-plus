@@ -158,6 +158,7 @@ import { t } from '../../libs/i18n'
  * @property {String}				rangePrompt	        范围选择超过最多可选天数时的提示文案，mode = range时有效
  * @property {Boolean}				showRangePrompt	    范围选择超过最多可选天数时，是否展示提示文案，mode = range时有效 (默认 true )
  * @property {Boolean}				allowSameDay	    是否允许日期范围的起止时间为同一天，mode = range时有效 (默认 false )
+ * @property {String}				rangeResultMode	    区间模式下确认返回值格式，all-返回区间内所有日期，boundary-仅返回起止日期 (默认 'all' )
  * @property {Number|String}	    round				圆角值，默认无圆角  (默认 0 )
  * @property {Number|String}	    monthNum			最多展示的月份数量  (默认 3 )
  * @property {Boolean}	            monthSwitch			是否启用非滚动的单月切换模式  (默认 false )
@@ -307,6 +308,17 @@ export default {
 	emits: ["confirm", "close"],
 	methods: {
 		addUnit,
+		getConfirmValue(selected = this.selected) {
+			if (
+				this.mode === 'range' &&
+				this.rangeResultMode === 'boundary' &&
+				selected.length >= 2
+			) {
+				const len = selected.length - 1
+				return [selected[0], selected[len]]
+			}
+			return selected
+		},
 		// 在微信小程序中，不支持将函数当做props参数，故只能通过ref形式调用
 		setFormatter(e) {
 			this.innerFormatter = e
@@ -325,7 +337,7 @@ export default {
 					 return
 				   }
 				   if( scene === 'tap') {
-					 this.$emit('confirm', this.selected)
+					 this.$emit('confirm', this.getConfirmValue())
 				   }
 				}
 			}
@@ -355,7 +367,7 @@ export default {
 		// 点击确定按钮
 		confirm() {
 			if (!this.buttonDisabled) {
-				this.$emit('confirm', this.selected)
+				this.$emit('confirm', this.getConfirmValue())
 			}
 		},
 		// 获得两个日期之间的月份数
