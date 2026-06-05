@@ -256,6 +256,9 @@
 			},
 			// 关闭选择器
 			close() {
+				if (this.hasInput) {
+					this.showByClickInput = false
+				}
 				if (this.closeOnClickOverlay) {
 					if (this.hasInput) {
 						this.showByClickInput = false
