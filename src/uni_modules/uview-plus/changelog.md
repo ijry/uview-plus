@@ -1,3 +1,9 @@
+## 3.8.49（2026-06-05）
+fix(datetime-picker): 修复hasInput模式下点击遮罩无法关闭弹窗的问题
+
+- 在close()方法中补充将showByClickInput置为false的逻辑，
+- 与cancel()和confirm()的处理保持一致，修复issue #759
+
 ## 3.8.48（2026-06-04）
 feat(calendar): 新增区间模式返回值格式配置
 
