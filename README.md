@@ -5,7 +5,6 @@
 <h3 align="center" style="margin: 30px 0 30px;font-weight: bold;font-size:40px;">uview-plus</h3>
 <h3 align="center">多平台快速开发的UI框架(fork自uView2.0)</h3>
 
-[![Cloud Studio Template](https://cs-res.codehub.cn/common/assets/icon-badge.svg)](https://club.cloudstudio.net/261753/11943789224931328)
 [![star](https://gitee.com/jry/uview-plus/badge/star.svg?theme=gvp)](https://gitee.com/jry/uview-plus/stargazers)
 [![stars](https://img.shields.io/github/stars/ijry/uview-plus?style=flat-square&logo=GitHub)](https://github.com/ijry/uview-plus)
 [![forks](https://img.shields.io/github/forks/ijry/uview-plus?style=flat-square&logo=GitHub)](https://github.com/ijry/uview-plus)
@@ -14,9 +13,11 @@
 [![license](https://img.shields.io/github/license/ijry/uview-plus?style=flat-square)](https://en.wikipedia.org/wiki/MIT_License)
 <!-- [![release](https://img.shields.io/github/v/release/ijry/uview-plus?style=flat-square)](https://github.com/ijry/uview-plus/releases) -->
 
-## 说明
-
-因为是2.0移植的plus版，时间有限，有很多细节问题需要完善与修复，个人时间精力有限，可能一个月定期维护几次，希望有能力的一起完善，提交PR。
+## 中转站推荐
+- [freemodel.dev](https://freemodel.dev/invite/FRE-f1f686f2)：经常遇到活动送100刀，注册送300刀但是是按周发放66刀，这个站应该是自己开发的没使用new-api这种源码。
+- [api.code-relay.com](https://api.code-relay.com/register?aff=r6nS)：注册送10刀。
+- [ai-router.dev](https://ai-router.dev/register?aff=XCKCNZVXRDUR)：注册送20刀。
+- [api.feng.cx](https://api.feng.cx/sign-up?aff=mx6l)：注册送10刀。
 
 ## 介绍
 
