@@ -33,7 +33,7 @@
 	// #endif
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
-	import { addUnit, deepClone, toast, sleep } from '../../libs/function/index';
+	import { addUnit, deepClone, toast, sleep, getWindowInfo } from '../../libs/function/index';
 	import { colorGradient } from '../../libs/function/colorGradient';
 	import test from '../../libs/function/test';
 	import defProps from '../../libs/config/props';
@@ -168,8 +168,10 @@
 				return (index1, index2, item) => {
 					const style = {}
 					let week = item.week
+					// 隐藏挂载场景下节点宽度可能拿到0，兜底使用窗口宽度避免首日偏移归零
+					const wrapperWidth = this.width > 0 ? this.width : (getWindowInfo().windowWidth || 0)
 					// 不进行四舍五入的形式保留2位小数
-					const dayWidth = Number(parseFloat(this.width / 7).toFixed(3).slice(0, -1))
+					const dayWidth = Number(parseFloat(wrapperWidth / 7).toFixed(3).slice(0, -1))
 					// 得出每个日期的宽度
 					// #ifdef APP-NVUE
 					style.width = addUnit(dayWidth, 'px')
@@ -178,7 +180,12 @@
 					if (index2 === 0) {
 						// 获取当前为星期几，如果为0，则为星期天，减一为每月第一天时，需要向左偏移的item个数
 						week = (week === 0 ? 7 : week) - 1
+						// #ifdef APP-NVUE
 						style.marginLeft = addUnit(week * dayWidth, 'px')
+						// #endif
+						// #ifndef APP-NVUE
+						style.marginLeft = `${(week / 7) * 100}%`
+						// #endif
 					}
 					if (this.mode === 'range') {
 						// 之所以需要这么写，是因为DCloud公司的iOS客户端导致的bug
@@ -339,12 +346,14 @@
 			getWrapperWidth() {
 				// #ifdef APP-NVUE
 				dom.getComponentRect(this.$refs['u-calendar-month-wrapper'], res => {
-					this.width = res.size.width
+					const width = res && res.size ? Number(res.size.width) : 0
+					this.width = width > 0 ? width : (getWindowInfo().windowWidth || 0)
 				})
 				// #endif
 				// #ifndef APP-NVUE
 				this.$uGetRect('.u-calendar-month-wrapper').then(size => {
-					this.width = size.width
+					const width = size ? Number(size.width) : 0
+					this.width = width > 0 ? width : (getWindowInfo().windowWidth || 0)
 				})
 				// #endif
 			},
