@@ -1,3 +1,13 @@
+## 3.8.51（2026-06-09）
+fix(picker): 修复异步columns加载时defaultIndex位置不更新的问题 (#841)
+
+问题：当columns从接口动态返回时（初始为空数组，延迟后赋值），
+defaultIndex已提前设置好innerIndex，columns变化时innerIndex值未改变，
+picker-view的:value绑定不触发重新渲染，导致滚动位置停留在第0项。
+
+修复：在setColumns中检测是否有列从空变为有数据，若是则先清空innerIndex，
+再在$nextTick中恢复目标值，强制picker-view重新滚动到defaultIndex指定位置。
+
 ## 3.8.50（2026-06-08）
 fix: 修复 pageInline 日历隐藏挂载时首日偏移异常
 
