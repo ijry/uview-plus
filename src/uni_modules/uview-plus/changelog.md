@@ -1,3 +1,11 @@
+## 3.8.52（2026-06-10）
+fix(table2): 修复微信小程序中重复 slot name="cell" 导致的报错 (#839)
+
+在固定列浮动视图（u-table-fixed-shadow）的 MP-WEIXIN 条件编译块中，
+将 <slot name="cell"> 改为直接内联渲染，消除同组件内同名 slot 的冲突。
+微信小程序不允许单个组件实例中出现多个同名 slot，而主表体已占用 "cell"，
+固定列视图区仅用于视觉叠加，直接渲染 item.row[col.key] 即可满足需求。
+
 ## 3.8.51（2026-06-09）
 fix(picker): 修复异步columns加载时defaultIndex位置不更新的问题 (#841)
 
