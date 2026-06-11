@@ -138,6 +138,21 @@ export const props = defineMixin({
             type: String,
             default: () => defProps.calendar.rangeResultMode
         },
+        // 是否开启时分秒选择
+        enableTime: {
+            type: Boolean,
+            default: () => defProps.calendar.enableTime
+        },
+        // 时间精度：hour-仅时，minute-时分，second-时分秒
+        timePrecision: {
+            type: String,
+            default: () => defProps.calendar.timePrecision
+        },
+        // 默认时间，格式支持 HH / HH:mm / HH:mm:ss
+        defaultTime: {
+            type: String,
+            default: () => defProps.calendar.defaultTime
+        },
 		// 圆角值
 		round: {
 		    type: [Boolean, String, Number],
