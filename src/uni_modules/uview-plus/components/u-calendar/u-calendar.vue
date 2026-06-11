@@ -699,16 +699,21 @@ export default {
 				return
 			}
 			const targetMonth = dayjs(this.todayDate).format('YYYY-MM')
+			const selectToday = () => {
+				this.$refs.month && this.$refs.month.selectDate(this.todayDate)
+			}
 			if (this.monthSwitch) {
 				const todayMonthIndex = this.months.findIndex(({ year, month }) => {
 					return `${year}-${padZero(month)}` === targetMonth
 				})
 				if (todayMonthIndex !== -1) {
 					this.monthIndex = todayMonthIndex
+					this.$nextTick(selectToday)
 				}
 				return
 			}
 			this.scrollIntoDefaultMonth(targetMonth)
+			this.$nextTick(selectToday)
 		},
 		// 滚动到默认设置的月份
 		scrollIntoDefaultMonth(selected) {

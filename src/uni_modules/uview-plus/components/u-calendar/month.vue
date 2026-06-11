@@ -502,6 +502,18 @@
 			setSelected(selected, event = true) {
 				this.selected = selected
 				event && this.$emit('monthSelected', this.selected,'tap')
+			},
+			selectDate(date) {
+				const targetDate = dayjs(date).format("YYYY-MM-DD")
+				for (let monthIndex = 0; monthIndex < this.months.length; monthIndex++) {
+					const dayIndex = this.months[monthIndex].date.findIndex(item => {
+						return this.dateSame(item.date, targetDate)
+					})
+					if (dayIndex !== -1) {
+						this.clickHandler(monthIndex, dayIndex, this.months[monthIndex].date[dayIndex])
+						return
+					}
+				}
 			}
 		}
 	}
