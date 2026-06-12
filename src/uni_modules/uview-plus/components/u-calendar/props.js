@@ -173,6 +173,11 @@ export const props = defineMixin({
 			type: Boolean,
 			default: () => defProps.calendar.showToday
 		},
+		// 今天日期的独立高亮颜色，默认跟随主题色
+		todayColor: {
+			type: String,
+			default: () => defProps.calendar.todayColor
+		},
         // 星期文案
         weekText: {
 			type: Array,

@@ -140,6 +140,11 @@
 			todayDate: {
 				type: String,
 				default: ''
+			},
+			// 今天日期的独立高亮颜色
+			todayColor: {
+				type: String,
+				default: ''
 			}
 		},
 		data() {
@@ -205,8 +210,8 @@
 					if (this.selected.some(item => this.dateSame(item, date))) {
 						style.backgroundColor = this.color
 					}
-					if (this.todayDate && this.dateSame(date, this.todayDate) && !this.selected.some(item => this.dateSame(item, date))) {
-						style.border = `1px solid ${this.color}`
+					if (this.todayDate && this.dateSame(date, this.todayDate)) {
+						style.border = `1px solid ${this.resolvedTodayColor}`
 						style.boxSizing = 'border-box'
 					}
 					if (this.mode === 'single') {
@@ -255,6 +260,9 @@
 					return style
 				}
 			},
+			resolvedTodayColor() {
+				return this.todayColor || this.color
+			},
 			// 某个日期是否被选中
 			textStyle() {
 				return (item) => {
@@ -271,6 +279,9 @@
 								.selected[len]))) {
 							style.color = this.color
 						}
+					}
+					if (this.todayDate && this.dateSame(date, this.todayDate) && !this.isSelectedDate(date)) {
+						style.color = this.resolvedTodayColor
 					}
 					return style
 				}
@@ -341,6 +352,9 @@
 			// 判断两个日期是否相等
 			dateSame(date1, date2) {
 				return dayjs(date1).isSame(dayjs(date2))
+			},
+			isSelectedDate(date) {
+				return this.selected.some(item => this.dateSame(item, date))
 			},
 			// 获取月份数据区域的宽度，因为nvue不支持百分比，所以无法通过css设置每个日期item的宽度
 			getWrapperWidth() {

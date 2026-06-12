@@ -160,6 +160,10 @@ declare interface CalendarProps {
    */
   showToday?: boolean
   /**
+   * 今天日期的独立高亮颜色，默认跟随主题色
+   */
+  todayColor?: string
+  /**
    * 日期选择完成后触发，若`show-confirm`为`true`，则点击确认按钮后触发
    */
   onConfirm?: (...args: any) => any

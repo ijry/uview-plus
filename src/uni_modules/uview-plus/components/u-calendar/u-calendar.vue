@@ -83,6 +83,7 @@
 					:forbidDaysToast="forbidDaysToast"
 					:monthFormat="monthFormat"
 					:todayDate="todayDate"
+					:todayColor="todayColor"
 					ref="month"
 					@monthSelected="monthSelected"
 					@updateMonthTop="onUpdateMonthTop"
@@ -116,6 +117,7 @@
 					:forbidDaysToast="forbidDaysToast"
 					:monthFormat="monthFormat"
 					:todayDate="todayDate"
+					:todayColor="todayColor"
 					ref="month"
 					@monthSelected="monthSelected"
 					@updateMonthTop="onUpdateMonthTop"
@@ -213,6 +215,7 @@ import { t } from '../../libs/i18n'
  * @property {Number|String}	    round				圆角值，默认无圆角  (默认 0 )
  * @property {Number|String}	    monthNum			最多展示的月份数量  (默认 3 )
  * @property {Boolean}	            monthSwitch			是否启用非滚动的单月切换模式  (默认 false )
+ * @property {String}	            todayColor			今天日期的独立高亮颜色，默认跟随主题色
  * @property {Array}	            weekText			星期文案  (默认 ['一', '二', '三', '四', '五', '六', '日'] )
  *
  * @event {Function()} confirm 		点击确定按钮时触发		选择日期相关的返回参数
@@ -700,6 +703,9 @@ export default {
 			}
 			const targetMonth = dayjs(this.todayDate).format('YYYY-MM')
 			const selectToday = () => {
+				if (this.mode === 'range') {
+					return
+				}
 				this.$refs.month && this.$refs.month.selectDate(this.todayDate)
 			}
 			if (this.monthSwitch) {
