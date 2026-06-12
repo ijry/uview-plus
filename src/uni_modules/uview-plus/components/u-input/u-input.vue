@@ -150,6 +150,8 @@ export default {
             firstChange: true,
             // value绑定值的变化是由内部还是外部引起的
             changeFromInner: false,
+            // 记录blur时原生输入框的值，用于识别blur阶段的外部格式化回流
+            blurValue: null,
 			// 过滤处理方法
 			innerFormatter: value => value,
             showPassword: false
@@ -166,11 +168,17 @@ export default {
             immediate: true,
             handler(newVal, oldVal) {
                 // console.log(newVal, oldVal)
-                if (this.changeFromInner || this.innerValue === newVal) {
+                const isBlurFormattedValue =
+                    this.blurValue !== null &&
+                    newVal !== this.blurValue &&
+                    newVal !== this.innerValue;
+                if ((this.changeFromInner && !isBlurFormattedValue) || this.innerValue === newVal) {
                     this.changeFromInner = false; // 重要否则会出现双向绑定失效问题https://github.com/ijry/uview-plus/issues/419
+                    this.blurValue = null;
                     return;
                 }
                 this.innerValue = newVal;
+                this.blurValue = null;
                 // 在H5中，外部value变化后，修改input中的值，不会触发@input事件，此时手动调用值变化方法
                 if (
                     this.firstChange === false &&
@@ -302,6 +310,7 @@ export default {
         },
         // 输入框失去焦点时触发
         onBlur(event) {
+            this.blurValue = event?.detail?.value;
             this.$emit("blur", event.detail.value);
             // H5端的blur会先于点击清除控件的点击click事件触发，导致focused
             // 瞬间为false，从而隐藏了清除控件而无法被点击到
