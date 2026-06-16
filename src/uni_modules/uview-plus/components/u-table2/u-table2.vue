@@ -41,6 +41,7 @@
                                 :class="[col.align ? 'u-text-' + col.align : '',
                                     cellClassName ? cellClassName(item.row, col) : '',
                                     getFixedClass(col),
+                                    isOverflowTooltipEnabled(col) ? 'u-table-cell-overflow' : '',
                                     getCellSpanClass(item.row, col, item.rowIndex, colIndex)
                                 ]"
                                 :style="[cellStyleInner({ row: item.row, column: col, rowIndex: item.rowIndex, columnIndex: colIndex, level: item.level }), getCellSpanStyle(item.row, col, item.rowIndex, colIndex)]">
@@ -54,12 +55,13 @@
                                             {{ isExpanded(item.row) ? '▼' : '▶' }}
                                         </view>
                                     </view>
-                                    <slot name="cell" :row="item.row" :column="col" :prow="item.parentRow"
-                                        :rowIndex="item.rowIndex" :columnIndex="colIndex" :level="item.level">
-                                        <view class="u-table-cell_content">
+                                    <view class="u-table-cell_content"
+                                        :class="{ 'u-table-cell_content-overflow': isOverflowTooltipEnabled(col) }">
+                                        <slot name="cell" :row="item.row" :column="col" :prow="item.parentRow"
+                                            :rowIndex="item.rowIndex" :columnIndex="colIndex" :level="item.level">
                                             {{ item.row[col.key] }}
-                                        </view>
-                                    </slot>
+                                        </slot>
+                                    </view>
                                 </template>
                             </view>
                         </view>
@@ -93,6 +95,7 @@
                         :expandWidth="expandWidth"
                         :computedMainCol="computedMainCol"
                         :span-method="spanMethod"
+                        :show-overflow-tooltip="showOverflowTooltip"
                         @toggle-select="toggleSelect"
                         @row-click="handleRowClick"
                         @toggle-expand="toggleExpand"
@@ -152,6 +155,7 @@
                                 :class="[col.align ? 'u-text-' + col.align : '',
                                     cellClassName ? cellClassName(item.row, col) : '',
                                     getFixedClass(col),
+                                    isOverflowTooltipEnabled(col) ? 'u-table-cell-overflow' : '',
                                     getCellSpanClass(item.row, col, item.rowIndex, colIndex)
                                 ]"
                                 :style="[cellStyleInner({ row: item.row, column: col, rowIndex: item.rowIndex, columnIndex: colIndex, level: item.level }), getCellSpanStyle(item.row, col, item.rowIndex, colIndex)]">
@@ -166,7 +170,8 @@
                                         </view>
                                     </view>
                                     <!-- 固定列浮动视图直接内联渲染，不使用 slot，避免与主表体 slot name="cell" 重名报错（微信小程序限制） -->
-                                    <view class="u-table-cell_content">
+                                    <view class="u-table-cell_content"
+                                        :class="{ 'u-table-cell_content-overflow': isOverflowTooltipEnabled(col) }">
                                         {{ item.row[col.key] }}
                                     </view>
                                 </template>
@@ -202,6 +207,7 @@
                             :expandWidth="expandWidth"
                             :computedMainCol="computedMainCol"
                             :span-method="spanMethod"
+                            :show-overflow-tooltip="showOverflowTooltip"
                             @toggle-select="toggleSelect"
                             @row-click="handleRowClick"
                             @toggle-expand="toggleExpand"
@@ -305,7 +311,7 @@ export default {
             default: null
         },
         showOverflowTooltip: {
-            type: Boolean,
+            type: [Boolean, Object],
             default: false
         },
         lazy: {
@@ -615,7 +621,17 @@ export default {
         getFixedClass(col) {
             return ''; // 不再使用原来的固定列样式类
         },
-        
+
+        isOverflowTooltipEnabled(column) {
+            if (column && column.type === 'selection') {
+                return false;
+            }
+            if (column && typeof column.showOverflowTooltip !== 'undefined') {
+                return !!column.showOverflowTooltip;
+            }
+            return !!this.showOverflowTooltip;
+        },
+
         headerColStyle(col) {
             let style = {
                 width: col.width ? addUnit(col.width) : 'auto',
@@ -837,6 +853,8 @@ export default {
         display: flex;
         flex-direction: row;
         align-items: center;
+        min-width: 0;
+        box-sizing: border-box;
         padding: 10px 1px;
         font-size: 14px;
         white-space: nowrap;
@@ -857,6 +875,20 @@ export default {
             justify-content: flex-end;
             text-align: right;
         }
+    }
+
+    .u-table-cell_content {
+        min-width: 0;
+        max-width: 100%;
+        flex: 1;
+        box-sizing: border-box;
+        text-align: inherit;
+    }
+
+    .u-table-cell_content-overflow {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .u-table-row-zebra {

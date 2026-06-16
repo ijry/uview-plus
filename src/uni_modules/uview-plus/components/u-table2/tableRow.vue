@@ -25,6 +25,8 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    min-width: 0;
+    box-sizing: border-box;
     padding: 10px 1px;
     font-size: 14px;
     white-space: nowrap;
@@ -45,6 +47,20 @@
         justify-content: flex-end;
         text-align: right;
     }
+}
+
+.u-table-cell_content {
+    min-width: 0;
+    max-width: 100%;
+    flex: 1;
+    box-sizing: border-box;
+    text-align: inherit;
+}
+
+.u-table-cell_content-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .u-table-row-zebra {
@@ -82,6 +98,7 @@
             :class="[col.align ? 'u-text-' + col.align : '',
                 cellClassName ? cellClassName(row, col) : '',
                 getFixedClass(col),
+                isOverflowTooltipEnabled(col) ? 'u-table-cell-overflow' : '',
                 getCellSpanClass(rowIndex, colIndex)
             ]"
             :style="[cellStyleInner({row: row, column: col, rowIndex: rowIndex, columnIndex: colIndex, level: level}), getCellSpanStyle(rowIndex, colIndex)]">
@@ -98,12 +115,13 @@
                             {{ isExpanded(row) ? '▼' : '▶' }}
                         </view>
                     </view>
-                    <slot name="cellChild" :row="row" :column="col" :prow="parentRow"
-                        :rowIndex="rowIndex" :columnIndex="colIndex" :level="level">
-                        <view class="u-table-cell_content">
+                    <view class="u-table-cell_content"
+                        :class="{ 'u-table-cell_content-overflow': isOverflowTooltipEnabled(col) }">
+                        <slot name="cellChild" :row="row" :column="col" :prow="parentRow"
+                            :rowIndex="rowIndex" :columnIndex="colIndex" :level="level">
                             {{ row[col.key] }}
-                        </view>
-                    </slot>
+                        </slot>
+                    </view>
                 </template>
         </view>
     </view>
@@ -135,6 +153,7 @@
                     :expandWidth="expandWidth"
                     :computed-main-col="computedMainCol"
                     :span-method="spanMethod"
+                    :show-overflow-tooltip="showOverflowTooltip"
                     @toggle-select="$emit('toggleSelect', $event)"
                     @row-click="$emit('rowClick', $event)"
                     @toggle-expand="$emit('toggleExpand', $event)"
@@ -230,6 +249,10 @@ export default {
             type: String,
             required: true
         },
+        showOverflowTooltip: {
+            type: [Boolean, Object],
+            default: false
+        },
         expandWidth: {
             type: String,
             required: true
@@ -256,6 +279,15 @@ export default {
     methods: {
         isSelected(row) {
             return this.selectedRows.some(r => r[this.rowKey] === row[this.rowKey]);
+        },
+        isOverflowTooltipEnabled(column) {
+            if (column && column.type === 'selection') {
+                return false;
+            }
+            if (column && typeof column.showOverflowTooltip !== 'undefined') {
+                return !!column.showOverflowTooltip;
+            }
+            return !!this.showOverflowTooltip;
         },
         // 获取单元格的合并信息
         getCellSpan(rowIndex, columnIndex) {
