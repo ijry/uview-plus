@@ -50,14 +50,30 @@
 }
 
 .u-table-cell_content {
+    width: 100%;
     min-width: 0;
     max-width: 100%;
     flex: 1;
     box-sizing: border-box;
+    display: block;
     text-align: inherit;
 }
 
-.u-table-cell_content-overflow {
+.u-table-cell_text {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    display: block;
+    box-sizing: border-box;
+    text-align: inherit;
+}
+
+.u-table-cell_content-overflow,
+.u-table-cell_content-overflow .u-table-cell_text {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    display: block;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -90,13 +106,13 @@
 <template>
     <view class="u-table-row u-table-row-child"
         :class="[highlightCurrentRow && currentRow === row ? 'u-table-row-highlight' : '',
-        rowClassName ? rowClassName(row, rowIndex) : '',
+        rowClassName ? rowClassName(row, rowIndex, context) : '',
         stripe && rowIndex % 2 === 1 ? 'u-table-row-zebra' : ''
-        ]" :style="{height: rowHeight}" @click="handleRowClick(row)">
-        <view v-for="(col, colIndex) in columns" :key="col.key" 
+        ]" :style="[{height: rowHeight}, getRowStyle(row, rowIndex)]" @click="handleRowClick(row)">
+        <view v-for="(col, colIndex) in columns" :key="col.key"
             class="u-table-cell"
             :class="[col.align ? 'u-text-' + col.align : '',
-                cellClassName ? cellClassName(row, col) : '',
+                cellClassName ? cellClassName(row, col, context) : '',
                 getFixedClass(col),
                 isOverflowTooltipEnabled(col) ? 'u-table-cell-overflow' : '',
                 getCellSpanClass(rowIndex, colIndex)
@@ -110,16 +126,18 @@
                 <template v-else>
                     <!-- 在mainCol列显示展开图标 -->
                     <view v-if="col.key === computedMainCol && hasTree"
-                        @click.stop="toggleExpand(row)" :style="{width: expandWidth}">
-                        <view v-if="row.children && row.children.length > 0">
-                            {{ isExpanded(row) ? '▼' : '▶' }}
+                        @click.stop="toggleExpand(row, level)" :style="{width: expandWidth}">
+                        <view v-if="hasExpandableChildren(row)">
+                            {{ isLazyLoading(row) ? '...' : (isExpanded(row) ? '▼' : '▶') }}
                         </view>
                     </view>
                     <view class="u-table-cell_content"
                         :class="{ 'u-table-cell_content-overflow': isOverflowTooltipEnabled(col) }">
                         <slot name="cellChild" :row="row" :column="col" :prow="parentRow"
-                            :rowIndex="rowIndex" :columnIndex="colIndex" :level="level">
-                            {{ row[col.key] }}
+                            :rowIndex="rowIndex" :columnIndex="colIndex" :level="level" :context="context">
+                            <text class="u-table-cell_text" :class="{ 'u-line-1': isOverflowTooltipEnabled(col) }" :lines="isOverflowTooltipEnabled(col) ? 1 : undefined">
+                                {{ row[col.key] }}
+                            </text>
                         </slot>
                     </view>
                 </template>
@@ -139,9 +157,11 @@
                     :cell-style-inner="cellStyleInner"
                     :is-expanded="isExpanded"
                     :row-class-name="rowClassName"
+                    :row-style="rowStyle"
                     :stripe="stripe"
                     :cell-class-name="cellClassName"
                     :get-fixed-class="getFixedClass"
+                    :context="context"
                     :highlight-current-row="highlightCurrentRow"
                     :current-row="currentRow"
                     :handle-row-click="handleRowClick"
@@ -154,14 +174,19 @@
                     :computed-main-col="computedMainCol"
                     :span-method="spanMethod"
                     :show-overflow-tooltip="showOverflowTooltip"
+                    :has-expandable-children="hasExpandableChildren"
+                    :is-lazy-loading="isLazyLoading"
                     @toggle-select="$emit('toggleSelect', $event)"
                     @row-click="$emit('rowClick', $event)"
                     @toggle-expand="$emit('toggleExpand', $event)"
                 >
                 <template v-slot:cellChild="scope">
                     <slot name="cellChild" :row="scope.row" :column="scope.column" :prow="scope.prow"
-                        :rowIndex="scope.rowIndex" :columnIndex="scope.columnIndex" :level="level">
-                    </slot>                      
+                        :rowIndex="scope.rowIndex" :columnIndex="scope.columnIndex" :level="level" :context="context">
+                        <text class="u-table-cell_text" :class="{ 'u-line-1': isOverflowTooltipEnabled(scope.column) }" :lines="isOverflowTooltipEnabled(scope.column) ? 1 : undefined">
+                            {{ scope.row[scope.column.key] }}
+                        </text>
+                    </slot>
                 </template>
                 </table-row>
             </template>
@@ -212,6 +237,10 @@ export default {
             type: Function,
             default: null
         },
+        rowStyle: {
+            type: [Object, Function],
+            default: () => ({})
+        },
         stripe: {
             type: Boolean,
             default: false
@@ -223,6 +252,10 @@ export default {
         getFixedClass: {
             type: Function,
             required: true
+        },
+        context: {
+            type: Object,
+            default: null
         },
         highlightCurrentRow: {
             type: Boolean,
@@ -273,6 +306,14 @@ export default {
         spanMethod: {
             type: Function,
             default: null
+        },
+        hasExpandableChildren: {
+            type: Function,
+            required: true
+        },
+        isLazyLoading: {
+            type: Function,
+            required: true
         }
     },
     emits: ['rowClick', 'toggleExpand', 'toggleSelect'],
@@ -289,6 +330,18 @@ export default {
             }
             return !!this.showOverflowTooltip;
         },
+        getRowStyle(row, rowIndex) {
+            if (typeof this.rowStyle === 'function') {
+                return this.rowStyle({
+                    row,
+                    rowIndex,
+                    level: this.level,
+                    parentRow: this.parentRow,
+                    context: this.context
+                }) || {};
+            }
+            return this.rowStyle || {};
+        },
         // 获取单元格的合并信息
         getCellSpan(rowIndex, columnIndex) {
             if (typeof this.spanMethod !== 'function') {
@@ -302,7 +355,8 @@ export default {
                 row,
                 column,
                 rowIndex,
-                columnIndex
+                columnIndex,
+                context: this.context
             });
             
             if (Array.isArray(result)) {

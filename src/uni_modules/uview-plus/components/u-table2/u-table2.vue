@@ -10,15 +10,15 @@
                 <view class="u-table-row">
                     <view v-for="(col, colIndex) in columns" :key="col.key" class="u-table-cell"
                         :class="[col.headerAlign ? 'u-text-' + col.headerAlign : (col.align ? 'u-text-' + col.align : '') ,
-                            headerCellClassName ? headerCellClassName(col) : '',
+                            headerCellClassName ? headerCellClassName(col, context) : '',
                             getFixedClass(col)
                         ]" :style="headerColStyle(col)" @click="handleHeaderClick(col)">
-                        <slot name="header" :column="col" :columnIndex="colIndex" :level="1">
+                        <slot name="header" :column="col" :columnIndex="colIndex" :level="1" :context="context">
                         </slot>
                         <text v-if="!$slots['header']">{{ col.title }}</text>
-                        <template v-if="col.sortable">
+                        <template v-if="isColumnSortable(col)">
                             <slot name="headerSort" :sortStatus="getSortValue(col.key)" :column="col"
-                                :columnIndex="colIndex" :level="1">
+                                :columnIndex="colIndex" :level="1" :context="context">
                             </slot>
                             <view v-if="!$slots['headerSort']">
                                 {{ getSortIcon(col.key) }}
@@ -34,12 +34,12 @@
                     <!-- #ifdef MP-WEIXIN -->
                     <template v-for="(item, flatIndex) in flattenedSortedData" :key="item.row[rowKey] || flatIndex">
                         <view class="u-table-row u-table-row-child" :class="[highlightCurrentRow && currentRow === item.row ? 'u-table-row-highlight' : '',
-                            rowClassName ? rowClassName(item.row, item.rowIndex) : '',
+                            rowClassName ? rowClassName(item.row, item.rowIndex, context) : '',
                             stripe && flatIndex % 2 === 1 ? 'u-table-row-zebra' : ''
-                        ]" :style="{ height: rowHeight }" @click="handleRowClick(item.row)">
+                        ]" :style="[{ height: rowHeight }, getRowStyle(item.row, item.rowIndex, item.level, item.parentRow)]" @click="handleRowClick(item.row)">
                             <view v-for="(col, colIndex) in columns" :key="col.key" class="u-table-cell"
                                 :class="[col.align ? 'u-text-' + col.align : '',
-                                    cellClassName ? cellClassName(item.row, col) : '',
+                                    cellClassName ? cellClassName(item.row, col, context) : '',
                                     getFixedClass(col),
                                     isOverflowTooltipEnabled(col) ? 'u-table-cell-overflow' : '',
                                     getCellSpanClass(item.row, col, item.rowIndex, colIndex)
@@ -49,17 +49,19 @@
                                     <checkbox :checked="isSelected(item.row)" @click.stop="toggleSelect(item.row)" />
                                 </view>
                                 <template v-else>
-                                    <view v-if="col.key === computedMainCol && hasTree" @click.stop="toggleExpand(item.row)"
+                                    <view v-if="col.key === computedMainCol && hasTree" @click.stop="toggleExpand(item.row, item.level)"
                                         :style="{ width: expandWidth }">
-                                        <view v-if="item.row[treeProps.children] && item.row[treeProps.children].length > 0">
-                                            {{ isExpanded(item.row) ? '▼' : '▶' }}
+                                        <view v-if="hasExpandableChildren(item.row)">
+                                            {{ isLazyLoading(item.row) ? '...' : (isExpanded(item.row) ? '▼' : '▶') }}
                                         </view>
                                     </view>
                                     <view class="u-table-cell_content"
                                         :class="{ 'u-table-cell_content-overflow': isOverflowTooltipEnabled(col) }">
                                         <slot name="cell" :row="item.row" :column="col" :prow="item.parentRow"
-                                            :rowIndex="item.rowIndex" :columnIndex="colIndex" :level="item.level">
-                                            {{ item.row[col.key] }}
+                                            :rowIndex="item.rowIndex" :columnIndex="colIndex" :level="item.level" :context="context">
+                                            <text class="u-table-cell_text" :class="{ 'u-line-1': isOverflowTooltipEnabled(col) }" :lines="isOverflowTooltipEnabled(col) ? 1 : undefined">
+                                                {{ item.row[col.key] }}
+                                            </text>
                                         </slot>
                                     </view>
                                 </template>
@@ -81,9 +83,11 @@
                         :cell-style-inner="cellStyleInner"
                         :is-expanded="isExpanded"
                         :row-class-name="rowClassName"
+                        :row-style="rowStyle"
                         :stripe="stripe"
                         :cell-class-name="cellClassName"
                         :get-fixed-class="getFixedClass"
+                        :context="context"
                         :highlight-current-row="highlightCurrentRow"
                         :current-row="currentRow"
                         :handle-row-click="handleRowClick"
@@ -96,13 +100,18 @@
                         :computedMainCol="computedMainCol"
                         :span-method="spanMethod"
                         :show-overflow-tooltip="showOverflowTooltip"
+                        :has-expandable-children="hasExpandableChildren"
+                        :is-lazy-loading="isLazyLoading"
                         @toggle-select="toggleSelect"
                         @row-click="handleRowClick"
                         @toggle-expand="toggleExpand"
                     >
                         <template v-slot:cellChild="scope">
                             <slot name="cell" :row="scope.row" :column="scope.column" :prow="scope.prow"
-                                :rowIndex="scope.rowIndex" :columnIndex="scope.columnIndex" :level="scope.level">
+                                :rowIndex="scope.rowIndex" :columnIndex="scope.columnIndex" :level="scope.level" :context="context">
+                                <text class="u-table-cell_text" :class="{ 'u-line-1': isOverflowTooltipEnabled(scope.column) }" :lines="isOverflowTooltipEnabled(scope.column) ? 1 : undefined">
+                                    {{ scope.row[scope.column.key] }}
+                                </text>
                             </slot>                      
                         </template>
                     </table-row>
@@ -124,15 +133,15 @@
                     <view v-for="(col, colIndex) in visibleFixedLeftColumns" :key="col.key" class="u-table-cell"
                         :style="headerColStyle(col)"
                         :class="[col.align ? 'u-text-' + col.align : '',
-                            headerCellClassName ? headerCellClassName(col) : '',
+                            headerCellClassName ? headerCellClassName(col, context) : '',
                             getFixedClass(col)
                         ]" @click="handleHeaderClick(col)">
-                        <slot name="header" :column="col" :columnIndex="colIndex" :level="1">
+                        <slot name="header" :column="col" :columnIndex="colIndex" :level="1" :context="context">
                         </slot>
                         <text v-if="!$slots['header']">{{ col.title }}</text>
-                        <template v-if="col.sortable">
+                        <template v-if="isColumnSortable(col)">
                             <slot name="headerSort" :sortStatus="getSortValue(col.key)" :column="col"
-                                :columnIndex="colIndex" :level="1">
+                                :columnIndex="colIndex" :level="1" :context="context">
                             </slot>
                             <view v-if="!$slots['headerSort']">
                                 {{ getSortIcon(col.key) }}
@@ -148,12 +157,12 @@
                     <!-- #ifdef MP-WEIXIN -->
                     <template v-for="(item, flatIndex) in flattenedSortedData" :key="item.row[rowKey] || flatIndex">
                         <view class="u-table-row u-table-row-child" :class="[highlightCurrentRow && currentRow === item.row ? 'u-table-row-highlight' : '',
-                            rowClassName ? rowClassName(item.row, item.rowIndex) : '',
+                            rowClassName ? rowClassName(item.row, item.rowIndex, context) : '',
                             stripe && flatIndex % 2 === 1 ? 'u-table-row-zebra' : ''
-                        ]" :style="{ height: rowHeight }" @click="handleRowClick(item.row)">
+                        ]" :style="[{ height: rowHeight }, getRowStyle(item.row, item.rowIndex, item.level, item.parentRow)]" @click="handleRowClick(item.row)">
                             <view v-for="(col, colIndex) in visibleFixedLeftColumns" :key="col.key" class="u-table-cell"
                                 :class="[col.align ? 'u-text-' + col.align : '',
-                                    cellClassName ? cellClassName(item.row, col) : '',
+                                    cellClassName ? cellClassName(item.row, col, context) : '',
                                     getFixedClass(col),
                                     isOverflowTooltipEnabled(col) ? 'u-table-cell-overflow' : '',
                                     getCellSpanClass(item.row, col, item.rowIndex, colIndex)
@@ -163,16 +172,18 @@
                                     <checkbox :checked="isSelected(item.row)" @click.stop="toggleSelect(item.row)" />
                                 </view>
                                 <template v-else>
-                                    <view v-if="col.key === computedMainCol && hasTree" @click.stop="toggleExpand(item.row)"
+                                    <view v-if="col.key === computedMainCol && hasTree" @click.stop="toggleExpand(item.row, item.level)"
                                         :style="{ width: expandWidth }">
-                                        <view v-if="item.row[treeProps.children] && item.row[treeProps.children].length > 0">
-                                            {{ isExpanded(item.row) ? '▼' : '▶' }}
+                                        <view v-if="hasExpandableChildren(item.row)">
+                                            {{ isLazyLoading(item.row) ? '...' : (isExpanded(item.row) ? '▼' : '▶') }}
                                         </view>
                                     </view>
                                     <!-- 固定列浮动视图直接内联渲染，不使用 slot，避免与主表体 slot name="cell" 重名报错（微信小程序限制） -->
                                     <view class="u-table-cell_content"
                                         :class="{ 'u-table-cell_content-overflow': isOverflowTooltipEnabled(col) }">
-                                        {{ item.row[col.key] }}
+                                        <text class="u-table-cell_text" :class="{ 'u-line-1': isOverflowTooltipEnabled(col) }" :lines="isOverflowTooltipEnabled(col) ? 1 : undefined">
+                                            {{ item.row[col.key] }}
+                                        </text>
                                     </view>
                                 </template>
                             </view>
@@ -193,9 +204,11 @@
                             :cell-style-inner="cellStyleInner"
                             :is-expanded="isExpanded"
                             :row-class-name="rowClassName"
+                            :row-style="rowStyle"
                             :stripe="stripe"
                             :cell-class-name="cellClassName"
                             :get-fixed-class="getFixedClass"
+                            :context="context"
                             :highlight-current-row="highlightCurrentRow"
                             :current-row="currentRow"
                             :handle-row-click="handleRowClick"
@@ -208,13 +221,18 @@
                             :computedMainCol="computedMainCol"
                             :span-method="spanMethod"
                             :show-overflow-tooltip="showOverflowTooltip"
+                            :has-expandable-children="hasExpandableChildren"
+                            :is-lazy-loading="isLazyLoading"
                             @toggle-select="toggleSelect"
                             @row-click="handleRowClick"
                             @toggle-expand="toggleExpand"
                         >
                             <template v-slot:cellChild="scope">
                                 <slot name="cell" :row="scope.row" :column="scope.column" :prow="scope.prow"
-                                    :rowIndex="scope.rowIndex" :columnIndex="scope.columnIndex" :level="scope.level">
+                                    :rowIndex="scope.rowIndex" :columnIndex="scope.columnIndex" :level="scope.level" :context="context">
+                                    <text class="u-table-cell_text" :class="{ 'u-line-1': isOverflowTooltipEnabled(scope.column) }" :lines="isOverflowTooltipEnabled(scope.column) ? 1 : undefined">
+                                        {{ scope.row[scope.column.key] }}
+                                    </text>
                                 </slot>                      
                             </template>
                         </table-row>
@@ -287,7 +305,7 @@ export default {
             default: null
         },
         rowStyle: {
-            type: Object,
+            type: [Object, Function],
             default: () => ({})
         },
         cellClassName: {
@@ -407,11 +425,13 @@ export default {
             fixedLeftColumns: [], // 左侧固定列
             tableHeight: 'auto', // 表格高度
             headerHeight: 'auto', // 新增表头高度属性
-            hasTree: false // 新增属性，用于判断是否存在树形结构
+            hasTree: false, // 新增属性，用于判断是否存在树形结构
+            lazyLoadingKeys: []
         }
     },
     mounted() {
         this.getComponentWidth()
+        this.initDefaultExpandAll()
         // 处理currentRowKey初始化
         if (this.currentRowKey !== null) {
             const found = this.data.find(item => item[this.rowKey] === this.currentRowKey);
@@ -440,12 +460,13 @@ export default {
 
             return data.sort((a, b) => {
                 for (const condition of this.sortConditions) {
-                    const { field, order } = condition;
-                    let valA = a[field];
-                    let valB = b[field];
+                    const { field, order, column } = condition;
+                    const sortBy = column ? this.getColumnSortBy(column) : this.sortBy;
+                    let valA = this.getSortValueBy(a, field, sortBy);
+                    let valB = this.getSortValueBy(b, field, sortBy);
 
                     if (this.sortMethod) {
-                        const result = this.sortMethod(a, b, field);
+                        const result = this.sortMethod(a, b, field, this.context);
                         if (result !== 0) return result * (order === 'ascending' ? 1 : -1);
                     }
 
@@ -516,6 +537,7 @@ export default {
         expandRowKeys: {
             handler(newVal) {
                 this.expandedKeys = [...newVal];
+                this.initDefaultExpandAll();
             },
             immediate: true
         },
@@ -534,6 +556,15 @@ export default {
             },
             deep: true,
             immediate: false
+        },
+        data: {
+            handler() {
+                this.initDefaultExpandAll();
+            },
+            deep: true
+        },
+        defaultExpandAll() {
+            this.initDefaultExpandAll();
         }
     },
     methods: {
@@ -550,7 +581,8 @@ export default {
                 row,
                 column,
                 rowIndex,
-                columnIndex
+                columnIndex,
+                context: this.context
             });
 
             if (Array.isArray(result)) {
@@ -596,6 +628,12 @@ export default {
 
             return style;
         },
+        getRowStyle(row, rowIndex, level = 1, parentRow = null) {
+            if (typeof this.rowStyle === 'function') {
+                return this.rowStyle({ row, rowIndex, level, parentRow, context: this.context }) || {};
+            }
+            return this.rowStyle || {};
+        },
         onScroll(e) {
             this.scrollLeft = e.detail.scrollLeft;
             // 获取所有左侧固定列
@@ -632,6 +670,73 @@ export default {
             return !!this.showOverflowTooltip;
         },
 
+        isColumnSortable(column) {
+            return typeof column.sortable !== 'undefined' ? !!column.sortable : !!this.sortable;
+        },
+
+        getColumnSortBy(column) {
+            if (typeof column.sortBy !== 'undefined') {
+                return column.sortBy;
+            }
+            return this.sortBy;
+        },
+
+        getColumnSortOrders(column) {
+            if (Array.isArray(column.sortOrders) && column.sortOrders.length > 0) {
+                return column.sortOrders;
+            }
+            return this.sortOrders;
+        },
+
+        getSortValueBy(row, field, sortBy) {
+            if (typeof sortBy === 'function') {
+                return sortBy(row);
+            }
+            if (Array.isArray(sortBy) && sortBy.length > 0) {
+                return sortBy.map(key => row[key]).join('');
+            }
+            if (typeof sortBy === 'string' && sortBy) {
+                return row[sortBy];
+            }
+            return row[field];
+        },
+
+        hasExpandableChildren(row) {
+            if (!row) {
+                return false;
+            }
+            const children = row[this.treeProps.children];
+            return (Array.isArray(children) && children.length > 0) || !!row[this.treeProps.hasChildren];
+        },
+
+        isLazyLoading(row) {
+            return this.lazyLoadingKeys.includes(row[this.rowKey]);
+        },
+
+        initDefaultExpandAll() {
+            if (!this.defaultExpandAll) {
+                return;
+            }
+            const keys = [];
+            const childrenKey = this.treeProps.children;
+            const walk = (rows) => {
+                if (!Array.isArray(rows)) {
+                    return;
+                }
+                rows.forEach(row => {
+                    if (!row) {
+                        return;
+                    }
+                    if (this.hasExpandableChildren(row)) {
+                        keys.push(row[this.rowKey]);
+                    }
+                    walk(row[childrenKey]);
+                });
+            };
+            walk(this.data);
+            this.expandedKeys = Array.from(new Set([...this.expandedKeys, ...keys]));
+        },
+
         headerColStyle(col) {
             let style = {
                 width: col.width ? addUnit(col.width) : 'auto',
@@ -656,7 +761,7 @@ export default {
                 style.paddingLeft = (16 * (scope.level -1 )) + 2 + 'px'
             }
 			if (this.cellStyle != null) {
-				let styleCalc = this.cellStyle(scope)
+				let styleCalc = this.cellStyle({...scope, context: this.context})
 				if (styleCalc != null) {
 					style = {...style, ...styleCalc}
 				}
@@ -693,14 +798,17 @@ export default {
             this.$emit('row-click', row);
         },
         handleHeaderClick(column) {
-            if (!column.sortable) return;
+            if (!this.isColumnSortable(column)) return;
 
             const index = this.sortConditions.findIndex(c => c.field === column.key);
-            let newOrder = 'ascending';
+            const sortOrders = this.getColumnSortOrders(column).filter(Boolean);
+            let newOrder = sortOrders[0] || 'ascending';
 
             if (index >= 0) {
-                if (this.sortConditions[index].order === 'ascending') {
-                    newOrder = 'descending';
+                const currentOrder = this.sortConditions[index].order;
+                const nextIndex = sortOrders.indexOf(currentOrder) + 1;
+                if (nextIndex > 0 && nextIndex < sortOrders.length) {
+                    newOrder = sortOrders[nextIndex];
                 } else {
                     this.sortConditions.splice(index, 1);
                     this.$emit('sort-change', this.sortConditions);
@@ -709,12 +817,13 @@ export default {
             }
 
             if (!this.multiSort) {
-                this.sortConditions = [{ field: column.key, order: newOrder }];
+                this.sortConditions = [{ field: column.key, order: newOrder, column }];
             } else {
                 if (index >= 0) {
                     this.sortConditions[index].order = newOrder;
+                    this.sortConditions[index].column = column;
                 } else {
-                    this.sortConditions.push({ field: column.key, order: newOrder });
+                    this.sortConditions.push({ field: column.key, order: newOrder, column });
                 }
             }
 
@@ -747,16 +856,49 @@ export default {
             this.$emit('selection-change', this.selectedRows);
             this.$emit('select', row);
         },
-        toggleExpand(row) {
+        toggleExpand(row, level = 1) {
             // console.log(row)
             const key = row[this.rowKey];
             const index = this.expandedKeys.indexOf(key);
             if (index === -1) {
                 this.expandedKeys.push(key);
+                this.loadLazyChildren(row, level);
             } else {
                 this.expandedKeys.splice(index, 1);
             }
             this.$emit('expand-change', this.expandedKeys);
+        },
+        loadLazyChildren(row, level = 1) {
+            if (!this.lazy || typeof this.load !== 'function') {
+                return;
+            }
+            const childrenKey = this.treeProps.children;
+            const key = row[this.rowKey];
+            const children = row[childrenKey];
+            if ((Array.isArray(children) && children.length > 0) || this.lazyLoadingKeys.includes(key)) {
+                return;
+            }
+
+            this.lazyLoadingKeys.push(key);
+            const resolve = (childrenList = []) => {
+                row[childrenKey] = Array.isArray(childrenList) ? childrenList : [];
+                this.lazyLoadingKeys = this.lazyLoadingKeys.filter(item => item !== key);
+                this.getComponentWidth();
+            };
+
+            const result = this.load(row, {
+                row,
+                level,
+                expanded: this.isExpanded(row),
+                loading: true,
+                context: this.context
+            }, resolve);
+
+            if (result && typeof result.then === 'function') {
+                result.then(resolve).catch(() => {
+                    this.lazyLoadingKeys = this.lazyLoadingKeys.filter(item => item !== key);
+                });
+            }
         },
         isExpanded(row) {
             if (!row) {
@@ -878,14 +1020,30 @@ export default {
     }
 
     .u-table-cell_content {
+        width: 100%;
         min-width: 0;
         max-width: 100%;
         flex: 1;
         box-sizing: border-box;
+        display: block;
         text-align: inherit;
     }
 
-    .u-table-cell_content-overflow {
+    .u-table-cell_text {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        display: block;
+        box-sizing: border-box;
+        text-align: inherit;
+    }
+
+    .u-table-cell_content-overflow,
+    .u-table-cell_content-overflow .u-table-cell_text {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        display: block;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;

@@ -1,3 +1,9 @@
+## 3.8.57（2026-06-21）
+fix: 修复 table2 超出隐藏失效并补齐表格属性行为
+
+为 table2 单元格内容增加稳定宽度约束和默认文本截断包装，兼容 H5、小程序及 nvue 下 showOverflowTooltip 的单行省略表现。
+同时补齐 rowStyle、defaultExpandAll、lazy/load、排序配置和 context 透传等表格属性的实际行为。
+
 ## 3.8.56（2026-06-16）
 fix 修复 table2 超出隐藏失效问题
 
