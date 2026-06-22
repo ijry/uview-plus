@@ -1,6 +1,17 @@
 <template>
   <view class="up-markdown" :class="theme">
-    <up-parse :content="parsedContent" :previewImg="previewImg"></up-parse>
+    <up-parse
+      :content="parsedContent"
+      :previewImg="previewImg"
+      :copyLink="copyLink"
+      :domain="domain"
+      @load="$emit('load', $event)"
+      @ready="$emit('ready', $event)"
+      @imgtap="$emit('imgtap', $event)"
+      @linktap="$emit('linktap', $event)"
+      @play="$emit('play', $event)"
+      @error="$emit('error', $event)"
+    ></up-parse>
   </view>
 </template>
 
@@ -9,6 +20,9 @@ import { marked } from './marked.esm.js';
 
 export default {
   name: 'up-markdown',
+  // #ifdef VUE3
+  emits: ['load', 'ready', 'imgtap', 'linktap', 'play', 'error'],
+  // #endif
   props: {
     // markdown内容
     content: {
@@ -19,6 +33,16 @@ export default {
     previewImg: {
       type: Boolean,
       default: true
+    },
+    // 是否允许外部链接被点击时自动打开
+    copyLink: {
+      type: [Boolean, String],
+      default: true
+    },
+    // 主域名，用于 up-parse 处理相对链接
+    domain: {
+      type: String,
+      default: ''
     },
     // 是否显示代码块行号
     showLineNumber: {
