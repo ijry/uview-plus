@@ -5,12 +5,12 @@
       :previewImg="previewImg"
       :copyLink="copyLink"
       :domain="domain"
-      @load="$emit('load', $event)"
-      @ready="$emit('ready', $event)"
-      @imgtap="$emit('imgtap', $event)"
-      @linktap="$emit('linktap', $event)"
-      @play="$emit('play', $event)"
-      @error="$emit('error', $event)"
+      @load="emitLoad"
+      @ready="emitReady"
+      @imgtap="emitImgtap"
+      @linktap="emitLinktap"
+      @play="emitPlay"
+      @error="emitError"
     ></up-parse>
   </view>
 </template>
@@ -117,6 +117,24 @@ export default {
     applyTheme(html) {
       // 可以根据theme属性添加不同的样式类
       return html;
+    },
+    emitLoad(event) {
+      this.$emit('load', event)
+    },
+    emitReady(event) {
+      this.$emit('ready', event)
+    },
+    emitImgtap(event) {
+      this.$emit('imgtap', event)
+    },
+    emitLinktap(event) {
+      this.$emit('linktap', event)
+    },
+    emitPlay(event) {
+      this.$emit('play', event)
+    },
+    emitError(event) {
+      this.$emit('error', event)
     }
   }
 };

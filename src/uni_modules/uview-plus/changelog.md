@@ -1,3 +1,6 @@
+## 3.8.58（2026-06-23）
+feat: forward markdown parse link events
+
 ## 3.8.57（2026-06-21）
 fix: 修复 table2 超出隐藏失效并补齐表格属性行为
 
