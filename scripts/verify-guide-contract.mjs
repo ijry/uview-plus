@@ -51,9 +51,12 @@ try {
     assertContains(guideVue, /close\(\s*remember\s*=\s*true\s*\)\s*{/, 'expected close(remember = true) method')
     assertContains(guideVue, /reset\(\)\s*{/, 'expected reset() method')
 
-    const propsAggregator = read('src/uni_modules/uview-plus/libs/config/props.js')
-    assertContains(propsAggregator, /import Guide from ['"]\.\.\/\.\.\/components\/u-guide\/guide['"]/, 'expected props aggregator to import Guide defaults')
-    assertContains(propsAggregator, /\.\.\.Guide,/, 'expected props aggregator to merge Guide defaults')
+    assertContains(guideProps, /import GuideDefaultProps from ['"]\.\/guide(?:\.js)?['"]/, 'expected guide props to import local defaults')
+    assertContains(guideProps, /registerComponentProps\(GuideDefaultProps\)/, 'expected guide props to register local defaults')
+
+    const propsConfig = read('src/uni_modules/uview-plus/libs/config/props.js')
+    assertContains(propsConfig, /registerComponentProps/, 'expected lazy props registration API')
+    assertContains(propsConfig, /setPropsConfig/, 'expected lazy props config API')
 
     assert.ok(
         exists('src/uni_modules/uview-plus/types/comps/guide.d.ts'),
