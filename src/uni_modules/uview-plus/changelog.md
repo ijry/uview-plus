@@ -1,3 +1,12 @@
+## 3.8.59（2026-06-29）
+feat: 优化组件 props 默认配置按需加载
+
+- 将全局 props 默认配置从“集中静态导入所有组件”改为懒注册机制，避免单个组件 props 加载时拉入全部组件默认配置。
+- 各组件 `props.js` 改为只导入并注册自身默认 props，降低按需使用场景下的依赖体积。
+- `setConfig({ props })` 改为写入共享懒加载 props store，继续兼容组件加载前后的全局默认值覆盖。
+- 恢复并保留 `uni.$u.props` 运行时访问与直接赋值能力。
+- 新增 props lazy-loading 验证脚本，覆盖全量导入检查、默认值补齐、用户覆盖优先和入口配置接入。
+
 ## 3.8.58（2026-06-23）
 feat: forward markdown parse link events
 
