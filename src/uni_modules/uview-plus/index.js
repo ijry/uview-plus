@@ -27,7 +27,7 @@ import index, { rpx2px } from './libs/function/index.js'
 // 配置信息
 import config from './libs/config/config.js'
 // props配置信息
-import props from './libs/config/props.js'
+import props, { setPropsConfig } from './libs/config/props.js'
 // 各个需要fixed的地方的z-index配置文件
 import zIndex from './libs/config/zIndex.js'
 // 关于颜色的配置，特殊场景使用
@@ -149,7 +149,7 @@ export * from './libs/function/colorGradient.js'
 export function setConfig(configs) {
     const settings = configs || {}
 	index.shallowMerge(config, settings.config || {})
-	index.shallowMerge(props, settings.props || {})
+	setPropsConfig(settings.props || {})
 	index.shallowMerge(color, settings.color || {})
 	index.shallowMerge(zIndex, settings.zIndex || {})
     syncThemeColorOverrideState({
@@ -182,7 +182,7 @@ const $u = {
 	calc,
     mixin,
     mpMixin,
-    // props,
+    props,
     ...index,
     color,
     platform,

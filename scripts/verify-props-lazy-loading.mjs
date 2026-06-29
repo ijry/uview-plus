@@ -94,6 +94,23 @@ async function importPropsConfigInSandbox() {
 
 function runStaticAssertions() {
     const propsConfig = read(propsConfigPath)
+    const entry = read(path.join(uviewRoot, 'index.js'))
+    assertContains(
+        entry,
+        /import\s+props,\s*{\s*setPropsConfig\s*}\s+from\s+['"]\.\/libs\/config\/props\.js['"]/,
+        'index.js must import setPropsConfig with props'
+    )
+    assertContains(
+        entry,
+        /setPropsConfig\(settings\.props\s*\|\|\s*{}\)/,
+        'index.js setConfig must delegate props overrides to setPropsConfig'
+    )
+    assertContains(
+        entry,
+        /\n\s*props,\s*\n\s*\.\.\.index,/,
+        '$u must expose props before spreading index helpers'
+    )
+
     assertNotContains(
         propsConfig,
         /from\s+['"]\.\.\/\.\.\/components\//,
