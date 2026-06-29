@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import OverlayDefaultProps from './overlay'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(OverlayDefaultProps)
 export const props = defineMixin({
     props: {
         // 是否显示遮罩

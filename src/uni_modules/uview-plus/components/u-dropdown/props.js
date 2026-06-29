@@ -1,5 +1,7 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps({ dropdown: {} })
 export const props = defineMixin({
     props: {
         // 菜单标题和选项的激活态颜色

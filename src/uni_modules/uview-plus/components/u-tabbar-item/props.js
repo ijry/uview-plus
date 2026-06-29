@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import TabbarItemDefaultProps from './tabbarItem'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(TabbarItemDefaultProps)
 export const props = defineMixin({
     props: {
         // item标签的名称，作为与u-tabbar的value参数匹配的标识符

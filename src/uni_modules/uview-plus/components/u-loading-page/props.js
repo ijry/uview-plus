@@ -1,6 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import LoadingPageDefaultProps from './loadingPage'
+import { registerComponentProps } from '../../libs/config/props.js'
 
+const defProps = registerComponentProps(LoadingPageDefaultProps)
 export const props = defineMixin({
     props: {
         // 提示内容

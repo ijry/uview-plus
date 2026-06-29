@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import GapDefaultProps from './gap'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(GapDefaultProps)
 export const props = defineMixin({
     props: {
         // 背景颜色（默认transparent）

@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import ParseDefaultProps from './parse'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(ParseDefaultProps)
 export const props = defineMixin({
     props: {
 		containerStyle: {

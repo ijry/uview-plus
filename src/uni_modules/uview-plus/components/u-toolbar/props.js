@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import ToolbarDefaultProps from './toolbar'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(ToolbarDefaultProps)
 export const props = defineMixin({
     props: {
         // 是否展示工具条

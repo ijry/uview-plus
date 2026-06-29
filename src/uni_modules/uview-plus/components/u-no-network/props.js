@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import NoNetworkDefaultProps from './noNetwork'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(NoNetworkDefaultProps)
 export const props = defineMixin({
     props: {
         // 页面文字提示

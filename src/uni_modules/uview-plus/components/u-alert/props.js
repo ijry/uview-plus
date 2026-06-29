@@ -7,8 +7,10 @@
  * @FilePath     : /uview-plus/libs/config/props/props.js
  */
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import AlertDefaultProps from './alert'
+import { registerComponentProps } from '../../libs/config/props.js'
 
+const defProps = registerComponentProps(AlertDefaultProps)
 export const props = defineMixin({
     props: {
         // 显示文字

@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import UploadDefaultProps from './upload'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(UploadDefaultProps)
 export const props = defineMixin({
     props: {
         // 接受的文件类型, 可选值为all media image file video

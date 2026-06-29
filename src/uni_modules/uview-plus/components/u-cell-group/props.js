@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import CellGroupDefaultProps from './cellGroup'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(CellGroupDefaultProps)
 export const props = defineMixin({
     props: {
         // 分组标题

@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import IndexAnchorDefaultProps from './indexAnchor'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(IndexAnchorDefaultProps)
 export const props = defineMixin({
     props: {
         // 列表锚点文本内容

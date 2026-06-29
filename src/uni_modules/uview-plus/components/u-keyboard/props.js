@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import KeyboardDefaultProps from './keyboard'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(KeyboardDefaultProps)
 export const props = defineMixin({
     props: {
         // 键盘的类型，number-数字键盘，card-身份证键盘，car-车牌号键盘

@@ -7,8 +7,10 @@
  * @FilePath     : /uview-plus/components/u-album/props.js
  */
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import AlbumDefaultProps from './album'
+import { registerComponentProps } from '../../libs/config/props.js'
 
+const defProps = registerComponentProps(AlbumDefaultProps)
 export const props = defineMixin({
     props: {
         // 图片地址，Array<String>|Array<Object>形式

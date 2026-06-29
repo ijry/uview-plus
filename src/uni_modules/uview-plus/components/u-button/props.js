@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import ButtonDefaultProps from './button'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(ButtonDefaultProps)
 export const props = defineMixin({
     props: {
         // 是否细边框

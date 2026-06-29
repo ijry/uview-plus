@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import StepsDefaultProps from './steps'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(StepsDefaultProps)
 export const props = defineMixin({
     props: {
         // 排列方向

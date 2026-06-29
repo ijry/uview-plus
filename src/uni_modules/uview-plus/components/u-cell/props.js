@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import CellDefaultProps from './cell'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(CellDefaultProps)
 export const props = defineMixin({
     props: {
         // 标题

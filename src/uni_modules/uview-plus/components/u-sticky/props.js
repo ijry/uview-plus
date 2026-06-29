@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import StickyDefaultProps from './sticky'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(StickyDefaultProps)
 export const props = defineMixin({
     props: {
         // 吸顶容器到顶部某个距离的时候，进行吸顶，在H5平台，NavigationBar为44px

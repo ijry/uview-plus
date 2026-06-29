@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue.js'
-import defProps from './box.js'
+import BoxDefaultProps from './box.js'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(BoxDefaultProps)
 
 export const propsBox = defineMixin({
     props: {

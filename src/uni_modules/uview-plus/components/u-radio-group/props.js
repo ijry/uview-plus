@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import RadioGroupDefaultProps from './radioGroup'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(RadioGroupDefaultProps)
 export const props = defineMixin({
     props: {
         // #ifdef VUE3

@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import CountToDefaultProps from './countTo'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(CountToDefaultProps)
 export const props = defineMixin({
     props: {
         // 开始的数值，默认从0增长到某一个数

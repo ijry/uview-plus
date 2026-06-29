@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import GridItemDefaultProps from './gridItem'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(GridItemDefaultProps)
 export const props = defineMixin({
     props: {
         // 宫格的name

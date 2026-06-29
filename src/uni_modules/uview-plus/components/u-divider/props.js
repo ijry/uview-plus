@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import DividerDefaultProps from './divider'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(DividerDefaultProps)
 export const props = defineMixin({
     props: {
         // 是否虚线

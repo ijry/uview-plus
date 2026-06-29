@@ -1,6 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import InputDefaultProps from './input'
+import { registerComponentProps } from '../../libs/config/props.js'
 
+const defProps = registerComponentProps(InputDefaultProps)
 export const props = defineMixin({
 	props: {
 		// #ifdef VUE3

@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import LoadingIconDefaultProps from './loadingIcon'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(LoadingIconDefaultProps)
 export const props = defineMixin({
     props: {
         // 是否显示组件

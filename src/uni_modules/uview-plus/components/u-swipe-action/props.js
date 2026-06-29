@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import SwipeActionDefaultProps from './swipeAction'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(SwipeActionDefaultProps)
 export const props = defineMixin({
     props: {
         // 是否自动关闭其他swipe按钮组

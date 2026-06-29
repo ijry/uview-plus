@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import RateDefaultProps from './rate'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(RateDefaultProps)
 export const props = defineMixin({
     props: {
         // #ifdef VUE3

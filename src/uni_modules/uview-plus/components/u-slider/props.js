@@ -1,6 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import SliderDefaultProps from './slider'
+import { registerComponentProps } from '../../libs/config/props.js'
 
+const defProps = registerComponentProps(SliderDefaultProps)
 export const props = defineMixin({
     props: {
         // 最小可选值

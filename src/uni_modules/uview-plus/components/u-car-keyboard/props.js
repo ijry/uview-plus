@@ -1,6 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import CarKeyboardDefaultProps from './carKeyboard'
+import { registerComponentProps } from '../../libs/config/props.js'
 
+const defProps = registerComponentProps(CarKeyboardDefaultProps)
 export const props = defineMixin({
     props: {
         // 是否打乱键盘按键的顺序

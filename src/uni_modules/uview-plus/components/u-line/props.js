@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import LineDefaultProps from './line'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(LineDefaultProps)
 export const props = defineMixin({
     props: {
         color: {

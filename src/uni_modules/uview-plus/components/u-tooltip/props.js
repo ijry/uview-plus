@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import TooltipDefaultProps from './tooltip'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(TooltipDefaultProps)
 export const props = defineMixin({
     props: {
         // 需要显示的提示文字

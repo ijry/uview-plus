@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import BackTopDefaultProps from './backtop'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(BackTopDefaultProps)
 export const props = defineMixin({
     props: {
         // 返回顶部的形状，circle-圆形，square-方形

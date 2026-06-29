@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import SwitchDefaultProps from './switch'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(SwitchDefaultProps)
 export const props = defineMixin({
     props: {
         // 是否为加载中状态

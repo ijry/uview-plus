@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import ListDefaultProps from './list'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(ListDefaultProps)
 export const props = defineMixin({
     props: {
         // 控制是否出现滚动条，仅nvue有效

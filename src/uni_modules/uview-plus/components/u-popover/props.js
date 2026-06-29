@@ -1,6 +1,7 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import { registerComponentProps } from '../../libs/config/props.js'
 
+const defProps = registerComponentProps({ popover: {} })
 export const props = defineMixin({
     props: {
         // 显示的文字内容

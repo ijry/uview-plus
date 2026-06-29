@@ -1,6 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import CalendarDefaultProps from './calendar'
+import { registerComponentProps } from '../../libs/config/props.js'
 
+const defProps = registerComponentProps(CalendarDefaultProps)
 export const props = defineMixin({
     props: {
         // 日历顶部标题

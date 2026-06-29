@@ -1,6 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import TabbarDefaultProps from './tabbar'
+import { registerComponentProps } from '../../libs/config/props.js'
 
+const defProps = registerComponentProps(TabbarDefaultProps)
 export const props = defineMixin({
     props: {
         // 当前匹配项的name

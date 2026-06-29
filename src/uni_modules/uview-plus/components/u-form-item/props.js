@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import FormItemDefaultProps from './formItem'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(FormItemDefaultProps)
 export const props = defineMixin({
     props: {
         // input的label提示语

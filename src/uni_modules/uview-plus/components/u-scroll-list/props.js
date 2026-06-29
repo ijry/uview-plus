@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import ScrollListDefaultProps from './scrollList'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(ScrollListDefaultProps)
 export const props = defineMixin({
     props: {
         // 指示器的整体宽度

@@ -1,6 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import CalendarStripDefaultProps from './calendarStrip'
+import { registerComponentProps } from '../../libs/config/props.js'
 
+const defProps = registerComponentProps(CalendarStripDefaultProps)
 export const props = defineMixin({
     props: {
         modelValue: {

@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import RowNoticeDefaultProps from './rowNotice'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(RowNoticeDefaultProps)
 export const props = defineMixin({
     props: {
         // 显示的内容，字符串

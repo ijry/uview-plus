@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import BadgeDefaultProps from './badge'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(BadgeDefaultProps)
 export const props = defineMixin({
     props: {
         // 是否显示圆点

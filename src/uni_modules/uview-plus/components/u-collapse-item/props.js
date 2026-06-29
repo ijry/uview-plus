@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import CollapseItemDefaultProps from './collapseItem'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(CollapseItemDefaultProps)
 export const props = defineMixin({
     props: {
         // 标题

@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import CodeInputDefaultProps from './codeInput'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(CodeInputDefaultProps)
 export const props = defineMixin({
     props: {
 		// 键盘弹起时，是否自动上推页面

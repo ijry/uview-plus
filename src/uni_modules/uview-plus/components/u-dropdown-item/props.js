@@ -1,5 +1,7 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps({ dropdownItem: {} })
 export const props = defineMixin({
     props: {
         // #ifdef VUE3

@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import LoadmoreDefaultProps from './loadmore'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(LoadmoreDefaultProps)
 export const props = defineMixin({
     props: {
         // 组件状态，loadmore-加载前的状态，loading-加载中的状态，nomore-没有更多的状态

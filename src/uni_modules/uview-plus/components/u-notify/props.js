@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import NotifyDefaultProps from './notify'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(NotifyDefaultProps)
 export const props = defineMixin({
     props: {
         // 到顶部的距离

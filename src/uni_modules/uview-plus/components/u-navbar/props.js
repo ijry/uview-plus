@@ -1,6 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import NavbarDefaultProps from './navbar'
+import { registerComponentProps } from '../../libs/config/props.js'
 
+const defProps = registerComponentProps(NavbarDefaultProps)
 export const props = defineMixin({
 	props: {
 		// 是否开启顶部安全区适配

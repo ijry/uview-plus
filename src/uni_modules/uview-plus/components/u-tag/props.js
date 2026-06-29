@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import TagDefaultProps from './tag'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(TagDefaultProps)
 export const props = defineMixin({
     props: {
         // 标签类型info、primary、success、warning、error

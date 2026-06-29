@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import FormDefaultProps from './form'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(FormDefaultProps)
 export const props = defineMixin({
     props: {
         // 当前form的需要验证字段的集合

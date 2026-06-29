@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import LinkDefaultProps from './link'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(LinkDefaultProps)
 export const props = defineMixin({
     props: {
         // 文字颜色

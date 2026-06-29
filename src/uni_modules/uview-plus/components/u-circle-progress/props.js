@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import CircleProgressDefaultProps from './circleProgress'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(CircleProgressDefaultProps)
 export const props = defineMixin({
     props: {
         percentage: {

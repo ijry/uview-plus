@@ -7,8 +7,10 @@
  * @FilePath     : /uview-plus/libs/config/props/props.js
  */
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import ActionSheetDefaultProps from './actionSheet'
+import { registerComponentProps } from '../../libs/config/props.js'
 
+const defProps = registerComponentProps(ActionSheetDefaultProps)
 export const props = defineMixin({
     props: {
         // 操作菜单是否展示 （默认false）

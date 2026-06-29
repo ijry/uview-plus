@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import RowDefaultProps from './row'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(RowDefaultProps)
 export const props = defineMixin({
     props: {
         // 给col添加间距，左右边距各占一半

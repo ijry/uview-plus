@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import DatetimePickerDefaultProps from './datetimePicker'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(DatetimePickerDefaultProps)
 export const props = defineMixin({
     props: {
         // 是否显示input

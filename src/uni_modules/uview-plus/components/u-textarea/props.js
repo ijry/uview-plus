@@ -1,6 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import TextareaDefaultProps from './textarea'
+import { registerComponentProps } from '../../libs/config/props.js'
 
+const defProps = registerComponentProps(TextareaDefaultProps)
 export const props = defineMixin({
 	props: {
 		// 输入框的内容

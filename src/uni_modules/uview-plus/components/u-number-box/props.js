@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import NumberBoxDefaultProps from './numberBox'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(NumberBoxDefaultProps)
 export const props = defineMixin({
     props: {
         // 步进器标识符，在change回调返回

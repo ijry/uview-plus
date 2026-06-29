@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import CountDownDefaultProps from './countDown'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(CountDownDefaultProps)
 export const props = defineMixin({
     props: {
         // 倒计时时长，单位ms

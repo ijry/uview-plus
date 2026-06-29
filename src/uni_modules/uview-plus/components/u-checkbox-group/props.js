@@ -1,6 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import CheckboxGroupDefaultProps from './checkboxGroup'
+import { registerComponentProps } from '../../libs/config/props.js'
 
+const defProps = registerComponentProps(CheckboxGroupDefaultProps)
 export const props = defineMixin({
     props: {
         // 标识符

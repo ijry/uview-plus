@@ -1,5 +1,8 @@
 import { defineMixin } from '../../libs/vue'
-import defProps from '../../libs/config/props.js'
+import IndexListDefaultProps from './indexList'
+import { registerComponentProps } from '../../libs/config/props.js'
+
+const defProps = registerComponentProps(IndexListDefaultProps)
 export const props = defineMixin({
     props: {
         // 右边锚点非激活的颜色
