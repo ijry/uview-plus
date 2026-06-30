@@ -1,3 +1,7 @@
+// 补齐部分平台缺失的 uni API（如支付宝小程序的 onWindowResize）
+import { applyUniApiShims } from './libs/function/uni-api-shims.js'
+applyUniApiShims()
+
 // 看到此报错，是因为没有配置vite.config.js的【transpileDependencies】
 // const pleaseSetTranspileDependencies = {}, babelTest = pleaseSetTranspileDependencies?.test
 
