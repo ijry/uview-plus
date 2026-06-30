@@ -1,3 +1,8 @@
+## 3.8.60（2026-06-30）
+fix: 添加 uni API shim 防止支付宝等平台缺失 onWindowResize 导致报错
+
+支付宝小程序等平台不支持 uni.onWindowResize / uni.offWindowResize，导致 u-tabs、u-subsection 等组件运行时报错。新增 uni-api-shims.js 模块，在库初始化时按能力检测并自动补齐缺失 API 为空实现，确保所有平台均可正常加载。
+
 ## 3.8.59（2026-06-29）
 feat: 优化组件 props 默认配置按需加载
 
