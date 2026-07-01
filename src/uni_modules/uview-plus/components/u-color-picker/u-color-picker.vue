@@ -801,6 +801,7 @@ export default {
 		width: 100%;
 		padding: 20px;
 		background-color: var(--up-card-bg-color, #fff);
+		box-sizing: border-box;
 	}
 	
 	&__header {
