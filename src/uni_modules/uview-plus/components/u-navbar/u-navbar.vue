@@ -7,17 +7,18 @@
 				height: addUnit(getPx(height) + getWindowInfo().statusBarHeight,'px'),
 			}"
 		></view>
-		<view :class="[fixed && 'u-navbar--fixed']">
-			<u-status-bar
-				v-if="safeAreaInsetTop"
-				:bgColor="statusBarBgColor ? statusBarBgColor : navbarBgColor"
-			></u-status-bar>
+		<view
+			class="u-navbar__inner"
+			:class="[fixed && 'u-navbar--fixed']"
+			:style="[navbarInnerStyle]"
+		>
+			<u-status-bar v-if="safeAreaInsetTop"></u-status-bar>
 			<view
 				class="u-navbar__content"
 				:class="[border && 'u-border-bottom']"
 				:style="{
 					height: addUnit(height),
-					backgroundColor: navbarBgColor,
+					backgroundColor: 'transparent',
 				}"
 			>
 				<view
@@ -95,8 +96,8 @@
 	 * @property {String}			rightIcon			右边返回图标的名称，只能为uview-plus自带的图标
 	 * @property {String}			title				导航栏标题，如设置为空字符，将会隐藏标题占位区域
 	 * @property {String}			titleColor			文字颜色 （默认 '' ）
-	 * @property {String}			bgColor				导航栏背景设置 （默认 '#ffffff' ）
-	 * @property {String}			statusBarBgColor	状态栏背景颜色 不写同导航栏背景设置
+	 * @property {String}			bgColor				导航栏背景设置，支持颜色、渐变或背景图 （默认 '#ffffff' ）
+	 * @property {String}			statusBarBgColor	状态栏背景颜色，保留兼容；导航栏内部统一使用 bgColor 作为整体背景
 	 * @property {String | Number}	titleWidth			导航栏标题的最大宽度，内容超出会以省略号隐藏 （默认 '400rpx' ）
 	 * @property {String | Number}	height				导航栏高度(不包括状态栏高度在内，内部自动加上)（默认 '44px' ）
 	 * @property {String | Number}	leftIconSize		左侧返回图标的大小（默认 20px ）
@@ -129,6 +130,11 @@
 			},
 			navbarRightColor() {
 				return this.upThemeVar('--up-main-color', this.$u.color.mainColor)
+			},
+			navbarInnerStyle() {
+				const style = {}
+				style.background = this.navbarBgColor
+				return style
 			}
 		},
 		emits: ["leftClick", "rightClick"],

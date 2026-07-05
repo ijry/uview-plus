@@ -43,12 +43,12 @@ declare interface NavbarProps {
    */
   title?: string
   /**
-   * 导航栏背景设置
-   * @default"#fff
+   * 导航栏背景设置，支持颜色、渐变或背景图
+   * @default "#fff"
    */
   bgColor?: string
   /**
-   * 状态栏背景颜色 不写同导航栏背景设置
+   * 状态栏背景颜色，保留兼容；导航栏内部统一使用 bgColor 作为整体背景
    * @default bgColor
    */
   statusBarBgColor?: string
