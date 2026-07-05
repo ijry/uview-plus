@@ -39,7 +39,8 @@
     "build:quickapp-webview": "uni build -p quickapp-webview",
     "build:quickapp-webview-huawei": "uni build -p quickapp-webview-huawei",
     "build:quickapp-webview-union": "uni build -p quickapp-webview-union",
-    "type-check": "vue-tsc --noEmit"
+    "type-check": "vue-tsc --noEmit",
+    "verify:navbar-safe-area-background": "node scripts/verify-navbar-safe-area-background.mjs"
   },
   "pnpm":{"overrides":{"rollup":"4.14.3"}},
   "dependencies": {
