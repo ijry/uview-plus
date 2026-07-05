@@ -1,3 +1,9 @@
+## 3.8.61（2026-07-06）
+fix:(up-avbar) : 优化安全区背景渲染
+fix(up-color-picker): 增加box-sizing解决content padding撑开宽度问题
+
+保留up-status-bar作为透明占位，将navbar背景统一设置到外层容器，并让内容区透明以支持渐变和图片背景连续覆盖。
+
 ## 3.8.60（2026-06-30）
 fix: 添加 uni API shim 防止支付宝等平台缺失 onWindowResize 导致报错
 
