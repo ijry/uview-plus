@@ -1,3 +1,6 @@
+## 3.8.62（2026-07-07）
+fix: 修复avatar语法问题
+
 ## 3.8.61（2026-07-06）
 fix:(up-avbar) : 优化安全区背景渲染
 fix(up-color-picker): 增加box-sizing解决content padding撑开宽度问题
