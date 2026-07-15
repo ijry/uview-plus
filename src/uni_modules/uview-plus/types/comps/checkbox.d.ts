@@ -58,11 +58,23 @@ declare interface CheckboxProps {
   labelDisabled?: string | boolean
 }
 
+declare interface CheckboxSlots {
+  /**
+   * 自定义icon内容
+   */
+  ['icon']?: () => any
+  /**
+   * 自定义label内容
+   */
+  ['label']?: () => any
+}
+
 declare interface _Checkbox {
   new (): {
     $props: AllowedComponentProps &
       VNodeProps &
       CheckboxProps
+    $slots: CheckboxSlots
   }
 }
 

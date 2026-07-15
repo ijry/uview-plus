@@ -11,7 +11,7 @@
 		    :class="iconClasses"
 		    :style="[iconWrapStyle]"
 		>
-			<slot name="icon" :elIconSize="elIconSize" :elIconColor="elIconColor">
+			<slot name="icon" :elIconSize="elIconSize" :elIconColor="elIconColor" :checked="checked" :elDisabled="elDisabled">
 				<up-icon
 				    class="u-radio__icon-wrap__icon"
 				    name="checkbox-mark"
@@ -145,8 +145,12 @@
 				if (this.elDisabled) {
 					classes.push('u-radio__icon-wrap--disabled')
 				}
-				if (this.checked && this.elDisabled) {
-					classes.push('u-radio__icon-wrap--disabled--checked')
+				if (this.checked) {
+				    if (this.elDisabled) {
+						classes.push('u-radio__icon-wrap--disabled--checked')
+					} else {
+						classes.push('u-radio__icon-wrap--checked')
+					}
 				}
 				// 支付宝，头条小程序无法动态绑定一个数组类名，否则解析出来的结果会带有","，而导致失效
 				// #ifdef MP-ALIPAY || MP-TOUTIAO
