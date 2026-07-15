@@ -1,3 +1,9 @@
+## 3.8.64
+fix: 修复 up-textarea 开启 count 时 v-model 为空值导致报错
+
+- 字数统计改为安全取值，避免 null/undefined 访问 length
+- 外部绑定值与输入值统一做字符串归一化
+
 ## 3.8.63
 chore: 给radio和checkbox组件添加选中样式名及插槽变量
 
