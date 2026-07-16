@@ -1,4 +1,11 @@
 export default {
+    // 无动画模式：直接显示/隐藏，供 pageInline 等常驻场景使用
+    none: {
+        enter: { opacity: 1 },
+        'enter-to': { opacity: 1 },
+        leave: { opacity: 1 },
+        'leave-to': { opacity: 0 }
+    },
     fade: {
         enter: { opacity: 0 },
         'enter-to': { opacity: 1 },

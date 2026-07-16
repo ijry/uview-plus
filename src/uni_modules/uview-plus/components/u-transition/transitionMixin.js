@@ -80,7 +80,7 @@ export default {
         // nvue版本动画进场
         async nvueEnter() {
             // 获得样式的名称
-            const currentStyle = getStyle(this.mode)
+            const currentStyle = getStyle(this.mode) || getStyle('none')
             // 组件动画状态和发出事件
             this.status = 'enter'
             this.$emit('beforeEnter')
@@ -89,7 +89,8 @@ export default {
             this.display = true
             // 在nvue安卓上，由于渲染速度慢，在弹窗，键盘，日历等组件中，渲染其中的内容需要时间
             // 导致出现弹窗卡顿，这里让其一开始为透明状态，等一定时间渲染完成后，再让其隐藏起来，再让其按正常逻辑出现
-            this.viewStyle = {
+            // none 模式为页面内常驻展示，不需要预置透明
+            this.viewStyle = this.mode === 'none' ? { opacity: 1 } : {
                 opacity: 0
             }
             // 等待弹窗内容渲染完成
@@ -105,7 +106,7 @@ export default {
                         // nvue的transition动画模块需要通过ref调用组件，注意此处的ref不同于vue的this.$refs['u-transition']用法
                         animation.transition(this.$refs['u-transition'].ref, {
                             styles: currentStyle['enter-to'],
-                            duration: this.duration,
+                            duration: this.mode === 'none' ? 0 : this.duration,
                             timingFunction: this.timingFunction,
                             needLayout: false,
                             delay: 0
@@ -121,7 +122,7 @@ export default {
             if (!this.display) {
                 return
             }
-            const currentStyle = getStyle(this.mode)
+            const currentStyle = getStyle(this.mode) || getStyle('none')
             // 定义状态和事件
             this.status = 'leave'
             this.$emit('beforeLeave')
@@ -136,7 +137,7 @@ export default {
                     this.$emit('leave')
                     animation.transition(this.$refs['u-transition'].ref, {
                         styles: currentStyle['leave-to'],
-                        duration: this.duration,
+                        duration: this.mode === 'none' ? 0 : this.duration,
                         timingFunction: this.timingFunction,
                         needLayout: false,
                         delay: 0
