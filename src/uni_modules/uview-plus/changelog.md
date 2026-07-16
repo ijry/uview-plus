@@ -1,3 +1,6 @@
+## 3.8.67
+fix: 修复 pageInline 在 nvue 下不显示
+
 ## 3.8.66
 fix: 修复 u-number-box 在 integer=false 时无法调出小数点键盘
 
