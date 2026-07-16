@@ -41,7 +41,7 @@
 					@blur="onBlur"
 					@focus="onFocus"
 					@input="onInput"
-					type="number"
+					:type="integer ? 'number' : 'digit'"
 					:style="[inputStyle]"
 				/>
 				<!-- #endif -->
@@ -55,7 +55,7 @@
 					@blur="onBlur"
 					@focus="onFocus"
 					@input="onInput"
-					type="number"
+					:type="integer ? 'number' : 'digit'"
 					:style="[inputStyle]"
 				/>
 				<!-- #endif -->

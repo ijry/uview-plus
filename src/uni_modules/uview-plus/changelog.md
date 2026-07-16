@@ -1,3 +1,9 @@
+## 3.8.66
+fix: 修复 u-number-box 在 integer=false 时无法调出小数点键盘
+
+- integer=false 时 input type 使用 digit，integer=true 时仍使用 number
+- 同步覆盖微信小程序与 APP/H5 等非微信端
+
 ## 3.8.64
 fix: 修复 up-textarea 开启 count 时 v-model 为空值导致报错
 
