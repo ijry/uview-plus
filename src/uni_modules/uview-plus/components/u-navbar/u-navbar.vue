@@ -148,7 +148,7 @@
 				// 如果配置了autoBack，自动返回上一页
 				this.$emit('leftClick')
 				if (config.interceptor.navbarLeftClick != null) {
-					config.interceptor.navbarLeftClick()
+					config.interceptor.navbarLeftClick.call(this, this)
 				} else {
 					if(this.autoBack) {
 						uni.navigateBack()
