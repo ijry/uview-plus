@@ -24,6 +24,7 @@ export default {
         popupBgColor: '',
         triggerMode: 'longpress',
         forcePosition: {},
-        show: false
+        show: false,
+        singleton: false
     }
 }

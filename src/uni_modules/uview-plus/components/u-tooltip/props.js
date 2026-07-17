@@ -79,6 +79,11 @@ export const props = defineMixin({
         show: {
             type: Boolean,
             default: () => defProps.tooltip.show
+        },
+        // 是否开启单例模式，开启该属性的tooltip同一页面同时只显示一个
+        singleton: {
+            type: Boolean,
+            default: () => defProps.tooltip.singleton
         }
     }
 })

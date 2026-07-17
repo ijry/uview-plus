@@ -50,6 +50,22 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
+			<text class="u-demo-block__title">单例打开</text>
+			<view class="u-demo-block__content u-flex-x">
+				<up-tooltip
+				    text="第一个"
+					triggerMode="click"
+					singleton
+				></up-tooltip>
+				<up-tooltip
+				    text="第二个"
+					triggerMode="click"
+					singleton
+					customStyle="margin-left: 12px"
+				></up-tooltip>
+			</view>
+		</view>
+		<view class="u-demo-block">
 			<text class="u-demo-block__title">自定义触发器</text>
 			<view class="u-demo-block__content">
 				<up-tooltip

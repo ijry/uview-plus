@@ -108,6 +108,7 @@
 	// #ifdef APP-NVUE 
 	const dom = uni.requireNativePlugin('dom')
 	// #endif
+	let activeSingletonTooltip = null
 	/**
 	 * Tooltip 
 	 * @description 
@@ -123,9 +124,12 @@
 	 * @property {Boolean}			showCopy	 是否显示复制按钮（默认 true ）
 	 * @property {Array}			buttons		 扩展的按钮组
 	 * @property {Boolean}			overlay		 是否显示透明遮罩以防止触摸穿透（默认 true ）
+	 * @property {Boolean}			singleton	 是否开启单例模式，开启该属性的tooltip同一页面同时只显示一个（默认 false ）
 	 * @property {Object}			customStyle	 定义需要用到的外部样式
 	 * 
-	 * @event {Function} 
+	 * @event {Function}			open		 打开时触发
+	 * @event {Function}			close		 关闭时触发
+	 * @event {Function}			update:show 显示状态变化时触发
 	 * @example 
 	 */
 	export default {
@@ -240,7 +244,13 @@
 		mounted() {
 			this.init()
 		},
-		emits: ["click", "open", "close"],
+		beforeUnmount() {
+			this.clearActiveTooltip()
+		},
+		beforeDestroy() {
+			this.clearActiveTooltip()
+		},
+		emits: ["click", "open", "close", "update:show"],
 		methods: {
 			addStyle,
 			addUnit,
@@ -262,14 +272,32 @@
 			},
 			// 打开tooltip
 			open() {
+				if (this.singleton && activeSingletonTooltip && activeSingletonTooltip !== this) {
+					activeSingletonTooltip.close()
+				}
+				if (this.singleton) {
+					activeSingletonTooltip = this
+				}
+				if (this.showTooltip && this.tooltipTop === 0) return
 				this.tooltipTop = 0
 				this.showTooltip = true
+				this.$emit('update:show', true)
 				this.$emit('open')
 			},
 			// 关闭tooltip
 			close() {
+				if (activeSingletonTooltip === this) {
+					activeSingletonTooltip = null
+				}
+				if (!this.showTooltip) return
 				this.showTooltip = false
+				this.$emit('update:show', false)
 				this.$emit('close')
+			},
+			clearActiveTooltip() {
+				if (activeSingletonTooltip === this) {
+					activeSingletonTooltip = null
+				}
 			},
 			// 点击透明遮罩
 			overlayClickHandler() {

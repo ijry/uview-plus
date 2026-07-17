@@ -1,3 +1,10 @@
+## 3.8.70
+feat: u-tooltip 新增 singleton 单例打开能力
+
+- 新增 singleton 属性，开启该属性的 tooltip 同一页面同时只显示一个
+- 默认值为 false，保持现有多 tooltip 同时展示行为不变
+- close 时同步触发 update:show，便于 manual 模式外部状态保持一致
+
 ## 3.8.69
 修复 navbar 全局左侧点击拦截器无法获取组件实例
 
