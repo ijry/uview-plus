@@ -296,6 +296,7 @@
 		}
 
 		&__description {
+			display: block;
 			font-size: $u-action-sheet-description-font-size;
 			color: $u-action-sheet-description-color;
 			margin: $u-action-sheet-description-margin;

@@ -1,3 +1,6 @@
+## 3.8.68
+修复 action-sheet 描述文本边距不生效问题
+
 ## 3.8.67
 fix: 修复 pageInline 在 nvue 下不显示
 
