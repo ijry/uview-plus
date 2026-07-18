@@ -1,6 +1,5 @@
 <template>
   <view class="u-pagination">
-    <view>{{currentPage}}</view>
     <!-- 上一页按钮 -->
     <view
       :class="[
@@ -32,21 +31,21 @@
 
     <!-- 总数显示 -->
     <view v-if="total > 0 && layout.includes('total')" class="u-pagination-total">
-        {{ currentPage }} / {{ totalPages }}
+        共 {{ total }} 条
     </view>
 
     <!-- 每页数量选择器 -->
-    <!-- <picker
-      v-if="layout.includes('sizes')"
+    <picker
+      v-if="layout.includes('sizes') && normalizedPageSizes.length"
       mode="selector"
-      :range="pageSizes"
+      :range="normalizedPageSizes"
       range-key="label"
       :value="pageSizeIndex"
       @change="handleSizeChange"
       class="u-pagination-sizes"
     >
       <view>{{ pageSizeLabel }}</view>
-    </picker> -->
+    </picker>
 
     <!-- 下一页按钮 -->
     <view
@@ -142,12 +141,33 @@ export default {
     totalPages() {
       return Math.max(1, Math.ceil(this.total / this.pageSize));
     },
+    normalizedPageSizes() {
+      if (!Array.isArray(this.pageSizes)) return [];
+      return this.pageSizes
+        .map(size => {
+          if (typeof size === 'number' || typeof size === 'string') {
+            return {
+              label: `${size}条/页`,
+              value: Number(size)
+            };
+          }
+          if (size && typeof size === 'object') {
+            const value = Number(size.value);
+            return {
+              label: size.label || `${value}条/页`,
+              value
+            };
+          }
+          return null;
+        })
+        .filter(size => size && !isNaN(size.value));
+    },
     pageSizeIndex() {
-      const index = this.pageSizes.findIndex(size => size.value === this.pageSize);
+      const index = this.normalizedPageSizes.findIndex(size => size.value === this.pageSize);
       return index >= 0 ? index : 0;
     },
     pageSizeLabel() {
-      const found = this.pageSizes.find(size => size.value === this.pageSize);
+      const found = this.normalizedPageSizes.find(size => size.value === this.pageSize);
       return found?.label || this.pageSize;
     },
     displayedPages() {
@@ -199,8 +219,9 @@ export default {
   methods: {
     t,
     handleSizeChange(e) {
-      const selected = e.detail.value;
-      const size = this.pageSizes[selected]?.value || this.pageSizes[0].value;
+      const selected = Number(e.detail.value);
+      const size = this.normalizedPageSizes[selected]?.value || this.normalizedPageSizes[0]?.value;
+      if (!size) return;
       this.$emit('update:pageSize', size);
       this.$emit('size-change', size);
     },
