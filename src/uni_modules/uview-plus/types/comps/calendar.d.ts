@@ -95,6 +95,44 @@ declare interface CalendarProps {
    */
   show?: boolean
   /**
+   * 是否显示遮罩
+   * @default true
+   */
+  overlay?: boolean
+  /**
+   * 动画时长，单位ms
+   * @default 300
+   */
+  duration?: number | string
+  /**
+   * 自定义遮罩的样式
+   */
+  overlayStyle?: unknown
+  /**
+   * 遮罩透明度，0-1之间，勿与overlayStyle共用
+   * @default 0.5
+   */
+  overlayOpacity?: number | string
+  /**
+   * 弹出层的z-index值
+   * @default 10075
+   */
+  zIndex?: number | string
+  /**
+   * 是否留出底部安全距离
+   * @default true
+   */
+  safeAreaInsetBottom?: boolean
+  /**
+   * 是否留出顶部安全距离（状态栏高度）
+   * @default false
+   */
+  safeAreaInsetTop?: boolean
+  /**
+   * 背景色，一般用于特殊弹窗内容场景，设置为transparent可去除默认的白色背景
+   */
+  bgColor?: string
+  /**
    * 是否允许点击遮罩关闭日历 （注意：关闭事件需要自行处理，只会在开启closeOnClickOverlay后点击遮罩层执行close回调）
    * @default false
    */

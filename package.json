@@ -41,7 +41,8 @@
     "build:quickapp-webview-union": "uni build -p quickapp-webview-union",
     "type-check": "vue-tsc --noEmit",
     "verify:pagination": "node scripts/verify-pagination-component.mjs",
-    "verify:navbar-safe-area-background": "node scripts/verify-navbar-safe-area-background.mjs"
+    "verify:navbar-safe-area-background": "node scripts/verify-navbar-safe-area-background.mjs",
+    "verify:calendar-popup-props": "node scripts/verify-calendar-popup-props.mjs"
   },
   "pnpm":{"overrides":{"rollup":"4.14.3"}},
   "dependencies": {

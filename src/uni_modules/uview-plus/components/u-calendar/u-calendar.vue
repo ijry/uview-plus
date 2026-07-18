@@ -2,6 +2,14 @@
 	<u-popup
 		:show="show"
 		mode="bottom"
+		:overlay="overlay"
+		:duration="duration"
+		:overlayStyle="overlayStyle"
+		:overlayOpacity="overlayOpacity"
+		:zIndex="zIndex"
+		:safeAreaInsetBottom="safeAreaInsetBottom"
+		:safeAreaInsetTop="safeAreaInsetTop"
+		:bgColor="bgColor"
 		:closeable="!pageInline"
 		@close="close"
 		:round="round"
@@ -202,6 +210,14 @@ import { t } from '../../libs/i18n'
  * @property {String}				confirmText			确定按钮的文字 (默认 '确定' )
  * @property {String}				confirmDisabledText	确认按钮处于禁用状态时的文字 (默认 '确定' )
  * @property {Boolean}				show				是否显示日历弹窗 (默认 false )
+ * @property {Boolean}				overlay				是否显示遮罩 (默认 true )
+ * @property {String | Number}		duration			动画时长，单位ms (默认 300 )
+ * @property {Object | String}		overlayStyle		自定义遮罩的样式
+ * @property {Number | String}		overlayOpacity		遮罩透明度，0-1之间 (默认 0.5 )
+ * @property {String | Number}		zIndex				弹出层的z-index值 (默认 10075 )
+ * @property {Boolean}				safeAreaInsetBottom	是否留出底部安全距离 (默认 true )
+ * @property {Boolean}				safeAreaInsetTop	是否留出顶部安全距离（状态栏高度） (默认 false )
+ * @property {String}				bgColor				弹窗背景色，设置为transparent可去除白色背景
  * @property {Boolean}				closeOnClickOverlay	是否允许点击遮罩关闭日历 (默认 false )
  * @property {Boolean}				readonly	        是否为只读状态，只读状态下禁止选择日期 (默认 false )
  * @property {String | Number}		maxRange	        日期区间最多可选天数，默认无限制，mode = range时有效
