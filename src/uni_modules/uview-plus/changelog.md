@@ -1,3 +1,10 @@
+## 3.8.73
+修复 u-calendar 页面内模式弹层安全区配置不足
+
+- u-calendar 新增 overlay、duration、overlayStyle、overlayOpacity、zIndex、safeAreaInsetBottom、safeAreaInsetTop、bgColor 等常用 u-popup 透传属性
+- pageInline 模式可通过 safeAreaInsetBottom=false 关闭底部安全区，默认行为保持不变
+- 同步补充 TypeScript 类型声明与静态校验
+
 ## 3.8.72
 修复 pagination 总数和每页条数选择展示问题
 
