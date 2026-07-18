@@ -1,3 +1,10 @@
+## 3.8.71
+修复 line-progress 默认参数错配导致默认进度宽度异常
+
+- 修正 inactiveColor 与 percentage 默认值读取字段，避免默认渲染计算出 NaNpx
+- 补充 fromRight 类型声明，完善从右往左加载能力提示
+- 补充 line-progress 示例默认配置场景，并同步文档说明
+
 ## 3.8.70
 feat: u-tooltip 新增 singleton 单例打开能力
 

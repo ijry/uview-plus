@@ -1,6 +1,13 @@
 <template>
 	<view class="u-page">
 		<view class="u-demo-block">
+			<text class="u-demo-block__title">默认配置</text>
+			<view class="u-demo-block__content">
+				<up-line-progress>
+				</up-line-progress>
+			</view>
+		</view>
+		<view class="u-demo-block">
 			<text class="u-demo-block__title">基础功能</text>
 			<view class="u-demo-block__content">
 				<up-line-progress :percentage="percentage1">
@@ -65,7 +72,7 @@
 				    activeColor="#3c9cff"
 				    inactiveColor="#f3f4f6"
 				>
-					<text class="u-percentage-slot">{{percentage4}}%</text>
+					<text class="u-percentage-slot">{{percentage5}}%</text>
 				</up-line-progress>
 			</view>
 		</view>

@@ -27,6 +27,11 @@ declare interface LineProgressProps {
    */
   height?: string | number
   /**
+   * 是否从右往左加载
+   * @default false
+   */
+  fromRight?: boolean
+  /**
    * 点击触发事件
    */
   onClick?: () => any

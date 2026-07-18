@@ -12,12 +12,12 @@ export const props = defineMixin({
         },
         inactiveColor: {
             type: String,
-            default: () => defProps.lineProgress.color
+            default: () => defProps.lineProgress.inactiveColor
         },
         // 进度百分比，数值
         percentage: {
             type: [String, Number],
-            default: () => defProps.lineProgress.inactiveColor
+            default: () => defProps.lineProgress.percentage
         },
         // 是否在进度条内部显示百分比的值
         showText: {
