@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { marked } from './marked.esm.js';
+import { marked } from './marked.esm.mjs';
 
 export default {
   name: 'up-markdown',

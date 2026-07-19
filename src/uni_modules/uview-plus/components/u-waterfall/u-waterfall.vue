@@ -247,54 +247,53 @@
                 
                 // 分配新数据到最短的列
                 for (let item of newData) {
-                    const minHeightIndex = columnHeights.indexOf(Math.min(...columnHeights));
+                    const minHeightIndex = this.getMinHeightColumnIndex(columnHeights);
                     // console.log('this.columnList', this.columnList)
                     this.columnList[minHeightIndex].push(item);
-                    
+
                     // 获取实际渲染后的元素高度而不是估算
-                    await sleep(this.addTime)
-                    await this.$nextTick(async () => {
-                        try {
-                            const rect = await this.$uGetRect(`#u-column-${minHeightIndex}`);
-                            // console.log(`#u-column-${minHeightIndex}`, rect.height)
-                            if (rect.height) {
-                                columnHeights[minHeightIndex] = rect.height;
-                                // 加载一个后置事件
-                                this.$emit('after-add-one', {
-                                    ...item,
-                                    height: rect.height
-                                });
-                            }
-                        } catch (e) {
-                            // console.log(e)
-                            // columnHeights[i] = 0;
+                    await sleep(this.addTime);
+                    await this.$nextTick();
+                    try {
+                        const rect = await this.$uGetRect(`#u-column-${minHeightIndex}`);
+                        // console.log(`#u-column-${minHeightIndex}`, rect.height)
+                        if (rect.height) {
+                            columnHeights[minHeightIndex] = rect.height;
+                            // 加载一个后置事件
+                            this.$emit('after-add-one', {
+                                ...item,
+                                height: rect.height
+                            });
                         }
-                    });
-                    // this.$nextTick(async () => {
-                    //     try {
-                    //         // 等待DOM更新后获取实际高度
-                    //         const lastIndex = this.columnList[minHeightIndex].length - 1;
-                    //         const el = this.$refs[`u-column-${minHeightIndex}`][0].children[lastIndex];
-                    //         if (el) {
-                    //             const rect = await this.$uGetRect(el);
-                    //             const actualHeight = rect.height || 100;
-                    //             columnHeights[minHeightIndex] += actualHeight;
-                    //         } else {
-                    //             // 备用方案：如果无法获取实际高度，则使用默认值
-                    //             columnHeights[minHeightIndex] += 100;
-                    //         }
-                    //     } catch (e) {
-                    //         // 出错时使用默认高度
-                    //         console.log(e)
-                    //         columnHeights[minHeightIndex] += 100;
-                    //     }
-                    // });
+                    } catch (e) {
+                        // console.log(e)
+                        // columnHeights[i] = 0;
+                    }
                 }
                 // 加载所有后置事件
                 this.$emit('after-add-all', {
                     columnHeights: columnHeights,
                     newData: newData
                 });
+            },
+
+            // 获取最短列；高度相同或暂不可测时按列数据量打散，避免全部落到第一列
+            getMinHeightColumnIndex(columnHeights) {
+                let minIndex = 0;
+                for (let i = 1; i < columnHeights.length; i++) {
+                    const currentHeight = Number(columnHeights[i]) || 0;
+                    const minHeight = Number(columnHeights[minIndex]) || 0;
+                    if (currentHeight < minHeight) {
+                        minIndex = i;
+                    } else if (currentHeight === minHeight) {
+                        const currentLength = this.columnList[i] ? this.columnList[i].length : 0;
+                        const minLength = this.columnList[minIndex] ? this.columnList[minIndex].length : 0;
+                        if (currentLength < minLength) {
+                            minIndex = i;
+                        }
+                    }
+                }
+                return minIndex;
             },
 
             // 复制而不是引用对象和数组
