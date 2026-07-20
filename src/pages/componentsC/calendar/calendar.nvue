@@ -165,6 +165,20 @@ const show9 = ref(false)
 const show10 = ref(false)
 const show11 = ref(false)
 const show12 = ref(false)
+const calendarShows = [
+	show1,
+	show2,
+	show3,
+	show4,
+	show5,
+	show6,
+	show7,
+	show8,
+	show9,
+	show10,
+	show11,
+	show12
+]
 const values = ref(['','','','','','','','','','','',''])
 const stripValue = ref(`${year}-${month}-${date}`)
 const customThemeDefaultDate = ref([`${year}-${month}-${date}`, `${year}-${month}-${date + 5}`])
@@ -222,20 +236,12 @@ const list = ref([{
 // 定义方法
 const showCalendar = (indexVal) => {
 	index.value = indexVal + 1
-	show1.value = false;
-	show2.value = false;
-	show3.value = false;
-	show4.value = false;
-	show5.value = false;
-	show6.value = false;
-	show7.value = false;
-	show8.value = false;
-	show9.value = false;
-	show10.value = false;
-	show11.value = false;
-	show12.value = false;
-	const showRef = `show${indexVal + 1}`;
-	eval(`${showRef}.value = true`);
+	calendarShows.forEach((show) => {
+		show.value = false
+	})
+	if (calendarShows[indexVal]) {
+		calendarShows[indexVal].value = true
+	}
 }
 
 const navigateBack = () => {
@@ -243,8 +249,10 @@ const navigateBack = () => {
 }
 
 const confirm = (e) => {
-	const showRef = `show${index.value}`;
-	eval(`${showRef}.value = false`);
+	const currentShow = calendarShows[index.value - 1]
+	if (currentShow) {
+		currentShow.value = false
+	}
 	console.log(e);
 	switch(index.value - 1) {
 		case 0:
@@ -291,8 +299,10 @@ const confirm = (e) => {
 }
 
 const close = () => {
-	const showRef = `show${index.value}`;
-	eval(`${showRef}.value = false`);
+	const currentShow = calendarShows[index.value - 1]
+	if (currentShow) {
+		currentShow.value = false
+	}
 }
 
 const formatter = (day) => {

@@ -81,6 +81,7 @@ const show2 = ref(false)
 const show3 = ref(false)
 const show4 = ref(false)
 const show5 = ref(false)
+const sheetShowRefs = [show0, show1, show2, show3, show4, show5]
 
 // 动作列表
 const actions0 = ref([{
@@ -197,7 +198,9 @@ const openSheet = (index) => {
 	// #ifndef MP
 	if (index === 5) return toast('请在微信内预览')
 	// #endif
-	eval(`show${index}.value = true`)
+	if (sheetShowRefs[index]) {
+		sheetShowRefs[index].value = true
+	}
 }
 
 const getuserinfo = (res) => {

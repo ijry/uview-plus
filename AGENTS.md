@@ -10,3 +10,7 @@
 
 - 发布新版本时，必须参考 `D:\Repos\xyito\config\ultraUI.md` 执行。
 - 按该文档中的命令与流程处理 `uview-plus` / `uview-ultra` 的版本 bump、notes、发布与后续提交推送。
+
+## uview-plus说明
+
+uview-plus一般是指的同一个父目录下的uview-plus文件夹项目， 文档一般也在同一父目录下。

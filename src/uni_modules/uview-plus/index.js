@@ -257,8 +257,8 @@ let components = []
 function resolveComponents() {
     if (components.length) return components
     // #ifdef H5
-    const canUseGlob = typeof import.meta !== 'undefined' && typeof import.meta.glob === 'function'
-    if (!canUseGlob) return components
+    // import.meta.glob is a Vite compile-time macro; the runtime guard would
+    // always fail in the browser and block component registration.
     const importFn = import.meta.glob('./components/u-*/u-*.vue', { eager: true })
     for (const key in importFn) {
         const component = importFn[key]?.default
