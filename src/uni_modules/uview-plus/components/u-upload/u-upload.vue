@@ -141,8 +141,14 @@
 					</slot>
 				</view>
 			</template>
-			<canvas id="myCanvas" type="2d"
-				style="width: 100px; height: 150px;display: none;"></canvas>
+			<up-canvas
+				ref="videoThumbCanvas"
+				class="u-upload__hidden-canvas"
+				:canvas-id="videoThumbCanvasId"
+				:width="videoThumbCanvasWidth"
+				:height="videoThumbCanvasHeight"
+				bg-color="transparent"
+			></up-canvas>
 			<template v-if="isInCount">
 				<view
 				    v-if="$slots.trigger"
@@ -257,7 +263,10 @@
 				lists: [],
 				isInCount: true,
 				popupShow: false,
-				currentItemIndex: -1
+				currentItemIndex: -1,
+				videoThumbCanvasId: 'u-upload-video-thumb-' + Math.random().toString(36).substr(2, 9),
+				videoThumbCanvasWidth: 100,
+				videoThumbCanvasHeight: 150
 			}
 		},
 		watch: {
@@ -314,47 +323,37 @@
 					return;
 				}
 				// 截取第一帧作为封面，oss等云存储场景直接使用拼接参数。
-				let w = this.lists[this.currentItemIndex].width;
-				let h = this.lists[this.currentItemIndex].height;
+				const w = this.lists[this.currentItemIndex].width;
+				const h = this.lists[this.currentItemIndex].height;
 				const dpr = uni.getSystemInfoSync().pixelRatio;
 				uni.createSelectorQuery().select('#myVideo').context(res => {
 					console.log('select video', res)
 					const myVideo = res.context
-					uni.createSelectorQuery()
-					  .select('#myCanvas')
-					  .fields({ node: true, size: true })
-					  .exec(([res]) => {
-						console.log('select canvas', res)
-						const ctx1 = res[0].node.getContext('2d')
-						res[0].node.width = w * dpr
-						res[0].node.height = h * dpr
-						// Draw the first frame and export it as an image
-						// myVideo.onPlay(() => {
-							setTimeout(() => {
-								captureFirstFrame()
-							}, 500)
-						// })
-						const captureFirstFrame = () => {
-							ctx1.drawImage(myVideo, 0, 0, w * dpr, h * dpr)
-							wx.canvasToTempFilePath({
-								canvas: res[0].node,
-								success: (result) => {
-									console.log('First frame image path:', result
-										.tempFilePath)
-									// Now you can use the image path (result.tempFilePath)
-									this.fileList['currentItemIndex'].thumb = result.tempFilePath
-								},
-								fail: (err) => {
-									console.error('Failed to export image:', err)
-								}
-							})
-						}
-
-						// Capture the first frame
-						setInterval(() => {
-							ctx1.drawImage(myVideo, 0, 0, w * dpr, h * dpr);
-						}, 1000 / 24)
-					}).exec()
+					this.videoThumbCanvasWidth = w
+					this.videoThumbCanvasHeight = h
+					this.$nextTick(async () => {
+						const canvas = this.$refs.videoThumbCanvas
+						if (!canvas || !myVideo) return
+						await canvas.initCanvas(true)
+						const ctx1 = canvas.getRawContext()
+						if (!ctx1) return
+						setTimeout(async () => {
+							try {
+								ctx1.drawImage(myVideo, 0, 0, w, h)
+								const result = await canvas.toTempFilePath({
+									width: w,
+									height: h,
+									destWidth: w * dpr,
+									destHeight: h * dpr
+								})
+								console.log('First frame image path:', result.tempFilePath)
+								this.fileList[this.currentItemIndex].thumb = result.tempFilePath
+								this.$emit('update:fileList', this.fileList)
+							} catch (err) {
+								console.error('Failed to export image:', err)
+							}
+						}, 500)
+					})
 				}).exec()
 			},
 			formatFileList() {
@@ -822,6 +821,14 @@
 				}
 			}
 		}
+
+		&__hidden-canvas {
+			position: fixed;
+			top: -10000px;
+			left: -10000px;
+			z-index: -1;
+		}
+
 		&__wrap__play {
 			position: absolute;
 			top: 0px;

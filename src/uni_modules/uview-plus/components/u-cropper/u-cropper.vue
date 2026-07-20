@@ -1,9 +1,9 @@
 <template>
 	<view class="u-cropper">
 		<!-- <image :src="imgSrc.imgSrc" @click="select" :style="[ imgStyle ]" class="my-avatar"></image> -->
-		<canvas :canvas-id="'avatar-canvas-' + instanceId" :id="'avatar-canvas-' + instanceId" class="my-canvas" :style="{ top: styleTop, height: cvsStyleHeight }" disable-scroll="false"></canvas>
-		<canvas :canvas-id="'oper-canvas-' + instanceId" :id="'oper-canvas-' + instanceId" class="oper-canvas" :style="{ top: styleTop, height: cvsStyleHeight }" disable-scroll="false" @touchstart="start" @touchmove="move" @touchend="end"></canvas>
-		<canvas :canvas-id="'prv-canvas-' + instanceId" :id="'prv-canvas-' + instanceId" class="prv-canvas" disable-scroll="false" @touchstart="hideImg" :style="{ height: cvsStyleHeight, top: prvTop }"></canvas>
+		<up-canvas ref="avatarCanvas" :canvas-id="'avatar-canvas-' + instanceId" class="my-canvas" :width="windowWidth || 0" :height="windowHeight || 0" :style="{ top: styleTop, height: cvsStyleHeight }" bg-color="transparent"></up-canvas>
+		<up-canvas ref="operCanvas" :canvas-id="'oper-canvas-' + instanceId" class="oper-canvas" :width="windowWidth || 0" :height="windowHeight || 0" :style="{ top: styleTop, height: cvsStyleHeight }" bg-color="transparent" @touchstart="start" @touchmove="move" @touchend="end"></up-canvas>
+		<up-canvas ref="prvCanvas" :canvas-id="'prv-canvas-' + instanceId" class="prv-canvas" :width="windowWidth || 0" :height="windowHeight || 0" bg-color="transparent" @touchstart="hideImg" :style="{ height: cvsStyleHeight, top: prvTop }"></up-canvas>
 		<view class="oper-wrapper" :style="{ display: styleDisplay }">
 			<view class="oper">
 				<view class="btn-wrapper" v-if="showOper">
@@ -108,9 +108,9 @@
 			},
 		},
 		created() {
-			this.ctxCanvas = uni.createCanvasContext('avatar-canvas-' + this.instanceId, this);
-			this.ctxCanvasOper = uni.createCanvasContext('oper-canvas-' + this.instanceId, this);
-			this.ctxCanvasPrv = uni.createCanvasContext('prv-canvas-' + this.instanceId, this);
+			this.ctxCanvas = null;
+			this.ctxCanvasOper = null;
+			this.ctxCanvasPrv = null;
 			this.qlty = parseInt(this.quality) || 0.9;
 			this.imgSrc.imgSrc = this.imageSrc;
 			this.letRotate = (this.canRotate === false || this.inner === true) ? 0 : 1;
@@ -144,8 +144,27 @@
 				});
 			}
 		},
+		mounted() {
+			this.initCanvasRefs(true);
+		},
 		methods: {
 			t,
+			async initCanvasRefs(force = false) {
+				await this.$nextTick();
+				const avatarCanvas = this.$refs.avatarCanvas;
+				const operCanvas = this.$refs.operCanvas;
+				const prvCanvas = this.$refs.prvCanvas;
+				if (!avatarCanvas || !operCanvas || !prvCanvas) return false;
+				await Promise.all([
+					avatarCanvas.initCanvas(force),
+					operCanvas.initCanvas(force),
+					prvCanvas.initCanvas(force)
+				]);
+				this.ctxCanvas = avatarCanvas;
+				this.ctxCanvasOper = operCanvas;
+				this.ctxCanvasPrv = prvCanvas;
+				return true;
+			},
 			windowResize() {
 				let sysInfo = uni.getSystemInfoSync();
 				this.platform = sysInfo.platform;
@@ -264,7 +283,7 @@
 					}
 				})
 			},
-			confirm() {
+			async confirm() {
 				if (this.fUploading) return;
 				this.fUploading = true;
 				setTimeout(() => { this.fUploading = false; }, 1000)
@@ -289,35 +308,34 @@
 				this.styleTop = '-10000px';
 				this.hasSel = false;
 				this.hideImg();
-				uni.canvasToTempFilePath({
+				await this.initCanvasRefs();
+				this.ctxCanvas.toTempFilePath({
 					x: x,
 					y: y,
 					width: width,
 					height: height,
 					destWidth: expWidth,
 					destHeight: expHeight,
-					canvasId: 'avatar-canvas-' + this.instanceId,
 					fileType: 'png',
 					quality: this.qlty,
 					success: (r) => {
 						r = r.tempFilePath;
 						// #ifdef H5
-						this.btop(r).then((r) => {
+						this.btop(r).then(async (r) => {
 							if (this.expWidth && this.expHeight) {
 								let ctxCanvas = this.ctxCanvas;
 								expWidth = this.expWidth,
 									expHeight = this.expHeight;
 
-								ctxCanvas.drawImage(r, 0, 0, expWidth, expHeight);
+								await ctxCanvas.drawImage(r, 0, 0, expWidth, expHeight);
 								ctxCanvas.draw(false, () => {
-									uni.canvasToTempFilePath({
+									ctxCanvas.toTempFilePath({
 										x: 0,
 										y: 0,
 										width: expWidth,
 										height: expHeight,
 										destWidth: expWidth,
 										destHeight: expHeight,
-										canvasId: 'avatar-canvas-' + this.instanceId,
 										fileType: 'png',
 										quality: this.qlty,
 										success: (r) => {
@@ -353,10 +371,10 @@
 						uni.hideLoading();
 						this.noBar || uni.showTabBar();
 					}
-				}, this);
+				});
 			},
 			// 用户点击"预览"模式下的"确认"按钮时被调用，用于将预览的裁剪结果上传
-			prvUpload() {
+			async prvUpload() {
 				if (this.fPrvUploading) return;
 				this.fPrvUploading = true;
 				setTimeout(() => { this.fPrvUploading = false; }, 1000)
@@ -384,35 +402,34 @@
 				this.styleTop = '-10000px';
 				this.hasSel = false;
 				this.hideImg();
-				uni.canvasToTempFilePath({
+				await this.initCanvasRefs();
+				this.ctxCanvasPrv.toTempFilePath({
 					x: prvX,
 					y: prvY,
 					width: prvWidth,
 					height: prvHeight,
 					destWidth: expWidth,
 					destHeight: expHeight,
-					canvasId: 'prv-canvas-' + this.instanceId,
 					fileType: 'png',
 					quality: this.qlty,
 					success: (r) => {
 						r = r.tempFilePath;
 						// #ifdef H5
-						this.btop(r).then((r) => {
+						this.btop(r).then(async (r) => {
 							if (this.expWidth && this.expHeight) {
 								let ctxCanvas = this.ctxCanvas;
 								expWidth = this.expWidth,
 									expHeight = this.expHeight;
 
-								ctxCanvas.drawImage(r, 0, 0, expWidth, expHeight);
+								await ctxCanvas.drawImage(r, 0, 0, expWidth, expHeight);
 								ctxCanvas.draw(false, () => {
-									uni.canvasToTempFilePath({
+									ctxCanvas.toTempFilePath({
 										x: 0,
 										y: 0,
 										width: expWidth,
 										height: expHeight,
 										destWidth: expWidth,
 										destHeight: expHeight,
-										canvasId: 'avatar-canvas-' + this.instanceId,
 										fileType: 'png',
 										quality: this.qlty,
 										success: (r) => {
@@ -448,9 +465,10 @@
 						uni.hideLoading();
 						this.noBar || uni.showTabBar();
 					}
-				}, this);
+				});
 			},
-			drawInit(ini = false) {
+			async drawInit(ini = false) {
+				await this.initCanvasRefs();
 				let allWidth = this.windowWidth,
 					allHeight = this.windowHeight,
 					imgWidth = this.imgWidth,
@@ -597,7 +615,8 @@
 
 				this.$emit("avtinit");
 			},
-			drawImage() {
+			async drawImage() {
+				await this.initCanvasRefs();
 				let tm_now = Date.now();
 				if (tm_now - this.drawTm < 20) return;
 				this.drawTm = tm_now;
@@ -605,10 +624,12 @@
 				if (this.fillColor && this.fillColor !== 'transparent') {
 					ctxCanvas.fillRect(0, 0, this.windowWidth, this.windowHeight - tabHeight);
 				}
+				ctxCanvas.save();
 				ctxCanvas.translate(this.posWidth + this.useWidth / 2, this.posHeight + this.useHeight / 2);
 				ctxCanvas.scale(this.scaleSize, this.scaleSize);
 				ctxCanvas.rotate(this.rotateDeg * Math.PI / 180);
-				ctxCanvas.drawImage(this.imgPath, -this.useWidth / 2, -this.useHeight / 2, this.useWidth, this.useHeight);
+				await ctxCanvas.drawImage(this.imgPath, -this.useWidth / 2, -this.useHeight / 2, this.useWidth, this.useHeight);
+				ctxCanvas.restore();
 				ctxCanvas.draw(false);
 			},
 			hideImg() {
@@ -628,7 +649,7 @@
 				this.noBar || uni.showTabBar();
 				this.$emit('cancel');
 			},
-			preview() {
+			async preview() {
 				if (this.fPreviewing) return;
 				this.fPreviewing = true;
 				setTimeout(() => { this.fPreviewing = false; }, 1000);
@@ -640,15 +661,15 @@
 
 				uni.showLoading({ mask: true });
 				// console.log('size', x, y, width, height)
-				uni.canvasToTempFilePath({
+				await this.initCanvasRefs();
+				this.ctxCanvas.toTempFilePath({
 					x: x,
 					y: y,
 					width: width,
 					height: height,
-					canvasId: 'avatar-canvas-' + this.instanceId,
 					fileType: 'png',
 					quality: this.qlty,
-					success: (r) => {
+					success: async (r) => {
 						// console.log(r)
 						this.prvImgTmp = r = r.tempFilePath;
 
@@ -678,7 +699,7 @@
 						this.prvY = prvY = (prvY - prvHeight) / 2;
 						this.prvWidth = prvWidth;
 						this.prvHeight = prvHeight;
-						ctxCanvasPrv.drawImage(r, prvX, prvY, prvWidth, prvHeight);
+						await ctxCanvasPrv.drawImage(r, prvX, prvY, prvWidth, prvHeight);
 						ctxCanvasPrv.draw(false, () => {
 							// #ifdef H5
 							this.btop(this.prvImgTmp).then((r) => {
@@ -703,7 +724,7 @@
 					complete: () => {
 						uni.hideLoading();
 					}
-				}, this);
+				});
 			},
 			chooseImage(index = undefined, params = undefined, data = undefined) {
 				if (params) {
@@ -962,7 +983,8 @@
 					this.resizeHandle = null; // 重置调整手柄
 				}
 			},
-			getImgData() {
+			async getImgData() {
+				await this.initCanvasRefs();
 				return new Promise((resolve, reject) => {
 					let prvX = this.prvX,
 						prvY = this.prvY,
@@ -974,8 +996,7 @@
 					prvWidth *= this.pixelRatio;
 					prvHeight *= this.pixelRatio;
 					// #endif
-					uni.canvasGetImageData({
-						canvasId: 'prv-canvas-' + this.instanceId,
+					this.ctxCanvasPrv.getImageData({
 						x: prvX,
 						y: prvY,
 						width: prvWidth,
@@ -986,7 +1007,7 @@
 						fail(err) {
 							reject(err);
 						}
-					}, this);
+					});
 				});
 			},
 			async colorChange(e) {
@@ -1110,8 +1131,7 @@
 				prvWidth *= this.pixelRatio;
 				prvHeight *= this.pixelRatio;
 				// #endif
-				uni.canvasPutImageData({
-					canvasId: 'prv-canvas-' + this.instanceId,
+				this.ctxCanvasPrv.putImageData({
 					x: prvX,
 					y: prvY,
 					width: prvWidth,
@@ -1126,7 +1146,7 @@
 					complete() {
 						uni.hideLoading();
 					}
-				}, this);
+				});
 			},
 			btop(base64) {
 				return new Promise(function (resolve, reject) {

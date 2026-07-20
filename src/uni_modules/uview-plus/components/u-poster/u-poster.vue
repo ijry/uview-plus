@@ -1,13 +1,16 @@
 <template>
 	<view class="up-poster">
 		<!-- canvas用于绘制海报 -->
-		<canvas 
-			v-if="showCanvas" 
+		<up-canvas
+			v-if="showCanvas"
+			ref="posterCanvas"
 			class="up-poster__hidden-canvas" 
 			:canvas-id="canvasId" 
-			:id="canvasId"
+			:width="canvasWidth"
+			:height="canvasHeight"
+			bg-color="transparent"
 			:style="{ width: canvasWidth + 'px', height: canvasHeight + 'px' }">
-		</canvas>
+		</up-canvas>
 		<!-- 隐藏的二维码组件，用于生成二维码图片 -->
 		<up-qrcode 
 			ref="qrCode" 
@@ -102,8 +105,8 @@ export default {
                     // 等待DOM更新
                     await this.$nextTick();
                     
-                    // 创建canvas上下文
-                    const ctx = uni.createCanvasContext(this.canvasId, this);
+                    const posterCanvas = await this.getPosterCanvas();
+                    const ctx = posterCanvas;
                     
                     // 绘制背景
                     if (posterSize.background) {
@@ -125,9 +128,11 @@ export default {
                     ctx.draw(false, () => {
                         // 等待绘制完成
                         setTimeout(() => {
-                            // 导出图片
-                            uni.canvasToTempFilePath({
-                                canvasId: this.canvasId,
+                            posterCanvas.toTempFilePath({
+                                width,
+                                height,
+                                destWidth: width,
+                                destHeight: height,
                                 success: (res) => {
                                     // 隐藏canvas
                                     this.showCanvas = false;
@@ -145,7 +150,7 @@ export default {
                                     this.showCanvas = false;
                                     reject(new Error('导出图片失败: ' + JSON.stringify(err)));
                                 }
-                            }, this);
+                            });
                         }, 300);
                     });
                     
@@ -159,6 +164,16 @@ export default {
                     reject(error);
                 }
 			});
+		},
+
+		async getPosterCanvas() {
+			await this.$nextTick();
+			const posterCanvas = this.$refs.posterCanvas;
+			if (!posterCanvas) {
+				throw new Error('无法获取海报画布实例');
+			}
+			await posterCanvas.initCanvas(true);
+			return posterCanvas;
 		},
 		
 		/**
@@ -224,7 +239,7 @@ export default {
 					return new Promise((resolve) => {
 						uni.getImageInfo({
 							src: item.src,
-							success: (res) => {
+							success: async (res) => {
 								// console.log('图片加载成功: ' + item.src, res);
 								// 处理圆角
 								if (css.radius) {
@@ -232,7 +247,7 @@ export default {
 									this.clipRoundRect(ctx, left, top, width, height, radius);
 								}
 								// 不能用item.src，要用res.path。
-								ctx.drawImage(res.path, left, top, width, height);
+								await ctx.drawImage(res.path, left, top, width, height);
 								// 恢复剪切区域
 								ctx.restore();
 								resolve();
@@ -255,8 +270,8 @@ export default {
 						return new Promise((resolve) => {
 							uni.getImageInfo({
 								src: qrCodeImageUrl,
-								success: (res) => {
-									ctx.drawImage(res.path, left, top, width, height);
+								success: async (res) => {
+									await ctx.drawImage(res.path, left, top, width, height);
 									resolve();
 								},
 								fail: () => {

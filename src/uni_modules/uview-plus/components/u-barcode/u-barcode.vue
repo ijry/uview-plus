@@ -1,11 +1,14 @@
 <template>
   <view class="u-barcode" v-if="calcSizeDone">
-    <canvas 
-      v-if="showCanvas && !error" 
-      :id="canvasId" 
+    <up-canvas
+      v-if="showCanvas && !error"
+      ref="barcodeCanvas"
       :canvas-id="canvasId" 
+      :width="canvasWidth"
+      :height="canvasHeight"
+      bg-color="transparent"
       :style="{ width: canvasWidth + 'px', height: canvasHeight + 'px' }"
-    ></canvas>
+    ></up-canvas>
     <image 
       v-else-if="!showCanvas && !error"
       :src="barcodeImage" 
@@ -19,6 +22,15 @@
     >
       <text class="error-text">{{ error }}</text>
     </view>
+    <up-canvas
+      v-if="!useCanvas && calcSizeDone"
+      ref="barcodeImageCanvas"
+      class="u-barcode__hidden-canvas"
+      :canvas-id="tempCanvasId"
+      :width="canvasWidth"
+      :height="canvasHeight"
+      bg-color="transparent"
+    ></up-canvas>
   </view>
 </template>
 
@@ -146,6 +158,7 @@ export default {
   data() {
     return {
       canvasId: 'barcode-' + Math.random().toString(36).substr(2, 9),
+      tempCanvasId: 'barcode-temp-' + Math.random().toString(36).substr(2, 9),
       barcodeImage: '',
       showCanvas: false,
       canvasWidth: 0,
@@ -269,8 +282,7 @@ export default {
 
         await nextTick()
 
-        // 获取canvas上下文
-        const ctx = uni.createCanvasContext(this.canvasId, this)
+        const ctx = await this.getCanvasRef('barcodeCanvas')
         
         // 清空画布
         ctx.setFillStyle(options.background)
@@ -301,14 +313,14 @@ export default {
      * @author jry <ijry@qq.com>
      * @param {Object} options - 条码配置选项
      */
-    renderToImage(options) {
+    async renderToImage(options) {
       try {
         // 计算canvas尺寸
         this.calculateCanvasSize(options)
-        
-        // 创建临时canvas用于生成图片
-        const tempCanvasId = 'temp-' + this.canvasId
-        const ctx = uni.createCanvasContext(tempCanvasId, this)
+
+        await nextTick()
+        const canvas = await this.getCanvasRef('barcodeImageCanvas')
+        const ctx = canvas
         
         // 清空画布
         ctx.setFillStyle(options.background)
@@ -326,9 +338,11 @@ export default {
         ctx.draw(false, () => {
           // 延迟一小段时间确保canvas绘制完成
           setTimeout(() => {
-            // 将canvas转换为图片
-            uni.canvasToTempFilePath({
-              canvasId: tempCanvasId,
+            canvas.toTempFilePath({
+              width: this.canvasWidth,
+              height: this.canvasHeight,
+              destWidth: this.canvasWidth,
+              destHeight: this.canvasHeight,
               success: (res) => {
                 this.barcodeImage = res.tempFilePath
                 this.$emit('rendered', { type: 'image', value: this.value, path: res.tempFilePath })
@@ -337,13 +351,23 @@ export default {
                 console.error('生成条码图片失败:', error)
                 this.$emit('error', error)
               }
-            }, this)
+            })
           }, 100)
         })
       } catch (error) {
         console.error('生成条码图片失败:', error)
         this.$emit('error', error)
       }
+    },
+
+    async getCanvasRef(refName) {
+      await nextTick()
+      const canvas = this.$refs[refName]
+      if (!canvas) {
+        throw new Error(`Canvas ref not found: ${refName}`)
+      }
+      await canvas.initCanvas(true)
+      return canvas
     },
     
     /**
@@ -984,6 +1008,13 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+
+.u-barcode__hidden-canvas {
+  position: fixed;
+  top: -10000px;
+  left: -10000px;
+  z-index: -1;
 }
 
 .error-container {
