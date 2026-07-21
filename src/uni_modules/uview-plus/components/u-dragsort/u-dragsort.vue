@@ -212,7 +212,8 @@ export default {
             if (this.$slots.handler && e.currentTarget.dataset.action !== 'handler') {
                 return
             }
-            if (this.list[index]?.draggable === false) return;
+            // 全局禁用或单项禁用时，不进入拖拽态，避免 Android 上小范围漂浮/阴影
+            if (!this.draggable || this.list[index]?.draggable === false) return;
             if (this.timer) clearTimeout(this.timer);
             this.sortChanged = false;
             this.dragIndex = index;
