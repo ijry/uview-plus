@@ -214,11 +214,23 @@
 		/* #ifndef APP-NVUE || MP-WEIXIN */
 		touch-action: pan-y;
 		/* #endif */
+		/* #ifndef APP-NVUE */
+		// 触发独立合成层，避免 H5 下 overflow 裁剪失效导致右侧按钮露边
+		transform: translateZ(0);
+		/* #endif */
 
 		&__content {
+			position: relative;
+			// 保证内容层始终铺满整行，避免关闭态右侧露出删除按钮底色
+			width: 100%;
             transform: translateX(0px); // 修复某些情况下默认右侧按钮是展开的问题
 			background-color: var(--up-card-bg-color, #FFFFFF);
 			z-index: 10;
+			/* #ifndef APP-NVUE */
+			// 覆盖 H5 亚像素渲染时内容层与容器之间的 1px 缝隙
+			box-shadow: 1px 0 0 var(--up-card-bg-color, #FFFFFF);
+			box-sizing: border-box;
+			/* #endif */
 		}
 
 		&__right {
@@ -226,6 +238,8 @@
 			top: 0;
 			bottom: 0;
 			right: 0;
+			height: 100%;
+			z-index: 1;
 			@include flex;
 
 			&__button {
