@@ -1,3 +1,9 @@
+## 3.8.78
+fix: 完善 u-dragsort 禁用拖拽逻辑
+
+- 全局 draggable 为 false 时，onTouchStart 不再写入 dragIndex
+- 避免 Android 禁用场景下出现小范围漂浮与阴影（关联 #854）
+
 ## 3.8.77
 修复 index.js 在 H5 环境下组件自动注册逻辑，移除对 import.meta.glob 的运行时函数判断。
 确保 Vite 编译期宏可以正常展开，避免全局组件注册被误跳过。
