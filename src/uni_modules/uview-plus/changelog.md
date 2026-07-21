@@ -1,3 +1,9 @@
+## 3.8.79
+fix: 适配鸿蒙 platform/UA 检测，并修复 u-image flex 压缩
+
+- u-sticky / gcanvas bridge-weex 显式识别 harmony/harmonyos/ohos，消除鸿蒙静态检查告警（#1028）
+- u-image 在 flex 布局下增加防压缩尺寸策略，修正 radius 字符串判断
+
 ## 3.8.78
 fix: 完善 u-dragsort 禁用拖拽逻辑
 
