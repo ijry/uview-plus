@@ -159,6 +159,17 @@
 					this.cssSticky = true
 				}
 
+				// 鸿蒙系统现代 WebView 支持 css sticky；显式判断以避免静态检查告警
+				// platform 可能为 harmony / harmonyos / ohos
+				const platformName = os()
+				if (
+					platformName === 'harmony' ||
+					platformName === 'harmonyos' ||
+					platformName === 'ohos'
+				) {
+					this.cssSticky = true
+				}
+
 				// APP-Vue和微信平台，通过computedStyle判断是否支持css sticky
 				// #ifdef APP-VUE || MP-WEIXIN || MP-TOUTIAO
 				this.cssSticky = await this.checkComputedStyle()
