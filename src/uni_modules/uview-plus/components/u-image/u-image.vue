@@ -126,14 +126,14 @@
 			}
 		},
 		computed: {
-			transStyle() {
-				let style = {};
-				// 通过调用addUnit()方法，如果有单位，如百分比，px单位等，直接返回，如果是纯粹的数值，则加上rpx单位
+			resolvedSizeStyle() {
+				const style = {};
 				// #ifdef APP-NVUE
 				style.width = addUnit(this.width);
 				style.height = addUnit(this.height);
 				// #endif
 				// #ifndef APP-NVUE
+				// widthFix/heightFix 加载完成后用 fit-content 跟随图片比例；其余模式固定宽高
 				if (this.loading || this.isError || this.width == '100%' || this.mode != 'heightFix') {
 					style.width = addUnit(this.width);
 				} else {
@@ -147,29 +147,38 @@
 				// #endif
 				return style;
 			},
+			transStyle() {
+				return {
+					...this.resolvedSizeStyle,
+					// flex 行布局下默认 shrink=1 会把固定宽图片压成细条
+					flexShrink: 0,
+					boxSizing: 'border-box',
+					maxWidth: '100%'
+				};
+			},
 			wrapStyle() {
-				let style = {};
-				// 通过调用addUnit()方法，如果有单位，如百分比，px单位等，直接返回，如果是纯粹的数值，则加上rpx单位
-				// #ifdef APP-NVUE
-				style.width = addUnit(this.width);
-				style.height = addUnit(this.height);
-				// #endif
-				// #ifndef APP-NVUE
-				if (this.loading || this.isError || this.width == '100%' || this.mode != 'heightFix') {
-					style.width = addUnit(this.width);
-				} else {
-					style.width = 'fit-content';
+				let style = {
+					...this.resolvedSizeStyle,
+					flexShrink: 0,
+					boxSizing: 'border-box',
+					maxWidth: '100%'
+				};
+				// 固定尺寸时用 minWidth/minHeight 抵抗 flex 压缩；百分比宽度不设 minWidth 以免撑破父级
+				const widthText = String(style.width || '')
+				const heightText = String(style.height || '')
+				if (widthText && widthText !== 'fit-content' && !widthText.includes('%')) {
+					style.minWidth = widthText
 				}
-				if (this.loading || this.isError || this.height == '100%' || this.mode != 'widthFix') {
-					style.height = addUnit(this.height);
-				} else {
-					style.height = 'fit-content';
+				if (heightText && heightText !== 'fit-content' && !heightText.includes('%')) {
+					style.minHeight = heightText
 				}
-				// #endif
 				// 如果是显示圆形，设置一个很多的半径值即可
 				style.borderRadius = this.shape == 'circle' ? '10000px' : addUnit(this.radius)
-				// 如果设置圆角，必须要有hidden，否则可能圆角无效
-				style.overflow = this.radius > 0 ? 'hidden' : 'visible'
+				// radius 可能是 "12px" 字符串，不能用 > 0 判断
+				const radiusNumber = Number(String(this.radius ?? '').replace(/[^\d.-]/g, ''))
+				const hasRadius = this.shape == 'circle' || (!Number.isNaN(radiusNumber) && radiusNumber > 0)
+				// 裁剪圆角 / aspectFill 时需要 hidden，避免内容溢出成细条错位
+				style.overflow = hasRadius || this.mode === 'aspectFill' || this.mode === 'aspectFit' ? 'hidden' : 'visible'
 				// if (this.fade) {
 				// 	style.opacity = this.opacity
 				// 	// nvue下，这几个属性必须要分开写
@@ -243,10 +252,14 @@
 	.u-image {
 		position: relative;
 		transition: opacity 0.5s ease-in-out;
+		flex-shrink: 0;
+		max-width: 100%;
+		box-sizing: border-box;
 
 		&__image {
 			width: 100%;
 			height: 100%;
+			display: block;
 		}
 
 		&__loading,
