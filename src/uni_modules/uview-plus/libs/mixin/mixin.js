@@ -74,7 +74,7 @@ export const mixin = defineMixin({
         if (typeof uni !== 'undefined' && typeof uni.$on === 'function') {
             this.__uThemeChangeHandler = (payload = {}) => {
                 this.upSyncThemeVersion(payload)
-                this.chacheU = null
+                this.upClearUCache()
                 if (typeof this.$forceUpdate === 'function') {
                     this.$forceUpdate()
                 }
@@ -89,6 +89,10 @@ export const mixin = defineMixin({
         $u() {
             this.upThemeVersion
             // #ifndef APP-NVUE
+            const instance = this.$
+            if (instance?.__upUCache) {
+                return instance.__upUCache
+            }
             // 在非nvue端，移除props，http，mixin等对象，避免在小程序setData时数据过大影响性能
             let mergeU = deepMerge(uni.$u, {
                 props: undefined,
@@ -96,10 +100,11 @@ export const mixin = defineMixin({
                 mixin: undefined
             })
 			// 缓存结果避免每次计算
-			if (!this.chacheU) {
-				this.chacheU = mergeU
+			if (instance) {
+				instance.__upUCache = mergeU
+				return instance.__upUCache
 			}
-			return this.chacheU
+			return mergeU
             // #endif
             // #ifdef APP-NVUE
             return uni.$u
@@ -156,6 +161,11 @@ export const mixin = defineMixin({
         }
     },
     methods: {
+        upClearUCache() {
+            if (this.$) {
+                this.$.__upUCache = null
+            }
+        },
         upBindGetRect() {
             const upU = this.$u || (typeof uni !== 'undefined' ? uni.$u : null)
             if (upU) {
