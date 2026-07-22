@@ -44,7 +44,8 @@
     "verify:navbar-safe-area-background": "node scripts/verify-navbar-safe-area-background.mjs",
     "verify:calendar-popup-props": "node scripts/verify-calendar-popup-props.mjs",
     "verify:waterfall-distribution": "node scripts/verify-waterfall-distribution.mjs",
-    "verify:up-canvas-unification": "node scripts/verify-up-canvas-unification.mjs"
+    "verify:up-canvas-unification": "node scripts/verify-up-canvas-unification.mjs",
+    "verify:app-local-icon-font": "node scripts/verify-app-local-icon-font.mjs"
   },
   "pnpm":{"overrides":{"rollup":"4.14.3"}},
   "dependencies": {

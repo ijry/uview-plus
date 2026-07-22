@@ -161,8 +161,8 @@
 	$u-icon-error: $u-error !default;
 	$u-icon-label-line-height:1 !default;
 
-	/* #ifdef APP || MP-QQ || MP-TOUTIAO || MP-BAIDU || MP-KUAISHOU || MP-XHS */
-	// 2025/04/09在App/微信/支付宝/鸿蒙元服务已改用uni.loadFontFace加载字体
+	/* #ifdef MP-QQ || MP-TOUTIAO || MP-BAIDU || MP-KUAISHOU || MP-XHS */
+	// App端通过uni.loadFontFace加载包内本地字体，避免远程字体阻塞页面渲染。
 	@font-face {
 		font-family: 'uicon-iconfont';
 		src: url('https://at.alicdn.com/t/font_2225171_8kdcwk4po24.ttf') format('truetype');
