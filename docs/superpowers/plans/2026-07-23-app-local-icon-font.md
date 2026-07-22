@@ -26,7 +26,7 @@
 
 - `scripts/verify-app-local-icon-font.mjs`: new repository check for the App-local font contract. It reads source files directly and fails if App CSS still references the CDN, if the package font asset is missing, or if runtime loading no longer uses the local `upicon.ttf` path.
 - `package.json`: add `verify:app-local-icon-font` so the contract can be run consistently.
-- `src/uni_modules/uview-plus/components/u-icon/util.js`: update built-in icon font loading to use `new URL('./upicon.ttf', import.meta.url).href` on App/App-nvue, while non-App platforms continue using `config.iconUrl`.
+- `src/uni_modules/uview-plus/components/u-icon/util.js`: update built-in icon font loading to import `./upicon.ttf?url` on App/App-nvue, while non-App platforms continue using `config.iconUrl`.
 - `src/uni_modules/uview-plus/components/u-icon/u-icon.vue`: remove `APP` from the remote CSS `@font-face` condition; keep the fallback CSS for mini-program targets that still depend on it.
 - `src/uni_modules/uview-plus/components/u-icon/upicon.ttf`: add the package-local built-in icon font asset to version control.
 
@@ -75,8 +75,16 @@ if (!/#ifdef\s+MP-QQ\s+\|\|\s+MP-TOUTIAO\s+\|\|\s+MP-BAIDU\s+\|\|\s+MP-KUAISHOU\
   throw new Error('u-icon.vue should keep the non-App mini-program @font-face condition')
 }
 
-if (!/new URL\('\.\/upicon\.ttf',\s*import\.meta\.url\)\.href/.test(util)) {
-  throw new Error('util.js should resolve the App built-in font from ./upicon.ttf')
+if (!/import\s+iconFontUrl\s+from\s+'\.\/upicon\.ttf\?url'/.test(util)) {
+  throw new Error('util.js should import the App built-in font with ./upicon.ttf?url')
+}
+
+if (/new URL\(['"]\.\/upicon\.ttf['"],\s*import\.meta\.url\)/.test(util)) {
+  throw new Error('util.js should not use new URL(..., import.meta.url) for the App font')
+}
+
+if (!/return iconFontUrl/.test(util)) {
+  throw new Error('util.js should use the emitted App font asset URL')
 }
 
 if (!/params\.loaded\s*=\s*true;\s*return;[\s\S]*if\s*\(config\.loadFontOnce\)/.test(util)) {
@@ -138,6 +146,9 @@ Use `apply_patch` to replace the whole file `src/uni_modules/uview-plus/componen
 
 ```js
 import config from '../../libs/config/config';
+// #ifdef APP || APP-NVUE
+import iconFontUrl from './upicon.ttf?url';
+// #endif
 
 const iconFontFamily = 'uicon-iconfont';
 
@@ -147,7 +158,7 @@ let params = {
 
 const getIconUrl = () => {
     // #ifdef APP || APP-NVUE
-    return new URL('./upicon.ttf', import.meta.url).href;
+    return iconFontUrl;
     // #endif
     return config.iconUrl;
 };

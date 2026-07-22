@@ -1,4 +1,7 @@
 import config from '../../libs/config/config';
+// #ifdef APP || APP-NVUE
+import iconFontUrl from './upicon.ttf?url';
+// #endif
 
 const iconFontFamily = 'uicon-iconfont';
 
@@ -8,7 +11,7 @@ let params = {
 
 const getIconUrl = () => {
     // #ifdef APP || APP-NVUE
-    return new URL('./upicon.ttf', import.meta.url).href;
+    return iconFontUrl;
     // #endif
     return config.iconUrl;
 };

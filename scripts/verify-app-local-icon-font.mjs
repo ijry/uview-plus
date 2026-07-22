@@ -26,8 +26,16 @@ if (!/#ifdef\s+MP-QQ\s+\|\|\s+MP-TOUTIAO\s+\|\|\s+MP-BAIDU\s+\|\|\s+MP-KUAISHOU\
   throw new Error('u-icon.vue should keep the non-App mini-program @font-face condition')
 }
 
-if (!/new URL\('\.\/upicon\.ttf',\s*import\.meta\.url\)\.href/.test(util)) {
-  throw new Error('util.js should resolve the App built-in font from ./upicon.ttf')
+if (!/import\s+iconFontUrl\s+from\s+'\.\/upicon\.ttf\?url'/.test(util)) {
+  throw new Error('util.js should import the App built-in font with ./upicon.ttf?url')
+}
+
+if (/new URL\(['"]\.\/upicon\.ttf['"],\s*import\.meta\.url\)/.test(util)) {
+  throw new Error('util.js should not use new URL(..., import.meta.url) for the App font')
+}
+
+if (!/return iconFontUrl/.test(util)) {
+  throw new Error('util.js should use the emitted App font asset URL')
 }
 
 if (!/params\.loaded\s*=\s*true;\s*return;[\s\S]*if\s*\(config\.loadFontOnce\)/.test(util)) {
