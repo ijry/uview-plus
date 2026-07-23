@@ -13,12 +13,6 @@
 [![license](https://img.shields.io/github/license/ijry/uview-plus?style=flat-square)](https://en.wikipedia.org/wiki/MIT_License)
 <!-- [![release](https://img.shields.io/github/v/release/ijry/uview-plus?style=flat-square)](https://github.com/ijry/uview-plus/releases) -->
 
-## 中转站推荐
-- [freemodel.dev](https://freemodel.dev/invite/FRE-f1f686f2)：经常遇到活动送100刀，注册送300刀但是是按周发放66刀，这个站应该是自己开发的没使用new-api这种源码。
-- [api.code-relay.com](https://api.code-relay.com/register?aff=r6nS)：注册送10刀。
-- [ai-router.dev](https://ai-router.dev/register?aff=XCKCNZVXRDUR)：注册送20刀。
-- [api.feng.cx](https://api.feng.cx/sign-up?aff=mx6l)：注册送10刀。
-
 ## 介绍
 
 uview-plus，是[uni-app](https://uniapp.dcloud.io/)全面兼容nvue的uni-app生态框架，全面的组件和便捷的工具会让您信手拈来，如鱼得水。
