@@ -746,7 +746,8 @@
 
 					expWidth && (this.expWidth = expWidth.indexOf('rpx') >= 0 ? parseInt(expWidth) * this.pxRatio : parseInt(expWidth));
 					expHeight && (this.expHeight = expHeight.indexOf('rpx') >= 0 ? parseInt(expHeight) * this.pxRatio : parseInt(expHeight));
-					this.letRotate = canRotate === false ? 0 : 1;
+					this.isin = inner === true ? 1 : 0;
+					this.letRotate = (canRotate === false || this.isin) ? 0 : 1;
 					this.letScale = canScale === false ? 0 : 1;
 					// 设置是否允许调整裁剪框大小
 					this.letChangeSize = canChangeSize || false;
@@ -754,7 +755,6 @@
 					this.mnScale = minScale || 0.3;
 					this.mxScale = maxScale || 4;
 					this.stc = stretch;
-					this.isin = inner === true ? 1 : 0;
 					this.lck = lock;
 					if (this.isin) {
 						this.btnWidth = '24%';
@@ -914,17 +914,41 @@
 								break;
 						}
 
-						// 确保最小尺寸
-						if (parseInt(style.width) >= minWidth && parseInt(style.height) >= minHeight) {
-							// 确保裁剪框不超出屏幕边界
-							if (parseInt(style.left) >= 0 &&
-								parseInt(style.top) >= 0 &&
-								(parseInt(style.left) + parseInt(style.width)) <= this.windowWidth &&
-								(parseInt(style.top) + parseInt(style.height)) <= (this.windowHeight - tabHeight)) {
-								this.selStyle = style;
-								// 重新绘制操作层
-								this.drawInit();
-							}
+						// 约束裁剪框：最小尺寸、屏幕边界，inner 模式下再限制在图片内
+						let nl = parseInt(style.left);
+						let nt = parseInt(style.top);
+						let nw = parseInt(style.width);
+						let nh = parseInt(style.height);
+
+						// 屏幕边界
+						if (nl < 0) nl = 0;
+						if (nt < 0) nt = 0;
+						if (nl + nw > this.windowWidth) nw = this.windowWidth - nl;
+						if (nt + nh > this.windowHeight - tabHeight) nh = this.windowHeight - tabHeight - nt;
+
+						if (this.isin) {
+							const imgWidth = this.useWidth * this.scaleSize;
+							const imgHeight = this.useHeight * this.scaleSize;
+							const rx0 = this.posWidth + this.useWidth / 2;
+							const ry0 = this.posHeight + this.useHeight / 2;
+							const imgL = rx0 - imgWidth / 2;
+							const imgT = ry0 - imgHeight / 2;
+							const imgR = imgL + imgWidth;
+							const imgB = imgT + imgHeight;
+							if (nl < imgL) nl = imgL;
+							if (nt < imgT) nt = imgT;
+							if (nl + nw > imgR) nw = imgR - nl;
+							if (nt + nh > imgB) nh = imgB - nt;
+						}
+
+						if (nw >= minWidth && nh >= minHeight) {
+							style.left = nl + 'px';
+							style.top = nt + 'px';
+							style.width = nw + 'px';
+							style.height = nh + 'px';
+							this.selStyle = style;
+							// 重新绘制操作层
+							this.drawInit();
 						}
 					} else {
 						// 原有的移动图片逻辑
