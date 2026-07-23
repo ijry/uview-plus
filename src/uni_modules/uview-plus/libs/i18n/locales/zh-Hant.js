@@ -1,4 +1,4 @@
-{
+export default {
     "up.common.cancel": "取消",
     "up.common.confirm": "確定",
     "up.common.start": "開始",

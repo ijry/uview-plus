@@ -1,4 +1,4 @@
-{
+export default {
     "up.common.cancel": "Annuler",
     "up.common.confirm": "Confirmer",
     "up.common.start": "Démarrer",
