@@ -1,3 +1,12 @@
+## 3.8.84
+feat!: i18n 语言包改为按需注册，默认仅内置 zh-Hans（#908）
+
+- 重大变更：不再默认打包 en/es/fr/de/ko/ja/ru/zh-Hant 等语言包，主包体积可明显下降
+- 语言包由 json 调整为 js 模块，并从包入口导出 en/ja/.../allLocales，业务无需手写深层路径
+- 迁移：非中文项目需在应用启动时 registerLocale 注册所需语言；可用 allLocales 一键恢复旧行为
+- 兼容：t()、uni.getLocale/onLocaleChange 用法不变；未注册语言回退 zh-Hans
+- 文档：i18n 指南补充按需注册与重大变更说明
+
 ## 3.8.83
 feat: cropper 支持并文档化 inner 限制裁剪框在图片内
 
@@ -2381,3 +2390,4 @@ fix: #261u-input在直接修改v-model的绑定值时，每隔一次会无法出
 
 - feat: tabbar 新增多种风格预设、动态图标切换与轻量选中动画
 - improvment: tabbar 补充高颜值本地图标示例并优化发布型底栏视觉
+
