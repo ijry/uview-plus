@@ -1,3 +1,10 @@
+## 3.8.82
+fix: App 端内置图标字体改为包内本地加载
+
+- App / App-nvue 内置 u-icon 字体改为从包内 upicon.ttf 加载，不再依赖 alicdn 网络请求（#1044）
+- 使用 upicon.ttf?url 由构建产物发射本地字体资源，配合 uni.loadFontFace / weex addRule，避免弱网阻塞页面渲染
+- 无需手动拷贝到 static，也无需 npm postinstall hook
+
 ## 3.8.81
 fix: 修复全局 mixin 的 $u 缓存未声明导致 Vue3 开发警告
 
