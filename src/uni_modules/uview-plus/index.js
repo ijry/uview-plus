@@ -46,7 +46,26 @@ import http from './libs/function/http.js'
 import fontUtil from './components/u-icon/util.js';
 
 // i18n
-import i18n, { t } from './libs/i18n/index.js'
+import i18n, {
+    t,
+    registerLocale,
+    hasLocale,
+    getLocale,
+    setLocale
+} from './libs/i18n/index.js'
+import {
+    en,
+    es,
+    fr,
+    de,
+    ko,
+    ja,
+    ru,
+    th,
+    zhHans,
+    zhHant,
+    all as allLocales
+} from './libs/i18n/locale-packs.js'
 import {
     themeState,
     setTheme,
@@ -139,7 +158,41 @@ function rootNotify(options = {}) {
 
 // 导出
 let themeType = ['primary', 'success', 'error', 'warning', 'info'];
-export { route, http, debounce, throttle, calc, digit, platform, themeType, mixin, mpMixin, props, color, test, zIndex, fontUtil, i18n , rpx2px, t}
+export {
+    route,
+    http,
+    debounce,
+    throttle,
+    calc,
+    digit,
+    platform,
+    themeType,
+    mixin,
+    mpMixin,
+    props,
+    color,
+    test,
+    zIndex,
+    fontUtil,
+    i18n,
+    rpx2px,
+    t,
+    registerLocale,
+    hasLocale,
+    getLocale,
+    setLocale,
+    en,
+    es,
+    fr,
+    de,
+    ko,
+    ja,
+    ru,
+    th,
+    zhHans,
+    zhHant,
+    allLocales
+}
 export * from './libs/function/index.js'
 export * from './libs/function/colorGradient.js'
 
