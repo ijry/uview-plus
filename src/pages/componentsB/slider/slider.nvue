@@ -33,6 +33,18 @@
 			</view>
 		</view>
 		<view class="u-demo-block">
+			<text class="u-demo-block__title">小数步长(每次步进0.1)</text>
+			<view class="u-page__slide-item">
+				<up-slider
+				    v-model="value3"
+				    :step="0.1"
+				    :min="0"
+				    :max="1"
+				    showValue
+				></up-slider>
+			</view>
+		</view>
+		<view class="u-demo-block">
 			<text class="u-demo-block__title">自定义样式</text>
 			<view class="u-page__slide-item">
 				<up-slider
@@ -130,7 +142,7 @@ const sliderValue = ref(4)
 const useNative = ref(false)
 const value1 = ref(30)
 const value2 = ref(30)
-const value3 = ref(30)
+const value3 = ref(0.3)
 const value4 = ref(30)
 const value5 = ref(30)
 const value6 = ref([10, 20])
