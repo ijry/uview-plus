@@ -101,6 +101,7 @@
 	import { mpMixin } from '../../libs/mixin/mpMixin'
 	import { mixin } from '../../libs/mixin/mixin'
 	import { addUnit, addStyle, getPx, sleep } from '../../libs/function/index.js'
+	import { digitLength, strip } from '../../libs/function/digit.js'
 	// #ifdef APP-NVUE
 	const dom = uni.requireNativePlugin('dom')
 	// #endif
@@ -326,16 +327,18 @@
 				clientX = touches.screenX;
 				clientY = touches.screenY;
 				// #endif
+				const min = this.toSliderNumber(this.min)
+				const max = this.toSliderNumber(this.max, 100)
 				if (this.vertical) {
 					this.distanceY = clientY - this.sliderRect.top;
 					// 获得移动距离对整个滑块的值，此为带有多位小数的值，不能用此更新视图
 					// 否则造成通信阻塞，需要每改变一个step值时修改一次视图
-					this.newValue = ((this.distanceY / this.sliderRect.height) * (this.max - this.min)) + parseFloat(this.min);
+					this.newValue = ((this.distanceY / this.sliderRect.height) * (max - min)) + min;
 				} else {
 					this.distanceX = clientX - this.sliderRect.left;
 					// 获得移动距离对整个滑块的值，此为带有多位小数的值，不能用此更新视图
 					// 否则造成通信阻塞，需要每改变一个step值时修改一次视图
-					this.newValue = ((this.distanceX / this.sliderRect.width) * (this.max - this.min)) + parseFloat(this.min);
+					this.newValue = ((this.distanceX / this.sliderRect.width) * (max - min)) + min;
 				}
 				
 				this.status = 'moving';
@@ -361,16 +364,18 @@
 				clientX = touches.screenX;
 				clientY = touches.screenY;
 				// #endif
+				const min = this.toSliderNumber(this.min)
+				const max = this.toSliderNumber(this.max, 100)
 				if (this.vertical) {
 					this.distanceY = clientY - this.sliderRect.top;
 					// 获得移动距离对整个滑块的值，此为带有多位小数的值，不能用此更新视图
 					// 否则造成通信阻塞，需要每改变一个step值时修改一次视图
-					this.newValue = ((this.distanceY / this.sliderRect.height) * (this.max - this.min)) + parseFloat(this.min);
+					this.newValue = ((this.distanceY / this.sliderRect.height) * (max - min)) + min;
 				} else {
 					this.distanceX = clientX - this.sliderRect.left;
 					// 获得移动距离对整个滑块的值，此为带有多位小数的值，不能用此更新视图
 					// 否则造成通信阻塞，需要每改变一个step值时修改一次视图
-					this.newValue = ((this.distanceX / this.sliderRect.width) * (this.max - this.min)) + parseFloat(this.min);
+					this.newValue = ((this.distanceX / this.sliderRect.width) * (max - min)) + min;
 				}
 				this.status = 'moving';
 				// 发出moving事件
@@ -407,35 +412,42 @@
 				// console.log('click', event)
 				// #ifndef APP-NVUE
 				// nvue下暂时无法获取坐标
+				const min = this.toSliderNumber(this.min)
+				const max = this.toSliderNumber(this.max, 100)
 				if (this.vertical) {
 					let clientY = event.detail.y - this.sliderRect.top
 					// console.log(this.sliderRect.top, event.detail.y)
-					this.newValue = ((clientY / this.sliderRect.height) * (this.max - this.min)) + parseFloat(this.min)
+					this.newValue = ((clientY / this.sliderRect.height) * (max - min)) + min
 					this.updateValue(this.newValue, false, 1)
 				} else {
 					let clientX = event.detail.x - this.sliderRect.left
-					this.newValue = ((clientX / this.sliderRect.width) * (this.max - this.min)) + parseFloat(this.min)
+					this.newValue = ((clientX / this.sliderRect.width) * (max - min)) + min
 					this.updateValue(this.newValue, false, 1)
 				}
 				// #endif
 			},
 			updateValue(value, drag, index = 1) {
-				// 去掉小数部分，同时也是对step步进的处理
 				let valueFormat = this.format(value, index)
+				const min = this.toSliderNumber(this.min)
+				const max = this.toSliderNumber(this.max, 100)
+				const range = max - min
 				// 不允许滑动的值超过max最大值
-				if(valueFormat > this.max ) {
-					valueFormat = this.max
+				if(valueFormat > max ) {
+					valueFormat = max
+				}
+				if(valueFormat < min ) {
+					valueFormat = min
 				}
 				// 设置移动的距离，不能用百分比，因为NVUE不支持。
 				let sliderLength = 0
 				let barStyle = {}
 				if (this.vertical) {
-					sliderLength = Math.min((valueFormat - this.min) / (this.max - this.min) * this.sliderRect.height, this.sliderRect.height)
+					sliderLength = range === 0 ? 0 : Math.min((valueFormat - min) / range * this.sliderRect.height, this.sliderRect.height)
 					barStyle['height'] = addUnit(sliderLength)
 					barStyle['width'] = addUnit(this.sizeLocal)
 					barStyle['marginLeft'] = '-' + getPx(this.sizeLocal, true)
 				} else {
-					sliderLength = Math.min((valueFormat - this.min) / (this.max - this.min) * this.sliderRect.width, this.sliderRect.width)
+					sliderLength = range === 0 ? 0 : Math.min((valueFormat - min) / range * this.sliderRect.width, this.sliderRect.width)
 					barStyle['width'] = addUnit(sliderLength)
 					barStyle['height'] = addUnit(this.sizeLocal)
 					barStyle['marginTop'] = '-' + getPx(this.sizeLocal, true)
@@ -477,31 +489,61 @@
 					return valueFormat
 				}
 			},
+			toSliderNumber(value, fallback = 0) {
+				const number = Number(value)
+				return Number.isFinite(number) ? number : fallback
+			},
+			getSliderStep() {
+				const step = this.toSliderNumber(this.step, 1)
+				return step > 0 ? step : 1
+			},
+			normalizeSliderValue(value, ...refs) {
+				const precision = Math.min(
+					15,
+					Math.max(
+						digitLength(value),
+						digitLength(this.toSliderNumber(this.min)),
+						digitLength(this.toSliderNumber(this.max, 100)),
+						digitLength(this.getSliderStep()),
+						...refs.map(item => digitLength(this.toSliderNumber(item)))
+					)
+				)
+				return Number(strip(value).toFixed(precision))
+			},
+			formatByStep(value, lowerLimit, upperLimit) {
+				const min = this.toSliderNumber(this.min)
+				const max = this.toSliderNumber(this.max, 100)
+				const step = this.getSliderStep()
+				const lower = Math.min(Math.max(this.toSliderNumber(lowerLimit, min), min), max)
+				const upper = Math.max(Math.min(this.toSliderNumber(upperLimit, max), max), lower)
+				const boundedValue = Math.max(lower, Math.min(this.toSliderNumber(value, min), upper))
+				const steps = Math.round((boundedValue - min) / step)
+				const valueFormat = this.normalizeSliderValue(min + steps * step, boundedValue)
+				return this.normalizeSliderValue(Math.max(lower, Math.min(valueFormat, upper)), boundedValue)
+			},
 			format(value, index = 1) {
-				// 将小数变成整数，为了减少对视图的更新，造成视图层与逻辑层的阻塞
 				if (this.isRange) {
+					const min = this.toSliderNumber(this.min)
+					const max = this.toSliderNumber(this.max, 100)
+					const step = this.getSliderStep()
 					switch (index) {
 						case 0:
-							return Math.round(
-								Math.max(this.min, Math.min(value, this.rangeValue[1] - parseInt(this.step),this.max))
-								/ parseInt(this.step)
-							) * parseInt(this.step);
-							break;
+							return this.formatByStep(
+								value,
+								min,
+								this.normalizeSliderValue(this.toSliderNumber(this.rangeValue[1], max) - step)
+							)
 						case 1:
-							return Math.round(
-								Math.max(this.min, this.rangeValue[0] + parseInt(this.step), Math.min(value, this.max))
-								/ parseInt(this.step)
-							) * parseInt(this.step);
-							break;
+							return this.formatByStep(
+								value,
+								this.normalizeSliderValue(this.toSliderNumber(this.rangeValue[0], min) + step),
+								max
+							)
 						default:
-							break;
+							return this.formatByStep(value, min, max)
 					}
-				} else {
-					return Math.round(
-						Math.max(this.min, Math.min(value, this.max))
-						/ parseInt(this.step)
-					) * parseInt(this.step);
 				}
+				return this.formatByStep(value, this.min, this.max)
 			}
 		}
 	}
