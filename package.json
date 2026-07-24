@@ -46,7 +46,8 @@
     "verify:waterfall-distribution": "node scripts/verify-waterfall-distribution.mjs",
     "verify:up-canvas-unification": "node scripts/verify-up-canvas-unification.mjs",
     "verify:app-local-icon-font": "node scripts/verify-app-local-icon-font.mjs",
-    "verify:cropper-inner": "node scripts/verify-cropper-inner.mjs",`n    "verify:i18n-on-demand": "node scripts/verify-i18n-on-demand.mjs"
+    "verify:cropper-inner": "node scripts/verify-cropper-inner.mjs",
+    "verify:i18n-on-demand": "node scripts/verify-i18n-on-demand.mjs"
   },
   "pnpm":{"overrides":{"rollup":"4.14.3"}},
   "dependencies": {
