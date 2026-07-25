@@ -22,6 +22,7 @@ export default {
         interval: 3000,
         duration: 300,
         circular: false,
+        vertical: false,
         previousMargin: 0,
         nextMargin: 0,
         acceleration: false,

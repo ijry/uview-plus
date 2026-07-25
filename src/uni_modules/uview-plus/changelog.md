@@ -1,3 +1,9 @@
+## Next
+feat: swiper 支持 vertical 纵向滑动（#936）
+
+- 新增 `vertical` 属性并透传原生 swiper，默认 `false` 保持横向兼容
+- 补充类型定义与纵向滑动示例
+
 ## 3.8.85
 fix: slider 支持自定义模式小数步长
 
