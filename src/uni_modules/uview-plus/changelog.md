@@ -1,3 +1,9 @@
+## 3.8.86
+fix: 为 .w-full 补充 box-sizing，并补充插件 tsconfig
+
+- 在 components.scss 中为 .w-full 增加 box-sizing: border-box，避免宽度计算受边框/内边距影响
+- 新增 uni_modules/uview-plus/tsconfig.json，统一插件内 TypeScript/Vue 类型检查配置
+
 ## 3.8.85
 fix: slider 支持自定义模式小数步长
 
