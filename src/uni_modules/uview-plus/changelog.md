@@ -1,3 +1,9 @@
+## Next
+feat: swiper 支持 vertical 纵向滑动（#936）
+
+- 新增 `vertical` 属性并透传原生 swiper，默认 `false` 保持横向兼容
+- 补充类型定义与纵向滑动示例
+
 ## 3.8.86
 fix: 为 .w-full 补充 box-sizing，并补充插件 tsconfig
 
@@ -2403,4 +2409,3 @@ fix: #261u-input在直接修改v-model的绑定值时，每隔一次会无法出
 
 - feat: tabbar 新增多种风格预设、动态图标切换与轻量选中动画
 - improvment: tabbar 补充高颜值本地图标示例并优化发布型底栏视觉
-

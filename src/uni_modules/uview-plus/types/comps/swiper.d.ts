@@ -60,6 +60,11 @@ declare interface SwiperProps {
    */
   circular?: boolean
   /**
+   * 滑动方向是否为纵向
+   * @default false
+   */
+  vertical?: boolean
+  /**
    * 前边距，可用于露出前一项的一小部分，nvue和支付宝不支持
    * @default 0
    */

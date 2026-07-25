@@ -27,6 +27,7 @@
 			:autoplay="autoplay"
 			:current="current"
 			:currentItemId="currentItemId"
+			:vertical="vertical"
 			:previousMargin="addUnit(previousMargin)"
 			:nextMargin="addUnit(nextMargin)"
 			:acceleration="acceleration"
@@ -113,6 +114,7 @@
 	 * @property {String | Number}	interval				滑块自动切换时间间隔（ms）（默认 3000 ）
 	 * @property {String | Number}	duration				滑块切换过程所需时间（ms）（默认 300 ）
 	 * @property {Boolean}			circular				播放到末尾后是否重新回到开头（默认 false ）
+	 * @property {Boolean}			vertical				滑动方向是否为纵向（默认 false ）
 	 * @property {String | Number}	previousMargin			前边距，可用于露出前一项的一小部分，nvue和支付宝不支持（默认 0 ）
 	 * @property {String | Number}	nextMargin				后边距，可用于露出后一项的一小部分，nvue和支付宝不支持（默认 0 ）
 	 * @property {Boolean}			acceleration			当开启时，会根据滑动速度，连续滑动多屏，支付宝不支持（默认 false ）

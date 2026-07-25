@@ -65,6 +65,11 @@ export const props = defineMixin({
             type: Boolean,
             default: () => defProps.swiper.circular
         },
+        // 滑动方向是否为纵向
+        vertical: {
+            type: Boolean,
+            default: () => defProps.swiper.vertical
+        },
         // 前边距，可用于露出前一项的一小部分，nvue和支付宝不支持
         previousMargin: {
             type: [String, Number],

@@ -48,7 +48,8 @@
     "verify:app-local-icon-font": "node scripts/verify-app-local-icon-font.mjs",
     "verify:cropper-inner": "node scripts/verify-cropper-inner.mjs",
     "verify:i18n-on-demand": "node scripts/verify-i18n-on-demand.mjs",
-    "verify:slider-decimal-step": "node scripts/verify-slider-decimal-step.mjs"
+    "verify:slider-decimal-step": "node scripts/verify-slider-decimal-step.mjs",
+    "verify:swiper-vertical": "node scripts/verify-swiper-vertical.mjs"
   },
   "pnpm":{"overrides":{"rollup":"4.14.3"}},
   "dependencies": {
