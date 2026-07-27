@@ -11,10 +11,8 @@
 					class="u-tabbar-item__icon"
 					:class="iconClassNames"
 				>
-					<view v-if="isMidButton" class="u-tabbar-item__mid-button-arc">
-						<svg viewBox="0 0 72 72" preserveAspectRatio="none">
-							<path d="M 4 36 A 32 32 0 0 1 68 36"></path>
-						</svg>
+					<view v-if="isMidButton" class="u-tabbar-item__mid-button-border">
+						<view class="u-tabbar-item__mid-button-border-circle"></view>
 					</view>
 					<view v-if="isMidButton" class="u-tabbar-item__mid-button-inner"></view>
 					<up-icon
@@ -22,6 +20,7 @@
 						:name="resolvedIconName"
 						:color="isMidButton ? resolvedMidButtonIconColor : (isActive ? resolvedActiveColor : resolvedInactiveColor)"
 						:size="isMidButton ? midButtonIconSize : 24"
+						:customStyle="midButtonIconStyle"
 					></up-icon>
 					<template v-else>
 						<slot
@@ -135,10 +134,34 @@
 				if (this.midButtonIconColor) return this.midButtonIconColor
 				return this.isMidButton ? '#3c9cff' : this.resolvedActiveColor
 			},
+			midButtonIconStyle() {
+				return this.isMidButton
+					? {
+						position: 'relative',
+						zIndex: 2
+					}
+					: {}
+			},
+			hasMidButtonText() {
+				return !!this.$slots.text || String(this.text || '').length > 0
+			},
+			resolvedMidButtonOffsetY() {
+				const offset = Number.parseFloat(this.midButtonOffsetY)
+				return Number.isFinite(offset) ? offset : -10
+			},
+			midButtonTranslateY() {
+				return `${this.resolvedMidButtonOffsetY}px`
+			},
+			midButtonBorderClipHeight() {
+				const clipBaseHeight = this.hasMidButtonText ? 15.5 : 7
+				const clipHeight = clipBaseHeight - this.resolvedMidButtonOffsetY
+				return `${Math.min(Math.max(clipHeight, 0), 64)}px`
+			},
 			itemClassNames() {
 				return [
 					this.isActive ? 'u-tabbar-item--active' : 'u-tabbar-item--inactive',
 					this.isMidButton ? 'u-tabbar-item--mid-button' : '',
+					this.isMidButton && !this.hasMidButtonText ? 'u-tabbar-item--mid-button-no-text' : '',
 					`u-tabbar-item--${this.resolvedStyleType}`,
 					this.resolvedAnimationType !== 'none' && this.isActive ? `u-tabbar-item--anim-${this.resolvedAnimationType}` : '',
 					this.resolvedItemShape !== 'default' ? `u-tabbar-item--shape-${this.resolvedItemShape}` : '',
@@ -276,6 +299,11 @@
 
 			&--mid-button {
 				justify-content: center;
+				position: relative;
+				z-index: 1;
+				/* #ifndef APP-NVUE */
+				transform: translateY(v-bind('midButtonTranslateY'));
+				/* #endif */
 			}
 		}
 
@@ -381,9 +409,6 @@
 	
 	// 中间按钮样式
 	.u-tabbar-item--mid-button {
-		/* #ifndef APP-NVUE */
-		transform: translateY(v-bind('`${midButtonOffsetY}px`'));
-		/* #endif */
 		z-index: 2;
 		flex: 1;
 	}
@@ -401,26 +426,36 @@
 		overflow: visible;
 	}
 
-	.u-tabbar-item__mid-button-arc {
+	.u-tabbar-item__mid-button-border {
 		position: absolute;
-		left: -4px;
-		top: -4px;
-		width: calc(100% + 8px);
-		height: calc(100% + 8px);
+		left: 0;
+		top: 0;
+		width: 64px;
+		height: v-bind('midButtonBorderClipHeight');
+		box-sizing: border-box;
+		background: transparent;
+		overflow: hidden;
 		pointer-events: none;
 		z-index: 0;
 	}
 
-	.u-tabbar-item__mid-button-arc svg {
-		width: 100%;
-		height: 100%;
+	/* #ifdef APP-NVUE */
+	.u-tabbar-item__mid-button-border {
+		height: 15.5px;
 	}
 
-	.u-tabbar-item__mid-button-arc path {
-		fill: none;
-		stroke: none;
-		stroke-width: 0;
-		stroke-linecap: round;
+	.u-tabbar-item--mid-button-no-text .u-tabbar-item__mid-button-border {
+		height: 7px;
+	}
+	/* #endif */
+
+	.u-tabbar-item__mid-button-border-circle {
+		width: 64px;
+		height: 64px;
+		box-sizing: border-box;
+		background: transparent;
+		border: 1px solid var(--up-border-color, rgba(0, 0, 0, 0.08));
+		border-radius: 999px;
 	}
 
 	.u-tabbar-item__mid-button-inner {
