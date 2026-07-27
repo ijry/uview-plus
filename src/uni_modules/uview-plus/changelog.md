@@ -1,8 +1,8 @@
-## Next
+## 3.8.87
 feat: swiper 支持 vertical 纵向滑动（#936）
 
-- 新增 `vertical` 属性并透传原生 swiper，默认 `false` 保持横向兼容
-- 补充类型定义与纵向滑动示例
+- up-swiper 新增 `vertical` 属性并透传原生 swiper，默认 `false` 保持横向兼容
+- 补充 TypeScript 类型定义、纵向滑动示例与自动校验
 
 ## 3.8.86
 fix: 为 .w-full 补充 box-sizing，并补充插件 tsconfig
