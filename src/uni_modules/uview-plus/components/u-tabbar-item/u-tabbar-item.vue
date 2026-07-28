@@ -12,7 +12,7 @@
 					:class="iconClassNames"
 				>
 					<view v-if="isMidButton" class="u-tabbar-item__mid-button-border">
-						<view class="u-tabbar-item__mid-button-border-circle"></view>
+						<view class="u-tabbar-item__mid-button-border-circle" :style="midButtonBorderCircleStyle"></view>
 					</view>
 					<view v-if="isMidButton" class="u-tabbar-item__mid-button-inner"></view>
 					<up-icon
@@ -93,7 +93,8 @@
 					inactiveBackgroundColor: '',
 					itemShape: 'default',
 					iconScale: 1.1,
-					textMode: 'always'
+					textMode: 'always',
+					borderColor: ''
 				}
 			}
 		},
@@ -156,6 +157,13 @@
 				const clipBaseHeight = this.hasMidButtonText ? 15.5 : 7
 				const clipHeight = clipBaseHeight - this.resolvedMidButtonOffsetY
 				return `${Math.min(Math.max(clipHeight, 0), 64)}px`
+			},
+			midButtonBorderCircleStyle() {
+				return this.isMidButton && this.parentData.borderColor
+					? {
+						borderColor: this.parentData.borderColor
+					}
+					: {}
 			},
 			itemClassNames() {
 				return [

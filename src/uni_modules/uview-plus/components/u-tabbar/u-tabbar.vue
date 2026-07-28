@@ -98,7 +98,8 @@
 					this.inactiveBackgroundColor,
 					this.itemShape,
 					this.iconScale,
-					this.textMode
+					this.textMode,
+					this.borderColor
 				]
 			},
 			updatePlaceholder() {
