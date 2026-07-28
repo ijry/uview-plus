@@ -1,3 +1,10 @@
+## 3.8.89
+fix: 修复 tabbar 中间按钮圆弧边框颜色
+
+- 中间按钮上半圆边框跟随 tabbar 的 `borderColor` 属性，避免圆弧与顶部边框颜色不一致
+- `borderColor` 为空时继续使用主题边框色 fallback，保持默认表现不变
+- uview-ultra 同步 Vue 与 uvue 实现，保证两个组件库样式一致
+
 ## 3.8.88
 fix: 修复 tabbar 中间按钮上半圆边框
 
