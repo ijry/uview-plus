@@ -227,10 +227,7 @@ export default {
         nvuePlainBackgroundColor() {
             return this.upThemeVar(
                 '--up-button-plain-background-color',
-                this.upThemeVar(
-                    '--up-card-bg-color',
-                    this.isDarkTheme ? '#1c1c1e' : '#ffffff'
-                )
+                'transparent'
             );
         },
         loadingColor() {
@@ -441,7 +438,7 @@ $u-button-square-border-top-left-radius: 3px !default;
 $u-button-square-border-bottom-left-radius: 3px !default;
 $u-button-square-border-bottom-right-radius: 3px !default;
 $u-button-icon-min-width: 1em !default;
-$u-button-plain-background-color: var(--up-button-plain-background-color, var(--up-card-bg-color, #fff)) !default;
+$u-button-plain-background-color: var(--up-button-plain-background-color, transparent) !default;
 $u-button-hairline-border-width: 0.5px !default;
 
 .u-button {

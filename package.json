@@ -50,7 +50,8 @@
     "verify:i18n-on-demand": "node scripts/verify-i18n-on-demand.mjs",
     "verify:slider-decimal-step": "node scripts/verify-slider-decimal-step.mjs",
     "verify:swiper-vertical": "node scripts/verify-swiper-vertical.mjs",
-    "verify:tabbar-mid-button-top-border": "node scripts/verify-tabbar-mid-button-top-border.mjs"
+    "verify:tabbar-mid-button-top-border": "node scripts/verify-tabbar-mid-button-top-border.mjs",
+    "verify:button-plain-background": "node scripts/verify-button-plain-background.mjs"
   },
   "pnpm":{"overrides":{"rollup":"4.14.3"}},
   "dependencies": {
