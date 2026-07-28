@@ -36,7 +36,14 @@
 				}, descriptionDynamicStyle]"
 			    v-if="description"
 			>{{description}}</text>
-			<slot>
+			<view
+				class="u-action-sheet__slot"
+				v-if="$slots.default"
+				@tap="slotClickHandler"
+			>
+				<slot></slot>
+			</view>
+			<template v-else>
 				<!-- 分割线 -->
 				<u-line v-if="description" :color="dividerColor"></u-line>
 				<!-- 操作项列表 -->
@@ -96,7 +103,7 @@
 						<u-line v-if="index !== actions.length - 1" :color="dividerColor"></u-line>
 					</view>
 				</scroll-view>
-			</slot>
+			</template>
 			<!-- 取消按钮前的分割区域 -->
 			<u-gap
 			    :bgColor="cancelGapColor"
@@ -161,6 +168,11 @@
 		name: "u-action-sheet",
 		// 一些props参数和methods方法，通过mixin混入，因为其他文件也会用到
 		mixins: [openType, buttonMixin, mixin, props],
+		provide() {
+			return {
+				uActionSheet: this,
+			}
+		},
 		data() {
 			return {
 
@@ -226,6 +238,13 @@
 			cancel() {
 				this.$emit('update:show', false)
 				this.$emit('close')
+			},
+			// 点击自定义内容时，按菜单项点击配置关闭弹窗
+			slotClickHandler() {
+				if (this.closeOnClickAction) {
+					this.$emit('update:show', false)
+					this.$emit('close')
+				}
 			},
 			// 选择操作项处理
 			selectHandler(index) {

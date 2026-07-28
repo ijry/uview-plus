@@ -90,6 +90,11 @@
 			}
 		},
 		mixins: [mpMixin, mixin, props],
+		inject: {
+			uActionSheet: {
+				default: null
+			}
+		},
 		computed: {
 			titleTextStyle() {
 				return addStyle(this.titleStyle)
@@ -123,6 +128,9 @@
 				this.$emit('click', {
 					name: this.name
 				})
+				if (this.stop && typeof this.uActionSheet?.slotClickHandler === 'function') {
+					this.uActionSheet.slotClickHandler()
+				}
 				// 如果配置了url(此props参数通过mixin引入)参数，跳转页面
 				this.openPage()
 				// 是否阻止事件传播
