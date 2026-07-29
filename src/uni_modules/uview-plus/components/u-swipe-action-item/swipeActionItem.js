@@ -16,6 +16,7 @@ export default {
         disabled: false,
         threshold: 20,
         autoClose: true,
+        scrolling: false,
         options: [],
         duration: 300
     }

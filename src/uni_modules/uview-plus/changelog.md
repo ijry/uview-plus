@@ -1,3 +1,10 @@
+## 3.8.92
+feat: swipe-action-item 暴露横滑滚动状态
+
+- up-swipe-action-item 新增 `scrolling` / `v-model:scrolling`，横向滑动过程中可让业务暂停页面或容器滚动
+- 同步提供 `scrolling` 事件，便于不使用 v-model 的场景监听状态变化
+- 手势结束、取消、关闭或禁用时自动释放状态，菜单打开后不持续锁滚动
+
 ## 3.8.91
 fix: 调整文本默认伸展与字体加载配置
 

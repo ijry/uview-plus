@@ -21,6 +21,11 @@ declare interface SwipeActionItemProps {
    */
   autoClose?: boolean
   /**
+   * 是否正在横向滑动，可用于 v-model:scrolling 暂停外部滚动
+   * @default false
+   */
+  scrolling?: boolean
+  /**
    * 滑动距离阈值，只有大于此值，才被认为是要打开菜单
    * @default 20
    */
@@ -44,6 +49,14 @@ declare interface SwipeActionItemProps {
    * @param index 第几个按钮被点击
    */
   onClick?: (name: any, index: number) => any
+  /**
+   * scrolling 双向绑定更新
+   */
+  ['onUpdate:scrolling']?: (value: boolean) => any
+  /**
+   * 横向滑动状态变化时触发
+   */
+  onScrolling?: (value: boolean) => any
 }
 
 

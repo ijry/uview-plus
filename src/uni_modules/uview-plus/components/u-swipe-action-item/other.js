@@ -30,6 +30,7 @@ export default {
 		clickHandler() {
 		},
 		closeHandler() {
+			this.setScrolling(false)
 			this.closeSwipeAction()
         },
 		setStatus(status) {
@@ -75,6 +76,7 @@ export default {
 			}
 			// 如果移动的X轴距离小于Y轴距离，也即终点位置与起点位置连线，与Y轴夹角小于45度时，认为是页面上下滑动，而不是左右滑动单元格
 			if (Math.abs(moveX) < Math.abs(moveY)) return
+			this.setScrolling(true)
 
 			// 限制右滑的距离，不允许内容部分往右偏移，右滑会导致X轴偏移值大于0，以此做判断
 			// 此处不能直接return，因为滑动过程中会缺失某些关键点坐标，会导致错乱，最好的办法就是
@@ -97,8 +99,12 @@ export default {
         },
         touchend(event) {
             // console.log(event)
-			if (!this.state.moving || this.disabled) return
+			if (!this.state.moving || this.disabled) {
+				this.setScrolling(false)
+				return
+			}
 			this.state.moving = false
+			this.setScrolling(false)
 			var touches = event.changedTouches ? event.changedTouches[0] : {}
 			var pageX = touches.pageX
 			var pageY = touches.pageY
@@ -128,6 +134,10 @@ export default {
 				}
 			}
         },
+		touchcancel(event) {
+			this.state.moving = false
+			this.setScrolling(false)
+		},
 		// 一次性展开滑动菜单
 		openSwipeAction() {
 			// 处理duration单位问题
@@ -143,6 +153,7 @@ export default {
 		},
 		// 一次性收起滑动菜单
 		closeSwipeAction() {
+			this.setScrolling(false)
 			// 处理duration单位问题
 			var duration = this.getDuration(this.duration)
 			this.sliderStyle = {

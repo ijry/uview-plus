@@ -8,6 +8,7 @@
 						v-if="show1"
 						:closeOnClick="false"
 						v-model:show="swshow1"
+						v-model:scrolling="swipeScrolling"
 						:options="options1"
 						@click="click"
 					>
@@ -92,6 +93,7 @@ import { ref } from 'vue'
 
 const swshow1 = ref(true)
 const show1 = ref(true)
+const swipeScrolling = ref(false)
 const moveX = ref(0)
 const showText = ref('当前状态：关')
 const showStatus = ref(false)

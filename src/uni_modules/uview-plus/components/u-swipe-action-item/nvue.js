@@ -43,6 +43,7 @@ export default {
 		},
 		// 关闭单元格，用于打开一个，自动关闭其他单元格的场景
 		closeHandler() {
+			this.setScrolling(false)
 			if(this.status === 'open') {
 				// 如果在打开状态下，进行点击的话，直接关闭单元格
 				return this.moveCellByAnimation('close') && this.unbindBindingX()
@@ -55,6 +56,7 @@ export default {
 			// 尝试关闭其他打开的单元格
 			this.parent && this.parent.closeOther(this)
 			if(this.status === 'open') {
+				this.setScrolling(false)
 				// 如果在打开状态下，进行点击的话，直接关闭单元格
 				return this.moveCellByAnimation('close') && this.unbindBindingX()
 			}
@@ -63,9 +65,11 @@ export default {
 		onTouchstart(e) {
 			// 如果当前正在移动中，或者disabled状态，则返回
 			if(this.moving || this.disabled) { 
+				this.setScrolling(false)
 				return this.unbindBindingX()   
 			}
 			if(this.status === 'open') {
+				this.setScrolling(false)
 				// 如果在打开状态下，进行点击的话，直接关闭单元格
 				return this.moveCellByAnimation('close') && this.unbindBindingX()
 			}
@@ -73,6 +77,7 @@ export default {
 			e?.stopPropagation && e.stopPropagation() 
 			e?.preventDefault && e.preventDefault()
 			this.moving = true
+			this.setScrolling(true)
 			// 获取元素ref
 			const content = this.getContentRef()
 			let expression = `min(max(${-this.buttonsWidth}, x), 0)`
@@ -92,6 +97,7 @@ export default {
 			}, (res) => {
 				this.moving = false
 				if (res.state === 'end' || res.state === 'exit') {
+					this.setScrolling(false)
 					const deltaX = res.deltaX
 					if(deltaX <= -this.buttonsWidth || deltaX >= 0) {
 						// 如果触摸滑动的过程中，大于单元格的总宽度，或者大于0，意味着已经动过滑动达到了打开或者关闭的状态
@@ -114,6 +120,7 @@ export default {
 		},
 		// 释放bindingX
 		unbindBindingX() {
+			this.setScrolling(false)
 			// 释放上一次的资源
 			if (this?.panEvent?.token != 0) {
 				bindingX.unbind({
@@ -159,6 +166,7 @@ export default {
 				timingFunction: 'ease-in-out'
 			}, () => {
 				this.moving = false
+				this.setScrolling(false)
 				this.status = status
 				this.unbindBindingX()
 			})
@@ -168,6 +176,7 @@ export default {
 			return this.$refs['u-swipe-action-item__content'].ref
 		},
 		beforeUnmount() {
+			this.setScrolling(false)
 			this.unbindBindingX()
 		}
 	}

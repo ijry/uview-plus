@@ -32,14 +32,14 @@
 		</view>
 		<!-- #ifdef APP-VUE || MP-WEIXIN || MP-QQ || H5  -->
 		<view class="u-swipe-action-item__content" @touchstart="wxs.touchstart" @touchmove="wxs.touchmove"
-			@touchend="wxs.touchend" :status="status" :change:status="wxs.statusChange" :size="size"
+			@touchend="wxs.touchend" @touchcancel="wxs.touchcancel" :status="status" :change:status="wxs.statusChange" :size="size"
 			:change:size="wxs.sizeChange">
 			<slot></slot>
 		</view>
 		<!-- #endif -->
 		<!-- #ifdef MP-ALIPAY || MP-BAIDU || MP-TOUTIAO-->
 		<view class="u-swipe-action-item__content" @click="clickHandler" @touchstart="touchstart" @touchmove="touchmove"
-			@touchend="touchend" :style="sliderStyle">
+			@touchend="touchend" @touchcancel="touchcancel" :style="sliderStyle">
 			<slot></slot>
 		</view>
 		<!-- <view class="u-swipe-action-item__content" @touchstart="mysjs.touchstart" @touchmove="mysjs.touchmove"
@@ -81,16 +81,18 @@
 	 * @property {String | Number}	index			标识符，如果是v-for，可用index索引
 	 * @property {Boolean}			disabled		是否禁用（默认 false ）
 	 * @property {Boolean}			autoClose		是否自动关闭其他swipe按钮组（默认 true ）
+	 * @property {Boolean}			scrolling		是否正在横向滑动，可用于v-model:scrolling暂停外部滚动（默认 false ）
 	 * @property {Number}			threshold		滑动距离阈值，只有大于此值，才被认为是要打开菜单（默认 30 ）
 	 * @property {Array}			options			右侧按钮内容
 	 * @property {String | Number}	duration		动画过渡时间，单位ms（默认 350 ）
+	 * @event {Function(value)}	scrolling	横向滑动状态变化时触发，参数为Boolean
 	 * @event {Function(index)}	open	组件打开时触发
 	 * @event {Function(index)}	close	组件关闭时触发
 	 * @example	<u-swipe-action><u-swipe-action-item :options="options1" ></u-swipe-action-item></u-swipe-action>
 	 */
 	export default {
 		name: 'u-swipe-action-item',
-		emits: ['click', 'update:show'],
+		emits: ['click', 'update:show', 'update:scrolling', 'scrolling'],
 		mixins: [
 			mpMixin,
 			mixin,
@@ -118,7 +120,9 @@
 				},
 				// 当前状态，open-打开，close-关闭
 				status: '',
-				sliderStyle: {}
+				sliderStyle: {},
+				// 内部缓存横向滑动状态，避免一次手势重复触发相同事件
+				innerScrolling: this.scrolling
 			}
 		},
 		watch: {
@@ -142,6 +146,14 @@
 				} else {
 					this.status = 'close'
 				}
+			},
+			scrolling(newValue) {
+				this.innerScrolling = !!newValue
+			},
+			disabled(newValue) {
+				if (newValue) {
+					this.setScrolling(false)
+				}
 			}
 		},
 		computed: {
@@ -160,6 +172,11 @@
 		},
 		beforeUmount() {
 			this.closeHandler()
+			this.setScrolling(false)
+		},
+		beforeUnmount() {
+			this.closeHandler()
+			this.setScrolling(false)
 		},
 		methods: {
 			addUnit,
@@ -176,6 +193,13 @@
 			updateParentData() {
 				// 此方法在mixin中
 				this.getParentData('u-swipe-action')
+			},
+			setScrolling(value) {
+				const next = !!value
+				if (this.innerScrolling === next) return
+				this.innerScrolling = next
+				this.$emit('update:scrolling', next)
+				this.$emit('scrolling', next)
 			},
 			// #ifndef APP-NVUE
 			// 查询节点

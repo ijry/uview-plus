@@ -43,6 +43,7 @@ function touchmove(event, ownerInstance) {
 	}
 	// 如果移动的X轴距离小于Y轴距离，也即终点位置与起点位置连线，与Y轴夹角小于45度时，认为是页面上下滑动，而不是左右滑动单元格
 	if (Math.abs(moveX) < Math.abs(moveY)) return
+	ownerInstance.callMethod('setScrolling', true)
 
 	// 限制右滑的距离，不允许内容部分往右偏移，右滑会导致X轴偏移值大于0，以此做判断
 	// 此处不能直接return，因为滑动过程中会缺失某些关键点坐标，会导致错乱，最好的办法就是
@@ -70,7 +71,12 @@ function touchend(event, ownerInstance) {
 	var instance = event.instance
 	// wxs内的局部变量快照
 	var state = instance.getState()
-	if (!state.moving || state.disabled) return
+	if (!state.moving || state.disabled) {
+		ownerInstance.callMethod('setScrolling', false)
+		return
+	}
+	state.moving = false
+	ownerInstance.callMethod('setScrolling', false)
 	var touches = event.changedTouches ? event.changedTouches[0] : {}
 	var pageX = touches.pageX
 	var pageY = touches.pageY
@@ -99,6 +105,16 @@ function touchend(event, ownerInstance) {
 			openSwipeAction(instance, ownerInstance)
 		}
 	}
+}
+
+// 触摸取消
+function touchcancel(event, ownerInstance) {
+	var instance = event.instance
+	var state = instance.getState()
+	if (state) {
+		state.moving = false
+	}
+	ownerInstance.callMethod('setScrolling', false)
 }
 
 // 获取过渡时间
@@ -159,6 +175,7 @@ function setStatus(status, instance, ownerInstance) {
 // 一次性收起滑动菜单
 function closeSwipeAction(instance, ownerInstance) {
 	var state = instance.getState()
+	ownerInstance.callMethod('setScrolling', false)
 	// 获取所有按钮的实例，需要通过它去设置按钮的位移
 	var buttons = ownerInstance.selectAllComponents('.u-swipe-action-item__right__button')
 	var len = buttons.length
@@ -229,6 +246,7 @@ module.exports = {
 	touchstart: touchstart,
 	touchmove: touchmove,
 	touchend: touchend,
+	touchcancel: touchcancel,
 	sizeChange: sizeChange,
 	statusChange: statusChange
 }
