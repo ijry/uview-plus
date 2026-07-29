@@ -33,7 +33,7 @@ export default {
         lineHeight: '',
         align: 'left',
         wordWrap: 'normal',
-		flex1: true
+		flex1: false
     }
 
 }

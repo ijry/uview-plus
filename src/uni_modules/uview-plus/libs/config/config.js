@@ -54,5 +54,5 @@ export default {
 		navbarLeftClick: null
 	},
     // 只加载一次字体
-    loadFontOnce: false
+    loadFontOnce: true
 }

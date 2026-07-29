@@ -279,6 +279,7 @@
 			    @change="name => value6 = name"
 			    :fixed="true"
 				:placeholder="true"
+				borderColor="red"
 			    :safeAreaInsetBottom="true"
 			>
 				<up-tabbar-item
