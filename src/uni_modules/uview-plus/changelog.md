@@ -1,3 +1,10 @@
+## 3.8.93
+fix: 修复自定义 action-sheet 插槽点击不关闭
+
+- 修复 closeOnClickAction 在自定义 slot 内容中的关闭行为
+- 兼容 up-cell 阻止事件冒泡时的 action-sheet 关闭场景
+- 增加对应的 action-sheet 插槽关闭验证脚本
+
 ## 3.8.92
 feat: swipe-action-item 新增 scrolling / v-model:scrolling，用于横向滑动时联动暂停页面或 scroll-view 容器滚动。
 fix: 补充 touchcancel、关闭、禁用和卸载释放逻辑，避免外部滚动锁状态卡住。
