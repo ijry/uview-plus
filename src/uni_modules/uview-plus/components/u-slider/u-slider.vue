@@ -180,7 +180,7 @@
 		},
 		async mounted() {
 			if (this.height != '') {
-				this.sizeLocal = val
+				this.sizeLocal = this.height
 			} else {
 				this.sizeLocal = this.size
 			}
