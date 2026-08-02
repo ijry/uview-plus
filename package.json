@@ -49,6 +49,7 @@
     "verify:cropper-inner": "node scripts/verify-cropper-inner.mjs",
     "verify:i18n-on-demand": "node scripts/verify-i18n-on-demand.mjs",
     "verify:slider-decimal-step": "node scripts/verify-slider-decimal-step.mjs",
+    "verify:slider-height": "node scripts/verify-slider-height.mjs",
     "verify:swiper-vertical": "node scripts/verify-swiper-vertical.mjs",
     "verify:swipe-action-scrolling": "node scripts/verify-swipe-action-scrolling.mjs",
     "verify:tabbar-mid-button-top-border": "node scripts/verify-tabbar-mid-button-top-border.mjs",
