@@ -1,3 +1,10 @@
+## 3.8.94
+fix: 修复 slider 设置 height 时初始化报错
+
+- 修复非空 height 触发 `ReferenceError: val is not defined` 的问题
+- 保留 height 优先、未设置时回退 size 的滑块厚度兼容行为
+- 增加 slider height mounted 初始化回归校验，覆盖 issue #1046
+
 ## 3.8.93
 fix: 修复自定义 action-sheet 插槽点击不关闭
 
