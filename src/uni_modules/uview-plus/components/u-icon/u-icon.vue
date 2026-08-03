@@ -161,8 +161,8 @@
 	$u-icon-error: $u-error !default;
 	$u-icon-label-line-height:1 !default;
 
-	/* #ifdef MP-QQ || MP-TOUTIAO || MP-BAIDU || MP-KUAISHOU || MP-XHS */
-	// App端通过uni.loadFontFace加载包内本地字体，避免远程字体阻塞页面渲染。
+	/* #ifdef APP || MP-QQ || MP-TOUTIAO || MP-BAIDU || MP-KUAISHOU || MP-XHS */
+	// 默认保留App端CSS字体，兼容未启用UniUpRoot的老项目；启用UniUpRoot后构建插件会移除App条件并改用本地字体。
 	@font-face {
 		font-family: 'uicon-iconfont';
 		src: url('https://at.alicdn.com/t/font_2225171_8kdcwk4po24.ttf') format('truetype');

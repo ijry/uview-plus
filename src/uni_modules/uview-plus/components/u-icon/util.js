@@ -1,17 +1,30 @@
 import config from '../../libs/config/config';
-// #ifdef APP || APP-NVUE
-import iconFontUrl from './upicon.ttf?url';
-// #endif
 
 const iconFontFamily = 'uicon-iconfont';
+const appIconFontUrl = '_www/static/app-plus/uview-plus/upicon.ttf';
+const useAppStaticIconFont = false;
 
 let params = {
     loaded: false
 };
 
+const getAppIconUrl = () => {
+    // #ifdef APP || APP-NVUE
+    if (!useAppStaticIconFont) {
+        return config.iconUrl;
+    }
+    if (typeof plus !== 'undefined' && plus.io && typeof plus.io.convertLocalFileSystemURL === 'function') {
+        const iconFontPath = plus.io.convertLocalFileSystemURL(appIconFontUrl);
+        if (iconFontPath) return iconFontPath;
+    }
+    return appIconFontUrl;
+    // #endif
+    return '';
+};
+
 const getIconUrl = () => {
     // #ifdef APP || APP-NVUE
-    return iconFontUrl;
+    return getAppIconUrl();
     // #endif
     return config.iconUrl;
 };

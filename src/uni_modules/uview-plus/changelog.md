@@ -1,3 +1,13 @@
+## 3.8.96（2026-08-03）
+fix: 更新示例工程
+
+## 3.8.95（2026-08-03）
+fix: 优化App端字体图标不显示先支持本地模式（依赖Root组件）和远程模式及IOS编译报错问题
+
+- 修复启用 UniUpRoot 后 iOS App 下 `u-icon` 字体从 `/assets` 加载失败的问题，App 构建时自动复制 `upicon.ttf` 到 `static/app-plus/uview-plus/upicon.ttf`
+- 未启用 UniUpRoot 的 App 项目继续保留远程 CSS 字体兼容；启用 UniUpRoot 后内置图标字体改用 `_www/static/app-plus/uview-plus/upicon.ttf` 并通过 `plus.io.convertLocalFileSystemURL` 转为平台路径
+- 修复启用 UniUpRoot 后 App nvue 子构建页面 chunk 被 tree-shaking 移除默认导出，导致 `No matching export ... for import "default"` 的问题
+
 ## 3.8.94
 fix: 修复 slider 设置 height 时初始化报错
 

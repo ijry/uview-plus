@@ -1,7 +1,7 @@
 import { dirname, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import process from 'node:process'
-import { existsSync, mkdirSync, statSync, writeFileSync } from 'node:fs'
+import { copyFileSync, existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'node:fs'
 
 import { createFilter, normalizePath } from 'vite'
 
@@ -10,6 +10,12 @@ import { rebuildUpApp, registerUpApp } from './root.js'
 import { loadPagesJson, normalizePlatformPath, toArray } from './utils.js'
 
 const rootLibPath = normalizePath(dirname(fileURLToPath(import.meta.url)))
+const appStaticIconFontRelativePath = 'static/app-plus/uview-plus/upicon.ttf'
+const appStaticIconFontFlag = 'const useAppStaticIconFont = false;'
+const appStaticIconFontEnabledFlag = 'const useAppStaticIconFont = true;'
+const appRemoteIconFontCondition = /\/\*\s*#ifdef\s+APP\s+\|\|\s+(MP-QQ\s+\|\|\s+MP-TOUTIAO\s+\|\|\s+MP-BAIDU\s+\|\|\s+MP-KUAISHOU\s+\|\|\s+MP-XHS)\s*\*\//
+const appCompiledRemoteIconFontFace = /[ \t]*(?:\/\/[^\n]*\n[ \t]*)?@font-face\s*\{[^{}]*font-family:\s*['"]?uicon-iconfont['"]?;?[^{}]*at\.alicdn\.com\/t\/font_2225171[^{}]*\}\s*/
+const appCompiledRemoteIconFontFaceGlobal = /[ \t]*(?:\/\/[^\n]*\n[ \t]*)?@font-face\s*\{[^{}]*font-family:\s*['"]?uicon-iconfont['"]?;?[^{}]*at\.alicdn\.com\/t\/font_2225171[^{}]*\}\s*/g
 
 export default function UniUpRoot(options = {}) {
   const rootOptions = {
@@ -53,6 +59,10 @@ export default function UniUpRoot(options = {}) {
   const rootPath = normalizePath(projectInfo.rootPath)
   const appUpPath = normalizePath(resolve(rootPath, `${rootFileName}.vue`))
   const rootToastHostPath = normalizePath(resolve(rootLibPath, 'root-toast-host.vue'))
+  const iconFontSourcePath = normalizePath(resolve(rootLibPath, '../../components/u-icon/upicon.ttf'))
+  const appStaticIconFontPath = normalizePath(resolve(rootPath, appStaticIconFontRelativePath))
+  const uIconUtilPath = normalizePath(resolve(rootPath, 'uni_modules/uview-plus/components/u-icon/util.js'))
+  const uIconVuePath = normalizePath(resolve(rootPath, 'uni_modules/uview-plus/components/u-icon/u-icon.vue'))
   const nvueRootPath = normalizePath(resolve(rootPath, 'uni_modules/uview-plus/libs/root/nvue-root.vue'))
   const themeRuntimePath = normalizePath(resolve(rootPath, 'uni_modules/uview-plus/libs/theme/runtime.js'))
   const pagesPath = normalizePath(resolve(rootPath, 'pages.json'))
@@ -90,6 +100,51 @@ export default function UniUpRoot(options = {}) {
     writeFileSync(appUpPath, defaultRootSfc, 'utf-8')
   }
 
+  const shouldCopyFile = (sourcePath, targetPath) => {
+    if (!existsSync(targetPath)) return true
+    if (statSync(sourcePath).size !== statSync(targetPath).size) return true
+    return !readFileSync(sourcePath).equals(readFileSync(targetPath))
+  }
+
+  const ensureAppStaticIconFont = () => {
+    if (process.env.UNI_PLATFORM !== 'app') return
+    if (!existsSync(iconFontSourcePath)) {
+      throw new Error(`uview-plus built-in icon font is missing: ${iconFontSourcePath}`)
+    }
+
+    mkdirSync(dirname(appStaticIconFontPath), { recursive: true })
+    if (shouldCopyFile(iconFontSourcePath, appStaticIconFontPath)) {
+      copyFileSync(iconFontSourcePath, appStaticIconFontPath)
+    }
+  }
+
+  const removeAppCompiledRemoteIconFontFace = (code) => code.replace(appCompiledRemoteIconFontFaceGlobal, '')
+
+  const transformAppStaticIconFont = (code, cleanId) => {
+    if (process.env.UNI_PLATFORM !== 'app') return null
+    if (cleanId === uIconUtilPath && code.includes(appStaticIconFontFlag)) {
+      return code.replace(appStaticIconFontFlag, appStaticIconFontEnabledFlag)
+    }
+    if (cleanId === uIconVuePath && appRemoteIconFontCondition.test(code)) {
+      return code.replace(appRemoteIconFontCondition, '/* #ifdef $1 */')
+    }
+    if (cleanId === uIconVuePath && appCompiledRemoteIconFontFace.test(code)) {
+      return removeAppCompiledRemoteIconFontFace(code)
+    }
+    return null
+  }
+
+  const removeAppRemoteIconFontFaceFromCssAssets = (bundle) => {
+    if (process.env.UNI_PLATFORM !== 'app') return
+    Object.values(bundle).forEach((asset) => {
+      if (asset.type !== 'asset') return
+      if (!asset.fileName.endsWith('.css')) return
+      if (typeof asset.source !== 'string') return
+      if (!appCompiledRemoteIconFontFace.test(asset.source)) return
+      asset.source = removeAppCompiledRemoteIconFontFace(asset.source)
+    })
+  }
+
   const refreshPagesJson = () => {
     if (!existsSync(pagesPath)) return
     const mtimeMs = statSync(pagesPath).mtimeMs
@@ -101,10 +156,16 @@ export default function UniUpRoot(options = {}) {
   return {
     name: 'vite-plugin-uni-up-root',
     enforce: 'pre',
-    configResolved({ plugins }) {
+    configResolved(config) {
+      const { plugins } = config
       hasPlatformPlugin = plugins.some(v => v.name === 'vite-plugin-uni-platform')
+      if (plugins.some(v => v.name === 'uni:app-nvue')) {
+        config.build.rollupOptions = config.build.rollupOptions || {}
+        config.build.rollupOptions.treeshake = false
+      }
     },
     buildStart() {
+      ensureAppStaticIconFont()
       ensureRootFile()
       refreshPagesJson()
     },
@@ -112,6 +173,14 @@ export default function UniUpRoot(options = {}) {
       let ms = null
       const isSfcBlock = id.includes('?')
       const cleanId = normalizePath(id.split('?')[0])
+
+      const iconFontCode = transformAppStaticIconFont(code, cleanId)
+      if (iconFontCode) {
+        return {
+          code: iconFontCode,
+          map: null,
+        }
+      }
 
       const filterMain = createFilter(mainFiles)
       if (filterMain(cleanId)) {
@@ -146,6 +215,9 @@ export default function UniUpRoot(options = {}) {
         }
       }
       return null
+    },
+    generateBundle(_, bundle) {
+      removeAppRemoteIconFontFaceFromCssAssets(bundle)
     },
   }
 }
