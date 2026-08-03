@@ -4,21 +4,21 @@
         :style="movableAreaStyle"
         >
         <movable-area class="u-dragsort-area">
-            <movable-view v-for="(item, index) in list" :key="item.id" :id="`u-dragsort-item-${index}`"
-                class="u-dragsort-item" :class="{ 'dragging': dragIndex === index, disabled: !draggable || item.draggable === false }"
+            <movable-view v-for="(item, index) in list" :key="item.id" :id="`u-dragsort-item-${instanceId}-${item.id}`"
+                class="u-dragsort-item" :class="{ 'dragging': dragItemId === item.id, disabled: !draggable || item.draggable === false }"
                 :direction="direction === 'all' ? 'all' : direction" :x="item.x" :y="item.y" :inertia="false"
-                :disabled="!draggable || dragIndex === -1 || item.draggable === false" @change="onChange(index, $event)"
-                @touchstart="onTouchStart(index, $event)" @touchend="onTouchEnd" @touchcancel="onTouchEnd" @touchmove="onTouchMove">
+                :disabled="!draggable || dragItemId === null || item.draggable === false" @change="onChange(item.id, $event)"
+                @touchstart="onTouchStart(item.id, $event)" @touchend="onTouchEnd" @touchcancel="onTouchEnd" @touchmove="onTouchMove">
                 <view class="u-dragsort-item-content">
                     <view
                         class="ui-dragSort-item-handler"
-                        v-if="$slots.handler"
+                        v-if="hasHandler"
                         data-action="handler"
-                        @touchstart="onTouchStart(index, $event)"
+                        @touchstart="onTouchStart(item.id, $event)"
                     >
-                        <slot name="handler" :item="item" :index="index"></slot>
+                        <slot name="handler" :item="item" :index="getItemIndex(item.id)"></slot>
                     </view>
-                    <slot :item="item" :index="index">
+                    <slot :item="item" :index="getItemIndex(item.id)">
                         {{ item.label }}
                     </slot>
                 </view>
@@ -30,7 +30,7 @@
 <script>
 import { mpMixin } from '../../libs/mixin/mpMixin';
 import { mixin } from '../../libs/mixin/mixin';
-import { sleep } from '../../libs/function/index';
+import { guid, sleep } from '../../libs/function/index';
 export default {
     name: 'u-dragsort',
     // #ifdef MP
@@ -67,7 +67,9 @@ export default {
     data() {
         return {
             list: [],
-            dragIndex: -1,
+            orderIds: [],
+            instanceId: guid(8),
+            dragItemId: null,
             sortChanged: false,
             itemHeight: 0,
             itemWidth: 0,
@@ -99,6 +101,9 @@ export default {
                     width: '100%'
                 }
             }
+        },
+        hasHandler() {
+            return !!(this.$slots.handler || this.$slots.$handler)
         }
     },
     emits: ['drag-end'],
@@ -110,8 +115,17 @@ export default {
     },
     methods: {
         initList() {
+            this.orderIds = this.initialList.map(item => item.id)
+            const currentItems = new Map(this.list.map(item => [item.id, item]))
+            const initialItems = new Map(this.initialList.map(item => [item.id, item]))
+            const renderIds = [
+                ...this.list.map(item => item.id).filter(itemId => initialItems.has(itemId)),
+                ...this.orderIds.filter(itemId => !currentItems.has(itemId))
+            ]
             // 初始化列表项的位置
-            this.list = this.initialList.map((item, index) => {
+            this.list = renderIds.map(itemId => {
+                const item = initialItems.get(itemId)
+                const index = this.getItemIndex(itemId)
                 let x
                 let y
 
@@ -135,6 +149,9 @@ export default {
                     y
                 }
             })
+        },
+        getItemIndex(itemId) {
+            return this.orderIds.indexOf(itemId)
         },
         async calculateItemSize() {
             // 计算项目尺寸
@@ -175,11 +192,13 @@ export default {
         },
         updatePositions(isDragging) {
             // 更新所有项目的位置
-            this.list = this.list.map((item, index) => {
+            this.list = this.list.map(item => {
                 // 当前正在拖动的项目保持拖动位置不动，避免抖动
-                if (isDragging && this.dragIndex === index) {
+                if (isDragging && this.dragItemId === item.id) {
                     return item
                 }
+
+                const index = this.getItemIndex(item.id)
 
                 if (this.direction === 'vertical') {
                     return {
@@ -208,25 +227,30 @@ export default {
                 }
             })
         },
-        onTouchStart(index, e) {
-            if (this.$slots.handler && e.currentTarget.dataset.action !== 'handler') {
+        onTouchStart(itemId, e) {
+            if (this.hasHandler && e.currentTarget.dataset.action !== 'handler') {
                 return
             }
+            const index = this.list.findIndex(item => item.id === itemId)
+            if (index === -1) return
             // 全局禁用或单项禁用时，不进入拖拽态，避免 Android 上小范围漂浮/阴影
             if (!this.draggable || this.list[index]?.draggable === false) return;
             if (this.timer) clearTimeout(this.timer);
             this.sortChanged = false;
-            this.dragIndex = index;
+            this.dragItemId = itemId;
         },
         onTouchMove(e) {
-            if (this.dragIndex !== -1) {
+            if (this.dragItemId !== null) {
                 // 目前只对H5生效, 如果该组件放置在开启了下拉刷新的scroll-view中, 向下拖动item还是会触发下拉刷新
                 e.stopPropagation()
                 e.preventDefault()
             }
         },
-        onChange(index, event) {
+        onChange(itemId, event) {
             if (!event.detail.source || event.detail.source !== 'touch') return;
+
+            const index = this.getItemIndex(itemId)
+            if (index === -1) return;
 
             this.currentPosition.x = event.detail.x;
             this.currentPosition.y = event.detail.y;
@@ -274,11 +298,9 @@ export default {
             }
         },
         reorderItems(fromIndex, toIndex) {
-            const movedItem = this.list.splice(fromIndex, 1)[0];
-            this.list.splice(toIndex, 0, movedItem);
+            const movedItemId = this.orderIds.splice(fromIndex, 1)[0];
+            this.orderIds.splice(toIndex, 0, movedItemId);
 
-            // 更新当前拖拽项目的新索引
-            this.dragIndex = toIndex;
             this.sortChanged = true;
 
             // 更新所有项目的位置
@@ -291,25 +313,29 @@ export default {
         },
         onTouchEnd() {
             // 未发生位移
-            if (this.dragIndex === -1) return
+            if (this.dragItemId === null) return
+
+            const dragItem = this.list.find(item => item.id === this.dragItemId)
+            if (!dragItem) return
 
             // 0.001是为了解决拖动过快等某些极限场景下位置还原不生效问题
             if (this.direction === 'horizontal') {
-                this.list[this.dragIndex].x = this.currentPosition.x + 0.001;
+                dragItem.x = this.currentPosition.x + 0.001;
             } else if (this.direction === 'vertical' || this.direction === 'all') {
-                this.list[this.dragIndex].y = this.currentPosition.y + 0.001;
-                this.list[this.dragIndex].x = this.currentPosition.x + 0.001;
+                dragItem.y = this.currentPosition.y + 0.001;
+                dragItem.x = this.currentPosition.x + 0.001;
             }
 
             // 重置到位置，需要延迟触发动，否则无效。
             sleep(50).then(() => {
                 this.updatePositions();
                 if (this.sortChanged) {
-                    this.$emit('drag-end', [...this.list]);
+                    const sortedList = this.orderIds.map(itemId => this.list.find(item => item.id === itemId));
+                    this.$emit('drag-end', sortedList);
                     this.sortChanged = false;
                 }
                 this.timer = setTimeout(() => {
-                    this.dragIndex = -1
+                    this.dragItemId = null
                 }, 600)
             });
         }
@@ -319,6 +345,7 @@ export default {
             handler() {
                 this.$nextTick(() => {
                     this.initList();
+                    this.updatePositions();
                 });
             },
             // deep: true
@@ -372,9 +399,6 @@ export default {
             position: relative;
             padding: 0;
             box-sizing: border-box;
-            border: 1px solid var(--up-border-color, rgba(125, 126, 128, 0.35));
-            border-radius: 8px;
-            background-color: var(--up-card-bg-color, #ffffff);
         }
     }
 

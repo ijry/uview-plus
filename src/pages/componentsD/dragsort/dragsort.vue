@@ -18,7 +18,7 @@
           <text class="u-page__item__title" style="margin-top: 0;">自定义拖动句柄</text>
           <view class="u-page__item__content">
             <u-dragsort :initial-list="list" @drag-end="handleDragEnd">
-			  <template #handler>
+			  <template #handler="{ item, index }">
 				<view class="custom-item-handler">
 					<view class="handle"></view>
 				</view>
