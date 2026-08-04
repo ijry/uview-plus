@@ -95,7 +95,11 @@
                 // 用于标记是否已经初始化
                 initialized: false,
                 windowWidth: 375,
-                windowHeight: 0
+                windowHeight: 0,
+                distributionQueue: [],
+                distributionRunning: false,
+                distributionPromise: null,
+                distributionGeneration: 0
             }
         },
         watch: {
@@ -107,9 +111,13 @@
                         if (this.columnList.length == 1) {
                             this.initColumnList()
                         }
+                        if (!this.isPureAppend(nVal, oVal)) {
+                            this.redistributeData(nVal);
+                            return;
+                        }
                         // 取差值，即这一次数组变化新增的部分
-                        let startIndex = Array.isArray(oVal) && oVal.length > 0 ? oVal.length : 0;
-                        // 直接处理数据，不再使用tempList和splitData
+                        const startIndex = Array.isArray(oVal) && oVal.length > 0 ? oVal.length : 0;
+                        // 纯追加时只将新增数据加入共享分配队列
                         this.handleData(nVal.slice(startIndex));
                     }
                 },
@@ -117,10 +125,11 @@
             },
             columns: {
                 handler() {
-                    this.initColumnList();
                     // 重新分配数据
                     if (this.copyFlowList.length > 0) {
-                        this.redistributeData();
+                        this.redistributeData(this.copyFlowList);
+                    } else {
+                        this.clear(false);
                     }
                 },
                 immediate: false
@@ -212,69 +221,111 @@
                     
                     // 只有列数发生变化时才重新分配数据
                     if (newColumnsCount !== oldColumnsCount) {
-                        this.redistributeData();
+                        this.redistributeData(this.copyFlowList);
                     }
                 }, 300);
             },
-            
+
             // 重新分配所有数据
-            async redistributeData() {
-                // 清空所有列
-                this.initColumnList();
+            redistributeData(data = this.copyFlowList) {
+                this.clear(false);
                 // 保存所有数据
-                const allData = this.cloneData(this.copyFlowList);
+                const allData = this.cloneData(data || []);
                 // 重新分配数据
-                this.handleData(allData);
+                return this.handleData(allData);
             },
-            
-            // 处理新增数据
-            async handleData(newData) {
-                if (!newData || newData.length === 0) return;
-                
-                // 初始化列高度数组
-                const columnHeights = new Array(this.columnList.length).fill(0);
-                
-                // 获取各列当前高度
-                for (let i = 0; i < this.columnList.length; i++) {
-                    try {
-                        const rect = await this.$uGetRect(`#u-column-${i}`);
-                        // console.log(`#u-column-${i}`, rect.height)
-                        columnHeights[i] = rect.height || 0;
-                    } catch (e) {
-                        columnHeights[i] = 0;
+
+            // 判断新数据是否只在原数组末尾追加
+            isPureAppend(newData, oldData) {
+                if (!Array.isArray(oldData) || oldData.length === 0) return true;
+                if (!Array.isArray(newData) || newData.length < oldData.length) return false;
+                return oldData.every((item, index) => {
+                    return JSON.stringify(item) === JSON.stringify(newData[index]);
+                });
+            },
+
+            // 将新增数据加入共享队列，确保只有一个分配循环运行
+            handleData(newData) {
+                if (!newData || newData.length === 0) {
+                    return this.distributionPromise || Promise.resolve();
+                }
+                this.distributionQueue.push({
+                    generation: this.distributionGeneration,
+                    data: this.cloneData(newData)
+                });
+                if (!this.distributionRunning) {
+                    this.distributionPromise = this.runDistributionQueue();
+                }
+                return this.distributionPromise;
+            },
+
+            // 串行消费所有待分配数据
+            async runDistributionQueue() {
+                if (this.distributionRunning) return;
+                this.distributionRunning = true;
+                try {
+                    while (this.distributionQueue.length > 0) {
+                        const task = this.distributionQueue.shift();
+                        if (task.generation !== this.distributionGeneration) continue;
+                        await this.distributeData(task.data, task.generation);
+                    }
+                } finally {
+                    this.distributionRunning = false;
+                    this.distributionPromise = null;
+                    if (this.distributionQueue.length > 0) {
+                        this.distributionPromise = this.runDistributionQueue();
                     }
                 }
-                
-                // 分配新数据到最短的列
-                for (let item of newData) {
+            },
+
+            // 逐项测量并分配数据，代数变化时立即退出
+            async distributeData(newData, generation) {
+                let columnHeights = new Array(this.columnList.length).fill(0);
+                for (const item of newData) {
+                    if (generation !== this.distributionGeneration) return;
+                    columnHeights = await this.getColumnHeights();
+                    if (generation !== this.distributionGeneration) return;
+
                     const minHeightIndex = this.getMinHeightColumnIndex(columnHeights);
-                    // console.log('this.columnList', this.columnList)
                     this.columnList[minHeightIndex].push(item);
 
-                    // 获取实际渲染后的元素高度而不是估算
                     await sleep(this.addTime);
+                    if (generation !== this.distributionGeneration) return;
                     await this.$nextTick();
+                    if (generation !== this.distributionGeneration) return;
                     try {
                         const rect = await this.$uGetRect(`#u-column-${minHeightIndex}`);
-                        // console.log(`#u-column-${minHeightIndex}`, rect.height)
+                        if (generation !== this.distributionGeneration) return;
                         if (rect.height) {
                             columnHeights[minHeightIndex] = rect.height;
-                            // 加载一个后置事件
                             this.$emit('after-add-one', {
                                 ...item,
                                 height: rect.height
                             });
                         }
                     } catch (e) {
-                        // console.log(e)
-                        // columnHeights[i] = 0;
+                        // 获取不到列高时，下一个元素会重新测量所有列
                     }
                 }
-                // 加载所有后置事件
+                if (generation !== this.distributionGeneration) return;
                 this.$emit('after-add-all', {
                     columnHeights: columnHeights,
                     newData: newData
                 });
+            },
+
+            // 获取当前所有列的真实高度
+            async getColumnHeights() {
+                const columnHeights = new Array(this.columnList.length).fill(0);
+                for (let i = 0; i < this.columnList.length; i++) {
+                    try {
+                        const rect = await this.$uGetRect(`#u-column-${i}`);
+                        columnHeights[i] = rect.height || 0;
+                    } catch (e) {
+                        columnHeights[i] = 0;
+                    }
+                }
+                return columnHeights;
             },
 
             // 获取最短列；高度相同或暂不可测时按列数据量打散，避免全部落到第一列
@@ -303,6 +354,8 @@
             
             // 清空数据列表
             clear(bak = true) {
+                this.distributionGeneration += 1;
+                this.distributionQueue.splice(0);
                 this.initColumnList();
                 // 同时清除父组件列表中的数据
                 if (bak) {
