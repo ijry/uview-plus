@@ -267,7 +267,7 @@ export default {
                 this._canvasElement = this._canvasNode.node || this._canvasNode;
                 this.dpr = uni.getSystemInfoSync().pixelRatio || 1;
 
-                // #ifdef MP || H5
+                // #ifdef MP
                 if (this._canvasElement) {
                     this._canvasElement.width = Math.ceil(this.actualWidth * this.dpr);
                     this._canvasElement.height = Math.ceil(this.actualHeight * this.dpr);
@@ -279,7 +279,7 @@ export default {
                     return false;
                 }
 
-                // #ifdef MP || H5
+                // #ifdef MP
                 if (typeof this.ctx.setTransform === 'function') {
                     this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
                 } else if (typeof this.ctx.scale === 'function') {

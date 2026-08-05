@@ -22,7 +22,10 @@ function loadCanvasOptions() {
 
 function createCanvasInstance(options) {
     const context = {
-        setTransform() {}
+        transform: null,
+        setTransform(...args) {
+            this.transform = args
+        }
     }
     const canvasElement = {
         width: 0,
@@ -51,9 +54,10 @@ function createCanvasInstance(options) {
     return { instance, canvasElement }
 }
 
+let pixelRatio = 1
 globalThis.uni = {
     getSystemInfoSync() {
-        return { pixelRatio: 1 }
+        return { pixelRatio }
     },
     upx2px(value) {
         return Number(value)
@@ -97,6 +101,19 @@ assert.equal(instance._initPromise, null, 'completed initialization should relea
 assert.equal(await instance.initCanvas(true), true, 'forced initialization should still run after completion')
 assert.equal(nodeLookupCount, 2, 'forced initialization should perform a fresh canvas node lookup')
 
+pixelRatio = 2
+const { instance: highDprInstance, canvasElement: highDprCanvas } = createCanvasInstance(options)
+highDprInstance.getCanvasNode = async () => ({ node: highDprCanvas })
+assert.equal(await highDprInstance.initCanvas(), true, 'mini-program initialization should support high DPR')
+assert.equal(highDprCanvas.width, 360, 'mini-program high-DPR initialization should scale canvas width')
+assert.equal(highDprCanvas.height, 360, 'mini-program high-DPR initialization should scale canvas height')
+assert.deepEqual(
+    highDprInstance.ctx.transform,
+    [2, 0, 0, 2, 0, 0],
+    'mini-program high-DPR initialization should apply one drawing transform'
+)
+pixelRatio = 1
+
 assert.match(
     canvasSource,
     /this\._initPromise\s*=\s*null/,
@@ -106,6 +123,26 @@ assert.match(
     canvasSource,
     /if\s*\(this\._initPromise\)\s*\{[\s\S]*return this\._initPromise/,
     'u-canvas should reuse an in-flight initialization'
+)
+assert.match(
+    canvasSource,
+    /\/\/ #ifdef MP\s+if \(this\._canvasElement\) \{[\s\S]*?this\._canvasElement\.width = Math\.ceil\(this\.actualWidth \* this\.dpr\)[\s\S]*?\/\/ #endif/,
+    'manual canvas backing-store scaling should remain limited to mini programs'
+)
+assert.match(
+    canvasSource,
+    /\/\/ #ifdef MP\s+if \(typeof this\.ctx\.setTransform === 'function'\) \{[\s\S]*?this\.ctx\.setTransform\(this\.dpr, 0, 0, this\.dpr, 0, 0\)[\s\S]*?\/\/ #endif/,
+    'manual canvas transform scaling should remain limited to mini programs'
+)
+assert.doesNotMatch(
+    canvasSource,
+    /\/\/ #ifdef MP \|\| H5\s+if \(this\._canvasElement\) \{[\s\S]*?this\._canvasElement\.width = Math\.ceil\(this\.actualWidth \* this\.dpr\)/,
+    'u-canvas should not manually apply HiDPI backing-store scaling on H5'
+)
+assert.doesNotMatch(
+    canvasSource,
+    /\/\/ #ifdef MP \|\| H5\s+if \(typeof this\.ctx\.setTransform === 'function'\) \{[\s\S]*?this\.ctx\.setTransform\(this\.dpr, 0, 0, this\.dpr, 0, 0\)/,
+    'u-canvas should not manually apply HiDPI transforms on H5'
 )
 assert.match(
     overlaySource,
