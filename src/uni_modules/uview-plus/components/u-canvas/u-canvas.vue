@@ -126,6 +126,7 @@ export default {
         this._canvasElement = null;
         this._imageCache = Object.create(null);
         this._isNvue = false;
+        this._initPromise = null;
     },
     mounted() {
         this.$nextTick(() => {
@@ -229,6 +230,22 @@ export default {
             }
         },
         async initCanvas(force = false) {
+            if (this._initPromise) {
+                return this._initPromise;
+            }
+
+            const initPromise = this._initializeCanvas(force);
+            this._initPromise = initPromise;
+
+            try {
+                return await initPromise;
+            } finally {
+                if (this._initPromise === initPromise) {
+                    this._initPromise = null;
+                }
+            }
+        },
+        async _initializeCanvas(force = false) {
             try {
                 if (this.useRootHeightAndWidth) {
                     await this.setNewSize();
