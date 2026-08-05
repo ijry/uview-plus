@@ -1,5 +1,5 @@
 import { defineMixin } from '../vue'
-import { deepMerge, $parent, sleep } from '../function/index'
+import { deepMerge, $parent, upGetRect } from '../function/index'
 import test from '../function/test'
 import route from '../util/route'
 import {
@@ -12,13 +12,6 @@ import {
     getThemeVarsForStyle,
     syncThemeRuntimeFromStorage
 } from '../theme/runtime'
-// #ifdef APP-NVUE
-// 由于weex为阿里的KPI业绩考核的产物，所以不支持百分比单位，这里需要通过dom查询组件的宽度
-const dom = (typeof uni !== 'undefined' && uni && typeof uni.requireNativePlugin === 'function')
-    ? uni.requireNativePlugin('dom')
-    : null
-// #endif
-
 export const mixin = defineMixin({
     // 定义每个组件都可能需要用到的外部样式以及类名
     props: {
@@ -49,7 +42,7 @@ export const mixin = defineMixin({
         }
     },
     onLoad() {
-        // getRect挂载到$u上，因为这方法需要使用in(this)，所以无法把它独立成一个单独的文件导出
+        // 保留 uni.$u.getRect 兼容入口
         this.upBindGetRect()
         this.upInitThemeVersion()
         if (this.upIsPageScope()) {
@@ -223,47 +216,8 @@ export const mixin = defineMixin({
         navTo(url = '', linkType = 'navigateTo') {
             route({ type: this.linkType, url })
         },
-        // 查询节点信息
-        // 目前此方法在支付宝小程序中无法获取组件跟接点的尺寸，为支付宝的bug(2020-07-21)
-        // 解决办法为在组件根部再套一个没有任何作用的view元素
-        $uGetRect(selector, all) {
-            return new Promise((resolve) => {
-                // #ifndef APP-NVUE
-                uni.createSelectorQuery()
-                    .in(this)[all ? 'selectAll' : 'select'](selector)
-                    .boundingClientRect((rect) => {
-                        if (all && Array.isArray(rect) && rect.length) {
-                            resolve(rect)
-                        }
-                        if (!all && rect) {
-                            resolve(rect)
-                        }
-                    })
-                    .exec()
-                // #endif
-                
-                // #ifdef APP-NVUE
-                sleep(30).then(() => {
-                    let selectorNvue = selector.substring(1) // 去掉开头的#或者.
-                    let selectorRef = this.$refs[selectorNvue]
-                    if (!selectorRef) {
-                        // console.log('不存在元素，请检查是否设置了ref属性' + selectorNvue + '。')
-                        resolve({
-                            with: 0,
-                            height: 0,
-                            left: 0,
-                            right: 0,
-                            top: 0,
-                            bottom: 0
-                        }) 
-                    }
-                    dom.getComponentRect(selectorRef, res => {
-                        // console.log(res)
-                        resolve(res.size)
-                    })
-                })
-                // #endif
-            })
+        $uGetRect(selector, all = false) {
+            return upGetRect(selector, all, this)
         },
         getParentData(parentName = '') {
             // 避免在created中去定义parent变量

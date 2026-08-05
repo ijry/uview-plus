@@ -1,3 +1,5 @@
+import type { ComponentInternalInstance, ComponentPublicInstance } from "vue";
+
 export interface RouteParam {
   type: "navigateTo" | "redirect" | "switchTab" | "reLaunch" | "navigateBack";
   /** 路由地址 */
@@ -100,6 +102,27 @@ export interface Func {
    * @param value rpx 值
    */
   rpx2px(value: number): number;
+
+  /** 查询当前组件作用域内的单个节点信息 */
+  upGetRect(
+    selector: string,
+    all?: false,
+    comp?: ComponentPublicInstance | ComponentInternalInstance | null
+  ): Promise<UniNamespace.NodeInfo>;
+
+  /** 查询当前组件作用域内的全部匹配节点信息 */
+  upGetRect(
+    selector: string,
+    all: true,
+    comp?: ComponentPublicInstance | ComponentInternalInstance | null
+  ): Promise<UniNamespace.NodeInfo[]>;
+
+  /** 使用动态布尔值查询节点信息 */
+  upGetRect(
+    selector: string,
+    all?: boolean,
+    comp?: ComponentPublicInstance | ComponentInternalInstance | null
+  ): Promise<UniNamespace.NodeInfo | UniNamespace.NodeInfo[]>;
 
   /**
    * 进行延时，以达到可以简写代码的目的 比如: await uni.$u.sleep(20)将会阻塞20ms

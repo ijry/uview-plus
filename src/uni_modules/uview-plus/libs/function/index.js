@@ -5,6 +5,71 @@ import {
 } from './test.js'
 import { round } from './digit.js'
 import config from '../config/config.js'
+
+function emptyNodeInfo() {
+	return {
+		width: 0,
+		height: 0,
+		left: 0,
+		right: 0,
+		top: 0,
+		bottom: 0
+	}
+}
+
+// #ifdef APP-NVUE
+const dom = (typeof uni !== 'undefined' && uni && typeof uni.requireNativePlugin === 'function')
+	? uni.requireNativePlugin('dom')
+	: null
+
+function getNvueRect(ref) {
+	return new Promise((resolve) => {
+		if (!dom || !ref) {
+			resolve(emptyNodeInfo())
+			return
+		}
+		dom.getComponentRect(ref, (res) => {
+			resolve(res && res.size ? res.size : emptyNodeInfo())
+		})
+	})
+}
+// #endif
+
+// 查询节点信息
+export function upGetRect(selector, all = false, comp = null) {
+	return new Promise((resolve) => {
+		// #ifndef APP-NVUE
+		const query = uni.createSelectorQuery()
+		const scopedQuery = comp ? query.in(comp) : query
+		scopedQuery[all ? 'selectAll' : 'select'](selector)
+			.boundingClientRect((rect) => {
+				if (all) {
+					resolve(Array.isArray(rect) ? rect : [])
+					return
+				}
+				resolve(rect || emptyNodeInfo())
+			})
+			.exec()
+		// #endif
+
+		// #ifdef APP-NVUE
+		sleep(30).then(async () => {
+			const refs = comp?.$refs || comp?.proxy?.$refs || comp?.refs || {}
+			const selectorRef = refs[selector.substring(1)]
+			if (all) {
+				const selectorRefs = Array.isArray(selectorRef)
+					? selectorRef
+					: selectorRef ? [selectorRef] : []
+				resolve(await Promise.all(selectorRefs.map(ref => getNvueRect(ref))))
+				return
+			}
+			const ref = Array.isArray(selectorRef) ? selectorRef[0] : selectorRef
+			resolve(await getNvueRect(ref))
+		})
+		// #endif
+	})
+}
+
 /**
  * @description 如果value小于min，取min；如果value大于max，取max
  * @param {number} min 
@@ -841,6 +906,7 @@ function hslToHex(h, s, l) {
 }
 
 export default {
+	upGetRect,
 	range,
 	getPx,
 	sleep,

@@ -57,7 +57,8 @@
     "verify:tabbar-mid-button-top-border": "node scripts/verify-tabbar-mid-button-top-border.mjs",
     "verify:button-plain-background": "node scripts/verify-button-plain-background.mjs",
     "verify:action-sheet-slot-close": "node scripts/verify-action-sheet-slot-close.mjs",
-    "verify:dragsort-stable-identity": "node scripts/verify-dragsort-stable-identity.mjs"
+    "verify:dragsort-stable-identity": "node scripts/verify-dragsort-stable-identity.mjs",
+    "verify:up-get-rect": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-up-get-rect.mjs"
   },
   "pnpm":{"overrides":{"rollup":"4.14.3"}},
   "dependencies": {
