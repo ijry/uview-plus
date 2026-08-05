@@ -10,3 +10,4 @@ deploy.sh
 /stats.html
 uni-app-x
 cachePath/
+.workbuddy/
