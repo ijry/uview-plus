@@ -29,6 +29,11 @@
 	  		}
 	  	})
 	  });
+	  function isSafeUrl(url) {
+		if (typeof url !== 'string') return false;
+		var val = url.trim().toLowerCase();
+		return val.indexOf('https://') === 0 || val.indexOf('http://') === 0 || val.indexOf('//') === 0 || val.indexOf('/') === 0 || val.indexOf('./') === 0 || val.indexOf('../') === 0 || val.indexOf('data:image/') === 0;
+	  }
 	  window.setContent = function(params) {
 		QRCode.toCanvas(document.getElementById('qrcode'), params.val,
 		  {
@@ -46,7 +51,7 @@
 				const canvas = document.getElementById('qrcode');
 				const ctx = canvas.getContext('2d');
 				// 2. 加载并绘制 logo
-				if(params.icon) {
+				if(params.icon && isSafeUrl(params.icon)) {
 					const logo = new Image();
 					logo.crossOrigin = "anonymous"; // 避免跨域问题（如适用）
 					logo.onload = () => {
