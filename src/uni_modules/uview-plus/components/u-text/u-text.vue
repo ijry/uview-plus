@@ -75,6 +75,18 @@ import { mixin } from '../../libs/mixin/mixin';
 import { buttonMixin } from '../../libs/mixin/button';
 import { openType } from '../../libs/mixin/openType';
 import { addStyle, addUnit, deepMerge } from '../../libs/function/index';
+
+function normalizeLineHeight(value) {
+    const valueString = String(value).trim()
+    const numericValue = Number(valueString)
+    const isUnitless =
+        /^[+-]?(?:\d+\.?\d*|\.\d+)$/.test(valueString) &&
+        numericValue > 0 &&
+        numericValue < 10
+
+    return isUnitless ? valueString : addUnit(value)
+}
+
 /**
  * Text 文本
  * @description 此组件集成了文本类在项目中的常用功能，包括状态，拨打电话，格式化日期，*替换，超链接...等功能。 您大可不必在使用特殊文本时自己定义，text组件几乎涵盖您能使用的大部分场景。
@@ -97,7 +109,7 @@ import { addStyle, addUnit, deepMerge } from '../../libs/function/index';
  * @property {Object | String} 			iconStyle	图标的样式 （默认 {fontSize: '15px'} ）
  * @property {String} 					decoration	文字装饰，下划线，中划线等，可选值 none|underline|line-through（默认 'none' ）
  * @property {Object | String | Number}	margin		外边距，对象、字符串，数值形式均可（默认 0 ）
- * @property {String | Number} 			lineHeight	文本行高
+ * @property {String | Number} 			lineHeight	文本行高，支持带单位值或无单位倍数（如 1.2）
  * @property {String} 					align		文本对齐方式，可选值left|center|right（默认 'left' ）
  * @property {String} 					wordWrap	文字换行，可选值break-word|normal|anywhere（默认 'normal' ）
  * @event {Function} click  点击触发事件
@@ -139,7 +151,7 @@ export default {
             }
             this.isNvue && this.lines && (style.lines = this.lines)
             this.lineHeight &&
-                (style.lineHeight = addUnit(this.lineHeight))
+                (style.lineHeight = normalizeLineHeight(this.lineHeight))
             !this.isNvue && this.block && (style.display = 'block')
             return deepMerge(style, addStyle(this.customStyle))
         },

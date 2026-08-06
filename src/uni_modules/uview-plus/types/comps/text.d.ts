@@ -80,7 +80,7 @@ declare interface TextProps {
    */
   margin?: Record<string, any> | string | number
   /**
-   * 文本行高
+   * 文本行高，支持带单位值或无单位倍数（如 1.2）
    */
   lineHeight?: number | string
   /**
