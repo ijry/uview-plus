@@ -693,6 +693,12 @@
                     }
                 },
                 {
+                    "path" : "novelReader/novelReader",
+                    "style" : {
+                        "navigationBarTitleText" : "小说阅读器"
+                    }
+                },
+                {
                     "path" : "colorPicker/colorPicker",
                     "style" : {
                         "navigationBarTitleText" : "颜色选择器"

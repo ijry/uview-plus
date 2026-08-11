@@ -94,6 +94,21 @@ export function toggleBookmark(bookmarks, bookmark) {
     return list.filter((_, index) => index !== existingIndex)
 }
 
+export function createBookmark({ chapterId, chapterIndex, charOffset, pageIndex, scrollTop, excerpt, createdAt } = {}) {
+    const normalizedChapterId = chapterId == null ? '' : String(chapterId)
+    const normalizedOffset = Math.max(0, Number(charOffset) || 0)
+    return {
+        id: `${normalizedChapterId}:${normalizedOffset}`,
+        chapterId,
+        chapterIndex: Number(chapterIndex) || 0,
+        charOffset: normalizedOffset,
+        pageIndex: Math.max(0, Number(pageIndex) || 0),
+        scrollTop: Math.max(0, Number(scrollTop) || 0),
+        excerpt: excerpt || '',
+        createdAt: Number(createdAt) || Date.now()
+    }
+}
+
 export function startReading(state, timestamp = Date.now()) {
     return {
         ...state,
@@ -129,6 +144,7 @@ export default {
     setSettings,
     setProgress,
     toggleBookmark,
+    createBookmark,
     startReading,
     pauseReading,
     consumeReadingTime

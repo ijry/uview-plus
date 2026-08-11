@@ -587,6 +587,12 @@ export default [{
         icon: 'pdfReader',
         title: 'PdfReader PDF阅读器',
         title_en: 'PdfReader'
+    },
+    {
+        path: '/pages/componentsD/novelReader/novelReader',
+        icon: 'file-text',
+        title: 'NovelReader 小说阅读器',
+        title_en: 'NovelReader'
     }]
 }
 ]

@@ -1,0 +1,273 @@
+<template>
+    <view class="u-page novel-reader-page">
+        <view class="u-page__item demo-header">
+            <text class="u-page__item__title">小说阅读器</text>
+            <text class="demo-summary">
+                当前章节：{{ currentChapter.title }} · {{ Math.round((progress.chapterProgress || 0) * 100) }}%
+            </text>
+        </view>
+
+        <view class="demo-controls">
+            <up-button size="mini" :type="mode === 'scroll' ? 'primary' : 'info'" @click="mode = 'scroll'">
+                纵向滚动
+            </up-button>
+            <up-button size="mini" :type="mode === 'page' ? 'primary' : 'info'" @click="mode = 'page'">
+                横向分页
+            </up-button>
+            <up-button size="mini" type="info" @click="toggleTheme">
+                {{ settings.theme === 'day' ? '纸张主题' : '日间主题' }}
+            </up-button>
+            <up-button size="mini" type="info" @click="adjustFontSize(1)">
+                字号+
+            </up-button>
+            <up-button size="mini" type="warning" @click="resetReader">
+                重置
+            </up-button>
+        </view>
+
+        <view class="reader-frame">
+            <up-novel-reader
+                book-id="demo-novel"
+                :chapters="chapters"
+                :current-chapter="currentChapter"
+                :loading="loading"
+                :error="error"
+                :progress="progress"
+                :settings="settings"
+                :mode="mode"
+                @chapter-request="handleChapterRequest"
+                @chapter-prefetch="handleChapterPrefetch"
+                @progress-change="handleProgressChange"
+                @settings-change="handleSettingsChange"
+                @retry="handleRetry"
+            />
+        </view>
+
+        <view class="demo-footer">
+            <text>最近进度：{{ progress.pageIndex || 0 }} / {{ progress.pageCount || 0 }} 页</text>
+            <text>预加载：{{ prefetchStatus }}</text>
+        </view>
+    </view>
+</template>
+
+<script setup>
+import { onUnmounted, ref } from 'vue'
+
+const createParagraph = (title, body) => `${title}。${body} ${body}`
+
+const chapters = ref([
+    {
+        id: 'chapter-1',
+        index: 0,
+        title: '第一章 远山来信',
+        content: [
+            createParagraph('清晨的雾还没有散去', '山城的邮差已经沿着石阶向上走'),
+            '他把一封没有署名的信放在门檐下，信纸上只有一句话：请在月亮升起以前，去旧车站等我。',
+            '林砚读完信，抬头看见屋后的远山像一排沉默的屏风。这个季节少有人来，旧车站也早已停运多年。',
+            '他收好信纸，带上手电和一件薄外套。院门外的风从峡谷里吹来，带着潮湿的草木气息。',
+            '下山的路比记忆中更长，沿途的店铺都还关着门，只有河面上浮着一层微光，像有人提前点亮了夜色。'
+        ].join('\n')
+    },
+    {
+        id: 'chapter-2',
+        index: 1,
+        title: '第二章 旧车站',
+        content: [
+            '旧车站藏在杉树林后面，站牌上的字已经被雨水冲淡。林砚推开铁门时，门轴发出一声长久的叹息。',
+            '候车室里没有灯，墙上的时钟停在十七点三十二分。长椅上积着灰尘，却留有一小块刚刚被擦拭过的地方。',
+            '他按照信上的时间等候，远处的铁轨始终没有传来声响。直到月亮越过屋顶，一束车灯突然穿过树林。',
+            '那不是普通的列车，车厢没有编号，窗户里也看不见乘客。车门打开后，里面传出熟悉的铃声。',
+            '林砚想起许多年前失踪的父亲，也想起父亲离开那天说过的话：有些路只能走一遍。'
+        ].join('\n')
+    },
+    {
+        id: 'chapter-3',
+        index: 2,
+        title: '第三章 河谷回声',
+        content: [
+            '列车驶入河谷后，窗外的景色开始倒退。山壁上的树木像一排排翻动的书页，重复着从未改变的季节。',
+            '林砚在车厢尽头找到一张木桌，桌上摆着一本旧笔记。第一页写着他的名字，日期却是二十年前。',
+            '笔记记录了父亲寻找星门的过程，也记录了每次经过河谷时听见的回声。那些回声总会回答尚未问出口的问题。',
+            '当列车停在无名隧道前，车厢里的铃声再次响起。林砚合上笔记，决定沿着铁轨走进黑暗。',
+            '隧道深处传来水滴声，他打开手电，发现墙上刻着一串方向相反的箭头，尽头写着：不要相信回声。'
+        ].join('\n')
+    },
+    {
+        id: 'chapter-4',
+        index: 3,
+        title: '第四章 无字之页',
+        content: [
+            '隧道另一端是一间没有门窗的石室。石室中央放着一张桌子，桌上摊开的书册没有任何文字。',
+            '林砚伸手触碰书页，空白上浮现出一行新的字迹。那是他刚才在车站没有说出口的疑问。',
+            '每当他读完一页，下一页便会出现一段记忆。记忆中的父亲站在月台上，身旁还有一个年幼的林砚。',
+            '原来那封信不是从远方寄来，而是从他一直不愿回想的那一天寄来。时间在石室里没有方向。',
+            '他终于明白，所谓星门并不是通往别处的门，而是一条允许人重新面对选择的路。'
+        ].join('\n')
+    },
+    {
+        id: 'chapter-5',
+        index: 4,
+        title: '第五章 空白章节',
+        content: ''
+    },
+    {
+        id: 'chapter-6',
+        index: 5,
+        title: '第六章 尚未解锁',
+        content: '这一章将在完成前置阅读后解锁。',
+        isLocked: true
+    }
+])
+
+const currentChapter = ref(chapters.value[0])
+const loading = ref(false)
+const error = ref(null)
+const mode = ref('scroll')
+const progress = ref({
+    chapterId: 'chapter-1',
+    chapterIndex: 0,
+    charOffset: 0,
+    pageIndex: 0,
+    scrollTop: 0,
+    chapterProgress: 0,
+    totalProgress: 0
+})
+const settings = ref({
+    theme: 'day',
+    fontSize: 18,
+    lineHeight: 1.8,
+    paragraphSpacing: 16,
+    contentWidth: '92%',
+    fontFamily: 'system',
+    fontWeight: 400,
+    animation: true
+})
+const prefetchStatus = ref('暂无')
+let requestTimer = null
+
+function handleChapterRequest(payload = {}) {
+    const target = chapters.value[payload.targetIndex]
+    if (!target || target.isLocked || loading.value) return
+
+    loading.value = true
+    error.value = null
+    clearTimeout(requestTimer)
+    requestTimer = setTimeout(() => {
+        try {
+            currentChapter.value = target
+            progress.value = {
+                ...progress.value,
+                chapterId: target.id,
+                chapterIndex: target.index,
+                charOffset: 0,
+                pageIndex: 0,
+                scrollTop: 0,
+                chapterProgress: 0,
+                updatedAt: Date.now()
+            }
+        } catch (requestError) {
+            error.value = requestError
+        } finally {
+            loading.value = false
+        }
+    }, 240)
+}
+
+function handleChapterPrefetch(payload = {}) {
+    const target = chapters.value[payload.targetIndex]
+    if (target) {
+        prefetchStatus.value = target.title
+    }
+}
+
+function handleProgressChange(value) {
+    progress.value = value
+}
+
+function handleSettingsChange(value) {
+    settings.value = value
+}
+
+function handleRetry() {
+    error.value = null
+    handleChapterRequest({
+        targetIndex: currentChapter.value.index
+    })
+}
+
+function toggleTheme() {
+    settings.value = {
+        ...settings.value,
+        theme: settings.value.theme === 'day' ? 'paper' : 'day'
+    }
+}
+
+function adjustFontSize(delta) {
+    settings.value = {
+        ...settings.value,
+        fontSize: Math.min(28, Math.max(14, settings.value.fontSize + delta))
+    }
+}
+
+function resetReader() {
+    if (typeof uni !== 'undefined' && typeof uni.removeStorageSync === 'function') {
+        uni.removeStorageSync('uview-plus:novel-reader:demo-novel')
+    }
+    currentChapter.value = chapters.value[0]
+    progress.value = {
+        ...progress.value,
+        chapterId: 'chapter-1',
+        chapterIndex: 0,
+        charOffset: 0,
+        pageIndex: 0,
+        scrollTop: 0,
+        chapterProgress: 0,
+        totalProgress: 0,
+        updatedAt: Date.now()
+    }
+    prefetchStatus.value = '暂无'
+}
+
+onUnmounted(() => {
+    clearTimeout(requestTimer)
+})
+</script>
+
+<style lang="scss" scoped>
+.novel-reader-page {
+    min-height: 100vh;
+    padding: 24rpx;
+    box-sizing: border-box;
+    background-color: #f5f6f7;
+}
+
+.demo-header {
+    margin-bottom: 20rpx;
+}
+
+.demo-summary,
+.demo-footer text {
+    display: block;
+    color: #909399;
+    font-size: 24rpx;
+    line-height: 1.6;
+}
+
+.demo-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12rpx;
+    margin-bottom: 20rpx;
+}
+
+.reader-frame {
+    height: 900rpx;
+    overflow: hidden;
+    border-radius: 16rpx;
+    background-color: #ffffff;
+}
+
+.demo-footer {
+    padding: 18rpx 4rpx 0;
+}
+</style>
