@@ -59,7 +59,8 @@
     "verify:action-sheet-slot-close": "node scripts/verify-action-sheet-slot-close.mjs",
     "verify:dragsort-stable-identity": "node scripts/verify-dragsort-stable-identity.mjs",
     "verify:up-get-rect": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-up-get-rect.mjs",
-    "verify:novel-reader-props": "node scripts/verify-novel-reader-props.mjs"
+    "verify:novel-reader-props": "node scripts/verify-novel-reader-props.mjs",
+    "verify:novel-reader-data": "node scripts/verify-novel-reader-data.mjs"
   },
   "pnpm":{"overrides":{"rollup":"4.14.3"}},
   "dependencies": {
