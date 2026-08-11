@@ -69,6 +69,7 @@ const componentKeys = [
     'noNetwork',
     'noticeBar',
     'notify',
+    'novelReader',
     'numberBox',
     'numberKeyboard',
     'overlay',
