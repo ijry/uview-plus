@@ -168,6 +168,34 @@ assert.doesNotMatch(
 {
     const options = loadWaterfallOptions(() => Promise.resolve())
     const instance = createWaterfallInstance(options)
+    const initialList = Array.from({ length: 15 }, (_, index) => ({
+        id: `item-${index}`
+    }))
+
+    assert.equal(
+        instance.distributionGeneration,
+        0,
+        'a newly mounted waterfall should start at generation 0'
+    )
+    options.watch.copyFlowList.handler.call(instance, initialList, undefined)
+    await instance.distributionPromise
+
+    const distributedItems = instance.columnList.flat()
+    assert.equal(
+        distributedItems.length,
+        initialList.length,
+        'data present during initial mount should be distributed without being dropped'
+    )
+    assert.deepEqual(
+        distributedItems.map(item => item.id).sort(),
+        initialList.map(item => item.id).sort(),
+        'initially mounted waterfall data should be distributed exactly once'
+    )
+}
+
+{
+    const options = loadWaterfallOptions(() => Promise.resolve())
+    const instance = createWaterfallInstance(options)
     const handled = []
     const redistributed = []
     instance.handleData = data => handled.push(data)
