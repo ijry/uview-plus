@@ -265,7 +265,12 @@ export default {
 
                 this._selectorResult = this._canvasNode;
                 this._canvasElement = this._canvasNode.node || this._canvasNode;
-                this.dpr = uni.getSystemInfoSync().pixelRatio || 1;
+                const systemInfo = uni.getSystemInfoSync() || {};
+                const pixelRatio = Number(systemInfo.pixelRatio) || 1;
+                // 微信开发者工具的模拟器预览通常按高密度屏幕缩放，至少使用 2 倍 backing store。
+                this.dpr = systemInfo.platform === 'devtools'
+                    ? Math.max(pixelRatio, 2)
+                    : pixelRatio;
 
                 // #ifdef MP
                 if (this._canvasElement) {

@@ -55,9 +55,10 @@ function createCanvasInstance(options) {
 }
 
 let pixelRatio = 1
+let platform = 'android'
 globalThis.uni = {
     getSystemInfoSync() {
-        return { pixelRatio }
+        return { pixelRatio, platform }
     },
     upx2px(value) {
         return Number(value)
@@ -113,6 +114,18 @@ assert.deepEqual(
     'mini-program high-DPR initialization should apply one drawing transform'
 )
 pixelRatio = 1
+platform = 'devtools'
+const { instance: devtoolsInstance, canvasElement: devtoolsCanvas } = createCanvasInstance(options)
+devtoolsInstance.getCanvasNode = async () => ({ node: devtoolsCanvas })
+assert.equal(await devtoolsInstance.initCanvas(), true, 'developer-tools initialization should support the simulator fallback')
+assert.equal(devtoolsCanvas.width, 360, 'developer-tools simulator should use at least a 2x backing store')
+assert.equal(devtoolsCanvas.height, 360, 'developer-tools simulator should use at least a 2x backing store')
+assert.deepEqual(
+    devtoolsInstance.ctx.transform,
+    [2, 0, 0, 2, 0, 0],
+    'developer-tools simulator should apply the fallback drawing transform'
+)
+platform = 'android'
 
 assert.match(
     canvasSource,
@@ -133,6 +146,11 @@ assert.match(
     canvasSource,
     /\/\/ #ifdef MP\s+if \(typeof this\.ctx\.setTransform === 'function'\) \{[\s\S]*?this\.ctx\.setTransform\(this\.dpr, 0, 0, this\.dpr, 0, 0\)[\s\S]*?\/\/ #endif/,
     'manual canvas transform scaling should remain limited to mini programs'
+)
+assert.match(
+    canvasSource,
+    /systemInfo\.platform === 'devtools'[\s\S]*?Math\.max\(pixelRatio, 2\)/,
+    'developer-tools simulator should have a minimum 2x DPR fallback'
 )
 assert.doesNotMatch(
     canvasSource,
