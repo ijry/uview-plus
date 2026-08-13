@@ -143,6 +143,18 @@
 			@change="change"
 			@close="close"
 		></up-datetime-picker>
+		<up-datetime-picker
+			:show="show8"
+			v-model="value8"
+			mode="time"
+			:minHour="minHour8"
+			:minMinute="minMinute8"
+			closeOnClickOverlay
+			@confirm="confirm"
+			@cancel="cancel"
+			@change="changeTime8"
+			@close="close"
+		></up-datetime-picker>
 	</view>
 </template>
 
@@ -164,6 +176,12 @@ const value4 = ref('05:28')
 const value5 = ref(Number(new Date()))
 const value6 = ref(Number(new Date()))
 const value7 = ref(Number(new Date()))
+// 「只能选当前时间之后」示例：初始值为当前时间，minHour固定为当前小时，
+// minMinute随所选小时动态变化（选中当前小时时不早于当前分钟，选中之后的小时则从0开始）
+const now8 = new Date()
+const value8 = ref(`${padZero(now8.getHours())}:${padZero(now8.getMinutes())}`)
+const minHour8 = ref(now8.getHours())
+const minMinute8 = ref(now8.getMinutes())
 const show1 = ref(false)
 const show2 = ref(false)
 const show3 = ref(false)
@@ -171,6 +189,7 @@ const show4 = ref(false)
 const show5 = ref(false)
 const show6 = ref(false)
 const show7 = ref(false)
+const show8 = ref(false)
 const form1 = ref(null)
 const item1 = ref(null)
 
@@ -199,6 +218,9 @@ const list = ref([{
 	}, {
 		title: '限制最大最小值',
 		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/datetime-picker/7.png'
+	}, {
+		title: '只能选当前时间之后(动态minMinute)',
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/datetime-picker/5.png'
 	}
 ])
 
@@ -211,6 +233,7 @@ const close = () => {
 	show5.value = false
 	show6.value = false
 	show7.value = false
+	show8.value = false
 }
 
 const cancel = () => {
@@ -221,6 +244,7 @@ const cancel = () => {
 	show5.value = false
 	show6.value = false
 	show7.value = false
+	show8.value = false
 }
 
 const confirm = (e) => {
@@ -232,11 +256,20 @@ const confirm = (e) => {
 	show5.value = false
 	show6.value = false
 	show7.value = false
+	show8.value = false
 	result(e.value, e.mode)
 }
 
 const change = (e) => {
 	// console.log('change', e)
+}
+
+// 「只能选当前时间之后」示例的change：根据所选小时动态调整minMinute。
+// 修复前：改变minMinute会把已选时间重置为初始值，并再次触发change；
+// 修复后：已选值保留（若低于新minMinute则被夹取上移），且不会重复触发change。
+const changeTime8 = (e) => {
+	const hour = parseInt(String(e.value).split(':')[0], 10)
+	minMinute8.value = hour <= now8.getHours() ? now8.getMinutes() : 0
 }
 
 const navigateBack = () => {
@@ -262,6 +295,7 @@ const showDatetimePicker = (index) => {
 		case 'show5': show5.value = true; break;
 		case 'show6': show6.value = true; break;
 		case 'show7': show7.value = true; break;
+		case 'show8': show8.value = true; break;
 	}
 }
 

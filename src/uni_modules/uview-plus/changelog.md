@@ -1,3 +1,11 @@
+## 3.8.104
+fix: 修复 DatetimePicker 动态修改 minMinute 等边界值导致已选值重置及重复触发 change
+
+- 修复 mode=time/timesecond 下，切换时间时动态改变 minMinute（及其他 min/max 边界）会把已选值重置为初始值的问题：改为保留当前已选值并按新边界重新校正，未点确认前不再回退到 modelValue。
+- 修复边界变化时程序化重建各列在部分原生端再次派发 change 的问题：新增 lastEmitValue 去重，值未变化不再上抛 change。
+- 已选值低于新的 minMinute（或高于 maxMinute）时会被自动夹取到合法范围并补发一次 change。
+- 示例页新增「只能选当前时间之后（动态 minMinute）」演示。
+
 ## 3.8.103
 feat: 增加小说阅读器组件
 

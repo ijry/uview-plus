@@ -108,7 +108,10 @@
                 showByClickInput: false, // 是否在hasInput模式下显示日期选择弹唱
 				columns: [],
 				innerDefaultIndex: [],
-				innerFormatter: (type, value) => value
+				innerFormatter: (type, value) => value,
+				// 记录最近一次通过change上抛给外部的值，用于去重，
+				// 避免边界(min/max)变化导致程序化重建列时再次触发change
+				lastEmitValue: null
 			}
 		},
 		watch: {
@@ -124,6 +127,8 @@
 					this.innerValue = this.correctValue(this.value)
 					// #endif
 					this.updateColumnValue(this.innerValue)
+					// 打开时以外部值为基准，重置去重基准
+					this.lastEmitValue = this.innerValue
 				}
 			},
 			// #ifdef VUE3
@@ -138,14 +143,20 @@
 				// this.getInputValue(newValue)
 			},
 			// #endif
-			propsChange() {
+			// mode变化会改变已选值的语义(时间串<->时间戳)，需要完整重新初始化
+			mode() {
 				this.init()
+			},
+			propsChange() {
+				// 边界(min/max、filter)变化时，保留当前已选值，仅重新校正并重建各列，
+				// 不回退到外部 modelValue，避免未确认前丢失用户已滚动的值
+				this.reInitColumns()
 			}
 		},
 		computed: {
-			// 如果以下这些变量发生了变化，意味着需要重新初始化各列的值
+			// 如果以下这些变量发生了变化，意味着需要重新计算各列范围，但应保留当前已选值
 			propsChange() {
-				return [this.mode, this.maxDate, this.minDate, this.minHour, this.maxHour, this.minMinute, this.maxMinute, this.minSecond, this.maxSecond, this.filter, this.modelValue]
+				return [this.maxDate, this.minDate, this.minHour, this.maxHour, this.minMinute, this.maxMinute, this.minSecond, this.maxSecond, this.filter]
 			},
 			resolvedMaskStyle() {
 				if (this.upHasProp('maskStyle')) {
@@ -249,6 +260,38 @@
 
 				// 初始化hasInput展示
 				this.getInputValue(this.innerValue)
+				// 以外部值为基准，重置去重基准
+				this.lastEmitValue = this.innerValue
+			},
+			// 边界(minMinute等)变化时调用：以当前已选值(innerValue)为基准，
+			// 按新的边界重新校正并重建各列，而不是回退到外部modelValue。
+			// 这样在未点击确认前也不会丢失/重置用户已经滚动选择的值。
+			reInitColumns() {
+				let base = this.innerValue
+				if (base === undefined || base === null || base === '') {
+					// #ifdef VUE3
+					base = this.modelValue
+					// #endif
+					// #ifdef VUE2
+					base = this.value
+					// #endif
+				}
+				// correctValue会把小于新minMinute(或大于maxMinute)的值夹取到合法范围内，
+				// 例如原选中15:30、minMinute变为51时会被夹取为15:51
+				const corrected = this.correctValue(base)
+				const changed = corrected !== this.innerValue
+				this.innerValue = corrected
+				this.updateColumnValue(corrected)
+				this.getInputValue(corrected)
+				// 仅当已选值确实因边界收紧而被夹取变化时，才补发一次change通知外部；
+				// 值未变化则不上抛，避免边界变化引起的重复change
+				if (changed && this.lastEmitValue !== corrected) {
+					this.lastEmitValue = corrected
+					this.$emit('change', {
+						value: corrected,
+						mode: this.mode
+					})
+				}
 			},
 			// 在微信小程序中，不支持将函数当做props参数，故只能通过ref形式调用
 			setFormatter(e) {
@@ -378,8 +421,14 @@
 				}
 				// 取出准确的合法值，防止超越边界的情况
 				selectValue = this.correctValue(selectValue)
+				// 边界变化会程序化重建各列并回填索引，picker-view在部分原生端会再次派发change，
+				// 若此时算出的值与上一次已上抛的值一致，说明并非用户真实操作，直接忽略，避免重复触发change
+				if (selectValue === this.lastEmitValue && selectValue === this.innerValue) {
+					return
+				}
 				this.innerValue = selectValue
 				this.updateColumnValue(selectValue)
+				this.lastEmitValue = selectValue
 				// 发出change时间，value为当前选中的时间戳
 				this.$emit('change', {
 					value: selectValue,
