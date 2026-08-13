@@ -1,13 +1,13 @@
-# APP-PLUS 画布高清导出实施计划
+# 跨平台画布高清导出实施计划
 
-目标：修复 APP-PLUS 下海报、二维码和条码默认导出像素不足导致的模糊问题。
+目标：修复 MP、H5 和 APP-PLUS 下海报、二维码和条码默认导出像素不足导致的模糊问题。
 
-架构：up-canvas 统一计算默认导出目标尺寸，仅 APP-PLUS 使用设备 DPR；业务组件继续按逻辑尺寸绘制，并移除覆盖统一策略的同值显式目标尺寸。
+架构：up-canvas 统一计算默认导出目标尺寸，在 MP、H5 和 APP-PLUS 使用设备 DPR；业务组件继续按逻辑尺寸绘制，并移除覆盖统一策略的同值显式目标尺寸。
 
-## 任务 1：统一 APP-PLUS 默认高清导出
+## 任务 1：统一三端默认高清导出
 
-- 修改 src/uni_modules/uview-plus/components/u-canvas/u-canvas.vue 的 toTempFilePath：未提供 destWidth / destHeight 时，APP-PLUS 使用 Math.round(width * this.dpr) 和 Math.round(height * this.dpr)，其他平台保持逻辑尺寸。
-- 新增 scripts/verify-app-canvas-hidpi.mjs，静态检查 APP-PLUS 条件、DPR 计算和显式参数优先级。
+- 修改 src/uni_modules/uview-plus/components/u-canvas/u-canvas.vue 的 toTempFilePath：未提供 destWidth / destHeight 时，MP、H5 和 APP-PLUS 使用 Math.round(width * this.dpr) 和 Math.round(height * this.dpr)，APP-NVUE 保持原行为。
+- 更新 scripts/verify-app-canvas-hidpi.mjs，静态检查 MP、H5、APP-PLUS 条件、DPR 计算和显式参数优先级。
 - 在 package.json 增加 verify:app-canvas-hidpi。
 
 ## 任务 2：让海报、二维码和条码使用统一策略

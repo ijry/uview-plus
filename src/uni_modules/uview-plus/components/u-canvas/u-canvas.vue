@@ -582,8 +582,8 @@ export default {
                 let destWidth = hasDestWidth ? options.destWidth : width;
                 let destHeight = hasDestHeight ? options.destHeight : height;
 
-                // APP-PLUS 的旧版 CanvasContext 不需要改变逻辑绘制坐标，只提升默认导出像素。
-                // #ifdef APP-PLUS
+                // MP、H5 和 APP-PLUS 保持逻辑绘制坐标，只提升默认导出像素。
+                // #ifdef MP || H5 || APP-PLUS
                 if (!hasDestWidth) {
                     destWidth = Math.round(width * this.dpr);
                 }
