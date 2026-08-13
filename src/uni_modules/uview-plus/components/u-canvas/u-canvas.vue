@@ -577,13 +577,28 @@ export default {
             return new Promise((resolve, reject) => {
                 const width = options.width || this.actualWidth;
                 const height = options.height || this.actualHeight;
+                const hasDestWidth = options.destWidth !== undefined && options.destWidth !== null;
+                const hasDestHeight = options.destHeight !== undefined && options.destHeight !== null;
+                let destWidth = hasDestWidth ? options.destWidth : width;
+                let destHeight = hasDestHeight ? options.destHeight : height;
+
+                // APP-PLUS 的旧版 CanvasContext 不需要改变逻辑绘制坐标，只提升默认导出像素。
+                // #ifdef APP-PLUS
+                if (!hasDestWidth) {
+                    destWidth = Math.round(width * this.dpr);
+                }
+                if (!hasDestHeight) {
+                    destHeight = Math.round(height * this.dpr);
+                }
+                // #endif
+
                 const request = {
                     x: options.x || 0,
                     y: options.y || 0,
                     width,
                     height,
-                    destWidth: options.destWidth || width,
-                    destHeight: options.destHeight || height,
+                    destWidth,
+                    destHeight,
                     fileType: options.fileType || 'png',
                     quality: options.quality === undefined ? 1 : options.quality
                 };
@@ -684,9 +699,7 @@ export default {
                 fileType,
                 quality,
                 width: this.actualWidth,
-                height: this.actualHeight,
-                destWidth: this.actualWidth,
-                destHeight: this.actualHeight
+                height: this.actualHeight
             });
             return res.tempFilePath || res.apFilePath;
         },

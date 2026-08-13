@@ -341,8 +341,6 @@ export default {
             canvas.toTempFilePath({
               width: this.canvasWidth,
               height: this.canvasHeight,
-              destWidth: this.canvasWidth,
-              destHeight: this.canvasHeight,
               success: (res) => {
                 this.barcodeImage = res.tempFilePath
                 this.$emit('rendered', { type: 'image', value: this.value, path: res.tempFilePath })

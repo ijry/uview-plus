@@ -131,8 +131,6 @@ export default {
                             posterCanvas.toTempFilePath({
                                 width,
                                 height,
-                                destWidth: width,
-                                destHeight: height,
                                 success: (res) => {
                                     // 隐藏canvas
                                     this.showCanvas = false;

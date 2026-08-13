@@ -267,8 +267,6 @@ export default {
             this.canvasHost.toTempFilePath({
                 width: this.sizeLocal,
                 height: this.sizeLocal,
-                destWidth: this.sizeLocal,
-                destHeight: this.sizeLocal,
                 success,
                 fail
             }).catch(err => {
