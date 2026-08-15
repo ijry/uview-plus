@@ -10,7 +10,7 @@ export let Image = GImage;
 
 export let WeexBridge = GBridgeWeex;
 
-export function enable(el, { bridge, debug, disableAutoSwap, disableComboCommands } = {}) {
+export function enable(el, { bridge, debug, disableAutoSwap, disableComboCommands, clearColor = 'white' } = {}) {
 
     const GBridge = GImage.GBridge = GCanvas.GBridge = GWebGLRenderingContext.GBridge = GContext2D.GBridge = bridge;
 
@@ -20,7 +20,7 @@ export function enable(el, { bridge, debug, disableAutoSwap, disableComboCommand
         false,  // supportScroll
         false,  // newCanvasMode
         1,      // compatible
-        'white',// clearColor
+        clearColor,// clearColor
         false   // sameLevel: newCanvasMode = true && true => GCanvasView and Webview is same level
     ]);
 
