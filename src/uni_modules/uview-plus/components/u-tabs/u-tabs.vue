@@ -195,10 +195,13 @@
 					const isActive = index == this.innerCurrent
 					const defaultActiveColor = defProps.tabs?.activeStyle?.color || '#303133'
 					const defaultInactiveColor = defProps.tabs?.inactiveStyle?.color || '#606266'
-					const isActiveStyleOverridden = this.upHasProp('activeStyle')
-						|| (customeStyle && customeStyle.color && customeStyle.color !== defaultActiveColor)
-					const isInactiveStyleOverridden = this.upHasProp('inactiveStyle')
-						|| (customeStyle && customeStyle.color && customeStyle.color !== defaultInactiveColor)
+					const hasCustomColor = customeStyle
+						&& Object.prototype.hasOwnProperty.call(customeStyle, 'color')
+						&& String(customeStyle.color ?? '').trim() !== ''
+					const isActiveStyleOverridden = hasCustomColor && (this.upHasProp('activeStyle')
+						|| customeStyle.color !== defaultActiveColor)
+					const isInactiveStyleOverridden = hasCustomColor && (this.upHasProp('inactiveStyle')
+						|| customeStyle.color !== defaultInactiveColor)
 					if (isActive && ['pill-arrow', 'tag'].includes(this.shapeMode) && !isActiveStyleOverridden) {
 						style.color = '#ffffff'
 					} else if (isActive && !isActiveStyleOverridden) {
