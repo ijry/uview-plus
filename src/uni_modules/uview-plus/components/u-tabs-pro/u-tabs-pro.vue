@@ -187,8 +187,8 @@
 				this.innerCurrent = nextCurrent
 				this.$emit('update:current', nextCurrent)
 			},
-			clickHandler(item, index) {
-				this.$emit('click', item, index)
+			clickHandler(item, index, event) {
+				this.$emit('click', item, index, event)
 			},
 			longPressHandler(item, index) {
 				this.$emit('longPress', item, index)
