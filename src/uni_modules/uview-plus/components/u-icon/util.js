@@ -5,7 +5,8 @@ const appIconFontUrl = '_www/static/app-plus/uview-plus/upicon.ttf';
 const useAppStaticIconFont = false;
 
 let params = {
-    loaded: false
+    loaded: false,
+    loading: false
 };
 
 // #ifdef APP-VUE
@@ -62,11 +63,12 @@ const markFontLoaded = () => {
     // #ifdef APP-VUE
     return;
     // #endif
+    params.loading = false;
     // #ifdef APP-NVUE
     params.loaded = true;
     return;
     // #endif
-    // 全局加载不稳定，默认关闭，需要开启可以配置loadFontOnce。
+    // 非App Vue平台由loadFontOnce决定成功后是否复用本次加载结果。
     if (config.loadFontOnce) {
         params.loaded = true;
     }
@@ -81,8 +83,13 @@ const loadFont = () => {
     }
     appVueLoadingPages.add(appVuePage);
     // #endif
+    // #ifndef APP-VUE
+    if (params.loaded || params.loading) {
+        return false;
+    }
+    params.loading = true;
+    // #endif
     const iconUrl = getIconUrl();
-    markFontLoaded();
     // #ifdef APP-NVUE
     // nvue通过weex的dom模块引入字体，相关文档地址如下：
     // https://weex.apache.org/zh/docs/modules/dom.html#addrule
@@ -97,6 +104,7 @@ const loadFont = () => {
             'src': `url('${config.customIcon.url}')`
         });
     }
+    markFontLoaded();
     // #endif
     // #ifdef APP-VUE || H5 || MP-WEIXIN || MP-ALIPAY
     uni.loadFontFace({
@@ -108,11 +116,15 @@ const loadFont = () => {
             appVueLoadingPages.delete(appVuePage);
             appVueLoadedPages.add(appVuePage);
             // #endif
+            markFontLoaded();
             // console.log('内置字体图标加载成功');
         },
         fail() {
             // #ifdef APP-VUE
             appVueLoadingPages.delete(appVuePage);
+            // #endif
+            // #ifndef APP-VUE
+            params.loading = false;
             // #endif
             // console.error('内置字体图标加载出错');
         }

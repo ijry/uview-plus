@@ -96,6 +96,26 @@ if (!/params\.loaded\s*=\s*true;[\s\S]*if\s*\(config\.loadFontOnce\)/.test(util)
   throw new Error('util.js should preserve one-time font loading for App nvue and non-App platforms')
 }
 
+if (!/loaded:\s*false,\s*loading:\s*false/.test(util)) {
+  throw new Error('util.js should track in-flight font loading separately from successful loading')
+}
+
+if (!/params\.loading\s*=\s*true/.test(util)) {
+  throw new Error('util.js should prevent duplicate font requests while loading')
+}
+
+if (!/success\(\)\s*{[\s\S]*markFontLoaded\(\)/.test(util)) {
+  throw new Error('util.js should mark non-App fonts loaded only after loadFontFace succeeds')
+}
+
+if (!/fail\(\)\s*{[\s\S]*params\.loading\s*=\s*false/.test(util)) {
+  throw new Error('util.js should clear the in-flight state when a font request fails')
+}
+
+if (/const\s+iconUrl\s*=\s*getIconUrl\(\);\s*markFontLoaded\(\)/.test(util)) {
+  throw new Error('util.js should not mark a non-App font loaded before requesting it')
+}
+
 if (!/return config\.iconUrl/.test(util)) {
   throw new Error('util.js should keep config.iconUrl for non-App platforms')
 }
