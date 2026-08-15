@@ -7,7 +7,7 @@
 					class="u-tabs__wrapper__scroll-view" :show-scrollbar="false" ref="u-tabs__wrapper__scroll-view">
 					<view class="u-tabs__wrapper__nav" ref="u-tabs__wrapper__nav">
 						<view class="u-tabs__wrapper__nav__item" v-for="(item, index) in tabList" :key="index"
-							@tap="clickHandler(item, index)" @longpress="longPressHandler(item,index)"
+							@tap="clickHandler(item, index, $event)" @longpress="longPressHandler(item,index)"
 							:ref="`u-tabs__wrapper__nav__item-${index}`"
 							:style="[itemComputedStyle, {flex: scrollable ? '' : 1}]" :class="[`u-tabs__wrapper__nav__item-${index}`,
 								shapeMode && `u-tabs__wrapper__nav__item--${shapeMode}`,
@@ -108,7 +108,7 @@
 	 * @property {String}	keyName	 从`list`元素对象中读取的键名（默认 'name' ）
 	 * @property {String}	shapeMode 标签形态模式，可选capsule/card/pill-arrow/tag（默认 '' ）
 	 * @event {Function(index)} change 标签改变时触发 index: 点击了第几个tab，索引从0开始
-	 * @event {Function(index)} click 点击标签时触发 index: 点击了第几个tab，索引从0开始
+	 * @event {Function(item, index, event)} click 点击标签时触发，event 为原始点击事件
 	 * @event {Function(index)} longPress 长按标签时触发 index: 点击了第几个tab，索引从0开始
 	 * @example <u-tabs :list="list" :is-scroll="false" :current="current" @change="change" @longPress="longPress"></u-tabs>
 	 */
@@ -270,12 +270,12 @@
 				// #endif
 			},
 			// 点击某一个标签
-			clickHandler(item, index) {
+			clickHandler(item, index, event) {
 				// 因为标签可能为disabled状态，所以click是一定会发出的，但是change事件是需要可用的状态才发出
 				this.$emit('click', {
 					...item,
 					index
-				}, index)
+				}, index, event)
 				// 如果disabled状态，返回
 				if (item.disabled) return
 				// 如果点击当前不触发change

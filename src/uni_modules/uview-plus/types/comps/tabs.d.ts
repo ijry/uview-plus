@@ -69,8 +69,9 @@ declare interface TabsProps {
    * 点击标签时触发
    * @param item 传入的其他值
    * @param index 标签索引值
+   * @param event 原始点击事件，H5 下为 DOM Event
    */
-  onClick?: (item: any, index: number) => any
+  onClick?: (item: any, index: number, event: any) => any
   /**
    * 标签索引改变时触发(`disalbed`时不会触发)
    * @param item 传入的其他值
