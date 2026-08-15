@@ -158,31 +158,46 @@
             background: '#f7f8fa',
             text: '#303133',
             muted: '#909399',
-            toolbar: '#ffffff'
+            toolbar: '#ffffff',
+            border: 'rgba(48, 49, 51, 0.12)',
+            active: '#2979ff',
+            disabled: '#c8c9cc'
         },
         paper: {
             background: '#f3ead7',
             text: '#51483d',
             muted: '#8f806d',
-            toolbar: '#f7efdf'
+            toolbar: '#f7efdf',
+            border: 'rgba(81, 72, 61, 0.16)',
+            active: '#9b7653',
+            disabled: '#c7b9a3'
         },
         green: {
             background: '#e7f1e4',
             text: '#3f5140',
             muted: '#708371',
-            toolbar: '#eef6eb'
+            toolbar: '#eef6eb',
+            border: 'rgba(63, 81, 64, 0.16)',
+            active: '#4d8b55',
+            disabled: '#b6c7b4'
         },
         night: {
             background: '#202124',
             text: '#d6d7da',
             muted: '#9ca0a8',
-            toolbar: '#292b30'
+            toolbar: '#292b30',
+            border: 'rgba(214, 215, 218, 0.16)',
+            active: '#7da7ff',
+            disabled: '#62656d'
         },
         dark: {
             background: '#111214',
             text: '#e5e7eb',
             muted: '#9ca3af',
-            toolbar: '#1b1d21'
+            toolbar: '#1b1d21',
+            border: 'rgba(229, 231, 235, 0.16)',
+            active: '#8ab4ff',
+            disabled: '#5f6368'
         }
     }
 
@@ -265,12 +280,7 @@
                     : 'day'
                 return {
                     ...THEME_TOKENS[theme],
-                    theme,
-                    active: '#2979ff',
-                    disabled: '#c8c9cc',
-                    border: theme === 'day'
-                        ? 'rgba(48, 49, 51, 0.12)'
-                        : 'rgba(127, 127, 127, 0.18)'
+                    theme
                 }
             },
             effectiveAnimation() {
@@ -313,6 +323,7 @@
                     '--up-novel-reader-muted': this.themeTokens.muted,
                     '--up-novel-reader-toolbar': this.themeTokens.toolbar,
                     '--up-novel-reader-active': this.themeTokens.active || '#2979ff',
+                    '--up-novel-reader-disabled': this.themeTokens.disabled || '#c8c9cc',
                     '--up-novel-reader-border': this.themeTokens.border || 'rgba(48, 49, 51, 0.12)'
                 }
             },
@@ -796,7 +807,7 @@
         position: absolute;
         right: 0;
         left: 0;
-        z-index: 5;
+        z-index: 10;
     }
 
     .up-novel-reader__controls {

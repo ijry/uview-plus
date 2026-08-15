@@ -1,4 +1,4 @@
-.up-novel-reader {
+.up-novel-reader.theme-day {
     --up-novel-reader-background: #f7f8fa;
     --up-novel-reader-text: #303133;
     --up-novel-reader-muted: #909399;
@@ -6,44 +6,44 @@
     --up-novel-reader-border: rgba(48, 49, 51, 0.12);
     --up-novel-reader-active: #2979ff;
     --up-novel-reader-disabled: #c8c9cc;
+}
 
-    &.theme-day {
-        --up-novel-reader-background: #f7f8fa;
-        --up-novel-reader-text: #303133;
-        --up-novel-reader-muted: #909399;
-        --up-novel-reader-toolbar: #ffffff;
-        --up-novel-reader-border: rgba(48, 49, 51, 0.12);
-    }
+.up-novel-reader.theme-paper {
+    --up-novel-reader-background: #f3ead7;
+    --up-novel-reader-text: #51483d;
+    --up-novel-reader-muted: #8f806d;
+    --up-novel-reader-toolbar: #f7efdf;
+    --up-novel-reader-border: rgba(81, 72, 61, 0.16);
+    --up-novel-reader-active: #9b7653;
+    --up-novel-reader-disabled: #c7b9a3;
+}
 
-    &.theme-paper {
-        --up-novel-reader-background: #f3ead7;
-        --up-novel-reader-text: #51483d;
-        --up-novel-reader-muted: #8f806d;
-        --up-novel-reader-toolbar: #f7efdf;
-        --up-novel-reader-border: rgba(81, 72, 61, 0.16);
-    }
+.up-novel-reader.theme-green {
+    --up-novel-reader-background: #e7f1e4;
+    --up-novel-reader-text: #3f5140;
+    --up-novel-reader-muted: #708371;
+    --up-novel-reader-toolbar: #eef6eb;
+    --up-novel-reader-border: rgba(63, 81, 64, 0.16);
+    --up-novel-reader-active: #4d8b55;
+    --up-novel-reader-disabled: #b6c7b4;
+}
 
-    &.theme-green {
-        --up-novel-reader-background: #e7f1e4;
-        --up-novel-reader-text: #3f5140;
-        --up-novel-reader-muted: #708371;
-        --up-novel-reader-toolbar: #eef6eb;
-        --up-novel-reader-border: rgba(63, 81, 64, 0.16);
-    }
+.up-novel-reader.theme-night {
+    --up-novel-reader-background: #202124;
+    --up-novel-reader-text: #d6d7da;
+    --up-novel-reader-muted: #9ca0a8;
+    --up-novel-reader-toolbar: #292b30;
+    --up-novel-reader-border: rgba(214, 215, 218, 0.16);
+    --up-novel-reader-active: #7da7ff;
+    --up-novel-reader-disabled: #62656d;
+}
 
-    &.theme-night {
-        --up-novel-reader-background: #202124;
-        --up-novel-reader-text: #d6d7da;
-        --up-novel-reader-muted: #9ca0a8;
-        --up-novel-reader-toolbar: #292b30;
-        --up-novel-reader-border: rgba(214, 215, 218, 0.16);
-    }
-
-    &.theme-dark {
-        --up-novel-reader-background: #111214;
-        --up-novel-reader-text: #e5e7eb;
-        --up-novel-reader-muted: #9ca3af;
-        --up-novel-reader-toolbar: #1b1d21;
-        --up-novel-reader-border: rgba(229, 231, 235, 0.16);
-    }
+.up-novel-reader.theme-dark {
+    --up-novel-reader-background: #111214;
+    --up-novel-reader-text: #e5e7eb;
+    --up-novel-reader-muted: #9ca3af;
+    --up-novel-reader-toolbar: #1b1d21;
+    --up-novel-reader-border: rgba(229, 231, 235, 0.16);
+    --up-novel-reader-active: #8ab4ff;
+    --up-novel-reader-disabled: #5f6368;
 }
