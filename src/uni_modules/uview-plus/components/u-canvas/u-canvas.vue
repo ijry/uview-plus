@@ -22,6 +22,7 @@
         <!-- #endif -->
 
         <!-- #ifdef APP-PLUS -->
+        <!-- #ifndef APP-NVUE -->
         <canvas
             class="u-canvas__canvas"
             :id="canvasId"
@@ -33,15 +34,15 @@
             @touchend="onTouchEnd"
         />
         <!-- #endif -->
+        <!-- #endif -->
 
         <!-- #ifdef APP-NVUE -->
-        <gcanvas
+        <web-view
             class="u-canvas__canvas"
-            ref="gcanvas"
+            ref="web"
+            src="/static/app-plus/up-canvas/local.html"
             :style="{ width: actualWidth + unit, height: actualHeight + unit }"
-            @touchstart="onTouchStart"
-            @touchmove="onTouchMove"
-            @touchend="onTouchEnd"
+            @onPostMessage="onWebViewMessage"
         />
         <!-- #endif -->
     </view>
@@ -50,10 +51,9 @@
 <script>
 // #ifdef APP-NVUE
 import {
-    enable,
-    WeexBridge,
-    Image as GImage
-} from '../../libs/util/gcanvas/index.js';
+    createWebViewCanvasBridge,
+    createWebViewCanvasContext
+} from '../../libs/util/app-nvue-webview-canvas.js';
 // #endif
 
 export default {
@@ -125,13 +125,26 @@ export default {
         this._selectorResult = null;
         this._canvasElement = null;
         this._imageCache = Object.create(null);
+        this._imageDataCache = Object.create(null);
         this._isNvue = false;
         this._initPromise = null;
+        this._webViewBridge = null;
+        this._webViewContext = null;
+        this._webViewInitSignature = null;
+        this._webViewSessionId = null;
     },
     mounted() {
         this.$nextTick(() => {
             this.initCanvas();
         });
+    },
+    beforeUnmount() {
+        if (this._webViewBridge) {
+            this._webViewBridge.destroy();
+        }
+        this._webViewBridge = null;
+        this._webViewContext = null;
+        this.ctx = null;
     },
     methods: {
         parseSize(value) {
@@ -158,22 +171,29 @@ export default {
         onTouchEnd(event) {
             this.$emit('touchend', event);
         },
+        onWebViewMessage(event) {
+            if (this._webViewBridge) {
+                this._webViewBridge.handleMessage(event);
+            }
+        },
+        onWebViewTouch(message) {
+            const eventType = message.eventType;
+            if (!['touchstart', 'touchmove', 'touchend'].includes(eventType)) return;
+            this.$emit(eventType, {
+                type: eventType,
+                detail: {
+                    x: message.x,
+                    y: message.y
+                },
+                touches: message.touches || [],
+                changedTouches: message.changedTouches || [],
+                canvasWidth: message.canvasWidth,
+                canvasHeight: message.canvasHeight
+            });
+        },
         async getCanvasNode(id = this.canvasId, isCanvas = true) {
             return new Promise((resolve) => {
                 try {
-                    // #ifdef APP-NVUE
-                    setTimeout(() => {
-                        const gcanvas = this.$refs.gcanvas;
-                        if (!gcanvas) {
-                            resolve(false);
-                            return;
-                        }
-                        this._isNvue = true;
-                        resolve(enable(gcanvas, { bridge: WeexBridge }));
-                    }, 100);
-                    // #endif
-
-                    // #ifndef APP-NVUE
                     uni.createSelectorQuery()
                         .in(this)
                         .select(`#${id}`)
@@ -183,11 +203,18 @@ export default {
                                 size: true
                             },
                             (res) => {
+                                // #ifdef APP-PLUS
+                                resolve(res || {
+                                    width: this.actualWidth,
+                                    height: this.actualHeight
+                                });
+                                return;
+                                // #endif
+
                                 resolve(res || false);
                             }
                         )
                         .exec();
-                    // #endif
                 } catch (error) {
                     console.error('获取画布节点失败:', error);
                     resolve(false);
@@ -201,14 +228,12 @@ export default {
             return this.ctx;
         },
         getCanvasContext() {
-            // #ifdef APP-PLUS
-            return uni.createCanvasContext(this.canvasId, this);
+            // #ifdef APP-NVUE
+            return this._webViewContext;
             // #endif
 
-            // #ifdef APP-NVUE
-            return this._canvasElement && typeof this._canvasElement.getContext === 'function'
-                ? this._canvasElement.getContext('2d')
-                : null;
+            // #ifdef APP-PLUS
+            return uni.createCanvasContext(this.canvasId, this);
             // #endif
 
             // #ifdef MP || H5
@@ -250,6 +275,12 @@ export default {
                 if (this.useRootHeightAndWidth) {
                     await this.setNewSize();
                 }
+                // #ifdef APP-NVUE
+                if (typeof createWebViewCanvasBridge === 'function') {
+                    return await this._initializeWebViewCanvas(force);
+                }
+                // #endif
+
                 if (this.ctx && !force) {
                     this.$emit('ready', {
                         width: this.actualWidth,
@@ -264,7 +295,9 @@ export default {
                 }
 
                 this._selectorResult = this._canvasNode;
-                this._canvasElement = this._canvasNode.node || this._canvasNode;
+                this._canvasElement = this._isNvue
+                    ? this._canvasNode
+                    : (this._canvasNode.node || null);
                 const systemInfo = uni.getSystemInfoSync() || {};
                 const pixelRatio = Number(systemInfo.pixelRatio) || 1;
                 // 微信开发者工具的模拟器预览通常按高密度屏幕缩放，至少使用 2 倍 backing store。
@@ -304,6 +337,64 @@ export default {
                 return false;
             }
         },
+        async _initializeWebViewCanvas(force = false) {
+            this._isNvue = true;
+            const systemInfo = uni.getSystemInfoSync() || {};
+            this.dpr = Math.max(1, Number(systemInfo.pixelRatio) || 1);
+
+            if (!this._webViewBridge) {
+                this._webViewBridge = createWebViewCanvasBridge({
+                    getWebView: () => this.$refs.web,
+                    onTouch: message => this.onWebViewTouch(message),
+                    onReady: (message) => {
+                        if (
+                            this._webViewSessionId &&
+                            message.sessionId &&
+                            this._webViewSessionId !== message.sessionId
+                        ) {
+                            this._webViewInitSignature = null;
+                        }
+                        this._webViewSessionId = message.sessionId || null;
+                    },
+                    onError: error => console.error('Canvas WebView错误:', error)
+                });
+                this._webViewContext = createWebViewCanvasContext({
+                    bridge: this._webViewBridge,
+                    resolveImage: source => this.resolveNvueImageSource(source),
+                    measureText: (text, state) => {
+                        const matched = String(state.font || '').match(/(\d+(?:\.\d+)?)px/);
+                        const fontSize = matched ? Number(matched[1]) : this.fontSize;
+                        return { width: String(text).length * fontSize * 0.6 };
+                    }
+                });
+                this.ctx = this._webViewContext;
+            }
+
+            await this._webViewBridge.ready();
+            const signature = [
+                this.actualWidth,
+                this.actualHeight,
+                this.dpr,
+                this.disableScroll ? 1 : 0
+            ].join(':');
+            if (force || this._webViewInitSignature !== signature) {
+                await this._webViewBridge.request('init', {
+                    width: this.actualWidth,
+                    height: this.actualHeight,
+                    dpr: this.dpr,
+                    disableScroll: this.disableScroll
+                });
+                this._webViewInitSignature = signature;
+                this.applyFont();
+                await this.clearCanvas();
+            }
+
+            this.$emit('ready', {
+                width: this.actualWidth,
+                height: this.actualHeight
+            });
+            return true;
+        },
         refresh() {
             return this.initCanvas(true);
         },
@@ -322,7 +413,7 @@ export default {
                 this.setFillStyle(this.bgColor);
                 this.fill();
             }
-            this.draw();
+            return this.draw();
         },
         callContext(method, ...args) {
             if (this.ctx && typeof this.ctx[method] === 'function') {
@@ -363,11 +454,27 @@ export default {
         arc(x, y, radius, startAngle, endAngle, anticlockwise = false) {
             return this.callContext('arc', x, y, radius, startAngle, endAngle, anticlockwise);
         },
+        arcTo(x1, y1, x2, y2, radius) {
+            return this.callContext('arcTo', x1, y1, x2, y2, radius);
+        },
         bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y) {
             return this.callContext('bezierCurveTo', cp1x, cp1y, cp2x, cp2y, x, y);
         },
         quadraticCurveTo(cpx, cpy, x, y) {
             return this.callContext('quadraticCurveTo', cpx, cpy, x, y);
+        },
+        ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle, anticlockwise = false) {
+            return this.callContext(
+                'ellipse',
+                x,
+                y,
+                radiusX,
+                radiusY,
+                rotation,
+                startAngle,
+                endAngle,
+                anticlockwise
+            );
         },
         clip() {
             return this.callContext('clip');
@@ -386,6 +493,15 @@ export default {
         },
         scale(x, y) {
             return this.callContext('scale', x, y);
+        },
+        setTransform(a, b, c, d, e, f) {
+            return this.callContext('setTransform', a, b, c, d, e, f);
+        },
+        transform(a, b, c, d, e, f) {
+            return this.callContext('transform', a, b, c, d, e, f);
+        },
+        resetTransform() {
+            return this.callContext('resetTransform');
         },
         setFillStyle(color) {
             if (!this.ctx) return;
@@ -426,6 +542,21 @@ export default {
             } else {
                 this.ctx.lineJoin = lineJoin;
             }
+        },
+        setMiterLimit(miterLimit) {
+            if (!this.ctx) return;
+            if (typeof this.ctx.setMiterLimit === 'function') {
+                this.ctx.setMiterLimit(miterLimit);
+            } else {
+                this.ctx.miterLimit = miterLimit;
+            }
+        },
+        setLineDash(segments = []) {
+            return this.callContext('setLineDash', segments);
+        },
+        getLineDash() {
+            const result = this.callContext('getLineDash');
+            return Array.isArray(result) ? result : [];
         },
         setTextAlign(align = 'left') {
             if (!this.ctx) return;
@@ -470,6 +601,14 @@ export default {
                 this.ctx.globalAlpha = alpha;
             }
         },
+        setGlobalCompositeOperation(operation) {
+            if (!this.ctx) return;
+            if (typeof this.ctx.setGlobalCompositeOperation === 'function') {
+                this.ctx.setGlobalCompositeOperation(operation);
+            } else {
+                this.ctx.globalCompositeOperation = operation;
+            }
+        },
         setShadow(offsetX = 0, offsetY = 0, blur = 0, color = 'rgba(0,0,0,0)') {
             if (!this.ctx) return;
             if (typeof this.ctx.setShadow === 'function') {
@@ -501,6 +640,12 @@ export default {
         fillText(text, x, y) {
             return this.callContext('fillText', String(text), x, y);
         },
+        strokeText(text, x, y, maxWidth) {
+            if (maxWidth === undefined) {
+                return this.callContext('strokeText', String(text), x, y);
+            }
+            return this.callContext('strokeText', String(text), x, y, maxWidth);
+        },
         measureText(text) {
             if (this.ctx && typeof this.ctx.measureText === 'function') {
                 return this.ctx.measureText(String(text));
@@ -508,6 +653,12 @@ export default {
             return {
                 width: String(text).length * this.fontSize * 0.6
             };
+        },
+        measureTextAsync(text) {
+            if (this.ctx && typeof this.ctx.measureTextAsync === 'function') {
+                return this.ctx.measureTextAsync(String(text));
+            }
+            return Promise.resolve(this.measureText(text));
         },
         createLinearGradient(x0, y0, x1, y1) {
             if (this.ctx && typeof this.ctx.createLinearGradient === 'function') {
@@ -521,16 +672,74 @@ export default {
             }
             return null;
         },
+        createPattern(image, repetition = 'repeat') {
+            if (this.ctx && typeof this.ctx.createPattern === 'function') {
+                return this.ctx.createPattern(image, repetition);
+            }
+            return null;
+        },
+        async resolveNvueImageSource(src) {
+            if (typeof src !== 'string' || src.indexOf('data:image/') === 0) {
+                return src;
+            }
+            if (this._imageDataCache[src]) {
+                return this._imageDataCache[src];
+            }
+
+            const task = (async () => {
+                const localPath = await new Promise((resolve, reject) => {
+                    uni.getImageInfo({
+                        src,
+                        success: res => resolve(res.path || res.tempFilePath),
+                        fail: reject
+                    });
+                });
+                if (!localPath) {
+                    throw new Error(`Canvas图片未返回本地路径: ${src}`);
+                }
+                return this.readNvueFileAsDataURL(localPath);
+            })();
+            this._imageDataCache[src] = task;
+            try {
+                const dataUrl = await task;
+                this._imageDataCache[src] = dataUrl;
+                return dataUrl;
+            } catch (error) {
+                delete this._imageDataCache[src];
+                throw error;
+            }
+        },
+        readNvueFileAsDataURL(path) {
+            return new Promise((resolve, reject) => {
+                // #ifdef APP-NVUE
+                if (typeof plus === 'undefined' || !plus.io) {
+                    reject(new Error('HTML5+ FileReader不可用'));
+                    return;
+                }
+                plus.io.resolveLocalFileSystemURL(path, (entry) => {
+                    entry.file((file) => {
+                        const reader = new plus.io.FileReader();
+                        reader.onloadend = event => resolve(event.target.result);
+                        reader.onerror = reject;
+                        reader.readAsDataURL(file);
+                    }, reject);
+                }, reject);
+                return;
+                // #endif
+
+                resolve(path);
+            });
+        },
         loadImage(src) {
+            // #ifdef APP-NVUE
+            return this.resolveNvueImageSource(src);
+            // #endif
+
             if (this._imageCache[src]) {
                 return Promise.resolve(this._imageCache[src]);
             }
             return new Promise((resolve, reject) => {
                 let image = null;
-
-                // #ifdef APP-NVUE
-                image = new GImage();
-                // #endif
 
                 // #ifdef MP
                 const canvas = this.getCanvasElement();
@@ -561,7 +770,11 @@ export default {
             if (!this.ctx || typeof this.ctx.drawImage !== 'function') {
                 return false;
             }
-            if (typeof source !== 'string' || (typeof this.ctx.setFillStyle === 'function' && !this._isNvue)) {
+            if (typeof source !== 'string') {
+                this.ctx.drawImage(source, ...args);
+                return true;
+            }
+            if (typeof this.ctx.setFillStyle === 'function' && !this._isNvue) {
                 this.ctx.drawImage(source, ...args);
                 return true;
             }
@@ -597,6 +810,7 @@ export default {
                 }
                 // #endif
 
+                const defaultFileType = 'png';
                 const request = {
                     x: options.x || 0,
                     y: options.y || 0,
@@ -604,7 +818,9 @@ export default {
                     height,
                     destWidth,
                     destHeight,
-                    fileType: options.fileType || 'png',
+                    fileType: options.fileType === undefined || options.fileType === null
+                        ? defaultFileType
+                        : options.fileType,
                     quality: options.quality === undefined ? 1 : options.quality
                 };
                 const success = (res) => {
@@ -667,18 +883,14 @@ export default {
 
                 // #ifdef APP-NVUE
                 if (this.ctx && typeof this.ctx.toTempFilePath === 'function') {
-                    this.ctx.toTempFilePath(
-                        request.x,
-                        request.y,
-                        request.width,
-                        request.height,
-                        request.destWidth,
-                        request.destHeight,
-                        request.fileType,
-                        request.quality,
+                    Promise.resolve(this.ctx.toTempFilePath(request)).then(
                         (res) => {
                             success(res);
                             complete(res);
+                        },
+                        (error) => {
+                            fail(error);
+                            complete(error);
                         }
                     );
                     return;
@@ -710,43 +922,90 @@ export default {
         },
         getImageData(options = {}) {
             return new Promise((resolve, reject) => {
+                const success = (res) => {
+                    if (typeof options.success === 'function') options.success(res);
+                    resolve(res);
+                };
+                const fail = (err) => {
+                    if (typeof options.fail === 'function') options.fail(err);
+                    reject(err);
+                };
+                const complete = (res) => {
+                    if (typeof options.complete === 'function') options.complete(res);
+                };
+                // #ifdef APP-NVUE
+                if (this.ctx && typeof this.ctx.getImageData === 'function') {
+                    Promise.resolve(this.ctx.getImageData({
+                        x: options.x || 0,
+                        y: options.y || 0,
+                        width: options.width || this.actualWidth,
+                        height: options.height || this.actualHeight
+                    })).then((res) => {
+                        success(res);
+                        complete(res);
+                    }, (error) => {
+                        fail(error);
+                        complete(error);
+                    });
+                    return;
+                }
+                // #endif
+
                 const request = {
                     canvasId: this.canvasId,
                     x: options.x || 0,
                     y: options.y || 0,
                     width: options.width || this.actualWidth,
                     height: options.height || this.actualHeight,
-                    success: (res) => {
-                        if (typeof options.success === 'function') options.success(res);
-                        resolve(res);
-                    },
-                    fail: (err) => {
-                        if (typeof options.fail === 'function') options.fail(err);
-                        reject(err);
-                    },
-                    complete: options.complete
+                    success,
+                    fail,
+                    complete
                 };
                 uni.canvasGetImageData(request, this);
             });
         },
         putImageData(options = {}) {
             return new Promise((resolve, reject) => {
+                const success = (res) => {
+                    if (typeof options.success === 'function') options.success(res);
+                    resolve(res);
+                };
+                const fail = (err) => {
+                    if (typeof options.fail === 'function') options.fail(err);
+                    reject(err);
+                };
+                const complete = (res) => {
+                    if (typeof options.complete === 'function') options.complete(res);
+                };
+                // #ifdef APP-NVUE
+                if (this.ctx && typeof this.ctx.putImageData === 'function') {
+                    Promise.resolve(this.ctx.putImageData({
+                        x: options.x || 0,
+                        y: options.y || 0,
+                        width: options.width || (options.data && options.data.width) || this.actualWidth,
+                        height: options.height || (options.data && options.data.height) || this.actualHeight,
+                        data: options.data
+                    })).then((res) => {
+                        success(res);
+                        complete(res);
+                    }, (error) => {
+                        fail(error);
+                        complete(error);
+                    });
+                    return;
+                }
+                // #endif
+
                 const request = {
                     canvasId: this.canvasId,
                     x: options.x || 0,
                     y: options.y || 0,
-                    width: options.width || this.actualWidth,
-                    height: options.height || this.actualHeight,
+                    width: options.width || (options.data && options.data.width) || this.actualWidth,
+                    height: options.height || (options.data && options.data.height) || this.actualHeight,
                     data: options.data,
-                    success: (res) => {
-                        if (typeof options.success === 'function') options.success(res);
-                        resolve(res);
-                    },
-                    fail: (err) => {
-                        if (typeof options.fail === 'function') options.fail(err);
-                        reject(err);
-                    },
-                    complete: options.complete
+                    success,
+                    fail,
+                    complete
                 };
                 uni.canvasPutImageData(request, this);
             });

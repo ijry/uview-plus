@@ -1164,60 +1164,67 @@ let QRCode = {};
                     }
                 }
             }
-            setTimeout(() => {
-                // canvas2 绘制是自动的不需要手动绘制
-                if(options.isNvue || isApp){
-                    const exportCode = () => {
-                        // 保存到临时区域
-                        setTimeout(() => {
-                            if (options.canvasHost && typeof options.canvasHost.toTempFilePath === 'function') {
-                                options.canvasHost.toTempFilePath({
-                                    width: options.width || options.size,
-                                    height: options.height || options.size,
-                                    destWidth: options.width || options.size,
-                                    destHeight: options.height || options.size,
-                                    quality: Number(1),
-                                    success: function (res) {
-                                        if (options.cbResult) {
-                                            if (!empty(res.tempFilePath)) {
-                                                options.cbResult(res.tempFilePath)
-                                            } else if (!empty(res.apFilePath)) {
-                                                options.cbResult(res.apFilePath)
-                                            } else {
-                                                options.cbResult(res.tempFilePath)
-                                            }
-                                        }
-                                    },
-                                    fail: function (res) {
-                                        console.log('绘制失败', res)
-                                        if (options.cbResult) {
-                                            options.cbResult(res)
-                                        }
-                                    },
-                                    complete: function () {
-                                        uni.hideLoading();
-                                    },
-                                }).catch(function(res) {
-                                    console.log('绘制失败', res)
-                                });
-                            }
-                        }, options.text.length + 100);
-                    };
+            // canvas2 绘制是自动的不需要手动绘制
+            if(options.isNvue || isApp){
+                let exportStarted = false;
+                const reportFailure = function(error) {
+                    uni.hideLoading();
+                    if (options.cbResult) {
+                        options.cbResult(error instanceof Error ? error : new Error(String(error || '绘制失败')))
+                    }
+                };
+                const exportCode = async function() {
+                    if (exportStarted) return;
+                    exportStarted = true;
+                    try {
+                        if (!options.canvasHost || typeof options.canvasHost.toTempFilePath !== 'function') {
+                            throw new Error('无法获取二维码画布导出方法');
+                        }
+                        const res = await options.canvasHost.toTempFilePath({
+                            width: options.width || options.size,
+                            height: options.height || options.size,
+                            quality: Number(1)
+                        });
+                        const tempFilePath = res && (res.tempFilePath || res.apFilePath);
+                        if (empty(tempFilePath)) {
+                            throw new Error('二维码导出未返回文件路径');
+                        }
+                        if (options.cbResult) {
+                            options.cbResult(tempFilePath)
+                        }
+                        uni.hideLoading();
+                    } catch (error) {
+                        reportFailure(error);
+                    }
+                };
+                try {
+                    let drawResult;
                     if (options.canvasHost && typeof options.canvasHost.draw === 'function') {
-                        options.canvasHost.draw(true, exportCode);
+                        drawResult = options.canvasHost.draw(true, exportCode);
                     } else if (ctx && typeof ctx.draw === 'function') {
-                        ctx.draw(true, exportCode);
+                        drawResult = ctx.draw(true, exportCode);
                     } else {
                         exportCode();
                     }
+                    if (drawResult && typeof drawResult.then === 'function') {
+                        drawResult.then(exportCode, reportFailure);
+                    }
+                } catch (error) {
+                    reportFailure(error);
                 }
-                else{
+            }
+            else{
+                setTimeout(function() {
                     options.cbResult("")
-                }
-
-            }, options.usingComponents ? 100 : 200);
+                }, options.usingComponents ? 100 : 200);
+            }
         }
-        createCanvas(this.options);
+        createCanvas(this.options).catch(function(error) {
+            uni.hideLoading();
+            if (opt.cbResult) {
+                opt.cbResult(error instanceof Error ? error : new Error(String(error || '二维码绘制失败')))
+            }
+        });
         // 空判定
         let empty = function (v) {
             let tp = typeof v,

@@ -7,8 +7,19 @@
 			<up-button type="primary" shape="circle" @click="generatePoster">生成海报</up-button>
 			
             <!-- 海报预览区域 -->
-			<view class="poster-preview" v-if="posterImageUrl" :style="{ backgroundColor: upThemeVar('--up-card-bg-color') }">
-				<image :src="posterImageUrl" class="poster-image" mode="widthFix"></image>
+            <view
+                class="poster-preview"
+                v-if="posterImageUrl"
+                :style="{
+                    backgroundColor: upThemeVar('--up-card-bg-color'),
+                    width: posterPreviewWidth + 'px',
+                    height: posterPreviewHeight + 'px'
+                }">
+				<image
+                    :src="posterImageUrl"
+                    class="poster-image"
+                    :style="{ width: posterPreviewWidth + 'px', height: posterPreviewHeight + 'px' }"
+                    mode="aspectFit"></image>
 			</view>
 
             <!-- 海报组件 -->
@@ -117,7 +128,9 @@
 					]
 				},
 				// 生成的海报图片URL
-				posterImageUrl: ''
+				posterImageUrl: '',
+				posterPreviewWidth: 0,
+				posterPreviewHeight: 0
 			}
 		},
 		methods: {
@@ -130,6 +143,7 @@
 					
 					// 调用海报组件的导出方法
 					const result = await this.$refs.poster.exportImage();
+					this.updatePosterPreviewSize(result.width, result.height);
 					this.posterImageUrl = result.path;
 					
 					uni.hideLoading();
@@ -146,6 +160,22 @@
 					console.error('海报生成失败:', error);
 				}
 			},
+
+			getPosterPreviewWidth() {
+				const systemInfo = uni.getSystemInfoSync() || {};
+				const windowWidth = Number(systemInfo.windowWidth) || 375;
+				return Math.max(1, windowWidth - 30);
+			},
+
+			updatePosterPreviewSize(width, height) {
+				const sourceWidth = Number(width) || 1;
+				const sourceHeight = Number(height) || 1;
+				this.posterPreviewWidth = this.getPosterPreviewWidth();
+				this.posterPreviewHeight = Math.max(
+					1,
+					Math.round(this.posterPreviewWidth * sourceHeight / sourceWidth)
+				);
+			},
 			
 			// 海报导出回调
 			onPosterExport(result) {
@@ -157,16 +187,10 @@
 
 <style scoped>
 	.poster-preview {
-		width: 100%;
         margin-top: 20px;
 		margin-bottom: 40rpx;
 		border-radius: 20rpx;
 		overflow: hidden;
 		box-shadow: 0 10rpx 30rpx rgba(0,0,0,0.1);
 	}
-	
-	.poster-image {
-		width: 100%;
-	}
 </style>
-
