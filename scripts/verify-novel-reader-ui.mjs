@@ -11,6 +11,7 @@ const content = readFileSync(resolve(componentDir, 'reader-content.vue'), 'utf8'
 const settings = readFileSync(resolve(componentDir, 'reader-settings.vue'), 'utf8')
 const catalog = readFileSync(resolve(componentDir, 'reader-catalog.vue'), 'utf8')
 const themeVars = readFileSync(resolve(componentDir, 'theme-vars.scss'), 'utf8')
+const demo = readFileSync(resolve(root, 'src/pages/componentsD/novelReader/novelReader.nvue'), 'utf8')
 
 function escapeRegExp(value) {
     return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
@@ -93,6 +94,18 @@ assertStyleRule(catalog, '.up-novel-reader__catalog-item', ['flex-direction: row
 assertStyleRule(catalog, '.up-novel-reader__catalog-index', ['flex-direction: row'])
 assertStyleRule(catalog, '.up-novel-reader__bookmark-heading', ['flex-direction: row'])
 assertStyleRule(catalog, '.up-novel-reader__bookmark-item', ['flex-direction: row'])
+assert.match(demo, /<template\s+#toolbar-extra>/)
+assertStyleRule(demo, '.novel-reader-demo', [
+    'width: 100%',
+    'height: 100%',
+    'overflow: hidden'
+])
+assertStyleRule(demo, '.novel-reader-demo__mode', [
+    'flex-direction: row',
+    'width: 36px',
+    'height: 36px'
+])
+assert.doesNotMatch(demo, /reader-frame|900rpx/)
 
 assertStyleRule(source, '.up-novel-reader', ['position: relative'])
 assert.match(
