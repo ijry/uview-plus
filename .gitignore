@@ -11,3 +11,4 @@ deploy.sh
 uni-app-x
 cachePath/
 .workbuddy/
+.claude/
