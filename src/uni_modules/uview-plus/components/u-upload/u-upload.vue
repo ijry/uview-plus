@@ -875,7 +875,7 @@
 			bottom: $u-upload-success-bottom;
 			right: $u-upload-success-right;
 			@include flex;
-			// 由于weex(nvue)为阿里巴巴的KPI(部门业绩考核)的laji产物，不支持css绘制三角形
+			// 由于weex(nvue)不支持css绘制三角形
 			// 所以在nvue下使用图片，非nvue下使用css实现
 			/* #ifndef APP-NVUE */
 			border-style: $u-upload-success-border-style;

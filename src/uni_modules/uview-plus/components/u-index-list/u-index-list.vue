@@ -108,7 +108,7 @@
 	import { addUnit, getWindowInfo, sleep, getPx } from '../../libs/function/index';
 
 	// #ifdef APP-NVUE
-	// 由于weex为阿里的KPI业绩考核的产物，所以不支持百分比单位，这里需要通过dom查询组件的宽度
+	// 由于weex不支持百分比单位，这里需要通过dom查询组件的宽度
 	const dom = uni.requireNativePlugin('dom')
 	// #endif
 	/**
