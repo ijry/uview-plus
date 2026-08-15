@@ -236,6 +236,7 @@
 
     .up-novel-reader__toolbar-row {
         display: flex;
+        flex-direction: row;
         align-items: center;
         justify-content: space-between;
         min-height: 36px;
@@ -247,13 +248,14 @@
 
     .up-novel-reader__toolbar-group {
         display: flex;
+        flex-direction: row;
         align-items: center;
         min-width: 0;
         gap: 6px;
     }
 
     .up-novel-reader__toolbar-title {
-        max-width: 44vw;
+        max-width: 200px;
         overflow: hidden;
         color: inherit;
         font-size: 16px;
@@ -264,6 +266,7 @@
 
     .up-novel-reader__toolbar-button {
         display: flex;
+        flex-direction: row;
         align-items: center;
         justify-content: center;
         width: 36px;
@@ -304,7 +307,7 @@
 
     .up-novel-reader__progress-value {
         height: 100%;
-        border-radius: inherit;
+        border-radius: 3px;
         background-color: var(--up-novel-reader-active, #2979ff);
     }
 </style>

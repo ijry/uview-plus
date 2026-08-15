@@ -7,6 +7,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const componentDir = resolve(root, 'src/uni_modules/uview-plus/components/u-novel-reader')
 const source = readFileSync(resolve(componentDir, 'u-novel-reader.vue'), 'utf8')
 const toolbar = readFileSync(resolve(componentDir, 'reader-toolbar.vue'), 'utf8')
+const content = readFileSync(resolve(componentDir, 'reader-content.vue'), 'utf8')
 const settings = readFileSync(resolve(componentDir, 'reader-settings.vue'), 'utf8')
 const themeVars = readFileSync(resolve(componentDir, 'theme-vars.scss'), 'utf8')
 
@@ -57,6 +58,12 @@ for (const token of ['u-status-bar', 'u-safe-bottom', 'u-popup']) {
 for (const token of ['arrow-left', 'showBack', 'toggle-controls']) {
     assert.match(toolbar, new RegExp(token))
 }
+assertStyleRule(toolbar, '.up-novel-reader__toolbar-row', ['flex-direction: row'])
+assertStyleRule(toolbar, '.up-novel-reader__toolbar-group', ['flex-direction: row'])
+assertStyleRule(toolbar, '.up-novel-reader__toolbar-button', ['flex-direction: row'])
+assertStyleRule(toolbar, '.up-novel-reader__toolbar-title', ['max-width: 200px'])
+assertStyleRule(toolbar, '.up-novel-reader__progress-value', ['border-radius: 3px'])
+assertStyleRule(content, '.up-novel-reader__page', ['flex-direction: row'])
 assert.match(settings, /u-slider/)
 
 assertStyleRule(source, '.up-novel-reader', ['position: relative'])
