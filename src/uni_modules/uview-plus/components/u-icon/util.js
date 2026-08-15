@@ -8,6 +8,34 @@ let params = {
     loaded: false
 };
 
+// #ifdef APP-VUE
+const appVueLoadedPages = new WeakSet();
+const appVueLoadingPages = new WeakSet();
+// #endif
+
+const getCurrentAppVuePage = () => {
+    // #ifdef APP-VUE
+    try {
+        if (typeof getCurrentPages !== 'function') return null;
+        const pages = getCurrentPages();
+        if (!Array.isArray(pages) || pages.length === 0) return null;
+        const page = pages[pages.length - 1];
+        return page && (typeof page === 'object' || typeof page === 'function') ? page : null;
+    } catch (e) {
+        return null;
+    }
+    // #endif
+    return null;
+};
+
+const isLoaded = () => {
+    // #ifdef APP-VUE
+    const page = getCurrentAppVuePage();
+    return !!page && appVueLoadedPages.has(page);
+    // #endif
+    return params.loaded;
+};
+
 const getAppIconUrl = () => {
     // #ifdef APP || APP-NVUE
     if (!useAppStaticIconFont) {
@@ -30,8 +58,11 @@ const getIconUrl = () => {
 };
 
 const markFontLoaded = () => {
-    // App端使用包内本地字体，重复注册没有收益且会放大多图标页面开销。
-    // #ifdef APP || APP-NVUE
+    // App Vue的字体注册只对当前页面WebView生效，由页面级状态在成功回调中记录。
+    // #ifdef APP-VUE
+    return;
+    // #endif
+    // #ifdef APP-NVUE
     params.loaded = true;
     return;
     // #endif
@@ -43,6 +74,13 @@ const markFontLoaded = () => {
 
 // 加载字体方法
 const loadFont = () => {
+    // #ifdef APP-VUE
+    const appVuePage = getCurrentAppVuePage();
+    if (!appVuePage || appVueLoadedPages.has(appVuePage) || appVueLoadingPages.has(appVuePage)) {
+        return false;
+    }
+    appVueLoadingPages.add(appVuePage);
+    // #endif
     const iconUrl = getIconUrl();
     markFontLoaded();
     // #ifdef APP-NVUE
@@ -60,15 +98,22 @@ const loadFont = () => {
         });
     }
     // #endif
-    // #ifdef APP || H5 || MP-WEIXIN || MP-ALIPAY
+    // #ifdef APP-VUE || H5 || MP-WEIXIN || MP-ALIPAY
     uni.loadFontFace({
         global: true, // 是否全局生效。微信小程序 '2.10.0'起支持全局生效，需在 app.vue 中调用。
         family: iconFontFamily,
         source: 'url("' + iconUrl + '")',
         success() {
+            // #ifdef APP-VUE
+            appVueLoadingPages.delete(appVuePage);
+            appVueLoadedPages.add(appVuePage);
+            // #endif
             // console.log('内置字体图标加载成功');
         },
         fail() {
+            // #ifdef APP-VUE
+            appVueLoadingPages.delete(appVuePage);
+            // #endif
             // console.error('内置字体图标加载出错');
         }
     });
@@ -99,5 +144,6 @@ const loadFont = () => {
 
 export default {
     params: params,
+    isLoaded,
     loadFont
 }

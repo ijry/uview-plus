@@ -23,7 +23,7 @@ if (statSync(fontPath).size <= 0) {
   throw new Error('built-in icon font asset upicon.ttf is empty')
 }
 
-const defaultAppRemoteFontFace = /#ifdef\s+APP[^\n]*[\s\S]*?@font-face[\s\S]*?at\.alicdn\.com[\s\S]*?#endif/
+const defaultAppRemoteFontFace = /#ifdef\s+APP\s+\|\|\s+MP-QQ\s+\|\|\s+MP-TOUTIAO\s+\|\|\s+MP-BAIDU\s+\|\|\s+MP-KUAISHOU\s+\|\|\s+MP-XHS[\s\S]*?@font-face[\s\S]*?at\.alicdn\.com[\s\S]*?#endif/
 const compiledAppRemoteFontFace = /@font-face\s*\{[\s\S]*?font-family:\s*['"]?uicon-iconfont['"]?[\s\S]*?at\.alicdn\.com\/t\/font_2225171[\s\S]*?\}/
 if (!defaultAppRemoteFontFace.test(uIconVue)) {
   throw new Error('u-icon.vue should keep the App remote @font-face block for projects that do not enable UniUpRoot')
@@ -60,8 +60,40 @@ const withTempUniProject = async (platform, callback) => {
   }
 }
 
-if (!/params\.loaded\s*=\s*true;\s*return;[\s\S]*if\s*\(config\.loadFontOnce\)/.test(util)) {
-  throw new Error('util.js should mark App built-in font loading once before falling back to loadFontOnce for non-App')
+if (!/const\s+appVueLoadedPages\s*=\s*new\s+WeakSet\(\)/.test(util)) {
+  throw new Error('util.js should track loaded icon fonts per App Vue page')
+}
+
+if (!/const\s+appVueLoadingPages\s*=\s*new\s+WeakSet\(\)/.test(util)) {
+  throw new Error('util.js should deduplicate in-flight icon font loads per App Vue page')
+}
+
+if (!/const\s+getCurrentAppVuePage\s*=\s*\(\)\s*=>[\s\S]*getCurrentPages\(\)/.test(util)) {
+  throw new Error('util.js should resolve the active App Vue page before loading its font')
+}
+
+if (!/const\s+isLoaded\s*=\s*\(\)\s*=>[\s\S]*appVueLoadedPages\.has\(/.test(util)) {
+  throw new Error('util.js should expose page-aware App Vue font loaded state')
+}
+
+if (!/success\(\)\s*{[\s\S]*appVueLoadedPages\.add\(/.test(util)) {
+  throw new Error('util.js should only mark an App Vue page loaded after loadFontFace succeeds')
+}
+
+if (!/fail\(\)\s*{[\s\S]*appVueLoadingPages\.delete\(/.test(util)) {
+  throw new Error('util.js should allow an App Vue page to retry after loadFontFace fails')
+}
+
+if (!/beforeCreate\(\)\s*{[\s\S]*#ifndef APP-VUE[\s\S]*fontUtil\.isLoaded\(\)/.test(uIconVue)) {
+  throw new Error('u-icon.vue should avoid page font registration before App Vue is mounted')
+}
+
+if (!/mounted\(\)\s*{[\s\S]*#ifdef APP-VUE[\s\S]*fontUtil\.isLoaded\(\)[\s\S]*fontUtil\.loadFont\(\)/.test(uIconVue)) {
+  throw new Error('u-icon.vue should register the font after each App Vue page mounts')
+}
+
+if (!/params\.loaded\s*=\s*true;[\s\S]*if\s*\(config\.loadFontOnce\)/.test(util)) {
+  throw new Error('util.js should preserve one-time font loading for App nvue and non-App platforms')
 }
 
 if (!/return config\.iconUrl/.test(util)) {

@@ -72,10 +72,19 @@
 	export default {
 		name: 'u-icon',
 		beforeCreate() {
-			if (!fontUtil.params.loaded) {
+			// #ifndef APP-VUE
+			if (!fontUtil.isLoaded()) {
 				fontUtil.loadFont();
 			}
+			// #endif
     	},
+		mounted() {
+			// #ifdef APP-VUE
+			if (!fontUtil.isLoaded()) {
+				fontUtil.loadFont();
+			}
+			// #endif
+		},
 		data() {
 			return {
 			}
