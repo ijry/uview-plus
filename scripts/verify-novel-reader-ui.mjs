@@ -9,6 +9,7 @@ const source = readFileSync(resolve(componentDir, 'u-novel-reader.vue'), 'utf8')
 const toolbar = readFileSync(resolve(componentDir, 'reader-toolbar.vue'), 'utf8')
 const content = readFileSync(resolve(componentDir, 'reader-content.vue'), 'utf8')
 const settings = readFileSync(resolve(componentDir, 'reader-settings.vue'), 'utf8')
+const catalog = readFileSync(resolve(componentDir, 'reader-catalog.vue'), 'utf8')
 const themeVars = readFileSync(resolve(componentDir, 'theme-vars.scss'), 'utf8')
 
 function escapeRegExp(value) {
@@ -65,6 +66,33 @@ assertStyleRule(toolbar, '.up-novel-reader__toolbar-title', ['max-width: 200px']
 assertStyleRule(toolbar, '.up-novel-reader__progress-value', ['border-radius: 3px'])
 assertStyleRule(content, '.up-novel-reader__page', ['flex-direction: row'])
 assert.match(settings, /u-slider/)
+assertStyleRule(settings, '.up-novel-reader__settings', ['width: 100%'])
+assertStyleRule(settings, '.up-novel-reader__settings-header', ['flex-direction: row'])
+assertStyleRule(settings, '.up-novel-reader__settings-close', ['flex-direction: row'])
+assert.match(
+    settings,
+    /\.up-novel-reader__settings-row,\s*\.up-novel-reader__settings-option\s*\{[^}]*flex-direction:\s*row/s
+)
+assertStyleRule(settings, '.up-novel-reader__theme-list', ['flex-direction: row'])
+assertStyleRule(settings, '.up-novel-reader__theme-option', [
+    'flex-direction: row',
+    'flex: 1',
+    'height: 42px',
+    'border-radius: 8px'
+])
+assertStyleRule(settings, '.up-novel-reader__theme-option.is-active', [
+    'border-color: var(--up-novel-reader-active, #2979ff)'
+])
+assertStyleRule(settings, '.up-novel-reader__settings-done', ['flex-direction: row'])
+assertStyleRule(catalog, '.up-novel-reader__catalog', ['height: 100%'])
+assertStyleRule(catalog, '.up-novel-reader__catalog-header', [
+    'flex-direction: row',
+    'align-items: flex-end'
+])
+assertStyleRule(catalog, '.up-novel-reader__catalog-item', ['flex-direction: row'])
+assertStyleRule(catalog, '.up-novel-reader__catalog-index', ['flex-direction: row'])
+assertStyleRule(catalog, '.up-novel-reader__bookmark-heading', ['flex-direction: row'])
+assertStyleRule(catalog, '.up-novel-reader__bookmark-item', ['flex-direction: row'])
 
 assertStyleRule(source, '.up-novel-reader', ['position: relative'])
 assert.match(

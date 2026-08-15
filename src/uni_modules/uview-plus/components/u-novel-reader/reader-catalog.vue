@@ -124,20 +124,21 @@
         flex-direction: column;
         width: 82vw;
         max-width: 360px;
-        height: 100vh;
+        height: 100%;
         box-sizing: border-box;
     }
 
     .up-novel-reader__catalog-header {
         display: flex;
-        align-items: baseline;
+        flex-direction: row;
+        align-items: flex-end;
         justify-content: space-between;
         padding: 20px 18px 14px;
         border-bottom: 1px solid var(--up-novel-reader-border, rgba(48, 49, 51, 0.12));
     }
 
     .up-novel-reader__catalog-title {
-        font-size: 19px;
+        font-size: 20px;
         font-weight: 600;
     }
 
@@ -153,6 +154,7 @@
 
     .up-novel-reader__catalog-item {
         display: flex;
+        flex-direction: row;
         align-items: center;
         min-height: 48px;
         padding: 0 18px;
@@ -170,9 +172,10 @@
 
     .up-novel-reader__catalog-index {
         display: flex;
+        flex-direction: row;
         align-items: center;
         justify-content: center;
-        width: 22px;
+        width: 24px;
         color: var(--up-novel-reader-muted, #909399);
         font-size: 12px;
     }
@@ -193,24 +196,26 @@
     }
 
     .up-novel-reader__bookmark-section {
-        margin-top: 12px;
-        padding-top: 12px;
+        margin-top: 10px;
+        padding: 16px 18px 24px;
         border-top: 1px solid var(--up-novel-reader-border, rgba(48, 49, 51, 0.12));
     }
 
     .up-novel-reader__bookmark-heading {
         display: flex;
+        flex-direction: row;
         align-items: center;
-        padding: 0 18px 8px;
+        margin-bottom: 10px;
         gap: 6px;
         color: var(--up-novel-reader-muted, #909399);
-        font-size: 12px;
+        font-size: 13px;
     }
 
     .up-novel-reader__bookmark-item {
         display: flex;
+        flex-direction: row;
         justify-content: space-between;
-        padding: 8px 18px;
+        padding: 8px 0;
         gap: 12px;
     }
 

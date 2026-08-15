@@ -210,15 +210,17 @@
 
 <style lang="scss" scoped>
     .up-novel-reader__settings {
+        width: 100%;
         max-height: 78vh;
         overflow: hidden;
     }
 
     .up-novel-reader__settings-header {
         display: flex;
+        flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        padding: 18px 18px 10px;
+        padding: 18px 20px 12px;
     }
 
     .up-novel-reader__settings-title {
@@ -228,35 +230,45 @@
 
     .up-novel-reader__settings-close {
         display: flex;
+        flex-direction: row;
         align-items: center;
         justify-content: center;
-        width: 36px;
-        height: 36px;
+        width: 34px;
+        height: 34px;
     }
 
     .up-novel-reader__settings-scroll {
         max-height: calc(78vh - 64px);
-        padding: 0 18px;
+        padding: 0 20px 24px;
         box-sizing: border-box;
     }
 
     .up-novel-reader__settings-section {
-        padding: 12px 0;
+        padding: 14px 0;
     }
 
     .up-novel-reader__settings-row,
     .up-novel-reader__settings-option {
         display: flex;
+        flex-direction: row;
         align-items: center;
         justify-content: space-between;
         gap: 12px;
+    }
+
+    .up-novel-reader__settings-row {
+        min-height: 34px;
     }
 
     .up-novel-reader__settings-label {
         font-size: 14px;
     }
 
-    .up-novel-reader__settings-value,
+    .up-novel-reader__settings-value {
+        color: var(--up-novel-reader-muted, #909399);
+        font-size: 13px;
+    }
+
     .up-novel-reader__settings-hint {
         color: var(--up-novel-reader-muted, #909399);
         font-size: 12px;
@@ -264,26 +276,26 @@
 
     .up-novel-reader__theme-list {
         display: flex;
-        flex-wrap: wrap;
-        margin-top: 10px;
+        flex-direction: row;
         gap: 8px;
+        margin-top: 10px;
     }
 
     .up-novel-reader__theme-option {
         display: flex;
+        flex-direction: row;
         align-items: center;
         justify-content: center;
-        min-width: 54px;
-        height: 34px;
-        padding: 0 10px;
+        flex: 1;
+        height: 42px;
         border: 1px solid transparent;
-        border-radius: 17px;
+        border-radius: 8px;
         font-size: 12px;
     }
 
     .up-novel-reader__theme-option.is-active {
-        border-color: #2979ff;
-        box-shadow: 0 0 0 2px rgba(41, 121, 255, 0.16);
+        border-color: var(--up-novel-reader-active, #2979ff);
+        box-shadow: 0 0 0 2px rgba(41, 121, 255, 0.18);
     }
 
     .up-novel-reader__settings-option {
@@ -301,12 +313,13 @@
 
     .up-novel-reader__settings-done {
         display: flex;
+        flex-direction: row;
         align-items: center;
         justify-content: center;
         height: 42px;
-        border-radius: 21px;
+        border-radius: 8px;
         color: #ffffff;
-        background-color: #2979ff;
+        background-color: var(--up-novel-reader-active, #2979ff);
         font-size: 14px;
     }
 </style>
