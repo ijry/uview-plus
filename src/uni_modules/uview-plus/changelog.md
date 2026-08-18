@@ -1,3 +1,19 @@
+## 3.8.109
+feat: popup 关闭事件补齐，新增 closed 事件（#902）
+
+close 此前只在点击遮罩、点击关闭图标时发出。外部直接把 show 置为 false 时组件内部没有走过关闭动作，不会发出任何事件，业务侧就少了一个"弹窗已关闭"的统一监听点。
+
+- u-popup: show 由 true 变 false 时补发 close，任意关闭方式都能被监听到。内部关闭走 emitClose()，它先同步置位去重标记再 emit，因此下游在 close 的同步 handler 里修改 show 数据源不会被误判成外部关闭而重复发出
+- u-popup: 新增 closed 事件，接 u-transition 已有但一直无人监听的 afterLeave，在离场动画结束、弹窗真正消失后发出。close 是"开始关闭"，closed 是"已关闭"
+- pageInline 模式下 transition 的 show 恒为 true、不执行离场动画，收不到 afterLeave，改由 watch 补发 closed
+- closed 透传到 u-picker、u-datetime-picker、u-action-sheet、u-keyboard、u-calendar、u-color-picker、u-picker-data、u-goods-sku。其中 u-datetime-picker、u-picker-data 包裹的是 u-picker，属二级透传；u-calendar 只从主体 popup 转发，关闭内部时间选择器不会误报
+- 补充 popup/picker/datetimePicker/actionSheet/keyboard/calendar 的 onClosed 类型定义
+- 新增 verify:popup-close-events 校验脚本
+
+组件保持纯受控，渲染只依赖 show prop，未引入内部副本，老用户行为不变。
+
+已知取舍：业务在 close 里跨 nextTick 才把 show 置为 false 时，close 会发两次。去重标记只在当次更新周期内有效是刻意的，否则残留标记会吞掉后续真实的关闭事件。这类异步确认场景应改用 closed，它只在弹窗真正消失时发出一次。
+
 ## 3.8.108（2026-08-18）
 fix: 修复鸿蒙二维码不显示、海报文字不换行等绘图问题
 
