@@ -1,3 +1,11 @@
+## 3.8.106
+feat: 让 App 原生 nvue 页面完整复用 App.up.vue 根容器
+
+- 原生 App nvue 页面统一导入并包裹项目 App.up.vue，保留页面主题、导航栏和 Root 能力。
+- App.up.vue 在 App Vue 和 App nvue 中分别显示 VUE、NVUE 渲染标识，并补充 nvue 根容器尺寸适配。
+- Toast/Notify 根宿主改为本地注册，兼容 nvue 独立页面实例。
+- 增加 Root、nvue 页面和 App.up.vue 的回归验证。
+
 ## 3.8.105
 feat: 完善 APP-NVUE 海报与通用画布能力
 
