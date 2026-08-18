@@ -1,0 +1,36 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "$string:app_name"
+    },
+    {
+      "name": "location_tips",
+      "value": "用于城市定位、地图选点等示例功能"
+    },
+    {
+      "name": "get_networkinfo_tips",
+      "value": "用于检测当前网络状态，网络异常时给出提示"
+    },
+    {
+      "name": "get_wifiinfo_tips",
+      "value": "用于检测当前 WLAN 连接状态，网络异常时给出提示"
+    },
+    {
+      "name": "microphone",
+      "value": "用于录音相关示例功能"
+    },
+    {
+      "name": "access_biometric",
+      "value": "用于生物识别验证相关示例功能"
+    }
+  ]
+}

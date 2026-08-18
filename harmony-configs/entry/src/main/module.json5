@@ -41,12 +41,16 @@
       {
         "name": "ohos.permission.APPROXIMATELY_LOCATION",
         "reason": "$string:location_tips",
-        "usedScene": {}
+        "usedScene": {
+          "when": "inuse"
+        }
       },
       {
         "name": "ohos.permission.LOCATION",
         "reason": "$string:location_tips",
-        "usedScene": {}
+        "usedScene": {
+          "when": "inuse"
+        }
       },
       {
         "name": "ohos.permission.GET_WIFI_INFO",
@@ -62,20 +66,22 @@
           "when": "inuse"
         }
       },
-      {
-        "name": "ohos.permission.MICROPHONE",
-        "reason": "$string:microphone",
-        "usedScene": {
-          "when": "inuse"
-        }
-      },
-      {
-        "name": "ohos.permission.ACCESS_BIOMETRIC",
-        "reason": "$string:access_biometric",
-        "usedScene": {
-          "when": "inuse"
-        }
-      }
+      // 以下权限暂无组件使用，先注释掉，避免上架审核因“申请未使用的权限”被驳回。
+      // 如后续新增录音 / 生物识别相关组件，取消注释即可（string.json 中已保留对应文案）。
+      // {
+      //   "name": "ohos.permission.MICROPHONE",
+      //   "reason": "$string:microphone",
+      //   "usedScene": {
+      //     "when": "inuse"
+      //   }
+      // },
+      // {
+      //   "name": "ohos.permission.ACCESS_BIOMETRIC",
+      //   "reason": "$string:access_biometric",
+      //   "usedScene": {
+      //     "when": "inuse"
+      //   }
+      // }
     ]
   }
 }

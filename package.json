@@ -68,7 +68,8 @@
     "verify:novel-reader-props": "node scripts/verify-novel-reader-props.mjs",
     "verify:novel-reader-data": "node scripts/verify-novel-reader-data.mjs",
     "verify:novel-reader-layout": "node scripts/verify-novel-reader-layout.mjs",
-    "verify:novel-reader-ui": "node scripts/verify-novel-reader-ui.mjs"
+    "verify:novel-reader-ui": "node scripts/verify-novel-reader-ui.mjs",
+    "verify:harmony-permission-resources": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-harmony-permission-resources.mjs"
   },
   "pnpm":{"overrides":{"rollup":"4.14.3"}},
   "dependencies": {
