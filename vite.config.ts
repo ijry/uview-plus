@@ -5,7 +5,7 @@ import appNvueAsVue from "./vite-plugins/app-nvue-as-vue.mjs";
 import UniUpRoot from "./src/uni_modules/uview-plus/libs/root/index.js";
 // import commonjs from '@rollup/plugin-commonjs';
 
-const APP_NVUE_AS_VUE = false;
+const APP_NVUE_AS_VUE = true;
 
 // https://vitejs.dev/config/
 export default defineConfig({

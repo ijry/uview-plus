@@ -360,6 +360,16 @@ export default {
 			const lines = [];
 			const ellipsis = '...';
 			const measurementCache = new Map();
+			const fontSize = css.fontSize ? this.convertRpxToPx(css.fontSize) : 20;
+			// 兜底估算：全角字符约占一个字号，半角约 0.56。测量失败时若按半角估算，
+			// 中文会短算 40% 而不换行，所以必须区分宽度。
+			const estimateWidth = (value) => Array.from(String(value)).reduce((width, char) => {
+				if (/[ᄀ-ᅟ⺀-〾぀-㏿㐀-䶿一-鿿ꀀ-꓏가-힣豈-﫿︰-﹯＀-｠￠-￦]/.test(char)) {
+					return width + fontSize;
+				}
+				if (/\s/.test(char)) return width + fontSize * 0.28;
+				return width + fontSize * 0.56;
+			}, 0);
 			const measureTextWidth = async (value) => {
 				if (measurementCache.has(value)) {
 					return measurementCache.get(value);
@@ -370,7 +380,12 @@ export default {
 				} else {
 					metrics = ctx.measureText(value);
 				}
-				const measuredWidth = Number(metrics && metrics.width) || 0;
+				let measuredWidth = Number(metrics && metrics.width) || 0;
+				// 测量不可用时(鸿蒙同步 measureText 恒返回 0)必须改用估算：
+				// 把 0 当作真实宽度会让下面的 <= maxWidth 恒成立，整段文本挤成一行。
+				if (!(measuredWidth > 0) && value) {
+					measuredWidth = estimateWidth(value);
+				}
 				measurementCache.set(value, measuredWidth);
 				return measuredWidth;
 			};
@@ -475,14 +490,32 @@ export default {
 		 */
 		convertRpxToPx(rpxValue) {
 			if (typeof rpxValue === 'number') return rpxValue;
-			
+
 			// 使用rpx2px方法
 			if (typeof rpxValue === 'string' && rpxValue.endsWith('rpx')) {
 				const value = parseFloat(rpxValue);
-				return rpx2px(value);
+				return value * this.getRpxRatio();
 			}
-			
+
 			return parseFloat(rpxValue) || 0;
+		},
+
+		/**
+		 * 获取 rpx -> px 的统一换算比例
+		 * @description uni.upx2px 对每个值单独判断设备宽度：当 windowWidth 超过
+		 *   rpxCalcMaxDeviceWidth(默认960)时，只有恰好等于 750 的值使用真实设备宽度，
+		 *   其余值回退到 rpxCalcBaseDeviceWidth(默认375)。海报需要所有尺寸共用同一
+		 *   比例，逐值换算会让宽高用上不同基准而破坏宽高比：鸿蒙 windowWidth 上报为
+		 *   物理像素1084，750rpx算得1084、1114rpx算得557，海报因此变成横向。
+		 *   这里只取一次比例，且刻意用非 750 的值探测，避开上面的特例分支，
+		 *   使超宽设备统一走 baseWidth，避免画布被放大到数十MB。
+		 * @returns {Number} 每 1rpx 对应的 px 值
+		 * @author jry ijry@qq.com
+		 */
+		getRpxRatio() {
+			const PROBE = 1000; // 不能用 750，750 是 upx2px 的特例值
+			const ratio = rpx2px(PROBE) / PROBE;
+			return ratio > 0 ? ratio : 1;
 		},
 		
 		/**

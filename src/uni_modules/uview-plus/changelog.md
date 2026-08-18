@@ -1,3 +1,23 @@
+## 3.8.108（2026-08-18）
+fix: 修复鸿蒙二维码不显示、海报文字不换行等绘图问题
+
+鸿蒙 CanvasContext.measureText 同步返回值恒为 0，真实宽度只通过可选 callback 经 evalJSAsync 异步回传；
+而 uni-app-plus 走 evalJSSync 同步就能拿到真值。这是同样代码在安卓
+正常、鸿蒙异常的根因。
+
+宽度 0 会让 drawTextWithLineClamp 里 `0 <= maxWidth` 恒成立，整段
+文本被当成一行放得下直接输出，标题横穿并压到二维码上。
+
+- u-canvas: 新增 #ifdef APP-HARMONY 的 callback 测量分支；measureText
+  不再把 0 当有效值外传；新增 estimateTextWidth 兜底
+- u-poster: measureTextWidth 拿到非正数宽度时改用估算，不再 `|| 0` 静默吞掉
+- 兜底估算区分全角/半角（全角 1.0、半角 0.56、空白 0.28）。原先的
+  length * fontSize * 0.6 会让中文短算约 40%，仍然不换行
+- callback 超时从 1000ms 降到 300ms，并用 _harmonyMeasureUnavailable
+  锁存状态：一次换行要二分测量十几次，逐次干等会把导出拖成十几秒
+- 新增 verify:harmony-poster-text-wrap 校验脚本
+
+
 ## 3.8.107（2026-08-18）
 fix: 修复empty示例页面
 

@@ -21,7 +21,7 @@
         />
         <!-- #endif -->
 
-        <!-- #ifdef APP-PLUS -->
+        <!-- #ifdef APP-PLUS || APP-HARMONY -->
         <!-- #ifndef APP-NVUE -->
         <canvas
             class="u-canvas__canvas"
@@ -203,7 +203,7 @@ export default {
                                 size: true
                             },
                             (res) => {
-                                // #ifdef APP-PLUS
+                                // #ifdef APP-PLUS || APP-HARMONY
                                 resolve(res || {
                                     width: this.actualWidth,
                                     height: this.actualHeight
@@ -232,7 +232,7 @@ export default {
             return this._webViewContext;
             // #endif
 
-            // #ifdef APP-PLUS
+            // #ifdef APP-PLUS || APP-HARMONY
             return uni.createCanvasContext(this.canvasId, this);
             // #endif
 
@@ -364,7 +364,7 @@ export default {
                     measureText: (text, state) => {
                         const matched = String(state.font || '').match(/(\d+(?:\.\d+)?)px/);
                         const fontSize = matched ? Number(matched[1]) : this.fontSize;
-                        return { width: String(text).length * fontSize * 0.6 };
+                        return { width: this.estimateTextWidth(text, fontSize) };
                     }
                 });
                 this.ctx = this._webViewContext;
@@ -646,18 +646,77 @@ export default {
             }
             return this.callContext('strokeText', String(text), x, y, maxWidth);
         },
+        /**
+         * 按字形宽度估算文本宽度
+         * @description 当平台无法给出真实测量值时的兜底。必须区分全角/半角：
+         *   汉字、假名、全角标点约占一个字号，按半角的 0.6 估算会短 40%，
+         *   中文海报因此算出"整段都放得下"而不换行。
+         * @param {String} text 待测量文本
+         * @param {Number} [fontSize] 字号，默认取组件当前字号
+         * @returns {Number} 估算宽度(px)
+         * @author jry ijry@qq.com
+         */
+        estimateTextWidth(text, fontSize) {
+            const size = Number(fontSize) || Number(this.fontSize) || 12;
+            const FULL_WIDTH = /[ᄀ-ᅟ⺀-〾ぁ-㏿㐀-䶿一-鿿ꀀ-꓏가-힣豈-﫿︰-﹯＀-｠￠-￦]/;
+            return Array.from(String(text)).reduce((width, char) => {
+                if (FULL_WIDTH.test(char)) return width + size;
+                if (/\s/.test(char)) return width + size * 0.28;
+                return width + size * 0.56;
+            }, 0);
+        },
         measureText(text) {
             if (this.ctx && typeof this.ctx.measureText === 'function') {
-                return this.ctx.measureText(String(text));
+                const metrics = this.ctx.measureText(String(text));
+                const width = Number(metrics && metrics.width);
+                // 鸿蒙同步测量恒为 0（真实值只走 callback），上下文未就绪时其他
+                // 平台也可能返回 0。绝不能把 0 交给调用方——换行逻辑会把它当成
+                // "宽度足够"，于是整段文本挤成一行。
+                if (width > 0) return metrics;
             }
             return {
-                width: String(text).length * this.fontSize * 0.6
+                width: this.estimateTextWidth(text)
             };
         },
         measureTextAsync(text) {
             if (this.ctx && typeof this.ctx.measureTextAsync === 'function') {
                 return this.ctx.measureTextAsync(String(text));
             }
+
+            // #ifdef APP-HARMONY
+            // 鸿蒙的 CanvasContext.measureText 同步返回值恒为 0，真实宽度只通过
+            // callback(webview.evalJSAsync) 回传，因此必须走回调形式。
+            if (this.ctx && typeof this.ctx.measureText === 'function' && !this._harmonyMeasureUnavailable) {
+                return new Promise((resolve) => {
+                    let settled = false;
+                    // evalJSAsync 并非所有鸿蒙版本都提供，回调可能永远不来，
+                    // 必须兜底避免上层 await 永久挂起。且一旦超时就标记为不可用：
+                    // 单次换行要二分测量十几次，逐次干等会把导出拖成十几秒。
+                    const timer = setTimeout(() => {
+                        if (settled) return;
+                        settled = true;
+                        this._harmonyMeasureUnavailable = true;
+                        resolve({ width: this.estimateTextWidth(text) });
+                    }, 300);
+                    const done = (metrics) => {
+                        if (settled) return;
+                        settled = true;
+                        clearTimeout(timer);
+                        const width = Number(metrics && metrics.width);
+                        resolve({ width: width > 0 ? width : this.estimateTextWidth(text) });
+                    };
+                    try {
+                        const sync = this.ctx.measureText(String(text), done);
+                        // 若该平台其实同步返回了有效值，直接采用
+                        const syncWidth = Number(sync && sync.width);
+                        if (syncWidth > 0) done(sync);
+                    } catch (error) {
+                        done(null);
+                    }
+                });
+            }
+            // #endif
+
             return Promise.resolve(this.measureText(text));
         },
         createLinearGradient(x0, y0, x1, y1) {
@@ -800,8 +859,8 @@ export default {
                 let destWidth = hasDestWidth ? options.destWidth : width;
                 let destHeight = hasDestHeight ? options.destHeight : height;
 
-                // MP、H5 和 APP-PLUS 保持逻辑绘制坐标，只提升默认导出像素。
-                // #ifdef MP || H5 || APP-PLUS
+                // MP、H5、APP-PLUS 和 APP-HARMONY 保持逻辑绘制坐标，只提升默认导出像素。
+                // #ifdef MP || H5 || APP-PLUS || APP-HARMONY
                 if (!hasDestWidth) {
                     destWidth = Math.round(width * this.dpr);
                 }
