@@ -99,6 +99,15 @@ export const props = defineMixin({
         maxHeight:{
 			type: [String],
 			default: () => defProps.popup.maxHeight
+		},
+        // 关闭前的拦截函数，接收(action, resolve)，调用resolve(false)可阻止关闭
+        // 默认null表示不拦截，此时组件行为与旧版本完全一致
+        // 注意：type为Function的prop，Vue把default当作默认值本身而非取值工厂，
+        // 因此必须直接给值。若写成 () => defProps.popup.beforeClose，
+        // 该箭头函数本身会成为beforeClose的值，导致拦截被意外启用、弹窗无法关闭
+        beforeClose:{
+			type: Function,
+			default: defProps.popup.beforeClose
 		}
     }
 })

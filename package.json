@@ -62,6 +62,7 @@
     "verify:button-plain-background": "node scripts/verify-button-plain-background.mjs",
     "verify:tabs-click-event": "node scripts/verify-tabs-click-event.mjs",
     "verify:action-sheet-slot-close": "node scripts/verify-action-sheet-slot-close.mjs",
+    "verify:popup-close-events": "node scripts/verify-popup-close-events.mjs",
     "verify:dragsort-stable-identity": "node scripts/verify-dragsort-stable-identity.mjs",
     "verify:up-get-rect": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-up-get-rect.mjs",
     "verify:app-nvue-as-vue": "node scripts/verify-app-nvue-as-vue.mjs",

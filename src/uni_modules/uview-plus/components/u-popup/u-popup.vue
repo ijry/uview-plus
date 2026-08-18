@@ -1,7 +1,7 @@
 <template>
 	<view class="u-popup" :class="[customClass]"
-		:style="{width: show == false ? '0px' : '',
-			height: show == false ? '0px' : ''}">
+		:style="{width: displayShow == false ? '0px' : '',
+			height: displayShow == false ? '0px' : ''}">
 		<view class="u-popup__trigger">
 			<slot name="trigger">
 			</slot>
@@ -9,7 +9,7 @@
 				class="u-popup__trigger__cover"></view>
 		</view>
 		<u-overlay
-			:show="show && pageInline == false"
+			:show="displayShow && pageInline == false"
 			@click="overlayClick"
 			v-if="overlay"
 			:zIndex="zIndex"
@@ -20,11 +20,12 @@
 		<u-transition
 			class="u-popup__content—transition"
 			:style="contentStyleWrap"
-			:show="pageInline ? true : show"
+			:show="pageInline ? true : displayShow"
 			:customStyle="transitionStyle"
 			:mode="pageInline ? 'none' : position"
 			:duration="duration"
 			@afterEnter="afterEnter"
+			@afterLeave="afterLeave"
 			@click="clickHandler"
 		>
 			<!-- @click.stop不能去除，去除会导致居中模式下点击内容区域触发关闭弹窗 -->
@@ -98,9 +99,15 @@
 	 * @property {Boolean}			touchable			是否开启底部弹窗手势功能（默认 false ）
 	 * @property {String}			minHeight			最小高度，单位任意，数值默认为px（默认 '200px' ）
 	 * @property {String}			maxHeight			最大高度，单位任意，数值默认为px（默认 '80%' ）
+	 * @property {Function}			beforeClose			关闭前的拦截函数，接收(action, resolve)，
+	 * 														action为overlay/close-icon/touch/outside（outside表示外部修改show触发），
+	 * 														调用resolve(false)可阻止关闭；也支持返回Promise或布尔值。
+	 * 														配置此项后组件会维护show的内部副本以支持拦截；
+	 * 														不配置时组件保持纯受控，行为与旧版本完全一致（默认 null ）
 	 * @property {Object}			customStyle			组件的样式，对象形式
-	 * @event {Function} open 弹出层打开
-	 * @event {Function} close 弹出层收起
+	 * @event {Function} open 弹出层打开（进场动画结束后）
+	 * @event {Function} close 弹出层收起（关闭动作发生时，离场动画开始前；外部直接将show置为false时也会触发）
+	 * @event {Function} closed 弹出层已关闭（离场动画结束、弹窗真正消失后）
 	 * @example <u-popup v-model:show="show"><text>出淤泥而不染，濯清涟而不妖</text></u-popup>
 	 */
 	export default {
@@ -109,6 +116,13 @@
 		data() {
 			return {
 				overlayDuration: this.duration + 50,
+				// close事件是否已由组件内部的关闭动作发出，避免show变化时重复发出
+				closeEmitted: false,
+				// beforeClose拦截期间的锁，防止重复触发关闭流程
+				closing: false,
+				// show的内部副本。仅在配置了beforeClose时参与渲染，
+				// 用于在拦截未放行前维持弹窗的展示状态
+				innerShow: this.show,
 				// 触摸相关数据
 				touchStartY: 0,
 				touchStartHeight: 0,
@@ -120,14 +134,47 @@
 		watch: {
 			show(newValue, oldValue) {
 				if (newValue === true) {
+					this.closeEmitted = false
+					this.innerShow = true
 					// #ifdef MP-WEIXIN
 					const children = this.$children
 					this.retryComputedComponentRect(children)
 					// #endif
+				} else if (oldValue === true) {
+					// 配置了beforeClose时，外部关闭同样需要经过拦截
+					if (this.interceptEnabled) {
+						// innerShow已为false，说明本次prop变化由组件内部关闭引起，
+						// 拦截与close事件都已处理过，此处不可重复走一遍
+						if (this.innerShow) {
+							this.doClose('outside')
+						}
+						return
+					}
+					// 外部直接将show置为false时，组件内部没有走过关闭动作，
+					// 此处补发close，保证任意关闭方式都能被监听到
+					if (this.closeEmitted) {
+						// 本次关闭已由内部动作发出过close，消费标记即可
+						this.closeEmitted = false
+					} else {
+						this.$emit('close')
+					}
+					// pageInline模式下transition的show恒为true，不会执行离场动画，
+					// 收不到afterLeave，此处按动画时长补发closed
+					if (this.pageInline) {
+						this.$emit('closed')
+					}
 				}
 			}
 		},
 		computed: {
+			// 是否启用关闭拦截。未配置beforeClose时组件保持纯受控，行为与旧版本一致
+			interceptEnabled() {
+				return typeof this.beforeClose === 'function'
+			},
+			// 实际用于渲染的展示状态
+			displayShow() {
+				return this.interceptEnabled ? this.innerShow : this.show
+			},
 			transitionStyle() {
 				const style = {
 					display: 'flex',
@@ -238,24 +285,78 @@
 				}
 			},
 		},
-		emits: ["open", "close", "click", "update:show"],
+		emits: ["open", "close", "closed", "click", "update:show"],
 		methods: {
+			// 发出close事件。标记仅在本次更新周期内有效，
+			// 用于抑制紧随其后的show变化导致watch重复补发close
+			emitClose() {
+				this.closeEmitted = true
+				this.$emit('close')
+				this.$nextTick(() => {
+					this.closeEmitted = false
+				})
+			},
+			// 执行关闭。action标识关闭来源：overlay/close-icon/touch/outside
+			// 未配置beforeClose时走同步路径，行为与旧版本完全一致
+			doClose(action) {
+				if (!this.interceptEnabled) {
+					this.$emit('update:show', false)
+					this.emitClose()
+					return
+				}
+				// 配置了beforeClose时，先交由业务侧决定是否放行
+				if (this.closing) return
+				this.closing = true
+				let settled = false
+				const resolve = pass => {
+					// 防止业务侧多次调用resolve
+					if (settled) return
+					settled = true
+					this.closing = false
+					if (pass === false) {
+						// 拦截未放行：outside来源的prop已经变为false，
+						// 需要反向同步回true，否则外部状态与实际展示不一致
+						if (action === 'outside') {
+							this.$emit('update:show', true)
+						}
+						return
+					}
+					this.innerShow = false
+					this.$emit('update:show', false)
+					this.emitClose()
+				}
+				const result = this.beforeClose(action, resolve)
+				// 同时兼容返回Promise/布尔值的写法
+				if (result && typeof result.then === 'function') {
+					result.then(pass => resolve(pass !== false)).catch(() => resolve(false))
+				} else if (typeof result === 'boolean') {
+					resolve(result)
+				} else if (this.beforeClose.length < 2) {
+					// beforeClose未声明resolve参数，且没有返回Promise/布尔值，
+					// 说明它无意拦截，此处直接放行，避免弹窗永久无法关闭
+					resolve(true)
+				}
+			},
 			// 点击遮罩
 			overlayClick() {
 				if (this.closeOnClickOverlay) {
-					this.$emit('update:show', false)
-					this.$emit('close')
+					this.doClose('overlay')
 				}
 			},
 			open(e) {
+				this.closeEmitted = false
+				this.innerShow = true
 				this.$emit('update:show', true)
 			},
 			close(e) {
-				this.$emit('update:show', false)
-				this.$emit('close')
+				this.doClose('close-icon')
 			},
 			afterEnter() {
 				this.$emit('open')
+			},
+			// 离场动画结束，弹窗已真正消失
+			afterLeave() {
+				this.$emit('closed')
 			},
 			clickHandler() {
 				// 由于中部弹出时，其u-transition占据了整个页面相当于遮罩，此时需要发出遮罩点击事件，是否无法通过点击遮罩关闭弹窗
@@ -338,7 +439,7 @@
 				
 				// 快速向下滑动时关闭弹窗
 				if (deltaY > 100 || (deltaY > 30 && velocity > 0.5)) {
-					this.close();
+					this.doClose('touch');
 				} else {
 					// 恢复到自适应高度
 					// this.currentHeight = 'auto';

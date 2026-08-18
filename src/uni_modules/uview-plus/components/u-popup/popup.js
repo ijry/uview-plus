@@ -28,6 +28,8 @@ export default {
         pageInline: false,
         touchable: false,
         minHeight: '200px',
-        maxHeight: '600px'
+        maxHeight: '600px',
+        // 关闭前的拦截函数，默认null表示不拦截，保持原有行为
+        beforeClose: null
     }
 }
