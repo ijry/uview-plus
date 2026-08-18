@@ -7,6 +7,7 @@
 	    :show="show"
 	    :safeAreaInsetBottom="safeAreaInsetBottom"
 	    @close="popupClose"
+	    @closed="$emit('closed')"
 	    :zIndex="zIndex"
 	    :customStyle="popupStyle"
 	>
@@ -111,7 +112,7 @@
 				}
 			}
 		},
-		emits: ["change", "close", "confirm", "cancel", "backspace"],
+		emits: ["change", "close", "closed", "confirm", "cancel", "backspace"],
 		methods: {
 			change(e) {
 				this.$emit('change', e);

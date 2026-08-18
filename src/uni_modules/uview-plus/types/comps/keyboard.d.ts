@@ -93,6 +93,10 @@ declare interface KeyboardProps {
    */
   onClose?: () => any
   /**
+   * 键盘已关闭（离场动画结束、弹窗真正消失后）触发
+   */
+  onClosed?: () => any
+  /**
    * 键盘顶部工具条右边的"完成"按钮被点击
    */
   onConfirm?: () => any

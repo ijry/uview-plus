@@ -4,7 +4,7 @@
             :style="{backgroundColor: value}" >
             <slot></slot>
         </view>
-		<up-popup :show="show" mode="bottom" round="10" @close="close" :closeOnClickOverlay="true">
+		<up-popup :show="show" mode="bottom" round="10" @close="close" @closed="$emit('closed')" :closeOnClickOverlay="true">
 			<view class="up-color-picker__content">
 				<view class="up-color-picker__header">
 					<text class="up-color-picker__title">选择颜色</text>
@@ -267,7 +267,7 @@ export default {
 	mounted() {
 		this.initColor()
 	},
-    emits: ['update:modelValue', 'confirm', 'close'],
+    emits: ['update:modelValue', 'confirm', 'close', 'closed'],
 	methods: {
 		// 初始化颜色
 		initColor() {

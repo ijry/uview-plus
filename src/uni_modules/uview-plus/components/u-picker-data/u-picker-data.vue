@@ -20,7 +20,8 @@
 			:defaultIndex="defaultIndex"
 			@confirm="confirm"
 			@cancel="cancel"
-			@close="close">
+			@close="close"
+			@closed="$emit('closed')">
 		</up-picker>
 	</view>
 </template>
@@ -95,7 +96,7 @@ export default {
 			return [this.options];
 		}
 	},
-    emits: ['update:modelValue', 'cancel', 'close', 'confirm'],
+    emits: ['update:modelValue', 'cancel', 'close', 'closed', 'confirm'],
     methods: {
         hideKeyboard() {
             uni.hideKeyboard()

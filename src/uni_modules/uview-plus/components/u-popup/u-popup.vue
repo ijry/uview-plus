@@ -25,6 +25,7 @@
 			:mode="pageInline ? 'none' : position"
 			:duration="duration"
 			@afterEnter="afterEnter"
+			@afterLeave="afterLeave"
 			@click="clickHandler"
 		>
 			<!-- @click.stop不能去除，去除会导致居中模式下点击内容区域触发关闭弹窗 -->
@@ -99,8 +100,9 @@
 	 * @property {String}			minHeight			最小高度，单位任意，数值默认为px（默认 '200px' ）
 	 * @property {String}			maxHeight			最大高度，单位任意，数值默认为px（默认 '80%' ）
 	 * @property {Object}			customStyle			组件的样式，对象形式
-	 * @event {Function} open 弹出层打开
-	 * @event {Function} close 弹出层收起
+	 * @event {Function} open 弹出层打开（进场动画结束后）
+	 * @event {Function} close 弹出层收起（关闭动作发生时，离场动画开始前；外部直接将show置为false时也会触发）
+	 * @event {Function} closed 弹出层已关闭（离场动画结束、弹窗真正消失后）
 	 * @example <u-popup v-model:show="show"><text>出淤泥而不染，濯清涟而不妖</text></u-popup>
 	 */
 	export default {
@@ -109,6 +111,8 @@
 		data() {
 			return {
 				overlayDuration: this.duration + 50,
+				// close事件是否已由组件内部的关闭动作发出，避免show变化时重复发出
+				closeEmitted: false,
 				// 触摸相关数据
 				touchStartY: 0,
 				touchStartHeight: 0,
@@ -120,10 +124,25 @@
 		watch: {
 			show(newValue, oldValue) {
 				if (newValue === true) {
+					this.closeEmitted = false
 					// #ifdef MP-WEIXIN
 					const children = this.$children
 					this.retryComputedComponentRect(children)
 					// #endif
+				} else if (oldValue === true) {
+					// 外部直接将show置为false时，组件内部没有走过关闭动作，
+					// 此处补发close，保证任意关闭方式都能被监听到
+					if (this.closeEmitted) {
+						// 本次关闭已由内部动作发出过close，消费标记即可
+						this.closeEmitted = false
+					} else {
+						this.$emit('close')
+					}
+					// pageInline模式下transition的show恒为true，不会执行离场动画，
+					// 收不到afterLeave，此处按动画时长补发closed
+					if (this.pageInline) {
+						this.$emit('closed')
+					}
 				}
 			}
 		},
@@ -238,24 +257,38 @@
 				}
 			},
 		},
-		emits: ["open", "close", "click", "update:show"],
+		emits: ["open", "close", "closed", "click", "update:show"],
 		methods: {
+			// 发出close事件。标记仅在本次更新周期内有效，
+			// 用于抑制紧随其后的show变化导致watch重复补发close
+			emitClose() {
+				this.closeEmitted = true
+				this.$emit('close')
+				this.$nextTick(() => {
+					this.closeEmitted = false
+				})
+			},
 			// 点击遮罩
 			overlayClick() {
 				if (this.closeOnClickOverlay) {
 					this.$emit('update:show', false)
-					this.$emit('close')
+					this.emitClose()
 				}
 			},
 			open(e) {
+				this.closeEmitted = false
 				this.$emit('update:show', true)
 			},
 			close(e) {
 				this.$emit('update:show', false)
-				this.$emit('close')
+				this.emitClose()
 			},
 			afterEnter() {
 				this.$emit('open')
+			},
+			// 离场动画结束，弹窗已真正消失
+			afterLeave() {
+				this.$emit('closed')
 			},
 			clickHandler() {
 				// 由于中部弹出时，其u-transition占据了整个页面相当于遮罩，此时需要发出遮罩点击事件，是否无法通过点击遮罩关闭弹窗

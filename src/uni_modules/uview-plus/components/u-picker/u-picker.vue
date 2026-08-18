@@ -23,6 +23,7 @@
 			:pageInline="pageInline"
 			:overlayOpacity="overlayOpacity"
 			@close="closeHandler"
+			@closed="$emit('closed')"
 		>
 			<view class="u-picker">
 				<u-toolbar
@@ -108,6 +109,7 @@
  * @property {String | Number}	duration			动画时长，单位ms （默认 300 ）
  * @property {String | Number}	overlayDuration		遮罩层动画时长，单位ms （默认 350 ）
  * @event {Function} close		关闭选择器时触发
+ * @event {Function} closed		选择器已关闭（离场动画结束、弹窗真正消失后）触发
  * @event {Function} cancel		点击取消按钮触发
  * @event {Function} change		当选择值变化时触发
  * @event {Function} confirm	点击确定按钮，返回当前选择的值
@@ -195,7 +197,7 @@ export default {
 			}
 		}
 	},
-	emits: ['close', 'cancel', 'confirm', 'change', 'update:modelValue', 'update:show'],
+	emits: ['close', 'closed', 'cancel', 'confirm', 'change', 'update:modelValue', 'update:show'],
     computed: {
 		// input的props
 		inputPropsInner() {

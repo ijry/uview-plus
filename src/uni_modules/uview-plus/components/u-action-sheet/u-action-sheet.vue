@@ -3,6 +3,7 @@
 	    :show="show"
 	    mode="bottom"
 	    @close="closeHandler"
+	    @closed="$emit('closed')"
 	    :safeAreaInsetBottom="safeAreaInsetBottom"
 	    :round="round"
 	>
@@ -156,6 +157,7 @@
 	 * 
 	 * @event {Function} select			点击ActionSheet列表项时触发 
 	 * @event {Function} close			点击取消按钮时触发
+	 * @event {Function} closed			弹窗已关闭（离场动画结束、弹窗真正消失后）触发
 	 * @event {Function} getuserinfo	用户点击该按钮时，会返回获取到的用户信息，回调的 detail 数据与 wx.getUserInfo 返回的一致，openType="getUserInfo"时有效
 	 * @event {Function} contact		客服消息回调，openType="contact"时有效
 	 * @event {Function} getphonenumber	获取用户手机号回调，openType="getPhoneNumber"时有效
@@ -224,7 +226,7 @@
 				})
 			}
 		},
-		emits: ["close", "select", "update:show"],
+		emits: ["close", "closed", "select", "update:show"],
 		methods: {
 			// 关闭操作菜单事件处理
 			closeHandler() {

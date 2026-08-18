@@ -12,6 +12,7 @@
 		:bgColor="bgColor"
 		:closeable="!pageInline"
 		@close="close"
+		@closed="$emit('closed')"
 		:round="round"
 		:pageInline="pageInline"
 		:closeOnClickOverlay="closeOnClickOverlay"
@@ -236,6 +237,7 @@ import { t } from '../../libs/i18n'
  *
  * @event {Function()} confirm 		点击确定按钮时触发		选择日期相关的返回参数
  * @event {Function()} close 		日历关闭时触发			可定义页面关闭时的回调事件
+ * @event {Function()} closed 	日历已关闭（离场动画结束、弹窗真正消失后）触发
  * @example <u-calendar  :defaultDate="defaultDateMultiple" :show="show" mode="multiple" @confirm="confirm">
 	</u-calendar>
  * */
@@ -411,7 +413,7 @@ export default {
 		this.start = Date.now()
 		this.init()
 	},
-	emits: ["confirm", "close"],
+	emits: ["confirm", "close", "closed"],
 	methods: {
 		addUnit,
 		padTime(num) {

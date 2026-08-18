@@ -84,6 +84,10 @@ declare interface ActionSheetProps {
    */
   onClose?: () => any
   /**
+   * 弹窗已关闭（离场动画结束、弹窗真正消失后）触发
+   */
+  onClosed?: () => any
+  /**
    * 获取用户信息回调，openType="getUserInfo"时有效
    * @param detail 用户信息
    */

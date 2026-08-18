@@ -123,6 +123,10 @@ declare interface DatetimePickerProps {
    */
   onClose?: () => any
   /**
+   * 选择器已关闭（离场动画结束、弹窗真正消失后）触发
+   */
+  onClosed?: () => any
+  /**
    * 点击确定按钮，返回当前选择的值
    */
   onConfirm?: () => any

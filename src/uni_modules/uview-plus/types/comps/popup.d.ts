@@ -78,13 +78,17 @@ declare interface PopupProps {
    */
   customStyle?: unknown
   /**
-   * 弹出层打开
+   * 弹出层打开（进场动画结束后）
    */
   onOpen?: () => any
   /**
-   * 弹出层收起
+   * 弹出层收起（关闭动作发生时，离场动画开始前；外部直接将show置为false时也会触发）
    */
   onClose?: () => any
+  /**
+   * 弹出层已关闭（离场动画结束、弹窗真正消失后）
+   */
+  onClosed?: () => any
 }
 
 declare interface PopupSlots {

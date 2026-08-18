@@ -209,6 +209,10 @@ declare interface CalendarProps {
    * 日历关闭时触发
    */
   onClose?: () => any
+  /**
+   * 日历已关闭（离场动画结束、弹窗真正消失后）触发
+   */
+  onClosed?: () => any
 }
 
 declare interface _Calendar {

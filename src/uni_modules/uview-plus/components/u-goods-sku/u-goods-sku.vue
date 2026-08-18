@@ -10,6 +10,7 @@
             :pageInline="pageInline"
             :border-radius="20"
             @close="close"
+            @closed="$emit('closed')"
         >
             <view class="up-goods-sku-container" :style="{padding: pageInline ? '0px' : ''}">
                 <view class="up-goods-sku__header">
@@ -175,7 +176,7 @@
 		},
 		watch: {
 		},
-        emits: ['open', 'confirm', 'close'],
+        emits: ['open', 'confirm', 'close', 'closed'],
         created() {
             if (this.pageInline) {
                 this.show = true;

@@ -33,6 +33,7 @@
 			:maskClass="maskClass"
 			:maskStyle="resolvedMaskStyle"
             @close="close"
+            @closed="$emit('closed')"
             @cancel="cancel"
             @confirm="confirm"
             @change="change"
@@ -93,6 +94,7 @@
 	 * @property {Boolean}			closeOnClickOverlay	是否允许点击遮罩关闭选择器  ( 默认 false )
 	 * @property {Array}			defaultIndex		各列的默认索引
 	 * @event {Function} close 关闭选择器时触发
+	 * @event {Function} closed 选择器已关闭（离场动画结束、弹窗真正消失后）触发
 	 * @event {Function} confirm 点击确定按钮，返回当前选择的值
 	 * @event {Function} change 当选择值变化时触发
 	 * @event {Function} cancel 点击取消按钮
@@ -191,7 +193,7 @@
 			}
 		},
 		// #ifdef VUE3
-		emits: ['close', 'cancel', 'confirm', 'change', 'update:modelValue'],
+		emits: ['close', 'closed', 'cancel', 'confirm', 'change', 'update:modelValue'],
 		// #endif
 		methods: {
 			toInt(value, fallback = 0) {
