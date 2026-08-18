@@ -53,11 +53,11 @@ export async function transformPage(code, enabledGlobalRef = false) {
 }
 
 function ensureOptionsComponent(ms, scriptContent) {
-  if (scriptContent.includes('UpNvueRoot')) return
+  if (scriptContent.includes('AppUpRoot')) return
 
   const componentsMatch = scriptContent.match(/components\s*:\s*\{/)
   if (componentsMatch) {
-    ms.appendLeft(componentsMatch.index + componentsMatch[0].length, ' UpNvueRoot,')
+    ms.appendLeft(componentsMatch.index + componentsMatch[0].length, ' AppUpRoot,')
     return
   }
 
@@ -65,7 +65,7 @@ function ensureOptionsComponent(ms, scriptContent) {
   if (exportDefaultMatch) {
     ms.appendLeft(
       exportDefaultMatch.index + exportDefaultMatch[0].length,
-      '\n  components: { UpNvueRoot },'
+      '\n  components: { AppUpRoot },'
     )
   }
 }
@@ -89,7 +89,7 @@ function ensureOptionsThemeMixin(ms, scriptContent) {
 }
 
 function getScriptSetupImports(componentImportPath, runtimeImportPath) {
-  return `import UpNvueRoot from '${componentImportPath}'
+  return `import AppUpRoot from '${componentImportPath}'
 import { computed as __upComputed, onBeforeUnmount as __upOnBeforeUnmount, onMounted as __upOnMounted, ref as __upRef } from 'vue'
 import { onShow as __upOnShow } from '@dcloudio/uni-app'
 import {
@@ -161,7 +161,7 @@ const upThemeNavBgColor = __upComputed(() => {
 }
 
 function getOptionsImports(componentImportPath, runtimeImportPath) {
-  return `import UpNvueRoot from '${componentImportPath}'
+  return `import AppUpRoot from '${componentImportPath}'
 import {
   applyNativeThemeUI as __upApplyNativeThemeUI,
   applyNativeThemeUIDeferred as __upApplyNativeThemeUIDeferred,
@@ -251,7 +251,7 @@ export async function transformNvuePage(
   const sfc = await parseSFC(code)
   const ms = new MagicString(code)
 
-  wrapTemplate(ms, sfc, 'UpNvueRoot', getPageRootRefSource(sfc, enabledGlobalRef), true)
+  wrapTemplate(ms, sfc, 'AppUpRoot', getPageRootRefSource(sfc, enabledGlobalRef), true)
 
   if (sfc.scriptSetup) {
     ms.appendLeft(sfc.scriptSetup.loc.start.offset, getScriptSetupImports(componentImportPath, runtimeImportPath))
@@ -261,7 +261,7 @@ export async function transformNvuePage(
     ensureOptionsThemeMixin(ms, sfc.script.content)
   } else {
     ms.append(
-      `\n<script>\n${getOptionsImports(componentImportPath, runtimeImportPath)}export default {\n  components: { UpNvueRoot },\n  mixins: [__upNvueThemeMixin]\n}\n</script>\n`
+      `\n<script>\n${getOptionsImports(componentImportPath, runtimeImportPath)}export default {\n  components: { AppUpRoot },\n  mixins: [__upNvueThemeMixin]\n}\n</script>\n`
     )
   }
 

@@ -63,7 +63,6 @@ export default function UniUpRoot(options = {}) {
   const appStaticIconFontPath = normalizePath(resolve(rootPath, appStaticIconFontRelativePath))
   const uIconUtilPath = normalizePath(resolve(rootPath, 'uni_modules/uview-plus/components/u-icon/util.js'))
   const uIconVuePath = normalizePath(resolve(rootPath, 'uni_modules/uview-plus/components/u-icon/u-icon.vue'))
-  const nvueRootPath = normalizePath(resolve(rootPath, 'uni_modules/uview-plus/libs/root/nvue-root.vue'))
   const themeRuntimePath = normalizePath(resolve(rootPath, 'uni_modules/uview-plus/libs/theme/runtime.js'))
   const pagesPath = normalizePath(resolve(rootPath, 'pages.json'))
   const excludedPaths = toArray(rootOptions.excludePages)
@@ -189,7 +188,9 @@ export default function UniUpRoot(options = {}) {
 
       const filterUpRoot = createFilter(appUpPath)
       if (filterUpRoot(cleanId)) {
-        ms = await rebuildUpApp(code, rootOptions.enabledVirtualHost)
+        ms = await rebuildUpApp(code, rootOptions.enabledVirtualHost, {
+          rootToastHostImportPath: getRelativeImportPath(cleanId, rootToastHostPath)
+        })
       }
 
       refreshPagesJson()
@@ -199,7 +200,7 @@ export default function UniUpRoot(options = {}) {
         if (cleanId.endsWith('.nvue')) {
           ms = await transformNvuePage(
             code,
-            getRelativeImportPath(cleanId, nvueRootPath),
+            getRelativeImportPath(cleanId, appUpPath),
             getRelativeImportPath(cleanId, themeRuntimePath),
             rootOptions.enabledGlobalRef
           )

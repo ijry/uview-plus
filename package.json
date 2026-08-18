@@ -51,6 +51,7 @@
     "verify:overlay-qrcode-canvas-init": "node scripts/verify-overlay-qrcode-canvas-init.mjs",
     "verify:app-local-icon-font": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-app-local-icon-font.mjs",
     "verify:root-nvue-entry-signatures": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-root-nvue-entry-signatures.mjs",
+    "verify:root-app-up-nvue": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-root-app-up-nvue.mjs",
     "verify:cropper-inner": "node scripts/verify-cropper-inner.mjs",
     "verify:i18n-on-demand": "node scripts/verify-i18n-on-demand.mjs",
     "verify:slider-decimal-step": "node scripts/verify-slider-decimal-step.mjs",

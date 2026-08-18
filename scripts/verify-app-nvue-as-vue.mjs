@@ -142,8 +142,8 @@ assert.equal(
 const viteConfig = readFileSync(path.join(repoRoot, 'vite.config.ts'), 'utf8')
 assert.match(
     viteConfig,
-    /const\s+APP_NVUE_AS_VUE\s*=\s*true/,
-    'vite.config.ts should enable nvue-as-vue for the demo App build'
+    /const\s+APP_NVUE_AS_VUE\s*=\s*false/,
+    'vite.config.ts should keep native nvue enabled for the demo App build'
 )
 assert.ok(
     viteConfig.indexOf('appNvueAsVue(') < viteConfig.indexOf('uni()'),

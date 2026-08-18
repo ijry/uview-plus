@@ -19,11 +19,26 @@ const getThemePageBgColor = () => {
 	return themeVars['--up-page-bg-color'] || themeVars['--up-bg-color'] || getThemeBgColor()
 }
 
+const getNvuePageHeight = () => {
+	// #ifdef APP-NVUE
+	try {
+		if (typeof uni !== 'undefined' && typeof uni.getWindowInfo === 'function') {
+			return Number((uni.getWindowInfo() || {}).windowHeight || 0)
+		}
+		if (typeof uni !== 'undefined' && typeof uni.getSystemInfoSync === 'function') {
+			return Number((uni.getSystemInfoSync() || {}).windowHeight || 0)
+		}
+	} catch (e) {}
+	// #endif
+	return 0
+}
+
 const buildRootStyle = () => {
 	// #ifdef APP-NVUE
 	return {
 		...getThemeVars(),
-		minHeight: '100vh',
+		minHeight: `${getNvuePageHeight()}px`,
+		width: '750rpx',
 		backgroundColor: getThemePageBgColor()
 	}
 	// #endif
@@ -75,6 +90,49 @@ onBeforeUnmount(() => {
 
 <template>
 	<view class="up-root-wrap" :style="upRootStyle">
+		<!-- #ifdef APP-VUE -->
+		<text class="up-render-mode">VUE</text>
+		<!-- #endif -->
+		<!-- #ifdef APP-NVUE -->
+		<text class="up-render-mode">NVUE</text>
+		<!-- #endif -->
 		<UpRootView />
 	</view>
 </template>
+
+<style lang="scss">
+	/* #ifdef APP-VUE */
+	.up-render-mode {
+		position: fixed;
+		top: 12px;
+		right: 12px;
+		z-index: 99999;
+		padding: 4px 8px;
+		border-radius: 4px;
+		background-color: rgba(17, 24, 39, 0.78);
+		color: #ffffff;
+		font-size: 10px;
+		line-height: 14px;
+		pointer-events: none;
+	}
+	/* #endif */
+
+	/* #ifdef APP-NVUE */
+	.up-root-wrap {
+		width: 750rpx;
+	}
+
+	.up-render-mode {
+		position: fixed;
+		top: 12px;
+		right: 12px;
+		z-index: 99999;
+		padding: 4px 8px;
+		border-radius: 4px;
+		background-color: rgba(17, 24, 39, 0.78);
+		color: #ffffff;
+		font-size: 10px;
+		line-height: 14px;
+	}
+	/* #endif */
+</style>
