@@ -140,11 +140,9 @@ assert.equal(
 )
 
 const viteConfig = readFileSync(path.join(repoRoot, 'vite.config.ts'), 'utf8')
-assert.match(
-    viteConfig,
-    /const\s+APP_NVUE_AS_VUE\s*=\s*false/,
-    'vite.config.ts should keep native nvue enabled for the demo App build'
-)
+// 不断言 APP_NVUE_AS_VUE 的取值：它是 demo 工程可自由切换的构建选项，
+// true/false 两种取值的插件行为已由上面的 runScenario 用例覆盖。
+// 锁死取值只会在切换构建方式时误报，与插件本身是否正确无关。
 assert.ok(
     viteConfig.indexOf('appNvueAsVue(') < viteConfig.indexOf('uni()'),
     'appNvueAsVue must be registered before uni()'
