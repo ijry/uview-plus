@@ -53,6 +53,7 @@
     "verify:root-nvue-entry-signatures": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-root-nvue-entry-signatures.mjs",
     "verify:root-app-up-nvue": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-root-app-up-nvue.mjs",
     "verify:cropper-inner": "node scripts/verify-cropper-inner.mjs",
+    "verify:cropper-image-src": "node scripts/verify-cropper-image-src.mjs",
     "verify:i18n-on-demand": "node scripts/verify-i18n-on-demand.mjs",
     "verify:slider-decimal-step": "node scripts/verify-slider-decimal-step.mjs",
     "verify:slider-height": "node scripts/verify-slider-height.mjs",
