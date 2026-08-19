@@ -142,6 +142,7 @@ declare module 'uview-plus' {
 	export const getPx: $u['getPx']
 	export const rpx2px: $u['rpx2px']
 	export const upGetRect: $u['upGetRect']
+	export const upCreateIntersectionObserver: $u['upCreateIntersectionObserver']
 	export const sleep: $u['sleep']
 	export const os: $u['os']
 	export const sys: $u['sys']

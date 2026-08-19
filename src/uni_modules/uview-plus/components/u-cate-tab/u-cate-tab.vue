@@ -47,7 +47,7 @@
 	</view>
 </template>
 <script>
-	import { addUnit, sleep } from '../../libs/function/index';
+	import { addUnit, sleep, upCreateIntersectionObserver } from '../../libs/function/index';
 	export default {
 		name: 'up-cate-tab',
         props: {
@@ -179,7 +179,7 @@
 				this._observerList = [];
 				
 				this.tabList.map((val, index) => {
-					let observer = uni.createIntersectionObserver(this);
+					let observer = upCreateIntersectionObserver(this);
 					this._observerList.push(observer);
 					// 检测相交状态
 					observer.relativeTo('.u-cate-tab__right-box', {

@@ -20,7 +20,8 @@
     import {
         addUnit,
         guid,
-        rpx2px
+        rpx2px,
+        upCreateIntersectionObserver
     } from '../../libs/function/index.js';
     /**
      * lazyLoad 懒加载
@@ -211,10 +212,11 @@
            
             setTimeout(() => {
                 // #ifndef APP-NVUE
-                // 这里是组件内获取布局状态，不能用uni.createIntersectionObserver，而必须用this.createIntersectionObserver
+                // 这里是组件内获取布局状态，不能直传Vue实例给uni.createIntersectionObserver，
+                // 否则小程序内部会Object.keys(vm)导致告警，统一走upCreateIntersectionObserver
                 // this.disconnectObserver('contentObserver');
                 // nvue 里不支持
-                const contentObserver = uni.createIntersectionObserver(this);
+                const contentObserver = upCreateIntersectionObserver(this);
                 // 要理解这里怎么计算的，请看这个：
                 // https://blog.csdn.net/qq_25324335/article/details/83687695
                 contentObserver.relativeToViewport({

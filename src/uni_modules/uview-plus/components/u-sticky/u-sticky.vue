@@ -17,7 +17,7 @@
 	import { props } from './props';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
-	import { addUnit, addStyle, deepMerge, getPx, guid, getDeviceInfo, os } from '../../libs/function/index';
+	import { addUnit, addStyle, deepMerge, getPx, guid, getDeviceInfo, os, upCreateIntersectionObserver } from '../../libs/function/index';
 	import zIndex from '../../libs/config/zIndex';
 	/**
 	 * sticky 吸顶
@@ -119,7 +119,7 @@
 			observeContent() {
 				// 先断掉之前的观察
 				this.disconnectObserver('contentObserver')
-				const contentObserver = uni.createIntersectionObserver(this,{
+				const contentObserver = upCreateIntersectionObserver(this, {
 					// 检测的区间范围
 					thresholds: [0.95, 0.98, 1]
 				})

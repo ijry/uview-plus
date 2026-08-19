@@ -70,6 +70,23 @@ export function upGetRect(selector, all = false, comp = null) {
 	})
 }
 
+// 创建交叉观察器
+// 小程序端 uni.createIntersectionObserver(vm) 会把 Vue 实例代理直接透传给原生 API，
+// 原生内部的 Object.keys(vm) 会触发告警：
+// Avoid app logic that relies on enumerating keys on a component instance
+// （uni-app 只给 createSelectorQuery 做了 $scope 解包，没给 createIntersectionObserver 做）
+// 组件实例上的同名方法内部使用 $scope（原生组件实例），不会把代理外泄，因此优先使用
+export function upCreateIntersectionObserver(comp, options) {
+	// 各家小程序与 H5 都在组件实例上暴露了该方法，内部已完成实例解包
+	if (comp && typeof comp.createIntersectionObserver === 'function') {
+		return options ? comp.createIntersectionObserver(options) : comp.createIntersectionObserver()
+	}
+	// APP 端未在实例上暴露该方法，退回全局 API，其内部会自行解析实例，本身不产生告警
+	// 注意：不能传 comp.$scope，APP 端页面的 $scope 仅为 { $getAppWebview }，
+	// 会被全局 API 误判成 options 参数从而丢失真实配置
+	return options ? uni.createIntersectionObserver(comp, options) : uni.createIntersectionObserver(comp)
+}
+
 /**
  * @description 如果value小于min，取min；如果value大于max，取max
  * @param {number} min 
@@ -907,6 +924,7 @@ function hslToHex(h, s, l) {
 
 export default {
 	upGetRect,
+	upCreateIntersectionObserver,
 	range,
 	getPx,
 	sleep,

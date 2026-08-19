@@ -125,6 +125,17 @@ export interface Func {
   ): Promise<UniNamespace.NodeInfo | UniNamespace.NodeInfo[]>;
 
   /**
+   * 创建交叉观察器，优先使用组件实例上的同名方法，
+   * 避免小程序端因枚举 Vue 实例代理的键而产生告警
+   * @param comp 组件实例
+   * @param options 交叉观察器配置
+   */
+  upCreateIntersectionObserver(
+    comp?: ComponentPublicInstance | ComponentInternalInstance | null,
+    options?: UniNamespace.CreateIntersectionObserverOptions
+  ): UniNamespace.IntersectionObserver;
+
+  /**
    * 进行延时，以达到可以简写代码的目的 比如: await uni.$u.sleep(20)将会阻塞20ms
    * @param value 延时时间（ms），默认 30
    */
