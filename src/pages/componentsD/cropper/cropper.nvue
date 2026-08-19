@@ -35,6 +35,17 @@
             </view>
           </view>
       </view>
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">裁剪已有临时图片</text>
+          <view class="u-page__item__content">
+            <view class="cut-box">
+                <view class="avatar-wrapper" @click="chooseExternalImage(3)">
+                    <up-avatar class="avatar" :src="urls[3]" size="120px"></up-avatar>
+                </view>
+                <up-cropper @confirm="cutImage" ref="avatarRefExternal"></up-cropper>
+            </view>
+          </view>
+      </view>
   </view>
 </template>
 
@@ -48,6 +59,7 @@ const urls = ref([]);
 const avatarRef0 = ref(null);
 const avatarRef1 = ref(null);
 const avatarRefInner = ref(null);
+const avatarRefExternal = ref(null);
 
 // 定义方法
 const chooseImage1 = (index) => {
@@ -66,6 +78,22 @@ const chooseImageInner = (index) => {
         areaHeight: "300rpx",
         exportWidth: '260rpx',
         exportHeight: '260rpx'
+    });
+};
+
+const chooseExternalImage = (index) => {
+    uni.chooseImage({
+        count: 1,
+        success: (res) => {
+            const imageSrc = res.tempFilePaths[0];
+            avatarRefExternal.value.chooseImage(index, {
+                imageSrc: imageSrc,
+                areaWidth: '300rpx',
+                areaHeight: '300rpx',
+                exportWidth: '260rpx',
+                exportHeight: '260rpx'
+            });
+        }
     });
 };
 
