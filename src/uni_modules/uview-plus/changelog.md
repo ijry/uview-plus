@@ -1,3 +1,18 @@
+## 3.8.111
+fix: 修复小程序端使用交叉观察器组件时控制台报枚举实例键告警（#864）
+
+小程序端 `uni.createIntersectionObserver(this)` 会把 Vue 实例代理直接透传给原生 API，原生内部的 `Object.keys(vm)` 命中 Vue 开发模式下的 ownKeys 拦截，从而输出告警：
+`[Vue warn]: Avoid app logic that relies on enumerating keys on a component instance.`
+根因是 uni-app 只为 `createSelectorQuery` 做了 `$scope` 解包，一直没有为 `createIntersectionObserver` 做同样处理。
+
+- 新增 `upCreateIntersectionObserver(comp, options)` 公共方法：优先调用组件实例上的同名方法（内部已完成实例解包，不会外泄代理），APP 端实例上没有该方法时回退到全局 API
+- u-lazy-load、u-sticky、u-cate-tab 三个组件改用该方法，小程序端不再产生告警
+- u-sticky 的 `thresholds: [0.95, 0.98, 1]` 原样透传。注意不能改传 `comp.$scope`：APP 端页面的 `$scope` 仅为 `{ $getAppWebview }`，会被全局 API 误判成 options 参数，导致真实配置被静默丢弃
+- u-parse/node 的观察器位于 `#ifdef H5 || APP-PLUS` 条件编译块内，不会编译进小程序，故保持不变
+- 补充 `upCreateIntersectionObserver` 类型定义，新增 verify:up-create-intersection-observer 校验脚本
+
+组件对外行为不变，APP 端调用路径与配置均保持原样。
+
 ## 3.8.110
 feat: cropper 支持外部图片路径直接裁剪（#897）
 
