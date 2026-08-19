@@ -221,65 +221,68 @@
 				}
 				this.hideImg();
 			},
+			loadImage(path) {
+				uni.showLoading({ mask: true });
+				this.imgPath = path;
+				uni.getImageInfo({
+					src: path,
+					success: r => {
+						this.imgWidth = r.width;
+						this.imgHeight = r.height;
+						this.path = path;
+						if (!this.hasSel) {
+							let style = this.selStyle || {};
+							if (this.arWidth && this.arHeight) {
+								let areaWidth = this.arWidth.indexOf('rpx') >= 0 ? parseInt(this.arWidth) * this.pxRatio : parseInt(this.arWidth),
+									areaHeight = this.arHeight.indexOf('rpx') >= 0 ? parseInt(this.arHeight) * this.pxRatio : parseInt(this.arHeight);
+								style.width = areaWidth + 'px';
+								style.height = areaHeight + 'px';
+								style.top = (this.windowHeight - areaHeight - tabHeight) / 2 + 'px';
+								style.left = (this.windowWidth - areaWidth) / 2 + 'px';
+							} else {
+								uni.showModal({
+									title: t("up.cropper.emptyWidhtOrHeight"),
+									showCancel: false
+								})
+								return;
+							}
+							this.selStyle = style;
+						}
+
+						if (this.noBar) {
+							this.drawInit(true);
+						} else {
+							uni.hideTabBar({
+								complete: () => {
+									this.drawInit(true);
+								}
+							});
+						}
+					},
+					fail: () => {
+						uni.showToast({
+							title: "error3",
+							duration: 2000,
+						})
+					},
+					complete() {
+						uni.hideLoading();
+					}
+				});
+			},
 			select() {
 				if (this.fSelecting) return;
 				this.fSelecting = true;
 				setTimeout(() => { this.fSelecting = false; }, 500);
-				const self = this
 				uni.chooseImage({
 					count: 1,
 					sizeType: ['original', 'compressed'],
 					sourceType: ['album', 'camera'],
 					success: (r) => {
-						uni.showLoading({ mask: true });
-						let path = this.imgPath = r.tempFilePaths[0];
-						uni.getImageInfo({
-							src: path,
-							success: r => {
-								this.imgWidth = r.width;
-								this.imgHeight = r.height;
-								this.path = path;
-								if (!this.hasSel) {
-									let style = this.selStyle || {};
-									if (this.arWidth && this.arHeight) {
-										let areaWidth = this.arWidth.indexOf('rpx') >= 0 ? parseInt(this.arWidth) * this.pxRatio : parseInt(this.arWidth),
-											areaHeight = this.arHeight.indexOf('rpx') >= 0 ? parseInt(this.arHeight) * this.pxRatio : parseInt(this.arHeight);
-										style.width = areaWidth + 'px';
-										style.height = areaHeight + 'px';
-										style.top = (this.windowHeight - areaHeight - tabHeight) / 2 + 'px';
-										style.left = (this.windowWidth - areaWidth) / 2 + 'px';
-									} else {
-										uni.showModal({
-											title: t("up.cropper.emptyWidhtOrHeight"),
-											showCancel: false
-										})
-										return;
-									}
-									this.selStyle = style;
-								}
-
-								if (this.noBar) {
-									this.drawInit(true);
-								} else {
-									uni.hideTabBar({
-										complete: () => {
-											this.drawInit(true);
-										}
-									});
-								}
-							},
-							fail: () => {
-								uni.showToast({
-									title: "error3",
-									duration: 2000,
-								})
-							},
-							complete() {
-								uni.hideLoading();
-							}
-						});
-					}, fail(err) {
-						self.$emit('cancel')
+						this.loadImage(r.tempFilePaths[0]);
+					},
+					fail: () => {
+						this.$emit('cancel')
 					}
 				})
 			},
@@ -727,6 +730,7 @@
 				});
 			},
 			chooseImage(index = undefined, params = undefined, data = undefined) {
+				const imageSrc = typeof params?.imageSrc === 'string' ? params.imageSrc.trim() : '';
 				if (params) {
 					console.log(params)
 					let areaWidth = params.areaWidth || this.areaWidth,
@@ -777,6 +781,10 @@
 				}
 				this.rtn = data;
 				this.indx = index;
+				if (imageSrc) {
+					this.loadImage(imageSrc);
+					return;
+				}
 				this.select();
 			},
 			rotate() {
