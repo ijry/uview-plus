@@ -10,6 +10,10 @@
 		>
 		</up-navbar>
 		<view class="u-page__item">
+			<text class="u-page__item__title">iOS 大标题模式</text>
+			<up-button type="primary" text="查看 iOS 模式示例" @click="toIosDemo"></up-button>
+		</view>
+		<view class="u-page__item">
 			<text class="u-page__item__title">基础功能</text>
 			<up-navbar
 				title="个人中心"
@@ -76,6 +80,12 @@ const instance = getCurrentInstance()
 const navigateBack = () => {
 	uni.navigateBack({
 		delta: 1
+	})
+}
+
+const toIosDemo = () => {
+	uni.navigateTo({
+		url: '/pages/componentsC/navbarIos/navbarIos'
 	})
 }
 

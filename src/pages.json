@@ -423,6 +423,13 @@
                     }
                 },
                 {
+                    "path" : "navbarIos/navbarIos",
+                    "style" : {
+                        "navigationBarTitleText" : "导航栏 iOS 模式",
+                        "navigationStyle" : "custom"
+                    }
+                },
+                {
                     "path" : "skeleton/skeleton",
                     "style" : {
                         "navigationBarTitleText" : "骨架屏"
