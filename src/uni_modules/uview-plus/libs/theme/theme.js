@@ -73,7 +73,9 @@ const DEFAULT_THEME_EXTRA_VARS = Object.freeze({
         '--up-skeleton-shimmer-color': '#e6e6e6',
         '--up-swipe-action-button-bg-color': '#c7c6cd',
         '--up-index-list-indicator-bg-color': '#c9c9c9',
-        '--up-calendar-month-mark-color': 'rgba(231, 232, 234, 0.83)'
+        '--up-calendar-month-mark-color': 'rgba(231, 232, 234, 0.83)',
+        '--up-navbar-glass-bg-color': 'rgba(255, 255, 255, 0.82)',
+        '--up-navbar-glass-blur': '20px'
     }),
     dark: Object.freeze({
         '--up-table2-header-bg-color': '#2a2d33',
@@ -84,7 +86,9 @@ const DEFAULT_THEME_EXTRA_VARS = Object.freeze({
         '--up-skeleton-shimmer-color': 'rgba(255, 255, 255, 0.12)',
         '--up-swipe-action-button-bg-color': '#4b5563',
         '--up-index-list-indicator-bg-color': '#4b5563',
-        '--up-calendar-month-mark-color': 'rgba(255, 255, 255, 0.04)'
+        '--up-calendar-month-mark-color': 'rgba(255, 255, 255, 0.04)',
+        '--up-navbar-glass-bg-color': 'rgba(28, 28, 30, 0.82)',
+        '--up-navbar-glass-blur': '20px'
     })
 })
 
