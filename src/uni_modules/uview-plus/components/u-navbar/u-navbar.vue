@@ -71,7 +71,7 @@
 				</view>
 				<view
 					class="u-navbar__content__center"
-					:style="{ opacity: navbarCenterOpacity }"
+					:style="[navbarCenterStyle]"
 				>
 					<slot name="center">
 						<text
@@ -117,6 +117,8 @@
 	// iOS 大标题行高。它同时是 navbarProgress 的分母，
 	// 因此改动此值会同步改变压缩过程的滚动区间。
 	const LARGE_TITLE_HEIGHT = 52
+	// 居中标题上浮的起始偏移，与淡入同步归零
+	const CENTER_TITLE_RISE = 12
 	/**
 	 * Navbar 自定义导航栏
 	 * @description 此组件一般用于在特殊情况下，需要自定义导航栏的时候用到，一般建议使用uni-app带的导航栏。
@@ -190,6 +192,15 @@
 			navbarCenterOpacity() {
 				if (!this.isIosMode) return 1
 				return Math.min(Math.max((this.navbarProgress - 0.75) / 0.25, 0), 1)
+			},
+			// 居中标题由下往上浮现：与淡入同一段行程，位移随之归零
+			navbarCenterStyle() {
+				if (!this.isIosMode) return {}
+				const opacity = this.navbarCenterOpacity
+				return {
+					opacity,
+					transform: `translateY(${(1 - opacity) * CENTER_TITLE_RISE}px)`
+				}
 			},
 			navbarGlassBgColor() {
 				// 0.82 是可读性下限的承重值：backdrop-filter 不生效时，
@@ -336,6 +347,11 @@
 				@include flex(row);
 				align-items: center;
 				justify-content: center;
+				// 滚动事件是离散到达的，补一段短过渡让上浮与淡入连续。
+				// 时长刻意短于一次滚动事件的间隔，避免落后于手指。
+				/* #ifndef APP-NVUE */
+				transition: opacity 0.15s linear, transform 0.15s ease-out;
+				/* #endif */
 			}
 
 			&__title {
