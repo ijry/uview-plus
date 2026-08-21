@@ -26,7 +26,9 @@ export default {
 		leftIconSize: 20,
 		leftIconColor: '',
 		autoBack: false,
-		titleStyle: ''
+		titleStyle: '',
+		mode: 'default',
+		scrollTop: 0
     }
 
 }

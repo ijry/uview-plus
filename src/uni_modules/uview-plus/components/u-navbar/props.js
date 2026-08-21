@@ -94,6 +94,16 @@ export const props = defineMixin({
 		titleStyle: {
 			type: [String, Object],
 			default: () => defProps.navbar.titleStyle
+		},
+		// 导航栏模式，default-常规，ios-大标题磨砂模式
+		mode: {
+			type: String,
+			default: () => defProps.navbar.mode
+		},
+		// 页面滚动距离，仅 ios 模式使用，由页面 onPageScroll 传入
+		scrollTop: {
+			type: [String, Number],
+			default: () => defProps.navbar.scrollTop
 		}
 	}
 })

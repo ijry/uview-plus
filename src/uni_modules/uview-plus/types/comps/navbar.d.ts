@@ -82,6 +82,19 @@ declare interface NavbarProps {
    */
   titleStyle?: unknown
   /**
+   * 导航栏模式。ios 模式下初始背景透明、标题左对齐大字号显示，
+   * 下滑压缩后过渡为居中标题并呈现磨砂背景。
+   * ios 模式下 fixed 与 placeholder 被忽略。nvue 端降级为 default。
+   * @default "default"
+   */
+  mode?: 'default' | 'ios'
+  /**
+   * 页面滚动距离，仅 ios 模式使用，需由页面 onPageScroll 传入。
+   * 不传时导航栏停留在大标题展开态。
+   * @default 0
+   */
+  scrollTop?: string | number
+  /**
    * 点击左侧区域
    */
   onLeftClick?: () => any
