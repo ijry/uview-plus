@@ -73,7 +73,8 @@
     "verify:novel-reader-ui": "node scripts/verify-novel-reader-ui.mjs",
     "verify:harmony-permission-resources": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-harmony-permission-resources.mjs",
     "verify:harmony-poster-text-wrap": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-harmony-poster-text-wrap.mjs",
-    "verify:up-create-intersection-observer": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-up-create-intersection-observer.mjs"
+    "verify:up-create-intersection-observer": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-up-create-intersection-observer.mjs",
+    "verify:navbar-ios-mode": "node scripts/verify-navbar-ios-mode.mjs"
   },
   "pnpm":{"overrides":{"rollup":"4.14.3"}},
   "dependencies": {
