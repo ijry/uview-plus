@@ -1,3 +1,9 @@
+## 3.8.113（2026-08-27）
+fix: 修复启用uniUpRoot，在root组件存在components选项时组件插入错误
+
+fix: 修复打包APK运行时icon组件未正确获取字体路径
+
+
 ## 3.8.112
 feat: navbar 新增 iOS 大标题模式
 
