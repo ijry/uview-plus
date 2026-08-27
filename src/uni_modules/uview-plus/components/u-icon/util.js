@@ -44,7 +44,8 @@ const getAppIconUrl = () => {
     }
     if (typeof plus !== 'undefined' && plus.io && typeof plus.io.convertLocalFileSystemURL === 'function') {
         const iconFontPath = plus.io.convertLocalFileSystemURL(appIconFontUrl);
-        if (iconFontPath) return iconFontPath;
+        // if (iconFontPath) return iconFontPath;
+        return iconFontPath && iconFontPath.startsWith('file://') ? iconFontPath : 'file://' + iconFontPath;
     }
     return appIconFontUrl;
     // #endif

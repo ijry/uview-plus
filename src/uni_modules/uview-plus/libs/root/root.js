@@ -7,7 +7,9 @@ function ensureRootToastHostComponent(ms, scriptContent) {
   if (componentsMatch && /\bUpRootToastHost\b/.test(componentsMatch[1])) return
 
   if (componentsMatch) {
-    ms.appendLeft(componentsMatch.index + componentsMatch[0].length, ' UpRootToastHost,')
+    // ms.appendLeft(componentsMatch.index + componentsMatch[0].length, ' UpRootToastHost,')
+    const openBraceIndex = componentsMatch.index + componentsMatch[0].indexOf('{')
+    ms.appendLeft(openBraceIndex + 1, ' UpRootToastHost,')
     return
   }
 
