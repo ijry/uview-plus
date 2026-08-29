@@ -99,8 +99,13 @@
 					this.itemShape,
 					this.iconScale,
 					this.textMode,
-					this.borderColor
+					this.borderColor,
+					this.border,
+					this.customStyle
 				]
+			},
+			midButtonBorderTopOffset() {
+				return this.border ? 0.25 : 0
 			},
 			updatePlaceholder() {
 				return [this.fixed, this.placeholder]

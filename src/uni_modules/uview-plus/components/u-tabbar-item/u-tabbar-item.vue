@@ -8,38 +8,41 @@
 		<view class="u-tabbar-item__content" :class="contentClassNames">
 			<view class="u-tabbar-item__bubble" :class="bubbleClassNames">
 				<view
+					ref="u-tabbar-item__icon--mid-button"
 					class="u-tabbar-item__icon"
 					:class="iconClassNames"
 				>
-					<view v-if="isMidButton" class="u-tabbar-item__mid-button-border">
+					<view v-if="isMidButton" class="u-tabbar-item__mid-button-border" :style="midButtonBorderStyle">
 						<view class="u-tabbar-item__mid-button-border-circle" :style="midButtonBorderCircleStyle"></view>
 					</view>
 					<view v-if="isMidButton" class="u-tabbar-item__mid-button-inner"></view>
-					<up-icon
-						v-if="resolvedIconName"
-						:name="resolvedIconName"
-						:color="isMidButton ? resolvedMidButtonIconColor : (isActive ? resolvedActiveColor : resolvedInactiveColor)"
-						:size="isMidButton ? midButtonIconSize : 24"
-						:customStyle="midButtonIconStyle"
-					></up-icon>
-					<template v-else>
-						<slot
-							v-if="isActive"
-							name="active-icon"
-						/>
-						<slot
-							v-else
-							name="inactive-icon"
-						/>
-					</template>
-					<u-badge
-						absolute
-						:offset="[0, dot ? '34rpx' : badge > 9 ? '14rpx' : '20rpx']"
-						:customStyle="badgeStyle"
-						:isDot="dot"
-						:value="badge || (dot ? 1 : null)"
-						:show="dot || badge > 0"
-					></u-badge>
+					<view class="u-tabbar-item__icon-content" :class="iconContentClassNames">
+						<up-icon
+							v-if="resolvedIconName"
+							:name="resolvedIconName"
+							:color="isMidButton ? resolvedMidButtonIconColor : (isActive ? resolvedActiveColor : resolvedInactiveColor)"
+							:size="isMidButton ? midButtonIconSize : 24"
+							:customStyle="midButtonIconStyle"
+						></up-icon>
+						<template v-else>
+							<slot
+								v-if="isActive"
+								name="active-icon"
+							/>
+							<slot
+								v-else
+								name="inactive-icon"
+							/>
+						</template>
+						<u-badge
+							absolute
+							:offset="[0, dot ? '34rpx' : badge > 9 ? '14rpx' : '20rpx']"
+							:customStyle="badgeStyle"
+							:isDot="dot"
+							:value="badge || (dot ? 1 : null)"
+							:show="dot || badge > 0"
+						></u-badge>
+					</view>
 				</view>
 
 				<slot name="text">
@@ -62,7 +65,8 @@
 	import { props } from './props';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
-	import { addStyle, error } from '../../libs/function/index';
+	import { addStyle, error, sleep } from '../../libs/function/index';
+	import { calculateMidButtonBorderClipHeight } from './midButtonGeometry';
 	/**
 	 * TabbarItem 底部导航栏子组件
 	 * @description 此组件提供了自定义tabbar的能力。
@@ -73,6 +77,13 @@
 	 * @property {Boolean}			dot			是否显示圆点，将会覆盖badge参数（默认 false ）
 	 * @property {String}			text		描述文本
 	 * @property {Object | String}	badgeStyle	控制徽标的位置，对象或者字符串形式，可以设置top和right属性（默认 'top: 6px;right:2px;' ）
+	 * @property {String}			mode		模式，默认普通模式，midButton中间按钮模式
+	 * @property {String}			midButtonBgColor	中间按钮背景色
+	 * @property {String}			midButtonIconColor	中间按钮图标颜色
+	 * @property {String | Number}	midButtonIconSize	中间按钮图标大小（默认 26 ）
+	 * @property {String}			midButtonBoxShadow	中间按钮外层阴影
+	 * @property {String}			midButtonInnerBoxShadow	中间按钮内层阴影
+	 * @property {String | Number}	midButtonOffsetY	中间按钮垂直偏移，负值为上移（默认 -10 ）
 	 * @property {Object}			customStyle	定义需要用到的外部样式
 	 * 
 	 * @example <u-tabbar :value="value2" :placeholder="false" @change="name => value2 = name" :fixed="false" :safeAreaInsetBottom="false"><u-tabbar-item text="首页" icon="home" dot ></u-tabbar-item></u-tabbar>
@@ -83,6 +94,7 @@
 		data() {
 			return {
 				isActive: false, // 是否处于激活状态
+				midButtonBorderClipHeightValue: 0,
 				parentData: {
 					value: null,
 					activeColor: '',
@@ -94,7 +106,9 @@
 					itemShape: 'default',
 					iconScale: 1.1,
 					textMode: 'always',
-					borderColor: ''
+					borderColor: '',
+					border: true,
+					midButtonBorderTopOffset: 0.25
 				}
 			}
 		},
@@ -154,9 +168,12 @@
 				return `${this.resolvedMidButtonOffsetY}px`
 			},
 			midButtonBorderClipHeight() {
-				const clipBaseHeight = this.hasMidButtonText ? 15.5 : 7
-				const clipHeight = clipBaseHeight - this.resolvedMidButtonOffsetY
-				return `${Math.min(Math.max(clipHeight, 0), 64)}px`
+				return `${this.midButtonBorderClipHeightValue}px`
+			},
+			midButtonBorderStyle() {
+				return {
+					height: this.midButtonBorderClipHeight
+				}
 			},
 			midButtonBorderCircleStyle() {
 				return this.isMidButton && this.parentData.borderColor
@@ -180,7 +197,15 @@
 				return [
 					this.isMidButton ? 'u-tabbar-item__icon--mid-button' : '',
 					`u-tabbar-item__icon--${this.resolvedStyleType}`,
-					this.isActive && this.resolvedAnimationType !== 'none' ? `u-tabbar-item__icon--anim-${this.resolvedAnimationType}` : ''
+					this.isActive && this.resolvedAnimationType !== 'none' && !this.isMidButton ? `u-tabbar-item__icon--anim-${this.resolvedAnimationType}` : ''
+				]
+			},
+			iconContentClassNames() {
+				return [
+					this.isMidButton ? 'u-tabbar-item__icon-content--mid-button' : '',
+					this.isMidButton && this.isActive && this.resolvedAnimationType !== 'none'
+						? `u-tabbar-item__icon-content--anim-${this.resolvedAnimationType}`
+						: ''
 				]
 			},
 			contentClassNames() {
@@ -213,6 +238,20 @@
 		created() {
 			this.init()
 		},
+		mounted() {
+			this.scheduleMidButtonBorderMeasure()
+		},
+		watch: {
+			mode() {
+				this.scheduleMidButtonBorderMeasure()
+			},
+			text() {
+				this.scheduleMidButtonBorderMeasure()
+			},
+			midButtonOffsetY() {
+				this.scheduleMidButtonBorderMeasure()
+			}
+		},
 		emits: ["click", "change"],
 		methods: {
 			addStyle,
@@ -235,6 +274,28 @@
 			updateFromParent() {
 				// 重新初始化
 				this.init()
+				this.scheduleMidButtonBorderMeasure()
+			},
+			scheduleMidButtonBorderMeasure() {
+				if (!this.isMidButton) return
+				this.$nextTick(() => this.updateMidButtonBorderClip())
+			},
+			async updateMidButtonBorderClip() {
+				if (!this.isMidButton || !this.parent) return
+				await sleep(20)
+				const [contentRect, circleRect] = await Promise.all([
+					this.parent.$uGetRect('.u-tabbar__content'),
+					this.$uGetRect('.u-tabbar-item__icon--mid-button')
+				])
+				if ([contentRect, circleRect].some(rect => !rect || !Number.isFinite(rect.top) || rect.height <= 0)) return
+				const clipHeight = calculateMidButtonBorderClipHeight({
+					contentTop: contentRect.top,
+					circleTop: circleRect.top,
+					borderTopOffset: this.parentData.border ? this.parentData.midButtonBorderTopOffset : 0
+				})
+				if (clipHeight !== this.midButtonBorderClipHeightValue) {
+					this.midButtonBorderClipHeightValue = clipHeight
+				}
 			},
 			clickHandler() {
 				this.$nextTick(() => {
@@ -279,6 +340,19 @@
 			&--glow,
 			&--convex {
 				width: 100%;
+			}
+
+			&-content {
+				@include flex;
+				align-items: center;
+				justify-content: center;
+
+				&--mid-button {
+					position: relative;
+					z-index: 2;
+					width: 100%;
+					height: 100%;
+				}
 			}
 
 			&--anim-scale {
@@ -402,7 +476,7 @@
 		transform: none;
 	}
 
-	.u-tabbar-item--lift.u-tabbar-item--active .u-tabbar-item__icon {
+	.u-tabbar-item--lift.u-tabbar-item--active .u-tabbar-item__icon:not(.u-tabbar-item__icon--mid-button) {
 		transform: translateY(-6rpx) scale(1.04);
 	}
 
@@ -439,7 +513,7 @@
 		left: 0;
 		top: 0;
 		width: 64px;
-		height: v-bind('midButtonBorderClipHeight');
+		height: 0;
 		box-sizing: border-box;
 		background: transparent;
 		overflow: hidden;
@@ -447,15 +521,17 @@
 		z-index: 0;
 	}
 
-	/* #ifdef APP-NVUE */
-	.u-tabbar-item__mid-button-border {
-		height: 15.5px;
+	.u-tabbar-item__icon-content--anim-scale {
+		transform: scale(var(--up-tabbar-icon-scale, 1.1));
 	}
 
-	.u-tabbar-item--mid-button-no-text .u-tabbar-item__mid-button-border {
-		height: 7px;
+	.u-tabbar-item__icon-content--anim-lift {
+		transform: translateY(-6rpx) scale(var(--up-tabbar-icon-scale, 1.08));
 	}
-	/* #endif */
+
+	.u-tabbar-item__icon-content--anim-swing {
+		transform: rotate(-10deg) scale(var(--up-tabbar-icon-scale, 1.08));
+	}
 
 	.u-tabbar-item__mid-button-border-circle {
 		width: 64px;
@@ -497,7 +573,8 @@
 		transform: translateY(-4rpx);
 	}
 
-	.u-tabbar-item--anim-pulse .u-tabbar-item__icon {
+	.u-tabbar-item--anim-pulse .u-tabbar-item__icon:not(.u-tabbar-item__icon--mid-button),
+	.u-tabbar-item__icon-content--anim-pulse {
 		animation: u-tabbar-item-pulse 1.4s ease-in-out infinite;
 	}
 
