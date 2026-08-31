@@ -1,7 +1,7 @@
 <template>
 	<view class="u-select">
 		<view :class="['u-select__content', disabled && 'disabled']">
-			<view :class="['u-select__label', border && 'u-select__label--border']" :style="selectLabelStyle" @click="openSelect">
+			<view :class="['u-select__label', border && 'u-select__label--border']" :style="selectLabelStyle" @click="labelClick">
 				<slot name="text" :currentLabel="currentLabel">
 					<text class="u-select__text" :style="{ color: resolvedTextColor }" v-if="showOptionsLabel">
 						{{ currentLabel }}
@@ -14,8 +14,8 @@
 					<up-icon name="arrow-down" :size="iconSize" :color="resolvedIconColor"></up-icon>
 				</slot>
 			</view>
-			<u-overlay :show="isOpen" @click="overlayClick" v-if="overlay" :zIndex="zIndex" :duration="duration + 50"
-				:customStyle="overlayStyle" :opacity="overlayOpacity" @touchmove.stop.prevent="noop"></u-overlay>
+			<up-overlay :show="isOpen" @click="overlayClick" v-if="overlay" :zIndex="zIndex" :duration="duration + 50"
+				:customStyle="overlayStyle" :opacity="overlayOpacity" @touchmove.stop.prevent="noop"></up-overlay>
 			<view class="u-select__options__wrap" :style="optionsWrapStyle">
 				<view class="u-select__options" :style="optionsStyle" v-if="isOpen">
 					<slot name="options">
@@ -59,14 +59,19 @@
 				default: true
 			},
 			overlayOpacity: {
-				type: Number,
-				default: 0.01
+				type: [String, Number],
+				default: 0.3
 			},
 			overlayStyle: {
 				type: Object,
 				default: () => {
 					return {}
 				}
+			},
+			// 点击遮罩是否关闭下拉面板
+			closeOnClickOverlay: {
+				type: Boolean,
+				default: true
 			},
 			duration: {
 				type: Number,
@@ -157,11 +162,17 @@
 				return this.optionsWidth;
 			},
 			selectLabelStyle() {
-				if (!this.border) return {};
-				return {
-					borderColor: this.upThemeVar('--up-border-color', '#dadbde'),
-					backgroundColor: this.upThemeVar('--up-card-bg-color', '#ffffff')
-				};
+				const style = {};
+				if (this.border) {
+					style.borderColor = this.upThemeVar('--up-border-color', '#dadbde');
+					style.backgroundColor = this.upThemeVar('--up-card-bg-color', '#ffffff');
+				}
+				// 遮罩可见时把触发区抬到遮罩之上，避免下拉面板亮着而它的锚点被压暗
+				if (this.isOpen && this.overlay) {
+					style.position = 'relative';
+					style.zIndex = this.zIndex + 1;
+				}
+				return style;
 			},
 			optionsWrapStyle() {
 				const style = {
@@ -195,6 +206,14 @@
 			}
 		},
 		methods: {
+			labelClick() {
+				// 触发区被抬到遮罩之上后，遮罩不再代收这次点击，需要自己处理收起
+				if (this.isOpen) {
+					this.closeSelect();
+					return;
+				}
+				this.openSelect();
+			},
 			openSelect() {
 				if (this.disabled) return;
 				this.isOpen = true;
@@ -208,7 +227,8 @@
 				this.isOpen = false;
 			},
 			overlayClick() {
-				this.isOpen = false;
+				if (!this.closeOnClickOverlay) return;
+				this.closeSelect();
 			},
 			selectItem(item) {
 				this.isOpen = false;
