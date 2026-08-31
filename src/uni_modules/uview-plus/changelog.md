@@ -1,3 +1,14 @@
+## 3.8.115
+feat: u-select 遮罩默认可见并支持点击遮罩关闭开关
+
+- overlayOpacity 默认由 0.01 调整为 0.3，遮罩真正可见，仍比 up-overlay 自身的 0.5 更浅
+- overlayOpacity 类型放宽为 String / Number，可直接以普通属性方式传值
+- 展开状态下把触发区抬到遮罩之上，避免下拉面板亮着而它的锚点被压暗
+- 新增 closeOnClickOverlay 属性（默认 true），与 u-popup 命名一致；此前点击遮罩关闭为硬编码行为，现在可显式禁用
+- 遮罩标签统一为 up-overlay，并补充 verify:select-overlay 回归校验
+
+nvue 端对 z-index 支持有限，若被忽略则触发区可能落在遮罩之下，该端建议按需关闭 overlay。
+
 ## 3.8.114
 fix: 修复 tabbar 中间按钮圆弧越界（#1052）
 
