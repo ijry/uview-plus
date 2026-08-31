@@ -1,3 +1,26 @@
+/* #ifdef MP-WEIXIN */
+:host {
+	--up-subsection-bg-color: #eeeeef;
+	--up-subsection-bar-color: #ffffff;
+	--up-subsection-inactive-color: #303133;
+	--up-subsection-disabled-text-color: #c8c9cc;
+	--up-subsection-disabled-border-color: #d4d4d4;
+	--up-subsection-disabled-bar-color: #f5f5f5;
+}
+
+@media (prefers-color-scheme: dark) {
+	:host {
+		--up-subsection-bg-color: #2b2c30;
+		--up-subsection-bar-color: #3a3b40;
+		--up-subsection-inactive-color: #d1d5db;
+		--up-subsection-disabled-text-color: #6b7280;
+		--up-subsection-disabled-border-color: #3a3a3c;
+		--up-subsection-disabled-bar-color: #3a3a3c;
+	}
+}
+/* #endif */
+
+/* #ifndef MP-WEIXIN */
 :root,
 page,
 body {
@@ -39,3 +62,4 @@ body {
 	--up-subsection-disabled-border-color: #3a3a3c;
 	--up-subsection-disabled-bar-color: #3a3a3c;
 }
+/* #endif */

@@ -1,3 +1,16 @@
+/* #ifdef MP-WEIXIN */
+:host {
+	--up-tag-close-bg-color: #c8c9cc;
+}
+
+@media (prefers-color-scheme: dark) {
+	:host {
+		--up-tag-close-bg-color: #4b5563;
+	}
+}
+/* #endif */
+
+/* #ifndef MP-WEIXIN */
 :root,
 page,
 body {
@@ -19,3 +32,4 @@ body {
 [data-up-theme='dark'] {
 	--up-tag-close-bg-color: #4b5563;
 }
+/* #endif */

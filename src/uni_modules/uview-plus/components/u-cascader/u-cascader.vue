@@ -348,7 +348,7 @@
 		overflow: hidden;
 		height: 800rpx;
 
-		>view {
+		>.u-flex {
 			width: 150%;
 			transition: transform 0.3s ease-in-out 0s;
 			transform: translateX(0);

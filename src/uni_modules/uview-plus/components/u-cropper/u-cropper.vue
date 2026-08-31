@@ -7,25 +7,25 @@
 		<view class="oper-wrapper" :style="{ display: styleDisplay }">
 			<view class="oper">
 				<view class="btn-wrapper" v-if="showOper">
-					<view @click="select" hover-class="hover" :style="{ width: btnWidth }">
+					<view class="u-cropper__action" @click="select" hover-class="hover" :style="{ width: btnWidth }">
 						<text>{{ t("up.common.re-select") }}</text>
 					</view>
-					<view @click="close" hover-class="hover" :style="{ width: btnWidth }">
+					<view class="u-cropper__action" @click="close" hover-class="hover" :style="{ width: btnWidth }">
 						<text>{{ t("up.common.close") }}</text>
 					</view>
-					<view @click="rotate" hover-class="hover" :style="{ width: btnWidth, display: btnDsp }">
+					<view class="u-cropper__action" @click="rotate" hover-class="hover" :style="{ width: btnWidth, display: btnDsp }">
 						<text>{{ t("up.common.rotate") }}</text>
 					</view>
-					<view @click="preview" hover-class="hover" :style="{ width: btnWidth }">
+					<view class="u-cropper__action" @click="preview" hover-class="hover" :style="{ width: btnWidth }">
 						<text>{{ t("up.common.preview") }}</text>
 					</view>
-					<view @click="confirm" hover-class="hover" :style="{ width: btnWidth }">
+					<view class="u-cropper__action" @click="confirm" hover-class="hover" :style="{ width: btnWidth }">
 						<text>{{ t("up.common.confirm") }}</text>
 					</view>
 				</view>
 				<view class="clr-wrapper" v-else>
 					<slider class="my-slider" @change="colorChange" block-size="25" value="0" min="-100" max="100" activeColor="red" backgroundColor="green" block-color="grey" show-value></slider>
-					<view @click="prvUpload" hover-class="hover" :style="{ width: btnWidth }">
+					<view class="u-cropper__action" @click="prvUpload" hover-class="hover" :style="{ width: btnWidth }">
 						<text>{{ t("up.common.confirm") }}</text>
 					</view>
 				</view>
@@ -1267,7 +1267,7 @@
 			justify-content: space-between;
 		}
 
-		.btn-wrapper view {
+		.btn-wrapper .u-cropper__action {
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -1288,7 +1288,7 @@
 			flex-grow: 1;
 		}
 
-		.clr-wrapper view {
+		.clr-wrapper .u-cropper__action {
 			display: flex;
 			align-items: center;
 			justify-content: center;
