@@ -159,7 +159,7 @@ export default {
         bottom: 0px;
         display: flex;
         flex-direction: column;
-        >view {
+        >.u-float-button__item {
             margin: 5px 0px;
         }
     }

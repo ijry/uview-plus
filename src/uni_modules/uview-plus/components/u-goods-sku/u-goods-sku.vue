@@ -16,7 +16,7 @@
                 <view class="up-goods-sku__header">
                     <slot name="header">
                         <view class="up-goods-sku__header__image">
-                            <image :src="goodsInfo.image || goodsInfo.picture" mode="aspectFill"></image>
+                            <image class="up-goods-sku__header__image-element" :src="goodsInfo.image || goodsInfo.picture" mode="aspectFill"></image>
                         </view>
                         <view class="up-goods-sku__header__info">
                             <view class="up-goods-sku__header__info__price">
@@ -333,7 +333,7 @@
 				overflow: hidden;
 				margin-right: 20rpx;
 				
-				image {
+				&-element {
 					width: 100%;
 					height: 100%;
 				}

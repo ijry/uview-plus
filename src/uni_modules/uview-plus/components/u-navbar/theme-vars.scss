@@ -1,3 +1,16 @@
+/* #ifdef MP-WEIXIN */
+:host {
+	--up-navbar-bg-color: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+	:host {
+		--up-navbar-bg-color: #1c1c1e;
+	}
+}
+/* #endif */
+
+/* #ifndef MP-WEIXIN */
 :root,
 page,
 body {
@@ -24,3 +37,4 @@ body {
 	--up-navbar-bg-color: #1c1c1e;
 	--up-navbar-glass-bg-color: rgba(28, 28, 30, 0.82);
 }
+/* #endif */

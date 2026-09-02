@@ -1,3 +1,18 @@
+/* #ifdef MP-WEIXIN */
+:host {
+	--up-notice-bar-color: #f9ae3d;
+	--up-notice-bar-bg-color: #fdf6ec;
+}
+
+@media (prefers-color-scheme: dark) {
+	:host {
+		--up-notice-bar-color: #f9ae3d;
+		--up-notice-bar-bg-color: #3d2f1b;
+	}
+}
+/* #endif */
+
+/* #ifndef MP-WEIXIN */
 :root,
 page,
 body {
@@ -23,3 +38,4 @@ body {
 	--up-notice-bar-color: #f9ae3d;
 	--up-notice-bar-bg-color: #3d2f1b;
 }
+/* #endif */
