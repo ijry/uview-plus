@@ -17,6 +17,20 @@ function emptyNodeInfo() {
 	}
 }
 
+// 组件卸载后仍把它交给原生查询，APP 端会拿已失效的 nodeId 去查视图层映射表，
+// 读到 undefined 再取 .$ 就抛 Cannot read properties of undefined (reading '$')
+function isCompUnmounted(comp) {
+	if (!comp) {
+		return false
+	}
+	// 公共 mixin 的 beforeUnmount 里同步置位
+	if (comp.__upUnmounted) {
+		return true
+	}
+	// 未应用公共 mixin 时退回 Vue 自身标记：公开实例挂在 $ 上，内部实例直接持有
+	return !!(comp.$ ? comp.$.isUnmounted : comp.isUnmounted)
+}
+
 // #ifdef APP-NVUE
 const dom = (typeof uni !== 'undefined' && uni && typeof uni.requireNativePlugin === 'function')
 	? uni.requireNativePlugin('dom')
@@ -37,6 +51,10 @@ function getNvueRect(ref) {
 
 // 查询节点信息
 export function upGetRect(selector, all = false, comp = null) {
+	// 判定必须放在条件编译之外，否则 app-harmony 上整段会被裁掉
+	if (isCompUnmounted(comp)) {
+		return Promise.resolve(all ? [] : emptyNodeInfo())
+	}
 	return new Promise((resolve) => {
 		// #ifndef APP-NVUE
 		const query = uni.createSelectorQuery()
@@ -70,6 +88,17 @@ export function upGetRect(selector, all = false, comp = null) {
 	})
 }
 
+// 卸载后替代真实观察器，保持链式调用不报错
+function noopIntersectionObserver() {
+	const observer = {
+		relativeTo: () => observer,
+		relativeToViewport: () => observer,
+		observe: () => {},
+		disconnect: () => {}
+	}
+	return observer
+}
+
 // 创建交叉观察器
 // 小程序端 uni.createIntersectionObserver(vm) 会把 Vue 实例代理直接透传给原生 API，
 // 原生内部的 Object.keys(vm) 会触发告警：
@@ -77,6 +106,10 @@ export function upGetRect(selector, all = false, comp = null) {
 // （uni-app 只给 createSelectorQuery 做了 $scope 解包，没给 createIntersectionObserver 做）
 // 组件实例上的同名方法内部使用 $scope（原生组件实例），不会把代理外泄，因此优先使用
 export function upCreateIntersectionObserver(comp, options) {
+	// 和 upGetRect 同理：APP 端 addIntersectionObserver 也走 window.__$__(id).$ 查表
+	if (isCompUnmounted(comp)) {
+		return noopIntersectionObserver()
+	}
 	// 各家小程序与 H5 都在组件实例上暴露了该方法，内部已完成实例解包
 	if (comp && typeof comp.createIntersectionObserver === 'function') {
 		return options ? comp.createIntersectionObserver(options) : comp.createIntersectionObserver()

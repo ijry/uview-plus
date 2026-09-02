@@ -251,6 +251,9 @@ export const mixin = defineMixin({
         uni.$emit('uOnReachBottom')
 	},
 	beforeUnmount() {
+        // mixin 的钩子先于组件自身钩子同步执行，比 Vue 内部的 $.isUnmounted
+        // （在 post-render 队列里异步置位）更早，异步回调据此拦截节点查询
+        this.__upUnmounted = true
         // 判断当前页面是否存在parent和chldren，一般在checkbox和checkbox-group父子联动的场景会有此情况
         // 组件销毁时，移除子组件在父组件children数组中的实例，释放资源，避免数据混乱
         if (this.parent && test.array(this.parent.children)) {
