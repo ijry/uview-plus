@@ -99,7 +99,9 @@
                 distributionQueue: [],
                 distributionRunning: false,
                 distributionPromise: null,
-                distributionGeneration: 0
+                distributionGeneration: 0,
+                // 每个分配循环持有独立令牌：锁被强制重置后新循环接管，旧循环恢复时只能安静退出
+                distributionRunToken: 0
             }
         },
         watch: {
@@ -266,39 +268,50 @@
             async runDistributionQueue() {
                 if (this.distributionRunning) return;
                 this.distributionRunning = true;
+                const runToken = ++this.distributionRunToken;
                 try {
                     while (this.distributionQueue.length > 0) {
+                        if (runToken !== this.distributionRunToken) return;
                         const task = this.distributionQueue.shift();
                         if (task.generation !== this.distributionGeneration) continue;
-                        await this.distributeData(task.data, task.generation);
+                        await this.distributeData(task.data, task.generation, runToken);
                     }
                 } finally {
-                    this.distributionRunning = false;
-                    this.distributionPromise = null;
-                    if (this.distributionQueue.length > 0) {
-                        this.distributionPromise = this.runDistributionQueue();
+                    // 仅当自己仍是当前循环时才释放锁，否则会清掉接管者的运行状态
+                    if (runToken === this.distributionRunToken) {
+                        this.distributionRunning = false;
+                        this.distributionPromise = null;
+                        if (this.distributionQueue.length > 0) {
+                            this.distributionPromise = this.runDistributionQueue();
+                        }
                     }
                 }
             },
 
-            // 逐项测量并分配数据，代数变化时立即退出
-            async distributeData(newData, generation) {
+            // 数据被重置或分配循环被接管时，当前循环应立即停止写入
+            isStaleDistribution(generation, runToken) {
+                return generation !== this.distributionGeneration
+                    || runToken !== this.distributionRunToken;
+            },
+
+            // 逐项测量并分配数据，代数或令牌变化时立即退出
+            async distributeData(newData, generation, runToken) {
                 let columnHeights = new Array(this.columnList.length).fill(0);
                 for (const item of newData) {
-                    if (generation !== this.distributionGeneration) return;
+                    if (this.isStaleDistribution(generation, runToken)) return;
                     columnHeights = await this.getColumnHeights();
-                    if (generation !== this.distributionGeneration) return;
+                    if (this.isStaleDistribution(generation, runToken)) return;
 
                     const minHeightIndex = this.getMinHeightColumnIndex(columnHeights);
                     this.columnList[minHeightIndex].push(item);
 
                     await sleep(this.addTime);
-                    if (generation !== this.distributionGeneration) return;
+                    if (this.isStaleDistribution(generation, runToken)) return;
                     await this.$nextTick();
-                    if (generation !== this.distributionGeneration) return;
+                    if (this.isStaleDistribution(generation, runToken)) return;
                     try {
                         const rect = await this.$uGetRect(`#u-column-${minHeightIndex}`);
-                        if (generation !== this.distributionGeneration) return;
+                        if (this.isStaleDistribution(generation, runToken)) return;
                         if (rect.height) {
                             columnHeights[minHeightIndex] = rect.height;
                             this.$emit('after-add-one', {
@@ -310,7 +323,7 @@
                         // 获取不到列高时，下一个元素会重新测量所有列
                     }
                 }
-                if (generation !== this.distributionGeneration) return;
+                if (this.isStaleDistribution(generation, runToken)) return;
                 this.$emit('after-add-all', {
                     columnHeights: columnHeights,
                     newData: newData

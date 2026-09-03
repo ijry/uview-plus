@@ -45,6 +45,7 @@
     "verify:calendar-popup-props": "node scripts/verify-calendar-popup-props.mjs",
     "verify:waterfall-distribution": "node scripts/verify-waterfall-distribution.mjs",
     "verify:waterfall-lock-reset": "node scripts/verify-waterfall-lock-reset.mjs",
+    "verify:waterfall-loop-ownership": "node scripts/verify-waterfall-loop-ownership.mjs",
     "verify:up-canvas-unification": "node scripts/verify-up-canvas-unification.mjs",
     "verify:app-canvas-hidpi": "node scripts/verify-app-canvas-hidpi.mjs",
     "verify:app-nvue-webview-canvas": "node scripts/verify-app-nvue-webview-canvas.mjs",
