@@ -49,6 +49,10 @@
 		watch: {
 			// #ifndef APP-NVUE
 			'uList.innerScrollTop'(n) {
+				// 确保parent已正确初始化，避免在mounted之前触发watch导致报错
+				if (!this.parent || !this.parent.updateOffsetFromChild) {
+					return
+				}
 				const preLoadScreen = this.uList.preLoadScreen
 				const windowHeight = this.sys.windowHeight
 				if(n <= windowHeight * preLoadScreen) {
