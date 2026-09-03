@@ -228,6 +228,9 @@
 
             // 重新分配所有数据
             redistributeData(data = this.copyFlowList) {
+                // 强制重置锁状态，确保能重新开始分配
+                this.distributionRunning = false;
+                this.distributionPromise = null;
                 this.clear(false);
                 // 保存所有数据
                 const allData = this.cloneData(data || []);
@@ -356,6 +359,9 @@
             clear(bak = true) {
                 this.distributionGeneration += 1;
                 this.distributionQueue.splice(0);
+                // 强制重置分配锁状态，避免页面隐藏导致的永久锁死
+                this.distributionRunning = false;
+                this.distributionPromise = null;
                 this.initColumnList();
                 // 同时清除父组件列表中的数据
                 if (bak) {
