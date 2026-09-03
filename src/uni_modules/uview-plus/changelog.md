@@ -1,3 +1,27 @@
+## 3.8.117
+fix: 修复瀑布流分发锁死、u-image 置于 u-swiper 内无法滑动、u-list-item 挂载竞态
+
+本版为三个问题的集中修复，均不涉及组件 API 变更。
+
+fix: 修复 u-waterfall 在 App 切换 tabbar 后不再消费新数据（#1056）
+
+App 端切换 tabbar 时，原生层会挂起隐藏页面的 setTimeout，`await sleep()` 永不 resolve，`runDistributionQueue` 的 finally 块无法执行，`distributionRunning` 永久为 true；切回页面后新数据只能入队，永远不会被分发。
+
+- `clear()` 强制重置 `distributionRunning` 与 `distributionPromise`
+- `redistributeData()` 在调用 clear 之前先解锁
+- 新增 `verify:waterfall-lock-reset` 回归校验
+
+fix: 修复 u-image 置于 u-swiper 内导致手势滑动失效（#894）
+
+u-transition 根节点绑定的 `@touchmove="noop"` 会执行 `e.stopPropagation()`，使 touchmove 无法冒泡到父级；u-image 以 u-transition 作为根节点，放进 u-swiper 的 slot 后 swiper 收不到 touchmove，滑动手势失效。该拦截对淡入、滑入等过渡动画本身没有作用，仅会阻断父组件的正常手势，故直接移除。
+
+fix: 修复 u-list-item 在 parent 未初始化时调用 updateOffsetFromChild 报错（#875）
+
+列表数据由后台异步返回、u-list-item 数量随之变化时，`uList.innerScrollTop` 的 watch 可能在 `mounted()` 之前触发；此时 `this.parent` 仍是 `created()` 中赋值的空对象，调用 `this.parent.updateOffsetFromChild` 会抛出 "is not a function"。
+
+- watch 回调中增加守卫，parent 未就绪时直接返回
+- 新增 `verify:list-item-parent-race` 回归校验
+
 ## 3.8.116
 fix: 修复组件卸载后查询节点导致 APP 与鸿蒙端报错（#1057）
 
