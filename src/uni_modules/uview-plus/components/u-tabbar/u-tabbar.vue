@@ -5,7 +5,6 @@
 		    ref="u-tabbar__content"
 		    @touchmove.stop.prevent="noop"
 		    :class="[
-				border && 'u-border-top',
 				fixed && 'u-tabbar--fixed',
 				`u-tabbar--${styleType}`,
 				textMode === 'active' && 'u-tabbar--text-active'
@@ -67,6 +66,10 @@
 			}
 		},
 		computed: {
+			// 顶部边框颜色，未指定borderColor时回退到主题边框色
+			tabbarBorderColor() {
+				return this.borderColor || this.upThemeVar('--up-border-color', '#dadbde')
+			},
 			tabbarStyle() {
 				const style = {
 					zIndex: this.zIndex,
@@ -75,10 +78,13 @@
 					'--up-tabbar-inactive-bg': this.inactiveBackgroundColor || 'transparent',
 					'--up-tabbar-icon-scale': `${this.iconScale}`
 				}
-				if (this.borderColor) {
-					style.borderColor = this.borderColor + ' !important'
-				} else {
-					style.borderColor = this.upThemeVar('--up-border-color', '#dadbde')
+				// 顶部边框由组件自身内联样式绘制，不再依赖全局的u-border-top工具类。
+				// 小程序自定义组件存在样式隔离，全局类名是否能作用到组件内部节点取决于宿主项目
+				// 引入全局样式的方式，会出现同一个tabbar在部分页面有边框、切换页面后边框丢失的问题。
+				if (this.border) {
+					style.borderTopWidth = '0.5px'
+					style.borderTopStyle = 'solid'
+					style.borderTopColor = this.tabbarBorderColor
 				}
 				if (['pill', 'card', 'glow', 'convex'].includes(this.styleType)) {
 					style.padding = '8rpx 12rpx 12rpx'
