@@ -661,7 +661,7 @@ export default {
 										dayjs(maxDate).format('YYYY-MM-DD')
 									),
 								// 返回一个日期对象，供外部的formatter获取当前日期的年月日等信息，进行加工处理
-								date: new Date(date),
+								date: dayjs(date).$d,
 								bottomInfo,
 								dot: false,
 								month:
