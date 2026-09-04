@@ -16,7 +16,7 @@
 	<!-- #ifndef APP-NVUE -->
 	<scroll-view
 		class="u-list"
-		:scroll-into-view="scrollIntoView"
+		:scroll-into-view="innerScrollIntoView"
 		:style="[listStyle]"
 		:scroll-y="scrollable"
 		:scroll-top="Number(scrollTop)"
@@ -88,6 +88,8 @@
 			return {
 				// 记录内部滚动的距离
 				innerScrollTop: 0,
+				// 非nvue下scroll-view的滚动目标节点id，由scrollIntoView属性和scrollIntoViewById()共同驱动
+				innerScrollIntoView: this.scrollIntoView,
 				// vue下，scroll-view在上拉加载时的偏移值
 				offset: 0,
 				sys: getWindowInfo()
@@ -109,7 +111,6 @@
 			}
 		},
 		created() {
-			this.refs = []
 			this.children = []
 			this.anchors = []
 		},
@@ -132,13 +133,34 @@
 				this.$emit('scroll', scrollTop)
 			},
 			scrollIntoViewById(id) {
+				if (id === '' || id === null || id === undefined) return
+				// u-list-item渲染出的ref和id都带有u-list-item-前缀，
+				// 这里同时兼容传入anchor和直接传入节点id两种写法
+				const anchorName = `u-list-item-${id}`
 				// #ifdef APP-NVUE
 				// 根据id参数，找到所有u-list-item中匹配的节点，再通过dom模块滚动到对应的位置
-				const item = this.refs.find(item => item.$refs[id] ? true : false)
-				dom.scrollToElement(item.$refs[id], {
+				// children由子组件的getParentData维护，早期实现用的this.refs从未被写入，因此永远找不到节点
+				const item = this.children.find(child => child.$refs[anchorName] || child.$refs[id])
+				if (!item) return
+				dom.scrollToElement(item.$refs[anchorName] || item.$refs[id], {
 					// 是否需要滚动动画
 					animated: this.scrollWithAnimation
 				})
+				// #endif
+				// #ifndef APP-NVUE
+				// scroll-view只能按节点id滚动，anchor需要换算成u-list-item输出的id
+				const matched = this.children.some(child => String(child.anchor) === String(id))
+				const target = matched ? anchorName : id
+				// scroll-into-view需要有一个值变动的过程才会生效，
+				// 否则连续滚动到同一个节点时第二次不会有任何反应
+				if (this.innerScrollIntoView === target) {
+					this.innerScrollIntoView = ''
+					this.$nextTick(() => {
+						this.innerScrollIntoView = target
+					})
+				} else {
+					this.innerScrollIntoView = target
+				}
 				// #endif
 			},
 			// 滚动到底部触发事件

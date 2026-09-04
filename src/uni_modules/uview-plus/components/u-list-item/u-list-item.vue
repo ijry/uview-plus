@@ -4,6 +4,7 @@
 		<!-- #endif -->
 		<view
 			class="u-list-item"
+			:id="anchorId"
 			:ref="`u-list-item-${anchor}`"
 			:anchor="`u-list-item-${anchor}`"
 			:class="[`u-list-item-${anchor}`]"
@@ -43,7 +44,12 @@
 			}
 		},
 		computed: {
-
+			// scroll-view的scroll-into-view只认节点id，未设置anchor时不能输出id，
+			// 否则列表里的每一项都会得到同一个u-list-item-。
+			anchorId() {
+				if (this.anchor === '' || this.anchor === null || this.anchor === undefined) return null
+				return `u-list-item-${this.anchor}`
+			}
 		},
 		inject: ['uList'],
 		watch: {
