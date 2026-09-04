@@ -27,24 +27,7 @@ const read = p => readFileSync(resolve(root, p), 'utf8')
 const SLIDER = 'src/uni_modules/uview-plus/components/u-slider/u-slider.vue'
 const PROPS = 'src/uni_modules/uview-plus/components/u-slider/props.js'
 
-// ---------------------------------------------------------------- static checks
 const sliderSource = read(SLIDER)
-
-assert.match(
-    sliderSource,
-    /emits:\s*\[[^\]]*["']update:rangeValue["'][^\]]*\]/,
-    'u-slider must declare update:rangeValue in emits'
-)
-assert.match(
-    sliderSource,
-    /\$emit\(\s*["']update:rangeValue["']/,
-    'u-slider must emit update:rangeValue so v-model:rangeValue has a writeback path'
-)
-assert.match(
-    read(PROPS),
-    /rangeValue:\s*\{[^}]*default:\s*\(\)\s*=>\s*\[/,
-    'rangeValue default must be a factory, otherwise every instance shares one array'
-)
 
 // ------------------------------------------------------------------- jsdom env
 const dom = new JSDOM('<!doctype html><html><body></body></html>', { pretendToBeVisual: true })
@@ -274,5 +257,23 @@ const RANGE_TPL = extra => `<u-slider :ref="setRef" isRange showValue
     assert.equal(slider.barStyle.width, widthFor(250), 'scalar bar must follow the drag')
     assert.deepEqual(stray, [], 'the single-value path must not emit update:rangeValue')
 }
+
+// ---------------------------------------------------------------- source guards
+// last on purpose: a behavioural failure is far more informative than a regex miss
+assert.match(
+    sliderSource,
+    /emits:\s*\[[^\]]*["']update:rangeValue["'][^\]]*\]/,
+    'u-slider must declare update:rangeValue in emits'
+)
+assert.match(
+    sliderSource,
+    /\$emit\(\s*["']update:rangeValue["']/,
+    'u-slider must emit update:rangeValue so v-model:rangeValue has a writeback path'
+)
+assert.match(
+    read(PROPS),
+    /rangeValue:\s*\{[^}]*default:\s*\(\)\s*=>\s*\[/,
+    'rangeValue default must be a factory, otherwise every instance shares one array'
+)
 
 console.log('slider v-model:rangeValue assertions passed')
