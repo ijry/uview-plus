@@ -81,7 +81,8 @@
     "verify:navbar-ios-mode": "node scripts/verify-navbar-ios-mode.mjs",
     "verify:select-overlay": "node scripts/verify-select-overlay.mjs",
     "verify:list-item-parent-race": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-list-item-parent-race.mjs",
-    "verify:datetime-picker-format": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-datetime-picker-format.mjs"
+    "verify:datetime-picker-format": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-datetime-picker-format.mjs",
+    "verify:types-barrel-exports": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-types-barrel-exports.mjs"
   },
   "pnpm":{"overrides":{"rollup":"4.14.3"}},
   "dependencies": {
