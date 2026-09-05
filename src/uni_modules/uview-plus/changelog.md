@@ -1,3 +1,25 @@
+## 3.8.119
+fix: 修复 datetime-picker format 兼容性与 tabbar 边框切页丢失
+
+本版修复两个独立问题，均不涉及组件 API 变更。
+
+fix: datetime-picker format 兼容库自身的 yyyy-mm-dd 写法，字符串绑定值不再退回 minDate (#537)
+
+库内置的日期格式化工具 `timeFormat` 支持 `yyyy-mm-dd` 写法（全小写），但 u-datetime-picker 的 format 解析只识别 `YYYY-MM-DD`（全大写），导致用户按文档示例传入小写 format 时，传入的字符串绑定值无法被正确解析，组件退回到 minDate 而非用户期望的日期。
+
+- format 解析逻辑补充小写月日模式 `mm` / `dd`，与库自身的 timeFormat 对齐
+- 保持对原有大写 `MM` / `DD` 的兼容
+- 新增 `verify:datetime-picker-format` 回归校验
+
+fix: tabbar 顶部边框改为组件内联绘制，修复切换页面后边框丢失 (#873)
+
+u-tabbar 的顶部边框原先靠模板上的全局工具类 `u-border-top` 绘制，组件自身 scoped 样式表没有任何 border 声明。该类只存在于宿主项目的全局样式表，而小程序自定义组件有样式隔离，能否命中取决于宿主引入全局样式的方式，于是出现同一个 tabbar 在首页有边框、切到另一个 tab 页边框消失。
+
+- 改为在 tabbarStyle 里内联 borderTopWidth/Style/Color，边框跟着组件走
+- 去掉 borderColor 上用来压全局类 !important 的 hack（nvue/weex 无法解析）
+- 让 borderColor 为空时的主题边框色回退真正生效
+- 新增 `verify:tabbar-border` 回归校验
+
 ## 3.8.118
 修复 u-waterfall 在强制解锁后旧分配循环误释放新循环分发锁的问题。
 
