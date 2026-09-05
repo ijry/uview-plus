@@ -44,6 +44,7 @@
 						hasInput
 						placeholder="请选择日期"
 						mode="datetime"
+						format="yyyy-mm-dd hh:MM"
 						:inputProps="{
 							border: 'surround',
 							shape: 'square',
