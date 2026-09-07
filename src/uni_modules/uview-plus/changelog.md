@@ -1,3 +1,14 @@
+## 3.8.120
+fix(types): 组件类型可直接从包名导入，模板提示补齐 u-/u-- 前缀
+
+本版仅完善 TypeScript 类型与 IDE 模板提示，不改变组件运行时行为和 API。
+
+- `uview-plus` 包入口重新导出 126 个公开组件类型，Props、Slots、Ref 可直接从包名导入，不再依赖 `uview-plus/types/comps/*` 内部路径
+- Ref 类型统一按 `typeof` 导出，避免将源文件中的 const 声明当作类型使用时报 TS2749
+- `GlobalComponents` 同时登记 `up-`、`u-`、`u--` 三种 easycom 前缀，模板中的 `u-button`、`u--button` 写法也能获得组件类型提示
+- 保留一份组件清单，通过模板字面量键改写生成三种前缀，避免清单重复维护
+- 新增 `verify:types-barrel-exports` 回归校验，防止入口类型导出与模板组件登记清单漂移
+
 ## 3.8.119
 fix: 修复 datetime-picker format 兼容性与 tabbar 边框切页丢失
 
