@@ -127,7 +127,9 @@
 			// 文字内容的样式
 			textStyle() {
 				let style = {}
-				style.whiteSpace = 'nowrap !important'
+				// innerText把文本切分到多个text标签，切分点正好是空格时，nowrap会把它
+				// 当做行首/行尾空白丢弃，所以用pre保留原文空白，pre同样不会换行
+				style.whiteSpace = 'pre !important'
 				style.color = this.color
 				style.fontSize = addUnit(this.fontSize)
 				return style
@@ -312,7 +314,8 @@
 				// 这一句很重要，为了能让滚动左右连接起来
 				padding-left: 100%;
 				word-break: keep-all;
-				white-space: nowrap;
+				// pre而非nowrap：切分后的空格落在text首尾时不能被折叠掉
+				white-space: pre;
 				animation: u-loop-animation 10s linear infinite both;
 				/* #endif */
 				@include flex(row);
