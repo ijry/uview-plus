@@ -1,3 +1,14 @@
+## 3.8.123
+fix: 修复 u-slider 区间模式 v-model:rangeValue 不生效 (#554)
+
+u-slider 区间模式（isRange）拖动滑块时只抛出 update:modelValue，未抛出 update:rangeValue，导致 v-model:rangeValue 双向绑定无法更新。此外 rangeValue 的 default 为数组字面量，所有实例共用同一引用。
+
+- 拖动结束时正确抛出 update:rangeValue 事件，同时兼容此前监听 update:modelValue 获取区间值的用法
+- 值未变化时跳过事件抛出，避免父级对数组做拷贝或归一化时形成更新回环
+- rangeValue 的 default 改为工厂函数，避免实例间共享数组引用
+- 补充 isRange、rangeValue 及 onUpdate:rangeValue 类型声明
+- 新增 verify:slider-range-value-model 回归校验脚本
+
 ## 3.8.122
 fix: 修复 u-row-notice 横向滚动空格丢失
 
