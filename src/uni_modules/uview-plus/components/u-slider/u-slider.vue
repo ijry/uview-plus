@@ -126,7 +126,7 @@
 	export default {
 		name: 'u-slider',
 		mixins: [mpMixin, mixin, props],
-		emits: ["start", "changing", "change", "update:modelValue"],
+		emits: ["start", "changing", "change", "update:modelValue", "update:rangeValue"],
 		data() {
 			return {
 				startX: 0,
@@ -462,8 +462,14 @@
 				}
 				// 修改value值
 				if (this.isRange) {
-					this.rangeValue[index] = valueFormat;
-					this.$emit("update:modelValue", this.rangeValue);
+					// 值没有变化时不再抛出事件，避免父级对数组做拷贝或归一化时形成更新回环
+					if (this.rangeValue[index] !== valueFormat) {
+						this.rangeValue[index] = valueFormat;
+						// 区间模式由rangeValue双向绑定，必须抛出update:rangeValue，v-model:rangeValue才能生效
+						this.$emit("update:rangeValue", this.rangeValue);
+						// 兼容此前监听update:modelValue获取区间值的用法
+						this.$emit("update:modelValue", this.rangeValue);
+					}
 				} else {
 					// #ifdef VUE3
 					this.$emit("update:modelValue", valueFormat);

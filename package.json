@@ -59,6 +59,7 @@
     "verify:i18n-on-demand": "node scripts/verify-i18n-on-demand.mjs",
     "verify:slider-decimal-step": "node scripts/verify-slider-decimal-step.mjs",
     "verify:slider-height": "node scripts/verify-slider-height.mjs",
+    "verify:slider-range-value-model": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-slider-range-value-model.mjs",
     "verify:swiper-vertical": "node scripts/verify-swiper-vertical.mjs",
     "verify:swipe-action-scrolling": "node scripts/verify-swipe-action-scrolling.mjs",
     "verify:tabbar-mid-button-top-border": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-tabbar-mid-button-top-border.mjs",

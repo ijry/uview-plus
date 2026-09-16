@@ -52,6 +52,21 @@ declare interface SliderProps {
    */
   blockStyle?: unknown
   /**
+   * 是否区间模式（双滑块）
+   * @default false
+   */
+  isRange?: boolean
+  /**
+   * 区间模式下的取值，支持 v-model:rangeValue 双向绑定
+   * @default [0, 0]
+   */
+  rangeValue?: (string | number)[]
+  /**
+   * 区间模式下更新 v-model:rangeValue
+   * @param value 当前区间值
+   */
+  "onUpdate:rangeValue"?: (value: (string | number)[]) => any
+  /**
    * 更新v-model的
    * @param value 当前值
    */
