@@ -87,7 +87,11 @@
     "verify:datetime-picker-format": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-datetime-picker-format.mjs",
     "verify:types-barrel-exports": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-types-barrel-exports.mjs"
   },
-  "pnpm":{"overrides":{"rollup":"4.14.3"}},
+  "pnpm": {
+    "overrides": {
+      "rollup": "4.14.3"
+    }
+  },
   "dependencies": {
     "@dcloudio/uni-app": "3.0.0-5000720260410001",
     "@dcloudio/uni-app-harmony": "3.0.0-5000720260410001",
@@ -123,6 +127,8 @@
     "@vue/tsconfig": "^0.1.3",
     "eslint": "^8.2.0",
     "eslint-config-airbnb": "^19.0.0",
+    "jsdom": "^30.1.0",
+    "rollup": "^4.14.3",
     "rollup-plugin-visualizer": "^5.12.0",
     "sass": "1.63.2",
     "sass-loader": "10.4.1",
