@@ -5,10 +5,11 @@ import { existsSync, mkdirSync, statSync, writeFileSync } from 'node:fs'
 
 import { createFilter, normalizePath } from 'vite'
 
-import { createAppIconFontPlugin } from './app-icon-font.js'
 import { transformNvuePage, transformPage } from './page.js'
 import { rebuildUpApp, registerUpApp } from './root.js'
-import { detectProjectRoot, loadPagesJson, normalizePlatformPath, toArray } from './utils.js'
+import { loadPagesJson, normalizePlatformPath, toArray } from './utils.js'
+import { createAppIconFontFeature } from '../vite/app-icon-font.js'
+import { detectProjectRoot } from '../vite/utils.js'
 
 const rootLibPath = normalizePath(dirname(fileURLToPath(import.meta.url)))
 
@@ -25,8 +26,8 @@ export default function UniUpRoot(options = {}) {
 
   const projectInfo = detectProjectRoot()
   const rootPath = normalizePath(projectInfo.rootPath)
-  // App 本地图标字体与 Root 组件无关，单独抽成可独立使用的插件后再组合进来
-  const appIconFont = createAppIconFontPlugin({ enabled: rootOptions.appStaticIconFont !== false })
+  // App 本地图标字体与 Root 组件无关，这里复用 UniUp 的同一个 feature，保持老项目行为不变
+  const appIconFont = createAppIconFontFeature({ enabled: rootOptions.appStaticIconFont !== false })
   const appUpPath = normalizePath(resolve(rootPath, `${rootFileName}.vue`))
   const rootToastHostPath = normalizePath(resolve(rootLibPath, 'root-toast-host.vue'))
   const themeRuntimePath = normalizePath(resolve(rootPath, 'uni_modules/uview-plus/libs/theme/runtime.js'))
@@ -85,7 +86,7 @@ export default function UniUpRoot(options = {}) {
       }
     },
     buildStart() {
-      appIconFont.ensureAppStaticIconFont()
+      appIconFont.ensure()
       ensureRootFile()
       refreshPagesJson()
     },
@@ -94,7 +95,7 @@ export default function UniUpRoot(options = {}) {
       const isSfcBlock = id.includes('?')
       const cleanId = normalizePath(id.split('?')[0])
 
-      const iconFontCode = appIconFont.transformCode(code, cleanId)
+      const iconFontCode = appIconFont.transform(code, cleanId)
       if (iconFontCode) {
         return {
           code: iconFontCode,
@@ -139,7 +140,7 @@ export default function UniUpRoot(options = {}) {
       return null
     },
     generateBundle(_, bundle) {
-      appIconFont.onGenerateBundle(bundle)
+      appIconFont.generateBundle(bundle)
     },
   }
 }

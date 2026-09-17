@@ -1,13 +1,12 @@
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import process from 'node:process'
 import { copyFileSync, existsSync, mkdirSync, readFileSync, statSync } from 'node:fs'
 
 import { normalizePath } from 'vite'
 
-import { detectProjectRoot } from './utils.js'
+import { detectProjectRoot, isAppPlatform, toCleanId } from './utils.js'
 
-const rootLibPath = normalizePath(dirname(fileURLToPath(import.meta.url)))
+const featurePath = normalizePath(dirname(fileURLToPath(import.meta.url)))
 export const appStaticIconFontRelativePath = 'static/app-plus/uview-plus/upicon.ttf'
 // 源码默认 App 端优先本地字体，只有在显式关闭本地字体时才切回 config.iconUrl
 const appStaticIconFontFlag = 'const useAppStaticIconFont = true;'
@@ -17,16 +16,17 @@ const appCompiledRemoteIconFontFace = /[ \t]*(?:\/\/[^\n]*\n[ \t]*)?@font-face\s
 const appCompiledRemoteIconFontFaceGlobal = /[ \t]*(?:\/\/[^\n]*\n[ \t]*)?@font-face\s*\{[^{}]*font-family:\s*['"]?uicon-iconfont['"]?;?[^{}]*at\.alicdn\.com\/t\/font_2225171[^{}]*\}\s*/g
 
 /**
- * App 本地图标字体能力。
+ * App 本地图标字体能力（UniUp 的一个 feature）。
  *
- * 与 Root 组件无关：不使用 UpRoot 的项目也可以单独引入本插件，
- * 让 App / App-nvue 使用随包分发的 static 字体，而不是远程 CDN 字体。
+ * 与 Root 组件无关：App / App-nvue 默认优先加载随包分发的 static 字体，
+ * 但字体文件必须由构建插件复制到应用 static 目录，本 feature 负责这件事，
+ * 并在 App 构建时移除远程 CSS 字体，避免本地字体与远程字体同时加载。
  */
-export function createAppIconFontPlugin(options = {}) {
+export function createAppIconFontFeature(options = {}) {
   const enabled = options.enabled !== false
   const projectInfo = detectProjectRoot()
   const rootPath = normalizePath(projectInfo.rootPath)
-  const iconFontSourcePath = normalizePath(resolve(rootLibPath, '../../components/u-icon/upicon.ttf'))
+  const iconFontSourcePath = normalizePath(resolve(featurePath, '../../components/u-icon/upicon.ttf'))
   const appStaticIconFontPath = normalizePath(resolve(rootPath, appStaticIconFontRelativePath))
   const uIconUtilPath = normalizePath(resolve(rootPath, 'uni_modules/uview-plus/components/u-icon/util.js'))
   const uIconVuePath = normalizePath(resolve(rootPath, 'uni_modules/uview-plus/components/u-icon/u-icon.vue'))
@@ -37,9 +37,11 @@ export function createAppIconFontPlugin(options = {}) {
     return !readFileSync(sourcePath).equals(readFileSync(targetPath))
   }
 
-  const ensureAppStaticIconFont = () => {
+  const removeAppCompiledRemoteIconFontFace = (code) => code.replace(appCompiledRemoteIconFontFaceGlobal, '')
+
+  const ensure = () => {
     if (!enabled) return
-    if (process.env.UNI_PLATFORM !== 'app') return
+    if (!isAppPlatform()) return
     if (!existsSync(iconFontSourcePath)) {
       throw new Error(`uview-plus built-in icon font is missing: ${iconFontSourcePath}`)
     }
@@ -50,10 +52,9 @@ export function createAppIconFontPlugin(options = {}) {
     }
   }
 
-  const removeAppCompiledRemoteIconFontFace = (code) => code.replace(appCompiledRemoteIconFontFaceGlobal, '')
-
-  const transformCode = (code, cleanId) => {
-    if (process.env.UNI_PLATFORM !== 'app') return null
+  const transform = (code, id) => {
+    if (!isAppPlatform()) return null
+    const cleanId = toCleanId(id)
     if (!enabled) {
       if (cleanId === uIconUtilPath && code.includes(appStaticIconFontFlag)) {
         return code.replace(appStaticIconFontFlag, appStaticIconFontDisabledFlag)
@@ -69,9 +70,9 @@ export function createAppIconFontPlugin(options = {}) {
     return null
   }
 
-  const onGenerateBundle = (bundle) => {
+  const generateBundle = (bundle) => {
     if (!enabled) return
-    if (process.env.UNI_PLATFORM !== 'app') return
+    if (!isAppPlatform()) return
     Object.values(bundle).forEach((asset) => {
       if (asset.type !== 'asset') return
       if (!asset.fileName.endsWith('.css')) return
@@ -82,42 +83,12 @@ export function createAppIconFontPlugin(options = {}) {
   }
 
   return {
+    name: 'app-icon-font',
     enabled,
     rootPath,
     appStaticIconFontPath,
-    ensureAppStaticIconFont,
-    transformCode,
-    onGenerateBundle,
-  }
-}
-
-/**
- * 独立的 App 本地图标字体 Vite 插件，供不使用 Root 组件的项目使用。
- *
- * 用法：import UniUpAppIconFont from 'uview-plus/libs/root/app-icon-font.js'
- *      plugins: [UniUpAppIconFont()]
- */
-export default function UniUpAppIconFont(options = {}) {
-  const iconFont = createAppIconFontPlugin(options)
-
-  return {
-    name: 'vite-plugin-uni-up-app-icon-font',
-    enforce: 'pre',
-    buildStart() {
-      iconFont.ensureAppStaticIconFont()
-    },
-    transform(code, id) {
-      const transformed = iconFont.transformCode(code, normalizePath(id.split('?')[0]))
-      if (transformed) {
-        return {
-          code: transformed,
-          map: null,
-        }
-      }
-      return null
-    },
-    generateBundle(_, bundle) {
-      iconFont.onGenerateBundle(bundle)
-    },
+    ensure,
+    transform,
+    generateBundle,
   }
 }

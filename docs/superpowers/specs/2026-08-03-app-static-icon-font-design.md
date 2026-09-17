@@ -45,8 +45,10 @@
 - 本地字体缺失时的兜底：
   - App-Vue：`uni.loadFontFace` 失败后自动用 `config.iconUrl` 再试一次，每个页面只回退一次（`appVueFallbackPages`）。
   - App-nvue：`dom.addRule` 没有失败回调，注册前先用 `plus.io.resolveLocalFileSystemURL` 探测字体文件，不存在时改用 `config.iconUrl`。
-- 本地字体的构建能力从 `UniUpRoot` 抽出为独立插件 `libs/root/app-icon-font.js`（默认导出 `UniUpAppIconFont`，另导出 `createAppIconFontPlugin` 供组合）。不使用 Root 组件的项目单独引入该插件即可复制字体并移除 App 远程 `@font-face`。
-- `UniUpRoot` 内部组合该能力，并新增 `appStaticIconFont: false` 选项；关闭时把开关改回 `false`、不复制字体、保留 App 远程 `@font-face`。
+- 本地字体的构建能力从 `UniUpRoot` 抽出为 `libs/vite/app-icon-font.js` 里的 feature（`createAppIconFontFeature`），由通用 Vite 插件入口 `libs/vite/index.js`（默认导出 `UpVite`）组合。不使用 Root 组件的项目只需注册一次 `UpVite()`，即可复制字体并移除 App 远程 `@font-face`。
+- 之所以做成通用入口而不是「一个能力一个插件」：后续组件库再新增构建期能力时，只在 `createUpViteFeatures()` 里追加 feature 即可，用户的 `vite.config` 不需要跟着改。每个 feature 统一实现 `{ name, ensure(), transform(code, id), generateBundle(bundle) }` 可选钩子。
+- `detectProjectRoot` 与平台判断下沉到 `libs/vite/utils.js`，供通用入口与 Root 插件共用。
+- `UniUpRoot` 复用同一个 feature，保持只装 Root 插件的老项目行为不变，并新增 `appStaticIconFont: false` 选项；关闭时把开关改回 `false`、不复制字体、保留 App 远程 `@font-face`。
 - `components/u-icon/u-icon.vue` 源码不变，仍然保留 App 远程 CSS `@font-face`，作为没有引入任何构建插件时的最后兜底。
 
 ## 影响

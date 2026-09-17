@@ -3,7 +3,7 @@ import { tmpdir } from 'node:os'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import UniUpRoot from '../src/uni_modules/uview-plus/libs/root/index.js'
-import UniUpAppIconFont from '../src/uni_modules/uview-plus/libs/root/app-icon-font.js'
+import UpVite from '../src/uni_modules/uview-plus/libs/vite/index.js'
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const read = (path) => readFileSync(resolve(repoRoot, path), 'utf8')
@@ -234,34 +234,60 @@ await withTempUniProject('h5', async (rootPath) => {
   }
 })
 
-// 不使用 Root 组件的项目，单独引入本地字体插件也应该拿到本地字体
+// 不使用 Root 组件的项目，只引入通用插件 UpVite 也应该拿到本地字体
 await withTempUniProject('app', async (rootPath) => {
-  const plugin = UniUpAppIconFont()
+  const plugin = UpVite()
   plugin.buildStart()
 
   const copiedFontPath = resolve(rootPath, appStaticIconFontPath)
   if (!existsSync(copiedFontPath)) {
-    throw new Error(`UniUpAppIconFont should copy the App built-in font to ${appStaticIconFontPath} without UniUpRoot`)
+    throw new Error(`UpVite should copy the App built-in font to ${appStaticIconFontPath} without UniUpRoot`)
   }
 
   if (readFileSync(copiedFontPath).compare(readFileSync(fontPath)) !== 0) {
-    throw new Error('UniUpAppIconFont should copy the App built-in font without changing its contents')
+    throw new Error('UpVite should copy the App built-in font without changing its contents')
   }
 
   const uIconVuePath = resolve(rootPath, 'uni_modules/uview-plus/components/u-icon/u-icon.vue')
   const transformedUIconVue = await plugin.transform(uIconVue, uIconVuePath)
   if (!transformedUIconVue || defaultAppRemoteFontFace.test(transformedUIconVue.code)) {
-    throw new Error('UniUpAppIconFont should remove the App remote @font-face block from u-icon.vue')
+    throw new Error('UpVite should remove the App remote @font-face block from u-icon.vue')
   }
 
   if (!miniProgramFontFaceCondition.test(transformedUIconVue.code)) {
-    throw new Error('UniUpAppIconFont should keep the mini-program @font-face condition in u-icon.vue')
+    throw new Error('UpVite should keep the mini-program @font-face condition in u-icon.vue')
   }
 
   const utilPath = resolve(rootPath, 'uni_modules/uview-plus/components/u-icon/util.js')
   const transformedUtil = await plugin.transform(util, utilPath)
   if (!/const\s+useAppStaticIconFont\s*=\s*true/.test(transformedUtil?.code || util)) {
-    throw new Error('UniUpAppIconFont should keep util.js on static App icon fonts')
+    throw new Error('UpVite should keep util.js on static App icon fonts')
+  }
+
+  // 模拟 uni:pre 已展开 App 条件后的 style block
+  const appCompiledUIconVue = uIconVue
+    .replace(/\/\*\s*#ifdef\s+APP\s+\|\|\s+MP-QQ\s+\|\|\s+MP-TOUTIAO\s+\|\|\s+MP-BAIDU\s+\|\|\s+MP-KUAISHOU\s+\|\|\s+MP-XHS\s*\*\/\n?/, '')
+    .replace(/\/\*\s*#endif\s*\*\//, '')
+  const compiledStyleId = `${uIconVuePath}?vue&type=style&index=0&lang.scss&scoped=true`
+  const compiledStyle = appCompiledUIconVue.match(/<style[^>]*>([\s\S]*?)<\/style>/)?.[1] || ''
+  const transformedCompiledStyle = await plugin.transform(compiledStyle, compiledStyleId)
+  if (!transformedCompiledStyle || compiledAppRemoteFontFace.test(transformedCompiledStyle.code)) {
+    throw new Error('UpVite should remove the App remote @font-face from u-icon.vue style blocks')
+  }
+})
+
+// 通用插件在非 App 平台不做任何字体处理
+await withTempUniProject('h5', async (rootPath) => {
+  const plugin = UpVite()
+  plugin.buildStart()
+
+  if (existsSync(resolve(rootPath, appStaticIconFontPath))) {
+    throw new Error('UpVite should not copy the App built-in font while UNI_PLATFORM is h5')
+  }
+
+  const uIconVuePath = resolve(rootPath, 'uni_modules/uview-plus/components/u-icon/u-icon.vue')
+  if (await plugin.transform(uIconVue, uIconVuePath)) {
+    throw new Error('UpVite should not transform icon fonts while UNI_PLATFORM is h5')
   }
 })
 
