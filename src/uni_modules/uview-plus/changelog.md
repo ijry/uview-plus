@@ -1,3 +1,16 @@
+## 3.8.124
+fix: App 端图标字体默认使用本地字体，新增通用 Vite 插件入口 UpVite
+
+u-icon 的 useAppStaticIconFont 原先写死 false，只有启用 UniUpRoot 的项目才会在构建期被改成 true；未启用 Root 组件的 App 项目仍然走远程 CDN 字体，弱网或离线时图标会丢失。本地字体是随包能力，不该由是否使用 Root 组件决定。
+
+- App / App-nvue 默认优先加载随包分发的 _www/static/app-plus/uview-plus/upicon.ttf
+- App-Vue 在 uni.loadFontFace 失败后回退 config.iconUrl，每个页面只回退一次；App-nvue 因 dom.addRule 没有失败回调，注册前用 plus.io.resolveLocalFileSystemURL 探测字体文件，缺失时回退远程
+- 新增通用 Vite 插件入口 UpVite（libs/vite/index.js），App 本地图标字体是它的第一个 feature；后续组件库新增构建期能力只需在插件内追加，业务项目不需要再改自己的 vite.config
+- UniUpRoot 复用同一份图标字体 feature 并新增 appStaticIconFont: false 选项，只装 Root 插件的项目行为完全不变
+- 不使用 Root 组件的项目单独引入 UpVite() 即可复制字体并移除 App 远程 @font-face
+- 新增 verify:app-local-icon-font 回归校验，覆盖 static 路径、两端兜底、插件复制行为与关闭开关
+- H5 与小程序行为不变，仍使用 config.iconUrl
+
 ## 3.8.123
 fix: 修复 u-slider 区间模式 v-model:rangeValue 不生效 (#554)
 
