@@ -70,7 +70,7 @@ globalThis.uni = {
 	}
 }
 
-const { parse, compileTemplate } = require('@vue/compiler-sfc')
+const { parse, compileTemplate } = require('vue/compiler-sfc')
 const { descriptor, errors } = parse(read('src/uni_modules/uview-plus/components/u-datetime-picker/u-datetime-picker.vue'), { filename: sfcPath })
 assert.deepEqual(errors, [], 'u-datetime-picker.vue should parse cleanly')
 

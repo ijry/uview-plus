@@ -51,7 +51,7 @@ assert.equal(
 	'package.json should expose verify:row-notice-space'
 )
 
-const { parse, compileTemplate } = require('@vue/compiler-sfc')
+const { parse, compileTemplate } = require('vue/compiler-sfc')
 const { descriptor, errors } = parse(source, { filename: sfcPath })
 assert.deepEqual(errors, [], 'u-row-notice.vue should parse cleanly')
 

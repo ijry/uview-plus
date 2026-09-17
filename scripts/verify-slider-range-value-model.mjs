@@ -18,7 +18,7 @@ import { readFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { JSDOM } from 'jsdom'
-import { parse, compileTemplate } from '@vue/compiler-sfc'
+import { parse, compileTemplate } from 'vue/compiler-sfc'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const root = resolve(__dirname, '..')
