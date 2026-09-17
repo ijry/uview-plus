@@ -2,7 +2,16 @@ import { existsSync } from 'node:fs'
 import { resolve } from 'node:path'
 import process from 'node:process'
 
-import { normalizePath } from 'vite'
+/**
+ * 统一为正斜杠路径。
+ *
+ * 这里刻意不 import vite 的 normalizePath —— 让 libs/vite 目录保持自包含，
+ * 宿主项目不一定装了 vite 包（HBuilderX 项目走 HBuilderX 内置构建）。
+ */
+export const normalizePath = (path) => {
+  if (!path) return ''
+  return String(path).replace(/\\/g, '/')
+}
 
 /**
  * 识别宿主项目根目录，同时兼容 CLI 项目与 HBuilderX 项目。
@@ -36,4 +45,4 @@ export function detectProjectRoot() {
 
 export const isAppPlatform = () => process.env.UNI_PLATFORM === 'app'
 
-export const toCleanId = (id) => normalizePath(id.split('?')[0])
+export const toCleanId = (id) => normalizePath(String(id).split('?')[0])

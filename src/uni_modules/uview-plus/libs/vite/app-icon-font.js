@@ -2,15 +2,14 @@ import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { copyFileSync, existsSync, mkdirSync, readFileSync, statSync } from 'node:fs'
 
-import { normalizePath } from 'vite'
-
-import { detectProjectRoot, isAppPlatform, toCleanId } from './utils.js'
+import { detectProjectRoot, isAppPlatform, normalizePath, toCleanId } from './utils.js'
 
 const featurePath = normalizePath(dirname(fileURLToPath(import.meta.url)))
 export const appStaticIconFontRelativePath = 'static/app-plus/uview-plus/upicon.ttf'
 // 源码默认 App 端优先本地字体，只有在显式关闭本地字体时才切回 config.iconUrl
-const appStaticIconFontFlag = 'const useAppStaticIconFont = true;'
-const appStaticIconFontDisabledFlag = 'const useAppStaticIconFont = false;'
+// 不带分号，兼容有/无分号两种代码风格
+const appStaticIconFontFlag = 'const useAppStaticIconFont = true'
+const appStaticIconFontDisabledFlag = 'const useAppStaticIconFont = false'
 const appRemoteIconFontCondition = /\/\*\s*#ifdef\s+APP\s+\|\|\s+(MP-QQ\s+\|\|\s+MP-TOUTIAO\s+\|\|\s+MP-BAIDU\s+\|\|\s+MP-KUAISHOU\s+\|\|\s+MP-XHS)\s*\*\//
 const appCompiledRemoteIconFontFace = /[ \t]*(?:\/\/[^\n]*\n[ \t]*)?@font-face\s*\{[^{}]*font-family:\s*['"]?uicon-iconfont['"]?;?[^{}]*at\.alicdn\.com\/t\/font_2225171[^{}]*\}\s*/
 const appCompiledRemoteIconFontFaceGlobal = /[ \t]*(?:\/\/[^\n]*\n[ \t]*)?@font-face\s*\{[^{}]*font-family:\s*['"]?uicon-iconfont['"]?;?[^{}]*at\.alicdn\.com\/t\/font_2225171[^{}]*\}\s*/g
