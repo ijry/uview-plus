@@ -3,6 +3,7 @@ import { tmpdir } from 'node:os'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import UniUpRoot from '../src/uni_modules/uview-plus/libs/root/index.js'
+import UniUpAppIconFont from '../src/uni_modules/uview-plus/libs/root/app-icon-font.js'
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const read = (path) => readFileSync(resolve(repoRoot, path), 'utf8')
@@ -120,12 +121,32 @@ if (!/return config\.iconUrl/.test(util)) {
   throw new Error('util.js should keep config.iconUrl for non-App platforms')
 }
 
-if (!/const\s+useAppStaticIconFont\s*=\s*false/.test(util)) {
-  throw new Error('util.js should default App built-in font loading to config.iconUrl for upgrade compatibility')
+if (!/const\s+useAppStaticIconFont\s*=\s*true/.test(util)) {
+  throw new Error('util.js should prefer the local static font on App by default')
 }
 
 if (!/if\s*\(\s*!useAppStaticIconFont\s*\)\s*{\s*return config\.iconUrl;?\s*}/.test(util)) {
-  throw new Error('util.js should use config.iconUrl on App until UniUpRoot enables static icon fonts')
+  throw new Error('util.js should fall back to config.iconUrl when the local static font is disabled')
+}
+
+if (!/const\s+appVueFallbackPages\s*=\s*new\s+WeakSet\(\)/.test(util)) {
+  throw new Error('util.js should track the remote font fallback per App Vue page')
+}
+
+if (!/fail\(\)\s*{[\s\S]*iconUrl\s*!==\s*config\.iconUrl[\s\S]*registerAppVueFontFace\(config\.iconUrl/.test(util)) {
+  throw new Error('util.js should retry with config.iconUrl after the local App Vue font fails')
+}
+
+if (!/fail\(\)\s*{[\s\S]*appVueFallbackPages\.has\(/.test(util)) {
+  throw new Error('util.js should fall back to the remote font only once per App Vue page')
+}
+
+if (!/registerNvueFontFace[\s\S]*plus\.io\.resolveLocalFileSystemURL/.test(util)) {
+  throw new Error('util.js should probe the local font file before registering it in nvue')
+}
+
+if (!/resolveLocalFileSystemURL[\s\S]*addFontFace\(config\.iconUrl\)/.test(util)) {
+  throw new Error('util.js should fall back to config.iconUrl when nvue has no local font file')
 }
 
 if (/\?url/.test(util)) {
@@ -155,8 +176,8 @@ await withTempUniProject('app', async (rootPath) => {
 
   const utilPath = resolve(rootPath, 'uni_modules/uview-plus/components/u-icon/util.js')
   const transformedUtil = await plugin.transform(util, utilPath)
-  if (!transformedUtil || !/const\s+useAppStaticIconFont\s*=\s*true/.test(transformedUtil.code)) {
-    throw new Error('UniUpRoot should switch util.js to static App icon fonts')
+  if (!/const\s+useAppStaticIconFont\s*=\s*true/.test(transformedUtil?.code || util)) {
+    throw new Error('UniUpRoot should keep util.js on static App icon fonts')
   }
 
   const uIconVuePath = resolve(rootPath, 'uni_modules/uview-plus/components/u-icon/u-icon.vue')
@@ -210,6 +231,59 @@ await withTempUniProject('h5', async (rootPath) => {
   const copiedFontPath = resolve(rootPath, appStaticIconFontPath)
   if (existsSync(copiedFontPath)) {
     throw new Error(`UniUpRoot should not copy the App built-in font while UNI_PLATFORM is h5`)
+  }
+})
+
+// 不使用 Root 组件的项目，单独引入本地字体插件也应该拿到本地字体
+await withTempUniProject('app', async (rootPath) => {
+  const plugin = UniUpAppIconFont()
+  plugin.buildStart()
+
+  const copiedFontPath = resolve(rootPath, appStaticIconFontPath)
+  if (!existsSync(copiedFontPath)) {
+    throw new Error(`UniUpAppIconFont should copy the App built-in font to ${appStaticIconFontPath} without UniUpRoot`)
+  }
+
+  if (readFileSync(copiedFontPath).compare(readFileSync(fontPath)) !== 0) {
+    throw new Error('UniUpAppIconFont should copy the App built-in font without changing its contents')
+  }
+
+  const uIconVuePath = resolve(rootPath, 'uni_modules/uview-plus/components/u-icon/u-icon.vue')
+  const transformedUIconVue = await plugin.transform(uIconVue, uIconVuePath)
+  if (!transformedUIconVue || defaultAppRemoteFontFace.test(transformedUIconVue.code)) {
+    throw new Error('UniUpAppIconFont should remove the App remote @font-face block from u-icon.vue')
+  }
+
+  if (!miniProgramFontFaceCondition.test(transformedUIconVue.code)) {
+    throw new Error('UniUpAppIconFont should keep the mini-program @font-face condition in u-icon.vue')
+  }
+
+  const utilPath = resolve(rootPath, 'uni_modules/uview-plus/components/u-icon/util.js')
+  const transformedUtil = await plugin.transform(util, utilPath)
+  if (!/const\s+useAppStaticIconFont\s*=\s*true/.test(transformedUtil?.code || util)) {
+    throw new Error('UniUpAppIconFont should keep util.js on static App icon fonts')
+  }
+})
+
+// 显式关闭本地字体时，回退到远程字体
+await withTempUniProject('app', async (rootPath) => {
+  const plugin = UniUpRoot({ rootFileName: 'App.up', autoCreateRootFile: false, appStaticIconFont: false })
+  plugin.buildStart()
+
+  if (existsSync(resolve(rootPath, appStaticIconFontPath))) {
+    throw new Error('UniUpRoot should not copy the App built-in font when appStaticIconFont is disabled')
+  }
+
+  const utilPath = resolve(rootPath, 'uni_modules/uview-plus/components/u-icon/util.js')
+  const transformedUtil = await plugin.transform(util, utilPath)
+  if (!transformedUtil || !/const\s+useAppStaticIconFont\s*=\s*false/.test(transformedUtil.code)) {
+    throw new Error('UniUpRoot should switch util.js back to config.iconUrl when appStaticIconFont is disabled')
+  }
+
+  const uIconVuePath = resolve(rootPath, 'uni_modules/uview-plus/components/u-icon/u-icon.vue')
+  const transformedUIconVue = await plugin.transform(uIconVue, uIconVuePath)
+  if (!defaultAppRemoteFontFace.test(transformedUIconVue?.code || uIconVue)) {
+    throw new Error('UniUpRoot should keep the App remote @font-face when appStaticIconFont is disabled')
   }
 })
 

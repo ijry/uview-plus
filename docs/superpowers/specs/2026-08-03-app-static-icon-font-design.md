@@ -37,6 +37,18 @@
 - 模拟 `uni:pre` 已经展开 App 条件后的 SFC/style block，并模拟生成的 CSS asset，断言 Root 插件仍会移除内置远程 `@font-face`。
 - 验证 `util.js` 不再包含 `?url`，并包含 `_www/static/app-plus/uview-plus/upicon.ttf` 与 `plus.io.convertLocalFileSystemURL`。
 
+## 后续调整：App 端默认本地字体（2026-09-17）
+
+原设计把本地字体绑定在 `UniUpRoot` 上，导致没有启用 Root 组件的项目在 App 端仍然只走远程 CDN 字体，弱网/离线场景下 `u-icon` 会掉图标。本地字体本身是随包能力，不该由 Root 组件决定，因此做如下调整：
+
+- `components/u-icon/util.js` 的 `useAppStaticIconFont` 默认值改为 `true`，App / App-nvue 优先使用 `_www/static/app-plus/uview-plus/upicon.ttf`。
+- 本地字体缺失时的兜底：
+  - App-Vue：`uni.loadFontFace` 失败后自动用 `config.iconUrl` 再试一次，每个页面只回退一次（`appVueFallbackPages`）。
+  - App-nvue：`dom.addRule` 没有失败回调，注册前先用 `plus.io.resolveLocalFileSystemURL` 探测字体文件，不存在时改用 `config.iconUrl`。
+- 本地字体的构建能力从 `UniUpRoot` 抽出为独立插件 `libs/root/app-icon-font.js`（默认导出 `UniUpAppIconFont`，另导出 `createAppIconFontPlugin` 供组合）。不使用 Root 组件的项目单独引入该插件即可复制字体并移除 App 远程 `@font-face`。
+- `UniUpRoot` 内部组合该能力，并新增 `appStaticIconFont: false` 选项；关闭时把开关改回 `false`、不复制字体、保留 App 远程 `@font-face`。
+- `components/u-icon/u-icon.vue` 源码不变，仍然保留 App 远程 CSS `@font-face`，作为没有引入任何构建插件时的最后兜底。
+
 ## 影响
 
 启用 `UniUpRoot` 的 App 构建会在应用源码的 `static/app-plus/uview-plus/upicon.ttf` 写入一份组件库内置字体。用户无需手工复制；如果用户项目已存在同一路径但内容不同，构建会用组件库内置字体覆盖，保证 `u-icon` 默认字体与 unicode 映射匹配。

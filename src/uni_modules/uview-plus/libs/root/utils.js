@@ -1,9 +1,36 @@
 import { existsSync, readFileSync } from 'node:fs'
-import { extname, join } from 'node:path'
+import { extname, join, resolve } from 'node:path'
 import process from 'node:process'
 
 import { parse as VueParser } from 'vue/compiler-sfc'
 import { normalizePath } from 'vite'
+
+export function detectProjectRoot() {
+  const cwd = normalizePath(process.env.INIT_CWD || process.cwd())
+  const envInputDir = process.env.UNI_INPUT_DIR ? normalizePath(process.env.UNI_INPUT_DIR) : ''
+  const cliRootPath = normalizePath(resolve(cwd, 'src'))
+  const hbuilderRootPath = cwd
+
+  const isPageRoot = (path) => existsSync(resolve(path, 'pages.json'))
+
+  if (envInputDir && isPageRoot(envInputDir)) {
+    const projectType = envInputDir.endsWith('/src') ? 'cli' : 'hbuilder'
+    return { rootPath: envInputDir, projectType }
+  }
+
+  if (isPageRoot(cliRootPath)) {
+    return { rootPath: cliRootPath, projectType: 'cli' }
+  }
+
+  if (isPageRoot(hbuilderRootPath)) {
+    return { rootPath: hbuilderRootPath, projectType: 'hbuilder' }
+  }
+
+  return {
+    rootPath: envInputDir || cliRootPath,
+    projectType: envInputDir && !envInputDir.endsWith('/src') ? 'hbuilder' : 'cli',
+  }
+}
 
 function stripJsonComments(jsonText) {
   return jsonText
