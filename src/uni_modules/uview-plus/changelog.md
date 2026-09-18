@@ -1,3 +1,14 @@
+## 3.8.125
+fix: 修复签名组件在 App 端无法绘制、笔迹画出后闪退的问题
+
+u-signature 在 App 端（APP-PLUS 旧版 canvas）存在无法落笔、笔迹一闪即消失的问题，根因是画布上下文异步就绪未做握手、触摸坐标未换算到画布坐标系、以及每次 draw 都会刷新绘图命令队列导致已画笔迹被清空。
+
+- 修复笔迹画出后立即消失：touchMove 改为「增量线段」绘制（beginPath + moveTo 上一点 + lineTo 当前点 + stroke），并使用 draw(true) 保留已绘制内容，不再每次 draw(false) 清空命令队列
+- 修复 App 端坐标错乱、笔迹落到画布外：getCanvasPoint 优先使用画布相对坐标，缺失时用视口坐标减去画布位置进行换算
+- 修复画布上下文异步就绪时首笔丢失：新增画布 ready / initCanvas 握手，缓存画布位置并在画布就绪后再响应绘制
+- 收尾不再 closePath，避免手写笔迹出现回连直线；撤销回放逻辑保持兼容
+- 覆盖 APP-PLUS / APP-HARMONY / APP-NVUE，微信小程序与 H5 行为保持不变
+
 ## 3.8.124
 fix: App 端图标字体默认使用本地字体，新增通用 Vite 插件入口 UpVite
 
