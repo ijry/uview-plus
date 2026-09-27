@@ -217,6 +217,9 @@
 			openSelect() {
 				if (this.disabled) return;
 				this.isOpen = true;
+				// 先同步重置为左对齐，避免沿用上一次关闭时的对齐状态
+				this.optionsWrapLeft = '0px';
+				this.optionsWrapRight = 'auto';
 				this.$nextTick(() => {
 					if (this.isOpen) {
 						this.adjustOptionsWrapPosition();
@@ -236,16 +239,20 @@
 				this.$emit('select', item);
 			},
 			adjustOptionsWrapPosition() {
-				this.optionsWrapLeft = '0px';
-				this.optionsWrapRight = 'auto';
 				let wi = getWindowInfo();
 				let windowWidth = wi.windowWidth;
-				this.$uGetRect('.u-select__options__wrap').then(rect => {
-					if (rect.left + rect.width > windowWidth) {
-						// 如果右侧被遮挡，则调整到左侧
-						this.optionsWrapLeft = 'auto';
-						this.optionsWrapRight = `0px`;
-					}
+				// 在 nextTick 之后测量，确保拿到的是本次重置后渲染的 DOM，
+				// 否则会量到上一次关闭前的旧位置，导致左右对齐交替错位
+				this.$nextTick(() => {
+					if (!this.isOpen) return;
+					this.$uGetRect('.u-select__options__wrap').then(rect => {
+						if (!this.isOpen) return;
+						if (rect.left + rect.width > windowWidth) {
+							// 如果右侧被遮挡，则调整到左侧
+							this.optionsWrapLeft = 'auto';
+							this.optionsWrapRight = `0px`;
+						}
+					});
 				});
 			}
 		}
