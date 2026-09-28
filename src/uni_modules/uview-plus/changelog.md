@@ -1,3 +1,14 @@
+## 3.8.126
+feat: 新增 u-flex 通用弹性布局容器组件
+
+新增 u-flex（up-flex）通用 flexbox 容器组件，跨端同名同默认，作为页面 view 之上的一层弹性布局落点，免去每处手写 display:flex 与各类对齐样式，让行列布局在 H5、小程序、App 各端保持一致表现。
+
+- 支持 direction 主轴方向 row / column / row-reverse / column-reverse（默认 row）
+- 支持 justify 主轴对齐 flex-start / flex-end / center / space-between / space-around / space-evenly，并兼容 start / end 简写
+- 支持 align 交叉轴对齐 flex-start / flex-end / center / stretch / baseline（默认 stretch）
+- 支持 wrap 是否换行（默认 false）与 gap 子元素间距（任意单位，自动 addUnit 处理）
+- 支持 customStyle 外部样式深合并，暴露 click 点击事件
+
 ## 3.8.125
 fix: 修复签名组件在 App 端无法绘制、笔迹画出后闪退的问题
 
