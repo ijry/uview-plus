@@ -59,6 +59,7 @@
     "verify:cropper-inner": "node scripts/verify-cropper-inner.mjs",
     "verify:cropper-image-src": "node scripts/verify-cropper-image-src.mjs",
     "verify:i18n-on-demand": "node scripts/verify-i18n-on-demand.mjs",
+    "verify:slider-box-sizing": "node scripts/verify-slider-box-sizing.mjs",
     "verify:slider-decimal-step": "node scripts/verify-slider-decimal-step.mjs",
     "verify:slider-height": "node scripts/verify-slider-height.mjs",
     "verify:slider-click-change": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-slider-click-change.mjs",
