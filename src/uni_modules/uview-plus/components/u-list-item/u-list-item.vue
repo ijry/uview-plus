@@ -4,6 +4,7 @@
 		<!-- #endif -->
 		<view
 			class="u-list-item"
+			:id="anchorId"
 			:ref="`u-list-item-${anchor}`"
 			:anchor="`u-list-item-${anchor}`"
 			:class="[`u-list-item-${anchor}`]"
@@ -27,8 +28,8 @@
 	 * List 列表
 	 * @description 该组件为高性能列表组件
 	 * @tutorial https://uview-plus.jiangruyi.com/components/list.html
-	 * @property {String | Number}	anchor	用于滚动到指定item
-	 * @example <u-list-ite v-for="(item, index) in indexList" :key="index" ></u-list-item>
+	 * @property {String | Number}	anchor	item的锚点，将u-list的scroll-into-view设置为该值即可滚动到此item
+	 * @example <u-list-item v-for="(item, index) in indexList" :key="index" :anchor="`item-${index}`"></u-list-item>
 	 */
 	export default {
 		name: 'u-list-item',
@@ -43,7 +44,13 @@
 			}
 		},
 		computed: {
-
+			// 非nvue下，scroll-view的scroll-into-view需要子元素id，故由anchor生成
+			// 加上前缀既能避免与页面其他id冲突，也能保证anchor为数字时id依然合法
+			anchorId() {
+				return this.anchor === '' || this.anchor === null || this.anchor === undefined ?
+					'' :
+					`u-list-item-${this.anchor}`
+			}
 		},
 		inject: ['uList'],
 		watch: {

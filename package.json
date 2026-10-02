@@ -83,6 +83,7 @@
     "verify:up-create-intersection-observer": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-up-create-intersection-observer.mjs",
     "verify:navbar-ios-mode": "node scripts/verify-navbar-ios-mode.mjs",
     "verify:select-overlay": "node scripts/verify-select-overlay.mjs",
+    "verify:list-anchor": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-list-anchor.mjs",
     "verify:parse-editor-align-class": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-parse-editor-align-class.mjs",
     "verify:row-notice-space": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-row-notice-space.mjs",
     "verify:list-item-parent-race": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-list-item-parent-race.mjs",
