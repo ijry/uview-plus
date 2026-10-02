@@ -593,6 +593,12 @@ export default [{
         icon: 'file-text',
         title: 'NovelReader 小说阅读器',
         title_en: 'NovelReader'
+    },
+    {
+        path: '/pages/componentsD/video/video',
+        icon: 'video',
+        title: 'Video 视频播放器',
+        title_en: 'Video'
     }]
 }
 ]

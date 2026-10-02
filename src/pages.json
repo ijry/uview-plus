@@ -718,6 +718,12 @@
                     }
                 },
                 {
+                    "path" : "video/video",
+                    "style" : {
+                        "navigationBarTitleText" : "视频播放器"
+                    }
+                },
+                {
                     "path" : "colorPicker/colorPicker",
                     "style" : {
                         "navigationBarTitleText" : "颜色选择器"

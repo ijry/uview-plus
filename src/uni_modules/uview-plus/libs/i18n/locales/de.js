@@ -82,5 +82,18 @@ export default {
     "up.goodsSku.price": "Preis",
     "up.goodsSku.amount": "Stück",
     "up.goodsSku.choosed": "Ausgewählt",
-    "up.goodsSku.buyAmount": "Anzahl"
+    "up.goodsSku.buyAmount": "Anzahl",
+    "up.video.rate": "Geschwindigkeit",
+    "up.video.volume": "Lautstärke",
+    "up.video.danmu": "Kommentare",
+    "up.video.danmuPlaceholder": "Kommentar senden",
+    "up.video.send": "Senden",
+    "up.video.episodes": "Folgen",
+    "up.video.lock": "Gesperrt",
+    "up.video.unlock": "Entsperrt",
+    "up.video.ad": "Werbung",
+    "up.video.adCountdown": "Werbung {seconds}s",
+    "up.video.skipAd": "Werbung überspringen",
+    "up.video.adDetail": "Mehr erfahren",
+    "up.video.error": "Wiedergabe fehlgeschlagen"
 }
