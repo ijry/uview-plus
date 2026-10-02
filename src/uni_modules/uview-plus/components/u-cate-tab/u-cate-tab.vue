@@ -20,7 +20,7 @@
 				</view>
 				<view class="u-cate-tab__page-view">
 					<template :key="index" v-for="(item , index) in tabList">
-						<view v-if="mode == 'follow' || ( mode == 'tab' && index == innerCurrent)"
+						<view v-if="(mode == 'follow' && index < renderLimit) || ( mode == 'tab' && index == innerCurrent)"
 							class="u-cate-tab__page-item" :id="'item' + index">
 							<slot name="itemList" :item="item">
 							</slot>
@@ -76,6 +76,16 @@
 			current: {
                 type: Number,
                 default: 0
+            },
+			// 右侧内容是否随滚动渐进渲染，分类很多时可避免首屏一次性渲染全部图片
+			lazyRender: {
+                type: Boolean,
+                default: true
+            },
+			// 渐进渲染时首屏渲染的分类数量，之后每次追加也是该数量
+			lazyRenderCount: {
+                type: Number,
+                default: 8
             }
         },
         watch: {
@@ -83,6 +93,10 @@
 				deep: true,
 				handler(newVal, oldVal) {
 					// this.observer();
+					// 整体换了一份数据时重新从首屏开始渐进渲染；仅内容变化则保留已渲染范围
+					if (newVal !== oldVal) {
+						this.renderCount = 0;
+					}
 					sleep(30).then(() => {
 						this.getMenuItemTop();
 						this.leftMenuStatus(this.innerCurrent);
@@ -103,6 +117,16 @@
 			}
         },
 		emits: ['update:current'],
+		computed: {
+			// 渐进渲染时右侧最多渲染到第几个分类（不含该下标）
+			renderLimit() {
+				if (!this.lazyRender || this.mode != 'follow') {
+					return this.tabList.length;
+				}
+				// 当前选中项必须在渲染范围内，否则联动滚动找不到目标节点
+				return Math.min(this.tabList.length, Math.max(this.renderCount, this.lazyRenderCount, this.innerCurrent + 1));
+			}
+		},
 		data() {
 			return {
 				scrollTop: 0, //tab标题的滚动条位置
@@ -117,6 +141,7 @@
 				arr: [],
 				scrollRightTop: 0, // 右边栏目scroll-view的滚动条高度
 				timer: null, // 定时器
+				renderCount: 0, // 渐进渲染已放开的分类数量
 			}
 		},
 		mounted() {
@@ -134,6 +159,8 @@
 			// 点击左边的栏目切换
 			async swichMenu(index) {
 				if (this.mode == 'follow') {
+					// 渐进渲染下目标分类可能还没渲染，先补齐再滚动，否则scroll-into-view找不到节点
+					await this.growRender(index + 1);
 					if(this.arr.length == 0) {
 						await this.getMenuItemTop();
 					}
@@ -147,6 +174,19 @@
 					this.innerCurrent = index;
 					this.$emit('update:current', index);
 				})
+			},
+			// 渐进渲染：把右侧渲染范围放开到count个分类，并重新测量各分类位置
+			async growRender(count) {
+				if (!this.lazyRender || this.mode != 'follow') return false;
+				// 已经全部渲染完就不用再测量，否则滚到底部时每次节流都会白跑一次查询
+				if (this.renderLimit >= this.tabList.length) return false;
+				if (count <= this.renderLimit) return false;
+				this.renderCount = Math.min(this.tabList.length, count);
+				await this.$nextTick();
+				// 小程序端节点布局晚于nextTick，等一拍再测量，否则arr拿到的还是旧位置
+				await sleep(30);
+				await this.getMenuItemTop();
+				return true;
 			},
 			// 获取一个目标元素的高度
 			getElRect(elClass, dataVal) {
@@ -196,8 +236,11 @@
 			},
 			// 设置左边菜单的滚动状态
 			async leftMenuStatus(index) {
-				this.innerCurrent = index;
-				this.$emit('update:current', index);
+				// 仅在选中项真正变化时才同步父组件，否则滚动过程中每次都会重复通知
+				if (this.innerCurrent != index) {
+					this.innerCurrent = index;
+					this.$emit('update:current', index);
+				}
 				// 如果为0，意味着尚未初始化
 				if (this.menuHeight == 0 || this.menuItemHeight == 0) {
 					await this.getElRect('u-cate-tab__menu-scroll-view', 'menuHeight');
@@ -239,17 +282,15 @@
 				this.oldScrollTop = e.detail.scrollTop;
                 // console.log(e.detail.scrollTop)
                 // console.log(JSON.stringify(this.arr))
-				if(this.arr.length == 0) {
-					await this.getMenuItemTop();
-				}
 				if(this.timer) return ;
-				if(!this.menuHeight) {
-					await this.getElRect('u-cate-tab__menu-scroll-view', 'menuHeight');
-				}
-				setTimeout(() => { // 节流
+				// 节流：定时器必须挂到this上，否则上面的拦截永远不生效，每个滚动事件都会跑一遍联动
+				this.timer = setTimeout(async () => {
 					this.timer = null;
+					if(this.arr.length == 0) {
+						await this.getMenuItemTop();
+					}
 					// scrollHeight为右边菜单垂直中点位置
-					let scrollHeight = e.detail.scrollTop + 1;
+					let scrollHeight = this.oldScrollTop + 1;
                     // console.log(e.detail.scrollTop)
 					for (let i = 0; i < this.arr.length; i++) {
 						let height1 = this.arr[i];
@@ -263,6 +304,10 @@
                             // console.log('height1', height1)
                             // console.log('height2', height2)
 							this.leftMenuStatus(i);
+							// 快滚到已渲染的最后一个分类时追加下一批
+							if (i >= this.renderLimit - 2) {
+								this.growRender(this.renderLimit + this.lazyRenderCount);
+							}
 							return ;
 						}
 					}
