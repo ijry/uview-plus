@@ -1,3 +1,102 @@
+## 3.8.127
+fix: 修复抖音小程序 tabbar-item / steps-item 因父子生命周期顺序导致的崩溃
+
+抖音小程序中，子组件的 created 可能早于父组件的 created 执行，此时父组件实例已可通过 $parent 找到，但父组件的 children 数组尚未初始化（u-tabbar / u-steps / u-list 都在自己的 created 里才赋值 children=[]）。子组件 init() 直接访问 this.parent.children.indexOf(this) 时 children 仍为 undefined，抛出 TypeError: Cannot read properties of undefined (reading 'indexOf')，并伴随「up-tabbar-item必须搭配up-tabbar组件使用」的误报警告（该分支只 log 未 return，继续执行才崩溃）。对照 u-radio / u-checkbox：它们在 mounted() 调 init() 且不访问 parent.children，所以不受影响。
+
+- u-tabbar-item：init() 在 error() 后补 return，并加 !this.parent.children 守卫；mounted() 新增 init() 补偿重试（created 阶段被跳过时补齐激活态）；clickHandler() 补 this.parent / children 守卫
+- u-steps-item：init() 加 !this.parent.children 守卫；mounted() 新增 init() 补偿重试，确保自身已注册进父组件 children
+- u-list-item：init() 加 !this.parent / !this.parent.children 守卫，避免 $parent 返回 false 时报错
+- 共享 mixin getParentData()：访问 children 前先判断 this.parent 存在，避免 $parent 返回 false 时读取 false.children 崩溃，影响所有父子联动组件
+
+## 3.8.126
+feat: 新增 u-flex 通用弹性布局容器组件
+
+新增 u-flex（up-flex）通用 flexbox 容器组件，跨端同名同默认，作为页面 view 之上的一层弹性布局落点，免去每处手写 display:flex 与各类对齐样式，让行列布局在 H5、小程序、App 各端保持一致表现。
+
+- 支持 direction 主轴方向 row / column / row-reverse / column-reverse（默认 row）
+- 支持 justify 主轴对齐 flex-start / flex-end / center / space-between / space-around / space-evenly，并兼容 start / end 简写
+- 支持 align 交叉轴对齐 flex-start / flex-end / center / stretch / baseline（默认 stretch）
+- 支持 wrap 是否换行（默认 false）与 gap 子元素间距（任意单位，自动 addUnit 处理）
+- 支持 customStyle 外部样式深合并，暴露 click 点击事件
+
+## 3.8.125
+fix: 修复签名组件在 App 端无法绘制、笔迹画出后闪退的问题
+
+u-signature 在 App 端（APP-PLUS 旧版 canvas）存在无法落笔、笔迹一闪即消失的问题，根因是画布上下文异步就绪未做握手、触摸坐标未换算到画布坐标系、以及每次 draw 都会刷新绘图命令队列导致已画笔迹被清空。
+
+- 修复笔迹画出后立即消失：touchMove 改为「增量线段」绘制（beginPath + moveTo 上一点 + lineTo 当前点 + stroke），并使用 draw(true) 保留已绘制内容，不再每次 draw(false) 清空命令队列
+- 修复 App 端坐标错乱、笔迹落到画布外：getCanvasPoint 优先使用画布相对坐标，缺失时用视口坐标减去画布位置进行换算
+- 修复画布上下文异步就绪时首笔丢失：新增画布 ready / initCanvas 握手，缓存画布位置并在画布就绪后再响应绘制
+- 收尾不再 closePath，避免手写笔迹出现回连直线；撤销回放逻辑保持兼容
+- 覆盖 APP-PLUS / APP-HARMONY / APP-NVUE，微信小程序与 H5 行为保持不变
+
+## 3.8.124
+fix: App 端图标字体默认使用本地字体，新增通用 Vite 插件入口 UpVite
+
+u-icon 的 useAppStaticIconFont 原先写死 false，只有启用 UniUpRoot 的项目才会在构建期被改成 true；未启用 Root 组件的 App 项目仍然走远程 CDN 字体，弱网或离线时图标会丢失。本地字体是随包能力，不该由是否使用 Root 组件决定。
+
+- App / App-nvue 默认优先加载随包分发的 _www/static/app-plus/uview-plus/upicon.ttf
+- App-Vue 在 uni.loadFontFace 失败后回退 config.iconUrl，每个页面只回退一次；App-nvue 因 dom.addRule 没有失败回调，注册前用 plus.io.resolveLocalFileSystemURL 探测字体文件，缺失时回退远程
+- 新增通用 Vite 插件入口 UpVite（libs/vite/index.js），App 本地图标字体是它的第一个 feature；后续组件库新增构建期能力只需在插件内追加，业务项目不需要再改自己的 vite.config
+- UniUpRoot 复用同一份图标字体 feature 并新增 appStaticIconFont: false 选项，只装 Root 插件的项目行为完全不变
+- 不使用 Root 组件的项目单独引入 UpVite() 即可复制字体并移除 App 远程 @font-face
+- 新增 verify:app-local-icon-font 回归校验，覆盖 static 路径、两端兜底、插件复制行为与关闭开关
+- H5 与小程序行为不变，仍使用 config.iconUrl
+
+## 3.8.123
+fix: 修复 u-slider 区间模式 v-model:rangeValue 不生效 (#554)
+
+u-slider 区间模式（isRange）拖动滑块时只抛出 update:modelValue，未抛出 update:rangeValue，导致 v-model:rangeValue 双向绑定无法更新。此外 rangeValue 的 default 为数组字面量，所有实例共用同一引用。
+
+- 拖动结束时正确抛出 update:rangeValue 事件，同时兼容此前监听 update:modelValue 获取区间值的用法
+- 值未变化时跳过事件抛出，避免父级对数组做拷贝或归一化时形成更新回环
+- rangeValue 的 default 改为工厂函数，避免实例间共享数组引用
+- 补充 isRange、rangeValue 及 onUpdate:rangeValue 类型声明
+- 新增 verify:slider-range-value-model 回归校验脚本
+
+## 3.8.122
+fix: 修复 u-row-notice 横向滚动空格丢失
+
+u-row-notice 每 20 个字符切分渲染到独立的 text 标签，若第 21 个字符为空格，会落在第二段行首被 CSS 折叠空白吃掉，导致横向滚动时两个字粘连。现将滚动文本 white-space 改为 pre，在保留原文空格的同时禁止换行，避免行首行尾空白被丢弃，并通过回归校验覆盖分段空格边界场景。
+
+## 3.8.121
+fix: 修复 up-button 真机首次点击后失效
+
+默认 throttleTime 为 0 时直接同步执行点击回调，不再依赖异步 setTimeout 释放全局节流锁，避免真机定时器未释放时后续点击被拦截。新增零延迟连续调用回归校验。
+
+## 3.8.120
+fix(types): 组件类型可直接从包名导入，模板提示补齐 u-/u-- 前缀
+
+本版仅完善 TypeScript 类型与 IDE 模板提示，不改变组件运行时行为和 API。
+
+- `uview-plus` 包入口重新导出 126 个公开组件类型，Props、Slots、Ref 可直接从包名导入，不再依赖 `uview-plus/types/comps/*` 内部路径
+- Ref 类型统一按 `typeof` 导出，避免将源文件中的 const 声明当作类型使用时报 TS2749
+- `GlobalComponents` 同时登记 `up-`、`u-`、`u--` 三种 easycom 前缀，模板中的 `u-button`、`u--button` 写法也能获得组件类型提示
+- 保留一份组件清单，通过模板字面量键改写生成三种前缀，避免清单重复维护
+- 新增 `verify:types-barrel-exports` 回归校验，防止入口类型导出与模板组件登记清单漂移
+
+## 3.8.119
+fix: 修复 datetime-picker format 兼容性与 tabbar 边框切页丢失
+
+本版修复两个独立问题，均不涉及组件 API 变更。
+
+fix: datetime-picker format 兼容库自身的 yyyy-mm-dd 写法，字符串绑定值不再退回 minDate (#537)
+
+库内置的日期格式化工具 `timeFormat` 支持 `yyyy-mm-dd` 写法（全小写），但 u-datetime-picker 的 format 解析只识别 `YYYY-MM-DD`（全大写），导致用户按文档示例传入小写 format 时，传入的字符串绑定值无法被正确解析，组件退回到 minDate 而非用户期望的日期。
+
+- format 解析逻辑补充小写月日模式 `mm` / `dd`，与库自身的 timeFormat 对齐
+- 保持对原有大写 `MM` / `DD` 的兼容
+- 新增 `verify:datetime-picker-format` 回归校验
+
+fix: tabbar 顶部边框改为组件内联绘制，修复切换页面后边框丢失 (#873)
+
+u-tabbar 的顶部边框原先靠模板上的全局工具类 `u-border-top` 绘制，组件自身 scoped 样式表没有任何 border 声明。该类只存在于宿主项目的全局样式表，而小程序自定义组件有样式隔离，能否命中取决于宿主引入全局样式的方式，于是出现同一个 tabbar 在首页有边框、切到另一个 tab 页边框消失。
+
+- 改为在 tabbarStyle 里内联 borderTopWidth/Style/Color，边框跟着组件走
+- 去掉 borderColor 上用来压全局类 !important 的 hack（nvue/weex 无法解析）
+- 让 borderColor 为空时的主题边框色回退真正生效
+- 新增 `verify:tabbar-border` 回归校验
+
 ## 3.8.118
 修复 u-waterfall 在强制解锁后旧分配循环误释放新循环分发锁的问题。
 
@@ -2703,3 +2802,13 @@ fix: #261u-input在直接修改v-model的绑定值时，每隔一次会无法出
 
 - feat: tabbar 新增多种风格预设、动态图标切换与轻量选中动画
 - improvment: tabbar 补充高颜值本地图标示例并优化发布型底栏视觉
+## 3.8.121
+fix: 修复 up-button 真机首次点击后失效
+
+用户反馈 up-button 在网页端正常，但在真机上点击一次后无法再次触发 click 事件。组件默认 throttleTime 为 0，原节流实现仍会先将全局节流标志置为 true，再依赖 setTimeout 回调异步释放；当真机运行环境没有按预期执行该定时回调时，全局标志会一直保持锁定状态，后续所有使用节流的点击都会被拦截。
+
+- throttle 的 wait 小于等于 0 时直接同步执行回调并返回，不再挂起全局锁
+- 保留大于 0 时原有的立即节流与非立即节流行为，API 不变
+- 新增 `verify:button-throttle` 回归校验，覆盖零延迟连续调用场景
+
+## 3.8.120

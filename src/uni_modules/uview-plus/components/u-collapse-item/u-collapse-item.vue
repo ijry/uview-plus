@@ -134,16 +134,20 @@
 					children = []
 				} = this.parent
 
-				if (accordion) {
-					if (test.array(value)) {
-						return error('手风琴模式下，u-collapse组件的value参数不能为数组')
+				// value为null(默认值)时面板并非受控，展开状态只存在于子组件自身的expanded上，
+				// 此时按value反推会把用户点开的面板强行收起，init()便只剩重算内容高度这一职责
+				if (value !== null && value !== undefined) {
+					if (accordion) {
+						if (test.array(value)) {
+							return error('手风琴模式下，u-collapse组件的value参数不能为数组')
+						}
+						this.expanded = this.name == value
+					} else {
+						if (!test.array(value)) {
+							return error('非手风琴模式下，u-collapse组件的value参数必须为数组')
+						}
+						this.expanded = value.some(item => item == this.name)
 					}
-					this.expanded = this.name == value
-				} else {
-					if (!test.array(value) && value !== null) {
-						return error('非手风琴模式下，u-collapse组件的value参数必须为数组')
-					}
-					this.expanded = (value || []).some(item => item == this.name)
 				}
 				// 设置组件的展开或收起状态
 				await nextTick()

@@ -334,9 +334,13 @@ export default {
 			//记录用户选中但是还没确认的值
 			this.currentActiveValue = value;	
 			// 通过对比前后两次的列索引，得出当前变化的是哪一列
+			// lastIndex记录的是"上一次确认"的值，滚动但未点确定时并不会更新，
+			// 用它做对比会导致滚动过上级列之后，columnIndex一直停留在上级列，
+			// 所以这里用innerIndex，即picker-view上一次所处的位置
+			const prevIndex = this.innerIndex
 			for (let i = 0; i < value.length; i++) {
 				let item = value[i]
-				if (item !== undefined && item !== (this.lastIndex[i] || 0)) { // 把undefined转为合法假值0
+				if (item !== undefined && item !== (prevIndex[i] || 0)) { // 把undefined转为合法假值0
 					// 设置columnIndex为当前变化列的索引
 					columnIndex = i
 					// index则为变化列中的变化项的索引
@@ -346,8 +350,7 @@ export default {
 			}
 			this.columnIndex = columnIndex
 			const values = this.innerColumns
-			// 将当前的各项变化索引，设置为"上一次"的索引变化值
-			// this.setLastIndex(value)
+			// 记录picker-view当前的各列位置，作为下一次变化对比的基准
 			this.setIndexs(value)
 			//如果是非自带输入框才会在change时候触发v-model绑值的变化
 			//否则会非常的奇怪，用户未确认，值就变了

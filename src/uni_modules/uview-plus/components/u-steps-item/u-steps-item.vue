@@ -187,6 +187,9 @@
 			}
 		},
 		mounted() {
+			// 抖音小程序等平台子组件 created 可能在父组件 created 之前执行，
+			// 此时 parent.children 尚未初始化，init 被跳过，此处补偿重试
+			this.init()
 			this.parent && this.parent.updateFromChild()
 			sleep().then(() => {
 				this.getStepsItemRect()
@@ -198,6 +201,12 @@
 				this.updateParentData()
 				if (!this.parent) {
 					return error('u-steps-item必须要搭配u-steps组件使用')
+				}
+				// 抖音小程序等平台子组件 created 可能在父组件 created 之前执行，
+				// 此时 parent.children 尚未初始化（u-steps 在 created 中才赋值 children=[]），
+				// 跳过本次初始化，由 mounted 钩子补偿重试
+				if (!this.parent.children) {
+					return
 				}
 				this.index = this.parent.children.indexOf(this)
 				this.childLength = this.parent.children.length

@@ -28,8 +28,8 @@
 	 * List 列表
 	 * @description 该组件为高性能列表组件
 	 * @tutorial https://uview-plus.jiangruyi.com/components/list.html
-	 * @property {String | Number}	anchor	用于滚动到指定item
-	 * @example <u-list-ite v-for="(item, index) in indexList" :key="index" ></u-list-item>
+	 * @property {String | Number}	anchor	item的锚点，将u-list的scroll-into-view设置为该值即可滚动到此item
+	 * @example <u-list-item v-for="(item, index) in indexList" :key="index" :anchor="`item-${index}`"></u-list-item>
 	 */
 	export default {
 		name: 'u-list-item',
@@ -44,11 +44,11 @@
 			}
 		},
 		computed: {
-			// scroll-view的scroll-into-view只认节点id，未设置anchor时不能输出id，
-			// 否则列表里的每一项都会得到同一个u-list-item-。
+			// scroll-view的scroll-into-view只认节点id，故由anchor加前缀生成；
+			// 未设置anchor时输出null，避免列表里的每一项都得到同一个空id。
 			anchorId() {
 				if (this.anchor === '' || this.anchor === null || this.anchor === undefined) return null
-				return `u-list-item-${this.anchor}`
+				return 'u-list-item-' + this.anchor
 			}
 		},
 		inject: ['uList'],
@@ -79,6 +79,10 @@
 			init() {
 				// 初始化数据
 				this.updateParentData()
+				// 父组件未找到或 children 尚未初始化时跳过，避免 indexOf 报错
+				if (!this.parent || !this.parent.children) {
+					return
+				}
 				this.index = this.parent.children.indexOf(this)
 				this.resize()
 			},

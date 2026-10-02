@@ -1,11 +1,14 @@
 <template>
 	<view class="u-page">
 		<up-list
+			:scroll-into-view="scrollIntoView"
 			@scrolltolower="scrolltolower"
 		>
+			<!-- 给up-list-item设置anchor，再修改up-list的scroll-into-view即可滚动到指定item -->
 			<up-list-item
 				v-for="(item, index) in indexList"
 				:key="index"
+				:anchor="`item-${index}`"
 			>
 				<up-cell
 					:title="`列表长度-${index + 1}`"
@@ -21,11 +24,26 @@
 				</up-cell>
 			</up-list-item>
 		</up-list>
+		<view class="u-anchor-bar">
+			<up-button
+				type="primary"
+				size="small"
+				text="滚动到第20项"
+				@click="scrollToItem(19)"
+			></up-button>
+			<up-button
+				type="info"
+				size="small"
+				text="回到第1项"
+				customStyle="margin-left: 10px"
+				@click="scrollToItem(0)"
+			></up-button>
+		</view>
 	</view>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, nextTick, onMounted } from 'vue'
 import { random } from '@/uni_modules/uview-plus'
 
 const indexList = ref([])
@@ -50,6 +68,17 @@ const loadmore = () => {
 	}
 }
 
+// 需要滚动到的item的anchor值
+const scrollIntoView = ref('')
+
+const scrollToItem = (index) => {
+	// scroll-into-view的值没有变化时不会重复触发，故先置空
+	scrollIntoView.value = ''
+	nextTick(() => {
+		scrollIntoView.value = `item-${index}`
+	})
+}
+
 const scrolltolower = () => {
 	loadmore()
 }
@@ -62,5 +91,16 @@ onMounted(() => {
 <style lang="scss">
 	.u-page {
 		padding: 0;
+	}
+
+	.u-anchor-bar {
+		position: fixed;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		flex-direction: row;
+		justify-content: center;
+		padding: 10px;
+		background-color: rgba(255, 255, 255, 0.9);
 	}
 </style>

@@ -44,7 +44,7 @@ function braceMatch(src, start) {
 // 取出某个平台条件编译后的方法源码
 function compiledMethod(src, platform, name) {
     const out = preprocess(src, { [platform]: true }, { type: 'js' })
-    const start = out.indexOf(`${name}(id) {`)
+    const start = out.indexOf(`${name}(id`)
     if (start === -1) return null
     return braceMatch(out, start)
 }
@@ -78,6 +78,14 @@ function makeListCtx() {
         })),
         scrollWithAnimation: true,
         innerScrollIntoView: '',
+        getAnchorChild(id) {
+            const anchorId = String(id)
+            return this.children.find(child => {
+                if (child.anchor === '' || child.anchor === null || child.anchor === undefined) return false
+                const anchor = String(child.anchor)
+                return anchor === anchorId || `u-list-item-${anchor}` === anchorId
+            })
+        },
         ticks: [],
         $nextTick(fn) { this.ticks.push(fn) },
         flush() { const q = this.ticks; this.ticks = []; q.forEach(fn => fn()) }

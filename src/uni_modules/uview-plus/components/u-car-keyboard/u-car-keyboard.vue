@@ -47,7 +47,8 @@
 			</view>
 			<view
 				v-if="i === 3"
-				@touchstart="backspaceClick"
+				@tap="backspaceClick"
+				@touchstart="backspaceTouchStart"
 				@touchend="clearTimer"
 				class="u-keyboard__button__inner-wrapper"
 			>
@@ -128,7 +129,8 @@
 					'澳',
 					'新',
 					'使',
-					'学'
+					'学',
+					'警'
 				];
 				let tmp = [];
 				// 打乱顺序
@@ -137,7 +139,7 @@
 				tmp[0] = data.slice(0, 10);
 				tmp[1] = data.slice(10, 20);
 				tmp[2] = data.slice(20, 30);
-				tmp[3] = data.slice(30, 36);
+				tmp[3] = data.slice(30, 37);
 				return tmp;
 			},
 			engKeyBoardList() {
@@ -204,17 +206,28 @@
 			changeCarInputMode() {
 				this.abc = !this.abc;
 			},
-			// 点击退格键
+			// 点击退格键，PC端浏览器(如电脑版微信内置浏览器)只有鼠标事件不触发touch，故由tap触发删除
 			backspaceClick() {
 				this.$emit('backspace');
-				clearInterval(this.timer); //再次清空定时器，防止重复注册定时器
-				this.timer = null;
-				this.timer = setInterval(() => {
+			},
+			// 触摸退格键，一定时间后进入长按连续删除状态，短按时会在touchend前被清除
+			backspaceTouchStart() {
+				this.clearTimer(); //再次清空定时器，防止重复注册定时器
+				this.timer = setTimeout(() => {
 					this.$emit('backspace');
+					this.backspaceLongPress();
+				}, 600);
+			},
+			// 长按状态下每隔一段时间删除一次
+			backspaceLongPress() {
+				this.clearTimer();
+				this.timer = setTimeout(() => {
+					this.$emit('backspace');
+					this.backspaceLongPress();
 				}, 250);
 			},
 			clearTimer() {
-				clearInterval(this.timer);
+				clearTimeout(this.timer);
 				this.timer = null;
 			},
 		}

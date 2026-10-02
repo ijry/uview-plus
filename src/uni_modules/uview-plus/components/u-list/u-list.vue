@@ -66,7 +66,7 @@
 	 * @property {Boolean}			enableFlex			启用 flexbox 布局。开启后，当前节点声明了display: flex就会成为flex container，并作用于其孩子节点，仅微信小程序有效（默认 false ）
 	 * @property {Boolean}			pagingEnabled		是否按分页模式显示List，（默认 false ）
 	 * @property {Boolean}			scrollable			是否允许List滚动（默认 true ）
-	 * @property {String}			scrollIntoView		值应为某子元素id（id不能以数字开头）
+	 * @property {String}			scrollIntoView		滚动到指定位置，值为u-list-item的anchor，或item内某个子元素的id（id不能以数字开头）
 	 * @property {Boolean}			scrollWithAnimation	在设置滚动条位置时使用动画过渡 （默认 false ）
 	 * @property {Boolean}			enableBackToTop		iOS点击顶部状态栏、安卓双击标题栏时，滚动条返回顶部，只对微信小程序有效 （默认 false ）
 	 * @property {String ｜ Number}	height				列表的高度 （默认 0 ）
@@ -88,8 +88,8 @@
 			return {
 				// 记录内部滚动的距离
 				innerScrollTop: 0,
-				// 非nvue下scroll-view的滚动目标节点id，由scrollIntoView属性和scrollIntoViewById()共同驱动
-				innerScrollIntoView: this.scrollIntoView,
+				// 非nvue下真正传给scroll-view的scroll-into-view值
+				innerScrollIntoView: '',
 				// vue下，scroll-view在上拉加载时的偏移值
 				offset: 0,
 				sys: getWindowInfo()
@@ -113,8 +113,15 @@
 		created() {
 			this.children = []
 			this.anchors = []
+			// 最后一次请求滚动的目标，非响应式，仅用于丢弃过期的重试
+			this.scrollIntoViewTarget = ''
 		},
-		mounted() {},
+		mounted() {
+			// 初始就设置了scroll-into-view时，子组件已挂载完成，此时才能匹配到anchor
+			if (this.scrollIntoView) {
+				this.scrollIntoViewById(this.scrollIntoView)
+			}
+		},
 		emits: ["scroll", "scrolltolower", "scroll-to-lower", "scrolltoupper", "scroll-to-upper",
 			"refresherpulling", "refresherrefresh", "refresherrestore", "refresherabort"],
 		methods: {
@@ -132,35 +139,57 @@
 				this.innerScrollTop = scrollTop
 				this.$emit('scroll', scrollTop)
 			},
-			scrollIntoViewById(id) {
+			// 根据id找到设置了对应anchor的u-list-item，anchor与u-list-item-${anchor}两种写法都支持
+			getAnchorChild(id) {
+				const anchorId = String(id)
+				return this.children.find(child => {
+					if (child.anchor === '' || child.anchor === null || child.anchor === undefined) return false
+					const anchor = String(child.anchor)
+					return anchor === anchorId || `u-list-item-${anchor}` === anchorId
+				})
+			},
+			scrollIntoViewById(id, retry = true) {
 				if (id === '' || id === null || id === undefined) return
-				// u-list-item渲染出的ref和id都带有u-list-item-前缀，
-				// 这里同时兼容传入anchor和直接传入节点id两种写法
-				const anchorName = `u-list-item-${id}`
+				// 记录最后一次请求，避免过期的重试覆盖掉新值
+				this.scrollIntoViewTarget = id
+				// 根据id参数，找到所有u-list-item中匹配的节点
+				const child = this.getAnchorChild(id)
+				const scheduleRetry = () => {
+					if (!retry) return
+					this.$nextTick(() => {
+						if (this.scrollIntoViewTarget === id) this.scrollIntoViewById(id, false)
+					})
+				}
+				// #ifndef APP-NVUE
+				// 命中anchor时滚动到item的id；未命中时仍按原语义透传用户自己的子元素id
+				const target = child ? 'u-list-item-' + child.anchor : id
+				// scroll-into-view需要有一个值变动的过程，重复滚动同一节点时先置空
+				if (retry && this.innerScrollIntoView === target) {
+					this.innerScrollIntoView = ''
+					this.$nextTick(() => {
+						if (this.scrollIntoViewTarget === id) this.innerScrollIntoView = target
+					})
+				} else {
+					this.innerScrollIntoView = target
+				}
+				// #endif
 				// #ifdef APP-NVUE
-				// 根据id参数，找到所有u-list-item中匹配的节点，再通过dom模块滚动到对应的位置
-				// children由子组件的getParentData维护，早期实现用的this.refs从未被写入，因此永远找不到节点
-				const item = this.children.find(child => child.$refs[anchorName] || child.$refs[id])
-				if (!item) return
-				dom.scrollToElement(item.$refs[anchorName] || item.$refs[id], {
+				// nvue下通过children和带前缀的ref查找节点，也兼容用户直接传入子节点ref名
+				const ref = child && child.$refs && child.$refs['u-list-item-' + child.anchor]
+				const matchedItem = ref ? null : this.children.find(item => item.$refs && item.$refs[id])
+				const targetRef = ref || (matchedItem && matchedItem.$refs[id])
+				if (!targetRef) {
+					scheduleRetry()
+					return
+				}
+				dom.scrollToElement(targetRef, {
 					// 是否需要滚动动画
 					animated: this.scrollWithAnimation
 				})
 				// #endif
 				// #ifndef APP-NVUE
-				// scroll-view只能按节点id滚动，anchor需要换算成u-list-item输出的id
-				const matched = this.children.some(child => String(child.anchor) === String(id))
-				const target = matched ? anchorName : id
-				// scroll-into-view需要有一个值变动的过程才会生效，
-				// 否则连续滚动到同一个节点时第二次不会有任何反应
-				if (this.innerScrollIntoView === target) {
-					this.innerScrollIntoView = ''
-					this.$nextTick(() => {
-						this.innerScrollIntoView = target
-					})
-				} else {
-					this.innerScrollIntoView = target
-				}
+				// anchor可能和列表数据同一帧生成，未命中时下一帧再尝试一次
+				if (!child) scheduleRetry()
 				// #endif
 			},
 			// 滚动到底部触发事件

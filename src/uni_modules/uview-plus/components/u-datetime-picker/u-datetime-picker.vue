@@ -63,8 +63,7 @@
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
 	import dayjs from './dayjs.esm.min.js';
-	import { range, error, padZero } from '../../libs/function/index';
-	import test from '../../libs/function/test';
+	import { range, error, padZero, timeFormat } from '../../libs/function/index';
 	/**
 	 * DatetimePicker 时间日期选择器
 	 * @description 此选择器用于时间日期
@@ -72,6 +71,8 @@
 	 * @property {Boolean}			show				用于控制选择器的弹出与收起 ( 默认 false )
 	 * @property {Boolean}			showToolbar			是否显示顶部的操作栏  ( 默认 true )
 	 * @property {String | Number}	modelValue		    绑定值
+	 * @property {Boolean}			hasInput			是否自带input输入框  ( 默认 false )
+	 * @property {String}			format				hasInput模式下输入框的日期显示格式，同时支持 yyyy-mm-dd(uview-plus timeFormat 写法) 与 YYYY-MM-DD(dayjs 写法)
 	 * @property {String}			title				顶部标题
 	 * @property {String}			mode				展示格式 mode=date为日期选择，mode=time为时间选择，mode=year-month为年月选择，mode=datetime为日期时间选择，mode=datehour为日期小时选择，mode=timesecond为时分秒选择，mode=datetimesecond为日期时分秒选择  ( 默认 ‘datetime )
 	 * @property {Number}			maxDate				可选的最大时间  默认值为后10年
@@ -196,6 +197,10 @@
 		emits: ['close', 'closed', 'cancel', 'confirm', 'change', 'update:modelValue'],
 		// #endif
 		methods: {
+			// 是否为“未选择/已清空”的空值。空值必须原样透传，不能被夹取成边界值
+			isEmptyValue(value) {
+				return value === '' || value === null || value === undefined
+			},
 			toInt(value, fallback = 0) {
 				const num = parseInt(value, 10)
 				return Number.isFinite(num) ? num : fallback
@@ -210,6 +215,16 @@
 				const value = column[index]
 				return value == null ? fallback : value
 			},
+			// format 有两种写法：uview-plus 自身 timeFormat($u.timeFormat) 的规则(yyyy-mm-dd hh:MM:ss，
+			// 小写 y 表示年、MM 表示分钟)，以及 dayjs 的规则(YYYY-MM-DD HH:mm:ss)。
+			// dayjs 没有小写 y 的 token，以此区分两者：否则按库里通用写法传 'yyyy-mm-dd'，
+			// dayjs 只认得其中的 mm(分钟)与 dd(星期)，会得到 'yyyy-00-Th' 这种结果(issue #537)
+			formatByPattern(value, pattern) {
+				if (/y/.test(pattern)) {
+					return timeFormat(value, pattern)
+				}
+				return dayjs(value).format(pattern)
+			},
 			getInputValue(newValue) {
 				if (newValue == '' || !newValue || newValue == undefined) {
 					this.inputValue = ''
@@ -219,7 +234,7 @@
 					this.inputValue = newValue
 				} else {
 					if (this.format) {
-						this.inputValue = dayjs(newValue).format(this.format)
+						this.inputValue = this.formatByPattern(newValue, this.format)
 					} else {
 						let format = ''
 						switch (this.mode) {
@@ -320,6 +335,14 @@
 			},
 			// 点击工具栏的确定按钮
 			confirm() {
+				// 值为空(从未选择或被外部清空)时，用户看到的是各列当前停留的位置，
+				// 直接上抛空值会“所见非所得”，故先按各列当前显示值取一次真实值
+				if (this.isEmptyValue(this.innerValue)) {
+					this.change({
+						indexs: this.innerDefaultIndex,
+						values: this.columns
+					})
+				}
 				// #ifdef VUE3
 				this.$emit('update:modelValue', this.innerValue)
 				// #endif
@@ -529,14 +552,43 @@
 			generateArray(start, end) {
 				return Array.from(new Array(end + 1).keys()).slice(start)
 			},
+			// 把绑定值统一解析成毫秒时间戳，识别不出日期时返回null
+			// 支持毫秒时间戳(number或纯数字字符串)，以及'2024-10-24'、'2024/10/24 15:08:09'这类
+			// 文档里写明支持的String绑定值
+			parseDateValue(value) {
+				if (value === '' || value === null || value === undefined) {
+					return null
+				}
+				if (typeof value === 'number') {
+					return Number.isFinite(value) ? value : null
+				}
+				const text = String(value).trim()
+				if (!text) {
+					return null
+				}
+				// 纯数字按时间戳处理，避免dayjs把'1729699200000'当成日期字符串去解析
+				if (/^-?\d+$/.test(text)) {
+					const timestamp = Number(text)
+					return Number.isFinite(timestamp) ? timestamp : null
+				}
+				const parsed = dayjs(text)
+				return parsed.isValid() ? parsed.valueOf() : null
+			},
 			// 得出合法的时间
 			correctValue(value) {
+				// 空值代表“未选择/已清空”，直接返回空串。
+				// 否则日期模式会被夹取成minDate、时间模式会被夹取成minHour:minMinute，
+				// 导致外部清空绑定值后输入框仍然显示最小日期/最小时间
+				if (this.isEmptyValue(value)) return ''
 				const isDateMode = !['time', 'timesecond'].includes(this.mode)
-				// if (isDateMode && !test.date(value)) {
-				if (isDateMode && !dayjs.unix(value).isValid()) {
-					// 如果是日期类型，但是又没有设置合法的当前时间的话，使用最小时间为当前时间
-					value = this.minDate
-				} else if (!isDateMode && !value) {
+				if (isDateMode) {
+					// 日期类型统一解析成毫秒时间戳，没有设置合法的当前时间时才使用最小时间。
+					// 这里不能用dayjs.unix(value).isValid()判断：dayjs.unix只接受秒级数字，
+					// 日期字符串乘1000后是NaN，'2024-10-24'这类合法值会被判为非法并被替换成
+					// minDate(默认当前年份-10)，选择器于是停在十年前(issue #537)
+					const timestamp = this.parseDateValue(value)
+					value = timestamp === null ? this.minDate : timestamp
+				} else if (!value) {
 					// 如果是时间类型，而又没有默认值的话，就用最小时间
 					value = this.mode === 'timesecond'
 						? `${padZero(this.minHour)}:${padZero(this.minMinute)}:${padZero(this.minSecond)}`

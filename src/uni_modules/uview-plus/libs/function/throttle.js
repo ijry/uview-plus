@@ -9,6 +9,10 @@ let flag;
  * @return null
  */
 export function throttle(func, wait = 500, immediate = true) {
+    if (wait <= 0) {
+        typeof func === 'function' && func()
+        return
+    }
     if (immediate) {
         if (!flag) {
             flag = true
