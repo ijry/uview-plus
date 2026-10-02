@@ -101,7 +101,8 @@
     "verify:list-scroll-into-view": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-list-scroll-into-view.mjs",
     "verify:tabs-scroll-view-flex": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-tabs-scroll-view-flex.mjs",
     "verify:cate-tab-lazy-render": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-cate-tab-lazy-render.mjs",
-    "verify:upload-video-file": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-upload-video-file.mjs"
+    "verify:upload-video-file": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-upload-video-file.mjs",
+    "verify:skill-assets": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-skill-assets.mjs"
   },
   "pnpm": {
     "overrides": {
