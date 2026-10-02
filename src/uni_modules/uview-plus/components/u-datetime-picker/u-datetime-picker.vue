@@ -197,6 +197,10 @@
 		emits: ['close', 'closed', 'cancel', 'confirm', 'change', 'update:modelValue'],
 		// #endif
 		methods: {
+			// 是否为“未选择/已清空”的空值。空值必须原样透传，不能被夹取成边界值
+			isEmptyValue(value) {
+				return value === '' || value === null || value === undefined
+			},
 			toInt(value, fallback = 0) {
 				const num = parseInt(value, 10)
 				return Number.isFinite(num) ? num : fallback
@@ -331,6 +335,14 @@
 			},
 			// 点击工具栏的确定按钮
 			confirm() {
+				// 值为空(从未选择或被外部清空)时，用户看到的是各列当前停留的位置，
+				// 直接上抛空值会“所见非所得”，故先按各列当前显示值取一次真实值
+				if (this.isEmptyValue(this.innerValue)) {
+					this.change({
+						indexs: this.innerDefaultIndex,
+						values: this.columns
+					})
+				}
 				// #ifdef VUE3
 				this.$emit('update:modelValue', this.innerValue)
 				// #endif
@@ -564,6 +576,10 @@
 			},
 			// 得出合法的时间
 			correctValue(value) {
+				// 空值代表“未选择/已清空”，直接返回空串。
+				// 否则日期模式会被夹取成minDate、时间模式会被夹取成minHour:minMinute，
+				// 导致外部清空绑定值后输入框仍然显示最小日期/最小时间
+				if (this.isEmptyValue(value)) return ''
 				const isDateMode = !['time', 'timesecond'].includes(this.mode)
 				if (isDateMode) {
 					// 日期类型统一解析成毫秒时间戳，没有设置合法的当前时间时才使用最小时间。
