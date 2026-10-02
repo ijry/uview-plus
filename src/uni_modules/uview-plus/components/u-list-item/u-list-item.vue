@@ -44,12 +44,11 @@
 			}
 		},
 		computed: {
-			// 非nvue下，scroll-view的scroll-into-view需要子元素id，故由anchor生成
-			// 加上前缀既能避免与页面其他id冲突，也能保证anchor为数字时id依然合法
+			// scroll-view的scroll-into-view只认节点id，故由anchor加前缀生成；
+			// 未设置anchor时输出null，避免列表里的每一项都得到同一个空id。
 			anchorId() {
-				return this.anchor === '' || this.anchor === null || this.anchor === undefined ?
-					'' :
-					`u-list-item-${this.anchor}`
+				if (this.anchor === '' || this.anchor === null || this.anchor === undefined) return null
+				return 'u-list-item-' + this.anchor
 			}
 		},
 		inject: ['uList'],

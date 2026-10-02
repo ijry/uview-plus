@@ -92,9 +92,9 @@ check('anchorId 由 anchor 加前缀生成，anchor 为空时不生成 id', () =
     // 数字 anchor 也能得到合法 id（id 不能以数字开头）
     assert.equal(mountItem(list, 19).anchorId, 'u-list-item-19')
     // 空 anchor 不能生成 id，否则整个列表都是重复 id
-    assert.equal(mountItem(list, '').anchorId, '')
-    assert.equal(mountItem(list, null).anchorId, '')
-    assert.equal(mountItem(list, undefined).anchorId, '')
+    assert.equal(mountItem(list, '').anchorId, null)
+    assert.equal(mountItem(list, null).anchorId, null)
+    assert.equal(mountItem(list, undefined).anchorId, null)
 })
 
 check('scroll-view 绑定的是内部值 innerScrollIntoView', () => {
@@ -114,6 +114,7 @@ check('getAnchorChild 同时支持 anchor 与 u-list-item-${anchor} 两种写法
     assert.equal(list.getAnchorChild(19).anchor, 19)
     assert.equal(list.getAnchorChild('u-list-item-19').anchor, 19)
     assert.equal(list.getAnchorChild('u-list-item-'), undefined, '空 anchor 的 item 不应被命中')
+    assert.equal(list.getAnchorChild('u-list-item-null'), undefined, 'null anchor 的 item 不应被命中')
     assert.equal(list.getAnchorChild('other-id'), undefined)
 })
 
@@ -130,6 +131,9 @@ check('命中 anchor 时非 nvue 转成 item 的 id、nvue 调用 dom.scrollToEl
     assert.equal(domCalls[0].options.animated, false, '应带上 scrollWithAnimation')
 
     list.scrollIntoViewById('u-list-item-item-19')
+    assert.equal(list.innerScrollIntoView, '', '重复滚动同一目标时应先置空')
+    list.nextTicks.shift()()
+    assert.equal(list.innerScrollIntoView, 'u-list-item-item-19', '下一帧应重新赋值以触发滚动')
     assert.equal(list.innerScrollIntoView, 'u-list-item-item-19', '带前缀的写法结果一致')
 })
 
@@ -151,21 +155,21 @@ check('未命中 anchor 的 id 仍按原有约定当作使用者自己的子元�
     assert.equal(list.innerScrollIntoView, 'my-own-id', '不该给使用者自己的 id 加前缀')
 })
 
-check('置空 scroll-into-view 会清掉内部值', () => {
+check('置空 scroll-into-view 是安全的空操作', () => {
     const list = createList()
     mountItem(list, 'item-1')
     list.scrollIntoViewById('item-1')
     assert.equal(list.innerScrollIntoView, 'u-list-item-item-1')
 
     list.scrollIntoViewById('')
-    assert.equal(list.innerScrollIntoView, '', '置空后应清掉，便于重复滚动到同一个 item')
+    assert.equal(list.innerScrollIntoView, 'u-list-item-item-1', '空值不应冲掉已有目标')
 })
 
 check('数据与 scroll-into-view 同一帧赋值时，下一帧重试仍能命中', () => {
     const list = createList()
     // item 还没挂载
     list.scrollIntoViewById('item-20')
-    assert.equal(list.innerScrollIntoView, '', '首次匹配不到时不应立即透传')
+    assert.equal(list.innerScrollIntoView, 'item-20', '未命中时先按原有节点 id 语义透传')
     assert.equal(list.nextTicks.length, 1, '应安排一次 $nextTick 重试')
 
     mountItem(list, 'item-20')
@@ -183,7 +187,7 @@ check('过期的重试不会覆盖新的目标', () => {
     mountItem(list, 'new')
     const [staleRetry, freshRetry] = list.nextTicks
     staleRetry()
-    assert.equal(list.innerScrollIntoView, '', '过期重试应被丢弃')
+    assert.equal(list.innerScrollIntoView, 'new', '过期重试不应覆盖当前目标')
     freshRetry()
     assert.equal(list.innerScrollIntoView, 'u-list-item-new')
 })

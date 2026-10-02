@@ -143,40 +143,53 @@
 			getAnchorChild(id) {
 				const anchorId = String(id)
 				return this.children.find(child => {
+					if (child.anchor === '' || child.anchor === null || child.anchor === undefined) return false
 					const anchor = String(child.anchor)
-					return anchor !== '' && (anchor === anchorId || `u-list-item-${anchor}` === anchorId)
+					return anchor === anchorId || `u-list-item-${anchor}` === anchorId
 				})
 			},
 			scrollIntoViewById(id, retry = true) {
+				if (id === '' || id === null || id === undefined) return
 				// 记录最后一次请求，避免过期的重试覆盖掉新值
 				this.scrollIntoViewTarget = id
-				// #ifndef APP-NVUE
-				if (!id) {
-					this.innerScrollIntoView = ''
-					return
-				}
-				// #endif
 				// 根据id参数，找到所有u-list-item中匹配的节点
 				const child = this.getAnchorChild(id)
-				// 数据和scroll-into-view同时赋值时item尚未挂载，等下一帧再匹配一次
-				if (!child && retry) {
+				const scheduleRetry = () => {
+					if (!retry) return
 					this.$nextTick(() => {
 						if (this.scrollIntoViewTarget === id) this.scrollIntoViewById(id, false)
 					})
-					return
 				}
 				// #ifndef APP-NVUE
-				// 命中anchor时滚动到该item，否则依然当作使用者自己在item内设置的子元素id
-				this.innerScrollIntoView = child ? `u-list-item-${child.anchor}` : id
+				// 命中anchor时滚动到item的id；未命中时仍按原语义透传用户自己的子元素id
+				const target = child ? 'u-list-item-' + child.anchor : id
+				// scroll-into-view需要有一个值变动的过程，重复滚动同一节点时先置空
+				if (retry && this.innerScrollIntoView === target) {
+					this.innerScrollIntoView = ''
+					this.$nextTick(() => {
+						if (this.scrollIntoViewTarget === id) this.innerScrollIntoView = target
+					})
+				} else {
+					this.innerScrollIntoView = target
+				}
 				// #endif
 				// #ifdef APP-NVUE
-				// nvue下scroll-view不可用，通过dom模块滚动到对应的位置
-				const ref = child && child.$refs[`u-list-item-${child.anchor}`]
-				if (!ref) return
-				dom.scrollToElement(ref, {
+				// nvue下通过children和带前缀的ref查找节点，也兼容用户直接传入子节点ref名
+				const ref = child && child.$refs && child.$refs['u-list-item-' + child.anchor]
+				const matchedItem = ref ? null : this.children.find(item => item.$refs && item.$refs[id])
+				const targetRef = ref || (matchedItem && matchedItem.$refs[id])
+				if (!targetRef) {
+					scheduleRetry()
+					return
+				}
+				dom.scrollToElement(targetRef, {
 					// 是否需要滚动动画
 					animated: this.scrollWithAnimation
 				})
+				// #endif
+				// #ifndef APP-NVUE
+				// anchor可能和列表数据同一帧生成，未命中时下一帧再尝试一次
+				if (!child) scheduleRetry()
 				// #endif
 			},
 			// 滚动到底部触发事件
