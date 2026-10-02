@@ -239,6 +239,9 @@
 			this.init()
 		},
 		mounted() {
+			// 抖音小程序等平台子组件 created 可能在父组件 created 之前执行，
+			// 此时 parent.children 尚未初始化，init 被跳过，此处补偿重试
+			this.init()
 			this.scheduleMidButtonBorderMeasure()
 		},
 		watch: {
@@ -260,6 +263,13 @@
 				this.updateParentData()
 				if (!this.parent) {
 					error('up-tabbar-item必须搭配up-tabbar组件使用')
+					return
+				}
+				// 抖音小程序等平台子组件 created 可能在父组件 created 之前执行，
+				// 此时 parent.children 尚未初始化（u-tabbar 在 created 中才赋值 children=[]），
+				// 跳过本次初始化，由 mounted 钩子补偿重试
+				if (!this.parent.children) {
+					return
 				}
 				// 本子组件在u-tabbar的children数组中的索引
 				const index = this.parent.children.indexOf(this)
@@ -299,10 +309,11 @@
 			},
 			clickHandler() {
 				this.$nextTick(() => {
+					if (!this.parent || !this.parent.children) return
 					const index = this.parent.children.indexOf(this)
 					const name = this.name || index
 					// 点击的item为非激活的item才发出change事件
-					if (name !== this.parent.value) {
+					if (this.parent && name !== this.parent.value) {
 						this.parent.$emit('change', name)
 					}
 					this.$emit('click', name)

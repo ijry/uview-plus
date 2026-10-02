@@ -13,6 +13,7 @@
 				backgroundColor: resolvedBgColor,
 				borderRadius: shape == 'round' ? '100px' : '4px',
 				borderColor: resolvedBorderColor,
+				'--up-search-placeholder-color': resolvedPlaceholderColor,
 			}"
 		>
 			<template v-if="$slots.label || label !== null">
@@ -268,6 +269,20 @@
 	}
 </script>
 
+<style lang="scss">
+/**
+ * placeholder-class 指定的类不能写在 scoped 中：小程序端 placeholder 节点由 input 内部渲染，
+ * 不会带上 scoped 的 data-v- 类，编译出的 .xxx--placeholder.data-v-xxx 永远匹配不到它，
+ * placeholderColor 就只剩内联 placeholder-style 一条通路，而真机上首次渲染并不总会应用它，
+ * 表现为"输入内容后颜色才生效"。颜色统一由 --up-search-placeholder-color 变量传入。
+ */
+$u-search-input-placeholder-color: $u-tips-color !default;
+
+.u-search__content__input--placeholder {
+	color: var(--up-search-placeholder-color, #{$u-search-input-placeholder-color});
+}
+</style>
+
 <style lang="scss" scoped>
 $u-search-content-padding: 0 10px !default;
 $u-search-label-color: $u-main-color !default;
@@ -280,7 +295,6 @@ $u-search-close-transform: scale(0.82) !default;
 $u-search-input-font-size: 14px !default;
 $u-search-input-margin: 0 5px !default;
 $u-search-input-color: $u-main-color !default;
-$u-search-input-placeholder-color: $u-tips-color !default;
 $u-search-action-font-size: 14px !default;
 $u-search-action-color: $u-main-color !default;
 $u-search-action-width: 0 !default;
@@ -341,10 +355,6 @@ $u-search-action-margin-left: 5px !default;
 			line-height: 1;
 			margin: $u-search-input-margin;
 			color: $u-search-input-color;
-
-			&--placeholder {
-				color: $u-search-input-placeholder-color;
-			}
 		}
 	}
 

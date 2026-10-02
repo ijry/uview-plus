@@ -109,5 +109,14 @@
 		grid-gap: v-bind(gap);
 		grid-template-columns: repeat(v-bind(col), minmax(0, 1fr));
 		/* #endif */
+		// 安卓7自带的WebView是Chromium 52/55，CSS Grid要到Chromium 57才可用，上面那条display:grid会被整条丢弃，
+		// 这里显式退回上面的flex换行，并把列数透出给u-grid-item，让宫格自己按列数取宽度；
+		// 这类老内核同样不支持flex的gap，所以gap在兜底布局下画不出来。
+		/* #ifndef APP-NVUE || MP */
+		@supports not (display: grid) {
+			display: flex !important;
+			--up-grid-col: v-bind(col);
+		}
+		/* #endif */
 	}
 </style>

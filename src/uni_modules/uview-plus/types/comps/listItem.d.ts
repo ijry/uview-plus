@@ -2,7 +2,7 @@ import { AllowedComponentProps, VNodeProps } from './_common'
 
 declare interface ListItemProps {
   /**
-   * 用于滚动到指定item
+   * item的锚点，将u-list的scroll-into-view设置为该值即可滚动到此item
    */
   anchor?: string | number
 }

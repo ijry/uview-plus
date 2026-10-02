@@ -3,7 +3,7 @@
 		<view :class="['u-select__content', disabled && 'disabled']">
 			<view :class="['u-select__label', border && 'u-select__label--border']" :style="selectLabelStyle" @click="labelClick">
 				<slot name="text" :currentLabel="currentLabel">
-					<text class="u-select__text" :style="{ color: resolvedTextColor }" v-if="showOptionsLabel">
+					<text class="u-select__text" :style="{ color: resolvedTextColor }" v-if="showOptionsLabel && currentLabel">
 						{{ currentLabel }}
 					</text>
 					<text class="u-select__text" :style="{ color: resolvedTextColor }" v-else>
@@ -16,17 +16,25 @@
 			</view>
 			<up-overlay :show="isOpen" @click="overlayClick" v-if="overlay" :zIndex="zIndex" :duration="duration + 50"
 				:customStyle="overlayStyle" :opacity="overlayOpacity" @touchmove.stop.prevent="noop"></up-overlay>
+			<view class="u-select__arrow" :class="'u-select__arrow--' + optionsPlacement" :style="arrowStyle"
+				v-if="isOpen && arrow">
+				<view class="u-select__arrow__outer"></view>
+				<view class="u-select__arrow__inner"></view>
+			</view>
 			<view class="u-select__options__wrap" :style="optionsWrapStyle">
 				<view class="u-select__options" :style="optionsStyle" v-if="isOpen">
 					<slot name="options">
-						<view class="u-select__options_item" :class="current == item[keyName] ? 'active': ''"
-							:style="{ color: resolvedItemColor }"
+						<view class="u-select__options_item" :class="isSelected(item) ? 'active': ''"
+							:style="{ color: itemTextColor(item) }"
 							:key="index" v-for="(item, index) in options" @click="selectItem(item)">
-							<slot name="optionItem" :item="item">
-								<text class="u-select__item_text" :style="{color: resolvedItemColor}">
-									{{item[labelName]}}
-								</text>
-							</slot>
+							<view class="u-select__options_item__body">
+								<slot name="optionItem" :item="item" :selected="isSelected(item)">
+									<text class="u-select__item_text" :style="{color: itemTextColor(item)}">
+										{{item[labelName]}}
+									</text>
+								</slot>
+							</view>
+							<up-icon v-if="isSelected(item)" name="checkbox-mark" size="15px" :color="resolvedActiveColor"></up-icon>
 						</view>
 					</slot>
 				</view>
@@ -99,8 +107,9 @@
 				type: Boolean,
 				default: false
 			},
+			// 当前选中值，multiple 时传数组
 			current: {
-				type: [String, Number],
+				type: [String, Number, Array],
 				default: ''
 			},
 			zIndex: {
@@ -133,18 +142,44 @@
 			optionsWidth: {
 				type: [String, Number],
 				default: ''
+			},
+			// 下拉面板展开方向：auto 按上下剩余空间自动选择，bottom 固定向下，top 固定向上
+			placement: {
+				type: String,
+				default: 'auto'
+			},
+			// 是否显示下拉面板指向触发区的三角形指示器
+			arrow: {
+				type: Boolean,
+				default: true
+			},
+			// 是否多选，多选时 current 为数组且选中后面板不关闭
+			multiple: {
+				type: Boolean,
+				default: false
+			},
+			// 选中项的文字与勾选图标颜色，默认取主题主色
+			activeColor: {
+				type: String,
+				default: ''
 			}
 		},
 		data() {
 			return {
 				isOpen: false,
 				optionsWrapLeft: 'auto',
-				optionsWrapRight: 'auto'
+				optionsWrapRight: 'auto',
+				// 展开方向与空间不足时的限高，都在打开时按剩余空间重新计算
+				optionsPlacement: 'bottom',
+				optionsWrapMaxHeight: ''
 			}
 		},
 		computed: {
 			resolvedItemColor() {
 				return this.itemColor || this.upThemeVar('--up-main-color', '#303133');
+			},
+			resolvedActiveColor() {
+				return this.activeColor || this.upThemeVar('--up-primary', '#3c9cff');
 			},
 			resolvedTextColor() {
 				return this.upThemeVar('--up-main-color', '#303133');
@@ -174,14 +209,25 @@
 				}
 				return style;
 			},
+			panelGap() {
+				// 显示指示器时把间距留成三角形的高度，让它正好顶住面板边框
+				return this.arrow ? 6 : 4;
+			},
 			optionsWrapStyle() {
 				const style = {
 					overflowY: 'auto',
 					zIndex: this.zIndex + 1,
 					left: this.optionsWrapLeft,
 					right: this.optionsWrapRight,
-					maxHeight: this.maxHeight
+					maxHeight: this.optionsWrapMaxHeight || this.maxHeight
 				};
+				if (this.optionsPlacement === 'top') {
+					style.top = 'auto';
+					style.bottom = `calc(100% + ${this.panelGap}px)`;
+				} else {
+					style.top = `calc(100% + ${this.panelGap}px)`;
+					style.bottom = 'auto';
+				}
 				if (this.normalizedOptionsWidth) {
 					style.width = this.normalizedOptionsWidth;
 				}
@@ -195,14 +241,35 @@
 				}
 				return style;
 			},
+			arrowStyle() {
+				// 指示器画在滚动容器外面，否则会被面板自身的 overflow 裁掉
+				const style = {
+					zIndex: this.zIndex + 2,
+					left: this.optionsWrapLeft === 'auto' ? 'auto' : '12px',
+					right: this.optionsWrapLeft === 'auto' ? '12px' : 'auto'
+				};
+				if (this.optionsPlacement === 'top') {
+					style.top = 'auto';
+					style.bottom = '100%';
+				} else {
+					style.top = '100%';
+					style.bottom = 'auto';
+				}
+				return style;
+			},
+			currentList() {
+				if (Array.isArray(this.current)) return this.current;
+				if (this.current === '' || this.current === null || typeof this.current === 'undefined') return [];
+				return [this.current];
+			},
 			currentLabel() {
-				let name = '';
+				const names = [];
 				this.options.forEach((ele) => {
-					if (ele[this.keyName] === this.current) {
-						name = ele[this.labelName];
+					if (this.isSelected(ele)) {
+						names.push(ele[this.labelName]);
 					}
 				});
-				return name;
+				return names.join('、');
 			}
 		},
 		methods: {
@@ -230,22 +297,74 @@
 				if (!this.closeOnClickOverlay) return;
 				this.closeSelect();
 			},
+			isSelected(item) {
+				const value = item[this.keyName];
+				if (this.multiple) {
+					return this.currentList.some((ele) => ele == value);
+				}
+				// 没有选中值时不能走宽松比较，否则 0 == '' 会把 key 为 0 的项误标成选中
+				if (this.current === '' || this.current === null || typeof this.current === 'undefined') {
+					return false;
+				}
+				return this.current == value;
+			},
+			itemTextColor(item) {
+				// 选项颜色是行内绑定的，选中态必须走同一个绑定，否则会被行内样式盖掉
+				return this.isSelected(item) ? this.resolvedActiveColor : this.resolvedItemColor;
+			},
 			selectItem(item) {
+				const value = item[this.keyName];
+				if (this.multiple) {
+					// 多选时保持面板展开，方便连续勾选
+					const list = this.currentList.slice();
+					const index = list.findIndex((ele) => ele == value);
+					if (index > -1) {
+						list.splice(index, 1);
+					} else {
+						list.push(value);
+					}
+					this.$emit('update:current', list);
+					this.$emit('select', item, list);
+					return;
+				}
 				this.isOpen = false;
-				this.$emit('update:current', item[this.keyName]);
+				this.$emit('update:current', value);
 				this.$emit('select', item);
 			},
 			adjustOptionsWrapPosition() {
+				// 每次打开都从"左对齐、向下、不限高"重新算，避免上一次的结果影响这次的测量
 				this.optionsWrapLeft = '0px';
 				this.optionsWrapRight = 'auto';
-				let wi = getWindowInfo();
-				let windowWidth = wi.windowWidth;
-				this.$uGetRect('.u-select__options__wrap').then(rect => {
-					if (rect.left + rect.width > windowWidth) {
-						// 如果右侧被遮挡，则调整到左侧
-						this.optionsWrapLeft = 'auto';
-						this.optionsWrapRight = `0px`;
-					}
+				this.optionsWrapMaxHeight = '';
+				this.optionsPlacement = this.placement === 'top' ? 'top' : 'bottom';
+				this.$nextTick(() => {
+					if (!this.isOpen) return;
+					let wi = getWindowInfo();
+					let windowWidth = wi.windowWidth;
+					let windowHeight = wi.windowHeight;
+					Promise.all([
+						this.$uGetRect('.u-select__label'),
+						this.$uGetRect('.u-select__options__wrap')
+					]).then(([labelRect, wrapRect]) => {
+						if (!this.isOpen || !labelRect || !wrapRect) return;
+						if (wrapRect.left + wrapRect.width > windowWidth) {
+							// 如果右侧被遮挡，则调整到左侧
+							this.optionsWrapLeft = 'auto';
+							this.optionsWrapRight = `0px`;
+						}
+						// boundingClientRect 的坐标以窗口可用区域为原点，直接和 windowHeight 比即可
+						const spaceBelow = windowHeight - labelRect.bottom - this.panelGap;
+						const spaceAbove = labelRect.top - this.panelGap;
+						if (this.placement === 'auto' && wrapRect.height > spaceBelow && spaceAbove > spaceBelow) {
+							// 下方放不下且上方更宽裕时翻到触发区上方
+							this.optionsPlacement = 'top';
+						}
+						// 选定方向后仍放不下就限高滚动，否则面板会溢出窗口，并把页面撑高
+						const space = this.optionsPlacement === 'top' ? spaceAbove : spaceBelow;
+						if (space > 0 && wrapRect.height > space) {
+							this.optionsWrapMaxHeight = `${Math.floor(space)}px`;
+						}
+					});
 				});
 			}
 		}
@@ -287,10 +406,56 @@
 			pointer-events: none;
 		}
 
-		.u-select__options__wrap {
-			margin-bottom: 46px;
+		.u-select__arrow {
 			position: absolute;
-			top: calc(100% + 4px);
+			width: 0;
+			height: 0;
+			pointer-events: none;
+
+			.u-select__arrow__outer,
+			.u-select__arrow__inner {
+				position: absolute;
+				left: 0;
+				/* 三角形以锚点为中心，左右对齐时都不会贴到面板边角 */
+				margin-left: -6px;
+				width: 0;
+				height: 0;
+				border-style: solid;
+				border-color: transparent;
+			}
+
+			&--bottom {
+				.u-select__arrow__outer {
+					top: 0;
+					border-width: 0 6px 6px 6px;
+					border-bottom-color: var(--up-border-color, #f1f1f1);
+				}
+
+				.u-select__arrow__inner {
+					// 往面板里挪 1px，盖掉面板自身的边框，拼出缺口效果
+					top: 1px;
+					border-width: 0 6px 6px 6px;
+					border-bottom-color: var(--up-card-bg-color, #fff);
+				}
+			}
+
+			&--top {
+				.u-select__arrow__outer {
+					bottom: 0;
+					border-width: 6px 6px 0 6px;
+					border-top-color: var(--up-border-color, #f1f1f1);
+				}
+
+				.u-select__arrow__inner {
+					bottom: 1px;
+					border-width: 6px 6px 0 6px;
+					border-top-color: var(--up-card-bg-color, #fff);
+				}
+			}
+		}
+
+		.u-select__options__wrap {
+			position: absolute;
 			left: 0;
 		}
 
@@ -303,12 +468,22 @@
 
 			.u-select__options_item {
 				padding: 10px 12px;
+				display: flex;
+				align-items: center;
 				box-sizing: border-box;
 				width: 100%;
 				height: 100%;
 
 				&:hover {
 					background-color: var(--up-bg-color, #f7f7f7);
+				}
+
+				&.active {
+					background-color: var(--up-primary-light, #ecf5ff);
+				}
+
+				.u-select__options_item__body {
+					flex: 1;
 				}
 
 				/* #ifdef H5 */

@@ -10,6 +10,7 @@
 				@touchstart="touchStart" 
 				@touchmove="touchMove" 
 				@touchend="touchEnd"
+				@ready="onCanvasReady"
 				:disable-scroll="true"
 				class="u-signature__canvas"
 				:style="{
@@ -75,6 +76,7 @@
 
 <script>
 	import { t } from '../../libs/i18n'
+	import { upGetRect } from '../../libs/function/index.js'
 	export default {
 		name: 'u-signature',
 		props: {
@@ -132,9 +134,11 @@
 				],
 				showBrushSettings: false,
 				showColorSettings: false,
-				lastPoint: null, // 保存上一个点的坐标
-				canvasInstance: null // 缓存canvas实例
-			}
+			lastPoint: null, // 保存上一个点的坐标
+			canvasInstance: null, // 缓存canvas实例
+			canvasReady: false, // up-canvas 是否已完成初始化（APP/NVUE 需异步）
+			canvasRect: { left: 0, top: 0 } // 画布在视口中的位置，用于坐标换算
+		}
 		},
 		computed: {
 			resolvedBgColor() {
@@ -150,10 +154,9 @@
 			}
 		},
 		mounted() {
-			// 初始化时获取canvas实例
+			// 等待 up-canvas 完成初始化（APP / NVUE 画布上下文需异步就绪）
 			this.$nextTick(() => {
-				this.getCanvasInstance();
-				this.clearCanvas();
+				this.initCanvasInstance();
 			});
 		},
 		watch: {
@@ -192,110 +195,168 @@
 			},
 			
 			// 获取签名画布实例
-			getCanvasInstance() {
-				if (this.canvasInstance) {
-					return this.canvasInstance;
-				}
-				
-				const canvasRef = this.$refs.signatureCanvas;
-				if (canvasRef) {
-					this.canvasInstance = canvasRef;
-					return canvasRef;
-				}
-				return null;
-			},
+		getCanvasInstance() {
+			if (this.canvasInstance) {
+				return this.canvasInstance;
+			}
 			
-			touchStart(e) {
-				if (!this.canvasInstance || !this.canvasInstance.ctx) {
-					this.getCanvasInstance();
+			const canvasRef = this.$refs.signatureCanvas;
+			if (canvasRef) {
+				this.canvasInstance = canvasRef;
+				// 实例已就绪则同步标记，避免首笔被 touchStart 拦截
+				if (canvasRef.ctx) {
+					this.canvasReady = true;
 				}
-				
-				if (!this.canvasInstance || !this.canvasInstance.ctx) return;
-				
-				this.isDrawing = true;
-				this.isEmpty = false;
-				this.currentPath = [];
-				
-				const { x, y } = this.getCanvasPoint(e);
-				
-				// 设置线条样式
-				this.canvasInstance.setLineStyle(this.lineColor, this.lineWidth);
-				
-				// 开始路径
-				this.canvasInstance.beginPath();
-				this.canvasInstance.moveTo(x, y);
-				
-				// 记录起始点
-				this.currentPath.push({
-					x,
-					y,
-					type: 'start',
-					color: this.lineColor,
-					width: this.lineWidth
-				});
-				
-				// 保存上一个点
-				this.lastPoint = { x, y };
-				
-				// 阻止默认事件以提高性能
-				e.preventDefault();
-			},
-			
-			touchMove(e) {
-				if (!this.isDrawing || !this.canvasInstance || !this.canvasInstance.ctx) return;
-				
-				// 阻止默认事件以提高性能
-				e.preventDefault();
-				
-				const { x, y } = this.getCanvasPoint(e);
-				
-				// 从上一个点画线到当前点
-				this.canvasInstance.lineTo(x, y);
-				this.canvasInstance.stroke(); // 实时绘制当前线段
-				this.currentPath.push({
-					x,
-					y,
-					type: 'move'
-				});
-				this.canvasInstance.draw(false);
-				
-				// 更新上一个点
-				this.lastPoint = { x, y };
-			},
-			
-			touchEnd(e) {
-				if (!this.isDrawing || !this.canvasInstance || !this.canvasInstance.ctx) return;
-				
-				this.isDrawing = false;
-				this.canvasInstance.closePath();
-				this.lastPoint = null;
-				
-				// 将当前路径加入栈中用于回退
-				if (this.currentPath.length > 0) {
-					this.pathStack.push([...this.currentPath]);
+				return canvasRef;
+			}
+			return null;
+		},
+
+		// 主动等待 up-canvas 完成初始化（部分平台画布上下文为异步）
+		async initCanvasInstance() {
+			const ref = this.getCanvasInstance();
+			if (!ref) return;
+			if (typeof ref.initCanvas === 'function') {
+				try {
+					const ok = await ref.initCanvas(true);
+					if (ok) {
+						this.onCanvasReady();
+						return;
+					}
+				} catch (e) {
+					// 忽略，等待 @ready 兜底
 				}
-				
-				// 最后统一执行一次绘制
-				this.canvasInstance.draw(true);
-			},
+			}
+			// 若 initCanvas 暂未就绪，up-canvas 的 @ready 事件会触发 onCanvasReady
+		},
+
+		// up-canvas 初始化完成回调（@ready 或 initCanvas 成功后触发）
+		onCanvasReady() {
+			if (this.canvasReady) return;
+			this.canvasReady = true;
+			this.getCanvasInstance();
+			this.refreshCanvasRect();
+			this.clearCanvas();
+		},
+
+		// 缓存画布在视口中的位置，用于将视口坐标换算为画布坐标
+		refreshCanvasRect() {
+			if (typeof upGetRect !== 'function') return;
+			upGetRect('#' + this.canvasId, false, this)
+				.then((rect) => {
+					if (rect && (rect.left || rect.top || rect.width)) {
+						this.canvasRect = {
+							left: rect.left || 0,
+							top: rect.top || 0
+						};
+					}
+				})
+				.catch(() => {});
+		},
 			
-			// 同步获取canvas坐标点（兼容处理）
-			getCanvasPoint(e) {
-				// #ifdef MP-WEIXIN
-				const touch = e.touches && e.touches[0] ? e.touches[0] : e.mp.touches[0];
-				// #endif
-				// #ifndef MP-WEIXIN
-				const touch = e.touches[0];
-				// #endif
-				
-				// 计算相对于canvas的坐标
-				// 由于无法直接获取canvas位置，这里简化处理
-				// 实际应用中可能需要通过uni.createSelectorQuery获取canvas位置
-				return {
-					x: touch.x,
-					y: touch.y
-				};
-			},
+		touchStart(e) {
+			if (!this.canvasReady || !this.canvasInstance || !this.canvasInstance.ctx) {
+				// 画布尚未就绪：尝试初始化一次，待 @ready 后下一次触摸即可绘制
+				this.getCanvasInstance();
+				if (this.canvasInstance && typeof this.canvasInstance.initCanvas === 'function') {
+					this.canvasInstance.initCanvas(true)
+						.then(() => {
+							this.canvasReady = true;
+							this.refreshCanvasRect();
+						})
+						.catch(() => {});
+				}
+				return;
+			}
+			
+			this.isDrawing = true;
+			this.isEmpty = false;
+			this.currentPath = [];
+			
+			const { x, y } = this.getCanvasPoint(e);
+			
+			// 设置线条样式（每次起笔确保样式生效，兼容旧版 canvas 的 draw 后状态重置）
+			this.canvasInstance.setLineStyle(this.lineColor, this.lineWidth);
+			
+			// 仅记录起点，真正的绘制在 touchMove 中以“增量线段”方式完成
+			this.lastPoint = { x, y };
+			this.currentPath.push({
+				x,
+				y,
+				type: 'start',
+				color: this.lineColor,
+				width: this.lineWidth
+			});
+			
+			e.preventDefault();
+		},
+			
+		touchMove(e) {
+			if (!this.isDrawing || !this.canvasInstance || !this.canvasInstance.ctx) return;
+			
+			e.preventDefault();
+			
+			const { x, y } = this.getCanvasPoint(e);
+			
+			// 增量绘制：以上一个点为起点画到当前点。
+			// 旧版 canvas（APP-PLUS）每次 draw 会刷新命令队列，必须以“单段”方式绘制；
+			// 2D canvas 亦适用（draw 为 no-op，stroke 即时生效并保留已有像素）。
+			this.canvasInstance.setLineStyle(this.lineColor, this.lineWidth);
+			this.canvasInstance.beginPath();
+			this.canvasInstance.moveTo(this.lastPoint.x, this.lastPoint.y);
+			this.canvasInstance.lineTo(x, y);
+			this.canvasInstance.stroke();
+			this.canvasInstance.draw(true); // reserve：保留已绘制内容，避免笔迹闪退
+			
+			this.currentPath.push({
+				x,
+				y,
+				type: 'move'
+			});
+			this.lastPoint = { x, y };
+		},
+		
+		touchEnd(e) {
+			if (!this.isDrawing || !this.canvasInstance || !this.canvasInstance.ctx) return;
+			
+			this.isDrawing = false;
+			this.lastPoint = null;
+			
+			// 将当前路径加入栈中用于回退
+			if (this.currentPath.length > 0) {
+				this.pathStack.push([...this.currentPath]);
+			}
+			
+			// 收尾绘制（保留已有内容）
+			this.canvasInstance.draw(true);
+		},
+			
+		// 同步获取canvas坐标点（兼容各平台）
+		getCanvasPoint(e) {
+			const touch =
+				(e.touches && e.touches[0]) ||
+				(e.changedTouches && e.changedTouches[0]) ||
+				null;
+			if (!touch) return { x: 0, y: 0 };
+
+			// 2D canvas（MP/H5）与 NVUE webview 会在事件上直接挂载画布相对坐标
+			if (typeof touch.x === 'number' && typeof touch.y === 'number') {
+				return { x: touch.x, y: touch.y };
+			}
+
+			// 旧版 canvas（如 APP-PLUS）的 touch 仅提供视口坐标，需减去画布位置
+			const rect = this.canvasRect || { left: 0, top: 0 };
+			const clientX = touch.clientX !== undefined
+				? touch.clientX
+				: (touch.pageX !== undefined ? touch.pageX : 0);
+			const clientY = touch.clientY !== undefined
+				? touch.clientY
+				: (touch.pageY !== undefined ? touch.pageY : 0);
+			return {
+				x: clientX - rect.left,
+				y: clientY - rect.top
+			};
+		},
 			
 			// 选择颜色
 			selectColor(color) {

@@ -441,6 +441,19 @@
 					index: index == null ? this.fileList.length : index,
 				};
 			},
+			// 组装uni.uploadFile的文件参数。
+			// H5下选择结果里带的是真实File对象，直接交给uni.uploadFile；否则它只能拿blob:
+			// 地址再读回二进制，而部分webview（如微信内置浏览器）读blob:会拿到空内容，
+			// 上传就会失败（uploadFile:fail file error）。#801
+			uploadFileParams(item, name = 'file') {
+				// #ifdef H5
+				const raw = item.file || item.tempFile
+				if (typeof Blob !== 'undefined' && raw instanceof Blob) {
+					return { name, files: [{ name, file: raw }] }
+				}
+				// #endif
+				return { name, filePath: item.url }
+			},
 			async onAfterRead(file) {
 				const {
 					maxSize,
@@ -511,8 +524,7 @@
 								}
 								var uploadTask = uni.uploadFile({
 									url: res0.data.params.host,
-									filePath: lists[j].url,
-									name: 'file',
+									...this.uploadFileParams(lists[j]),
 									// fileType: 'video', // 仅支付宝小程序，且必填。
 									// header: header,
 									formData: formData,
@@ -556,8 +568,7 @@
 								// 服务器本机上传
 								var uploadTask = uni.uploadFile({
 									url: this.autoUploadApi,
-									filePath: lists[j].url,
-									name: 'file',
+									...this.uploadFileParams(lists[j]),
 									// fileType: 'video', // 仅支付宝小程序，且必填。
 									header: this.autoUploadHeader,
 									success: (uploadFileRes) => {

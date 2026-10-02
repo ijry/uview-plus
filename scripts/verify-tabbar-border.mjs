@@ -46,7 +46,7 @@ assert.equal(
 	'package.json should expose verify:tabbar-border'
 )
 
-const { parse, compileTemplate } = require('@vue/compiler-sfc')
+const { parse, compileTemplate } = require('vue/compiler-sfc')
 const { descriptor, errors } = parse(source, { filename: sfcPath })
 assert.deepEqual(errors, [], 'u-tabbar.vue should parse cleanly')
 

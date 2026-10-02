@@ -1,5 +1,5 @@
 import { defineMixin } from '../vue'
-import { deepMerge, $parent, upGetRect } from '../function/index'
+import { $parent, upGetRect } from '../function/index'
 import test from '../function/test'
 import route from '../util/route'
 import {
@@ -87,11 +87,16 @@ export const mixin = defineMixin({
                 return instance.__upUCache
             }
             // 在非nvue端，移除props，http，mixin等对象，避免在小程序setData时数据过大影响性能
-            let mergeU = deepMerge(uni.$u, {
-                props: undefined,
-                http: undefined,
-                mixin: undefined
-            })
+            // 这里只做浅拷贝：本mixin是全局注册的（见index.js的Vue.mixin），深拷贝整个uni.$u
+            // （含上百个组件的props默认值）的开销会随组件实例数线性放大，日历、长列表这类
+            // 一次渲染上千个节点的场景会因此长时间阻塞主线程
+            const globalU = typeof uni !== 'undefined' ? uni.$u : null
+            // 与原先的deepMerge保持一致：uni.$u尚未初始化时返回false，交由upBindGetRect兜底
+            if (!globalU || typeof globalU !== 'object') return false
+            let mergeU = Object.assign({}, globalU)
+            mergeU.props = undefined
+            mergeU.http = undefined
+            mergeU.mixin = undefined
 			// 缓存结果避免每次计算
 			if (instance) {
 				instance.__upUCache = mergeU
@@ -227,7 +232,7 @@ export const mixin = defineMixin({
             // 之所以需要这么做，是因为所有端中，头条小程序不支持通过this.parent.xxx去监听父组件参数的变化
             // 此处并不会自动更新子组件的数据，而是依赖父组件u-radio-group去监听data的变化，手动调用更新子组件的方法去重新获取
             this.parent = $parent.call(this, parentName)
-            if (this.parent.children) {
+            if (this.parent && this.parent.children) {
                 // 如果父组件的children不存在本组件的实例，才将本实例添加到父组件的children中
                 this.parent.children.indexOf(this) === -1 && this.parent.children.push(this)
             }

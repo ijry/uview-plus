@@ -197,6 +197,14 @@
 		margin-top:$u-grid-item-margin-top;
 		/* #endif */
 
+		// 老WebView（安卓7自带的是Chromium 52/55）没有CSS Grid，u-grid会退回flex换行，
+		// 内联的width:100%此时等于整行宽度，会让每个宫格独占一行，所以按u-grid透出的列数重新分配。
+		/* #ifndef APP-NVUE || MP */
+		@supports not (display: grid) {
+			width: calc(100% / var(--up-grid-col, 1)) !important;
+		}
+		/* #endif */
+
 		&--hover-class {
 			opacity:$u-grid-item-hover-class-opcatiy;
 		}

@@ -42,6 +42,7 @@ const componentKeys = [
     'dropdown',
     'dropdownItem',
     'empty',
+    'flex',
     'form',
     'formItem',
     'gap',

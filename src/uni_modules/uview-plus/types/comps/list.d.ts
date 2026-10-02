@@ -42,7 +42,7 @@ declare interface ListProps {
    */
   scrollable?: boolean
   /**
-   * 值应为某子元素id（id不能以数字开头）
+   * 滚动到指定位置，值为u-list-item的anchor，或item内某个子元素的id（id不能以数字开头）
    */
   scrollIntoView?: string
   /**
