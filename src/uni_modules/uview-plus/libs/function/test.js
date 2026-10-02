@@ -103,6 +103,8 @@ export function idCard(value) {
  * 是否车牌号
  */
 export function carNo(value) {
+    // 空值（如表单字段默认为null/undefined）直接返回false，避免读取length时报错
+    if (!value) return false
     // 新能源车牌
     const xreg = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}(([0-9]{5}[DF]$)|([DF][A-HJ-NP-Z0-9][0-9]{4}$))/
     // 旧车牌
