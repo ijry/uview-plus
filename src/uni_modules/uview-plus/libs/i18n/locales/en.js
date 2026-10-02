@@ -82,5 +82,18 @@ export default {
     "up.goodsSku.price": "Price",
     "up.goodsSku.amount": "Items",
     "up.goodsSku.choosed": "Selected",
-    "up.goodsSku.buyAmount": "Quantity"
+    "up.goodsSku.buyAmount": "Quantity",
+    "up.video.rate": "Speed",
+    "up.video.volume": "Volume",
+    "up.video.danmu": "Danmaku",
+    "up.video.danmuPlaceholder": "Send a danmaku",
+    "up.video.send": "Send",
+    "up.video.episodes": "Episodes",
+    "up.video.lock": "Locked",
+    "up.video.unlock": "Unlocked",
+    "up.video.ad": "Ad",
+    "up.video.adCountdown": "Ad {seconds}s",
+    "up.video.skipAd": "Skip ad",
+    "up.video.adDetail": "Learn more",
+    "up.video.error": "Playback failed"
 }

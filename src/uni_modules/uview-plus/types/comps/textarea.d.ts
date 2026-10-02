@@ -15,10 +15,16 @@ declare interface TextareaProps {
    */
   height?: string | number
   /**
-   * 设置键盘右下角按钮的文字，仅微信小程序，App-vue和H5有效
-   * @default "done"
+   * 设置键盘右下角按钮的文字，仅微信小程序，App-vue和H5有效。
+   * 为 return 时回车换行，其余取值回车会触发 confirm 且不换行
+   * @default "return"
    */
-  confirmType?: string
+  confirmType?: 'return' | 'send' | 'search' | 'next' | 'go' | 'done'
+  /**
+   * 点击键盘右下角按钮时是否保持键盘不收起，confirmType 非 return 时有效
+   * @default false
+   */
+  confirmHold?: boolean
   /**
    * 是否禁用
    * @default false

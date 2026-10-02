@@ -1,13 +1,40 @@
 import { AllowedComponentProps, VNodeProps } from './_common'
 
+/**
+ * focus/blur 的回调载荷（对象形式）
+ * - 除下列字段外，还会带上平台原生 event.detail 中的其他字段
+ */
+declare interface NumberBoxFocusPayload {
+  /** 输入框当前值 */
+  value: string | number
+  /** 步进器标识符，即 name 属性 */
+  name: string | number
+  [key: string]: any
+}
+
+/** change 的回调载荷（对象形式） */
+declare interface NumberBoxChangePayload {
+  /** 输入框当前值 */
+  value: string | number
+  /** 步进器标识符，即 name 属性 */
+  name: string | number
+  /** 本次变更来源：plus-点击加号，minus-点击减号，手动输入时为空字符串 */
+  type: 'plus' | 'minus' | ''
+}
+
 declare interface NumberBoxProps {
   /**
    * 步进器标识符，在change回调返回
    */
   name?: string | number
   /**
-   * 用于双向绑定的值，初始化时设置设为默认min值(最小值)
-   * @default 1
+   * 用于双向绑定的值（v-model），初始化时会被格式化到 min~max 之间
+   * @default 0
+   */
+  modelValue?: string | number
+  /**
+   * 用于双向绑定的值
+   * @deprecated 仅 Vue2 可用，Vue3 请使用 modelValue（即 v-model）
    */
   value?: string | number
   /**
@@ -62,28 +89,50 @@ declare interface NumberBoxProps {
   showPlus?: boolean
   /**
    * 显示的小数位数
+   * @default null
    */
-  decimalLength?: string | number
+  decimalLength?: string | number | null
   /**
    * 是否允许长按进行加减
    * @default true
    */
   longPress?: boolean
   /**
-   * 输入框文字和加减按钮图标的颜色
-   * @default "#323233"
+   * 输入框文字和加减按钮图标的颜色，留空则跟随主题变量
+   * @default ""
    */
   color?: string
+  /**
+   * 按钮宽度，单位px
+   * @default 30
+   */
+  buttonWidth?: string | number
   /**
    * 按钮大小，宽高等于此值，单位px，输入框高度和此值保持一致
    * @default 30
    */
   buttonSize?: string | number
   /**
-   * 输入框和按钮的背景颜色
-   * @default "#EBECEE"
+   * 按钮圆角
+   * @default "0px"
+   */
+  buttonRadius?: string
+  /**
+   * 输入框和按钮的背景颜色，留空则跟随主题变量
+   * @default ""
    */
   bgColor?: string
+  /**
+   * 按钮禁用时的背景颜色，留空则跟随主题变量
+   * @version 3.4.57
+   * @default ""
+   */
+  disabledBgColor?: string
+  /**
+   * 输入框独立背景颜色，留空则跟随 bgColor
+   * @default ""
+   */
+  inputBgColor?: string
   /**
    * 指定光标于键盘的距离，避免键盘遮挡输入框，单位px
    * @default 100
@@ -102,30 +151,45 @@ declare interface NumberBoxProps {
   /**
    * 加减按钮图标的样式
    */
-  iconStyle?: string
+  iconStyle?: string | Record<string, any>
   /**
-   * 输入框得到焦点触发(按钮可点击情况下)
-   * @param value 输入框当前值
-   * @param value 步进器标识符
+   * 迷你模式，常用于外卖场景，值为0时只显示加号按钮
+   * @default false
    */
-  onFocus?: (value: any, name: any) => any
+  miniMode?: boolean
   /**
-   * 输入框失去焦点时触发
-   * @param value 输入框当前值
-   * @param value 步进器标识符
+   * modelValue 变化时触发（v-model 内部使用）
+   * @param value 格式化后的最新值
    */
-  onBlur?: (value: any, name: any) => any
+  ['onUpdate:modelValue']?: (value: string | number) => any
   /**
-   * 输入框内容发生变化时触发
-   * @param value 输入框当前值
-   * @param value 步进器标识符
+   * 输入框得到焦点触发(按钮可点击情况下)，回调参数为对象
+   * @param event 对象形式，包含 value(输入框当前值)、name(步进器标识符)
    */
-  onChange?: (value: any, name: any) => any
+  onFocus?: (event: NumberBoxFocusPayload) => any
+  /**
+   * 输入框失去焦点时触发，回调参数为对象
+   * @param event 对象形式，包含 value(输入框当前值)、name(步进器标识符)
+   */
+  onBlur?: (event: NumberBoxFocusPayload) => any
+  /**
+   * 输入框内容发生变化时触发，回调参数为对象
+   * @param event 对象形式，包含 value(输入框当前值)、name(步进器标识符)、type(变更来源)
+   */
+  onChange?: (event: NumberBoxChangePayload) => any
   /**
    * 超过范围阈值时触发
-   * @type type 限制类型
+   * @param type 限制类型，minus-已达最小值，plus-已达最大值
    */
   onOverlimit?: (type: 'minus' | 'plus') => any
+  /**
+   * 点击增加按钮时触发（未超过阈值时）
+   */
+  onPlus?: () => any
+  /**
+   * 点击减少按钮时触发（未超过阈值时）
+   */
+  onMinus?: () => any
 }
 
 declare interface NumberBoxSlots {

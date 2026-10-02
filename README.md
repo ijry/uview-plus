@@ -72,6 +72,19 @@ uview-plus，是[uni-app](https://uniapp.dcloud.io/)全面兼容nvue的uni-app�
 </template>
 ```
 
+## AI 编码助手
+
+`src/uni_modules/uview-plus/skills/` 提供了给 AI 编码助手用的 uview-plus 使用说明（Agent Skills 的 `SKILL.md` 格式），随包分发，包含组件与图标清单、easycom 接入、`uni.$u` 工具库和多端常见坑。
+
+Claude Code 等工具把它拷到项目的 `.claude/skills/` 下即可生效，接法见 `src/uni_modules/uview-plus/skills/README.md`。
+
+组件与图标清单由源码生成，改动组件后执行：
+
+```bash
+node scripts/gen-skill-references.mjs
+npm run verify:skill-assets
+```
+
 ## 🤝需求外包
 如果你有需求想要实现，可以微信联系【ijiangruyi】。
 

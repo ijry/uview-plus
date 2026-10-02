@@ -82,5 +82,18 @@ export default {
     "up.goodsSku.price": "가격",
     "up.goodsSku.amount": "개",
     "up.goodsSku.choosed": "선택됨",
-    "up.goodsSku.buyAmount": "구매 수량"
+    "up.goodsSku.buyAmount": "구매 수량",
+    "up.video.rate": "재생 속도",
+    "up.video.volume": "음량",
+    "up.video.danmu": "탄막",
+    "up.video.danmuPlaceholder": "탄막을 입력하세요",
+    "up.video.send": "보내기",
+    "up.video.episodes": "회차",
+    "up.video.lock": "잠김",
+    "up.video.unlock": "잠금 해제",
+    "up.video.ad": "광고",
+    "up.video.adCountdown": "광고 {seconds}초",
+    "up.video.skipAd": "광고 건너뛰기",
+    "up.video.adDetail": "자세히 보기",
+    "up.video.error": "재생 실패"
 }

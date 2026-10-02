@@ -84,6 +84,19 @@ uview-plus现已推出免费可视化设计，可以方便的进行页面可视�
 </template>
 ```
 
+## AI 编码助手
+
+包内 `skills/` 目录提供了给 AI 编码助手用的 uview-plus 使用说明（Agent Skills 的 `SKILL.md` 格式），包含组件与图标清单、easycom 接入、`uni.$u` 工具库和多端常见坑，让 AI 少猜少写错。
+
+Claude Code 等工具把它拷到项目的 `.claude/skills/` 下即可生效：
+
+```bash
+mkdir -p .claude/skills
+cp -r node_modules/uview-plus/skills/uview-plus .claude/skills/
+```
+
+其他工具的接法与 uni_modules 装法见 `skills/README.md`。
+
 ## 版权信息
 uview-plus遵循[MIT](https://en.wikipedia.org/wiki/MIT_License)开源协议，意味着您无需支付任何费用，也无需授权，即可将uview-plus应用到您的产品中。
 

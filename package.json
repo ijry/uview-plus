@@ -54,11 +54,13 @@
     "verify:app-nvue-qrcode-poster": "node scripts/verify-app-nvue-qrcode-poster.mjs",
     "verify:overlay-qrcode-canvas-init": "node scripts/verify-overlay-qrcode-canvas-init.mjs",
     "verify:app-local-icon-font": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-app-local-icon-font.mjs",
+    "verify:icon-font-focus-retry": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-icon-font-focus-retry.mjs",
     "verify:root-nvue-entry-signatures": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-root-nvue-entry-signatures.mjs",
     "verify:root-app-up-nvue": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-root-app-up-nvue.mjs",
     "verify:cropper-inner": "node scripts/verify-cropper-inner.mjs",
     "verify:cropper-image-src": "node scripts/verify-cropper-image-src.mjs",
     "verify:i18n-on-demand": "node scripts/verify-i18n-on-demand.mjs",
+    "verify:slider-box-sizing": "node scripts/verify-slider-box-sizing.mjs",
     "verify:slider-decimal-step": "node scripts/verify-slider-decimal-step.mjs",
     "verify:slider-height": "node scripts/verify-slider-height.mjs",
     "verify:slider-click-change": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-slider-click-change.mjs",
@@ -85,6 +87,8 @@
     "verify:up-create-intersection-observer": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-up-create-intersection-observer.mjs",
     "verify:navbar-ios-mode": "node scripts/verify-navbar-ios-mode.mjs",
     "verify:select-overlay": "node scripts/verify-select-overlay.mjs",
+    "verify:dropdown-nvue-width": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-dropdown-nvue-width.mjs",
+    "verify:cell-required-asterisk": "node scripts/verify-cell-required-asterisk.mjs",
     "verify:select-panel": "node scripts/verify-select-panel.mjs",
     "verify:search-placeholder-color": "node scripts/verify-search-placeholder-color.mjs",
     "verify:keyboard-backspace-click": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-keyboard-backspace-click.mjs",
@@ -92,6 +96,8 @@
     "verify:parse-editor-align-class": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-parse-editor-align-class.mjs",
     "verify:row-notice-space": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-row-notice-space.mjs",
     "verify:list-item-parent-race": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-list-item-parent-race.mjs",
+    "verify:video-component": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-video-component.mjs",
+    "verify:component-type-hints": "node scripts/verify-component-type-hints.mjs",
     "verify:test-car-no-nullish": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-test-car-no-nullish.mjs",
     "verify:picker-column-index": "node scripts/verify-picker-column-index.mjs",
     "verify:datetime-picker-format": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-datetime-picker-format.mjs",
@@ -101,7 +107,10 @@
     "verify:list-scroll-into-view": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-list-scroll-into-view.mjs",
     "verify:tabs-scroll-view-flex": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-tabs-scroll-view-flex.mjs",
     "verify:cate-tab-lazy-render": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-cate-tab-lazy-render.mjs",
-    "verify:upload-video-file": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-upload-video-file.mjs"
+    "verify:upload-video-file": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-upload-video-file.mjs",
+    "verify:skill-assets": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-skill-assets.mjs",
+    "verify:textarea-confirm-type": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-textarea-confirm-type.mjs",
+    "verify:collapse-item-content-height": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-collapse-item-content-height.mjs"
   },
   "pnpm": {
     "overrides": {

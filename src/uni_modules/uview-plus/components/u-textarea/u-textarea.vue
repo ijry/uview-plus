@@ -21,6 +21,7 @@
             :holdKeyboard="holdKeyboard"
             :maxlength="maxlength"
             :confirm-type="confirmType"
+            :confirm-hold="confirmHold"
             :ignoreCompositionEvent="ignoreCompositionEvent"
             @focus="onFocus"
             @blur="onBlur"
@@ -55,7 +56,8 @@ import { addStyle, addUnit, deepMerge, formValidate, os } from '../../libs/funct
  * @property {String}			    placeholderClass		指定placeholder的样式类，注意页面或组件的style中写了scoped时，需要在类名前写/deep/ （ 默认 'input-placeholder' ）
  * @property {String | Object}	    placeholderStyle		指定placeholder的样式，字符串/对象形式，如"color: red;"
  * @property {String | Number}		height					输入框高度（默认 70 ）
- * @property {String}				confirmType				设置键盘右下角按钮的文字，仅微信小程序，App-vue和H5有效（默认 'done' ）
+ * @property {String}				confirmType				设置键盘右下角按钮的文字，仅微信小程序，App-vue和H5有效。为 'return' 时回车换行，取 'done'、'go'、'next'、'search'、'send' 时回车触发 confirm 且不换行（默认 'return' ）
+ * @property {Boolean}				confirmHold				点击键盘右下角按钮时是否保持键盘不收起，confirmType 非 'return' 时有效（默认 false ）
  * @property {Boolean}				disabled				是否禁用（默认 false ）
  * @property {Boolean}				count					是否显示统计字数（默认 false ）
  * @property {Boolean}				focus					是否自动获取焦点，nvue不支持，H5取决于浏览器的实现（默认 false ）
