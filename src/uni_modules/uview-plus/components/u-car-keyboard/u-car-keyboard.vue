@@ -128,7 +128,8 @@
 					'澳',
 					'新',
 					'使',
-					'学'
+					'学',
+					'警'
 				];
 				let tmp = [];
 				// 打乱顺序
@@ -137,7 +138,7 @@
 				tmp[0] = data.slice(0, 10);
 				tmp[1] = data.slice(10, 20);
 				tmp[2] = data.slice(20, 30);
-				tmp[3] = data.slice(30, 36);
+				tmp[3] = data.slice(30, 37);
 				return tmp;
 			},
 			engKeyBoardList() {
