@@ -783,9 +783,10 @@ Parser.prototype.popNode = function () {
   }
   // #endif
 
-  // 一些编辑器的自带 class
-  if ((attrs.class || '').includes('align-center')) {
-    styleObj['text-align'] = 'center'
+  // 一些编辑器的自带 class（quill 等编辑器用 class 而非行内样式表示对齐，如 ql-align-right）
+  const alignClass = ['left', 'center', 'right', 'justify'].find(align => (attrs.class || '').includes('align-' + align))
+  if (alignClass) {
+    styleObj['text-align'] = alignClass
   }
 
   Object.assign(styleObj, this.parseStyle(node))
