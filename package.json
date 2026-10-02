@@ -88,7 +88,8 @@
     "verify:list-item-parent-race": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-list-item-parent-race.mjs",
     "verify:datetime-picker-format": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-datetime-picker-format.mjs",
     "verify:types-barrel-exports": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-types-barrel-exports.mjs",
-    "verify:collapse-init": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-collapse-init.mjs"
+    "verify:collapse-init": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-collapse-init.mjs",
+    "verify:grid-old-webview": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-grid-old-webview.mjs"
   },
   "pnpm": {
     "overrides": {
