@@ -95,7 +95,8 @@
     "verify:types-barrel-exports": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-types-barrel-exports.mjs",
     "verify:collapse-init": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-collapse-init.mjs",
     "verify:grid-old-webview": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-grid-old-webview.mjs",
-    "verify:list-scroll-into-view": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-list-scroll-into-view.mjs"
+    "verify:list-scroll-into-view": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-list-scroll-into-view.mjs",
+    "verify:tabs-scroll-view-flex": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-tabs-scroll-view-flex.mjs"
   },
   "pnpm": {
     "overrides": {
