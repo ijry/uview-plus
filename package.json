@@ -47,6 +47,7 @@
     "verify:waterfall-lock-reset": "node scripts/verify-waterfall-lock-reset.mjs",
     "verify:waterfall-loop-ownership": "node scripts/verify-waterfall-loop-ownership.mjs",
     "verify:up-canvas-unification": "node scripts/verify-up-canvas-unification.mjs",
+    "verify:barcode-canvas-ref": "node scripts/verify-barcode-canvas-ref.mjs",
     "verify:app-canvas-hidpi": "node scripts/verify-app-canvas-hidpi.mjs",
     "verify:app-nvue-webview-canvas": "node scripts/verify-app-nvue-webview-canvas.mjs",
     "verify:app-nvue-qrcode-poster": "node scripts/verify-app-nvue-qrcode-poster.mjs",

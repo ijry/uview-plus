@@ -359,7 +359,7 @@ export default {
     },
 
     async getCanvasRef(refName) {
-      await nextTick()
+      await this.$nextTick()
       const canvas = this.$refs[refName]
       if (!canvas) {
         throw new Error(`Canvas ref not found: ${refName}`)
