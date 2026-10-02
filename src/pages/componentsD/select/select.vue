@@ -33,6 +33,34 @@
             </up-select>
           </view>
       </view>
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">多选</text>
+          <view class="u-page__item__content u-page__item__content--pc">
+            <up-select
+                v-model:current="multipleIds"
+                label="请选择分类"
+                :showOptionsLabel="true"
+                :options="scenesList"
+                :multiple="true"
+                :border="true"
+                optionsWidth="100%">
+            </up-select>
+          </view>
+      </view>
+      <view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">底部自动向上展开</text>
+          <view class="u-page__item__spacer"></view>
+          <view class="u-page__item__content u-page__item__content--pc">
+            <up-select
+                v-model:current="bottomId"
+                label="请选择分类"
+                :showOptionsLabel="true"
+                :options="scenesList"
+                :border="true"
+                optionsWidth="100%">
+            </up-select>
+          </view>
+      </view>
   </view>
 </template>
 
@@ -41,6 +69,8 @@ import { ref } from 'vue';
 
 const cateId = ref('')
 const pcSelectId = ref('')
+const multipleIds = ref([])
+const bottomId = ref('')
 const scenesList = ref([
     {
         id: '1',
@@ -66,6 +96,10 @@ const scenesList = ref([
   }
   .u-page__item__content--pc {
       width: 100%;
+  }
+  /* 把最后一个下拉框顶到页面底部，用来验证空间不足时会自动向上展开 */
+  .u-page__item__spacer {
+      height: 55vh;
   }
 </style>
 
