@@ -228,6 +228,3 @@ if (issues.length === 0) {
     issues.forEach(i => console.log(i))
     process.exit(1)
 }
-
-
-

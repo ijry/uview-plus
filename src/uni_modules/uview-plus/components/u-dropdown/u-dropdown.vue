@@ -203,7 +203,11 @@
 
 	.u-dropdown {
 		flex: 1;
+		// nvue(weex)不支持百分比长度，width: 100%会被编译成width: 100（100px），
+		// 使整个下拉菜单被压缩到屏幕左侧一条窄列，nvue下交由flex拉伸撑满父级宽度
+		/* #ifndef APP-NVUE */
 		width: 100%;
+		/* #endif */
 		position: relative;
 
 		&__menu {
@@ -243,8 +247,14 @@
 		&__content {
 			position: absolute;
 			z-index: 8;
+			// 绝对定位元素在nvue下用left+right撑满父级宽度，替代无效的width: 100%
+			/* #ifndef APP-NVUE */
 			width: 100%;
+			/* #endif */
 			left: 0px;
+			/* #ifdef APP-NVUE */
+			right: 0px;
+			/* #endif */
 			bottom: 0;
 			overflow: hidden;
 			
@@ -253,8 +263,13 @@
 				position: absolute;
 				z-index: 9;
 				background: rgba(0, 0, 0, .3);
+				/* #ifndef APP-NVUE */
 				width: 100%;
+				/* #endif */
 				left: 0;
+				/* #ifdef APP-NVUE */
+				right: 0;
+				/* #endif */
 				top: 0;
 				bottom: 0;
 			}

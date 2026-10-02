@@ -300,6 +300,12 @@ export default {
 			handler(n) {
 				if (n) {
 					this.setMonth()
+					// 弹层每次打开都会重新挂载并滚动回默认月份，副标题指向的月份索引要一起复位，
+					// 否则会沿用上一次关闭前滚动到的月份，导致副标题与日历内容对应不上。
+					// 页面内模式的内容一直挂载着，滚动位置不会重置，所以不做处理
+					if (!this.pageInline) {
+						this.monthIndex = this.getDefaultMonthIndex()
+					}
 				} else {
 					// 关闭时重置scrollIntoView，否则会出现二次打开日历，当前月份数据显示不正确。
 					// scrollIntoView需要有一个值变动过程，才会产生作用。
@@ -619,33 +625,42 @@ export default {
 				this.monthNum,
 				this.getMonths(minDate, maxDate)
 			)
+			// 记录上一次测量到的各月份top值，月份未发生变化时高度也不会变，
+			// 复用后可避免重新生成数据后onScroll没有判断依据
+			const topCache = {}
+			this.months.forEach(item => {
+				if (typeof item.top === 'number') {
+					topCache[`${item.year}-${item.month}`] = item.top
+				}
+			})
 			// 先清空数组
 			this.months = []
+			// 最大最小日期只需格式化一次，YYYY-MM-DD的字典序即时间序，可直接比较字符串
+			const minDateStr = dayjs(minDate).format('YYYY-MM-DD')
+			const maxDateStr = dayjs(maxDate).format('YYYY-MM-DD')
+			const formatter = this.formatter || this.innerFormatter
 			for (let i = 0; i < months; i++) {
+				// 每个月只构造一个dayjs对象，当月的日期数据都由它派生，
+				// 避免按天重复解析（monthNum较大时这里是主要开销）
+				const monthStart = dayjs(minDate).add(i, 'month')
+				const monthValue = monthStart.month() + 1
 				this.months.push({
-					date: new Array(
-						dayjs(minDate).add(i, 'month').daysInMonth()
-					)
+					date: new Array(monthStart.daysInMonth())
 						.fill(1)
 						.map((item, index) => {
 							// 日期，取值1-31
 							let day = index + 1
+							const current = monthStart.date(day)
 							// 星期，0-6，0为周日
-							const week = dayjs(minDate)
-								.add(i, 'month')
-								.date(day)
-								.day()
-							const date = dayjs(minDate)
-								.add(i, 'month')
-								.date(day)
-								.format('YYYY-MM-DD')
+							const week = current.day()
+							const date = current.format('YYYY-MM-DD')
 							let bottomInfo = ''
 							if (this.showLunar) {
 								// 将日期转为农历格式
 								const lunar = Calendar.solar2lunar(
-									dayjs(date).year(),
-									dayjs(date).month() + 1,
-									dayjs(date).date()
+									current.year(),
+									monthValue,
+									day
 								)
 								bottomInfo = lunar.IDayCn
 							}
@@ -654,29 +669,30 @@ export default {
 								week,
 								// 小于最小允许的日期，或者大于最大的日期，则设置为disabled状态
 								disabled:
-									dayjs(date).isBefore(
-										dayjs(minDate).format('YYYY-MM-DD')
-									) ||
-									dayjs(date).isAfter(
-										dayjs(maxDate).format('YYYY-MM-DD')
-									),
+									date < minDateStr || date > maxDateStr,
 								// 返回一个日期对象，供外部的formatter获取当前日期的年月日等信息，进行加工处理
 								date: new Date(date),
+								// 已格式化好的日期字符串，供month组件比较使用，
+								// 省掉渲染期对每个日期格子的重复解析
+								dateStr: date,
 								bottomInfo,
 								dot: false,
-								month:
-									dayjs(minDate).add(i, 'month').month() + 1
+								month: monthValue
 							}
-							const formatter =
-								this.formatter || this.innerFormatter
 							return formatter(config)
 						}),
 					// 当前所属的月份
-					month: dayjs(minDate).add(i, 'month').month() + 1,
+					month: monthValue,
 					// 当前年份
-					year: dayjs(minDate).add(i, 'month').year()
+					year: monthStart.year()
 				})
 			}
+			this.months.forEach(item => {
+				const cachedTop = topCache[`${item.year}-${item.month}`]
+				if (typeof cachedTop === 'number') {
+					item.top = cachedTop
+				}
+			})
 			if (this.monthSwitch) {
 				this.monthIndex = this.getDefaultMonthIndex()
 			}
@@ -750,6 +766,9 @@ export default {
 				return `${year}-${month}` === selected
 			})
 			if (_index !== -1) {
+				// 滚动位置是程序主动设置的，同步更新副标题指向的月份索引。
+				// 只依赖scroll事件的话，滚动位置没有真正变化时收不到事件，副标题就会停留在上一次的月份
+				this.monthIndex = _index
 				// #ifndef MP-WEIXIN
 				this.$nextTick(() => {
 					this.scrollIntoView = ''
@@ -758,7 +777,15 @@ export default {
 				})
 				// #endif
 				// #ifdef MP-WEIXIN
-				this.scrollTop = this.months[_index].top || 0;
+				// scrollTop与scrollIntoView同理，需要有一个值变动过程才会生效，
+				// 否则二次打开日历时沿用上次的数值，scroll-view不会滚动到默认月份
+				const _top = this.months[_index].top || 0;
+				this.scrollTop = 0;
+				if (_top !== 0) {
+					this.$nextTick(() => {
+						this.scrollTop = _top;
+					})
+				}
 				// #endif
 			}
 		},
@@ -766,13 +793,22 @@ export default {
 		onScroll(event) {
 			// 不允许小于0的滚动值，如果scroll-view到顶了，继续下拉，会出现负数值
 			const scrollTop = Math.max(0, event.detail.scrollTop)
-			// 将当前滚动条数值，除以滚动区域的高度，可以得出当前滚动到了哪一个月份的索引
+			// 月份的top值尚未测量出来时不做判断，否则所有月份的判断阈值相同，
+			// 会把副标题固定到最后一个月份上
+			if (!this.months.some(item => typeof item.top === 'number')) return
+			// 将当前滚动条数值，与各月份的top值比较，可以得出当前滚动到了哪一个月份的索引
+			let monthIndex = 0
 			for (let i = 0; i < this.months.length; i++) {
-				if (scrollTop >= (this.months[i].top || this.listHeight)) {
-					this.monthIndex = i
-					this.scrollIntoViewScroll = `month-${i}`
+				const top = this.months[i].top
+				if (typeof top !== 'number') continue
+				if (scrollTop >= top) {
+					monthIndex = i
+				} else {
+					break
 				}
 			}
+			this.monthIndex = monthIndex
+			this.scrollIntoViewScroll = `month-${monthIndex}`
 		},
 		// 更新月份的top值
 		onUpdateMonthTop(topArr = []) {

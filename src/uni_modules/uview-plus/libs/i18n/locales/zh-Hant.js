@@ -82,5 +82,18 @@ export default {
     "up.goodsSku.price": "價格",
     "up.goodsSku.amount": "件",
     "up.goodsSku.choosed": "已選",
-    "up.goodsSku.buyAmount": "購買數量"
+    "up.goodsSku.buyAmount": "購買數量",
+    "up.video.rate": "倍速",
+    "up.video.volume": "音量",
+    "up.video.danmu": "彈幕",
+    "up.video.danmuPlaceholder": "發條彈幕吧",
+    "up.video.send": "發送",
+    "up.video.episodes": "選集",
+    "up.video.lock": "已鎖定",
+    "up.video.unlock": "已解鎖",
+    "up.video.ad": "廣告",
+    "up.video.adCountdown": "廣告 {seconds}s",
+    "up.video.skipAd": "跳過廣告",
+    "up.video.adDetail": "了解詳情",
+    "up.video.error": "播放失敗"
 }

@@ -117,7 +117,8 @@ const componentKeys = [
     'tooltip',
     'tr',
     'transition',
-    'upload'
+    'upload',
+    'video'
 ]
 
 const props = {}

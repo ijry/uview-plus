@@ -45,6 +45,7 @@
 		<view
 			class="u-collapse-item__content"
 			:animation="animationData"
+			:style="[contentStyle]"
 			ref="animation"
 		>
 			<view
@@ -93,6 +94,8 @@
 				elId: guid(),
 				// uni.createAnimation的导出数据
 				animationData: {},
+				// 展开动画结束后接管面板高度，交还给内容，避免内容后续变高被裁切
+				contentStyle: {},
 				// 是否展开状态
 				expanded: false,
 				// 根据expanded确定是否显示border，为了控制展开时，cell的下划线更好的显示效果，进行一定时间的延时
@@ -162,6 +165,15 @@
 				// 好处是，父组件从服务端获取内容后，变更折叠面板后可以获得最新的高度
 				const rect = await this.queryRect()
 				const height = this.expanded ? rect.height : 0
+				// #ifndef APP-NVUE
+				// 展开状态下面板高度是auto，收起前先固定成当前实际高度，否则浏览器无法从auto过渡到0
+				if (!this.expanded && this.contentStyle.height === 'auto') {
+					this.contentStyle = { height: `${rect.height}px` }
+					await nextTick()
+					// 再查询一次节点，借这次布局读取确保上面的固定高度已经生效，收起动画才有起点
+					await this.queryRect()
+				}
+				// #endif
 				this.animating = true
 				// #ifdef APP-NVUE
 				const ref = this.$refs['animation'].ref
@@ -182,17 +194,24 @@
 				const animation = uni.createAnimation({
 					timingFunction: 'ease-in-out',
 				});
+				// 只保留一个step：uni的step会累积之前的animates，多余的空step会在动画结束时
+				// 把同一个像素高度再写一遍，把下面交还给内容的auto高度盖掉
 				animation
 					.height(height)
 					.step({
 						duration: this.duration,
 					})
-					.step()
 				// 导出动画数据给面板的animationData值
 				this.animationData = animation.export()
-				// 标识动画结束
+				// 标识动画结束。快速连点时只认最后一次动画的回调，否则旧回调会打断新动画
+				const animateToken = (this.animateToken || 0) + 1
+				this.animateToken = animateToken
 				sleep(this.duration).then(() => {
+					if (this.animateToken !== animateToken) return
 					this.animating = false
+					// 展开动画结束后把高度交还给内容：内容里的图片、异步数据等在测量之后才变高时，
+					// 面板不会再停留在过时的测量值上被overflow:hidden裁掉一截
+					this.contentStyle = this.expanded ? { height: 'auto' } : {}
 				})
 				// #endif
 			},

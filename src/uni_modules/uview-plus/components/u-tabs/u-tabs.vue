@@ -405,7 +405,11 @@
 			}
 
 			&__scroll-view {
-				@include flex;
+				// 这里不能声明 display: flex：各端 scroll-view 都把内容包在内层容器里，flex 作用不到内容上，
+				// 反而会让微信小程序告警「设置 enable-flex 属性以使 flexbox 布局生效」（issue #650）
+				/* #ifdef APP-NVUE */
+				flex-direction: row;
+				/* #endif */
 				flex: 1;
 			}
 

@@ -42,7 +42,10 @@ function formatVideo(res) {
 			height: res.height || 0, // APP 2.1.0+、H5、微信小程序、京东小程序
 			// #ifdef H5
 			name: res.name,
-			file: res
+			// chooseVideo 在H5已经返回了真实的File对象（res.tempFile），必须把它透出来，
+			// 和formatImage/formatMedia/formatFile保持一致。否则调用方只剩blob:地址可用，
+			// 而部分webview（如微信内置浏览器）读blob:会拿到空内容，视频就传不上去。#801
+			file: res.tempFile || res
 			// #endif
 			// #ifndef H5
 			name: res.tempFilePath.split('/').pop() + '.mp4',

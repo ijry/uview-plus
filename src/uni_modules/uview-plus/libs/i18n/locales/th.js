@@ -82,5 +82,18 @@ export default {
     "up.goodsSku.price": "ราคา",
     "up.goodsSku.amount": "ชิ้น",
     "up.goodsSku.choosed": "เลือกแล้ว",
-    "up.goodsSku.buyAmount": "จำนวน"
+    "up.goodsSku.buyAmount": "จำนวน",
+    "up.video.rate": "ความเร็ว",
+    "up.video.volume": "ระดับเสียง",
+    "up.video.danmu": "คอมเมนต์",
+    "up.video.danmuPlaceholder": "ส่งคอมเมนต์",
+    "up.video.send": "ส่ง",
+    "up.video.episodes": "ตอน",
+    "up.video.lock": "ล็อกแล้ว",
+    "up.video.unlock": "ปลดล็อกแล้ว",
+    "up.video.ad": "โฆษณา",
+    "up.video.adCountdown": "โฆษณา {seconds} วิ",
+    "up.video.skipAd": "ข้ามโฆษณา",
+    "up.video.adDetail": "ดูรายละเอียด",
+    "up.video.error": "เล่นไม่สำเร็จ"
 }

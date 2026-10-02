@@ -6,6 +6,13 @@ const appIconFontUrl = '_www/static/app-plus/uview-plus/upicon.ttf';
 // 项目没有本地字体（未启用本地字体构建插件、或没拷贝 static/app-plus/uview-plus/upicon.ttf）时：
 // App-Vue 在 uni.loadFontFace 失败后回退 config.iconUrl，App-nvue 先探测字体文件是否存在再决定字体地址。
 const useAppStaticIconFont = true;
+// 字体加载失败后的重试上限与重试基础间隔。重试只能由定时器驱动，不能由“新建u-icon”驱动：
+// u-search、u-input的清除按钮仅在输入框聚焦时才创建，若在那一刻补发字体请求，
+// 微信开发者工具里正在聚焦的input会立即失去焦点，表现为输入内容后再也无法聚焦、无法删除内容。
+// https://github.com/ijry/uview-plus/issues/844
+const maxFontRetryTimes = 3;
+const fontRetryDelay = 2000;
+let fontRetryTimes = 0;
 
 let params = {
     loaded: false,
@@ -176,7 +183,15 @@ const loadFont = () => {
             // console.log('内置字体图标加载成功');
         },
         fail() {
-            params.loading = false;
+            // 失败后不立刻释放请求锁，改由定时器重试有限次数，
+            // 避免此后每创建一个u-icon都立刻补发一次字体请求。
+            if (fontRetryTimes < maxFontRetryTimes) {
+                fontRetryTimes++;
+                setTimeout(() => {
+                    params.loading = false;
+                    loadFont();
+                }, fontRetryDelay * fontRetryTimes);
+            }
             // console.error('内置字体图标加载出错');
         }
     });

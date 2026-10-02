@@ -576,6 +576,11 @@
 			flex-direction: column;
 			position: relative;
 			border-radius: 999px;
+			/* #ifndef APP-NVUE */
+			// 高度按 blockSize 内联下发，须以内容盒为基准；否则应用层的
+			// view { box-sizing: border-box } 会把上下 padding 从内容高度中扣掉，滑块与滑道错位
+			box-sizing: content-box;
+			/* #endif */
 			padding: 10px 18px;
 			justify-content: center;
 		}

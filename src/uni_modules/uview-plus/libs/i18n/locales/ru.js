@@ -82,5 +82,18 @@ export default {
     "up.goodsSku.price": "Цена",
     "up.goodsSku.amount": "Штук",
     "up.goodsSku.choosed": "Выбрано",
-    "up.goodsSku.buyAmount": "Количество"
+    "up.goodsSku.buyAmount": "Количество",
+    "up.video.rate": "Скорость",
+    "up.video.volume": "Громкость",
+    "up.video.danmu": "Комментарии",
+    "up.video.danmuPlaceholder": "Отправить комментарий",
+    "up.video.send": "Отправить",
+    "up.video.episodes": "Серии",
+    "up.video.lock": "Заблокировано",
+    "up.video.unlock": "Разблокировано",
+    "up.video.ad": "Реклама",
+    "up.video.adCountdown": "Реклама {seconds} с",
+    "up.video.skipAd": "Пропустить рекламу",
+    "up.video.adDetail": "Подробнее",
+    "up.video.error": "Ошибка воспроизведения"
 }
