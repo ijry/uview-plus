@@ -44,11 +44,10 @@ declare interface SwipeActionItemProps {
    */
   name?: string | number
   /**
-   * 按钮被点击时触发
-   * @param name props参数`name`的值
-   * @param index 第几个按钮被点击
+   * 按钮被点击时触发，回调参数为对象
+   * @param event 对象形式，包含 index(第几个按钮被点击)、name(props参数`name`的值)
    */
-  onClick?: (name: any, index: number) => any
+  onClick?: (event: { index: number; name?: string | number }) => any
   /**
    * scrolling 双向绑定更新
    */
