@@ -21,7 +21,6 @@
 				>
 				</view>
 				<view
-					@click="onClick"
 					class="u-slider__gap"
 					:style="[
 						barStyle,
@@ -52,7 +51,7 @@
 				<template v-if="isRange">
 					<view class="u-slider__button-wrap u-slider__button-wrap-0" @touchstart="onTouchStart($event, 0)"
 						@touchmove="onTouchMove($event, 0)" @touchend="onTouchEnd($event, 0)"
-						@touchcancel="onTouchEnd($event, 0)" :style="touchButtonStyle(barStyle0)">
+						@touchcancel="onTouchEnd($event, 0)" @click.stop="() => {}" :style="touchButtonStyle(barStyle0)">
 						<slot name="min" v-if="$slots.min || $slots.$min"/>
 						<view v-else class="u-slider__button" :style="[blockStyle, {
 							height: getPx(blockSize, true),
@@ -63,7 +62,7 @@
 				</template>
 				<view class="u-slider__button-wrap" @touchstart="onTouchStart"
 					@touchmove="onTouchMove" @touchend="onTouchEnd"
-					@touchcancel="onTouchEnd" :style="touchButtonStyle(barStyle)">
+					@touchcancel="onTouchEnd" @click.stop="() => {}" :style="touchButtonStyle(barStyle)">
 					<slot name="max" v-if="isRange && ($slots.max || $slots.$max)"/>
 					<slot v-else-if="$slots.default || $slots.$default"/>
 					<view v-else class="u-slider__button" :style="[blockStyle, {
@@ -153,8 +152,7 @@
 			modelValue(n) {
 				// 只有在非滑动状态时，才可以通过value更新滑块值，这里监听，是为了让用户触发
 				if (this.status == 'end') {
-					const $crtFmtValue = this.updateValue(this.modelValue, false);
-					this.$emit('change', $crtFmtValue);
+					this.updateValue(this.modelValue, false);
 				}
 			},
 			// #endif
@@ -162,8 +160,7 @@
 			value(n) {
 				// 只有在非滑动状态时，才可以通过value更新滑块值，这里监听，是为了让用户触发
 				if (this.status == 'end') {
-					const $crtFmtValue = this.updateValue(this.value, false);
-					this.$emit('change', $crtFmtValue);
+					this.updateValue(this.value, false);
 				}
 			},
 			// #endif
@@ -172,7 +169,6 @@
 					if (this.status == 'end') {
 						this.updateValue(this.rangeValue[0], false, 0);
 						this.updateValue(this.rangeValue[1], false, 1);
-						this.$emit('change', this.rangeValue);
 					}
             	},
             	deep:true
@@ -414,16 +410,24 @@
 				// nvue下暂时无法获取坐标
 				const min = this.toSliderNumber(this.min)
 				const max = this.toSliderNumber(this.max, 100)
+				const detail = event && event.detail ? event.detail : {}
+				const position = Number(this.vertical ? detail.y : detail.x)
+				const sliderSize = this.vertical ? this.sliderRect.height : this.sliderRect.width
+				// 少数端的tap没有坐标，滑块在弹窗里未显示时也量不到长度，
+				// 这两种情况下算出来的只会是min，别当成用户点了min发出去
+				if (!Number.isFinite(position) || !sliderSize) return
 				if (this.vertical) {
-					let clientY = event.detail.y - this.sliderRect.top
+					let clientY = position - this.sliderRect.top
 					// console.log(this.sliderRect.top, event.detail.y)
 					this.newValue = ((clientY / this.sliderRect.height) * (max - min)) + min
-					this.updateValue(this.newValue, false, 1)
 				} else {
-					let clientX = event.detail.x - this.sliderRect.left
+					let clientX = position - this.sliderRect.left
 					this.newValue = ((clientX / this.sliderRect.width) * (max - min)) + min
-					this.updateValue(this.newValue, false, 1)
 				}
+				// 点击等同于一次完整的取值，需要和拖动结束一样对外发出change，
+				// 否则单向绑定(:modelValue)时外部拿不到点击后的值
+				const $crtFmtValue = this.updateValue(this.newValue, false, 1)
+				this.$emit('change', $crtFmtValue)
 				// #endif
 			},
 			updateValue(value, drag, index = 1) {
