@@ -11,12 +11,18 @@
 						:custom-style="iconStyle"
 						:size="size === 'large' ? 22 : 18"></up-icon>
 				</view>
+				<!-- 必填星号用真实节点渲染，绝对定位的伪元素在nvue和小程序下不显示，且通栏布局时会跑到屏幕外 -->
+				<text
+					v-if="required"
+					class="u-cell__required"
+					:style="[cellRequiredDynamicStyle]"
+				>*</text>
 				<view class="u-cell__title">
                     <!-- 将slot与默认内容用if/else分开主要是因为微信小程序不支持slot嵌套传递，这样才能解决collapse组件的slot不失效问题，label暂时未用到。 -->
 					<slot name="title" v-if="$slots.title || !title">
 					</slot>
                     <text v-else class="u-cell__title-text" :style="[cellTitleDynamicStyle, titleTextStyle]"
-                        :class="[required && 'u-cell--required', disabled && 'u-cell--disabled', size === 'large' && 'u-cell__title-text--large']">{{ title }}</text>
+                        :class="[disabled && 'u-cell--disabled', size === 'large' && 'u-cell__title-text--large']">{{ title }}</text>
 					<slot name="label">
 						<text class="u-cell__label" v-if="label"
 							:style="[cellLabelDynamicStyle]"
@@ -102,6 +108,11 @@
 			cellDisabledColor() {
 				return this.upThemeVar('--up-disabled-color', '#c8c9cc')
 			},
+			cellRequiredDynamicStyle() {
+				return {
+					color: this.upThemeVar('--up-error', '#f56c6c')
+				}
+			},
 			cellTitleDynamicStyle() {
 				return {
 					color: this.upThemeVar('--up-main-color', '#303133')
@@ -150,6 +161,8 @@
 	$u-cell-title-font-size: 15px !default;
 	$u-cell-title-line-height: 22px !default;
 	$u-cell-title-color: $u-main-color !default;
+	$u-cell-required-font-size: 14px !default;
+	$u-cell-required-color: $u-error !default;
 	$u-cell-label-font-size: 12px !default;
 	$u-cell-label-color: $u-tips-color !default;
 	$u-cell-label-line-height: 18px !default;
@@ -258,23 +271,14 @@
 			}
 		}
 
-		&--required {
+		&__required {
 			/* #ifndef APP-NVUE */
-			overflow: visible;
+			align-self: flex-start;
 			/* #endif */
-			@include flex;
-			align-items: center;
-		}
-
-		&--required:before {
-			position: absolute;
-			/* #ifndef APP-NVUE */
-			content: '*';
-			/* #endif */
-			left: -8px;
-			margin-top: 4rpx;
-			font-size: 14px;
-			color: $u-error;
+			margin-right: 2px;
+			font-size: $u-cell-required-font-size;
+			line-height: $u-cell-title-line-height;
+			color: $u-cell-required-color;
 		}
 
 		&--clickable {
