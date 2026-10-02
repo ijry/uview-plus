@@ -44,6 +44,7 @@
                 :send-message-img="sendMessageImg"
                 :show-message-card="showMessageCard"
                 :app-parameter="appParameter"
+                v-bind="$attrs"
             >
                 {{ value }}
             </button>
@@ -123,6 +124,7 @@ export default {
     // #ifndef MP
     mixins: [mpMixin, mixin, value, props],
     // #endif
+	inheritAttrs: false,
 	emits: ['click'],
     computed: {
         wrapStyle() {
