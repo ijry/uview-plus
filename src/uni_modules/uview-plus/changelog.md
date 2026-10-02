@@ -1,3 +1,13 @@
+## 3.8.127
+fix: 修复抖音小程序 tabbar-item / steps-item 因父子生命周期顺序导致的崩溃
+
+抖音小程序中，子组件的 created 可能早于父组件的 created 执行，此时父组件实例已可通过 $parent 找到，但父组件的 children 数组尚未初始化（u-tabbar / u-steps / u-list 都在自己的 created 里才赋值 children=[]）。子组件 init() 直接访问 this.parent.children.indexOf(this) 时 children 仍为 undefined，抛出 TypeError: Cannot read properties of undefined (reading 'indexOf')，并伴随「up-tabbar-item必须搭配up-tabbar组件使用」的误报警告（该分支只 log 未 return，继续执行才崩溃）。对照 u-radio / u-checkbox：它们在 mounted() 调 init() 且不访问 parent.children，所以不受影响。
+
+- u-tabbar-item：init() 在 error() 后补 return，并加 !this.parent.children 守卫；mounted() 新增 init() 补偿重试（created 阶段被跳过时补齐激活态）；clickHandler() 补 this.parent / children 守卫
+- u-steps-item：init() 加 !this.parent.children 守卫；mounted() 新增 init() 补偿重试，确保自身已注册进父组件 children
+- u-list-item：init() 加 !this.parent / !this.parent.children 守卫，避免 $parent 返回 false 时报错
+- 共享 mixin getParentData()：访问 children 前先判断 this.parent 存在，避免 $parent 返回 false 时读取 false.children 崩溃，影响所有父子联动组件
+
 ## 3.8.126
 feat: 新增 u-flex 通用弹性布局容器组件
 

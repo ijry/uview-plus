@@ -73,6 +73,10 @@
 			init() {
 				// 初始化数据
 				this.updateParentData()
+				// 父组件未找到或 children 尚未初始化时跳过，避免 indexOf 报错
+				if (!this.parent || !this.parent.children) {
+					return
+				}
 				this.index = this.parent.children.indexOf(this)
 				this.resize()
 			},
