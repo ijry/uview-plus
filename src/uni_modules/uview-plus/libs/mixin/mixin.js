@@ -1,5 +1,5 @@
 import { defineMixin } from '../vue'
-import { deepMerge, $parent, upGetRect } from '../function/index'
+import { $parent, upGetRect } from '../function/index'
 import test from '../function/test'
 import route from '../util/route'
 import {
@@ -87,11 +87,16 @@ export const mixin = defineMixin({
                 return instance.__upUCache
             }
             // 在非nvue端，移除props，http，mixin等对象，避免在小程序setData时数据过大影响性能
-            let mergeU = deepMerge(uni.$u, {
-                props: undefined,
-                http: undefined,
-                mixin: undefined
-            })
+            // 这里只做浅拷贝：本mixin是全局注册的（见index.js的Vue.mixin），深拷贝整个uni.$u
+            // （含上百个组件的props默认值）的开销会随组件实例数线性放大，日历、长列表这类
+            // 一次渲染上千个节点的场景会因此长时间阻塞主线程
+            const globalU = typeof uni !== 'undefined' ? uni.$u : null
+            // 与原先的deepMerge保持一致：uni.$u尚未初始化时返回false，交由upBindGetRect兜底
+            if (!globalU || typeof globalU !== 'object') return false
+            let mergeU = Object.assign({}, globalU)
+            mergeU.props = undefined
+            mergeU.http = undefined
+            mergeU.mixin = undefined
 			// 缓存结果避免每次计算
 			if (instance) {
 				instance.__upUCache = mergeU

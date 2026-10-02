@@ -621,31 +621,32 @@ export default {
 			)
 			// 先清空数组
 			this.months = []
+			// 最大最小日期只需格式化一次，YYYY-MM-DD的字典序即时间序，可直接比较字符串
+			const minDateStr = dayjs(minDate).format('YYYY-MM-DD')
+			const maxDateStr = dayjs(maxDate).format('YYYY-MM-DD')
+			const formatter = this.formatter || this.innerFormatter
 			for (let i = 0; i < months; i++) {
+				// 每个月只构造一个dayjs对象，当月的日期数据都由它派生，
+				// 避免按天重复解析（monthNum较大时这里是主要开销）
+				const monthStart = dayjs(minDate).add(i, 'month')
+				const monthValue = monthStart.month() + 1
 				this.months.push({
-					date: new Array(
-						dayjs(minDate).add(i, 'month').daysInMonth()
-					)
+					date: new Array(monthStart.daysInMonth())
 						.fill(1)
 						.map((item, index) => {
 							// 日期，取值1-31
 							let day = index + 1
+							const current = monthStart.date(day)
 							// 星期，0-6，0为周日
-							const week = dayjs(minDate)
-								.add(i, 'month')
-								.date(day)
-								.day()
-							const date = dayjs(minDate)
-								.add(i, 'month')
-								.date(day)
-								.format('YYYY-MM-DD')
+							const week = current.day()
+							const date = current.format('YYYY-MM-DD')
 							let bottomInfo = ''
 							if (this.showLunar) {
 								// 将日期转为农历格式
 								const lunar = Calendar.solar2lunar(
-									dayjs(date).year(),
-									dayjs(date).month() + 1,
-									dayjs(date).date()
+									current.year(),
+									monthValue,
+									day
 								)
 								bottomInfo = lunar.IDayCn
 							}
@@ -654,27 +655,22 @@ export default {
 								week,
 								// 小于最小允许的日期，或者大于最大的日期，则设置为disabled状态
 								disabled:
-									dayjs(date).isBefore(
-										dayjs(minDate).format('YYYY-MM-DD')
-									) ||
-									dayjs(date).isAfter(
-										dayjs(maxDate).format('YYYY-MM-DD')
-									),
+									date < minDateStr || date > maxDateStr,
 								// 返回一个日期对象，供外部的formatter获取当前日期的年月日等信息，进行加工处理
 								date: new Date(date),
+								// 已格式化好的日期字符串，供month组件比较使用，
+								// 省掉渲染期对每个日期格子的重复解析
+								dateStr: date,
 								bottomInfo,
 								dot: false,
-								month:
-									dayjs(minDate).add(i, 'month').month() + 1
+								month: monthValue
 							}
-							const formatter =
-								this.formatter || this.innerFormatter
 							return formatter(config)
 						}),
 					// 当前所属的月份
-					month: dayjs(minDate).add(i, 'month').month() + 1,
+					month: monthValue,
 					// 当前年份
-					year: dayjs(minDate).add(i, 'month').year()
+					year: monthStart.year()
 				})
 			}
 			if (this.monthSwitch) {

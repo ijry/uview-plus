@@ -39,6 +39,8 @@
 	import defProps from '../../libs/config/props';
 	import dayjs from '../u-datetime-picker/dayjs.esm.min.js';
 	import { t } from '../../libs/i18n'
+	// 已经是YYYY-MM-DD形式的日期字符串，无需再交给dayjs解析
+	const DATE_STR_REG = /^\d{4}-\d{2}-\d{2}$/
 	export default {
 		name: 'u-calendar-month',
 		mixins: [mpMixin, mixin],
@@ -169,6 +171,29 @@
 			selectedChange() {
 				return [this.minDate, this.maxDate, this.defaultDate]
 			},
+			// selected中的元素可能是用户通过defaultDate传入的原始值（未补零的字符串、
+			// Date对象、时间戳等），这里统一归一化一次，避免在每个日期格子里反复解析
+			selectedDates() {
+				return this.selected.map((item) => this.formatDate(item))
+			},
+			// 供渲染期做O(1)的选中判断，取代原先每个格子都要遍历selected的dayjs比较
+			selectedDateMap() {
+				const map = {}
+				this.selectedDates.forEach((date) => {
+					map[date] = true
+				})
+				return map
+			},
+			// 区间模式的起止日期
+			selectedStart() {
+				return this.selectedDates[0]
+			},
+			selectedEnd() {
+				return this.selectedDates[this.selectedDates.length - 1]
+			},
+			normalizedTodayDate() {
+				return this.todayDate ? this.formatDate(this.todayDate) : ''
+			},
 			dayStyle(index1, index2, item) {
 				return (index1, index2, item) => {
 					const style = {}
@@ -204,18 +229,18 @@
 			},
 			daySelectStyle() {
 				return (index1, index2, item) => {
-					let date = dayjs(item.date).format("YYYY-MM-DD"),
+					let date = this.dateOf(item),
 						style = {}
-					// 判断date是否在selected数组中，因为月份可能会需要补0，所以使用dateSame判断，而不用数组的includes判断
-					if (this.selected.some(item => this.dateSame(item, date))) {
+					// selected已归一化为YYYY-MM-DD（月份可能需要补0），故可直接比较字符串
+					if (this.selectedDateMap[date]) {
 						style.backgroundColor = this.color
 					}
-					if (this.todayDate && this.dateSame(date, this.todayDate)) {
+					if (this.normalizedTodayDate && date === this.normalizedTodayDate) {
 						style.border = `1px solid ${this.resolvedTodayColor}`
 						style.boxSizing = 'border-box'
 					}
 					if (this.mode === 'single') {
-						if (date === this.selected[0]) {
+						if (date === this.selectedStart) {
 							// 因为需要对nvue的兼容，只能这么写，无法缩写，也无法通过类名控制等等
 							style.borderTopLeftRadius = '3px'
 							style.borderBottomLeftRadius = '3px'
@@ -223,34 +248,31 @@
 							style.borderBottomRightRadius = '3px'
 						}
 					} else if (this.mode === 'range') {
-						if (this.selected.length >= 2) {
-							const len = this.selected.length - 1
+						if (this.selectedDates.length >= 2) {
 							// 第一个日期设置左上角和左下角的圆角
-							if (this.dateSame(date, this.selected[0])) {
+							if (date === this.selectedStart) {
 								style.borderTopLeftRadius = '3px'
 								style.borderBottomLeftRadius = '3px'
 							}
 							// 最后一个日期设置右上角和右下角的圆角
-							if (this.dateSame(date, this.selected[len])) {
+							if (date === this.selectedEnd) {
 								style.borderTopRightRadius = '3px'
 								style.borderBottomRightRadius = '3px'
 							}
 							// 处于第一和最后一个之间的日期，背景色设置为浅色，通过将对应颜色进行等分，再取其尾部的颜色值
-							if (dayjs(date).isAfter(dayjs(this.selected[0])) && dayjs(date).isBefore(dayjs(this
-									.selected[len]))) {
-								const rangeEndColor = this.upThemeVar('--up-card-bg-color', this.upThemeIsDark ? '#1c1c1e' : '#ffffff')
-								style.backgroundColor = colorGradient(this.color, rangeEndColor, 100)[90]
+							if (date > this.selectedStart && date < this.selectedEnd) {
+								style.backgroundColor = this.rangeMiddleColor
 								// 增加一个透明度，让范围区间的背景色也能看到底部的mark水印字符
 								style.opacity = this.upThemeIsDark ? 0.85 : 0.7
 							}
-						} else if (this.selected.length === 1) {
+						} else if (this.selectedDates.length === 1) {
 							// 之所以需要这么写，是因为uni-app的iOS客户端的bug
 							// 进行还原操作，否则在nvue的iOS，uni-app有bug，会导致诡异的表现
 							style.borderTopLeftRadius = '3px'
 							style.borderBottomLeftRadius = '3px'
 						}
 					} else {
-						if (this.selected.some(item => this.dateSame(item, date))) {
+						if (this.selectedDateMap[date]) {
 							style.borderTopLeftRadius = '3px'
 							style.borderBottomLeftRadius = '3px'
 							style.borderTopRightRadius = '3px'
@@ -260,27 +282,31 @@
 					return style
 				}
 			},
+			// 区间中间日期的背景色与格子无关，按整体算一次即可，
+			// 否则区间内每个格子都要做一遍100等分的颜色渐变计算
+			rangeMiddleColor() {
+				const rangeEndColor = this.upThemeVar('--up-card-bg-color', this.upThemeIsDark ? '#1c1c1e' : '#ffffff')
+				return colorGradient(this.color, rangeEndColor, 100)[90]
+			},
 			resolvedTodayColor() {
 				return this.todayColor || this.color
 			},
 			// 某个日期是否被选中
 			textStyle() {
 				return (item) => {
-					const date = dayjs(item.date).format("YYYY-MM-DD"),
+					const date = this.dateOf(item),
 						style = {}
 					// 选中的日期，提示文字设置白色
-					if (this.selected.some(item => this.dateSame(item, date))) {
+					if (this.selectedDateMap[date]) {
 						style.color = '#ffffff'
 					}
 					if (this.mode === 'range') {
-						const len = this.selected.length - 1
 						// 如果是范围选择模式，第一个和最后一个之间的日期，文字颜色设置为高亮的主题色
-						if (dayjs(date).isAfter(dayjs(this.selected[0])) && dayjs(date).isBefore(dayjs(this
-								.selected[len]))) {
+						if (date > this.selectedStart && date < this.selectedEnd) {
 							style.color = this.color
 						}
 					}
-					if (this.todayDate && this.dateSame(date, this.todayDate) && !this.isSelectedDate(date)) {
+					if (this.normalizedTodayDate && date === this.normalizedTodayDate && !this.selectedDateMap[date]) {
 						style.color = this.resolvedTodayColor
 					}
 					return style
@@ -289,24 +315,23 @@
 			// 获取底部的提示文字
 			getBottomInfo() {
 				return (index1, index2, item) => {
-					const date = dayjs(item.date).format("YYYY-MM-DD")
+					const date = this.dateOf(item)
 					const bottomInfo = item.bottomInfo
 					// 当为日期范围模式时，且选择的日期个数大于0时
-					if (this.mode === 'range' && this.selected.length > 0) {
-						if (this.selected.length === 1) {
+					if (this.mode === 'range' && this.selectedDates.length > 0) {
+						if (this.selectedDates.length === 1) {
 							// 选择了一个日期时，如果当前日期为数组中的第一个日期，则显示底部文字为“开始”
-							if (this.dateSame(date, this.selected[0])) return this.startText
+							if (date === this.selectedStart) return this.startText
 							else return bottomInfo
 						} else {
-							const len = this.selected.length - 1
 							// 如果数组中的日期大于2个时，第一个和最后一个显示为开始和结束日期
-							if (this.dateSame(date, this.selected[0]) && this.dateSame(date, this.selected[1]) &&
-								len === 1) {
+							if (this.selectedDates.length === 2 && date === this.selectedStart && date === this
+								.selectedEnd) {
 								// 如果长度为2，且第一个等于第二个日期，则提示语放在同一个item中
 								return `${this.startText}/${this.endText}`
-							} else if (this.dateSame(date, this.selected[0])) {
+							} else if (date === this.selectedStart) {
 								return this.startText
-							} else if (this.dateSame(date, this.selected[len])) {
+							} else if (date === this.selectedEnd) {
 								return this.endText
 							} else {
 								return bottomInfo
@@ -343,18 +368,29 @@
 				}
 			},
 			isForbid(item) {
-				let date = dayjs(item.date).format("YYYY-MM-DD")
-				if (this.mode !== 'range' && this.forbidDays.includes(date)) {
-					return true
+				if (this.mode === 'range' || !this.forbidDays.length) {
+					return false
 				}
-				return false
+				return this.forbidDays.includes(this.dateOf(item))
+			},
+			// 归一化为YYYY-MM-DD，已经是该形式的字符串则直接返回，省掉一次dayjs解析
+			formatDate(value) {
+				if (typeof value === 'string' && DATE_STR_REG.test(value)) {
+					return value
+				}
+				return dayjs(value).format("YYYY-MM-DD")
+			},
+			// 取日期格子的日期字符串，父组件生成数据时已经算好；
+			// 兼容自定义formatter返回了不带dateStr的新对象的情况
+			dateOf(item) {
+				return item.dateStr || dayjs(item.date).format("YYYY-MM-DD")
 			},
 			// 判断两个日期是否相等
 			dateSame(date1, date2) {
 				return dayjs(date1).isSame(dayjs(date2))
 			},
 			isSelectedDate(date) {
-				return this.selected.some(item => this.dateSame(item, date))
+				return !!this.selectedDateMap[this.formatDate(date)]
 			},
 			// 获取月份数据区域的宽度，因为nvue不支持百分比，所以无法通过css设置每个日期item的宽度
 			getWrapperWidth() {
