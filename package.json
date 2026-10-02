@@ -67,6 +67,7 @@
     "verify:button-plain-background": "node scripts/verify-button-plain-background.mjs",
     "verify:button-throttle": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-button-throttle.mjs",
     "verify:tabs-click-event": "node scripts/verify-tabs-click-event.mjs",
+    "verify:tabs-enable-flex": "node scripts/verify-tabs-enable-flex.mjs",
     "verify:action-sheet-slot-close": "node scripts/verify-action-sheet-slot-close.mjs",
     "verify:popup-close-events": "node scripts/verify-popup-close-events.mjs",
     "verify:dragsort-stable-identity": "node scripts/verify-dragsort-stable-identity.mjs",

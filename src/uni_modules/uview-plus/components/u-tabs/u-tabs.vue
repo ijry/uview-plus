@@ -3,7 +3,7 @@
 		<view class="u-tabs__wrapper">
 			<slot name="left" />
 			<view class="u-tabs__wrapper__scroll-view-wrapper">
-				<scroll-view :scroll-x="scrollable" :scroll-left="scrollLeft" scroll-with-animation
+				<scroll-view :scroll-x="scrollable" :scroll-left="scrollLeft" scroll-with-animation enable-flex
 					class="u-tabs__wrapper__scroll-view" :show-scrollbar="false" ref="u-tabs__wrapper__scroll-view">
 					<view class="u-tabs__wrapper__nav" ref="u-tabs__wrapper__nav">
 						<view class="u-tabs__wrapper__nav__item" v-for="(item, index) in tabList" :key="index"
@@ -406,6 +406,8 @@
 
 			&__scroll-view {
 				@include flex;
+				// 缺少会在enable-flex模式下高度异常
+				align-items: flex-start;
 				flex: 1;
 			}
 
