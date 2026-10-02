@@ -15,7 +15,10 @@ export default {
 		placeholderClass: 'textarea-placeholder',
 		placeholderStyle: '',
 		height: 70,
-		confirmType: 'done',
+		// 与 uni-app textarea 原生默认值保持一致：return 表示回车换行；
+		// 取 done/go/next/search/send 时回车会触发 confirm 且不换行
+		confirmType: 'return',
+		confirmHold: false,
 		disabled: false,
 		count: false,
 		focus: false,
