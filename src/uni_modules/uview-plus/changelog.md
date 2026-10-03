@@ -1,3 +1,32 @@
+## 3.8.128
+feat: 新增 u-video 视频播放器组件，并集中修复列表滚动、日历副标题、下拉菜单等 20+ 个问题
+
+本次为大版本迭代：新增 u-video 视频播放器组件（含弹幕、进度条、自定义控制层），随包提供面向 AI 编码助手的 uview-plus skill，并集中修复了列表锚点滚动、日历副标题同步、select 面板、App 端字体加载等一批跨组件问题。
+
+- 新增 u-video：统一封装 video 播放能力，支持弹幕（danmaku）、自定义进度条与控制层、常见播放属性透传，覆盖 H5 / 小程序 / App
+- 随包提供 skills/uview-plus：面向 AI 编码助手的技能包，含 setup、components、api、icons、pitfalls 参考文档
+- u-list / u-list-item：新增 anchor 锚点滚动定位，修复 scrollIntoViewById 调用后不滚动的问题（#671、#721），并合并 anchor 定位实现
+- u-calendar：修复关闭再打开后副标题与月份内容不一致；优化大 monthNum 下的渲染性能
+- u-select：完善面板指示器、自适应宽度与多选回显逻辑
+- u-icon：字体加载失败后改由定时器重试，修复 u-search 输入后无法再次聚焦的问题（#844）
+- u-dropdown：修复 nvue 下菜单宽度被压缩的问题（#814）
+- u-collapse / u-collapse-item：修复展开后内容变高被裁切；value 为 null 时不再重置展开状态
+- u-cell：必填星号改用真实节点渲染，修复小程序与 nvue 下不显示
+- u-slider：修复 border-box 下的滑块错位；点击轨道时直接触发 change
+- u-textarea：回车默认换行并支持 confirmHold
+- u-text：透传 data-* 属性，修复分享回调拿不到数据的问题
+- u-upload：透传 H5 端视频真实的 File 对象
+- u-search：修复小程序端占位符颜色首屏不生效
+- u-cate-tab：优化大量图片场景的首屏渲染与滚动联动
+- u-tabs：去除 scroll-view 上无效的 flex 布局
+- u-picker：修复滚动过上级列后的 columnIndex 错位
+- u-datetime-picker：修复空值回填并让确认返回当前选中值
+- u-grid：兼容旧版 WebView 的网格布局
+- u-parse：支持 quill 的对齐 class
+- u-number-keyboard：修复 PC 浏览器退格键不触发；u-car-keyboard 支持警车车牌输入
+- 类型声明：补齐步进器、分页器与表单相关类型；补齐 u-video 与 icon 字体相关配置
+- 合入任务分支 task/71、task/82
+
 ## 3.8.127
 fix: 修复抖音小程序 tabbar-item / steps-item 因父子生命周期顺序导致的崩溃
 
