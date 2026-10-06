@@ -95,6 +95,12 @@ declare interface NavbarProps {
    */
   scrollTop?: string | number
   /**
+   * 微信小程序端右侧区域是否避让右上角原生胶囊按钮，
+   * 避让后右边缘与胶囊左缘对齐。其他平台无胶囊，此属性不生效。
+   * @default true
+   */
+  avoidCapsule?: boolean
+  /**
    * 点击左侧区域
    */
   onLeftClick?: () => any

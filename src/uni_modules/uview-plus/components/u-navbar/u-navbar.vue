@@ -85,6 +85,7 @@
 				</view>
 				<view
 					class="u-navbar__content__right"
+					:style="[navbarRightStyle]"
 					v-if="$slots.right || rightIcon || rightText"
 					@tap="rightClick"
 				>
@@ -143,6 +144,7 @@
 	 * @property {Object | String}	titleStyle			标题的样式，对象或字符串
 	 * @property {String}			mode				导航栏模式，default-常规，ios-大标题磨砂模式（默认 'default' ）
 	 * @property {String | Number}	scrollTop			页面滚动距离，仅 ios 模式使用，由页面 onPageScroll 传入（默认 0 ）
+	 * @property {Boolean}			avoidCapsule		微信小程序端右侧区域是否避让右上角原生胶囊按钮（默认 true ）
 	 * @event {Function} leftClick		点击左侧区域
 	 * @event {Function} rightClick		点击右侧区域
 	 * @example <u-navbar title="剑未配妥，出门已是江湖" left-text="返回" right-text="帮助" @click-left="onClickBack" @click-right="onClickRight"></u-navbar>
@@ -221,9 +223,24 @@
 				if (this.leftIconColor) return this.leftIconColor
 				return this.upThemeVar('--up-main-color', this.$u.color.mainColor)
 			},
-			navbarRightColor() {
-				return this.upThemeVar('--up-main-color', this.$u.color.mainColor)
-			},
+		navbarRightColor() {
+			return this.upThemeVar('--up-main-color', this.$u.color.mainColor)
+		},
+		// 微信小程序端右侧区域避让右上角原生胶囊按钮：
+		// 将容器右边缘从屏幕右缘移到胶囊左缘，内容随容器自带 padding 自然留出间距。
+		navbarRightStyle() {
+			// #ifdef MP-WEIXIN
+			if (!this.avoidCapsule) return {}
+			const rect = uni.getMenuButtonBoundingClientRect()
+			const windowWidth = getWindowInfo().windowWidth
+			// 胶囊信息不可用（部分调试环境返回全 0）时维持原有布局
+			if (!rect || !rect.left || !windowWidth) return {}
+			return { right: `${windowWidth - rect.left}px` }
+			// #endif
+			// #ifndef MP-WEIXIN
+			return {}
+			// #endif
+		},
 			navbarInnerStyle() {
 				const style = {}
 				style.background = this.navbarBgColor
