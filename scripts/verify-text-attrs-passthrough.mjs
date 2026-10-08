@@ -1,91 +1,115 @@
-/**
- * Verification script for issue #603
- * Verifies that u-text component passes through data-* attributes to internal button element
- */
+import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
+import { createRequire } from 'node:module'
+import { dirname, resolve } from 'node:path'
+import { test } from 'node:test'
+import { fileURLToPath } from 'node:url'
 
-import { readFileSync } from 'fs'
-import { fileURLToPath } from 'url'
-import { dirname, join } from 'path'
+const require = createRequire(import.meta.url)
+const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+const filename = resolve(repoRoot, 'src/uni_modules/uview-plus/components/u-text/u-text.vue')
+const { parse, compileTemplate } = require('vue/compiler-sfc')
+const { descriptor, errors } = parse(readFileSync(filename, 'utf8'), { filename })
+assert.deepEqual(errors, [], 'u-text.vue should parse without errors')
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
+// Resolve transitive tools through their owners so this also works with pnpm.
+const sharedRequire = createRequire(require.resolve('@dcloudio/uni-cli-shared/package.json'))
+const mpRequire = createRequire(require.resolve('@dcloudio/uni-mp-weixin/package.json'))
+const { initPreContext, preHtml, preJs } = require('@dcloudio/uni-cli-shared')
+const { compile } = mpRequire('@dcloudio/uni-mp-compiler')
 
-const textComponentPath = join(__dirname, '../src/uni_modules/uview-plus/components/u-text/u-text.vue')
-
-console.log('Verifying issue #603 fix: u-text data-* attribute pass-through\n')
-
-const content = readFileSync(textComponentPath, 'utf-8')
-
-let pass = true
-
-// Check 1: v-bind="$attrs" on button element
-if (!content.includes('v-bind="$attrs"')) {
-    console.error('❌ FAIL: v-bind="$attrs" not found on button element')
-    pass = false
-} else {
-    // Verify it's on the button element in the openType block
-    const openTypeButtonMatch = content.match(/<template v-else-if="openType && isMp">[\s\S]*?<button[\s\S]*?v-bind="\$attrs"[\s\S]*?>[\s\S]*?<\/button>/m)
-    if (!openTypeButtonMatch) {
-        console.error('❌ FAIL: v-bind="$attrs" not found on the openType button element')
-        pass = false
-    } else {
-        console.log('✓ v-bind="$attrs" is present on the openType button element')
+test('u-text compiles for WeChat and preserves explicit button bindings', () => {
+    initPreContext('mp-weixin')
+    const errors = []
+    let wxml = ''
+    compile(preHtml(descriptor.template.content, filename), {
+        filename,
+        mode: 'module',
+        onError: error => errors.push(error.message),
+        miniProgram: {
+            directive: 'wx:',
+            class: { array: true },
+            slot: { fallbackContent: false, dynamicSlotNames: true },
+            event: { key: true },
+            component: { dir: 'wxcomponents' },
+            emitFile: asset => { wxml = asset.source }
+        }
+    })
+    // Runtime v-if cannot hide unsupported native-element syntax from the compiler.
+    // The former v-bind="$attrs" must fail here, not pass a source-string check.
+    assert.deepEqual(errors, [], 'u-text should compile without unsupported v-bind errors')
+    const button = wxml.match(/<button\b[^>]*>/)?.[0]
+    assert.ok(button, 'the openType branch should emit a native button')
+    for (const attribute of [
+        'data-index', 'openType', 'lang', 'session-from', 'send-message-title',
+        'send-message-path', 'send-message-img', 'show-message-card', 'app-parameter'
+    ]) {
+        assert.match(button, new RegExp('\\b' + attribute + '="\\{\\{[^}]+\\}\\}"'),
+            'the button should keep its explicit ' + attribute + ' binding')
     }
-}
-
-// Check 2: inheritAttrs: false in component options
-if (!content.includes('inheritAttrs: false')) {
-    console.error('❌ FAIL: inheritAttrs: false not found in component options')
-    pass = false
-} else {
-    // Verify it's in the export default block
-    const exportDefaultMatch = content.match(/export default \{[\s\S]*?inheritAttrs: false[\s\S]*?\}/m)
-    if (!exportDefaultMatch) {
-        console.error('❌ FAIL: inheritAttrs: false not found in export default block')
-        pass = false
-    } else {
-        console.log('✓ inheritAttrs: false is set in component options')
+    for (const event of [
+        'getuserinfo', 'contact', 'getphonenumber', 'error', 'launchapp', 'opensetting'
+    ]) {
+        assert.match(button, new RegExp('\\bbind' + event + '="'),
+            'the button should keep its ' + event + ' handler')
     }
-}
+})
 
-// Check 3: Button element still has all required openType attributes
-const requiredAttrs = [
-    ':openType="openType"',
-    '@getuserinfo="onGetUserInfo"',
-    '@contact="onContact"',
-    '@getphonenumber="onGetPhoneNumber"',
-    '@error="onError"',
-    '@launchapp="onLaunchApp"',
-    '@opensetting="onOpenSetting"',
-    ':lang="lang"',
-    ':session-from="sessionFrom"',
-    ':send-message-title="sendMessageTitle"',
-    ':send-message-path="sendMessagePath"',
-    ':send-message-img="sendMessageImg"',
-    ':show-message-card="showMessageCard"',
-    ':app-parameter="appParameter"'
-]
-
-for (const attr of requiredAttrs) {
-    if (!content.includes(attr)) {
-        console.error(`❌ FAIL: Required attribute ${attr} not found`)
-        pass = false
+test('ordinary u-text content inherits attributes on its root view in H5', async () => {
+    initPreContext('h5')
+    const previousUni = globalThis.uni
+    // Only the host uni APIs are replaced; the component and its mixins are real.
+    globalThis.uni = {
+        $on() {}, $off() {}, $once() {}, $emit() {},
+        getStorageSync: () => '',
+        setStorageSync() {},
+        getSystemInfoSync: () => ({ windowWidth: 375, windowHeight: 667 }),
+        getWindowInfo: () => ({ windowWidth: 375, windowHeight: 667 })
     }
-}
-
-if (pass) {
-    console.log('✓ All required openType attributes are present\n')
-}
-
-// Summary
-if (pass) {
-    console.log('✅ All checks passed!')
-    console.log('\nThe fix correctly:')
-    console.log('1. Adds v-bind="$attrs" to pass through data-* attributes')
-    console.log('2. Sets inheritAttrs: false to prevent auto-binding to root element')
-    console.log('3. Preserves all existing openType functionality')
-    process.exit(0)
-} else {
-    console.log('\n❌ Verification failed')
-    process.exit(1)
-}
+    try {
+        const { buildSync } = sharedRequire('esbuild')
+        // Bundling resolves the extensionless imports used by uni-app components.
+        const { outputFiles } = buildSync({
+            stdin: {
+                contents: preJs(descriptor.script.content, filename),
+                resolveDir: dirname(filename),
+                sourcefile: filename,
+                loader: 'js'
+            },
+            bundle: true,
+            platform: 'node',
+            format: 'cjs',
+            external: ['vue'],
+            write: false,
+            logLevel: 'silent'
+        })
+        const componentModule = { exports: {} }
+        new Function('module', 'exports', 'require', outputFiles[0].text)(
+            componentModule, componentModule.exports, require
+        )
+        const Vue = require('vue')
+        const { renderToString } = require('vue/server-renderer')
+        const { code, errors } = compileTemplate({
+            source: preHtml(descriptor.template.content, filename),
+            filename,
+            id: 'u-text-regression',
+            compilerOptions: { mode: 'function', isCustomElement: () => true }
+        })
+        assert.deepEqual(errors, [], 'the H5 template should compile without errors')
+        const render = new Function('Vue', code)(Vue)
+        const app = Vue.createSSRApp({ ...componentModule.exports.default, render }, {
+            text: 'Regression text',
+            id: 'text-root',
+            'data-check': 'root-attrs'
+        })
+        const html = await renderToString(app)
+        const root = html.match(/^<view\b[^>]*>/)?.[0]
+        assert.ok(root, 'ordinary text should render a root view')
+        assert.match(root, /\bid="text-root"/, 'id should fall through to the root view')
+        assert.match(root, /\bdata-check="root-attrs"/, 'data attributes should fall through to the root view')
+        assert.match(html, /Regression text/, 'the text value should still render')
+    } finally {
+        if (previousUni === undefined) delete globalThis.uni
+        else globalThis.uni = previousUni
+    }
+})
