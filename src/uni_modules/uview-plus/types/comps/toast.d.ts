@@ -11,6 +11,11 @@ declare interface ToastProps {
    */
   loading?: boolean
   /**
+   * 是否显示全屏透明遮罩，阻止操作页面（防止点击穿透）
+   * @default true
+   */
+  overlay?: boolean
+  /**
    * 显示的文本
    */
   message?: string | number

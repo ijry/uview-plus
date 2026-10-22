@@ -86,6 +86,14 @@ const list = [
 		icon: 'https://uview-plus.jiangruyi.com/uview/demo/toast/jump.png',
 		message: "只是当时已惘然",
 		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/toast/default.png'
+	},
+	{
+		type: 'default',
+		title: '提示期间可操作页面',
+		overlay: false,
+		duration: 5000,
+		message: "此时页面仍可点击、滑动",
+		iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/toast/default.png'
 	}
 ];
 
@@ -98,7 +106,8 @@ const getIcon = () => {
 const showToast = (params) => {
 	uToastRef.value.show({
 		...params,
-		overlay: true,
+		// 演示项可通过 overlay 控制是否穿透页面，未指定时默认拦截
+		overlay: params.overlay === undefined ? true : params.overlay,
 		complete() {
 			params.url && uni.navigateTo({
 				url: params.url

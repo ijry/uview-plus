@@ -55,7 +55,8 @@
 	 * @property {String}			icon		图标，或者绝对路径的图片
 	 * @property {String}			type		主题类型 （默认 default）
 	 * @property {Boolean}			show		是否显示该组件 （默认 false）
-	 * @property {Boolean}			overlay		是否显示透明遮罩，防止点击穿透 （默认 true ）
+	 * @property {Boolean}			overlay		是否显示透明遮罩，防止点击穿透。false 时提示期间页面可正常操作，
+	 *                                     也可在 show({ overlay: false }) 中单独指定 （默认 true ）
 	 * @property {String}			position	位置 （默认 'center' ）
 	 * @property {Object}			params		跳转的参数 
 	 * @property {String | Number}  duration	展示时间，单位ms （默认 2000 ）
@@ -70,6 +71,14 @@
 	export default {
 		name: 'u-toast',
 		mixins: [mpMixin, mixin],
+		props: {
+			// 是否显示全屏透明遮罩，阻止操作页面（防止点击穿透）
+			// 设置为 false 时，toast 提示期间页面依然可以正常点击、滑动
+			overlay: {
+				type: Boolean,
+				default: true
+			}
+		},
 		data() {
 			return {
 				isShow: false,
@@ -104,6 +113,10 @@
 					return this.tmpConfig.icon
 				}
 			},
+			// 遮罩是否拦截页面操作：show() 显式传入的 overlay 优先，其次回落到组件 prop
+			overlayEnabled() {
+				return this.tmpConfig.overlay === undefined ? this.overlay : !!this.tmpConfig.overlay
+			},
 			overlayStyle() {
 				const style = {
 					justifyContent: 'center',
@@ -112,10 +125,23 @@
 				}
 				// 将遮罩设置为100%透明度，避免出现灰色背景
 				style.backgroundColor = 'rgba(0, 0, 0, 0)'
-				// overlay=false时不阻止点击穿透
-				if (!this.tmpConfig.overlay) {
-					style.pointerEvents = 'none'
+				// 拦截模式：遮罩铺满全屏（u-overlay 默认即为全屏），提示期间阻止操作页面
+				if (this.overlayEnabled) {
+					return style
 				}
+				// 穿透模式：让 toast 提示期间页面依然可以点击、滑动
+				// 1) pointer-events 让遮罩不吃事件，H5 / 小程序 / 鸿蒙均支持
+				style.pointerEvents = 'none'
+				// #ifndef APP-NVUE
+				// 2) 把遮罩从"铺满全屏"收缩成"跟随内容大小的浮动层"，从物理上不再遮挡页面，
+				//    这样即便运行环境不认 pointer-events，点击与滚动也都能穿透。
+				//    nvue(Weex) 不支持百分比 transform，故该分支只在非 nvue 端开启。
+				style.left = '50%'
+				style.top = '50%'
+				style.right = 'auto'
+				style.bottom = 'auto'
+				style.transform = 'translate(-50%, -50%)'
+				// #endif
 				return style
 			},
 			iconStyle() {
@@ -166,7 +192,8 @@
 			// 显示toast组件，由父组件通过this.$refs.xxx.show(options)形式调用
 			show(options) {
 				// 不将结果合并到this.config变量，避免多次调用u-toast，前后的配置造成混乱
-				this.tmpConfig = deepMerge(this.config, options)
+				// 组件 prop 作为 show() 未显式传值时的默认值，让 <up-toast :overlay="false"> 也能生效
+				this.tmpConfig = deepMerge({ ...this.config, overlay: this.overlay }, options)
 				// 清除定时器
 				this.clearTimer()
 				this.isShow = true

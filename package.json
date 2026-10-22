@@ -102,6 +102,7 @@
     "verify:video-component": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-video-component.mjs",
     "verify:component-type-hints": "node scripts/verify-component-type-hints.mjs",
     "verify:test-car-no-nullish": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-test-car-no-nullish.mjs",
+    "verify:toast-overlay-passthrough": "node scripts/verify-toast-overlay-passthrough.mjs",
     "verify:calc-div": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-calc-div.mjs",
     "verify:picker-column-index": "node scripts/verify-picker-column-index.mjs",
     "verify:datetime-picker-format": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-datetime-picker-format.mjs",
