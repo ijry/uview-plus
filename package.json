@@ -61,6 +61,7 @@
     "verify:root-app-up-nvue": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-root-app-up-nvue.mjs",
     "verify:cropper-inner": "node scripts/verify-cropper-inner.mjs",
     "verify:cropper-image-src": "node scripts/verify-cropper-image-src.mjs",
+    "verify:cropper-export-and-safe-area": "node scripts/verify-cropper-export-and-safe-area.mjs",
     "verify:i18n-on-demand": "node scripts/verify-i18n-on-demand.mjs",
     "verify:slider-box-sizing": "node scripts/verify-slider-box-sizing.mjs",
     "verify:slider-decimal-step": "node scripts/verify-slider-decimal-step.mjs",

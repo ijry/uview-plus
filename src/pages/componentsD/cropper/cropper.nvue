@@ -66,7 +66,9 @@ const chooseImage1 = (index) => {
     avatarRef1.value.chooseImage(index, {
         canChangeSize: true,
         areaWidth: "300rpx", areaHeight: "180rpx",
-        exportWidth: '260rpx', exportHeight: '160rpx'
+        exportWidth: '260rpx', exportHeight: '160rpx',
+        // 导出 jpg 才会按 quality 压缩，png 是无损格式、没有质量档位
+        fileType: 'jpg', quality: 0.8
     });
 };
 

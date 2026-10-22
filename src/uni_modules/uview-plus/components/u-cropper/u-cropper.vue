@@ -4,7 +4,7 @@
 		<up-canvas ref="avatarCanvas" :canvas-id="'avatar-canvas-' + instanceId" class="my-canvas" :width="windowWidth || 0" :height="windowHeight || 0" :style="{ top: styleTop, height: cvsStyleHeight }" bg-color="transparent"></up-canvas>
 		<up-canvas ref="operCanvas" :canvas-id="'oper-canvas-' + instanceId" class="oper-canvas" :width="windowWidth || 0" :height="windowHeight || 0" :style="{ top: styleTop, height: cvsStyleHeight }" bg-color="transparent" @touchstart="start" @touchmove="move" @touchend="end"></up-canvas>
 		<up-canvas ref="prvCanvas" :canvas-id="'prv-canvas-' + instanceId" class="prv-canvas" :width="windowWidth || 0" :height="windowHeight || 0" bg-color="transparent" @touchstart="hideImg" :style="{ height: cvsStyleHeight, top: prvTop }"></up-canvas>
-		<view class="oper-wrapper" :style="{ display: styleDisplay }">
+		<view class="oper-wrapper" :style="operStyle">
 			<view class="oper">
 				<view class="btn-wrapper" v-if="showOper">
 					<view class="u-cropper__action" @click="select" hover-class="hover" :style="{ width: btnWidth }">
@@ -92,6 +92,8 @@
 			noTab: true,
 			inner: false,
 			quality: '',
+			// 导出图片格式：png 为无损压缩（quality 不生效），jpg 才会按 quality 压缩
+			fileType: 'png',
 			index: '',
 			canChangeSize: false,
 			areaWidth: '300rpx',
@@ -107,11 +109,29 @@
 				default: 'transparent'
 			},
 		},
+		computed: {
+			// 导出图片格式：png 无损，quality 不生效；只有 jpg 才会按 quality 压缩
+			expFileType() {
+				const type = String(this.fileType || '').toLowerCase();
+				return type === 'jpg' || type === 'jpeg' ? 'jpg' : 'png';
+			},
+			// 底部操作栏样式：把底部安全区算进高度并用 padding-bottom 留出。
+			// 画布高度减掉了安全区，而操作栏仍是 50px 贴屏幕最底，两者之间会露出一
+			// 条页面背景，页面上浮动的按钮/标签会从这条缝里透出来，和裁剪底部按钮重叠。
+			operStyle() {
+				const safe = Math.max(0, parseInt(this.safeAreaInsetsBottom) || 0);
+				return {
+					display: this.styleDisplay,
+					height: (tabHeight + safe) + 'px',
+					paddingBottom: safe + 'px'
+				};
+			}
+		},
 		created() {
 			this.ctxCanvas = null;
 			this.ctxCanvasOper = null;
 			this.ctxCanvasPrv = null;
-			this.qlty = parseInt(this.quality) || 0.9;
+			this.qlty = this.parseQuality(this.quality);
 			this.imgSrc.imgSrc = this.imageSrc;
 			this.letRotate = (this.canRotate === false || this.inner === true) ? 0 : 1;
 			this.letScale = this.canScale === false ? 0 : 1;
@@ -148,6 +168,13 @@
 			this.initCanvasRefs(true);
 		},
 		methods: {
+			// 图片质量归一化：接受 number 与数字字符串，越界夹到 0-1，无效值回落 0.9
+			// 原来用 parseInt，parseInt(0.5) 是 0，`|| 0.9` 会把所有小数质量悄悄改回 0.9
+			parseQuality(value) {
+				const num = parseFloat(value);
+				if (isNaN(num)) return 0.9;
+				return Math.min(1, Math.max(0, num));
+			},
 			t,
 			async initCanvasRefs(force = false) {
 				await this.$nextTick();
@@ -170,7 +197,7 @@
 				this.platform = sysInfo.platform;
 				this.pixelRatio = sysInfo.pixelRatio;
 				this.windowWidth = sysInfo.windowWidth;
-				this.safeAreaInsetsBottom = sysInfo.safeAreaInsets.bottom;
+				this.safeAreaInsetsBottom = (sysInfo.safeAreaInsets && sysInfo.safeAreaInsets.bottom) || 0;
 				// #ifdef H5
 				this.drawTop = sysInfo.windowTop;
 				this.windowHeight = sysInfo.windowHeight + sysInfo.windowBottom;
@@ -319,7 +346,7 @@
 					height: height,
 					destWidth: expWidth,
 					destHeight: expHeight,
-					fileType: 'png',
+					fileType: this.expFileType,
 					quality: this.qlty,
 					success: (r) => {
 						r = r.tempFilePath;
@@ -339,7 +366,7 @@
 										height: expHeight,
 										destWidth: expWidth,
 										destHeight: expHeight,
-										fileType: 'png',
+										fileType: this.expFileType,
 										quality: this.qlty,
 										success: (r) => {
 											r = r.tempFilePath;
@@ -413,7 +440,7 @@
 					height: prvHeight,
 					destWidth: expWidth,
 					destHeight: expHeight,
-					fileType: 'png',
+					fileType: this.expFileType,
 					quality: this.qlty,
 					success: (r) => {
 						r = r.tempFilePath;
@@ -433,7 +460,7 @@
 										height: expHeight,
 										destWidth: expWidth,
 										destHeight: expHeight,
-										fileType: 'png',
+										fileType: this.expFileType,
 										quality: this.qlty,
 										success: (r) => {
 											r = r.tempFilePath;
@@ -670,7 +697,7 @@
 					y: y,
 					width: width,
 					height: height,
-					fileType: 'png',
+					fileType: this.expFileType,
 					quality: this.qlty,
 					success: async (r) => {
 						// console.log(r)
@@ -738,6 +765,7 @@
 						expWidth = params.exportWidth || this.exportWidth,
 						expHeight = params.exportHeight || this.exportHeight,
 						quality = params.quality,
+						fileType = params.fileType,
 						canRotate = params.canRotate,
 						canScale = params.canScale,
 						canChangeSize = params.canChangeSize,
@@ -755,7 +783,8 @@
 					this.letScale = canScale === false ? 0 : 1;
 					// 设置是否允许调整裁剪框大小
 					this.letChangeSize = canChangeSize || false;
-					this.qlty = parseInt(quality) || 0.9;
+					this.qlty = this.parseQuality(quality);
+					if (fileType) this.fileType = fileType;
 					this.mnScale = minScale || 0.3;
 					this.mxScale = maxScale || 4;
 					this.stc = stretch;
