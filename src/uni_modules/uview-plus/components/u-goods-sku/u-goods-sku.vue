@@ -8,6 +8,7 @@
             mode="bottom"
             :closeable="pageInline ? false : closeable"
             :pageInline="pageInline"
+            :safeAreaInsetBottom="safeAreaInsetBottom"
             :border-radius="20"
             @close="close"
             @closed="$emit('closed')"
@@ -96,6 +97,11 @@
 				type: Array,
 				default: () => []
 			},
+			// 默认选中的SKU
+			defaultSku: {
+				type: Object,
+				default: () => ({})
+			},
 			// 最大购买数量
 			maxBuy: {
 				type: Number,
@@ -115,13 +121,18 @@
             pageInline: {
 				type: Boolean,
 				default: false
+			},
+            // 是否留出底部安全距离
+            safeAreaInsetBottom: {
+				type: Boolean,
+				default: true
 			}
 		},
 		data() {
 			return {
                 show: false,
 				// 已选择的SKU
-				selectedSku: {},
+				selectedSku: { ...this.defaultSku },
 				// 购买数量
 				buyNum: 1
 			}
@@ -175,6 +186,11 @@
 			}
 		},
 		watch: {
+			defaultSku: {
+				handler(sku) {
+					this.selectedSku = { ...(sku || {}) }
+				}
+			}
 		},
         emits: ['open', 'confirm', 'close', 'closed'],
         created() {
@@ -281,7 +297,7 @@
 			},
 			// 重置选择
 			reset() {
-				this.selectedSku = {}
+				this.selectedSku = { ...this.defaultSku }
 				this.buyNum = 1
 			},
             open() {

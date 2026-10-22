@@ -43,6 +43,7 @@
     "verify:pagination": "node scripts/verify-pagination-component.mjs",
     "verify:navbar-safe-area-background": "node scripts/verify-navbar-safe-area-background.mjs",
     "verify:calendar-popup-props": "node scripts/verify-calendar-popup-props.mjs",
+    "verify:goods-sku-default-selection": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-goods-sku-default-selection.mjs",
     "verify:calendar-subtitle-sync": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-calendar-subtitle-sync.mjs",
     "verify:calendar-render-perf": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-calendar-render-perf.mjs",
     "verify:waterfall-distribution": "node scripts/verify-waterfall-distribution.mjs",
