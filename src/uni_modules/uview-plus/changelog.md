@@ -1,3 +1,14 @@
+## 3.8.133
+fix: 修复微信小程序数字键盘退格键短按无效，toast 新增 overlay 属性支持提示期间穿透页面
+
+本次更新修复 3.8.x 近期引入的两个小程序体验问题，并补上 toast 提示期间页面可操作的能力。
+
+- u-number-keyboard：去掉退格键 @touchstart 上残留的 .stop，修复微信小程序 catchtouchstart 吞掉同一节点 tap，导致短按退格不删除内容、只剩长按连删有效的问题
+- u-number-keyboard：补充 @touchcancel 清理定时器，避免触摸被系统手势或滚动打断后长按连删定时器空转
+- u-toast：新增 overlay 属性（默认 true），设置 :overlay="false" 后遮罩由铺满全屏收缩为跟随内容大小并居中的浮动层，提示期间点击与滚动可穿透页面；show() 未显式传值时回落到该 prop，show({ overlay }) 仍然优先
+- types/comps/toast.d.ts 的 ToastProps 补上 overlay，IDE 可提示
+- 回归验证：新增键盘退格点击行为与 toast overlay 穿透两个验证脚本，改动前均失败
+
 ## 3.8.132
 feat: 新增 u-goods-sku 默认选中与安全区配置，并修复 calc.div 精度崩溃
 
