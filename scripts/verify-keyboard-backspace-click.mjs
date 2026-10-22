@@ -178,6 +178,13 @@ for (const name of ['u-number-keyboard', 'u-car-keyboard']) {
 		/@touchstart(?:\.\w+)*="backspaceClick"/,
 		`${name}: @touchstart must not run the single-delete handler, or a touch tap would delete twice`
 	)
+	// 微信小程序里 catchtouchstart（.stop）会吞掉同一节点上的 tap，短按退格就只剩长按有效
+	assert.doesNotMatch(
+		source,
+		/@touchstart\.[\w.]+="backspaceTouchStart"/,
+		`${name}: the backspace @touchstart must carry no modifiers, ` +
+			`catchtouchstart swallows the tap on the same node in WeChat mini-program`
+	)
 }
 
 console.log('keyboard backspace click assertions passed')
