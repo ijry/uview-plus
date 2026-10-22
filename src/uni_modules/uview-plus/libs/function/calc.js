@@ -1,4 +1,5 @@
 // 浮点数加法
+import { divide } from './digit.js'
 export function add (arg1, arg2) {
 	var r1, r2, m
 		try {
@@ -44,17 +45,9 @@ export function mul (a, b) {
 	} catch (f) {}
 	return Number(d.replace(".", "")) * Number(e.replace(".", "")) / Math.pow(10, c);
 }
-//浮点除法
+// 浮点除法
 export function div (a, b) {
-	var c, d, e = 0,
-		f = 0;
-	try {
-		e = a.toString().split(".")[1].length;
-	} catch (g) {}
-	try {
-		f = b.toString().split(".")[1].length;
-	} catch (g) {}
-	return c = Number(a.toString().replace(".", "")), d = Number(b.toString().replace(".", "")), xyutil.mul(c / d, Math.pow(10, f - e));
+	return divide(a, b);
 }
 export default {
 	add,
