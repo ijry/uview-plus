@@ -1,3 +1,13 @@
+## 3.8.132
+feat: 新增 u-goods-sku 默认选中与安全区配置，并修复 calc.div 精度崩溃
+
+本次更新包含商品 SKU 组件的默认选中能力、底部安全区开关，以及修复浮点除法在无 xyutil 环境下崩溃的问题。
+
+- u-goods-sku：新增 defaultSku 属性，支持设置默认选中的 SKU，并支持响应式更新与重置恢复（#1070）
+- u-goods-sku：新增 safeAreaInsetBottom 属性（默认 true），可关闭底部安全距离，并透传给 u-popup
+- calc.div：改用 digit.divide 实现，避免依赖未定义的 xyutil，修复运行环境为空时的崩溃
+- 回归验证：新增 u-goods-sku 默认选中与 calc.div 精度验证脚本
+
 ## 3.8.131
 fix: 修复微信小程序 u-text 的 v-bind 编译报错
 
