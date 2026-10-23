@@ -752,6 +752,12 @@
                     "style" : {
                         "navigationBarTitleText" : "选项选择器"
                     }
+                },
+                {
+                    "path" : "lottie/lottie",
+                    "style" : {
+                        "navigationBarTitleText" : "Lottie 动画"
+                    }
                 }
             ]
         },
