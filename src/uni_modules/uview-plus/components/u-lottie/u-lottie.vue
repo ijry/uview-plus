@@ -31,6 +31,7 @@ import { mixin } from '../../libs/mixin/mixin'
 
 // #ifdef APP-HARMONY
 import './libs/wx-env.js'
+import { createHarmonyCanvasAdapter } from './libs/harmony-canvas-adapter.js'
 // #endif
 
 // #ifdef MP-WEIXIN || APP-HARMONY
@@ -140,6 +141,7 @@ export default {
         this._sourceData = null
         this._ownsCanvasEngine = false
         this._instanceId = `u-lottie-${Date.now()}${Math.floor(Math.random() * 1000)}`
+        this._harmonyAdapter = null
     },
     mounted() {
         this.reload()
@@ -402,9 +404,22 @@ export default {
                 if (!legacyContext) {
                     throw new Error('画布上下文初始化失败')
                 }
-                this.fail('鸿蒙平台画布初始化失败', token)
+                const adapter = createHarmonyCanvasAdapter({
+                    context: legacyContext,
+                    width: this.canvasWidth,
+                    height: this.canvasHeight
+                })
+                this._harmonyAdapter = adapter
+                lottieMiniprogram.setup(adapter.canvas)
+                this.startCanvasAnimation(adapter.context, token)
                 // #endif
             } catch (error) {
+                // #ifdef APP-HARMONY
+                if (this._harmonyAdapter) {
+                    this._harmonyAdapter.destroy()
+                    this._harmonyAdapter = null
+                }
+                // #endif
                 this.releaseCanvasOwner()
                 this.fail(this.normalizeError(error), token)
             }
@@ -548,6 +563,12 @@ export default {
                 }
                 this._animation = null
             }
+            // #ifdef APP-HARMONY
+            if (this._harmonyAdapter) {
+                this._harmonyAdapter.destroy()
+                this._harmonyAdapter = null
+            }
+            // #endif
             this.releaseCanvasOwner()
             this._ready = false
             this._engineState = 'idle'
