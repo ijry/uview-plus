@@ -43,7 +43,8 @@ zl-lottie 的 App 端依赖 UTS 原生插件和 lottie-android / lottie-ios，�
 
 1. **Web 轨（H5 / App-Vue）**
    - 引入 `lottie-web@5.13.0` 的 `lottie_svg.min.js`（约 242KB，含表达式支持）。
-   - 条件编译：`// #ifdef H5 || APP-PLUS`，并在内部嵌套 `// #ifndef APP-NVUE` 排除 nvue。
+   - App-Vue 使用 `// #ifdef APP-PLUS` 静态引入（内部嵌套 `// #ifndef APP-NVUE` 排除 nvue），与 webview 生命周期同步加载。
+   - H5 使用 `// #ifdef H5` 动态 `import()`，模块级缓存，失败时重置缓存以便重试。引擎被拆分为独立异步 chunk，仅在 `u-lottie` 挂载后按需拉取，不进入共享入口包。
    - 组件模板在对应平台渲染一个普通 `<view>` 容器，由 `lottie.loadAnimation({ container, renderer: 'svg', ... })` 挂载 SVG。
    - App-Vue 运行在 webview 中，有 DOM，因此不需要 renderjs。
 2. **Canvas 轨（MP-WEIXIN / APP-HARMONY）**
@@ -87,7 +88,7 @@ zl-lottie 的 App 端依赖 UTS 原生插件和 lottie-android / lottie-ios，�
 
 ### 事件
 
-`statechange` 的 `event.detail` 结构：
+`statechange` 的回调对象结构：
 
 ```js
 {
@@ -95,6 +96,8 @@ zl-lottie 的 App 端依赖 UTS 原生插件和 lottie-android / lottie-ios，�
   message: '' // 仅 error 时提供
 }
 ```
+
+跨端回调参数不同：H5 / App-Vue 的回调参数直接是该对象（`{ type, message? }`）；微信小程序 / 鸿蒙通过自定义组件事件派发，对象位于 `event.detail`。监听时统一按 `const detail = event.detail || event` 取值。
 
 | type | 触发时机 |
 | --- | --- |
@@ -130,7 +133,8 @@ const lottieRef = ref(null)
 const animationData = loadingData
 
 function onStateChange(e) {
-    console.log(e.detail.type)
+    const detail = e.detail || e
+    console.log(detail.type)
 }
 
 function play() {
@@ -193,7 +197,7 @@ function play() {
    - 调用 `setup(node)`（lottie-miniprogram 全局初始化）。
    - 调用 `loadAnimation({ animationData, loop, autoplay: false, rendererSettings: { context: ctx, preserveAspectRatio, dpr: 1 } })`。
 4. `u-canvas` 已把 canvas backing store 设为 `CSS 尺寸 × dpr`，且引擎 `dpr` 固定为 1，引擎按 backing store 像素绘制，最终由 canvas CSS 尺寸缩放显示，避免双重 DPR。
-5. 单实例限制：`setup()` 是全局单例，同一页面只允许一个 `u-lottie` 实例；第二个实例发 `error`。实例销毁时释放占用标记，后续页面可重新初始化。
+5. 单实例限制：`setup()` 是全局单例，且组件内的占用标记是模块级变量、作用域为整个应用而非单个页面。因此同一时刻只允许一个并行的 `u-lottie` 实例，第二个实例发 `error`。实例销毁或加载失败时释放占用标记；若页面在实例未卸载时就跳转，占用标记会继续保留并阻塞其他页面，当前版本不做 page hide/show 重新获取，需先卸载组件再离开页面。
 
 ### APP-HARMONY
 
@@ -226,8 +230,9 @@ idle -> loading -> ready -> playing <-> paused
 ```
 
 - `loading` 阶段重复触发重载时，以最后一次数据源为准，旧请求结果丢弃。
-- `playAnimation()` 在 `loading` 阶段设置待播放标记，`ready` 后执行。
+- `playAnimation()` 在 `loading` 阶段设置待播放标记，`ready` 后执行；在 `ready` 前调用 `cancelAnimation()` 会清除待播放标记，并抑制本次加载的 `autoplay`。
 - 销毁或重载时取消未完成的请求和尺寸测量回调。
+- 异步 `data_failed` / `error` 失败时销毁动画与鸿蒙适配器、释放画布占用并置为 `error`；同一加载令牌只派发一次 `error` 状态。
 
 ## 文件清单
 
@@ -251,7 +256,7 @@ src/pages.json                            # 注册示例页
 
 说明：
 
-- 引擎文件放在组件目录内，只被 `u-lottie` 条件引入；未使用 `u-lottie` 的项目不会打包这些体积。
+- 引擎文件放在组件目录内，只被 `u-lottie` 条件引入。H5 的 SVG 引擎是独立异步 chunk，仅在 `u-lottie` 挂载后按需拉取，不进入共享入口包；小程序 / 鸿蒙的 canvas 引擎随平台包一起打包。
 - 保留上游 MIT License 文件。
 - `u-canvas` 不修改，也不复制其 nvue 静态资产。
 
@@ -259,7 +264,7 @@ src/pages.json                            # 注册示例页
 
 1. H5：`npm run dev:h5` 启动示例页，动画正常渲染和播放；`play` / `pause` / `resume` / `cancel` 状态事件正确；三种 `contentModel` 表现符合上表；控制台无报错。
 2. MP-WEIXIN：`npm run build:mp-weixin` 编译通过，产物中包含 `u-lottie` 和 `lottie-miniprogram`，不包含 `lottie-web` SVG 构建。
-3. H5 / MP 构建产物检查：Web 平台不包含 `lottie-miniprogram`，小程序不包含 SVG 引擎，确认条件编译生效。
+3. H5 / MP 构建产物检查：H5 入口 chunk 不包含 SVG 引擎（无 `createElementNS` 等引擎代码），SVG 引擎位于独立异步 chunk；Web 平台不包含 `lottie-miniprogram`，小程序不包含 SVG 引擎，确认条件编译生效。
 4. 示例页使用本地 `loading.json`，不依赖网络；额外提供一个 http(s) `filePath` 示例并注明域名白名单要求。
 5. App-Vue、APP-HARMONY、APP-NVUE 无法在本机完成运行验证，必须记录具体原因：
    - 本机无 HBuilderX CLI / 原生运行环境；
@@ -269,9 +274,9 @@ src/pages.json                            # 注册示例页
 ## 风险与限制
 
 - **引擎版本不一致**：Web 使用 lottie-web 5.13.0，小程序 / 鸿蒙使用 lottie-miniprogram 1.0.12（内部为 5.5.7），少数新特性或表达式渲染结果可能不同。
-- **单实例限制**：微信小程序和鸿蒙受 lottie-miniprogram 全局 `setup()` 限制，同一页面只能有一个并行动画实例。
+- **单实例限制**：微信小程序和鸿蒙受 lottie-miniprogram 全局 `setup()` 限制，组件用模块级变量记录占用者，因此限制是应用级而非页面级：同一时刻只能有一个并行的 `u-lottie` 实例；页面在实例未卸载时跳转，占用会继续保留并可能阻塞其他页面，当前版本不做 page hide/show 重新获取。
 - **鸿蒙适配层为尽力而为**：旧版 CanvasContext 能力子集有限，复杂遮罩、滤镜、混合模式和图片处理可能失真；需要在真机回归。
 - **本地路径限制**：微信小程序无法读取包内本地 JSON，必须使用 `animationData`；鸿蒙本地路径是否可读取决于运行时，失败时回退到 `animationData`。
-- **包体积**：两个引擎源文件合计约 450KB，但条件编译后每个平台只打入其中一个；不影响未使用 `u-lottie` 的项目。
-- **网络加载**：http(s) 数据源需要配置小程序合法域名和 H5 CORS；示例页默认使用本地 `animationData`。
+- **包体积**：H5 的 SVG 引擎约 242KB，构建为独立异步 chunk，仅在 `u-lottie` 挂载后拉取，不进入共享入口包；小程序 / 鸿蒙的 canvas 引擎（约 205KB）随平台包一起打包。
+- **网络加载**：http(s) 数据源需要配置小程序合法域名和 H5 CORS；示例页默认使用本地 `animationData`。远程 Lottie JSON 的表达式字段是可执行代码，必须仅加载可信来源，避免 XSS 或任意脚本执行。
 - **布局依赖**：组件依赖父容器给定宽高；画布平台尺寸为 0 时会发 `error`，不会自动猜测尺寸。

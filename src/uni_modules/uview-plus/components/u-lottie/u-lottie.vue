@@ -43,21 +43,44 @@ import lottieMiniprogram from './libs/lottie-miniprogram.min.js'
 let canvasEngineOwner = null
 // #endif
 
-// #ifdef H5 || APP-PLUS
+// #ifdef APP-PLUS
 // #ifndef APP-NVUE
 import lottieWeb from './libs/lottie_svg.min.js'
+// #endif
+// #endif
+
+// #ifdef H5
+let webEnginePromise = null
+function getWebEngine() {
+    if (!webEnginePromise) {
+        webEnginePromise = import('./libs/lottie_svg.min.js')
+            .then((module) => module.default)
+            .catch((error) => {
+                webEnginePromise = null
+                throw error
+            })
+    }
+    return webEnginePromise
+}
+// #endif
+
+// #ifdef APP-PLUS
+// #ifndef APP-NVUE
+function getWebEngine() {
+    return Promise.resolve(lottieWeb)
+}
 // #endif
 // #endif
 
 /**
  * lottie 动画
  * @description 加载 AE 导出的 Lottie JSON 并播放；H5/App-Vue 使用 SVG，微信小程序/鸿蒙使用 canvas。
- * @property {String} filePath 动画 JSON 路径，支持 http(s)；H5 / App-Vue 额外支持本地静态路径
+ * @property {String} filePath 动画 JSON 路径，支持 http(s)；H5 / App-Vue 额外支持本地静态路径。远程 JSON 可包含可执行表达式，请仅加载可信来源
  * @property {Object} animationData 直接传入 Lottie JSON 对象，优先级高于 filePath
  * @property {String} contentModel 填充模式：ScaleToFill / AspectFill / Center
  * @property {Boolean} loop 是否循环播放
  * @property {Boolean} autoplay 就绪后是否自动播放
- * @event {Function} statechange 状态变化，detail.type 为 ready/play/pause/resume/stop/complete/error
+ * @event {Function} statechange 状态变化，type 为 ready/play/pause/resume/stop/complete/error；H5 / App-Vue 回调参数为 { type, message? }，小程序 / 鸿蒙为 event.detail
  * @example <up-lottie :animation-data="data" content-model="AspectFill" @statechange="onState" />
  */
 export default {
@@ -140,6 +163,7 @@ export default {
         this._failedToken = -1
         this._sourceData = null
         this._ownsCanvasEngine = false
+        this._cancelledBeforeReady = false
         this._instanceId = `u-lottie-${Date.now()}${Math.floor(Math.random() * 1000)}`
         this._harmonyAdapter = null
     },
@@ -169,6 +193,7 @@ export default {
             this._ready = false
             this._completed = false
             this._pendingPlay = false
+            this._cancelledBeforeReady = false
             this._failedToken = -1
             this._engineState = 'idle'
 
@@ -263,7 +288,15 @@ export default {
         async initWeb(source, token) {
             // #ifdef H5 || APP-PLUS
             // #ifndef APP-NVUE
-            if (!lottieWeb || typeof lottieWeb.loadAnimation !== 'function') {
+            let engine
+            try {
+                engine = await getWebEngine()
+            } catch (error) {
+                this.fail(this.normalizeError(error), token)
+                return
+            }
+            if (token !== this._loadToken) return
+            if (!engine || typeof engine.loadAnimation !== 'function') {
                 this.fail('lottie-web 引擎未加载', token)
                 return
             }
@@ -294,7 +327,7 @@ export default {
             }
             let animation
             try {
-                animation = lottieWeb.loadAnimation(options)
+                animation = engine.loadAnimation(options)
             } catch (error) {
                 this.fail(this.normalizeError(error), token)
                 return
@@ -360,13 +393,15 @@ export default {
         },
         onCanvasReady() {
             if (!this.canvasVisible) return
+            const canvasRef = this.$refs.canvasRef
+            if (!canvasRef || canvasRef.canvasId !== this.canvasId) return
             const token = this._loadToken
             this.$nextTick(() => {
                 if (!this.canvasVisible || token !== this._loadToken) return
                 this.initCanvasEngine(token)
             })
         },
-        async initCanvasEngine(token) {
+        initCanvasEngine(token) {
             // #ifdef MP-WEIXIN || APP-HARMONY
             if (token !== this._loadToken) return
             if (this._animation) {
@@ -378,7 +413,7 @@ export default {
                 return
             }
             if (canvasEngineOwner && canvasEngineOwner !== this._instanceId) {
-                this.fail('微信小程序与鸿蒙同一页面仅支持一个 u-lottie 实例', token)
+                this.fail('当前应用仅支持一个并行的 u-lottie 实例', token)
                 return
             }
             if (!canvasEngineOwner) {
@@ -475,7 +510,7 @@ export default {
                 }
                 this._ready = true
                 this.emitState('ready')
-                if (this.autoplay || this._pendingPlay) {
+                if ((this.autoplay && !this._cancelledBeforeReady) || this._pendingPlay) {
                     this._pendingPlay = false
                     this.startPlayback()
                 }
@@ -509,6 +544,7 @@ export default {
             this.emitState('play')
         },
         playAnimation() {
+            this._cancelledBeforeReady = false
             if (!this._animation || !this._ready) {
                 this._pendingPlay = true
                 return
@@ -528,6 +564,7 @@ export default {
             this.emitState('resume')
         },
         cancelAnimation() {
+            this._cancelledBeforeReady = true
             this._pendingPlay = false
             if (!this._animation) return
             this._animation.stop()
@@ -546,6 +583,10 @@ export default {
             if (typeof token === 'number' && token !== this._loadToken) return
             if (this._failedToken === this._loadToken) return
             this._failedToken = this._loadToken
+            this._ready = false
+            this._pendingPlay = false
+            this._completed = false
+            this.destroyEngine()
             this._engineState = 'error'
             this.emitState('error', message || '动画初始化失败')
         },
