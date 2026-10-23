@@ -1,3 +1,15 @@
+## 3.8.134
+fix: 修复 up-cropper 小程序端底部操作栏透出页面与导出参数失效
+
+本次更新修复 u-cropper 的三个问题：iOS 上底部操作栏与页面浮动元素重叠、quality 参数完全失效，以及小数质量被悄悄改回 0.9。
+
+- u-cropper：修复 iOS 上底部操作栏与页面浮动按钮/标签重叠的问题。画布高度减掉了底部安全区，而操作栏仍是 50px 贴在屏幕最底，两者之间露出一条约安全区高度的页面背景，页面上浮动的元素会从这条缝里透出来；安卓 safeAreaInsets.bottom 为 0，所以只有苹果机能看到。现在操作栏高度改为 50px + 安全区并用 padding-bottom 让出，与画布严丝合缝，按钮也完整位于 home 指示条上方
+- u-cropper：新增 fileType 属性（默认 png，可选 png/jpg）。原先 5 处导出都把 fileType 硬编码为 png，PNG 是无损格式、没有质量档位，quality 形同虚设；只有 jpg 才会按 quality 压缩，chooseImage 的 params 也可覆盖
+- u-cropper：修复 quality 归一化使用 parseInt 导致 parseInt(0.5) 为 0、被 `|| 0.9` 改回 0.9 的问题，改用 parseFloat 并夹取到 0-1，number 与数字字符串都认
+- u-cropper：safeAreaInsets 取值增加兜底，个别端取不到时不再算出 NaN 把布局顶飞
+- 升级说明：fileType 默认仍为 png，输出格式与升级前一致，不需要改代码；需要压缩体积时显式传 fileType="jpg" 并配合 quality
+- 回归验证：新增 scripts/verify-cropper-export-and-safe-area.mjs，直接加载组件脚本真实调用 computed 与方法，锁住操作栏安全区样式、fileType 透传与 quality 归一化
+
 ## 3.8.133
 fix: 修复微信小程序数字键盘退格键短按无效，toast 新增 overlay 属性支持提示期间穿透页面
 
