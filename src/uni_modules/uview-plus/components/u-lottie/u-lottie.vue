@@ -9,6 +9,18 @@
         ></view>
         <!-- #endif -->
         <!-- #endif -->
+
+        <!-- #ifdef MP-WEIXIN || APP-HARMONY -->
+        <u-canvas
+            v-if="canvasVisible"
+            ref="canvasRef"
+            :canvas-id="canvasId"
+            :width="canvasWidth"
+            :height="canvasHeight"
+            bg-color="transparent"
+            @ready="onCanvasReady"
+        />
+        <!-- #endif -->
     </view>
 </template>
 
@@ -16,6 +28,19 @@
 import { props } from './props'
 import { mpMixin } from '../../libs/mixin/mpMixin'
 import { mixin } from '../../libs/mixin/mixin'
+
+// #ifdef APP-HARMONY
+import './libs/wx-env.js'
+// #endif
+
+// #ifdef MP-WEIXIN || APP-HARMONY
+import uCanvas from '../u-canvas/u-canvas.vue'
+import lottieMiniprogram from './libs/lottie-miniprogram.min.js'
+// #endif
+
+// #ifdef MP-WEIXIN || APP-HARMONY
+let canvasEngineOwner = null
+// #endif
 
 // #ifdef H5 || APP-PLUS
 // #ifndef APP-NVUE
@@ -37,6 +62,11 @@ import lottieWeb from './libs/lottie_svg.min.js'
 export default {
     name: 'u-lottie',
     mixins: [mpMixin, mixin, props],
+    components: {
+        // #ifdef MP-WEIXIN || APP-HARMONY
+        uCanvas
+        // #endif
+    },
     emits: ['statechange'],
     data() {
         return {
@@ -107,6 +137,9 @@ export default {
         this._completed = false
         this._engineState = 'idle'
         this._failedToken = -1
+        this._sourceData = null
+        this._ownsCanvasEngine = false
+        this._instanceId = `u-lottie-${Date.now()}${Math.floor(Math.random() * 1000)}`
     },
     mounted() {
         this.reload()
@@ -129,6 +162,7 @@ export default {
             this._requestTask = null
             this.destroyEngine()
             this.canvasVisible = false
+            this._sourceData = null
             this.webCenterSize = null
             this._ready = false
             this._completed = false
@@ -149,7 +183,7 @@ export default {
                     await this.initWeb(source, token)
                     return
                 }
-                this.fail('当前平台暂未接入画布渲染', token)
+                await this.initCanvasLayout(source, token)
             } catch (error) {
                 if (token !== this._loadToken) return
                 this.fail(this.normalizeError(error), token)
@@ -279,6 +313,133 @@ export default {
                 this.webCenterSize = { width, height }
             }
         },
+        async initCanvasLayout(source, token) {
+            if (!source.data) {
+                this.fail('画布平台仅支持 animationData 或 http(s) 数据源', token)
+                return
+            }
+            this._sourceData = source.data
+            const rect = await this.measureRoot()
+            if (token !== this._loadToken) return
+            if (!rect) {
+                this.fail('组件宽高为 0，请为 u-lottie 设置明确的宽高', token)
+                return
+            }
+            let width = rect.width
+            let height = rect.height
+            if (this.contentModel === 'Center') {
+                const naturalWidth = Number(source.data.w)
+                const naturalHeight = Number(source.data.h)
+                if (naturalWidth > 0 && naturalHeight > 0) {
+                    width = naturalWidth
+                    height = naturalHeight
+                }
+            }
+            this.canvasWidth = width
+            this.canvasHeight = height
+            this.canvasId = `u-lottie-canvas-${Date.now()}${Math.floor(Math.random() * 1000)}`
+            this.canvasVisible = true
+        },
+        async measureRoot() {
+            for (let attempt = 0; attempt < 10; attempt += 1) {
+                const rect = await new Promise((resolve) => {
+                    uni.createSelectorQuery()
+                        .in(this)
+                        .select('.u-lottie')
+                        .boundingClientRect((result) => resolve(result))
+                        .exec()
+                })
+                if (rect && rect.width > 0 && rect.height > 0) {
+                    return rect
+                }
+                await new Promise((resolve) => setTimeout(resolve, 30))
+            }
+            return null
+        },
+        onCanvasReady() {
+            if (!this.canvasVisible) return
+            const token = this._loadToken
+            this.$nextTick(() => {
+                if (!this.canvasVisible || token !== this._loadToken) return
+                this.initCanvasEngine(token)
+            })
+        },
+        async initCanvasEngine(token) {
+            // #ifdef MP-WEIXIN || APP-HARMONY
+            if (token !== this._loadToken) return
+            if (this._animation) {
+                this.destroyEngine()
+            }
+            const canvasRef = this.$refs.canvasRef
+            if (!canvasRef) {
+                this.fail('画布未就绪', token)
+                return
+            }
+            if (canvasEngineOwner && canvasEngineOwner !== this._instanceId) {
+                this.fail('微信小程序与鸿蒙同一页面仅支持一个 u-lottie 实例', token)
+                return
+            }
+            if (!canvasEngineOwner) {
+                canvasEngineOwner = this._instanceId
+                this._ownsCanvasEngine = true
+            }
+            try {
+                // #ifdef MP-WEIXIN
+                const node = canvasRef.getCanvasElement()
+                const context = canvasRef.getRawContext()
+                if (!node || !context) {
+                    throw new Error('画布节点初始化失败')
+                }
+                if (typeof context.setTransform === 'function') {
+                    context.setTransform(1, 0, 0, 1, 0, 0)
+                }
+                lottieMiniprogram.setup(node)
+                this.startCanvasAnimation(context, token)
+                // #endif
+
+                // #ifdef APP-HARMONY
+                const legacyContext = canvasRef.getRawContext()
+                if (!legacyContext) {
+                    throw new Error('画布上下文初始化失败')
+                }
+                this.fail('鸿蒙平台画布初始化失败', token)
+                // #endif
+            } catch (error) {
+                this.releaseCanvasOwner()
+                this.fail(this.normalizeError(error), token)
+            }
+            // #endif
+        },
+        startCanvasAnimation(context, token) {
+            // #ifdef MP-WEIXIN || APP-HARMONY
+            const animation = lottieMiniprogram.loadAnimation({
+                animationData: this._sourceData,
+                loop: this.loop,
+                autoplay: false,
+                rendererSettings: {
+                    context,
+                    preserveAspectRatio: this.preserveAspectRatio,
+                    dpr: 1,
+                    clearCanvas: true
+                }
+            })
+            if (token !== this._loadToken) {
+                animation.destroy()
+                this.releaseCanvasOwner()
+                return
+            }
+            this._animation = animation
+            this.bindEngineEvents(animation, token)
+            // #endif
+        },
+        releaseCanvasOwner() {
+            // #ifdef MP-WEIXIN || APP-HARMONY
+            if (this._ownsCanvasEngine && canvasEngineOwner === this._instanceId) {
+                canvasEngineOwner = null
+            }
+            this._ownsCanvasEngine = false
+            // #endif
+        },
         bindEngineEvents(animation, token) {
             const isCurrent = () => token === this._loadToken
             animation.addEventListener('DOMLoaded', () => {
@@ -387,6 +548,7 @@ export default {
                 }
                 this._animation = null
             }
+            this.releaseCanvasOwner()
             this._ready = false
             this._engineState = 'idle'
         }
