@@ -34,6 +34,8 @@ declare interface UploadProps {
    * @default "image"
    */
   accept?: 'all' | 'media' | 'image' | 'file' | 'video'
+  /** 当使用chooseMedia上传文件时设置的文件类型，可选值为image, video, mix，默认 ['image', 'video'] */
+  mediaType?: ('image' | 'video' | 'mix')[]
   /**
    * 图片或视频拾取模式，当accept为image类型时设置capture可选额外camera可以直接调起摄像头
    * @default ["album", "camera"]
