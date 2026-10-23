@@ -30,10 +30,7 @@ export function createHarmonyCanvasAdapter(options = {}) {
     let dirty = false
     let flushing = false
     let destroyed = false
-
-    const markDirty = () => {
-        dirty = true
-    }
+    let flushTimer = null
 
     const flush = () => {
         if (destroyed || !dirty || flushing) return
@@ -44,6 +41,7 @@ export function createHarmonyCanvasAdapter(options = {}) {
             if (released) return
             released = true
             flushing = false
+            if (dirty) scheduleFlush()
         }
         try {
             if (typeof legacy.draw === 'function') {
@@ -55,6 +53,22 @@ export function createHarmonyCanvasAdapter(options = {}) {
         } catch (error) {
             release()
         }
+    }
+
+    const scheduleFlush = () => {
+        if (destroyed || flushTimer !== null) return
+        const timer = setTimeout(() => {
+            rafIds.delete(timer)
+            if (flushTimer === timer) flushTimer = null
+            flush()
+        }, 0)
+        flushTimer = timer
+        rafIds.add(timer)
+    }
+
+    const markDirty = () => {
+        dirty = true
+        scheduleFlush()
     }
 
     const sync = () => {
@@ -372,6 +386,8 @@ export function createHarmonyCanvasAdapter(options = {}) {
             destroyed = true
             rafIds.forEach((timer) => clearTimeout(timer))
             rafIds.clear()
+            flushTimer = null
+            dirty = false
             stack.length = 0
         }
     }
