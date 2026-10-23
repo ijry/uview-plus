@@ -11,7 +11,8 @@ export default {
 	// upload组件
 	upload: {
 		accept: 'image',
-		extension: [],
+        extension: [],
+		mediaType: ['image', 'video'],
 		capture: ['album', 'camera'],
 		compressed: true,
 		camera: 'back',

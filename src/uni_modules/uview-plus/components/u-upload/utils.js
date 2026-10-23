@@ -87,6 +87,7 @@ export function chooseFile({
     multiple,
     capture,
     compressed,
+    mediaType,
     maxDuration,
     sizeType,
     camera,
@@ -109,20 +110,28 @@ export function chooseFile({
                 fail: reject
             })
             break
-            // #ifdef MP-WEIXIN
-            // 只有微信小程序才支持chooseMedia接口
         case 'media':
-            wx.chooseMedia({
-                count: multiple ? Math.min(maxCount, 9) : 1,
-                sourceType: capture,
-                maxDuration,
-                sizeType,
-                camera,
-                success: (res) => resolve(formatMedia(res)),
-                fail: reject
-            })
+            if (wx.chooseMedia) {
+                wx.chooseMedia({
+                    count: multiple ? Math.min(maxCount, 9) : 1,
+                    mediaType,
+                    sourceType: capture,
+                    maxDuration,
+                    sizeType,
+                    camera,
+                    success: (res) => resolve(formatMedia(res)),
+                    fail: reject
+                })
+            } else {
+                uni.chooseImage({
+                    count: multiple ? Math.min(maxCount, 9) : 1,
+                    sourceType: capture,
+                    sizeType,
+                    success: (res) => resolve(formatImage(res)),
+                    fail: reject
+                })
+            }
             break
-            // #endif
         case 'video':
             uni.chooseVideo({
                 sourceType: capture,
