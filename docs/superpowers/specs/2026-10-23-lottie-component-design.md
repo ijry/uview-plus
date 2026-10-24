@@ -97,7 +97,7 @@ zl-lottie 的 App 端依赖 UTS 原生插件和 lottie-android / lottie-ios，�
 }
 ```
 
-跨端回调参数不同：H5 / App-Vue 的回调参数直接是该对象（`{ type, message? }`）；微信小程序 / 鸿蒙通过自定义组件事件派发，对象位于 `event.detail`。监听时统一按 `const detail = event.detail || event` 取值。
+跨端回调参数不同：H5 / App-Vue（以及鸿蒙等 App 端）通常直接收到该对象（`{ type, message? }`）；微信小程序通过自定义组件事件派发，对象位于 `event.detail`。监听时统一按 `const detail = event.detail || event` 取值。
 
 | type | 触发时机 |
 | --- | --- |
@@ -264,7 +264,7 @@ src/pages.json                            # 注册示例页
 
 1. H5：`npm run dev:h5` 启动示例页，动画正常渲染和播放；`play` / `pause` / `resume` / `cancel` 状态事件正确；三种 `contentModel` 表现符合上表；控制台无报错。
 2. MP-WEIXIN：`npm run build:mp-weixin` 编译通过，产物中包含 `u-lottie` 和 `lottie-miniprogram`，不包含 `lottie-web` SVG 构建。
-3. H5 / MP 构建产物检查：H5 入口 chunk 不包含 SVG 引擎（无 `createElementNS` 等引擎代码），SVG 引擎位于独立异步 chunk；Web 平台不包含 `lottie-miniprogram`，小程序不包含 SVG 引擎，确认条件编译生效。
+3. H5 / MP 构建产物检查：H5 入口 chunk 不包含 SVG 引擎（用 `AnimationItem` 等 lottie 专有标记判断；`createElementNS` 也可能来自 Vue runtime-dom，不能单独作为判据），SVG 引擎位于独立异步 chunk；Web 平台不包含 `lottie-miniprogram`，小程序不包含 SVG 引擎，确认条件编译生效。
 4. 示例页使用本地 `loading.json`，不依赖网络；额外提供一个 http(s) `filePath` 示例并注明域名白名单要求。
 5. App-Vue、APP-HARMONY、APP-NVUE 无法在本机完成运行验证，必须记录具体原因：
    - 本机无 HBuilderX CLI / 原生运行环境；

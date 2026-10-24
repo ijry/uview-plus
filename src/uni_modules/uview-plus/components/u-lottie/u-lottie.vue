@@ -80,7 +80,7 @@ function getWebEngine() {
  * @property {String} contentModel 填充模式：ScaleToFill / AspectFill / Center
  * @property {Boolean} loop 是否循环播放
  * @property {Boolean} autoplay 就绪后是否自动播放
- * @event {Function} statechange 状态变化，type 为 ready/play/pause/resume/stop/complete/error；H5 / App-Vue 回调参数为 { type, message? }，小程序 / 鸿蒙为 event.detail
+ * @event {Function} statechange 状态变化，type 为 ready/play/pause/resume/stop/complete/error；H5 / App-Vue / 鸿蒙通常为直接对象 { type, message? }，微信小程序为 event.detail，统一按 event.detail || event 兼容
  * @example <up-lottie :animation-data="data" content-model="AspectFill" @statechange="onState" />
  */
 export default {
