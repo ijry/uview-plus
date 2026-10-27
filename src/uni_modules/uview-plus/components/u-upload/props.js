@@ -14,6 +14,10 @@ export const props = defineMixin({
             type: Array,
             default: () => defProps.upload.extension
         },
+        mediaType: {
+          type: Array,
+          default: () => defProps.upload.mediaType
+        },
         // 	图片或视频拾取模式，当accept为image类型时设置capture可选额外camera可以直接调起摄像头
         capture: {
             type: [String, Array],
