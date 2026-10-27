@@ -27,8 +27,10 @@ export function createAppIconFontFeature(options = {}) {
   const rootPath = normalizePath(projectInfo.rootPath)
   const iconFontSourcePath = normalizePath(resolve(featurePath, '../../components/u-icon/upicon.ttf'))
   const appStaticIconFontPath = normalizePath(resolve(rootPath, appStaticIconFontRelativePath))
-  const uIconUtilPath = normalizePath(resolve(rootPath, 'uni_modules/uview-plus/components/u-icon/util.js'))
-  const uIconVuePath = normalizePath(resolve(rootPath, 'uni_modules/uview-plus/components/u-icon/u-icon.vue'))
+  // 同时兼容 uni_modules 与 npm（node_modules / pnpm 真实路径）两种安装方式：
+  // npm 安装时包位于 node_modules/uview-plus/...，按包内相对路径后缀匹配即可命中。
+  const isUIconUtil = (cleanId) => cleanId.endsWith('uview-plus/components/u-icon/util.js')
+  const isUIconVue = (cleanId) => cleanId.endsWith('uview-plus/components/u-icon/u-icon.vue')
 
   const shouldCopyFile = (sourcePath, targetPath) => {
     if (!existsSync(targetPath)) return true
@@ -55,15 +57,15 @@ export function createAppIconFontFeature(options = {}) {
     if (!isAppPlatform()) return null
     const cleanId = toCleanId(id)
     if (!enabled) {
-      if (cleanId === uIconUtilPath && code.includes(appStaticIconFontFlag)) {
+      if (isUIconUtil(cleanId) && code.includes(appStaticIconFontFlag)) {
         return code.replace(appStaticIconFontFlag, appStaticIconFontDisabledFlag)
       }
       return null
     }
-    if (cleanId === uIconVuePath && appRemoteIconFontCondition.test(code)) {
+    if (isUIconVue(cleanId) && appRemoteIconFontCondition.test(code)) {
       return code.replace(appRemoteIconFontCondition, '/* #ifdef $1 */')
     }
-    if (cleanId === uIconVuePath && appCompiledRemoteIconFontFace.test(code)) {
+    if (isUIconVue(cleanId) && appCompiledRemoteIconFontFace.test(code)) {
       return removeAppCompiledRemoteIconFontFace(code)
     }
     return null

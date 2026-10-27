@@ -171,7 +171,10 @@ const loadFont = () => {
     registerNvueFontFace(iconUrl);
     // #endif
     // #ifdef APP-VUE
-    registerAppVueFontFace(iconUrl, appVuePage);
+    // App-Vue 本地字体直接用原始 _www/... 路径，交给 view 层转换一次，
+    // 自定义基座与云打包正式 APK 都能正确显示图标（issue #1069）。
+    const appVueIconUrl = useAppStaticIconFont ? appIconFontUrl : iconUrl;
+    registerAppVueFontFace(appVueIconUrl, appVuePage);
     // #endif
     // #ifdef H5 || MP-WEIXIN || MP-ALIPAY
     uni.loadFontFace({

@@ -10,7 +10,7 @@
             :pageInline="pageInline"
             :safeAreaInsetBottom="safeAreaInsetBottom"
             :border-radius="20"
-            @close="close"
+            @close="$emit('close')"
             @closed="$emit('closed')"
         >
             <view class="up-goods-sku-container" :style="{padding: pageInline ? '0px' : ''}">
@@ -304,10 +304,10 @@
                 this.show = true;
                 this.$emit('open')
             },
-			// 关闭弹窗
+			// 关闭弹窗：仅驱动 show，关闭事件由 popup 的 show watcher 补发，
+			// 并经模板 @close="$emit('close')" 透传给父组件，保证每种关闭方式恰好 emit 一次
 			close() {
-                this.false = true;
-				this.$emit('close')
+				this.show = false
 			},
 			// 确认选择
 			onConfirm() {

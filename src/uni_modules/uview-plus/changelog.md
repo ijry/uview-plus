@@ -1,3 +1,12 @@
+## 3.8.136
+fix: 修复 u-goods-sku 关闭笔误与 u-icon App 本地字体在 npm 安装/正式 APK 下的问题
+
+本次更新修复 u-goods-sku 关闭弹窗的笔误，并解决 App 端本地图标字体在 npm 安装方式与云打包正式 APK 上显示异常的问题（对应 issue #1069）。
+
+- u-goods-sku：close() 中 `this.false = true` 为无效赋值（误建 false 属性、弹窗从未真正关闭），改为 `this.show = false` 真正关闭弹窗；并将 popup 的 close/closed 事件经模板透传给父组件，避免 `ref.close()` 触发 popup 的 show watcher 补发导致父组件重复收到 close 事件
+- u-icon（App 本地字体）：构建插件 transform 原仅按 `uni_modules/uview-plus/...` 绝对路径严格匹配，npm 安装到 `node_modules/uview-plus/...` 时永远不命中、App 远程 @font-face 不被剥离；改为按包内相对路径后缀匹配，同时覆盖 uni_modules / node_modules / pnpm 真实路径
+- u-icon（App-Vue）：原在 App-Vue 路径预先 `plus.io.convertLocalFileSystemURL` 转换 `_www` 字体路径，导致云打包正式 APK 图标不显示；App-Vue 改用原始 `_www/static/app-plus/uview-plus/upicon.ttf` 路径、交由 view 层转换一次，自定义基座与正式 APK 均可正常显示（App-NVue 仍保持原转换逻辑）
+
 ## 3.8.135
 feat: 新增 u-lottie 动画组件，u-upload 新增 mediaType 并修复 chooseMedia 平台判断
 
