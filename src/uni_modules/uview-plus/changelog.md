@@ -1,3 +1,15 @@
+## 3.8.135
+feat: 新增 u-lottie 动画组件，u-upload 新增 mediaType 并修复 chooseMedia 平台判断
+
+本次更新新增 Lottie 动画组件 u-lottie，覆盖 H5/App-Vue、微信小程序与鸿蒙多端渲染；同时为 u-upload 补上 mediaType 属性，并修复 chooseMedia 按平台硬编码导致的兼容性问题。
+
+- 新增 u-lottie 组件：支持 filePath 传入动画 JSON 地址（http(s)，H5 / App-Vue 额外支持本地静态路径），或 animationData 直接传入 Lottie JSON 对象（优先级高于 filePath）；可配置 contentModel 内容填充模式（ScaleToFill / AspectFill / Center）、loop 循环播放、autoplay 数据与引擎就绪后自动播放
+- u-lottie 跨端渲染：H5 / App-Vue 基于 lottie-web SVG 渲染器，H5 端引擎按需加载、加载失败自动清理；微信小程序基于 lottie-miniprogram 画布渲染；鸿蒙通过 harmony-canvas-adapter 画布适配，并修复同步渲染未提交绘制的问题
+- u-lottie 实例方法：reload / playAnimation / pauseAnimation / resumeAnimation / cancelAnimation；statechange 事件统一回报 ready / play / pause / resume / stop / complete / error 状态（微信小程序从 event.detail 读取）
+- u-upload：新增 mediaType 属性（默认 ['image', 'video']），accept 为 media 时透传给 chooseMedia 控制可选文件类型（image / video / mix）
+- u-upload：chooseMedia 不再做平台编译判断，改为运行时检测接口是否存在，不存在时自动回退到 chooseImage，修复部分平台 accept="media" 直接报错的问题
+- 新增 componentsD/lottie 示例页
+
 ## 3.8.134
 fix: 修复 up-cropper 小程序端底部操作栏透出页面与导出参数失效
 
