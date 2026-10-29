@@ -28,7 +28,8 @@
 			},
 			// 当父组件需要子组件需要共享的参数发生了变化，手动通知子组件
 			parentData() {
-				if (this.children.length) {
+				// 抖音小程序等平台 watch 回调可能早于自身 created 执行，此时 children 尚未初始化
+				if (this.children && this.children.length) {
 					this.children.map(child => {
 						// 判断子组件(u-checkbox)如果有updateParentData方法的话，就就执行(执行的结果是子组件重新从父组件拉取了最新的值)
 						typeof(child.updateParentData) === 'function' && child.updateParentData()
@@ -50,6 +51,8 @@
 		methods: {
 			// 重新初始化一次内部的所有子元素
 			init() {
+				// 抖音小程序等平台 watch 回调可能早于自身 created 执行，此时 children 尚未初始化
+				if (!this.children) return
 				this.children.map(child => {
 					child.init()
 				})

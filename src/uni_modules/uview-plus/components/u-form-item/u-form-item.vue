@@ -67,7 +67,7 @@
 			>{{ message }}</text>
 		</slot>
 		<u-line
-			v-if="borderBottom"
+			v-if="resolvedBorderBottom"
 			:color="message != '' && parentData['errorType'] === 'border-bottom' ? color['error'] : propsLine['color']"
 			:customStyle="`margin-top: ${message != '' && parentData['errorType'] === 'message' ? '5px' : 0}`"
 		></u-line>
@@ -114,7 +114,9 @@
 					// 提示文本的宽度
 					labelWidth: 45,
 					// 错误提示方式
-					errorType: 'message'
+					errorType: 'message',
+					// 是否显示下划线边框，跟随u-form的同名属性
+					borderBottom: true
 				},
 				color: color,
 				itemRules: []
@@ -126,6 +128,13 @@
 				return {
 					color: this.upThemeVar('--up-main-color', '#303133')
 				}
+			},
+			// 是否显示下划线边框：未在form-item上显式设置时，跟随u-form的同名属性
+			resolvedBorderBottom() {
+				if (!this.upHasProp('borderBottom')) {
+					return this.parentData.borderBottom
+				}
+				return this.borderBottom
 			},
 			propsLine() {
 				return defProps.line

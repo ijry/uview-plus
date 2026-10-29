@@ -55,7 +55,10 @@
 					if (this.cssSticky) {
 						style.position = 'sticky'
 						style.zIndex = this.uZindex
-						style.top = addUnit(this.stickyTop)
+						// stickyTop 由 getPx 换算而来，已是确定的 px 数值；
+						// 这里必须显式指定 px，避免跟随全局 unit 配置（如 rpx）二次换算，
+						// 在非 375px 宽度的设备上产生偏移，导致吸顶元素与导航栏之间出现间隙
+						style.top = addUnit(this.stickyTop, 'px')
 					} else {
 						style.height = this.fixed ? this.height + 'px' : 'auto'
 					}

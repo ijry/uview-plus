@@ -175,6 +175,10 @@ export default {
                 if ((this.changeFromInner && !isBlurFormattedValue) || this.innerValue === newVal) {
                     this.changeFromInner = false; // 重要否则会出现双向绑定失效问题https://github.com/ijry/uview-plus/issues/419
                     this.blurValue = null;
+                    // immediate 首次执行也会走这里，必须把 firstChange 置为 false，
+                    // 否则首次外部赋值（如弹窗选择回填）会因 firstChange 仍为 true
+                    // 而跳过 valueChange 与表单验证
+                    this.firstChange = false;
                     return;
                 }
                 this.innerValue = newVal;
@@ -329,7 +333,9 @@ export default {
             this.$refs['input-native'].focus();
         },
         doBlur() {
-            this.$refs['input-native'].blur();
+            // 部分平台（如小程序端）取不到原生节点引用，做防御性调用避免直接抛错
+            const inputNative = this.$refs['input-native'];
+            inputNative && typeof inputNative.blur === 'function' && inputNative.blur();
         },
         // 点击完成按钮时触发
         onConfirm(event) {

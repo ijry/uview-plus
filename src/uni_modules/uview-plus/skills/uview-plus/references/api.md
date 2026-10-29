@@ -69,10 +69,14 @@ uni.$u.http.get('/user/info', { params: { id: 1 } })
 ## 主题与暗黑模式
 
 ```js
-uni.$u.setTheme('dark')          // 'light' | 'dark'
-uni.$u.setThemePreference('auto') // 跟随系统
-uni.$u.getThemeVars()             // 当前主题的 CSS 变量表
+uni.$u.setThemePreference('system') // 跟随系统（默认值，没有 'auto' 这个取值）
+uni.$u.setThemePreference('light')  // 固定浅色，关闭跟随系统；'dark' 固定深色
+uni.$u.setTheme('dark')             // 固定深色的快捷方法，'light' | 'dark'
+uni.$u.getThemePreference()         // 当前偏好：'system' | 'light' | 'dark'
+uni.$u.getThemeVars()               // 当前主题的 CSS 变量表
 ```
+
+偏好持久化在 storage 键 `u-theme-mode`，启动时 `initThemeSystem` 自动恢复，因此在 onLaunch 或设置页调用一次即可。固定为 `light`/`dark` 后系统深色切换不再影响组件主题。
 
 3.8 起主题走 `--up-*` CSS 变量 + 运行时主题，旧的 `$u-*` scss 变量只桥接 light 主题。样式里优先用 `var(--up-primary)` 这类变量；模板里可用 `upThemeVar('--up-border-color', '#dadbde')`、`upThemeIsDark`、`upThemePageStyle`、`upThemeCardStyle`（由 install 挂在实例上，nvue 页面依赖 Root 注入）。
 

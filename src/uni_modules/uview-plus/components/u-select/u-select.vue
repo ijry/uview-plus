@@ -283,6 +283,13 @@
 			},
 			openSelect() {
 				if (this.disabled) return;
+				// 在打开的同一个更新周期内先复位对齐与限高，让复位与面板挂载合并成同一次渲染提交。
+				// 若先挂载再复位，复位产生的第二次 setData 在 App/小程序端会与节点查询竞态：
+				// 查询可能读到复位前的旧对齐布局，导致奇偶次打开交替漏判溢出、面板位置来回跳
+				this.optionsWrapLeft = '0px';
+				this.optionsWrapRight = 'auto';
+				this.optionsWrapMaxHeight = '';
+				this.optionsPlacement = this.placement === 'top' ? 'top' : 'bottom';
 				this.isOpen = true;
 				this.$nextTick(() => {
 					if (this.isOpen) {
@@ -332,39 +339,38 @@
 				this.$emit('select', item);
 			},
 			adjustOptionsWrapPosition() {
-				// 每次打开都从"左对齐、向下、不限高"重新算，避免上一次的结果影响这次的测量
-				this.optionsWrapLeft = '0px';
-				this.optionsWrapRight = 'auto';
-				this.optionsWrapMaxHeight = '';
-				this.optionsPlacement = this.placement === 'top' ? 'top' : 'bottom';
-				this.$nextTick(() => {
-					if (!this.isOpen) return;
-					let wi = getWindowInfo();
-					let windowWidth = wi.windowWidth;
-					let windowHeight = wi.windowHeight;
-					Promise.all([
-						this.$uGetRect('.u-select__label'),
-						this.$uGetRect('.u-select__options__wrap')
-					]).then(([labelRect, wrapRect]) => {
-						if (!this.isOpen || !labelRect || !wrapRect) return;
-						if (wrapRect.left + wrapRect.width > windowWidth) {
-							// 如果右侧被遮挡，则调整到左侧
-							this.optionsWrapLeft = 'auto';
-							this.optionsWrapRight = `0px`;
-						}
-						// boundingClientRect 的坐标以窗口可用区域为原点，直接和 windowHeight 比即可
-						const spaceBelow = windowHeight - labelRect.bottom - this.panelGap;
-						const spaceAbove = labelRect.top - this.panelGap;
-						if (this.placement === 'auto' && wrapRect.height > spaceBelow && spaceAbove > spaceBelow) {
-							// 下方放不下且上方更宽裕时翻到触发区上方
-							this.optionsPlacement = 'top';
-						}
-						// 选定方向后仍放不下就限高滚动，否则面板会溢出窗口，并把页面撑高
-						const space = this.optionsPlacement === 'top' ? spaceAbove : spaceBelow;
-						if (space > 0 && wrapRect.height > space) {
-							this.optionsWrapMaxHeight = `${Math.floor(space)}px`;
-						}
-					});
+				if (!this.isOpen) return;
+				let wi = getWindowInfo();
+				let windowWidth = wi.windowWidth;
+				let windowHeight = wi.windowHeight;
+				Promise.all([
+					this.$uGetRect('.u-select__label'),
+					this.$uGetRect('.u-select__options__wrap')
+				]).then(([labelRect, wrapRect]) => {
+					if (!this.isOpen || !labelRect || !wrapRect) return;
+					// 面板宽高由内容决定、与当前对齐方式无关；左对齐时面板左缘即触发区左缘。
+					// 溢出判断用触发区左缘 + 面板宽度推算，不依赖查询瞬间面板所处的对齐状态，
+					// 即使查询读到上一次对齐的旧布局快照，判断结果也保持一致
+					if (labelRect.left + wrapRect.width > windowWidth) {
+						// 如果右侧被遮挡，则调整到左侧
+						this.optionsWrapLeft = 'auto';
+						this.optionsWrapRight = `0px`;
+					} else {
+						this.optionsWrapLeft = '0px';
+						this.optionsWrapRight = 'auto';
+					}
+					// boundingClientRect 的坐标以窗口可用区域为原点，直接和 windowHeight 比即可
+					const spaceBelow = windowHeight - labelRect.bottom - this.panelGap;
+					const spaceAbove = labelRect.top - this.panelGap;
+					if (this.placement === 'auto' && wrapRect.height > spaceBelow && spaceAbove > spaceBelow) {
+						// 下方放不下且上方更宽裕时翻到触发区上方
+						this.optionsPlacement = 'top';
+					}
+					// 选定方向后仍放不下就限高滚动，否则面板会溢出窗口，并把页面撑高
+					const space = this.optionsPlacement === 'top' ? spaceAbove : spaceBelow;
+					if (space > 0 && wrapRect.height > space) {
+						this.optionsWrapMaxHeight = `${Math.floor(space)}px`;
+					}
 				});
 			}
 		}

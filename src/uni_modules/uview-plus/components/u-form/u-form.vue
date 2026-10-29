@@ -169,10 +169,13 @@
 								}
 								for (let i = 0; i < rules.length; i++) {
 									const ruleItem = rules[i];
-									// 将u-form-item的触发器转为数组形式
-									const trigger = [].concat(ruleItem?.trigger);
-									// 如果是有传入触发事件，但是此form-item却没有配置此触发器的话，不执行校验操作
-									if (event && !trigger.includes(event)) {
+									// 将u-form-item的触发器转为数组形式；
+									// 未配置trigger（undefined/null/空字符串）的规则视为任何触发方式都执行，
+									// 与async-validator等库的惯例一致，避免被静默跳过导致验证永远不触发
+									const ruleTrigger = ruleItem?.trigger;
+									const trigger = (ruleTrigger == null || ruleTrigger === '') ? null : [].concat(ruleTrigger);
+									// 如果是有传入触发事件，且此规则配置了触发器但不包含当前事件，则不执行校验操作
+									if (event && trigger && !trigger.includes(event)) {
 										resolve()
 										continue;
 									}
@@ -208,11 +211,17 @@
 						});
 					});
 
-					// 使用Promise.all来等待所有Promise完成  
+					// 使用Promise.all来等待所有Promise完成
 					Promise.all(promises)
 						.then(results => {
 							// 执行回调函数
 							typeof callback === "function" && callback(errorsRes);
+							// 如果错误提示方式为toast，则进行提示。放在validateField里，
+							// 输入、失焦等自动触发的校验同样能弹出提示（此前只有validate()会提示）；
+							// 每次校验只提示第一条错误，避免多字段同时失败时连续弹出多个toast
+							if (errorsRes.length && this.errorType === 'toast' && (!options || options?.showErrorMsg == true)) {
+								toast(errorsRes[0].message)
+							}
 						})
 						.catch(error => {
 							console.error('An error occurred:', error);
@@ -240,8 +249,7 @@
 						// console.log(formItemProps)
 						this.validateField(formItemProps, (errors) => {
 							if(errors.length) {
-								// 如果错误提示方式为toast，则进行提示
-								this.errorType === 'toast' && toast(errors[0].message)
+								// toast提示已统一在validateField中处理，此处只需拒绝Promise
 								reject(errors)
 							} else {
 								resolve(true)

@@ -49,6 +49,8 @@
 		methods: {
 			// 更新子组件的数据
 			updateChildData() {
+				// 抖音小程序等平台 watch 回调可能早于自身 created 执行，此时 children 尚未初始化
+				if (!this.children) return
 				this.children.map(child => {
 					// 先判断子组件是否存在对应的方法
 					test.func((child || {}).updateFromParent()) && child.updateFromParent()

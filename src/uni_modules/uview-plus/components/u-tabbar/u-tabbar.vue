@@ -135,6 +135,8 @@
 		},
 		methods: {
 			updateChildren() {
+				// 抖音小程序等平台 watch 回调可能早于自身 created 执行，此时 children 尚未初始化
+				if (!this.children) return
 				// 如果存在子元素，则执行子元素的updateFromParent进行更新数据
 				this.children.length && this.children.map(child => child.updateFromParent())
 			},

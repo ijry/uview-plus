@@ -261,16 +261,25 @@
 			init() {
 				// 支付宝小程序不支持provide/inject，所以使用这个方法获取整个父组件，在created定义，避免循环引用
 				this.updateParentData()
-				if (!this.parent) {
-					error('up-tabbar-item必须搭配up-tabbar组件使用')
+				// 抖音小程序等平台 created/mounted 钩子执行时，父子关系可能尚未建立，或父组件
+				// children 尚未初始化（u-tabbar 在 created 中才赋值 children=[]），
+				// 此时延迟重试，待关系建立后补注册到 parent.children，
+				// 重试次数用尽仍找不到父组件才报错提示，避免正常写法被误报
+				if (!this.parent || !this.parent.children) {
+					if (!this.parentRetryCount) this.parentRetryCount = 0
+					if (this.parentRetryCount < 10) {
+						this.parentRetryCount++
+						setTimeout(() => {
+							// 组件已卸载则停止重试
+							if (this.__upUnmounted) return
+							this.init()
+						}, 100)
+					} else if (!this.parent) {
+						error('up-tabbar-item必须搭配up-tabbar组件使用')
+					}
 					return
 				}
-				// 抖音小程序等平台子组件 created 可能在父组件 created 之前执行，
-				// 此时 parent.children 尚未初始化（u-tabbar 在 created 中才赋值 children=[]），
-				// 跳过本次初始化，由 mounted 钩子补偿重试
-				if (!this.parent.children) {
-					return
-				}
+				this.parentRetryCount = 0
 				// 本子组件在u-tabbar的children数组中的索引
 				const index = this.parent.children.indexOf(this)
 				// 判断本组件的name(如果没有定义name，就用index索引)是否等于父组件的value参数

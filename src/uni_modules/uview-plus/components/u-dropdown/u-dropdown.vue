@@ -114,6 +114,8 @@
 				// 当某个子组件内容变化时，触发父组件的init，父组件再让每一个子组件重新初始化一遍
 				// 以保证数据的正确性
 				this.menuList = [];
+				// 抖音小程序等平台子组件挂载可能早于自身 created 执行，此时 children 尚未初始化
+				if (!this.children) return
 				this.children.map(child => {
 					child.init();
 				})
