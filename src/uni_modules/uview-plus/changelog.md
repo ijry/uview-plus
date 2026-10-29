@@ -1,3 +1,16 @@
+## 3.8.137
+fix: 修复抖音 tabbar 时序崩溃、sticky 吸顶间隙、select 位置交替、表单验证触发与 form 属性传递问题
+
+本次更新修复 #1065 / #1063 / #1061 / #726 / #614 五个 issue，并修正主题 API 文档中的无效取值示例。
+
+- 父子组件时序（#1065）：抖音小程序等平台 watch 回调可能早于自身 created 执行，此时 children 尚未初始化，u-tabbar 的 updateChildren 访问 this.children.length 抛 TypeError。u-tabbar/u-steps/u-checkbox-group/u-radio-group/u-grid/u-collapse/u-dropdown/u-swipe-action 的 watcher 驱动路径统一加 children 守卫；u-tabbar-item 找不到父组件时改为最多 10 次、每次 100ms 的延迟重试，待父子关系建立后补注册到 parent.children，重试耗尽才报错，消除「必须搭配up-tabbar组件使用」误报并恢复抖音端吸顶联动
+- u-sticky（#1063）：吸顶 top 值 addUnit 未显式指定单位，配置了全局 unit: 'rpx' 的项目在非 375px 宽度设备上被二次换算，吸顶元素与导航栏之间出现间隙，现显式钉死 px，与 u-navbar 占位高度单位语义对齐
+- u-select（#1061）：对齐复位并入打开的同一次渲染提交，消除复位 setData 与节点查询在渲染层的竞态；溢出判断改为触发区左缘 + 面板宽度（与对齐状态无关），修复奇偶次打开面板位置交替错误
+- u-input（#726）：modelValue watcher 的 firstChange 在初始值为空时永不复位，导致首次程序化赋值（弹窗选择回填）不触发表单验证，现于早退分支复位；doBlur 对原生节点引用做防御性调用，修复小程序端报 blur undefined
+- u-form（#726/#614）：未配置 trigger 的校验规则视为任意触发方式执行，不再被静默跳过；toast 提示统一移入 validateField，errorType=toast 时输入/失焦/手动校验均能提示，validate 不再重复弹窗
+- u-form-item（#614）：parentData 补充 borderBottom，未显式设置时跟随 u-form 同名属性，修复 form 级 borderBottom 不生效
+- 文档：修正 setThemePreference('auto') 无效取值示例，改为 'system' 并补充固定主题与偏好持久化说明
+
 ## 3.8.136
 fix: 修复 u-goods-sku 关闭笔误与 u-icon App 本地字体在 npm 安装/正式 APK 下的问题
 
