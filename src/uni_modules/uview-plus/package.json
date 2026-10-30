@@ -2,7 +2,7 @@
   "id": "uview-plus",
   "name": "uview-plus",
   "displayName": "零云®uview-plus3.0重磅发布，全面的Vue3鸿蒙跨端移动组件库，组件丰富维护更新稳定。",
-  "version": "3.8.138",
+  "version": "3.8.139",
   "description": "零云®uview-plus已兼容vue3支持多语言，120+全面的组件和便捷的工具会让您信手拈来。近期新增拖动排序、条码、图片裁剪、下拉刷新、虚拟列表、签名、Markdown等。",
   "keywords": [
     "uview",
@@ -22,17 +22,17 @@
   "dcloudext": {
     "sale": {
       "regular": {
-        "price": "0.00"
+        "price": "99.00"
       },
       "sourcecode": {
-        "price": "0.00"
+        "price": "199.00"
       }
     },
     "contact": {
       "qq": "598821125"
     },
     "declaration": {
-      "ads": "请注意本插件开发文档包含弹窗广告每日展示一次，源码纯净无广告。",
+      "ads": "无（插件源码与开发文档均不含任何广告）",
       "data": "无",
       "permissions": "无"
     },
