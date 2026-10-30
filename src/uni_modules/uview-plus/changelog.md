@@ -1,3 +1,12 @@
+## 3.8.140
+perf: 缓存设备信息与状态栏高度，减少高频路径重复同步系统调用
+
+本次为性能优化版本，消除组件高频路径上重复发起的同步系统信息查询。设备信息与平台标识在运行期不变，此前 os()/getDeviceInfo() 每次调用都会发起一次同步桥调用，在滚动、列表渲染等热路径上产生无谓开销。
+
+- os()/getDeviceInfo() 结果模块级缓存：u-sticky 挂载检测由每次 4 次同步查询降为仅首次 1 次；u-radio 的样式 computed 在父组件更新时不再逐实例发起同步查询；u-toast、u-rate、u-input、u-textarea、u-no-network 等调用点同步受益
+- u-navbar：default 模式占位块高度改为 navbarPlaceholderHeight computed，仅在 height 变化时重算，不再随组件每次重渲染重复读取 statusBarHeight
+- 函数返回值与组件行为完全不变，所有调用方对返回对象均为只读读取
+
 ## 3.8.139
 feat: 转为付费授权（99 元）并彻底移除开发文档广告
 
