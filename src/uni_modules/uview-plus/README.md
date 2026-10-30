@@ -98,6 +98,6 @@ cp -r node_modules/uview-plus/skills/uview-plus .claude/skills/
 其他工具的接法与 uni_modules 装法见 `skills/README.md`。
 
 ## 版权信息
-uview-plus遵循[MIT](https://en.wikipedia.org/wiki/MIT_License)开源协议，意味着您无需支付任何费用，也无需授权，即可将uview-plus应用到您的产品中。
+uview-plus已转为付费授权模式，您可在[DCloud插件市场](https://ext.dcloud.net.cn/)购买普通授权或源码授权后，将uview-plus应用到您的产品中。
 
 Root 组件基于上游项目 `uni-ku/root` 二次开发，已按 MIT 要求保留其原始授权文件：`libs/root/LICENSE`。
