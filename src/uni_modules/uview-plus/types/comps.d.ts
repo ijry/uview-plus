@@ -91,6 +91,7 @@ interface UviewPlusComponents {
   ['up-pagination']: typeof import('./comps/pagination')['Pagination']
 
   // 其他组件
+  ['up-audio']: typeof import('./comps/audio')['Audio']
   ['up-parse']: typeof import('./comps/parse')['Parse']
   ['up-code-input']: typeof import('./comps/codeInput')['CodeInput']
   ['up-loadmore']: typeof import('./comps/loadMore')['LoadMore']

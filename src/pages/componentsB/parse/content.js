@@ -200,4 +200,20 @@ export default `<title>富文本示例</title>
     </svg>
     <div style="font-size: 12px; color: gray; margin-top: 5px;">svg 动画</div>
   </section>
+  <section style="text-align: center; margin: 0px auto; margin-top: 2em">
+    <section style="border-radius: 4px; border: 1px solid #757576; display: inline-block; padding: 5px 20px;">
+      <span style="font-size: 18px; color: #595959;">音频</span>
+    </section>
+  </section>
+  <section style="margin-top: 1.5em; text-align: center;">
+    <audio controls src="https://www.w3schools.com/html/horse.mp3"></audio>
+    <div style="font-size: 12px; color: gray; margin-top: 5px;">audio 标签：经 u-audio（innerAudioContext）渲染，全平台可播放</div>
+  </section>
+  <section style="margin-top: 1.5em; text-align: center;">
+    <audio controls loop>
+      <source src="https://www.w3schools.com/html/horse.ogg">
+      <source src="https://www.w3schools.com/html/horse.mp3">
+    </audio>
+    <div style="font-size: 12px; color: gray; margin-top: 5px;">多 source 音频，加载失败自动切换下一个源</div>
+  </section>
 </div>`

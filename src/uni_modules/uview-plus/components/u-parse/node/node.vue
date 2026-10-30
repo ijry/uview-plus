@@ -47,9 +47,9 @@
       <iframe v-else-if="n.name==='iframe'" :style="n.attrs.style" :allowfullscreen="n.attrs.allowfullscreen" :frameborder="n.attrs.frameborder" :src="n.attrs.src" />
       <embed v-else-if="n.name==='embed'" :style="n.attrs.style" :src="n.attrs.src" />
       <!-- #endif -->
-      <!-- #ifndef MP-TOUTIAO || ((H5 || APP-PLUS) && VUE3) -->
+      <!-- #ifndef APP-PLUS-NVUE -->
       <!-- 音频 -->
-      <audio v-else-if="n.name==='audio'" :id="n.attrs.id" :class="n.attrs.class" :style="n.attrs.style" :author="n.attrs.author" :controls="n.attrs.controls" :loop="n.attrs.loop" :name="n.attrs.name" :poster="n.attrs.poster" :src="n.src[ctrl[i]||0]" :data-i="i" @play="play" @error="mediaError" />
+      <u-audio v-else-if="n.name==='audio'" :src="n.src" :title="n.attrs.title || n.attrs.name" :loop="!!n.attrs.loop" @play="onAudioPlay" @error="onAudioError" />
       <!-- #endif -->
       <view v-else-if="(n.name==='table'&&n.c)||n.name==='li'" :id="n.attrs.id" :class="'_'+n.name+' '+n.attrs.class" :style="n.attrs.style">
         <node v-if="n.name==='li'" :childs="n.children" :opts="opts" />
@@ -113,6 +113,9 @@ module.exports = {
 </script>
 <script>
 import node from './node'
+// #ifndef APP-PLUS-NVUE
+import uAudio from '../../u-audio/u-audio.vue'
+// #endif
 export default {
   name: 'node',
   options: {
@@ -143,6 +146,9 @@ export default {
     opts: Array
   },
   components: {
+    // #ifndef APP-PLUS-NVUE
+    uAudio,
+    // #endif
     // #ifndef ((H5 || APP-PLUS) && VUE3) || APP-HARMONY
     node
     // #endif
@@ -249,6 +255,26 @@ export default {
         plus.runtime.openURL(href)
       } catch (e) { }
       // #endif
+    },
+
+    /**
+     * @description 音频播放事件（audio-player 组件触发，转发给 up-parse）
+     * @param {Object} payload
+     */
+    onAudioPlay (payload) {
+      if (this.root) {
+        this.root.$emit('play', payload)
+      }
+    },
+
+    /**
+     * @description 音频加载错误（audio-player 组件触发，转发给 up-parse）
+     * @param {Object} payload
+     */
+    onAudioError (payload) {
+      if (this.root) {
+        this.root.$emit('error', payload)
+      }
     },
 
     /**

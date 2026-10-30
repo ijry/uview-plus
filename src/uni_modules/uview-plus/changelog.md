@@ -1,3 +1,12 @@
+## 3.8.138
+feat: 新增 u-audio 音频播放器组件
+
+uni-app 在 Vue3 中已废除 `<audio>` 组件，本版新增基于 `uni.createInnerAudioContext` 的公共组件 `u-audio`，并替换 up-parse 内部已废弃的 `<audio>` 渲染，音频在 App / H5 端也可正常播放。
+
+- 新增组件 `u-audio`：支持播放/暂停、进度条拖动 seek、倍速切换、多源自动切换、play/error 事件，多实例互斥（播放时自动暂停其它音频），App / H5 / 各小程序全平台可用。
+- `up-parse` 的音频节点改用 `u-audio` 渲染（`node/node.vue` 中废弃的 `<audio>` 组件分支已替换）。
+- 新增 `types/comps/audio.d.ts` 类型定义，并在 `types/comps.d.ts` 登记 `up-audio`。
+
 ## 3.8.137
 fix: 修复抖音 tabbar 时序崩溃、sticky 吸顶间隙、select 位置交替、表单验证触发与 form 属性传递问题
 
