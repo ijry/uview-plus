@@ -178,13 +178,14 @@ export function sleep(value = 30) {
  * @returns {string} 返回所在平台(小写) 
  * @link 运行期判断平台 https://uniapp.dcloud.io/frame?id=判断平台
  */
+// 平台标识运行期不变，缓存结果避免高频路径重复发起同步桥调用
+let cachedOs = ''
 export function os() {
-	// #ifdef APP || H5 || MP-WEIXIN
-	return uni.getDeviceInfo().platform.toLowerCase()
-	// #endif
-	// #ifndef APP || H5 || MP-WEIXIN
-	return uni.getSystemInfoSync().platform.toLowerCase()
-	// #endif
+	if (cachedOs) {
+		return cachedOs
+	}
+	cachedOs = getDeviceInfo().platform.toLowerCase()
+	return cachedOs
 }
 /**
  * @description 获取系统信息同步接口
@@ -203,7 +204,13 @@ export function getWindowInfo() {
 	// #endif
 	return ret
 }
+// 设备信息运行期不变，缓存结果避免重复发起同步桥调用；
+// 调用方（platform/system 等）均为只读读取，共享同一对象是安全的
+let cachedDeviceInfo = null
 export function getDeviceInfo() {
+	if (cachedDeviceInfo) {
+		return cachedDeviceInfo
+	}
 	let ret = {}
 	// #ifdef APP || H5 || MP-WEIXIN
 	ret = uni.getDeviceInfo()
@@ -211,6 +218,7 @@ export function getDeviceInfo() {
 	// #ifndef APP || H5 || MP-WEIXIN
 	ret = sys()
 	// #endif
+	cachedDeviceInfo = ret
 	return ret
 }
 

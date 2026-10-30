@@ -22,7 +22,7 @@
 			class="u-navbar__placeholder"
 			v-if="!isIosMode && fixed && placeholder"
 			:style="{
-				height: addUnit(getPx(height) + getWindowInfo().statusBarHeight,'px'),
+				height: navbarPlaceholderHeight,
 			}"
 		></view>
 		<view
@@ -176,6 +176,11 @@
 			navbarFlowSpacerHeight() {
 				const statusBarHeight = this.safeAreaInsetTop ? getWindowInfo().statusBarHeight : 0
 				return addUnit(getPx(this.height) + statusBarHeight, 'px')
+			},
+			// default 模式占位块高度，与 navbarFlowSpacerHeight 同源但无 safeAreaInsetTop 门控。
+			// 收进 computed 后仅在 height 变化时重算，状态栏高度不必随每次重渲染重复读取
+			navbarPlaceholderHeight() {
+				return addUnit(getPx(this.height) + getWindowInfo().statusBarHeight, 'px')
 			},
 			// 压缩进度。分母取有效大标题行高，progress=1 即大标题恰好完全没入导航栏
 			navbarProgress() {
