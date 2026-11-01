@@ -177,14 +177,35 @@ export default {
   },
   watch: {
     data: {
-      handler() {
+      handler(newValue) {
+        // 内容指纹守卫：父组件重渲染常用内容相同的新数组引用（模板内联数组、重新 map 等）
+        // 触发本 deep watcher，内容未变时跳过全树克隆重建（cloneNodes + 勾选状态同步）与整树重渲染。
+        // 序列化失败的异构输入（如循环引用）回退为按原逻辑处理
+        let fingerprint = null
+        try {
+          fingerprint = JSON.stringify(newValue)
+        } catch (e) {}
+        if (fingerprint !== null && fingerprint === this.__dataFingerprint) {
+          return
+        }
+        this.__dataFingerprint = fingerprint
         this.initTree();
       },
       deep: true,
       immediate: true
     },
     props: {
-      handler() {
+      handler(newValue) {
+        // 内容指纹守卫：props 常被模板内联对象传入，父组件每次重渲染都会产生新引用，
+        // 内容未变时跳过整树克隆重建。序列化失败的异构输入回退为按原逻辑处理
+        let fingerprint = null
+        try {
+          fingerprint = JSON.stringify(newValue)
+        } catch (e) {}
+        if (fingerprint !== null && fingerprint === this.__propsFingerprint) {
+          return
+        }
+        this.__propsFingerprint = fingerprint
         this.initTree();
       },
       deep: true
