@@ -244,9 +244,32 @@
             isPureAppend(newData, oldData) {
                 if (!Array.isArray(oldData) || oldData.length === 0) return true;
                 if (!Array.isArray(newData) || newData.length < oldData.length) return false;
-                return oldData.every((item, index) => {
-                    return JSON.stringify(item) === JSON.stringify(newData[index]);
-                });
+                // 序列化缓存：纯追加场景每轮只新增尾部，旧列表的序列化结果与上一轮新列表一致，
+                // 复用缓存后每轮仅序列化一遍新数据（原实现对旧列表与新列表前缀各序列化一遍）。
+                // 比对语义与逐项 JSON.stringify 比较完全一致，含首个不匹配即短路
+                const cached = Array.isArray(this._wfSerializedPrefix) && this._wfSerializedPrefix.length === oldData.length
+                    ? this._wfSerializedPrefix
+                    : null;
+                const next = new Array(newData.length);
+                let pure = true;
+                for (let i = 0; i < oldData.length; i++) {
+                    const serialized = JSON.stringify(newData[i]);
+                    next[i] = serialized;
+                    if (serialized !== (cached ? cached[i] : JSON.stringify(oldData[i]))) {
+                        pure = false;
+                        break;
+                    }
+                }
+                if (pure) {
+                    for (let i = oldData.length; i < newData.length; i++) {
+                        next[i] = JSON.stringify(newData[i]);
+                    }
+                    this._wfSerializedPrefix = next;
+                } else {
+                    // 非纯追加走整体重分发，旧缓存与新列表不再对齐，置空待下一轮重建
+                    this._wfSerializedPrefix = null;
+                }
+                return pure;
             },
 
             // 将新增数据加入共享队列，确保只有一个分配循环运行
