@@ -93,6 +93,17 @@
 				deep: true,
 				handler(newVal, oldVal) {
 					// this.observer();
+					// 内容指纹守卫：父组件重渲染常用内容相同的新数组引用（模板内联数组、重新 map 等）
+					// 触发本 deep watcher，内容未变时跳过渐进渲染重置与整轮节点测量、滚动联动。
+					// 序列化失败的异构输入（如循环引用）回退为按原逻辑处理
+					let fingerprint = null
+					try {
+						fingerprint = JSON.stringify(newVal)
+					} catch (e) {}
+					if (fingerprint !== null && fingerprint === this.__tabListFingerprint) {
+						return
+					}
+					this.__tabListFingerprint = fingerprint
 					// 整体换了一份数据时重新从首屏开始渐进渲染；仅内容变化则保留已渲染范围
 					if (newVal !== oldVal) {
 						this.renderCount = 0;
