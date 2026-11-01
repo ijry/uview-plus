@@ -384,7 +384,22 @@ export function deepClone(obj) {
  * @param {object} source 拷贝的来源对象
  * @returns {object|boolean} 深度合并后的对象或者false（入参有不是对象）
  */
+// 扁平对象判定：普通对象且不含嵌套对象/数组值（null 值两种路径语义一致）
+function isFlatPlainObject(value) {
+	if (typeof value !== 'object' || value === null || testArray(value)) return false
+	for (const key in value) {
+		if (value.hasOwnProperty(key) && value[key] !== null && typeof value[key] === 'object') return false
+	}
+	return true
+}
+
 export function deepMerge(targetOrigin = {}, source = {}) {
+	// 扁平快路径：两侧均为无嵌套对象/数组的普通对象时，结果等价于浅覆盖合并，
+	// 免去 deepClone 递归克隆与逐键深合并；约 30 处组件 style computed 的
+	// deepMerge(style, addStyle(customStyle)) 是该形态的高频调用方
+	if (isFlatPlainObject(targetOrigin) && isFlatPlainObject(source)) {
+		return Object.assign({}, targetOrigin, source)
+	}
 	let target = deepClone(targetOrigin)
 	if (typeof target !== 'object' || typeof source !== 'object') return false
 	for (const prop in source) {
