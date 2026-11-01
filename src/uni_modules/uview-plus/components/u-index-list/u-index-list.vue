@@ -419,7 +419,7 @@
 				const customNavHeight = this.customNavHeight
 
 				// 获取header slot的尺寸信息
-				const header = await this.getHeaderRect()
+				const header = await this.getHeaderRectCached()
 				// item的top值，在nvue下，模拟出的anchor的top，类似非nvue下的index-item的top
 				let top = header.height
 				// console.log(top)
@@ -454,6 +454,16 @@
 					animated: false
 				})
 				// #endif
+			},
+			// 滚动采样高频使用 header 高度做锚点偏移基准，原实现每次采样（约 10ms 一次）都发起节点查询；
+			// 缓存 500ms 内的结果，header slot 内容变化最迟 500ms 后自愈
+			async getHeaderRectCached() {
+				const now = Date.now()
+				if (!this._headerRectCache || now - this._headerRectCacheAt > 500) {
+					this._headerRectCache = await this.getHeaderRect()
+					this._headerRectCacheAt = now
+				}
+				return this._headerRectCache
 			},
 			getHeaderRect() {
 				// 获取header slot的高度，因为list组件中获取元素的尺寸是没有top值的
@@ -504,7 +514,7 @@
 				// #endif
 
 				// 获取header slot的尺寸信息
-				const header = await this.getHeaderRect()
+				const header = await this.getHeaderRectCached()
 				// item的top值，在nvue下，模拟出的anchor的top，类似非nvue下的index-item的top
 				let top = header.height
 				const anchors = this.anchors
