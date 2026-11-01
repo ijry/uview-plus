@@ -369,6 +369,16 @@ export function deepClone(obj) {
 		// 原始类型直接返回
 		return obj
 	}
+	// 数组快路径：按下标遍历克隆，避免 for-in 对每个下标做字符串化键与 hasOwnProperty 判定；
+	// picker 列数据、上传列表、表格数据等大数组场景克隆开销显著降低。
+	// 元素逐项语义与原 for-in 路径一致（null/函数/嵌套均同）；仅丢弃数组上的非下标附加属性
+	if (testArray(obj)) {
+		const list = new Array(obj.length)
+		for (let i = 0; i < obj.length; i++) {
+			list[i] = typeof obj[i] === 'object' ? deepClone(obj[i]) : obj[i]
+		}
+		return list
+	}
 	const o = testArray(obj) ? [] : {}
 	for (const i in obj) {
 		if (obj.hasOwnProperty(i)) {
