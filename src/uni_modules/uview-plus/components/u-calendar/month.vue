@@ -153,10 +153,15 @@
 			return {
 				// 每个日期的宽度
 				width: 0,
+				// 兜底窗口宽度，created 时读取一次，避免每个日期格子渲染时重复发起窗口信息同步查询
+				fallbackWindowWidth: 0,
 				// 当前选中的日期item
 				item: {},
 				selected: []
 			}
+		},
+		created() {
+			this.fallbackWindowWidth = getWindowInfo().windowWidth || 0
 		},
 		watch: {
 			selectedChange: {
@@ -199,7 +204,7 @@
 					const style = {}
 					let week = item.week
 					// 隐藏挂载场景下节点宽度可能拿到0，兜底使用窗口宽度避免首日偏移归零
-					const wrapperWidth = this.width > 0 ? this.width : (getWindowInfo().windowWidth || 0)
+					const wrapperWidth = this.width > 0 ? this.width : this.fallbackWindowWidth
 					// 不进行四舍五入的形式保留2位小数
 					const dayWidth = Number(parseFloat(wrapperWidth / 7).toFixed(3).slice(0, -1))
 					// 得出每个日期的宽度
