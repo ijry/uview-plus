@@ -149,6 +149,17 @@
 			// list变化时，重新渲染list各项信息
 			list: {
 				handler(newValue, oldValue) {
+					// 内容指纹守卫：父组件重渲染常用内容相同的新数组引用（模板内联数组、重新 map 等）
+					// 触发本 deep watcher，内容未变时跳过 deepClone 与 resize 的整轮节点测量。
+					// 序列化失败的异构输入（如循环引用）回退为按原逻辑处理
+					let fingerprint = null
+					try {
+						fingerprint = JSON.stringify(newValue)
+					} catch (e) {}
+					if (fingerprint !== null && fingerprint === this.__listFingerprint) {
+						return
+					}
+					this.__listFingerprint = fingerprint
 					// 重新拷贝一份list用于增加其他额外信息处理后导致重复监听的死循环
 					this.tabList = deepClone(newValue);
 					this.$nextTick(() => {
