@@ -26,20 +26,23 @@
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
-				isH5: false
+				isH5: false,
+				// 状态栏高度，created 时读取一次缓存，computed 重算不再重复发起窗口信息同步查询
+				statusBarHeight: 0
 			}
 		},
 		created() {
 			// #ifdef H5
 			this.isH5 = true
 			// #endif
+			this.statusBarHeight = getWindowInfo().statusBarHeight
 		},
 		emits: ['update:height'],
 		computed: {
 			style() {
 				const style = {}
 				// 状态栏高度，由于某些安卓和微信开发工具无法识别css的顶部状态栏变量，所以使用js获取的方式
-				let sheight = getWindowInfo().statusBarHeight
+				let sheight = this.statusBarHeight
 				this.$emit('update:height', sheight)
 				if (sheight == 0) {
 					this.isH5 = true
