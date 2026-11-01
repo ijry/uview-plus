@@ -82,6 +82,8 @@
 		data() {
 			return {
 				isShow: false,
+				// 窗口高度，created 时读取一次缓存，contentStyle 重算不再重复发起窗口信息同步查询
+				windowHeight: 0,
 				timer: null, // 定时器
 				config: {
 					message: '', // 显示文本
@@ -167,7 +169,7 @@
 			},
 			// 内容盒子的样式
 			contentStyle() {
-				const windowHeight = getWindowInfo().windowHeight, style = {}
+				const windowHeight = this.windowHeight, style = {}
 				let value = 0
 				// 根据top和bottom，对Y轴进行窗体高度的百分比偏移
 				if(this.tmpConfig.position === 'top') {
@@ -180,6 +182,7 @@
 			}
 		},
 		created() {
+			this.windowHeight = getWindowInfo().windowHeight
 			// 通过主题的形式调用toast，批量生成方法函数
 			['primary', 'success', 'error', 'warning', 'default', 'loading'].map(item => {
 				this[item] = message => this.show({
