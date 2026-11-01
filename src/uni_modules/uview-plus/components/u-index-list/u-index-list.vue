@@ -497,8 +497,8 @@
 				const len = this.children.length
 				let children = this.children
 				// #ifdef APP-NVUE
-				// nvue下获取的滚动条偏移为负数，需要转为正数
-				let sys = getWindowInfo()
+				// nvue下获取的滚动条偏移为负数，需要转为正数；复用 created 时缓存的系统信息，滚动回调不再重复发起同步查询
+				let sys = this.sys
 				scrollTop = Math.abs(e.contentOffset.y) / 10
 				// console.log('native', e)
 				// #endif
