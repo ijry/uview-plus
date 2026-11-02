@@ -1,3 +1,12 @@
+## 3.8.143
+perf: u-popup 移除内容样式计算中未使用的窗口信息查询
+
+合入 perf/u-popup-contentstyle-safearea-cache 分支，清理 u-popup 的 contentStyle 计算属性中未使用的 safeAreaInsets 解构及 getWindowInfo() 调用。
+
+- 背景色、圆角、弹出位置或自定义样式导致 contentStyle 重新求值时，不再额外读取一次同步窗口信息。
+- 不新增缓存，不改变窗口尺寸或安全区的刷新机制；弹层布局、圆角、自定义样式、安全区组件与事件接口保持原样。
+- 合并前后每仓 720 组样式组合对比一致，并覆盖样式覆写、深色主题及 px/rpx 单位；同步查询次数回归测试通过。
+
 ## 3.8.142
 perf: u-cate-tab tabList 深度监听增加内容指纹守卫，跳过冗余节点测量
 
