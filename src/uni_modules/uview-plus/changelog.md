@@ -1,3 +1,13 @@
+## 3.8.145
+perf: u-waterfall 消除分发链路的整表双重克隆
+
+合入 perf/u-waterfall-redistribute-double-clone 分支，优化瀑布流大列表流式加载时的分发开销。
+
+- copyFlowList computed 由 cloneData 整表 JSON 深克隆改为直接返回 modelValue/value 数据源别名；redistributeData 与 handleData 内部原有的保护性克隆保留，防止队列分配过程改动父组件数据。
+- 全量重分发与纯追加两条路径的整表序列化次数均从 2 降为 1；columns watcher、resize 回调与默认参数仍经由该 computed，行为同步受益。
+- 3 项瀑布流既有回归全部通过；合并前后克隆行为对比确认旧版 computed 克隆 1 次并返回副本、新版零克隆且返回同一引用，分发链路的保护性克隆仍在。H5 构建通过，保留原有 Browserslist 数据与第三方 Lottie eval 告警。
+- 本版不修改组件 props、事件与对外 API，其它组件不受影响。
+
 ## 3.8.144
 perf: u-index-list 减少 nvue 滚动采样中的同步窗口信息查询
 
