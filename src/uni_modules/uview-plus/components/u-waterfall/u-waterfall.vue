@@ -171,16 +171,19 @@
         computed: {
             // 破坏flowList变量的引用，否则watch的结果新旧值是一样的
             copyFlowList() {
+                // 统一 Vue2/Vue3 的数据源别名，不再克隆：所有消费方（watcher 的
+                // isPureAppend/redistributeData/handleData）都有各自的保护性克隆，
+                // 原实现先克隆一次、分发链路内再克隆一次，每次数据变更全量列表被 JSON 序列化两轮
                 // #ifdef VUE3
                 if (!this.modelValue || this.modelValue.length == 0) {
                     // console.log('clear');
                     return [];
                 } else {
-                    return this.cloneData(this.modelValue);
+                    return this.modelValue;
                 }
                 // #endif
                 // #ifdef VUE2
-                return this.cloneData(this.value);
+                return this.value;
                 // #endif
             }
         },
