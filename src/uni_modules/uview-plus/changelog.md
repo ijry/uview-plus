@@ -1,3 +1,12 @@
+## 3.8.146
+perf: libs deepMerge 增加扁平快路径，样式 computed 高频合并免于递归克隆
+
+合入 perf/deepmerge-flat-fast-path 分支，优化 deepMerge 在组件样式计算中的高频调用。
+
+- 当 target 与 source 均为无嵌套对象/数组的普通对象时，直接 Object.assign({}, target, source) 浅覆盖合并，免去 deepClone 递归克隆与逐键深合并。
+- 约 30 处组件 style computed 的 deepMerge(style, addStyle(customStyle)) 是该形态的高频调用方，重算样式时不再递归深克隆，降低渲染期开销。
+- 仅改动 src/uni_modules/uview-plus/libs/function/index.js，不涉及组件 props、事件与对外 API，其它组件与既有逻辑不受影响。
+
 ## 3.8.145
 perf: u-waterfall 消除分发链路的整表双重克隆
 
