@@ -1,3 +1,13 @@
+## 3.8.147
+perf: libs deepClone 增加数组快路径，降低大数组克隆开销
+
+合入 perf/deepclone-array-fast-path 分支，优化 deepClone 对大数组的克隆性能。
+
+- 当入参为数组时，按下标遍历克隆（new Array + for 循环），避免 for-in 对每个下标做字符串化键与 hasOwnProperty 判定。
+- picker 列数据、上传列表、表格数据等大数组场景克隆开销显著降低。
+- 元素逐项语义与原 for-in 路径一致（null/函数/嵌套均同）；仅丢弃数组上的非下标附加属性。
+- 仅改动 src/uni_modules/uview-plus/libs/function/index.js，不涉及组件 props、事件与对外 API，其它组件与既有逻辑不受影响。
+
 ## 3.8.146
 perf: libs deepMerge 增加扁平快路径，样式 computed 高频合并免于递归克隆
 
