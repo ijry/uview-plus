@@ -1,3 +1,10 @@
+## 3.8.148
+perf: u-toast 窗口高度 created 读取一次，contentStyle 重算不再查窗口信息
+
+- contentStyle computed 原每次重算都调用 getWindowInfo().windowHeight，tmpConfig/config 任一变化（显示/隐藏/位置切换）均触发重算并发起窗口信息同步查询。
+- 改为 created 时读取一次存入 data.windowHeight，computed 改读缓存，偏移计算逻辑与数值不变。
+- 权衡同已上线的 u-navbar/u-status-bar 缓存方案：窗口高度仅旋转时变化，toast 偏移取 ±25% 相对量，旋转后首帧前保持旧值影响仅过渡帧偏移。
+
 ## 3.8.147
 perf: libs deepClone 增加数组快路径，降低大数组克隆开销
 
