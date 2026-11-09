@@ -304,6 +304,12 @@ export function $parent(name = undefined) {
  * @param {String} target 转换的目的，object-转为对象，string-转为字符串
  * @returns {object|string}
  */
+// addStyle 字符串转对象的解析 memo：同一字符串样式（全局配置、主题字符串等）在大量组件的
+// style computed 里重复出现，命中缓存可省去每次的 split/trim 解析；用无原型对象做键表，
+// 超过上限整体清空，避免动态拼接字符串样式导致无界增长
+const addStyleObjectCache = Object.create(null)
+let addStyleObjectCacheSize = 0
+
 export function addStyle(customStyle, target = 'object') {
 	// 字符串转字符串，对象转对象情形，直接返回
 	if (testEmpty(customStyle) || typeof(customStyle) === 'object' && target === 'object' || target === 'string' &&
@@ -314,6 +320,11 @@ export function addStyle(customStyle, target = 'object') {
 	if (target === 'object') {
 		// 去除字符串样式中的两端空格(中间的空格不能去掉，比如padding: 20px 0如果去掉了就错了)，空格是无用的
 		customStyle = trim(customStyle)
+		// 解析 memo 命中：返回浅拷贝，保持每次调用返回独立对象的原有语义，避免调用方改动互相影响
+		const cached = addStyleObjectCache[customStyle]
+		if (cached) {
+			return Object.assign({}, cached)
+		}
 		// 根据";"将字符串转为数组形式
 		const styleArray = customStyle.split(';')
 		const style = {}
@@ -325,7 +336,15 @@ export function addStyle(customStyle, target = 'object') {
 				style[trim(item[0])] = trim(item[1])
 			}
 		}
-		return style
+		if (addStyleObjectCacheSize >= 200) {
+			addStyleObjectCacheSize = 0
+			for (const k in addStyleObjectCache) {
+				delete addStyleObjectCache[k]
+			}
+		}
+		addStyleObjectCache[customStyle] = style
+		addStyleObjectCacheSize++
+		return Object.assign({}, style)
 	}
 	// 这里为对象转字符串形式
 	let string = ''
