@@ -572,6 +572,36 @@ export default {
             this._engineState = 'stopped'
             this.emitState('stop')
         },
+        getTotalFrames() {
+            return !this._animation || !this._ready ? 0 : this._animation.totalFrames
+        },
+        setDirection(direction) {
+            if (this._animation) {
+                this._animation.setDirection(direction < 0 ? -1 : 1)
+            }
+        },
+        setSpeed(speed) {
+            if (this._animation) {
+                this._animation.setSpeed(speed)
+            }
+        },
+        goToAndStop(value, isFrame = true) {
+            this._cancelledBeforeReady = true
+            this._pendingPlay = false
+            if (!this._animation || !this._ready) return
+            this._animation.goToAndStop(value, isFrame)
+            this._completed = false
+            this._engineState = 'paused'
+        },
+        goToAndPlay(value, isFrame = true) {
+            if (!this._animation || !this._ready) return
+            this._cancelledBeforeReady = false
+            this._pendingPlay = false
+            this._completed = false
+            this._animation.goToAndPlay(value, isFrame)
+            this._engineState = 'playing'
+            this.emitState('play')
+        },
         emitState(type, message = '') {
             const detail = { type }
             if (type === 'error') {
