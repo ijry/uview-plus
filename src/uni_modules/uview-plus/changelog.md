@@ -1,3 +1,10 @@
+## 3.8.149
+perf: addStyle 字符串转对象增加解析 memo，全站样式 computed 受益
+
+- libs/function/index.js 的 addStyle 增加无原型键表缓存，同一字符串样式（全局配置、主题字符串等）在大量组件的 style computed 里重复出现时命中缓存，省去每次的 split/trim 解析
+- 缓存上限 200 整体清空，避免动态拼接字符串样式导致无界增长
+- 命中时返回浅拷贝，保持每次调用返回独立对象的原有语义，避免调用方改动互相影响
+
 ## 3.8.148
 perf: u-toast 窗口高度 created 读取一次，contentStyle 重算不再查窗口信息
 
