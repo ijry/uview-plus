@@ -1,3 +1,10 @@
+## 3.8.150
+perf: u-safe-bottom 安全区高度 created 读取一次，style computed 重算不再查窗口信息
+
+- u-safe-bottom 原在 style computed 内每次重算都调用 getWindowInfo().safeAreaInsets.bottom（对应系统信息接口），父组件重渲染或主题切换触发重算时反复发起窗口信息同步查询。
+- 改为 created 时读取一次存入 data，computed 改读缓存，安全区偏移计算逻辑与数值不变；对齐 uview-ultra 同名优化。
+- 权衡同已上线的 u-navbar/u-status-bar 缓存方案：安全区高度仅在系统设置或旋转时变化，组件内读取一次足以覆盖常规场景。
+
 ## 3.8.149
 perf: addStyle 字符串转对象增加解析 memo，全站样式 computed 受益
 
