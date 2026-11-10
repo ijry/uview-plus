@@ -31,12 +31,18 @@
 				isNvue: false,
 			};
 		},
+		created() {
+			// #ifdef APP-NVUE || MP-TOUTIAO || MP-WEIXIN
+			// 安全区高度运行期基本不变，created 读取一次缓存，style computed 重算不再重复查询
+			this.safeAreaBottomHeight = getWindowInfo().safeAreaInsets.bottom;
+			// #endif
+		},
 		computed: {
 			style() {
 				const style = {};
 				// #ifdef APP-NVUE || MP-TOUTIAO || MP-WEIXIN
 				// nvue下，高度使用js计算填充
-				style.height = addUnit(getWindowInfo().safeAreaInsets.bottom, 'px');
+				style.height = addUnit(this.safeAreaBottomHeight, 'px');
 				// #endif
 				return deepMerge(style, addStyle(this.customStyle));
 			},
