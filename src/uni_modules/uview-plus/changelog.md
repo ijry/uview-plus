@@ -1,3 +1,10 @@
+## 3.8.151
+perf: u-status-bar 状态栏高度 created 读取一次，computed 重算不再查窗口信息
+
+- u-status-bar 原在 style computed 内每次重算都调用 getWindowInfo().statusBarHeight（对应系统信息接口），父组件重渲染或主题切换触发重算时反复发起窗口信息同步查询。
+- 改为 created 时读取一次存入 data.statusBarHeight，computed 改读缓存，状态栏高度计算逻辑与数值不变。
+- 权衡同已上线的 u-navbar/u-safe-bottom 缓存方案：状态栏高度仅在系统设置或旋转时变化，组件内读取一次足以覆盖常规场景；对齐 uview-ultra 同名优化。
+
 ## 3.8.150
 perf: u-safe-bottom 安全区高度 created 读取一次，style computed 重算不再查窗口信息
 
