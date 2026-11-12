@@ -1,3 +1,10 @@
+## 3.8.152
+perf: u-index-list 列表锚点定位新增 header 高度采样缓存，滚动不再每次查询节点尺寸
+
+- u-index-list 滚动定位时每个采样（约 10ms 一次）都调用 getHeaderRect() 发起节点尺寸查询，高频滚动下反复读取 DOM 布局。
+- 新增 getHeaderRectCached() 缓存 500ms 内的 header 尺寸结果，滚动采样命中缓存直接返回，header slot 内容变化最迟 500ms 后自愈。
+- 仅改动组件内部实现（u-index-list.vue），锚点偏移计算逻辑与数值不变，props、事件与对外 API 不变；对齐 uview-ultra 同名优化。
+
 ## 3.8.151
 perf: u-status-bar 状态栏高度 created 读取一次，computed 重算不再查窗口信息
 
