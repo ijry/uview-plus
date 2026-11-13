@@ -1,3 +1,10 @@
+## 3.8.153
+perf: u-calendar-month 兜底窗口宽度 created 读取一次，日期格子渲染不再逐格查窗口信息
+
+- u-calendar 月份视图每个日期格子计算宽度时，若节点宽度拿到 0 会回退调用 getWindowInfo().windowWidth 兜底。
+- 原先每次渲染都发起一次窗口信息同步查询，高频重渲染下重复读取布局，增加同步开销。
+- 改为在 created 时读取一次存入 fallbackWindowWidth，格子宽度计算统一复用该缓存，计算逻辑与数值不变；对齐 uview-ultra 4.x 同名优化，仅改动组件内部实现，props、事件与对外 API 不变。
+
 ## 3.8.152
 perf: u-index-list 列表锚点定位新增 header 高度采样缓存，滚动不再每次查询节点尺寸
 
