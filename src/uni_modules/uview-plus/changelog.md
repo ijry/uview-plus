@@ -1,3 +1,12 @@
+## 3.8.154
+perf: u-waterfall isPureAppend 增加序列化缓存，纯追加判定免于逐轮重复序列化旧列表
+
+- u-waterfall 的 isPureAppend 用于判断新增数据是否为纯追加（决定走轻量追加还是整体重分发）。
+- 原实现对旧列表与新列表前缀逐元素各做一次 JSON.stringify 比较，纯追加场景每轮都重复序列化整个旧列表。
+- 新增组件实例级序列化缓存：命中时复用上一轮旧列表的序列化结果，每轮仅序列化一遍新数据，首个不匹配即短路。
+- 比对语义与逐项 JSON.stringify 比较完全一致；非纯追加走整体重分发时清空缓存待下一轮重建。
+- 仅改动 uni_modules/uview-plus/components/u-waterfall/u-waterfall.vue，不涉及对外 API。
+
 ## 3.8.153
 perf: u-calendar-month 兜底窗口宽度 created 读取一次，日期格子渲染不再逐格查窗口信息
 
