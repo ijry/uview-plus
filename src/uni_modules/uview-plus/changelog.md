@@ -1,3 +1,10 @@
+## 3.8.155
+perf: u-checkbox-group parentData 增加内容指纹守卫，跳过子组件冗余 re-init
+
+- u-checkbox-group 的 parentData watch 在父组件任意依赖重算时都会触发（computed 数组每次返回新引用），即便内容未变也会逐个沿 $parent 链对 children 做全量 re-init 回拷。
+- 新增组件实例级内容指纹：watch 回调先对 newValue 做 JSON.stringify，序列化成功且与上一轮指纹相同则直接 return，跳过子组件 re-init；序列化失败（如循环引用）的异构输入回退为原逻辑照常处理。
+- 子组件初始化状态、选中回显与对外 API 不变；仅改动组件内部 watch 守卫，对齐 uview-ultra 4.x 同名优化。
+
 ## 3.8.154
 perf: u-waterfall isPureAppend 增加序列化缓存，纯追加判定免于逐轮重复序列化旧列表
 
