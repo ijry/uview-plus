@@ -72,7 +72,18 @@
 		},
 		watch: {
 			// 当父组件需要子组件需要共享的参数发生了变化，手动通知子组件
-			parentData() {
+			parentData(newValue) {
+				// 内容指纹守卫：value/modelValue 为数组，父组件重渲染传内容相同的新数组引用时
+				// parentData computed 重算出新引用触发本监听，内容未变时跳过子组件全量 re-init。
+				// 序列化失败的异构输入（如循环引用）回退为按原逻辑处理
+				let fingerprint = null
+				try {
+					fingerprint = JSON.stringify(newValue)
+				} catch (e) {}
+				if (fingerprint !== null && fingerprint === this.__parentDataFingerprint) {
+					return
+				}
+				this.__parentDataFingerprint = fingerprint
 				// 抖音小程序等平台 watch 回调可能早于自身 created 执行，此时 children 尚未初始化
 				if (this.children && this.children.length) {
 					this.children.map(child => {
