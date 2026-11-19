@@ -1,3 +1,10 @@
+## 3.8.157
+perf: u-subsection 列表 watch 增加内容指纹守卫，跳过冗余节点测量
+
+- u-subsection 的 list 常以模板内联数组传入（:list="['a', 'b']"），父组件重渲染传入内容相同的新数组引用即触发 list watcher，原逻辑会执行 init 的整轮节点测量（sleep + 首个 item rect 查询）。
+- 新增组件实例级内容指纹：watch 回调先对 newValue 做 JSON.stringify，序列化成功且与上一轮指纹相同则直接 return，跳过 init 测量；序列化失败（如循环引用）的异构输入回退为原逻辑照常处理。
+- 分段切换、滑块定位与对外 API 不变；仅改动组件内部 watch 守卫，对齐 uview-ultra 4.x 同名优化。
+
 ## 3.8.156
 perf: u-radio-group parentData 增加内容指纹守卫，跳过子组件冗余 re-init
 
