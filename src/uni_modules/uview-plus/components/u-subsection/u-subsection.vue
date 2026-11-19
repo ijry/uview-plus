@@ -95,6 +95,18 @@ export default {
     },
     watch: {
         list(newValue, oldValue) {
+            // 内容指纹守卫：分段器列表常以模板内联数组传入（[:list="['a', 'b']"]），
+            // 父组件重渲染传内容相同的新数组引用即触发本监听，
+            // 内容未变时跳过 init 的整轮节点测量（sleep + 首个 item rect 查询）。
+            // 序列化失败的异构输入（如循环引用）回退为按原逻辑处理
+            let fingerprint = null
+            try {
+                fingerprint = JSON.stringify(newValue)
+            } catch (e) {}
+            if (fingerprint !== null && fingerprint === this.__listFingerprint) {
+                return
+            }
+            this.__listFingerprint = fingerprint
             this.init();
         },
         current: {
