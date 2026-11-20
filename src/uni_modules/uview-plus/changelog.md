@@ -1,3 +1,10 @@
+## 3.8.158
+perf: u-tree data/props 深度监听增加内容指纹守卫，跳过整树克隆重建
+
+- u-tree 的 data 与 props 两个 watcher 均为 deep 监听且 handler 都是 initTree() 全树重建：cloneNodes 逐节点 Object.assign 递归克隆并重建 nodeMap，非 strictly 模式再递归同步父子勾选状态，最终整树重渲染。props 是字段映射对象，模板内联 :props="{ label: 'name', children: 'children' }" 是文档典型写法，父组件每次重渲染都传新引用，等于每次渲染都全树重建。
+- 现于两个 handler 入口分别做 JSON 序列化指纹比对：内容未变直接返回；内容真变（含保持引用的原地嵌套修改）走原逻辑，deep 语义不变；序列化失败的异构输入（如循环引用）指纹置空回退原逻辑；immediate 首跑指纹为 undefined 天然放行。
+- 从「引用变化即重建」收敛为「内容变化才重建」，同内容重传不再额外重置树内部展开/勾选状态（该状态本就不在 data 内容里）；对外 API 与展开/勾选行为不变，对齐 uview-ultra 4.x 同名优化。
+
 ## 3.8.157
 perf: u-subsection 列表 watch 增加内容指纹守卫，跳过冗余节点测量
 
