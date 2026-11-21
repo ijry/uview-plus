@@ -148,7 +148,18 @@
 		},
 		watch: {
 			data: {
-				handler() {
+				handler(newValue) {
+					// 内容指纹守卫：级联树常由父组件 computed/map 重建，重渲染传内容相同的新数组引用
+					// 即触发本监听，内容未变时跳过层级重建与按默认值的树遍历定位。
+					// 序列化失败的异构输入（如循环引用）回退为按原逻辑处理
+					let fingerprint = null
+					try {
+						fingerprint = JSON.stringify(newValue)
+					} catch (e) {}
+					if (fingerprint !== null && fingerprint === this.__dataFingerprint) {
+						return
+					}
+					this.__dataFingerprint = fingerprint
 					this.initLevelList();
 					this.setDefaultValue();
 				},
