@@ -142,6 +142,17 @@ export default {
 			immediate: true,
 			deep:true,
 			handler(n) {
+				// 内容指纹守卫：父组件重渲染常用内容相同的新数组引用（模板内联数组、重新 map 等）
+				// 触发本 deep watcher，内容未变时跳过整棵列数据的 deepClone 与空列检测。
+				// 序列化失败的异构输入（如循环引用）回退为按原逻辑处理
+				let fingerprint = null
+				try {
+					fingerprint = JSON.stringify(n)
+				} catch (e) {}
+				if (fingerprint !== null && fingerprint === this.__columnsFingerprint) {
+					return
+				}
+				this.__columnsFingerprint = fingerprint
 				this.setColumns(n)
 			}
 		},
