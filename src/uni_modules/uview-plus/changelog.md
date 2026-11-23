@@ -1,3 +1,10 @@
+## 3.8.161
+perf: u-upload fileList 监听增加内容指纹守卫，跳过逐项重映射
+
+- u-upload 的 fileList deep+immediate watcher 在父组件用 filter/map 派生、模板内联等传入内容相同的新数组引用时即触发，原逻辑会对每个文件项 Object.assign 新建对象并各跑两次图片/视频正则判型，最后整组替换 lists 触发上传网格全量 diff 重渲染。
+- 现于 watcher 入口做 JSON 序列化指纹比对：内容未变直接返回；内容真变（含保持引用的原地嵌套修改）走原逻辑，deep 语义不变；序列化失败的异构输入（如循环引用）回退原逻辑；immediate 首跑指纹为 undefined 天然放行。
+- 从「引用变化即重映射」收敛为「内容变化才重映射」，同内容重传不再额外重置上传网格；deletable/maxCount/accept 等独立 watcher 及组件内部上传流程不受影响，对外 API 与行为不变，对齐 uview-ultra 4.x 同名优化。
+
 ## 3.8.160
 perf: u-picker columns 监听增加内容指纹守卫，跳过整棵列数据重建
 
