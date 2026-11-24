@@ -1,3 +1,10 @@
+## 3.8.162
+perf: u-tabs-pro list 监听增加内容指纹守卫，跳过冗余钳制处理
+
+- u-tabs-pro 的 list deep watcher 在父组件重渲染传入内容相同的新数组引用时即触发（模板内联数组、重新 map 派生等），原逻辑会执行 normalizeCurrent 钳制与 current 回写，内容未变时结果必然相同。
+- 现于 watcher 入口做 JSON 序列化指纹比对：内容未变直接返回，省去 Vue 对整棵 list 递归 traverse 后的冗余钳制处理；内容真变走原逻辑，deep 语义不变；序列化失败的异构输入（如循环引用）回退为按原逻辑处理。
+- 从「引用变化即钳制」收敛为「内容变化才钳制」，同内容重传不再产生冗余的 current 更新；current watcher、切换逻辑与对外 API 不变，对齐 uview-ultra 4.x 同名优化。
+
 ## 3.8.161
 perf: u-upload fileList 监听增加内容指纹守卫，跳过逐项重映射
 
