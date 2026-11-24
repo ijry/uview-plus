@@ -6,7 +6,7 @@
 			}">
 				<view class="u-dropdown-item__options">
 					<up-cell-group>
-						<up-cell @click="cellClick(item.value)" :arrow="false" :title="item.label" v-for="(item, index) in options"
+						<up-cell @click="cellClick(item.value)" :disabled="disabled" :arrow="false" :title="item.label" v-for="(item, index) in options"
 						 :key="index" :title-style="{
 							color: modelValue == item.value ? activeColor : inactiveColor
 						}">
@@ -94,6 +94,7 @@
 			},
 			// cell被点击
 			cellClick(value) {
+				if (this.disabled) return;
 				// 修改通过v-model绑定的值
                 // #ifdef VUE2
 				this.$emit('input', value);
