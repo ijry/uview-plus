@@ -166,7 +166,18 @@
 			},
 			list: {
 				deep: true,
-				handler() {
+				handler(newValue) {
+					// 内容指纹守卫：父组件重渲染常用内容相同的新数组引用（模板内联数组、重新 map 等）
+					// 触发本 deep watcher，内容未变时钳制结果必然相同，直接返回省去 Vue 对整个
+					// list 的递归 traverse 后的冗余处理；序列化失败的异构输入回退为按原逻辑处理
+					let fingerprint = null
+					try {
+						fingerprint = JSON.stringify(newValue)
+					} catch (e) {}
+					if (fingerprint !== null && fingerprint === this.__listFingerprint) {
+						return
+					}
+					this.__listFingerprint = fingerprint
 					const nextCurrent = this.normalizeCurrent(this.innerCurrent)
 					if (nextCurrent !== this.innerCurrent) {
 						this.innerCurrent = nextCurrent
