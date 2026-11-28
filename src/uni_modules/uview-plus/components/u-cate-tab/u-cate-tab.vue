@@ -200,7 +200,7 @@
 				return true;
 			},
 			// 获取一个目标元素的高度
-			getElRect(elClass, dataVal) {
+			getElRect(elClass, dataVal, retryCount = 0) {
 				return new Promise((resolve, reject) => {
 					const query = uni.createSelectorQuery().in(this);
 					query.select('.' + elClass).fields({
@@ -208,8 +208,13 @@
 					}, res => {
 						// 如果节点尚未生成，res值为null，循环调用执行
 						if (!res) {
+							// 重试上限 20 次（约 200ms）：节点永不渲染时不再无限轮询，超限放行调用方
+							if (retryCount >= 20) {
+								resolve();
+								return;
+							}
 							setTimeout(() => {
-								this.getElRect(elClass);
+								this.getElRect(elClass, dataVal, retryCount + 1);
 							}, 10);
 							return;
 						}
@@ -262,7 +267,7 @@
 				this.scrollTop = index * this.menuItemHeight + this.menuItemHeight / 2 - this.menuHeight / 2;
 			},
 			// 获取右边菜单每个item到顶部的距离
-			async getMenuItemTop() {
+			async getMenuItemTop(retryCount = 0) {
 				// await this.$nextTick();
 				// console.log('getMenuItemTop')
 				return new Promise(resolve => {
@@ -270,8 +275,13 @@
 					selectorQuery.selectAll('.u-cate-tab__page-item').boundingClientRect((rects) => {
 						// 如果节点尚未生成，rects值为[](因为用selectAll，所以返回的是数组)，循环调用执行
 						if(!rects.length) {
+							// 重试上限 50 次（约 5s）：分类节点永不渲染时不再无限轮询，超限放行调用方
+							if (retryCount >= 50) {
+								resolve();
+								return;
+							}
 							setTimeout(() => {
-								this.getMenuItemTop();
+								this.getMenuItemTop(retryCount + 1);
 							}, 100);
 							return ;
 						}
