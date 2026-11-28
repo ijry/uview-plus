@@ -1,3 +1,10 @@
+## 3.8.164
+perf: u-cate-tab 两处节点测量重试加上限，修复 getElRect 重试丢失 dataVal
+
+- u-cate-tab 的 getElRect 与 getMenuItemTop 在目标节点尚未渲染时靠 setTimeout 递归轮询，节点永不出现时会无限重试：现分别加 20 次（约 200ms）与 50 次（约 5s）上限，超限直接 resolve() 放行调用方，避免页面卡在测量任务上。
+- 修复 getElRect 递归重试只传 elClass、未透传 dataVal 的问题，重试链路保留 dataVal 参数，与首次调用一致。
+- 节点正常渲染时行为与原逻辑完全相同，仅异常场景不再无限轮询；对外 API 与分类吸顶/滚动定位表现不变，对齐 uview-ultra 4.x 同名优化。
+
 ## 3.8.163
 perf: u-collapse needInit 监听增加内容指纹守卫，跳过子组件全量 init
 
